@@ -7,6 +7,7 @@
 htmlcov/
 __pycache__/
 node_modules/
+*.tsbuildinfo
 apps/web/.next/
 apps/web/coverage/
 

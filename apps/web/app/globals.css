@@ -531,6 +531,34 @@ h3 {
   gap: 1px;
   margin-left: auto;
 }
+.review-edit {
+  padding-inline: 4px;
+  color: var(--muted) !important;
+  font-size: 11px;
+}
+.inline-edit {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.inline-edit textarea {
+  min-height: 64px;
+  width: 100%;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 8px;
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.inline-edit > span {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+}
 .review-action {
   width: 30px;
   min-width: 30px;
@@ -937,6 +965,268 @@ h3 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px 20px;
+}
+.diagnosis-workbench {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 300px;
+  min-height: calc(100dvh - 58px);
+}
+.diagnosis-profile,
+.learning-panel {
+  padding: 22px 20px;
+  background: var(--paper-soft);
+}
+.diagnosis-report {
+  min-width: 0;
+  padding: 28px 34px;
+  background: var(--panel);
+}
+.diagnosis-heading,
+.diagnosis-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.diagnosis-heading h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+}
+.diagnosis-heading span,
+.profile-location {
+  color: var(--muted);
+  font-size: 12px;
+}
+.profile-location {
+  margin: 18px 0;
+}
+.profile-counts {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.profile-counts span {
+  display: grid;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.profile-counts b {
+  color: var(--ink);
+  font:
+    20px/1 "Arial Narrow",
+    Arial,
+    sans-serif;
+}
+.diagnosis-profile h2 {
+  margin: 24px 0 10px;
+  font-size: 15px;
+}
+.skill-list {
+  display: grid;
+  gap: 4px;
+}
+.profile-skill {
+  display: grid;
+  gap: 5px;
+  padding: 9px 6px;
+  border-radius: 4px;
+}
+.profile-skill > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.profile-skill strong {
+  font-size: 13px;
+}
+.profile-skill button {
+  width: max-content;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--blue);
+  cursor: pointer;
+  font-size: 11px;
+}
+.profile-skill small {
+  color: var(--muted);
+  font-size: 11px;
+}
+.profile-skill-missing {
+  background: rgba(228, 184, 16, 0.14);
+}
+.project-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 18px;
+  color: #47443e;
+  font-size: 12px;
+}
+.diagnosis-title h2 {
+  margin: 0 0 6px;
+  font-size: 24px;
+}
+.diagnosis-title h2 span {
+  color: var(--muted);
+  font:
+    11px/1 "IBM Plex Mono",
+    Consolas,
+    monospace;
+}
+.diagnosis-title p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.match-summary {
+  display: flex;
+  gap: 34px;
+  margin-top: 26px;
+  padding: 16px 0;
+  background: var(--paper-soft);
+}
+.match-summary > div {
+  display: grid;
+  min-width: 100px;
+  gap: 6px;
+}
+.match-summary span {
+  color: var(--muted);
+  font-size: 11px;
+}
+.match-summary strong {
+  font:
+    26px/1 "Arial Narrow",
+    Arial,
+    sans-serif;
+}
+.match-summary b {
+  font:
+    22px/1 "Arial Narrow",
+    Arial,
+    sans-serif;
+}
+.gap-section {
+  margin-top: 34px;
+}
+.gap-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+.gap-item {
+  padding: 13px 8px;
+  border-radius: 4px;
+  background: rgba(255, 245, 200, 0.3);
+}
+.gap-item > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.gap-item strong {
+  font-size: 14px;
+}
+.gap-item p {
+  margin: 8px 0;
+  color: #47443e;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.gap-item > span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.gap-high {
+  background: rgba(220, 60, 52, 0.08);
+}
+.match-evidence {
+  display: grid;
+  gap: 8px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line-soft);
+}
+.match-evidence h3 {
+  margin: 0;
+  font-size: 14px;
+}
+.match-evidence p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.learning-panel h2 {
+  margin: 0;
+  font-size: 16px;
+}
+.learning-panel ol {
+  display: grid;
+  gap: 20px;
+  margin: 28px 0;
+  padding: 0;
+  list-style: none;
+}
+.learning-panel li {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 10px;
+}
+.learning-panel li > span {
+  color: var(--muted);
+  font:
+    11px/1 "IBM Plex Mono",
+    Consolas,
+    monospace;
+}
+.learning-panel li strong {
+  font-size: 13px;
+}
+.learning-panel li p {
+  margin: 6px 0 0;
+  color: #47443e;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.learning-note {
+  display: flex;
+  gap: 7px;
+  color: var(--green);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.learning-note svg {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 1100px) {
+  .diagnosis-workbench {
+    grid-template-columns: 260px minmax(0, 1fr);
+  }
+  .learning-panel {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 760px) {
+  .diagnosis-workbench {
+    display: block;
+    min-height: auto;
+  }
+  .diagnosis-profile,
+  .learning-panel,
+  .diagnosis-report {
+    padding: 20px 16px;
+  }
+  .match-summary {
+    gap: 16px;
+    overflow-x: auto;
+  }
+  .learning-panel {
+    margin-top: 16px;
+  }
 }
 .editor-actions {
   display: flex;

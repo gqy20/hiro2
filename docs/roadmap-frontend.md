@@ -24,7 +24,7 @@
 | F-T1.3 | Evidence Drawer | `EvidenceView` | 进行中 | 岗位更新已显示来源、原文、时间、质量和审核上下文 |
 | F-T1.4 | JobVersion / Evidence Mock Adapter | `contracts.md` | 进行中 | 岗位更新通过 `data/fixtures/job_update.json` 演示默认、分析和审核状态，并明确标记演示数据；空与错误状态待补 |
 | F-T1.5 | API Client 和 Query Hooks | `contracts.md` | 未开始 | 前端只通过 API Client 访问数据 |
-| F-T1.6 | 可信岗位版本上下文组件 | `JobVersion` / `EvidenceView` | 未开始 | 所有岗位结论统一显示状态、版本、时间、证据入口和下一步动作 |
+| F-T1.6 | 可信岗位版本上下文组件 | `JobVersion` / `EvidenceView` | 进行中 | 岗位更新、新岗位和人岗诊断已共享状态、证据和置信度组件；API View Model 待接入 |
 
 ### F-T2 岗位演化
 
@@ -41,9 +41,9 @@
 | --- | --- | --- | --- | --- | --- |
 | F-T3.1 | 技能点图谱 | F-T1.2 | I3 | 未开始 | 支持技术栈、级别、能力类型、版本筛选 |
 | F-T3.2 | 图谱节点详情和证据 | F-T1.3 | I3 | 未开始 | 选中节点可打开技能点、岗位版本和证据 |
-| F-T3.3 | 手工技能画像 | `CandidateProfile` | I4 | 未开始 | 可录入技能、熟练度、年限、项目和证书 |
+| F-T3.3 | 手工技能画像 | `CandidateProfile` | I4 | 进行中 | Fixture 驱动画像已可查看和修正技能字段，项目证据可展示；后端持久化待补 |
 | F-T3.4 | PDF/DOCX 解析确认 | Resume API | I4 | 未开始 | 解析结果可编辑，保留原文片段 |
-| F-T3.5 | 匹配报告和学习路径 | `MatchReport`、F-T1.6 | I4 | 未开始 | 显示岗位版本、岗位/候选人依据、多维差距、关键短板和排序依据 |
+| F-T3.5 | 匹配报告和学习路径 | `MatchReport`、F-T1.6 | I4 | 进行中 | Fixture 驱动报告已显示岗位版本、岗位/候选人依据、关键短板和排序学习路径 |
 | F-T3.6 | 岗位标准输出与培养任务 | PublishedJobVersion API | I4 | 未开始 | 导出 JD 能力模板、诊断标准和学练赛证式训练任务 |
 
 ### F-T4 评测与交付

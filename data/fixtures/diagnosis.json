@@ -1,0 +1,32 @@
+{
+  "fixtureVersion": "2026-08-25.v1",
+  "mode": "synthetic",
+  "candidate": {
+    "id": "candidate-a",
+    "name": "候选人 A",
+    "headline": "AI 应用开发 · 3 年经验",
+    "location": "上海",
+    "skills": [
+      { "name": "Python", "level": "熟练", "years": 3, "status": "ready", "evidence": "企业知识助手项目" },
+      { "name": "检索增强生成", "level": "熟悉", "years": 1, "status": "partial", "evidence": "完成知识库问答原型" },
+      { "name": "智能体编排", "level": "入门", "years": 0.5, "status": "partial", "evidence": "个人实验项目" },
+      { "name": "效果评测", "level": "未体现", "years": 0, "status": "missing", "evidence": "简历未找到直接证据" }
+    ],
+    "projects": ["企业知识助手", "客服问答评测集", "内部工单自动化"]
+  },
+  "job": { "title": "AI 应用工程师", "version": "v1.5", "window": "2026-05 至 2026-08", "evidenceCount": 30 },
+  "report": {
+    "matchId": "MATCH-0825-031",
+    "algorithmVersion": "match-v0.1",
+    "overallScore": 0.72,
+    "gaps": [
+      { "skill": "效果评测", "reason": "岗位必备，候选人画像中没有直接项目证据。", "priority": "high", "action": "完成一套离线评测集并复盘 10 个错误案例。" },
+      { "skill": "智能体编排", "reason": "已有入门项目，但缺少多工具失败恢复和人工接管证据。", "priority": "high", "action": "实现一个带工具调用、重试和人工确认的任务流。" },
+      { "skill": "检索增强生成", "reason": "已有原型经验，尚缺召回评测和引用溯源。", "priority": "medium", "action": "补充召回指标、重排实验和引用质量记录。" }
+    ],
+    "evidence": [
+      { "id": "match-ev-01", "source": "候选人简历", "sourceType": "招聘 JD", "publishedAt": "2026-08-20", "collectedAt": "2026-08-25", "quality": 0.86, "excerpt": "负责企业知识助手和工单自动化项目。", "fullText": "项目经历：负责企业知识助手和工单自动化项目，完成数据清洗、检索链路和服务接口开发。", "sourceUrl": null, "stance": "支持" },
+      { "id": "match-ev-02", "source": "AI 应用工程师 v1.5", "sourceType": "招聘 JD", "publishedAt": "2026-08-22", "collectedAt": "2026-08-25", "quality": 0.92, "excerpt": "必备技能包含智能体编排、效果评测和检索增强生成。", "fullText": "已发布岗位版本 v1.5：必备技能包含智能体编排、效果评测和检索增强生成，并要求保留评测与引用证据。", "sourceUrl": null, "stance": "支持" }
+    ]
+  }
+}

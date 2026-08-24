@@ -7,23 +7,18 @@ import {
   PencilSimple,
   XCircle,
 } from "@phosphor-icons/react";
-import { Alert, Button, Empty, Input, Tag, Tooltip } from "antd";
+import { Button, Input, Tag, Tooltip } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
+import { StatusMark } from "@/components/review-ui";
+import { FixtureState } from "@/components/workflow-ui";
 import type { NewJobsFixture } from "@/lib/new-jobs";
 import type {
   ChangeItem,
   JobUpdateContext,
   ReviewStatus,
 } from "@/lib/job-update";
-
-const statusLabel: Record<ReviewStatus, string> = {
-  accepted: "已接受",
-  needs_evidence: "待确认",
-  rejected: "已拒绝",
-  reviewing: "待审",
-};
 
 type NewJobsWorkbenchProps = {
   fixture: NewJobsFixture;
@@ -53,29 +48,18 @@ export function NewJobsWorkbench({
     [candidates, query],
   );
 
-  if (state === "error") {
+  if (state === "error")
     return (
       <AppShell>
-        <section className="fixture-state">
-          <Alert
-            description="候选岗位来源暂时不可用。"
-            message="无法加载候选"
-            showIcon
-            type="error"
-          />
-        </section>
+        <FixtureState errorText="候选岗位来源暂时不可用。" state="error" />
       </AppShell>
     );
-  }
-  if (state === "empty" || !selected) {
+  if (state === "empty" || !selected)
     return (
       <AppShell>
-        <section className="fixture-state">
-          <Empty description="当前时间窗没有新的岗位候选。" />
-        </section>
+        <FixtureState emptyText="当前时间窗没有新的岗位候选。" state="empty" />
       </AppShell>
     );
-  }
 
   const context: JobUpdateContext = {
     baselineVersion: "既有岗位库",
@@ -403,22 +387,5 @@ function EditDefinition({
         </Button>
       </div>
     </section>
-  );
-}
-
-function StatusMark({ status }: { status: ReviewStatus }) {
-  const icon =
-    status === "accepted" ? (
-      <CheckCircle aria-hidden weight="fill" />
-    ) : status === "rejected" ? (
-      <XCircle aria-hidden weight="fill" />
-    ) : (
-      <i aria-hidden />
-    );
-  return (
-    <span className={`status-mark status-mark-${status}`}>
-      {icon}
-      <span>{statusLabel[status]}</span>
-    </span>
   );
 }

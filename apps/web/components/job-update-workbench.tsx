@@ -7,13 +7,17 @@ import {
   FunnelSimple,
   MagnifyingGlass,
   PaperPlaneTilt,
-  XCircle,
 } from "@phosphor-icons/react";
 import { Button, Modal, Select, Skeleton, Tag, Tooltip } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
 import { ReviewProgress } from "@/components/review-progress";
+import {
+  ConfidenceMeter,
+  ReviewActions,
+  StatusMark,
+} from "@/components/review-ui";
 import {
   type ChangeItem,
   type ChangeKind,
@@ -34,13 +38,6 @@ const filterOptions: Array<"全部" | ChangeKind> = [
   "modified",
 ];
 
-const reviewLabels: Record<ReviewStatus, string> = {
-  accepted: "已接受",
-  needs_evidence: "待确认",
-  rejected: "已拒绝",
-  reviewing: "待审",
-};
-
 type JobUpdateWorkbenchProps = { fixture: JobUpdateFixture };
 
 export function JobUpdateWorkbench({ fixture }: JobUpdateWorkbenchProps) {
@@ -50,6 +47,8 @@ export function JobUpdateWorkbench({ fixture }: JobUpdateWorkbenchProps) {
   const [publishing, setPublishing] = useState(false);
   const [published, setPublished] = useState(false);
   const [filter, setFilter] = useState<"全部" | ChangeKind>("全部");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [draftDetail, setDraftDetail] = useState("");
 
   const pending = items.filter(
     (item) => item.status === "reviewing" || item.status === "needs_evidence",
@@ -70,6 +69,20 @@ export function JobUpdateWorkbench({ fixture }: JobUpdateWorkbenchProps) {
     setItems((current) =>
       current.map((item) => (item.id === id ? { ...item, status } : item)),
     );
+  }
+
+  function startEditing(item: ChangeItem) {
+    setEditingId(item.id);
+    setDraftDetail(item.detail);
+  }
+
+  function saveDetail(id: string) {
+    setItems((current) =>
+      current.map((item) =>
+        item.id === id ? { ...item, detail: draftDetail } : item,
+      ),
+    );
+    setEditingId(null);
   }
 
   function runAnalysis() {
@@ -259,6 +272,12 @@ export function JobUpdateWorkbench({ fixture }: JobUpdateWorkbenchProps) {
                             onAccept={() => updateStatus(item.id, "accepted")}
                             onEvidence={() => setSelected(item)}
                             onReject={() => updateStatus(item.id, "rejected")}
+                            editing={editingId === item.id}
+                            onEdit={() => startEditing(item)}
+                            onCancelEdit={() => setEditingId(null)}
+                            onSaveEdit={() => saveDetail(item.id)}
+                            draftDetail={draftDetail}
+                            onDraftDetailChange={setDraftDetail}
                           />
                         ))}
                     </div>
@@ -365,81 +384,78 @@ type ChangeRowProps = {
   onAccept: () => void;
   onEvidence: () => void;
   onReject: () => void;
+  editing: boolean;
+  onEdit: () => void;
+  onCancelEdit: () => void;
+  onSaveEdit: () => void;
+  draftDetail: string;
+  onDraftDetailChange: (value: string) => void;
 };
 
-function ChangeRow({ item, onAccept, onEvidence, onReject }: ChangeRowProps) {
+function ChangeRow({
+  item,
+  onAccept,
+  onEvidence,
+  onReject,
+  editing,
+  onEdit,
+  onCancelEdit,
+  onSaveEdit,
+  draftDetail,
+  onDraftDetailChange,
+}: ChangeRowProps) {
   const isReviewing =
     item.status === "reviewing" || item.status === "needs_evidence";
-  const confidence = Math.round(item.confidence * 100);
-
   return (
     <article className="change-row">
       <div className="change-row-topline">
         <h4>{item.title}</h4>
         <StatusMark status={item.status} />
       </div>
-      <p>{item.detail}</p>
+      {editing ? (
+        <div className="inline-edit">
+          <textarea
+            aria-label={`编辑 ${item.title}`}
+            onChange={(event) => onDraftDetailChange(event.target.value)}
+            value={draftDetail}
+          />
+          <span>
+            <Button onClick={onCancelEdit} size="small">
+              取消
+            </Button>
+            <Button onClick={onSaveEdit} size="small" type="primary">
+              保存
+            </Button>
+          </span>
+        </div>
+      ) : (
+        <p>{item.detail}</p>
+      )}
       <div className="change-metrics">
-        <span
-          className={
-            item.confidence < 0.8
-              ? "confidence-meter confidence-meter-caution"
-              : "confidence-meter"
-          }
-          aria-label={`${confidence}% 置信`}
-        >
-          <b>{`${confidence}%`}</b>
-          <i aria-hidden>
-            <u style={{ width: `${confidence}%` }} />
-          </i>
-          <em>置信</em>
-        </span>
+        <ConfidenceMeter confidence={item.confidence} />
         <button
           onClick={onEvidence}
           type="button"
         >{`${item.evidence.length} 条证据`}</button>
         {isReviewing ? (
-          <span className="review-actions" aria-label="审核动作">
-            <Tooltip title="接受变化">
-              <Button
-                aria-label={`接受 ${item.title}`}
-                className="review-action review-action-accept"
-                icon={<CheckCircle size={16} />}
-                onClick={onAccept}
-                size="small"
-                type="text"
-              />
-            </Tooltip>
-            <Tooltip title="拒绝变化">
-              <Button
-                aria-label={`拒绝 ${item.title}`}
-                className="review-action review-action-reject"
-                icon={<XCircle size={16} />}
-                onClick={onReject}
-                size="small"
-                type="text"
-              />
-            </Tooltip>
-          </span>
+          <>
+            <Button
+              aria-label={`编辑说明 ${item.title}`}
+              className="review-edit"
+              onClick={onEdit}
+              size="small"
+              type="text"
+            >
+              编辑
+            </Button>
+            <ReviewActions
+              label={item.title}
+              onAccept={onAccept}
+              onReject={onReject}
+            />
+          </>
         ) : null}
       </div>
     </article>
-  );
-}
-
-function StatusMark({ status }: { status: ReviewStatus }) {
-  const icon =
-    status === "accepted" ? (
-      <CheckCircle aria-hidden weight="fill" />
-    ) : status === "rejected" ? (
-      <XCircle aria-hidden weight="fill" />
-    ) : (
-      <i aria-hidden />
-    );
-  return (
-    <span className={`status-mark status-mark-${status}`}>
-      {icon}
-      <span>{reviewLabels[status]}</span>
-    </span>
   );
 }

@@ -1,0 +1,41 @@
+minimum_pre_commit_version: "4.5.0"
+default_stages: [pre-commit]
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        args: ["--maxkb=2048"]
+      - id: check-merge-conflict
+      - id: check-json
+      - id: check-toml
+      - id: check-yaml
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.10
+    hooks:
+      - id: actionlint
+        args: [-shellcheck=]
+
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: Ruff 检查
+        entry: uv run ruff check --fix
+        language: system
+        types: [python]
+      - id: ruff-format
+        name: Ruff 格式化
+        entry: uv run ruff format
+        language: system
+        types: [python]
+      - id: commit-message
+        name: 提交信息规范
+        entry: uv run python scripts/cmcheck.py
+        language: system
+        stages: [commit-msg]
+        always_run: true

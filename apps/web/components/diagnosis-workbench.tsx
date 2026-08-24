@@ -8,6 +8,7 @@ import { AppShell } from "@/components/app-shell";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
 import { ConfidenceMeter, StatusMark } from "@/components/review-ui";
 import { FixtureState, skillStatusToReview } from "@/components/workflow-ui";
+import { SectionHeader } from "@/components/workflow-ui";
 import type { DiagnosisFixture, SkillMatch } from "@/lib/diagnosis";
 import type { ChangeItem, JobUpdateContext } from "@/lib/job-update";
 
@@ -163,19 +164,19 @@ export function DiagnosisWorkbench({
             </div>
           </section>
           <section className="gap-section">
-            <div className="section-heading">
-              <div className="inline-heading">
-                <h3>关键短板</h3>
-                <span>{`${fixture.report.gaps.length} 项`}</span>
-              </div>
-              <Button
-                onClick={() => setSelectedEvidence(reportEvidence)}
-                size="small"
-                type="link"
-              >
-                查看依据
-              </Button>
-            </div>
+            <SectionHeader
+              action={
+                <Button
+                  onClick={() => setSelectedEvidence(reportEvidence)}
+                  size="small"
+                  type="link"
+                >
+                  查看依据
+                </Button>
+              }
+              meta={`${fixture.report.gaps.length} 项`}
+              title="关键短板"
+            />
             <div className="gap-list">
               {fixture.report.gaps.map((gap) => (
                 <article

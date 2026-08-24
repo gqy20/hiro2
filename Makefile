@@ -47,13 +47,13 @@ fmt:
 fmt-check:
 	$(UV) run ruff format --check .
 	@if [ -f "$(WEB_DIR)/package.json" ]; then \
-		$(PNPM) --dir "$(WEB_DIR)" run format:check --if-present; \
+		$(PNPM) --dir "$(WEB_DIR)" run format:check; \
 	fi
 
 lint:
 	$(UV) run ruff check .
 	@if [ -f "$(WEB_DIR)/package.json" ]; then \
-		$(PNPM) --dir "$(WEB_DIR)" run lint --if-present; \
+		$(PNPM) --dir "$(WEB_DIR)" run lint; \
 	fi
 
 type:
@@ -63,7 +63,7 @@ type:
 		echo "Skipping Python type check: backend/ not found"; \
 	fi
 	@if [ -f "$(WEB_DIR)/package.json" ]; then \
-		$(PNPM) --dir "$(WEB_DIR)" run typecheck --if-present; \
+		$(PNPM) --dir "$(WEB_DIR)" run typecheck; \
 	fi
 
 test: test-py test-web
@@ -77,7 +77,7 @@ test-py:
 
 test-web:
 	@if [ -f "$(WEB_DIR)/package.json" ]; then \
-		$(PNPM) --dir "$(WEB_DIR)" run test --if-present; \
+		$(PNPM) --dir "$(WEB_DIR)" run test; \
 	else \
 		echo "Skipping web tests: $(WEB_DIR)/package.json not found"; \
 	fi

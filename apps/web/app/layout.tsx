@@ -1,0 +1,24 @@
+import type { Metadata } from "next";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+
+import { AppTheme } from "@/components/app-theme";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "Hiro2 | 岗位更新",
+  description: "证据驱动的岗位能力演化工作台",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="zh-CN">
+      <body>
+        <AntdRegistry>
+          <AppTheme>{children}</AppTheme>
+        </AntdRegistry>
+      </body>
+    </html>
+  );
+}

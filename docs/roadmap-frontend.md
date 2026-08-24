@@ -19,10 +19,10 @@
 
 | ID | 任务 | 依赖 | 状态 | 验收 |
 | --- | --- | --- | --- | --- |
-| F-T1.1 | 应用壳层和一级导航 | `design.md` | 未开始 | 工作台、新岗位、岗位更新、图谱、诊断、评测可切换 URL |
-| F-T1.2 | 组件库主题与设计 Token | `design.md` | 未开始 | 使用 Ant Design 6 / Ant Design X 2.x；页面不出现临时字号、一次性颜色或平行基础组件 |
-| F-T1.3 | Evidence Drawer | `EvidenceView` | 未开始 | 可显示来源、原文、时间、质量和审核动作 |
-| F-T1.4 | JobVersion / Evidence Mock Adapter | `contracts.md` | 未开始 | 页面可脱离后端完成默认、空、错误和审核状态 |
+| F-T1.1 | 应用壳层和一级导航 | `design.md` | 进行中 | 岗位更新已可通过 URL 访问；其余一级页面待实现 |
+| F-T1.2 | 组件库主题与设计 Token | `design.md` | 进行中 | 已接入 Ant Design 6 / Ant Design X 2.x 与 Hiro2 Token；其余页面待复用 |
+| F-T1.3 | Evidence Drawer | `EvidenceView` | 进行中 | 岗位更新已显示来源、原文、时间、质量和审核上下文 |
+| F-T1.4 | JobVersion / Evidence Mock Adapter | `contracts.md` | 进行中 | 岗位更新通过 `data/fixtures/job_update.json` 演示默认、分析和审核状态，并明确标记演示数据；空与错误状态待补 |
 | F-T1.5 | API Client 和 Query Hooks | `contracts.md` | 未开始 | 前端只通过 API Client 访问数据 |
 | F-T1.6 | 可信岗位版本上下文组件 | `JobVersion` / `EvidenceView` | 未开始 | 所有岗位结论统一显示状态、版本、时间、证据入口和下一步动作 |
 

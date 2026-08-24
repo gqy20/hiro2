@@ -1,0 +1,222 @@
+{
+  "fixtureVersion": "2026-08-24.v1",
+  "mode": "synthetic",
+  "run": {
+    "id": "RUN-0822-1147",
+    "datasetVersion": "fixture-2026-08",
+    "status": "REVIEWING"
+  },
+  "context": {
+    "jobTitle": "AI 应用工程师",
+    "baselineVersion": "v1.4",
+    "targetVersion": "v1.5",
+    "timeWindow": "2026-05 至 2026-08"
+  },
+  "summary": { "validSamples": 22, "companies": 14, "evidenceSources": 30 },
+  "changes": [
+    {
+      "id": "change-agent-orchestration",
+      "kind": "added",
+      "title": "智能体编排",
+      "detail": "设计多工具任务流，处理状态、失败与人工接管。",
+      "confidence": 0.91,
+      "status": "reviewing",
+      "evidence": [
+        {
+          "id": "ev-091",
+          "source": "招聘 JD 汇总",
+          "sourceType": "招聘 JD",
+          "publishedAt": "2026-07-18",
+          "collectedAt": "2026-08-22",
+          "quality": 0.94,
+          "excerpt": "负责智能体工作流设计、工具调用编排与异常恢复机制建设。",
+          "fullText": "岗位职责：负责智能体工作流设计、工具调用编排与异常恢复机制建设；将复杂任务拆分为可观测、可恢复的执行步骤，并在高风险节点设计人工接管机制。",
+          "sourceUrl": null,
+          "stance": "支持"
+        },
+        {
+          "id": "ev-104",
+          "source": "AI 工程日报",
+          "sourceType": "技术日报",
+          "publishedAt": "2026-07-29",
+          "collectedAt": "2026-08-22",
+          "quality": 0.81,
+          "excerpt": "企业开始将单轮问答改造为可观测的多步骤智能体流程。",
+          "fullText": "行业观察：企业应用正从单轮问答向多步骤智能体流程演进。研发重点从提示词调优扩展为工具调用编排、状态追踪、失败恢复与人工审核。",
+          "sourceUrl": null,
+          "stance": "支持"
+        }
+      ]
+    },
+    {
+      "id": "change-evaluation",
+      "kind": "added",
+      "title": "效果评测",
+      "detail": "定义离线集、指标和错误复盘，持续验证应用效果。",
+      "confidence": 0.87,
+      "status": "reviewing",
+      "evidence": [
+        {
+          "id": "ev-117",
+          "source": "招聘 JD 汇总",
+          "sourceType": "招聘 JD",
+          "publishedAt": "2026-08-03",
+          "collectedAt": "2026-08-22",
+          "quality": 0.89,
+          "excerpt": "建立模型效果评估体系，分析准确率、召回率及失败案例。",
+          "fullText": "岗位职责：建立模型效果评估体系，维护测试集与评测指标，分析准确率、召回率及失败案例，并向研发团队提供可执行的改进建议。",
+          "sourceUrl": null,
+          "stance": "支持"
+        }
+      ]
+    },
+    {
+      "id": "change-prompt-only",
+      "kind": "removed",
+      "title": "仅提示词优化",
+      "detail": "不再作为独立必备项，能力要求并入工作流构建与评测。",
+      "confidence": 0.68,
+      "status": "needs_evidence",
+      "evidence": [
+        {
+          "id": "ev-122",
+          "source": "职业标准草案",
+          "sourceType": "职业标准",
+          "publishedAt": "2026-06-14",
+          "collectedAt": "2026-08-20",
+          "quality": 0.62,
+          "excerpt": "提示词能力与任务分解、工具使用和评测能力存在高度重叠。",
+          "fullText": "能力说明：提示词设计应与任务分解、知识组织、工具使用和效果评测共同评价，避免将单一提示词技巧独立视作完整岗位能力。",
+          "sourceUrl": null,
+          "stance": "支持"
+        },
+        {
+          "id": "ev-126",
+          "source": "招聘 JD 汇总",
+          "sourceType": "招聘 JD",
+          "publishedAt": "2026-08-08",
+          "collectedAt": "2026-08-22",
+          "quality": 0.76,
+          "excerpt": "部分岗位仍将提示词设计作为单独职责列出。",
+          "fullText": "岗位职责：针对业务场景完成提示词模板设计、测试和迭代，并与知识库、模型路由和工具调用配置协同优化。",
+          "sourceUrl": null,
+          "stance": "反证"
+        }
+      ]
+    },
+    {
+      "id": "change-single-model",
+      "kind": "removed",
+      "title": "单模型调用",
+      "detail": "不再作为独立能力项，改为按场景选择模型与降级策略。",
+      "confidence": 0.73,
+      "status": "reviewing",
+      "evidence": [
+        {
+          "id": "ev-129",
+          "source": "招聘 JD 汇总",
+          "sourceType": "招聘 JD",
+          "publishedAt": "2026-08-12",
+          "collectedAt": "2026-08-22",
+          "quality": 0.83,
+          "excerpt": "根据任务复杂度、成本和稳定性配置模型路由与降级策略。",
+          "fullText": "岗位职责：根据任务复杂度、成本和稳定性配置模型路由与降级策略，持续监测模型效果并调整服务参数。",
+          "sourceUrl": null,
+          "stance": "支持"
+        }
+      ]
+    },
+    {
+      "id": "change-rag",
+      "kind": "modified",
+      "title": "检索增强生成",
+      "detail": "由“接入向量库”改为“构建可评测的知识检索链路”。",
+      "confidence": 0.84,
+      "status": "accepted",
+      "evidence": [
+        {
+          "id": "ev-132",
+          "source": "招聘 JD 汇总",
+          "sourceType": "招聘 JD",
+          "publishedAt": "2026-07-26",
+          "collectedAt": "2026-08-22",
+          "quality": 0.91,
+          "excerpt": "负责知识库构建、召回评测、引用溯源和结果优化。",
+          "fullText": "岗位职责：负责知识库构建、检索召回评测、引用溯源和结果优化；根据业务质量反馈持续调整切分、召回、重排与生成策略。",
+          "sourceUrl": null,
+          "stance": "支持"
+        }
+      ]
+    },
+    {
+      "id": "change-observability",
+      "kind": "added",
+      "title": "链路可观测",
+      "detail": "跟踪调用成本、工具失败与关键质量信号，支持问题定位。",
+      "confidence": 0.82,
+      "status": "reviewing",
+      "evidence": [
+        {
+          "id": "ev-136",
+          "source": "AI 工程日报",
+          "sourceType": "技术日报",
+          "publishedAt": "2026-08-15",
+          "collectedAt": "2026-08-22",
+          "quality": 0.8,
+          "excerpt": "生产级智能体系统开始将成本、工具成功率与人工接管纳入统一追踪。",
+          "fullText": "行业观察：生产级智能体系统开始将调用成本、工具成功率、检索质量与人工接管频率纳入统一追踪，以支持异常定位和持续优化。",
+          "sourceUrl": null,
+          "stance": "支持"
+        }
+      ]
+    },
+    {
+      "id": "change-model-operations",
+      "kind": "modified",
+      "title": "模型服务",
+      "detail": "由“调用模型接口”改为“管理服务质量、成本与安全边界”。",
+      "confidence": 0.86,
+      "status": "reviewing",
+      "evidence": [
+        {
+          "id": "ev-141",
+          "source": "招聘 JD 汇总",
+          "sourceType": "招聘 JD",
+          "publishedAt": "2026-08-18",
+          "collectedAt": "2026-08-22",
+          "quality": 0.9,
+          "excerpt": "负责模型服务稳定性、调用成本、权限控制与内容安全策略。",
+          "fullText": "岗位职责：负责模型服务稳定性、调用成本、权限控制与内容安全策略，制定告警阈值并处理高风险调用的降级与人工复核。",
+          "sourceUrl": null,
+          "stance": "支持"
+        }
+      ]
+    }
+  ],
+  "progressSteps": [
+    {
+      "id": "load",
+      "label": "读取来源",
+      "detail": "30 条证据",
+      "state": "finished"
+    },
+    {
+      "id": "dedupe",
+      "label": "完成去重",
+      "detail": "22 条有效记录",
+      "state": "finished"
+    },
+    {
+      "id": "diff",
+      "label": "生成变化",
+      "detail": "7 条候选变化",
+      "state": "finished"
+    },
+    {
+      "id": "review",
+      "label": "等待审核",
+      "detail": "6 条待处理",
+      "state": "active"
+    }
+  ]
+}

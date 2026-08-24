@@ -1,0 +1,7 @@
+{
+  "fixtureVersion": "2026-08-25.error.v1",
+  "mode": "synthetic",
+  "runId": "RUN-0825-ERROR",
+  "candidates": [],
+  "error": { "code": "FIXTURE_SOURCE_UNAVAILABLE", "message": "候选岗位来源暂时不可用。" }
+}

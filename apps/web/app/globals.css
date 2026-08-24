@@ -216,7 +216,7 @@ input:focus-visible {
 .version-summary dt {
   color: var(--muted);
   font-family: "IBM Plex Mono", Consolas, monospace;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .route-label {
@@ -343,7 +343,7 @@ h3 {
 }
 .version-summary dt {
   overflow: hidden;
-  font-size: 10px;
+  font-size: 11px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -357,7 +357,7 @@ h3 {
   font-variant-numeric: tabular-nums;
 }
 .delta {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
 }
 .delta-added {
@@ -422,7 +422,7 @@ h3 {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
-  padding: 0 16px;
+  padding: 0 20px;
 }
 .change-column {
   min-width: 0;
@@ -473,7 +473,7 @@ h3 {
   line-height: 1.35;
 }
 .change-row p {
-  min-height: 0;
+  min-height: 42px;
   margin: 10px 0;
   color: #47443e;
   font-size: 12px;
@@ -566,7 +566,7 @@ h3 {
 .evidence-panel {
   display: flex;
   flex-direction: column;
-  padding: 20px 16px;
+  padding: 20px;
   background: var(--paper-soft);
 }
 .workbench .ant-tag {
@@ -631,7 +631,7 @@ h3 {
   align-items: center;
   gap: 4px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 11px;
 }
 .review-distribution i {
   width: 18px;
@@ -646,7 +646,7 @@ h3 {
     monospace;
 }
 .review-distribution small {
-  font-size: 10px;
+  font-size: 11px;
 }
 .distribution-accepted i {
   background: var(--green);
@@ -758,7 +758,7 @@ h3 {
   margin-bottom: 3px;
   color: var(--muted);
   font-family: "IBM Plex Mono", Consolas, monospace;
-  font-size: 10px;
+  font-size: 11px;
 }
 .evidence-item dd {
   overflow: hidden;
@@ -786,6 +786,265 @@ h3 {
   margin: 0;
   color: #47443e;
   line-height: 1.7;
+}
+
+.new-jobs-workbench {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  min-height: calc(100dvh - 58px);
+}
+.fixture-state {
+  display: grid;
+  min-height: calc(100dvh - 58px);
+  place-items: center;
+  padding: 24px;
+}
+.candidate-panel {
+  padding: 22px 18px;
+  background: var(--paper-soft);
+}
+.new-jobs-heading,
+.candidate-item-title,
+.candidate-title-row,
+.candidate-proof,
+.candidate-review-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.new-jobs-heading {
+  margin-bottom: 20px;
+}
+.new-jobs-heading h1 {
+  margin: 0;
+  font-size: 22px;
+}
+.new-jobs-heading span,
+.candidate-item > span,
+.candidate-proof span {
+  color: var(--muted);
+  font:
+    10px/1.2 "IBM Plex Mono",
+    Consolas,
+    monospace;
+}
+.candidate-panel .ant-input-affix-wrapper {
+  border-radius: 4px;
+  background: var(--panel);
+}
+.candidate-list {
+  display: grid;
+  gap: 4px;
+  margin-top: 14px;
+}
+.candidate-item {
+  width: 100%;
+  padding: 12px 8px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+.candidate-item:hover,
+.candidate-item-active {
+  background: rgba(255, 245, 200, 0.54);
+}
+.candidate-item strong {
+  font-size: 13px;
+}
+.candidate-item p {
+  margin: 8px 0;
+  color: #47443e;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.candidate-definition {
+  min-width: 0;
+  padding: 28px 34px;
+  background: var(--panel);
+}
+.candidate-title-row {
+  align-items: flex-start;
+  padding-bottom: 24px;
+}
+.candidate-title-row h2 {
+  margin: 0 0 7px;
+  font-size: 24px;
+}
+.candidate-title-row p:last-child {
+  max-width: 60ch;
+  margin: 0;
+  color: #47443e;
+  line-height: 1.5;
+}
+.candidate-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.candidate-decision {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  color: var(--muted);
+  font:
+    11px/1.2 "IBM Plex Mono",
+    Consolas,
+    monospace;
+}
+.candidate-decision > span:not(.status-mark) {
+  padding-left: 12px;
+  border-left: 1px solid var(--line-soft);
+}
+.definition-section {
+  margin-top: 32px;
+}
+.decision-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+.decision-heading h3 {
+  margin: 0;
+  font-size: 17px;
+}
+.definition-editor {
+  display: grid;
+  gap: 16px;
+  margin-top: 28px;
+  padding: 18px;
+  border-radius: 4px;
+  background: var(--paper-soft);
+}
+.definition-editor label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+.definition-editor .ant-input,
+.definition-editor textarea {
+  border-radius: 4px;
+  background: var(--panel);
+}
+.definition-editor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 20px;
+}
+.editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 4px;
+}
+.definition-section h3,
+.definition-block h3 {
+  margin: 0;
+  font-size: 14px;
+}
+.why-new {
+  max-width: 72ch;
+  margin: 12px 0 0;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.65;
+}
+.definition-grid {
+  display: grid;
+  align-items: start;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 34px 42px;
+  margin-top: 36px;
+}
+.definition-block ul {
+  display: grid;
+  gap: 7px;
+  margin: 12px 0 0;
+  padding-left: 17px;
+  color: #47443e;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.definition-block-primary h3 {
+  color: var(--blue);
+}
+.definition-block-primary {
+  padding: 14px 16px;
+  border-radius: 4px;
+  background: rgba(255, 245, 200, 0.38);
+}
+.definition-block-primary ul {
+  margin-top: 10px;
+}
+.candidate-review-bar {
+  margin-top: 40px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-soft);
+  color: var(--muted);
+  font-size: 12px;
+}
+.candidate-review-bar > div {
+  display: flex;
+  gap: 5px;
+}
+
+@media (max-width: 760px) {
+  .new-jobs-workbench {
+    display: block;
+    min-height: auto;
+  }
+  .candidate-panel {
+    padding: 18px 16px;
+  }
+  .candidate-list {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .candidate-item {
+    flex: 0 0 220px;
+    min-width: 220px;
+  }
+  .candidate-definition {
+    padding: 22px 16px;
+  }
+  .candidate-title-row {
+    display: block;
+  }
+  .candidate-actions {
+    justify-content: space-between;
+    margin-top: 14px;
+  }
+  .candidate-decision {
+    flex-wrap: wrap;
+    gap: 9px;
+  }
+  .candidate-decision > span:not(.status-mark) {
+    padding-left: 9px;
+  }
+  .definition-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .definition-editor-grid {
+    grid-template-columns: 1fr;
+  }
+  .candidate-review-bar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .candidate-review-bar > div {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
 
 @media (max-width: 1100px) {
@@ -874,6 +1133,9 @@ h3 {
   }
   .change-row p {
     min-height: 0;
+  }
+  .change-grid {
+    padding: 0 16px;
   }
   .diff-toolbar {
     align-items: flex-start;

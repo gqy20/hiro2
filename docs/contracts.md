@@ -128,6 +128,26 @@ ingestion_mode: live | backfill
 status
 ```
 
+### ReportEvent
+
+早报事件抽取输出（`prompts/report-event.yml`，Pydantic 模型 `ReportEventList`）。
+
+```text
+event_id
+item_id
+event_type: research | standard_release | model_release | open_source | productization | adoption | policy | rumor
+title
+summary
+entities[]
+fact_grade: fact | report | opinion
+urls[]
+skill_mentions[]      # 原词，不做归一化；归一化属于 skills 模块
+prompt_version
+model_version
+```
+
+LLM 只产出该结构化候选；解析失败重试后进隔离队列（区分 `validation_failed` 与 `api_error`），不得静默接受自由文本。
+
 ### TrendSignal
 
 ```text

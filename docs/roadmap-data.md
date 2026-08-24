@@ -69,6 +69,14 @@ D0 盘点结论（2026-08-24）：
 
 ### D4 技能本体与归一化
 
+进行中：
+- `data/SKILLS.yml` v4（人工先验：Excel 30 能力 + 技能点 + 别名）与 `data/SKILLS-EARNED.yml`（语料习得别名，带 `effective_from` 首见日期）。
+- `backend/skills/resolver.py` 确定性匹配；`resolve --as-of T` 时首见日期晚于 T 的习得别名不参与匹配（防回测规则泄漏：词典不得携带未来知识回翻译过去）。
+- `scripts/resolve.py events` 输出逐条映射、分桶覆盖率（中高频 >=2 次为验收口径，目标 >=80%；31 篇样本下中高频已 100%）与带上下文的未命中词单 `unmatched-words.jsonl`；`dates` 子命令重算首见日期。
+- 词典迭代以全量语料 top 未命中词为依据；未命中是新词队列，反复出现的新词经人工审核进入词典并递增 version。
+
+每个映射保存 `raw_mention`、`canonical_skill_id`、`skill_point_id`、`mapping_method`、`confidence`、`evidence_ids` 和 `review_status`。
+
 Excel 的 30 个能力维度作为初始能力域，并继续拆出技能点和别名：
 
 ```text
@@ -90,6 +98,8 @@ DetailEvidence 用于职责、要求、技能和岗位版本
 只有详情完整、来源和发布时间可信的 JD 才能进入正式岗位分析。退出条件：100～200 条完整 JD 具备职责、任职要求、技能片段、岗位/等级映射和人工标注。
 
 ### D6 日报事件与趋势信号
+
+进行中：`prompts/report-event.yml` v2 + `backend/temporal` 抽取管线已冒烟通过（.env 网关，单篇约 100s、15 事件/篇），全量 697 篇待跑。
 
 ```text
 Markdown -> ReportEvent -> Evidence -> TrendSignal -> SignalCluster

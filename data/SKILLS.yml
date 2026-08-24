@@ -1,0 +1,157 @@
+# 技能归一化词典（D4）。确定性规则匹配，不经 LLM。
+# 结构：capability_id 对应 Excel 能力矩阵（data/processed/capability-matrix/capabilities.json），
+#       aliases 是原文提及词的变体表，points 是能力域下的技能点。
+# 未命中的提及进入新词队列；语料习得的别名进 SKILLS-EARNED.yml（带 effective_from，受 as_of 闸门控制）。
+# 反复出现的新词经人工审核后进入两个文件之一并递增 version。
+
+version: 4
+
+entries:
+  - capability_id: cap_01
+    name: LLM应用
+    aliases:
+      [LLM, 大语言模型, 大模型, 基座模型, 长上下文, 上下文窗口, 百万上下文, 快速模型, 端侧模型, 生成式 AI, 生成式AI, AIGC, 生成式人工智能, 无代码, 低代码, no-code]
+    points:
+      - name: 推理
+        aliases:
+          [推理模型, 推理能力, 视觉推理, 数学推理, 思维链, CoT, Chain of Thought, o1式推理, 深度思考, 推理框架, 模型推理, ]
+      - name: 代码生成
+        aliases: [编码, 编程, 编程任务, 编程能力, 代码模型, 代码补全]
+
+  - capability_id: cap_02
+    name: Prompt工程
+    aliases: [提示词, 提示工程, Prompt, prompt工程, 系统提示词]
+
+  - capability_id: cap_03
+    name: 模型微调
+    aliases: [微调, Fine-tuning, finetuning, LoRA, SFT, RLHF, 蒸馏, 量化, 模型训练, 预训练, 后训练]
+
+  - capability_id: cap_04
+    name: AI Agent
+    aliases: [Agent, 智能体, AI Agent, Agentic, 自主智能体, 多智能体, 智能体框架, 工作流编排]
+    points:
+      - name: MCP
+        aliases: [Model Context Protocol, MCP服务器, MCP协议, MCP服务]
+      - name: 工具调用
+        aliases: [Function Calling, 函数调用, 工具集成, 插件调用]
+      - name: 联网搜索
+        aliases: [搜索增强, Web搜索, 网络搜索]
+      - name: 深度研究
+        aliases: [Deep Research, 深度调研, 研究智能体]
+      - name: 记忆
+        aliases: [记忆功能, 长期记忆, Memory]
+
+  - capability_id: cap_05
+    name: 多模态AI
+    aliases: [多模态, 多模态模型, 多模态理解, 多模态输入, 视觉语言模型, VLM, 视觉模型, 图像理解, ]
+    points:
+      - name: 图像生成
+        aliases: [文生图, 图像编辑, inpainting, 图片生成, AI绘画]
+      - name: 视频生成
+        aliases: [文生视频, 视频模型, 图生视频]
+      - name: 语音
+        aliases: [语音识别, ASR, 语音合成, TTS, 语音克隆, 语音交互, 语音模型, 语音技术]
+
+  - capability_id: cap_06
+    name: RAG/知识库
+    aliases: [RAG, 检索增强生成, 检索增强, 知识库, 知识库问答, 向量数据库, Embedding, 向量检索, Reranking, 重排序]
+    points:
+      - name: 检索评测
+        aliases: [检索质量评估]
+
+  - capability_id: cap_07
+    name: Python
+    aliases: [Python编程, PyPI, pip]
+
+  - capability_id: cap_08
+    name: SQL/数据库
+    aliases: [SQL, 数据库, PostgreSQL, MySQL, 向量库]
+
+  - capability_id: cap_09
+    name: 大数据处理
+    aliases: [大数据, 数据工程, 数据管道, 数仓, Hadoop, Spark, Flink, Kafka, 数据湖]
+
+  - capability_id: cap_10
+    name: 数据标注
+    aliases: [标注, 人工标注, 合成数据]
+
+  - capability_id: cap_11
+    name: 数据可视化
+    aliases: [可视化, Dashboard, 图表]
+
+  - capability_id: cap_12
+    name: ML/DL算法
+    aliases:
+      [机器学习, 深度学习, 神经网络, 强化学习, MoE, 混合专家, Transformer, 扩散模型, Diffusion Transformer, DiT, 多模态训练, Benchmark, ]
+
+  - capability_id: cap_13
+    name: 云计算
+    aliases: [云原生, Kubernetes, Docker, 容器, Serverless, 边缘计算]
+
+  - capability_id: cap_14
+    name: API开发
+    aliases: [API, REST, OpenAPI, 接口开发, GraphQL, SDK]
+
+  - capability_id: cap_15
+    name: 系统架构
+    aliases: [架构设计, 分布式系统, 微服务, 高可用]
+
+  - capability_id: cap_16
+    name: 物联网/IoT
+    aliases: [IoT, 物联网, 传感器, 边缘设备]
+
+  - capability_id: cap_17
+    name: 嵌入式/硬件
+    aliases: [嵌入式, 机器人, 人形机器人, 具身智能, 芯片, GPU, 算力, 仿真框架, 仿真]
+
+  - capability_id: cap_18
+    name: 自动化运维
+    aliases: [运维, DevOps, CI/CD, 监控告警, 自动化测试]
+
+  - capability_id: cap_19
+    name: AI伦理合规
+    aliases: [AI安全, 模型安全, 对齐, 可解释性, 深度伪造]
+
+  - capability_id: cap_20
+    name: 法规/审计
+    aliases: [AI法案, 监管, 合规审计, 数据合规]
+
+  - capability_id: cap_21
+    name: 领域知识
+    aliases: [行业知识, 垂直领域, 行业大模型]
+
+  - capability_id: cap_22
+    name: 产品思维
+    aliases: [产品设计, 用户体验, 商业化]
+
+  - capability_id: cap_23
+    name: 项目管理
+    aliases: [敏捷开发, 需求管理]
+
+  - capability_id: cap_24
+    name: 培训/教学
+    aliases: [教学, 课程, 人才培养]
+
+  - capability_id: cap_25
+    name: 英语
+    aliases: [英文]
+
+  - capability_id: cap_26
+    name: 跨部门沟通
+    aliases: [沟通协作]
+
+  - capability_id: cap_27
+    name: 团队管理
+    aliases: [团队协作, 组织管理]
+
+  - capability_id: cap_28
+    name: 战略思维
+    aliases: [战略规划, 技术战略]
+
+  - capability_id: cap_29
+    name: 创新思维
+    aliases: [创新方法]
+
+  - capability_id: cap_30
+    name: 安全/风控意识
+    aliases: [网络安全, 信息安全, 数据安全, 隐私保护, 风险控制]

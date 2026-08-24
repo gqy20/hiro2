@@ -1,0 +1,35 @@
+# 原始数据来源登记（D0）。字段与 docs/contracts.md 的 Evidence/FeedSource 对齐。
+# ingestion_mode: backfill 表示历史回填，available_at 以发布时间为准，不能伪装实时采集。
+
+sources:
+  - id: capability-matrix
+    type: expert_matrix          # 职业标准/Excel：能力本体与专家基线
+    path: data/raw/capability-matrix
+    license: 团队内部整理，仅限比赛与研究使用
+    time_range: [2026-08-19, 2026-08-19]
+    ingestion_mode: backfill
+    notes: 数字经济岗位能力矩阵，46 岗位 x 30 能力 x 7 分组，0-5 评分
+
+  - id: jd-opencli
+    type: job_board              # 招聘 JD：企业岗位需求验证
+    path: data/raw/jd/opencli
+    license: 招聘平台公开页面，仅限研究使用，不分发原文
+    time_range: [2025-09, 2026-07]
+    ingestion_mode: backfill
+    notes: 关键词“AI 工程师”；搜索层 1190 条（51job 650 / boss 540），详情层 70 条，正文可用约 38 条
+
+  - id: standards
+    type: occupation_standard    # 官方职业标准：能力本体参考
+    path: data/raw/standards
+    license: 各来源官方许可，仅限研究使用
+    time_range: [2022, 2026]
+    ingestion_mode: backfill
+    notes: 中国职业分类 2022 征求意见稿 PDF、O*NET 30.3 文本、ESCO v1.2.1 职业页
+
+  - id: wechat-mp
+    type: industry_media         # 中文产业资讯：技术先导信号
+    path: data/raw/wechat-mp
+    license: 微信公众号公开内容，仅限研究使用，不二次分发全文
+    time_range: [2025-03, 2026-08]
+    ingestion_mode: backfill
+    notes: AI 早报归档 697 篇 Markdown + jueya-index.csv 索引（权威元数据以索引为准）

@@ -17,13 +17,16 @@ Excel/职业标准      -> 能力本体与专家基线
 
 ## 数据分层
 
+目录遵循 `AGENTS.md` 的 `raw / processed / fixtures / runs` 四层；清洗深度用 `data/processed/<source_id>/` 内的文件名前缀表达：
+
 ```text
-data/raw/          原始文件和快照，只读
-data/staged/       结构修复后的记录，可重建
-data/normalized/   岗位、等级、技能标准化结果
-data/curated/      通过质量门、可进入业务分析的数据
-data/features/     日/周/月特征和历史快照
-data/runs/         清洗、回测和评测运行产物
+data/raw/                                原始文件和快照，只读
+data/processed/<src>/manifest.json       原始件哈希与清单
+data/processed/<src>/reports*.jsonl      首层结构化（staged）
+data/processed/<src>/norm*.jsonl         标准化结果（normalized）
+data/processed/<src>/curated*.jsonl      通过质量门的正式分析数据
+data/processed/<src>/feat*.jsonl         日/周/月特征和历史快照
+data/runs/                               清洗、回测和评测运行产物
 ```
 
 ## 阶段计划
@@ -32,11 +35,17 @@ data/runs/         清洗、回测和评测运行产物
 
 | 任务 | 状态 | 退出条件 |
 | --- | --- | --- |
-| 建立 source registry | 未开始 | 每个来源有类型、许可、时间和使用范围 |
-| 导入 Excel 能力矩阵 | 未开始 | 46 岗位、30 能力、7 分组可解析 |
-| 导入 JD CSV/JSONL | 未开始 | 搜索层和详情层分开统计 |
-| 导入日报归档 | 未开始 | 生成报告 manifest，标记 `backfill` |
+| 建立 source registry | 完成 | 每个来源有类型、许可、时间和使用范围（`data/SOURCES.yml`） |
+| 导入 Excel 能力矩阵 | 完成 | 46 岗位、30 能力、7 分组可解析（`uv run scripts/ingest.py excel`） |
+| 导入 JD CSV/JSONL | 完成 | 搜索层和详情层分开统计（`uv run scripts/ingest.py jd`） |
+| 导入日报归档 | 完成 | 生成报告 manifest，标记 `backfill`（`uv run scripts/ingest.py wechat`） |
 | 建立数据字典 | 未开始 | 每个字段有类型、含义、来源和质量规则 |
+
+D0 盘点结论（2026-08-24）：
+
+- Excel 矩阵 46 x 30 x 7 全部解析通过，30 能力即 D4 初始能力域。
+- JD 搜索层 1190 条（51job 650 / boss 540），仅关键词“AI 工程师”；boss 行全部缺发布时间，51job 有 40 个重复 id；详情层 70 条中正文 >=200 字仅 38 条，18 条标题字段损坏（可用搜索层按 jobId 修复）。**详情可用量距 D5 退出条件（100~200 条）缺口最大，补抓是当前关键路径。**
+- 日报归档：索引 707 行，其中 329 行正文从未保存；磁盘实际 697 篇全部保留（378 篇索引内 + 319 篇索引外早期文件，后者元数据降级为文件名日期），时间跨度 2017-11（置顶旧文 1 篇）~ 2026-08。
 
 ### D1 结构清洗
 

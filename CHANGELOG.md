@@ -6,6 +6,10 @@
 
 ### Added
 
+- 建立原始数据来源登记（`data/SOURCES.yml`）与四类来源导入：Excel 能力矩阵、招聘 JD、职业标准、公众号日报归档。
+- 增加 `scripts/ingest.py` 数据导入 CLI：来源 manifest 与哈希、46 岗位 x 30 能力矩阵解析、日报索引分级（ok/隔离/未索引三层）与 JD 双层统计。
+- 增加数据运行记录 `scripts/runlog.py`：每次导入生成 `run_id` 与 `data/runs/<run_id>/` 结构化日志。
+- 增加解析器单元测试（矩阵解析、坏分值标记、时间戳归一化、日报状态分级）。
 - 建立 Hiro2 产品、技术、设计、数据和 Roadmap 文档体系。
 - 增加时间情报、历史回测、岗位影响建议和协作评测设计。
 - 增加 Makefile、uv/pnpm 环境规范和 Git 提交前检查。

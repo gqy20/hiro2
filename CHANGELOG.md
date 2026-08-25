@@ -18,6 +18,8 @@
 
 - 完成 F-T3.1 技能图谱：新增 `@xyflow/react` 依赖；`/skills` 从占位升级为真实图谱（30 capability + 11 skill points 共 41 节点），按 `JobVersion` 必备蓝 / 加分中性 / 新增蓝虚线 / 修改黄虚线着色；4 维筛选（技术栈 / 级别 / 能力类型 / 全部清除）；选中节点打开底部指标条 + 复用 `EvidenceDrawer`。`data/fixtures/skill{,_empty,_error}.json` + `lib/skill.ts`（类型）+ `lib/skill-fixture.ts`（RSC-safe loader）；`components/skill-graph.tsx`（xyflow 容器）+ `components/skills-workbench.tsx`（主 workbench）；RSC 页面直接处理 mock/real 切换，避免 `node:fs` 进客户端 bundle。F-T3.2 节点详情侧栏留独立 PR。
 
+- 完成 F-T3.2 节点详情侧栏：`/skills` 从 2 栏（toolbar + stage）升级为 3 栏（toolbar + stage + 320px detail），删除底部 metrics bar（信息上移）。新增 `components/skill-node-detail.tsx`：按 design.md「结论→变化→依据→行动」组织（节点身份 + 别名表 + 父能力/兄弟/下属技能点 + 证据摘要 + JobVersion 占位）；空态显示引导「选择节点查看详情与证据」。`globals.css` 改 `.skill-graph-layout` 为三列网格 + 响应式断点（1180px 第三栏下移，980px 单列堆叠）。F-T3.5 关联 JobVersion / SkillSignal 等后端数据接入后再补「关联岗位版本」section。
+
 - 建立 D8 回测基础设施：SkillSnapshot 特征层（事实分级加权）、确定性方向预测 v1、月度滚动回测（双 as_of 闸门防泄漏）；v1 动量规则实测低于全平基线，错误集中在爆发后回落，结论如实记录。
 
 - 完成 D4 全量归一化验收：697 篇事件 12605 次提及，中高频覆盖率 85.2%、高频 94.0%；离线归一任务（skillmap）产出 1053 个候选，665 个高置信合入习得词典；时间闸门实测词典随 as_of 正确截断。

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
   CheckCircle,
@@ -57,7 +58,11 @@ export function NewJobsWorkbench({
   if (state === "empty" || !selected)
     return (
       <AppShell>
-        <FixtureState emptyText="当前时间窗没有新的岗位候选。" state="empty" />
+        <FixtureState
+          action={<Link href="/jobs"><Button type="primary">浏览现有岗位</Button></Link>}
+          emptyText="当前时间窗没有新的岗位候选。"
+          state="empty"
+        />
       </AppShell>
     );
 

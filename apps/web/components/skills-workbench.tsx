@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { X } from "@phosphor-icons/react";
 import { Button, Select, Tag } from "antd";
@@ -123,6 +124,7 @@ export function SkillsWorkbench({
     return (
       <AppShell>
         <FixtureState
+          action={<Link href="/jobs"><Button type="primary">查看岗位更新</Button></Link>}
           emptyText="当前图谱暂无可用技能点。"
           state="empty"
         />

@@ -12,6 +12,7 @@
   --blue: #2457e6;
   --red: #dc3c34;
   --green: #17824b;
+  --font-mono: "IBM Plex Mono", Consolas, monospace;
 }
 
 * {
@@ -136,7 +137,7 @@ input:focus-visible {
   gap: 7px;
   padding-right: 22px;
   color: var(--muted);
-  font-family: "IBM Plex Mono", Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 11px;
 }
 
@@ -215,7 +216,7 @@ input:focus-visible {
 .context-summary span,
 .version-summary dt {
   color: var(--muted);
-  font-family: "IBM Plex Mono", Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 11px;
 }
 
@@ -352,7 +353,7 @@ h3 {
   align-items: baseline;
   gap: 5px;
   margin: 0;
-  font-family: "IBM Plex Mono", Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 11px;
   font-variant-numeric: tabular-nums;
 }
@@ -792,7 +793,7 @@ h3 {
 .evidence-item dt {
   margin-bottom: 3px;
   color: var(--muted);
-  font-family: "IBM Plex Mono", Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 11px;
 }
 .evidence-item dd {
@@ -1994,4 +1995,23 @@ h3 {
   .evaluation-metric-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ---------- 窄屏适配（F-T4.3，390px 视口） ---------- */
+
+@media (max-width: 480px) {
+  .page-heading h1 { font-size: 18px; }
+  .skill-graph-toolbar { flex-direction: column; padding: 12px; gap: 8px; }
+  .skill-graph-toolbar label { font-size: 11px; }
+  .skill-graph-detail { padding: 14px; }
+  .skill-node-detail-header h3 { font-size: 14px; }
+  .dashboard { padding: 16px; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .workbench { padding: 12px; }
+  .diagnosis-workbench,
+  .new-jobs-workbench,
+  .evaluation-workbench { padding: 12px; }
+  .skill-graph-layout,
+  .evaluation-layout { grid-template-columns: 1fr; min-height: 360px; }
+  .evaluation-metric-grid { grid-template-columns: 1fr; }
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import {
   CheckCircle,
@@ -73,6 +74,7 @@ export function DiagnosisWorkbench({
     return (
       <AppShell>
         <FixtureState
+          action={<Link href="/jobs"><Button type="primary">查看岗位</Button></Link>}
           emptyText="上传简历或录入技能后开始诊断。"
           state="empty"
         />

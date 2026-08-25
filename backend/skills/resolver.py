@@ -52,9 +52,14 @@ class MatchResult:
 
 
 def normalize(text: str) -> str:
-    """小写、去空白、全角转半角；用于词典与提及的统一比对。"""
+    """小写、全角转半角、压缩空白；用于词典与提及的统一比对。"""
     t = unicodedata.normalize("NFKC", text).strip().lower()
     return " ".join(t.split())
+
+
+def _lookup_key(text: str) -> str:
+    """去空格变体：中文习惯写法"Prompt 工程"与别名"Prompt工程"须可互达。"""
+    return normalize(text).replace(" ", "")
 
 
 def parse_day(value: str | None) -> date | None:
@@ -80,32 +85,32 @@ class SkillResolver:
         self._lookup: dict[str, MatchResult] = {}
         for entry in entries:
             cap = entry.capability_id
-            self._lookup[normalize(entry.name)] = MatchResult(entry.name, cap, None, None, "name")
+            self._lookup[_lookup_key(entry.name)] = MatchResult(entry.name, cap, None, None, "name")
             for alias in entry.aliases:
                 self._lookup.setdefault(
-                    normalize(alias), MatchResult(alias, cap, None, None, "alias")
+                    _lookup_key(alias), MatchResult(alias, cap, None, None, "alias")
                 )
             for point_name, point_aliases in entry.points:
                 pid: str | None = f"{cap}.{point_name}"
                 self._lookup.setdefault(
-                    normalize(point_name),
+                    _lookup_key(point_name),
                     MatchResult(point_name, cap, pid, point_name, "point_name"),
                 )
                 for alias in point_aliases:
                     self._lookup.setdefault(
-                        normalize(alias), MatchResult(alias, cap, pid, point_name, "point_alias")
+                        _lookup_key(alias), MatchResult(alias, cap, pid, point_name, "point_alias")
                     )
         for ea in earned or []:
             if as_of is not None and ea.effective_from > as_of:
                 continue  # 时间闸门：首见日期晚于 as_of 的习得别名不可用
             pid = f"{ea.capability_id}.{ea.point_name}" if ea.point_name else None
             self._lookup.setdefault(
-                normalize(ea.mention),
+                _lookup_key(ea.mention),
                 MatchResult(ea.mention, ea.capability_id, pid, ea.point_name, "earned"),
             )
 
     def resolve(self, mention: str) -> MatchResult:
-        hit = self._lookup.get(normalize(mention))
+        hit = self._lookup.get(_lookup_key(mention))
         if hit is None:
             return MatchResult(mention, None, None, None, "unmatched")
         return MatchResult(mention, hit.skill_id, hit.point_id, hit.point_name, hit.matched_by)

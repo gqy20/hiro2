@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- 完成主案例 3 人岗诊断（candmatch/candidates/matching）：文档解析适配器 + LLM 简历抽取 + 确定性四档匹配引擎 + 学练赛证路径；岗位版本发布流程（jobpub 审核留痕校验 + 不可变发布）；修复 resolver 空格变体 bug，词典 v6。
 - D9 评测集骨架（evalset）：三层冻结样本（映射 100/领域 50/事件 30，分层+哈希+种子）与回流评分脚本。
 - 岗位版本组装（jobver）：AI Agent 工程师 JobVersion v2 草稿（必备/加分技能+56 证据 JD+点级 changeset）与两窗口 JobChangeSet；修正份额换算量纲错误，改用群内排名规则，结论为专家基线域级一致、点级细化 8 项。
 - 完成主案例 1（newjob）：AI Agent 工程师新岗位发现的五路确定性证据（涌现/技能组合独立性/跨公司扩散/信号先行/定义卡草稿）。

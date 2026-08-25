@@ -113,3 +113,12 @@ def test_earned_file_capability_ids_valid() -> None:
     valid = {c["capability_id"] for c in caps}
     for ea in load_earned():
         assert ea.capability_id in valid, ea.mention
+
+
+def test_space_variant_lookup() -> None:
+    """中文习惯空格写法（"Prompt 工程"）与无空格别名（"Prompt工程"）必须互达。"""
+    r = load_resolver()
+    assert r.resolve("Prompt 工程").skill_id == "cap_02"
+    assert r.resolve("LangChain").skill_id == "cap_04"
+    assert r.resolve("Milvus").skill_id == "cap_06"
+    assert r.resolve("REST API").skill_id == "cap_14"

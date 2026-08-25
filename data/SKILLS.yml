@@ -4,7 +4,7 @@
 # 未命中的提及进入新词队列；语料习得的别名进 SKILLS-EARNED.yml（带 effective_from，受 as_of 闸门控制）。
 # 反复出现的新词经人工审核后进入两个文件之一并递增 version。
 
-version: 5
+version: 6
 
 entries:
   - capability_id: cap_01
@@ -28,7 +28,7 @@ entries:
 
   - capability_id: cap_04
     name: AI Agent
-    aliases: [Agent, 智能体, AI Agent, Agentic, 自主智能体, 多智能体, 智能体框架, 工作流编排]
+    aliases: [Agent, 智能体, AI Agent, Agentic, 自主智能体, 多智能体, 智能体框架, 工作流编排, LangChain, LangGraph, LlamaIndex, AutoGen, CrewAI]
     points:
       - name: MCP
         aliases: [Model Context Protocol, MCP服务器, MCP协议, MCP服务]
@@ -54,7 +54,7 @@ entries:
 
   - capability_id: cap_06
     name: RAG/知识库
-    aliases: [RAG, 检索增强生成, 检索增强, 知识库, 知识库问答, 向量数据库, Embedding, 向量检索, Reranking, 重排序]
+    aliases: [RAG, 检索增强生成, 检索增强, 知识库, 知识库问答, 向量数据库, Embedding, 向量检索, Reranking, 重排序, Milvus, FAISS, Chroma, Pinecone]
     points:
       - name: 检索评测
         aliases: [检索质量评估]
@@ -90,7 +90,7 @@ entries:
 
   - capability_id: cap_14
     name: API开发
-    aliases: [API, REST, OpenAPI, 接口开发, GraphQL, SDK]
+    aliases: [API, REST, REST API, OpenAPI, 接口开发, GraphQL, SDK, FastAPI, Flask]
 
   - capability_id: cap_15
     name: 系统架构

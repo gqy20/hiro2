@@ -146,6 +146,11 @@ Markdown -> ReportEvent -> Evidence -> TrendSignal -> SignalCluster
 
 退出条件：岗位、技能、趋势和匹配结论均能通过 `evidence_id` 回链原文；正式岗位字段和关键匹配结论的证据覆盖率为 100%；来源冲突、单一来源热点和低置信结论进入审核队列，不能静默聚合为岗位事实。
 
+### 主案例 3：人岗诊断管线（2026-08-25）
+
+`backend/candidates`（PyMuPDF/python-docx 薄适配器 + resume-parse LLM 抽取 + 画像构建）与 `backend/matching`（确定性匹配引擎 match-v1 + 学练赛证路径模板）。前置完成岗位版本发布：`scripts/jobpub.py` 校验审核留痕（review-actions accepted）后固化 `published/ai-agent-v2.json`（hash f0f3fdb4，发布后不可变，幂等保护）。合成简历端到端（candmatch demo，标注 synthetic 不进指标）：10/10 技能归一、overall 0.48、四档判定（已具备/初级部分/点级部分/缺失）、关键短板 = LLM应用 + SQL、6 步学练赛证路径。
+过程中修复 resolver 空格变体 bug（"Prompt 工程"≠"Prompt工程"）并升级词典 v6（LangChain/LangGraph/Milvus/FastAPI 等框架别名）。
+
 ### 岗位版本组装（2026-08-25，`scripts/jobver.py`）
 
 产品核心对象落地（contracts.md 语义，确定性组装，status=DRAFT/PENDING 待人工审核）：

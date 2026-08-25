@@ -28,3 +28,10 @@ export type {
   NewJobsFixture as NewJobsView,
   EmergingJobCandidate,
 } from "@/lib/new-jobs";
+
+export type {
+  DiagnosisFixture as DiagnosisView,
+  SkillMatch,
+  ProjectEntry,
+  UserCorrection,
+} from "@/lib/diagnosis";

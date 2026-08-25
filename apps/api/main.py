@@ -12,6 +12,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
+from backend.application.diagnosis import build_diagnosis, list_candidates
 from backend.application.service import ApplicationService
 
 app = FastAPI(title="Hiro2 API", version="0.1.0")
@@ -68,3 +69,16 @@ def evidence(evidence_id: str) -> dict:
     if vm is None:
         raise HTTPException(404, f"证据不存在: {evidence_id}")
     return vm.model_dump(by_alias=True)
+
+
+@app.get("/api/v1/candidates")
+def candidates() -> list[dict]:
+    return list_candidates()
+
+
+@app.get("/api/v1/diagnosis/{candidate_id}")
+def diagnosis(candidate_id: str, job: str = "ai-agent-v2") -> dict:
+    try:
+        return build_diagnosis(candidate_id, job).model_dump()
+    except FileNotFoundError as exc:
+        raise HTTPException(404, str(exc)) from exc

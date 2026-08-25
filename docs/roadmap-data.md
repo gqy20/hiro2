@@ -122,6 +122,10 @@ Markdown -> ReportEvent -> Evidence -> TrendSignal -> SignalCluster
 
 ### D8 时间快照与历史回测数据
 
+回测基础设施完成（2026-08-25，rule_version=1）：
+- `backend/temporal/features.py`：SkillSnapshot 窗口统计（事实分级加权 fact=1.0/report=0.6/opinion=0.3）；`backend/temporal/forecast.py`：确定性方向预测与后验方向；`scripts/backtest.py run`：月度滚动回测，预测侧数据+词典双 as_of 闸门，后验侧全词典度量。
+- 结果（H=30/60/90，11/10/9 个封闭 as_of 点）：动量规则 v1 命中率 36.1%/33.6%/34.6%，均低于全平基线 40.3%/43.2%/45.6%。最大错误源 up->down：新闻爆发后均值回归，动量外推不适用。**诚实结论：v1 规则不可用，基础设施可用**；v2 方向（更长平滑窗口、高置信子集弃权）另行迭代并在答辩披露两版对比。
+
 为每个 `as_of_date` 构建：
 
 ```text

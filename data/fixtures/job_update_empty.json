@@ -1,0 +1,23 @@
+{
+  "fixtureVersion": "2026-08-24.v1",
+  "mode": "synthetic",
+  "run": {
+    "id": "RUN-0822-1148",
+    "datasetVersion": "fixture-2026-08",
+    "status": "REVIEWING"
+  },
+  "context": {
+    "jobTitle": "AI 应用工程师",
+    "baselineVersion": "v1.4",
+    "targetVersion": "v1.5",
+    "timeWindow": "2026-05 至 2026-08"
+  },
+  "summary": { "validSamples": 22, "companies": 14, "evidenceSources": 30 },
+  "changes": [],
+  "progressSteps": [
+    { "id": "load", "label": "读取来源", "detail": "30 条证据", "state": "finished" },
+    { "id": "dedupe", "label": "完成去重", "detail": "22 条有效记录", "state": "finished" },
+    { "id": "diff", "label": "生成变化", "detail": "0 条候选变化", "state": "finished" },
+    { "id": "review", "label": "等待审核", "detail": "0 条待处理", "state": "finished" }
+  ]
+}

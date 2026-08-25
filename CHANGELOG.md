@@ -9,6 +9,12 @@
 - 增加归一化时间闸门：语料习得别名独立为 `data/SKILLS-EARNED.yml` 并带首见日期，`resolve --as-of` 时未来习得词不参与匹配，防止回测规则泄漏；新增分桶覆盖率与带上下文的未命中词单。
 - 事件抽取改为逐篇落盘并提升并发至 5，长批次中断不丢已完成结果。
 
+- 建立前端 API Client（F-T1.5）：`lib/api/{types,client,queries}.ts` 三件套 + `app/jobs/{loading,error}.tsx` 路由级边界；通过 `NEXT_PUBLIC_USE_MOCK` 环境变量在 fixture 与真实后端之间切换，默认 mock，本地无后端时也不阻塞前端验证。`/jobs` 页迁入 `getJobUpdate()`，作为后续页面迁移的模板；不引入新依赖，全部用 Next.js 16 + 原生 `fetch`。
+
+- 完成 F-T2.3 + F-T2.4：`/jobs` 页面支持空/错误态（`?state=empty|error`，与 `new-jobs`、`diagnosis` 对齐）、发布流走 `publishJobVersion()`（mock 模式 1.4s 模拟延迟，real 模式 POST `/api/v1/jobs/{id}/versions/{version}/publish`）、发布成功视图（`components/publish-result.tsx`）显示 `v1.5 已发布`、本次审核记录（已接受/已拒绝/待确认）与「返回岗位更新」按钮；新增「下游影响」section 联动技能图谱入口。`apiFetch` 增加 POST 支持与对应测试；修复 Modal `confirmLoading` 阻止首次 onOk 的状态耦合（拆出 `publishModalOpen` 与 `publishing` 两个独立 state）。`lib/api/queries.ts` 收紧为仅含客户端可调用 mutation，RSC 页面直接走 fixture 加载器，避免 `node:fs/promises` 被拉进客户端 bundle。
+
+- 完成一级导航补齐：新建 `app/skills/page.tsx`、`app/evaluation/page.tsx` 占位骨架（F-T3.1、F-T4.1 待接入），并把原 `app/[view]` 兜底路由删除（已被具体页面接管）；`app/page.tsx` 从 `redirect("/jobs")` 改为真实工作台（4 张数字卡：新岗位待审 / 岗位更新待审 / 诊断中 / 今日回测，跳转到对应一级页面）。`use client` 因 `next/link` 引入，不引新依赖。
+
 - 建立 D8 回测基础设施：SkillSnapshot 特征层（事实分级加权）、确定性方向预测 v1、月度滚动回测（双 as_of 闸门防泄漏）；v1 动量规则实测低于全平基线，错误集中在爆发后回落，结论如实记录。
 
 - 完成 D4 全量归一化验收：697 篇事件 12605 次提及，中高频覆盖率 85.2%、高频 94.0%；离线归一任务（skillmap）产出 1053 个候选，665 个高置信合入习得词典；时间闸门实测词典随 as_of 正确截断。

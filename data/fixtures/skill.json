@@ -1,0 +1,901 @@
+{
+  "fixtureVersion": "2026-08-24.v1",
+  "mode": "synthetic",
+  "run": {
+    "id": "RUN-0822-2100",
+    "datasetVersion": "fixture-2026-08",
+    "status": "REVIEWING"
+  },
+  "context": {
+    "jobTitle": "AI 应用工程师",
+    "baselineVersion": "v1.4",
+    "targetVersion": "v1.5",
+    "timeWindow": "2026-05 至 2026-08"
+  },
+  "nodes": [
+    {
+      "id": "cap_01",
+      "label": "LLM应用",
+      "capabilityId": "cap_01",
+      "pointName": null,
+      "role": "required",
+      "status": "stable",
+      "aliases": [
+        "LLM",
+        "大语言模型",
+        "大模型"
+      ],
+      "evidenceIds": [
+        "ev-skill-001"
+      ],
+      "position": {
+        "x": 80,
+        "y": 80
+      },
+      "techStack": "LLM"
+    },
+    {
+      "id": "cap_01.推理",
+      "label": "推理",
+      "capabilityId": "cap_01",
+      "pointName": "推理",
+      "role": "required",
+      "status": "stable",
+      "aliases": [
+        "推理模型",
+        "思维链"
+      ],
+      "evidenceIds": [
+        "ev-skill-002"
+      ],
+      "position": {
+        "x": 110,
+        "y": 170
+      },
+      "techStack": "LLM"
+    },
+    {
+      "id": "cap_01.代码生成",
+      "label": "代码生成",
+      "capabilityId": "cap_01",
+      "pointName": "代码生成",
+      "role": "required",
+      "status": "stable",
+      "aliases": [
+        "编码",
+        "代码补全"
+      ],
+      "evidenceIds": [
+        "ev-skill-003"
+      ],
+      "position": {
+        "x": 220,
+        "y": 170
+      },
+      "techStack": "LLM"
+    },
+    {
+      "id": "cap_02",
+      "label": "Prompt工程",
+      "capabilityId": "cap_02",
+      "pointName": null,
+      "role": "required",
+      "status": "stable",
+      "aliases": [
+        "提示词",
+        "提示工程"
+      ],
+      "evidenceIds": [
+        "ev-skill-004"
+      ],
+      "position": {
+        "x": 300,
+        "y": 80
+      },
+      "techStack": "LLM"
+    },
+    {
+      "id": "cap_03",
+      "label": "模型微调",
+      "capabilityId": "cap_03",
+      "pointName": null,
+      "role": "required",
+      "status": "stable",
+      "aliases": [
+        "微调",
+        "Fine-tuning",
+        "LoRA"
+      ],
+      "evidenceIds": [
+        "ev-skill-005"
+      ],
+      "position": {
+        "x": 520,
+        "y": 80
+      },
+      "techStack": "LLM"
+    },
+    {
+      "id": "cap_04",
+      "label": "AI Agent",
+      "capabilityId": "cap_04",
+      "pointName": null,
+      "role": "required",
+      "status": "added",
+      "aliases": [
+        "Agent",
+        "智能体"
+      ],
+      "evidenceIds": [
+        "ev-skill-006"
+      ],
+      "position": {
+        "x": 740,
+        "y": 80
+      },
+      "techStack": "Agent"
+    },
+    {
+      "id": "cap_04.MCP",
+      "label": "MCP",
+      "capabilityId": "cap_04",
+      "pointName": "MCP",
+      "role": "required",
+      "status": "added",
+      "aliases": [
+        "Model Context Protocol"
+      ],
+      "evidenceIds": [
+        "ev-skill-007"
+      ],
+      "position": {
+        "x": 770,
+        "y": 170
+      },
+      "techStack": "Agent"
+    },
+    {
+      "id": "cap_04.工具调用",
+      "label": "工具调用",
+      "capabilityId": "cap_04",
+      "pointName": "工具调用",
+      "role": "required",
+      "status": "added",
+      "aliases": [
+        "Function Calling"
+      ],
+      "evidenceIds": [
+        "ev-skill-008"
+      ],
+      "position": {
+        "x": 880,
+        "y": 170
+      },
+      "techStack": "Agent"
+    },
+    {
+      "id": "cap_04.联网搜索",
+      "label": "联网搜索",
+      "capabilityId": "cap_04",
+      "pointName": "联网搜索",
+      "role": "required",
+      "status": "added",
+      "aliases": [
+        "Web搜索"
+      ],
+      "evidenceIds": [
+        "ev-skill-009"
+      ],
+      "position": {
+        "x": 770,
+        "y": 240
+      },
+      "techStack": "Agent"
+    },
+    {
+      "id": "cap_04.深度研究",
+      "label": "深度研究",
+      "capabilityId": "cap_04",
+      "pointName": "深度研究",
+      "role": "required",
+      "status": "added",
+      "aliases": [
+        "Deep Research"
+      ],
+      "evidenceIds": [
+        "ev-skill-010"
+      ],
+      "position": {
+        "x": 880,
+        "y": 240
+      },
+      "techStack": "Agent"
+    },
+    {
+      "id": "cap_04.记忆",
+      "label": "记忆",
+      "capabilityId": "cap_04",
+      "pointName": "记忆",
+      "role": "required",
+      "status": "added",
+      "aliases": [
+        "长期记忆"
+      ],
+      "evidenceIds": [
+        "ev-skill-011"
+      ],
+      "position": {
+        "x": 770,
+        "y": 310
+      },
+      "techStack": "Agent"
+    },
+    {
+      "id": "cap_05",
+      "label": "多模态AI",
+      "capabilityId": "cap_05",
+      "pointName": null,
+      "role": "preferred",
+      "status": "added",
+      "aliases": [
+        "多模态",
+        "VLM"
+      ],
+      "evidenceIds": [
+        "ev-skill-012"
+      ],
+      "position": {
+        "x": 960,
+        "y": 80
+      },
+      "techStack": "多模态"
+    },
+    {
+      "id": "cap_05.图像生成",
+      "label": "图像生成",
+      "capabilityId": "cap_05",
+      "pointName": "图像生成",
+      "role": "preferred",
+      "status": "added",
+      "aliases": [
+        "文生图"
+      ],
+      "evidenceIds": [
+        "ev-skill-013"
+      ],
+      "position": {
+        "x": 990,
+        "y": 170
+      },
+      "techStack": "多模态"
+    },
+    {
+      "id": "cap_05.视频生成",
+      "label": "视频生成",
+      "capabilityId": "cap_05",
+      "pointName": "视频生成",
+      "role": "preferred",
+      "status": "added",
+      "aliases": [
+        "文生视频"
+      ],
+      "evidenceIds": [
+        "ev-skill-014"
+      ],
+      "position": {
+        "x": 1100,
+        "y": 170
+      },
+      "techStack": "多模态"
+    },
+    {
+      "id": "cap_05.语音",
+      "label": "语音",
+      "capabilityId": "cap_05",
+      "pointName": "语音",
+      "role": "preferred",
+      "status": "added",
+      "aliases": [
+        "ASR",
+        "TTS"
+      ],
+      "evidenceIds": [
+        "ev-skill-015"
+      ],
+      "position": {
+        "x": 990,
+        "y": 240
+      },
+      "techStack": "多模态"
+    },
+    {
+      "id": "cap_06",
+      "label": "RAG/知识库",
+      "capabilityId": "cap_06",
+      "pointName": null,
+      "role": "required",
+      "status": "modified",
+      "aliases": [
+        "RAG",
+        "检索增强"
+      ],
+      "evidenceIds": [
+        "ev-skill-016"
+      ],
+      "position": {
+        "x": 1180,
+        "y": 80
+      },
+      "techStack": "RAG"
+    },
+    {
+      "id": "cap_06.检索评测",
+      "label": "检索评测",
+      "capabilityId": "cap_06",
+      "pointName": "检索评测",
+      "role": "required",
+      "status": "modified",
+      "aliases": [
+        "检索质量评估"
+      ],
+      "evidenceIds": [
+        "ev-skill-017"
+      ],
+      "position": {
+        "x": 1210,
+        "y": 170
+      },
+      "techStack": "RAG"
+    },
+    {
+      "id": "cap_07",
+      "label": "Python",
+      "capabilityId": "cap_07",
+      "pointName": null,
+      "role": "required",
+      "status": "stable",
+      "aliases": [
+        "Python",
+        "PyPI"
+      ],
+      "evidenceIds": [
+        "ev-skill-018"
+      ],
+      "position": {
+        "x": 80,
+        "y": 220
+      },
+      "techStack": "数据"
+    },
+    {
+      "id": "cap_08",
+      "label": "SQL/数据库",
+      "capabilityId": "cap_08",
+      "pointName": null,
+      "role": "required",
+      "status": "stable",
+      "aliases": [
+        "SQL",
+        "PostgreSQL"
+      ],
+      "evidenceIds": [
+        "ev-skill-019"
+      ],
+      "position": {
+        "x": 300,
+        "y": 220
+      },
+      "techStack": "数据"
+    },
+    {
+      "id": "cap_09",
+      "label": "大数据处理",
+      "capabilityId": "cap_09",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "大数据",
+        "数据工程"
+      ],
+      "evidenceIds": [
+        "ev-skill-020"
+      ],
+      "position": {
+        "x": 520,
+        "y": 220
+      },
+      "techStack": "数据"
+    },
+    {
+      "id": "cap_10",
+      "label": "数据标注",
+      "capabilityId": "cap_10",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "标注",
+        "合成数据"
+      ],
+      "evidenceIds": [
+        "ev-skill-021"
+      ],
+      "position": {
+        "x": 740,
+        "y": 220
+      },
+      "techStack": "数据"
+    },
+    {
+      "id": "cap_11",
+      "label": "数据可视化",
+      "capabilityId": "cap_11",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "可视化",
+        "Dashboard"
+      ],
+      "evidenceIds": [
+        "ev-skill-022"
+      ],
+      "position": {
+        "x": 960,
+        "y": 220
+      },
+      "techStack": "数据"
+    },
+    {
+      "id": "cap_12",
+      "label": "ML/DL算法",
+      "capabilityId": "cap_12",
+      "pointName": null,
+      "role": "required",
+      "status": "stable",
+      "aliases": [
+        "机器学习",
+        "深度学习"
+      ],
+      "evidenceIds": [
+        "ev-skill-023"
+      ],
+      "position": {
+        "x": 1180,
+        "y": 220
+      },
+      "techStack": "工程"
+    },
+    {
+      "id": "cap_13",
+      "label": "云计算",
+      "capabilityId": "cap_13",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "云原生",
+        "Kubernetes"
+      ],
+      "evidenceIds": [
+        "ev-skill-024"
+      ],
+      "position": {
+        "x": 80,
+        "y": 360
+      },
+      "techStack": "工程"
+    },
+    {
+      "id": "cap_14",
+      "label": "API开发",
+      "capabilityId": "cap_14",
+      "pointName": null,
+      "role": "required",
+      "status": "stable",
+      "aliases": [
+        "API",
+        "REST"
+      ],
+      "evidenceIds": [
+        "ev-skill-025"
+      ],
+      "position": {
+        "x": 300,
+        "y": 360
+      },
+      "techStack": "工程"
+    },
+    {
+      "id": "cap_15",
+      "label": "系统架构",
+      "capabilityId": "cap_15",
+      "pointName": null,
+      "role": "required",
+      "status": "stable",
+      "aliases": [
+        "架构设计",
+        "分布式"
+      ],
+      "evidenceIds": [
+        "ev-skill-026"
+      ],
+      "position": {
+        "x": 520,
+        "y": 360
+      },
+      "techStack": "工程"
+    },
+    {
+      "id": "cap_16",
+      "label": "物联网/IoT",
+      "capabilityId": "cap_16",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "IoT",
+        "传感器"
+      ],
+      "evidenceIds": [
+        "ev-skill-027"
+      ],
+      "position": {
+        "x": 740,
+        "y": 360
+      },
+      "techStack": "工程"
+    },
+    {
+      "id": "cap_17",
+      "label": "嵌入式/硬件",
+      "capabilityId": "cap_17",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "嵌入式",
+        "GPU"
+      ],
+      "evidenceIds": [
+        "ev-skill-028"
+      ],
+      "position": {
+        "x": 960,
+        "y": 360
+      },
+      "techStack": "工程"
+    },
+    {
+      "id": "cap_18",
+      "label": "自动化运维",
+      "capabilityId": "cap_18",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "DevOps",
+        "监控"
+      ],
+      "evidenceIds": [
+        "ev-skill-029"
+      ],
+      "position": {
+        "x": 1180,
+        "y": 360
+      },
+      "techStack": "工程"
+    },
+    {
+      "id": "cap_19",
+      "label": "AI伦理合规",
+      "capabilityId": "cap_19",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "AI安全",
+        "对齐"
+      ],
+      "evidenceIds": [
+        "ev-skill-030"
+      ],
+      "position": {
+        "x": 80,
+        "y": 500
+      },
+      "techStack": "治理"
+    },
+    {
+      "id": "cap_20",
+      "label": "法规/审计",
+      "capabilityId": "cap_20",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "AI法案",
+        "合规"
+      ],
+      "evidenceIds": [
+        "ev-skill-031"
+      ],
+      "position": {
+        "x": 300,
+        "y": 500
+      },
+      "techStack": "治理"
+    },
+    {
+      "id": "cap_21",
+      "label": "领域知识",
+      "capabilityId": "cap_21",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "行业知识",
+        "垂直领域"
+      ],
+      "evidenceIds": [
+        "ev-skill-032"
+      ],
+      "position": {
+        "x": 520,
+        "y": 500
+      },
+      "techStack": "工程"
+    },
+    {
+      "id": "cap_22",
+      "label": "产品思维",
+      "capabilityId": "cap_22",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "产品设计",
+        "用户体验"
+      ],
+      "evidenceIds": [
+        "ev-skill-033"
+      ],
+      "position": {
+        "x": 740,
+        "y": 500
+      },
+      "techStack": "工程"
+    },
+    {
+      "id": "cap_23",
+      "label": "项目管理",
+      "capabilityId": "cap_23",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "敏捷开发"
+      ],
+      "evidenceIds": [
+        "ev-skill-034"
+      ],
+      "position": {
+        "x": 960,
+        "y": 500
+      },
+      "techStack": "工程"
+    },
+    {
+      "id": "cap_24",
+      "label": "培训/教学",
+      "capabilityId": "cap_24",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "教学",
+        "课程"
+      ],
+      "evidenceIds": [
+        "ev-skill-035"
+      ],
+      "position": {
+        "x": 1180,
+        "y": 500
+      },
+      "techStack": "工程"
+    },
+    {
+      "id": "cap_25",
+      "label": "英语",
+      "capabilityId": "cap_25",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "英文"
+      ],
+      "evidenceIds": [
+        "ev-skill-036"
+      ],
+      "position": {
+        "x": 80,
+        "y": 640
+      },
+      "techStack": "治理"
+    },
+    {
+      "id": "cap_26",
+      "label": "跨部门沟通",
+      "capabilityId": "cap_26",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "沟通协作"
+      ],
+      "evidenceIds": [
+        "ev-skill-037"
+      ],
+      "position": {
+        "x": 300,
+        "y": 640
+      },
+      "techStack": "治理"
+    },
+    {
+      "id": "cap_27",
+      "label": "团队管理",
+      "capabilityId": "cap_27",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "团队协作"
+      ],
+      "evidenceIds": [
+        "ev-skill-038"
+      ],
+      "position": {
+        "x": 520,
+        "y": 640
+      },
+      "techStack": "治理"
+    },
+    {
+      "id": "cap_28",
+      "label": "战略思维",
+      "capabilityId": "cap_28",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "战略规划"
+      ],
+      "evidenceIds": [
+        "ev-skill-039"
+      ],
+      "position": {
+        "x": 740,
+        "y": 640
+      },
+      "techStack": "治理"
+    },
+    {
+      "id": "cap_29",
+      "label": "创新思维",
+      "capabilityId": "cap_29",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "创新方法"
+      ],
+      "evidenceIds": [
+        "ev-skill-040"
+      ],
+      "position": {
+        "x": 960,
+        "y": 640
+      },
+      "techStack": "治理"
+    },
+    {
+      "id": "cap_30",
+      "label": "安全/风控意识",
+      "capabilityId": "cap_30",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [
+        "网络安全",
+        "数据安全"
+      ],
+      "evidenceIds": [
+        "ev-skill-041"
+      ],
+      "position": {
+        "x": 1180,
+        "y": 640
+      },
+      "techStack": "治理"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-cap_01-推理",
+      "source": "cap_01",
+      "target": "cap_01.推理"
+    },
+    {
+      "id": "e-cap_01-代码生成",
+      "source": "cap_01",
+      "target": "cap_01.代码生成"
+    },
+    {
+      "id": "e-cap_04-MCP",
+      "source": "cap_04",
+      "target": "cap_04.MCP"
+    },
+    {
+      "id": "e-cap_04-工具调用",
+      "source": "cap_04",
+      "target": "cap_04.工具调用"
+    },
+    {
+      "id": "e-cap_04-联网搜索",
+      "source": "cap_04",
+      "target": "cap_04.联网搜索"
+    },
+    {
+      "id": "e-cap_04-深度研究",
+      "source": "cap_04",
+      "target": "cap_04.深度研究"
+    },
+    {
+      "id": "e-cap_04-记忆",
+      "source": "cap_04",
+      "target": "cap_04.记忆"
+    },
+    {
+      "id": "e-cap_05-图像生成",
+      "source": "cap_05",
+      "target": "cap_05.图像生成"
+    },
+    {
+      "id": "e-cap_05-视频生成",
+      "source": "cap_05",
+      "target": "cap_05.视频生成"
+    },
+    {
+      "id": "e-cap_05-语音",
+      "source": "cap_05",
+      "target": "cap_05.语音"
+    },
+    {
+      "id": "e-cap_06-检索评测",
+      "source": "cap_06",
+      "target": "cap_06.检索评测"
+    }
+  ],
+  "filterOptions": {
+    "techStacks": [
+      "LLM",
+      "Agent",
+      "RAG",
+      "多模态",
+      "数据",
+      "工程",
+      "治理"
+    ],
+    "roles": [
+      "required",
+      "preferred"
+    ],
+    "capabilityTypes": [
+      "capability",
+      "point"
+    ]
+  }
+}

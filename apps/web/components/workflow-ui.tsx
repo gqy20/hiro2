@@ -22,8 +22,8 @@ export function FixtureState({
       <section className="fixture-state">
         <Alert
           description={errorText}
-          message="加载失败"
           showIcon
+          title="加载失败"
           type="error"
         />
       </section>

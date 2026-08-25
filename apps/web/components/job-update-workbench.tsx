@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
   CheckCircle,
@@ -7,17 +8,21 @@ import {
   FunnelSimple,
   MagnifyingGlass,
   PaperPlaneTilt,
+  Warning,
 } from "@phosphor-icons/react";
-import { Button, Modal, Select, Skeleton, Tag, Tooltip } from "antd";
+import { Alert, Button, Modal, Select, Skeleton, Tag, Tooltip } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
+import { PublishResultView } from "@/components/publish-result";
 import { ReviewProgress } from "@/components/review-progress";
 import {
   ConfidenceMeter,
   ReviewActions,
   StatusMark,
 } from "@/components/review-ui";
+import { FixtureState } from "@/components/workflow-ui";
+import { publishJobVersion, type PublishResult } from "@/lib/api/queries";
 import {
   type ChangeItem,
   type ChangeKind,
@@ -38,14 +43,24 @@ const filterOptions: Array<"全部" | ChangeKind> = [
   "modified",
 ];
 
-type JobUpdateWorkbenchProps = { fixture: JobUpdateFixture };
+type JobUpdateWorkbenchProps = {
+  fixture: JobUpdateFixture;
+  state?: "ready" | "empty" | "error";
+};
 
-export function JobUpdateWorkbench({ fixture }: JobUpdateWorkbenchProps) {
+export function JobUpdateWorkbench({
+  fixture,
+  state = "ready",
+}: JobUpdateWorkbenchProps) {
   const [items, setItems] = useState(fixture.changes);
   const [selected, setSelected] = useState<ChangeItem | null>(null);
   const [running, setRunning] = useState(false);
+  const [publishModalOpen, setPublishModalOpen] = useState(false);
   const [publishing, setPublishing] = useState(false);
-  const [published, setPublished] = useState(false);
+  const [publishedResult, setPublishedResult] = useState<PublishResult | null>(
+    null,
+  );
+  const [publishError, setPublishError] = useState<string | null>(null);
   const [filter, setFilter] = useState<"全部" | ChangeKind>("全部");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draftDetail, setDraftDetail] = useState("");
@@ -55,9 +70,15 @@ export function JobUpdateWorkbench({ fixture }: JobUpdateWorkbenchProps) {
   ).length;
   const reviewCounts = {
     accepted: items.filter((item) => item.status === "accepted").length,
+    rejected: items.filter((item) => item.status === "rejected").length,
     needsEvidence: items.filter((item) => item.status === "needs_evidence")
       .length,
     reviewing: items.filter((item) => item.status === "reviewing").length,
+  };
+  const kindCounts = {
+    added: items.filter((item) => item.kind === "added").length,
+    removed: items.filter((item) => item.kind === "removed").length,
+    modified: items.filter((item) => item.kind === "modified").length,
   };
   const visibleItems = useMemo(
     () =>
@@ -94,10 +115,58 @@ export function JobUpdateWorkbench({ fixture }: JobUpdateWorkbenchProps) {
     }, 1400);
   }
 
-  function publish() {
-    setPublishing(false);
-    setPublished(true);
+  async function publish() {
+    setPublishing(true);
+    setPublishError(null);
+    try {
+      const result = await publishJobVersion(
+        "default",
+        fixture.context.targetVersion,
+      );
+      setPublishedResult(result);
+      setPublishModalOpen(false);
+      setPublishing(false);
+    } catch (err) {
+      setPublishError(
+        err instanceof Error ? err.message : "发布失败，请稍后重试。",
+      );
+      setPublishing(false);
+    }
   }
+
+  // 早返回必须在所有 hooks 调用之后（React Rules of Hooks）。
+  if (state === "error")
+    return (
+      <AppShell>
+        <FixtureState
+          errorText="岗位版本数据暂时不可用，请稍后重试。"
+          state="error"
+        />
+      </AppShell>
+    );
+  if (state === "empty")
+    return (
+      <AppShell>
+        <FixtureState
+          emptyText="当前版本暂未检测到能力变化。"
+          state="empty"
+        />
+      </AppShell>
+    );
+  if (publishedResult)
+    return (
+      <PublishResultView
+        jobTitle={fixture.context.jobTitle}
+        onBack={() => setPublishedResult(null)}
+        publishedAt={publishedResult.publishedAt}
+        reviewCounts={{
+          accepted: reviewCounts.accepted,
+          rejected: reviewCounts.rejected,
+          pending: reviewCounts.reviewing + reviewCounts.needsEvidence,
+        }}
+        targetVersion={fixture.context.targetVersion}
+      />
+    );
 
   return (
     <AppShell>
@@ -110,11 +179,7 @@ export function JobUpdateWorkbench({ fixture }: JobUpdateWorkbenchProps) {
             </div>
             <div className="header-tags">
               <Tag>演示数据</Tag>
-              <Tag color={published ? "green" : "gold"}>
-                {published
-                  ? `已发布 ${fixture.context.targetVersion}`
-                  : `草稿 ${fixture.context.targetVersion}`}
-              </Tag>
+              <Tag color="gold">{`草稿 ${fixture.context.targetVersion}`}</Tag>
             </div>
           </div>
 
@@ -287,6 +352,35 @@ export function JobUpdateWorkbench({ fixture }: JobUpdateWorkbenchProps) {
             </div>
           )}
 
+          {items.length > 0 ? (
+            <section
+              className="downstream-impact"
+              aria-labelledby="impact-title"
+            >
+              <h3 id="impact-title">下游影响</h3>
+              <p>
+                {`${items.length} 项能力变化将影响技能图谱和人岗诊断，建议在评测中心复跑匹配报告。`}
+              </p>
+              <ul>
+                <li>
+                  <span>新增</span>
+                  <strong>{kindCounts.added}</strong>
+                </li>
+                <li>
+                  <span>删除</span>
+                  <strong>{kindCounts.removed}</strong>
+                </li>
+                <li>
+                  <span>修改</span>
+                  <strong>{kindCounts.modified}</strong>
+                </li>
+              </ul>
+              <Link className="impact-link" href="/skills">
+                查看技能图谱 →
+              </Link>
+            </section>
+          ) : null}
+
           <footer className="diff-footer">
             <span>
               {pending === 0
@@ -294,13 +388,15 @@ export function JobUpdateWorkbench({ fixture }: JobUpdateWorkbenchProps) {
                 : `还有 ${pending} 条变化待处理`}
             </span>
             <Button
-              disabled={pending > 0 || published}
+              disabled={pending > 0}
               icon={<PaperPlaneTilt />}
-              loading={publishing}
-              onClick={() => setPublishing(true)}
+              onClick={() => {
+                setPublishError(null);
+                setPublishModalOpen(true);
+              }}
               type="primary"
             >
-              {published ? "已发布" : "发布版本"}
+              发布版本
             </Button>
           </footer>
         </section>
@@ -362,18 +458,30 @@ export function JobUpdateWorkbench({ fixture }: JobUpdateWorkbenchProps) {
       <Modal
         cancelText="继续审核"
         centered
+        confirmLoading={publishing}
         okButtonProps={{ disabled: pending > 0 }}
         okText={`发布 ${fixture.context.targetVersion}`}
-        onCancel={() => setPublishing(false)}
+        onCancel={() => {
+          if (!publishing) setPublishModalOpen(false);
+        }}
         onOk={publish}
-        open={publishing}
+        open={publishModalOpen}
         title="发布岗位版本"
       >
-        <p>
-          {pending === 0
-            ? `发布后将创建不可变的 ${fixture.context.jobTitle} ${fixture.context.targetVersion}。`
-            : "请先完成所有审核项。"}
-        </p>
+        {publishError ? (
+          <Alert
+            description={publishError}
+            icon={<Warning aria-hidden />}
+            showIcon
+            type="error"
+          />
+        ) : (
+          <p>
+            {pending === 0
+              ? `发布后将创建不可变的 ${fixture.context.jobTitle} ${fixture.context.targetVersion}。`
+              : "请先完成所有审核项。"}
+          </p>
+        )}
       </Modal>
     </AppShell>
   );

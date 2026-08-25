@@ -3,12 +3,20 @@ import path from "node:path";
 
 import type { JobUpdateFixture } from "@/lib/job-update";
 
-const fixturePath = path.resolve(
-  process.cwd(),
-  "../../data/fixtures/job_update.json",
-);
+const files = {
+  empty: "job_update_empty.json",
+  error: "job_update_error.json",
+  ready: "job_update.json",
+} as const;
 
-export async function loadJobUpdateFixture(): Promise<JobUpdateFixture> {
-  const fixture = await readFile(fixturePath, "utf8");
-  return JSON.parse(fixture) as JobUpdateFixture;
+export type JobUpdateFixtureVariant = keyof typeof files;
+
+export async function loadJobUpdateFixture(
+  variant: JobUpdateFixtureVariant = "ready",
+): Promise<JobUpdateFixture> {
+  const fixturePath = path.resolve(
+    process.cwd(),
+    `../../data/fixtures/${files[variant]}`,
+  );
+  return JSON.parse(await readFile(fixturePath, "utf8")) as JobUpdateFixture;
 }

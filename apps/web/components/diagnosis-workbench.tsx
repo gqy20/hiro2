@@ -6,7 +6,6 @@ import {
   PencilSimple,
   Plus,
   Trash,
-  X,
 } from "@phosphor-icons/react";
 import { Button, Input, Select, Tag } from "antd";
 
@@ -398,7 +397,7 @@ export function DiagnosisWorkbench({
                 >
                   <div>
                     <strong>{gap.skill}</strong>
-                    <Tag>{gap.priority === "high" ? "优先" : "补强"}}</Tag>
+                    <Tag>{gap.priority === "high" ? ("优先") : ("补强")}</Tag>
                   </div>
                   <p>{gap.reason}</p>
                   <span>{gap.action}</span>

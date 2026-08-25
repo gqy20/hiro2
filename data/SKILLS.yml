@@ -4,7 +4,7 @@
 # 未命中的提及进入新词队列；语料习得的别名进 SKILLS-EARNED.yml（带 effective_from，受 as_of 闸门控制）。
 # 反复出现的新词经人工审核后进入两个文件之一并递增 version。
 
-version: 4
+version: 5
 
 entries:
   - capability_id: cap_01
@@ -69,7 +69,7 @@ entries:
 
   - capability_id: cap_09
     name: 大数据处理
-    aliases: [大数据, 数据工程, 数据管道, 数仓, Hadoop, Spark, Flink, Kafka, 数据湖]
+    aliases: [大数据, 数据处理, 数据工程, 数据管道, 数仓, Hadoop, Spark, Flink, Kafka, 数据湖]
 
   - capability_id: cap_10
     name: 数据标注
@@ -154,4 +154,4 @@ entries:
 
   - capability_id: cap_30
     name: 安全/风控意识
-    aliases: [网络安全, 信息安全, 数据安全, 隐私保护, 风险控制]
+    aliases: [网络安全, 信息安全, 数据安全, 隐私保护, 风险控制, 安全/风控, 安全]

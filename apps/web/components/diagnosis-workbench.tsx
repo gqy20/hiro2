@@ -1,16 +1,41 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle, PencilSimple } from "@phosphor-icons/react";
-import { Button, Select, Tag } from "antd";
+import {
+  CheckCircle,
+  PencilSimple,
+  Plus,
+  Trash,
+  X,
+} from "@phosphor-icons/react";
+import { Button, Input, Select, Tag } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
 import { ConfidenceMeter, StatusMark } from "@/components/review-ui";
 import { FixtureState, skillStatusToReview } from "@/components/workflow-ui";
 import { SectionHeader } from "@/components/workflow-ui";
-import type { DiagnosisFixture, SkillMatch } from "@/lib/diagnosis";
+import type {
+  DiagnosisFixture,
+  ProjectEntry,
+  SkillMatch,
+  UserCorrection,
+} from "@/lib/diagnosis";
 import type { ChangeItem, JobUpdateContext } from "@/lib/job-update";
+
+const SKILL_STATUSES: Array<SkillMatch["status"]> = ["ready", "partial", "missing"];
+
+function makeCorrectionId(prefix: string): string {
+  return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
+}
+
+function makeProjectId(): string {
+  return `proj-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
+}
+
+function nowDate(): string {
+  return new Date().toISOString().slice(0, 10);
+}
 
 export function DiagnosisWorkbench({
   fixture,
@@ -20,12 +45,22 @@ export function DiagnosisWorkbench({
   state?: "ready" | "empty" | "error";
 }) {
   const [skills, setSkills] = useState(fixture.candidate.skills);
+  const [projects, setProjects] = useState<ProjectEntry[]>(
+    fixture.candidate.projects,
+  );
+  const [userCorrections, setUserCorrections] = useState<UserCorrection[]>(
+    fixture.candidate.userCorrections,
+  );
   const [editing, setEditing] = useState<string | null>(null);
   const [selectedEvidence, setSelectedEvidence] = useState<ChangeItem | null>(
     null,
   );
   const [reportScore, setReportScore] = useState(fixture.report.overallScore);
   const [recalculating, setRecalculating] = useState(false);
+  const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
+  const [projectDraft, setProjectDraft] = useState("");
+  const [editingProjectText, setEditingProjectText] = useState("");
+
   if (state === "error")
     return (
       <AppShell>
@@ -66,12 +101,27 @@ export function DiagnosisWorkbench({
     missing: skills.filter((skill) => skill.status === "missing").length,
   };
 
+  function pushCorrection(correction: UserCorrection) {
+    setUserCorrections((current) => [...current, correction]);
+  }
+
   function updateSkill(index: number, patch: Partial<SkillMatch>) {
+    const before = skills[index]?.status;
     setSkills((current) =>
       current.map((skill, currentIndex) =>
         currentIndex === index ? { ...skill, ...patch } : skill,
       ),
     );
+    if (patch.status && before && patch.status !== before) {
+      pushCorrection({
+        id: makeCorrectionId("corr"),
+        timestamp: nowDate(),
+        field: "skill_status",
+        target: skills[index]?.name ?? `skill-${index}`,
+        before,
+        after: patch.status,
+      });
+    }
   }
 
   function recalculate() {
@@ -92,6 +142,62 @@ export function DiagnosisWorkbench({
       );
       setRecalculating(false);
     }, 500);
+  }
+
+  function addProject() {
+    const text = projectDraft.trim();
+    if (!text) return;
+    const entry: ProjectEntry = { id: makeProjectId(), text };
+    setProjects((current) => [...current, entry]);
+    pushCorrection({
+      id: makeCorrectionId("corr"),
+      timestamp: nowDate(),
+      field: "project_added",
+      target: entry.id,
+      after: text,
+    });
+    setProjectDraft("");
+  }
+
+  function saveProjectEdit(id: string) {
+    const text = editingProjectText.trim();
+    if (!text) return;
+    const before = projects.find((p) => p.id === id)?.text;
+    setProjects((current) =>
+      current.map((p) => (p.id === id ? { ...p, text } : p)),
+    );
+    if (before !== undefined && before !== text) {
+      pushCorrection({
+        id: makeCorrectionId("corr"),
+        timestamp: nowDate(),
+        field: "project_text",
+        target: id,
+        before,
+        after: text,
+      });
+    }
+    setEditingProjectId(null);
+    setEditingProjectText("");
+  }
+
+  function cancelProjectEdit() {
+    setEditingProjectId(null);
+    setEditingProjectText("");
+  }
+
+  function removeProject(id: string) {
+    const before = projects.find((p) => p.id === id)?.text;
+    setProjects((current) => current.filter((p) => p.id !== id));
+    if (before !== undefined) {
+      pushCorrection({
+        id: makeCorrectionId("corr"),
+        timestamp: nowDate(),
+        field: "project_removed",
+        target: id,
+        before,
+      });
+    }
+    if (editingProjectId === id) cancelProjectEdit();
   }
 
   return (
@@ -136,11 +242,15 @@ export function DiagnosisWorkbench({
                       onChange={(value) =>
                         updateSkill(index, { status: value })
                       }
-                      options={[
-                        { label: "已具备", value: "ready" },
-                        { label: "部分具备", value: "partial" },
-                        { label: "缺失", value: "missing" },
-                      ]}
+                      options={SKILL_STATUSES.map((s) => ({
+                        label:
+                          s === "ready"
+                            ? "已具备"
+                            : s === "partial"
+                              ? "部分具备"
+                              : "缺失",
+                        value: s,
+                      }))}
                     />
                     <Button onClick={() => setEditing(null)} size="small">
                       完成
@@ -158,10 +268,78 @@ export function DiagnosisWorkbench({
           </div>
           <h2>项目证据</h2>
           <ul className="project-list">
-            {fixture.candidate.projects.map((project) => (
-              <li key={project}>{project}</li>
-            ))}
+            {projects.map((project) =>
+              editingProjectId === project.id ? (
+                <li className="project-row-editing" key={project.id}>
+                  <Input
+                    aria-label={`编辑项目 ${project.id}`}
+                    onChange={(event) =>
+                      setEditingProjectText(event.target.value)
+                    }
+                    onPressEnter={() => saveProjectEdit(project.id)}
+                    value={editingProjectText}
+                  />
+                  <Button
+                    onClick={() => saveProjectEdit(project.id)}
+                    size="small"
+                    type="primary"
+                  >
+                    保存
+                  </Button>
+                  <Button onClick={cancelProjectEdit} size="small">
+                    取消
+                  </Button>
+                </li>
+              ) : (
+                <li className="project-row" key={project.id}>
+                  <span>{project.text}</span>
+                  <span className="project-actions">
+                    <Button
+                      aria-label={`编辑项目 ${project.id}`}
+                      icon={<PencilSimple size={14} />}
+                      onClick={() => {
+                        setEditingProjectId(project.id);
+                        setEditingProjectText(project.text);
+                      }}
+                      size="small"
+                      type="text"
+                    />
+                    <Button
+                      aria-label={`删除项目 ${project.id}`}
+                      danger
+                      icon={<Trash size={14} />}
+                      onClick={() => removeProject(project.id)}
+                      size="small"
+                      type="text"
+                    />
+                  </span>
+                </li>
+              ),
+            )}
+            <li className="project-row-new">
+              <Input
+                aria-label="新增项目"
+                onChange={(event) => setProjectDraft(event.target.value)}
+                onPressEnter={addProject}
+                placeholder="新增项目证据 · 回车保存"
+                value={projectDraft}
+              />
+              <Button
+                disabled={!projectDraft.trim()}
+                icon={<Plus aria-hidden size={14} />}
+                onClick={addProject}
+                size="small"
+                type="primary"
+              >
+                新增
+              </Button>
+            </li>
           </ul>
+          {userCorrections.length > 0 ? (
+            <p className="project-audit-meta">
+              {`本次会话已记录 ${userCorrections.length} 条修改（仅本地）`}
+            </p>
+          ) : null}
         </aside>
         <main className="diagnosis-report" aria-labelledby="diagnosis-title">
           <div className="diagnosis-title">
@@ -220,7 +398,7 @@ export function DiagnosisWorkbench({
                 >
                   <div>
                     <strong>{gap.skill}</strong>
-                    <Tag>{gap.priority === "high" ? "优先" : "补强"}</Tag>
+                    <Tag>{gap.priority === "high" ? "优先" : "补强"}}</Tag>
                   </div>
                   <p>{gap.reason}</p>
                   <span>{gap.action}</span>

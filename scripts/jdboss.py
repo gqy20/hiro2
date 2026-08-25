@@ -56,7 +56,8 @@ KEEP_FIELDS = (
 )
 
 
-def _tab_new(url: str) -> None:
+def _tab_new(url: str) -> str:
+    """开标签页，返回 page id（供用后关闭）。"""
     r = subprocess.run(
         ["opencli", "browser", SESSION, "tab", "new", url],
         capture_output=True,
@@ -65,6 +66,21 @@ def _tab_new(url: str) -> None:
     )
     if '"page"' not in r.stdout:
         raise RuntimeError(f"tab new 失败: {r.stdout[:120]} {r.stderr[:120]}")
+    import re as _re
+
+    m = _re.search(r'"page":\s*"([^"]+)"', r.stdout)
+    return m.group(1) if m else ""
+
+
+def _tab_close(page_id: str) -> None:
+    if not page_id:
+        return
+    subprocess.run(
+        ["opencli", "browser", SESSION, "tab", "close", page_id],
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
 
 
 def _read_jobs(offset: int) -> list[dict]:
@@ -107,7 +123,7 @@ def cmd_run(keywords: list[str], pages: int) -> dict:
                     "https://www.zhipin.com/web/geek/job"
                     f"?query={urllib.parse.quote(kw)}&city=100010000&page={page}"
                 )
-                _tab_new(url)
+                page_id = _tab_new(url)
                 time.sleep(NAV_WAIT_SECONDS)
                 jobs = _read_jobs(offset)
                 fresh = 0
@@ -138,6 +154,7 @@ def cmd_run(keywords: list[str], pages: int) -> dict:
                     item_id=kw,
                     count={"items": len(jobs), "fresh": fresh},
                 )
+                _tab_close(page_id)
             per_keyword[kw] = kw_new
     finally:
         fh.close()
@@ -184,7 +201,7 @@ def cmd_detail(limit: int) -> dict:
     try:
         for jid in todo:
             offset = _line_count()
-            _tab_new(f"https://www.zhipin.com/job_detail/{jid}.html")
+            page_id = _tab_new(f"https://www.zhipin.com/job_detail/{jid}.html")
             time.sleep(8)
             desc = ""
             with CAPTURE.open(encoding="utf-8") as cf:
@@ -216,13 +233,7 @@ def cmd_detail(limit: int) -> dict:
             run.log(
                 "detail", jid[-8:], "ok" if desc else "empty", item_id=jid[-8:], count=len(desc)
             )
-            # 控制标签页数量
-            r = subprocess.run(
-                ["opencli", "browser", SESSION, "tab", "close", "oldest"],
-                capture_output=True,
-                text=True,
-                timeout=30,
-            )
+            _tab_close(page_id)  # 用完即关，控制标签页数量
     finally:
         fh.close()
     metrics = {"fetched": fetched, "usable": usable, "requested": len(todo)}

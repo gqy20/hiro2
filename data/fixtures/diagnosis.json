@@ -12,7 +12,12 @@
       { "name": "智能体编排", "level": "入门", "years": 0.5, "status": "partial", "evidence": "个人实验项目" },
       { "name": "效果评测", "level": "未体现", "years": 0, "status": "missing", "evidence": "简历未找到直接证据" }
     ],
-    "projects": ["企业知识助手", "客服问答评测集", "内部工单自动化"]
+    "projects": [
+      { "id": "proj-01", "text": "企业知识助手" },
+      { "id": "proj-02", "text": "客服问答评测集" },
+      { "id": "proj-03", "text": "内部工单自动化" }
+    ],
+    "userCorrections": []
   },
   "job": { "title": "AI 应用工程师", "version": "v1.5", "window": "2026-05 至 2026-08", "evidenceCount": 30 },
   "report": {

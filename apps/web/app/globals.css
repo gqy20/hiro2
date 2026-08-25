@@ -1079,10 +1079,47 @@ h3 {
   display: grid;
   gap: 8px;
   margin: 0;
-  padding-left: 18px;
+  padding-left: 0;
+  list-style: none;
   color: #47443e;
   font-size: 12px;
 }
+
+.project-row,
+.project-row-editing,
+.project-row-new {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+}
+
+.project-row > span:first-child {
+  flex: 1;
+}
+
+.project-actions {
+  display: inline-flex;
+  gap: 2px;
+  flex: 0 0 auto;
+}
+
+.project-row-editing .ant-input {
+  flex: 1;
+}
+
+.project-row-new .ant-input {
+  flex: 1;
+}
+
+.project-audit-meta {
+  margin: 12px 0 0;
+  font-size: 11px;
+  color: var(--muted);
+  border-top: 1px dashed var(--line);
+  padding-top: 8px;
+}
+
 .diagnosis-title h2 {
   margin: 0 0 6px;
   font-size: 24px;

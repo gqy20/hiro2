@@ -1,5 +1,3 @@
-import type { Evidence } from "@/lib/job-update";
-
 export type SkillMatch = {
   name: string;
   level: string;
@@ -7,6 +5,27 @@ export type SkillMatch = {
   status: "ready" | "partial" | "missing";
   evidence: string;
 };
+
+export type ProjectEntry = {
+  id: string;
+  text: string;
+};
+
+export type UserCorrectionField =
+  | "skill_status"
+  | "project_text"
+  | "project_added"
+  | "project_removed";
+
+export type UserCorrection = {
+  id: string;
+  timestamp: string;
+  field: UserCorrectionField;
+  target: string;
+  before?: string;
+  after?: string;
+};
+
 export type DiagnosisFixture = {
   fixtureVersion: string;
   mode: "synthetic";
@@ -16,7 +35,8 @@ export type DiagnosisFixture = {
     headline: string;
     location: string;
     skills: SkillMatch[];
-    projects: string[];
+    projects: ProjectEntry[];
+    userCorrections: UserCorrection[];
   };
   job: {
     title: string;
@@ -28,7 +48,7 @@ export type DiagnosisFixture = {
     matchId: string;
     algorithmVersion: string;
     overallScore: number;
-    evidence: Evidence[];
+    evidence: import("@/lib/job-update").Evidence[];
     gaps: Array<{
       skill: string;
       reason: string;

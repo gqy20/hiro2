@@ -32,7 +32,11 @@ CDP = "http://127.0.0.1:9222"
 
 
 def _sleep() -> None:
-    time.sleep(random.uniform(2.0, 4.0))
+    import os
+
+    lo = float(os.environ.get("JDAUTO_SLEEP_MIN", "2.0"))
+    hi = float(os.environ.get("JDAUTO_SLEEP_MAX", "4.0"))
+    time.sleep(random.uniform(lo, hi))
 
 
 def _keyword_of(url: str) -> str:
@@ -40,7 +44,7 @@ def _keyword_of(url: str) -> str:
     return (q.get("keyword") or ["?"])[0]
 
 
-async def cmd_run(keywords: list[str], pages: int) -> dict:
+async def cmd_run(keywords: list[str], pages: int, area: str | None = None) -> dict:
     from playwright.async_api import async_playwright
 
     run = RunContext("jdauto", {"cmd": "run", "keywords": keywords, "pages": pages})
@@ -68,9 +72,10 @@ async def cmd_run(keywords: list[str], pages: int) -> dict:
                         captured.append(resp)
 
                 page.on("response", on_response)
+                area_q = f"&jobArea={area}" if area else ""
                 url = (
                     "https://we.51job.com/pc/search"
-                    f"?keyword={urllib.parse.quote(kw)}&searchType=post&pageno={pageno}"
+                    f"?keyword={urllib.parse.quote(kw)}&searchType=post{area_q}&pageno={pageno}"
                 )
                 await page.goto(url, wait_until="networkidle", timeout=60000)
                 await page.wait_for_timeout(3500)  # 等签名重试（networkidle 后才发出）
@@ -205,13 +210,14 @@ def main(argv: list[str] | None = None) -> int:
     p_run = sub.add_parser("run")
     p_run.add_argument("--keywords", nargs="+", required=True)
     p_run.add_argument("--pages", type=int, default=5)
+    p_run.add_argument("--area", type=str, default=None, help="51job jobArea 码，多城逗号分隔")
     p_detail = sub.add_parser("detail")
     p_detail.add_argument("--limit", type=int, default=1000)
     args = parser.parse_args(argv)
     if args.cmd == "detail":
         metrics = asyncio.run(cmd_detail(args.limit))
     else:
-        metrics = asyncio.run(cmd_run(args.keywords, args.pages))
+        metrics = asyncio.run(cmd_run(args.keywords, args.pages, args.area))
     print(json.dumps(metrics, ensure_ascii=False))
     return 0
 

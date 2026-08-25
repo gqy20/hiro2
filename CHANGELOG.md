@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- 增加 Excel 岗位画像抽取（exskill）：46 岗位职责简介 → 结构化职责/要求/技能原词 + 词典归一（46/46 零隔离）；46 岗位名清洗为 59 个搜索关键词用于 JD 扩采；词典 v5 补专家短形别名。
 - 打通 boss直聘 采集：OpenCLI 扩展标签页导航 + mitmproxy 网络层捕获（页面零感知），jdboss 抓取 6 关键词 92 条含明文薪资与技能标签；jdserve 集成 mitm 启停，形成 51job(CDP)+boss(mitm) 双通路。
 
 - 增加归一化时间闸门：语料习得别名独立为 `data/SKILLS-EARNED.yml` 并带首见日期，`resolve --as-of` 时未来习得词不参与匹配，防止回测规则泄漏；新增分桶覆盖率与带上下文的未命中词单。

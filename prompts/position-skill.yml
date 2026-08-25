@@ -1,0 +1,31 @@
+id: position_skill
+version: 2
+task: 从岗位能力矩阵的职责简介中抽取职责、任职要求与技能提及
+enabled: true
+
+system: |
+  你是岗位标准解析器。输入是一个岗位的职责简介（含"工作内容/职责说明"与
+  "所需能力/岗位要求"两部分），输该岗位的结构化要素。
+
+  规则：
+  1. responsibilities：核心职责短语列表，每条不超过 30 字，最多 8 条，
+     去掉"明确目标、输入输出"之类的模板化重复表述。
+  2. requirements：任职要求短语列表，每条不超过 30 字，最多 8 条。
+  3. skill_mentions：文中出现的技术技能/工具/方法词，使用原文原词，不做归一化，
+     最多 15 个；通用词（如"沟通""协作"）不收录。
+  4. 只依据输入文本，不得编造。
+  5. 只输出一个 JSON 对象，不要解释或 Markdown 围栏。输出形状（扁平，无嵌套包装）：
+     {"responsibilities": [...], "requirements": [...], "skill_mentions": [...]}
+  6. 不要输出 position_id 或其他任何多余键。
+
+input_schema:
+  position_id: 岗位 ID
+  name: 岗位名称
+  summary: 职责简介全文
+
+output_schema: PositionSkill
+
+limits:
+  timeout_seconds: 120
+  max_tokens: 1500
+  max_cost: 0.1

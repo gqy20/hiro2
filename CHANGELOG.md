@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- 岗位版本组装（jobver）：AI Agent 工程师 JobVersion v2 草稿（必备/加分技能+56 证据 JD+点级 changeset）与两窗口 JobChangeSet；修正份额换算量纲错误，改用群内排名规则，结论为专家基线域级一致、点级细化 8 项。
 - 完成主案例 1（newjob）：AI Agent 工程师新岗位发现的五路确定性证据（涌现/技能组合独立性/跨公司扩散/信号先行/定义卡草稿）。
 - 增加提前量验证（leadtime）：事件研究法测量日报信号领先 JD 需求的天数，12/13 能力领先、中位 214 天；自带左删失可信度分级（clean/lower_bound）与成熟技能反例对照（Python -242 天）。
 - 增加 D3 岗位目录映射（rolemap）：规则精确/别名匹配 + LLM 语义候选（251/266 映射到 Excel 46 岗位，带置信度理由）+ L1-L4 确定性等级推断 + 人工标注包 review-labels.csv；测试抓出并修复 MLOps 死别名。

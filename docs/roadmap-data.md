@@ -133,6 +133,12 @@ Markdown -> ReportEvent -> Evidence -> TrendSignal -> SignalCluster
 
 退出条件：岗位、技能、趋势和匹配结论均能通过 `evidence_id` 回链原文；正式岗位字段和关键匹配结论的证据覆盖率为 100%；来源冲突、单一来源热点和低置信结论进入审核队列，不能静默聚合为岗位事实。
 
+### 岗位版本组装（2026-08-25，`scripts/jobver.py`）
+
+产品核心对象落地（contracts.md 语义，确定性组装，status=DRAFT/PENDING 待人工审核）：
+- `jobversion-agent-draft.json`：AI Agent 工程师 JobVersion v2 草稿。必备/加分技能（市场份额加权）、56 条证据 JD、信号引用；changeset_vs_v1 用群内排名规则（份额与 Excel 0-5 评分不同量纲，直接换算不成立——已修正）：能力域级零变化（专家基线与市场一致），技能点级 8 项 add（工具调用 20 证据/代码生成 14/MCP 10/推理 7/记忆 4）——v2 的真实增量是点级细化。
+- `jobchangeset-window-diff.json`：主案例 2 两窗口 diff 归一为 JobChangeSet（13 项带证据 JD，样本量声明）。
+
 ### 主案例 1：AI Agent 工程师新岗位发现（2026-08-25，`scripts/newjob.py`）
 
 五路确定性证据（`data/processed/jd-opencli/emerging-agent.json`）：

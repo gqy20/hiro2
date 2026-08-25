@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- 打通 boss直聘 采集：OpenCLI 扩展标签页导航 + mitmproxy 网络层捕获（页面零感知），jdboss 抓取 6 关键词 92 条含明文薪资与技能标签；jdserve 集成 mitm 启停，形成 51job(CDP)+boss(mitm) 双通路。
 
 - 增加归一化时间闸门：语料习得别名独立为 `data/SKILLS-EARNED.yml` 并带首见日期，`resolve --as-of` 时未来习得词不参与匹配，防止回测规则泄漏；新增分桶覆盖率与带上下文的未命中词单。
 - 事件抽取改为逐篇落盘并提升并发至 5，长批次中断不丢已完成结果。

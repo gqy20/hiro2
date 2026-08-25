@@ -1,12 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowSquareOut, X } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react";
 import { Button, Select, Tag } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
 import { SkillGraph } from "@/components/skill-graph";
+import {
+  SkillNodeDetail,
+  SkillNodeDetailEmpty,
+} from "@/components/skill-node-detail";
 import { FixtureState } from "@/components/workflow-ui";
 import type {
   CapabilityType,
@@ -25,20 +29,6 @@ type SkillsWorkbenchProps = {
 const roleLabels: Record<SkillNode["role"], string> = {
   required: "必备",
   preferred: "加分",
-};
-
-const statusLabels: Record<SkillNode["status"], string> = {
-  added: "新增",
-  removed: "删除",
-  modified: "修改",
-  stable: "稳定",
-};
-
-const statusTone: Record<SkillNode["status"], string> = {
-  added: "gold",
-  removed: "red",
-  modified: "blue",
-  stable: "default",
 };
 
 function buildNodeEvidence(node: SkillNode): Evidence[] {
@@ -225,41 +215,22 @@ export function SkillsWorkbench({
               selectedId={selectedId}
             />
           </div>
-        </div>
 
-        {selectedNode ? (
-          <aside
-            className="graph-metrics-bar"
-            aria-label={`${selectedNode.label} 节点指标`}
-          >
-            <div className="graph-metrics-info">
-              <strong>{selectedNode.label}</strong>
-              <span className="graph-metrics-id">
-                {`${selectedNode.capabilityId}${selectedNode.pointName ? `.${selectedNode.pointName}` : ""}`}
-              </span>
-              <Tag>{`${roleLabels[selectedNode.role]} · ${selectedNode.techStack}`}</Tag>
-              <Tag color={statusTone[selectedNode.status]}>
-                {statusLabels[selectedNode.status]}
-              </Tag>
-              <span className="graph-metrics-meta">
-                {`${selectedNode.evidenceIds.length} 条证据`}
-              </span>
-            </div>
-            <div className="graph-metrics-actions">
-              <Button
-                icon={<ArrowSquareOut aria-hidden size={15} />}
-                onClick={() =>
-                  setEvidenceItem(
-                    toChangeItem(selectedNode, fixture.context),
-                  )
+          <aside className="skill-graph-detail" aria-label="节点详情">
+            {selectedNode ? (
+              <SkillNodeDetail
+                allNodes={fixture.nodes}
+                node={selectedNode}
+                onOpenEvidence={() =>
+                  setEvidenceItem(toChangeItem(selectedNode, fixture.context))
                 }
-                size="small"
-              >
-                查看证据
-              </Button>
-            </div>
+                onSelectNode={setSelectedId}
+              />
+            ) : (
+              <SkillNodeDetailEmpty />
+            )}
           </aside>
-        ) : null}
+        </div>
       </section>
 
       <EvidenceDrawer

@@ -10,7 +10,6 @@ import {
 
 import { AppShell } from "@/components/app-shell";
 
-// ponytail: 演示数据；F-T1.1 接工作台 API 后改为查询函数读取。
 const dashboardCounts = [
   {
     href: "/new-jobs",
@@ -42,6 +41,13 @@ const dashboardCounts = [
   },
 ];
 
+const temporalEntry = {
+  href: "/temporal",
+  label: "时间情报",
+  value: "4",
+  meta: "信号流 / 趋势回测 / 预测复盘 / 影响建议",
+};
+
 export default function DashboardPage() {
   return (
     <AppShell>
@@ -64,6 +70,13 @@ export default function DashboardPage() {
             </li>
           ))}
         </ul>
+        <Link className="dashboard-temporal-card" href={temporalEntry.href}>
+          <span className="dashboard-card-label">{temporalEntry.label}</span>
+          <strong className="dashboard-card-value">
+            {temporalEntry.value} 个次级视图
+          </strong>
+          <span className="dashboard-card-meta">{temporalEntry.meta}</span>
+        </Link>
       </section>
     </AppShell>
   );

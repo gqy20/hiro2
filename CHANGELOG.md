@@ -32,6 +32,18 @@
 
 - 完成 F-T4.3 响应式 + 字体 token + 空状态 CTA：`globals.css` :root 加 `--font-mono` token，4 处硬编码「IBM Plex Mono」统一改 `var(--font-mono)`；加 `@media (max-width: 480px)` 断点覆盖 390px 视口（workbench padding 减、3 栏转单列、metric grid 单列、标题字号 -1）。`workflow-ui.tsx` FixtureState 加 `action` prop，4 个 workbench empty state 补明确 CTA（jobs 回工作台、new-jobs 浏览现有岗位、skills 查看岗位更新、diagnosis 查看岗位）。10 个 e2e 用例全过。
 
+- 完成 F-T4.7/4.6/4.8/4.9 时间情报四件套：新增 4 个次级页面 `/temporal/{signals,forecasts,retrospect,suggestions}` + `/temporal` 索引页，全部 mock 数据驱动（不接后端 B-T2/B-T4）：
+  * 信号流用 antd `Timeline` 渲染 25 条 TrendSignal + Top 5 技能簇摘要 + 3 档时间窗筛选
+  * 趋势回测读 `data/processed/wechat-mp/backtest-h{30,60,90}.json` 真实数据，含 3 horizon + 144 条预测 + accuracy vs flat_baseline + 纯手写 SVG 折线（不引图表库）
+  * 预测复盘用 4 张 `Statistic` 卡 + 6 类误差分布
+  * 影响建议列表支持接受/修改/拒绝三按钮（`review-ui.tsx` 的 `ReviewActions` 新增 `onModify` 可选 prop），按 `contracts.md:108`「不能与已发布岗位事实并列」原则不污染 `/jobs` 主页
+  * 数据来源：`lib/temporal-fixture.ts` 一次性从 `wechat-mp/` 4 个 JSONL/JSON 读出 → 返回 `TemporalDataset { backtests, backtestRecords, forecasts, signals, suggestions }`
+  * 类型：`lib/temporal.ts` 严格照 `contracts.md:131-279` DTO 形状
+- `app/page.tsx` dashboard 加 1 张「时间情报」跳转卡（仍保持 6 项一级导航不变）
+- 路由级 loading.tsx / error.tsx 全部 5 页（`/temporal`、`/temporal/{signals,forecasts,retrospect,suggestions}`）照 jobs/skills/diagnosis 模板
+- `globals.css` 加 ~250 行 `.temporal-*` 样式（含 1180px 响应式断点）
+- 10 个 e2e 用例全过（regression 通过）
+
 - 建立 D8 回测基础设施：SkillSnapshot 特征层（事实分级加权）、确定性方向预测 v1、月度滚动回测（双 as_of 闸门防泄漏）；v1 动量规则实测低于全平基线，错误集中在爆发后回落，结论如实记录。
 
 - 完成 D4 全量归一化验收：697 篇事件 12605 次提及，中高频覆盖率 85.2%、高频 94.0%；离线归一任务（skillmap）产出 1053 个候选，665 个高置信合入习得词典；时间闸门实测词典随 as_of 正确截断。

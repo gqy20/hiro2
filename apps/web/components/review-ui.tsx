@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle, XCircle } from "@phosphor-icons/react";
+import { CheckCircle, PencilSimple, XCircle } from "@phosphor-icons/react";
 import { Button, Tooltip } from "antd";
 
 import type { ReviewStatus } from "@/lib/job-update";
@@ -54,14 +54,28 @@ export function ConfidenceMeter({
 export function ReviewActions({
   label,
   onAccept,
+  onModify,
   onReject,
 }: {
   label: string;
   onAccept: () => void;
+  onModify?: () => void;
   onReject: () => void;
 }) {
   return (
     <span className="review-actions" aria-label="审核动作">
+      {onModify ? (
+        <Tooltip title="修改建议">
+          <Button
+            aria-label={`修改 ${label}`}
+            className="review-action review-action-modify"
+            icon={<PencilSimple size={16} />}
+            onClick={onModify}
+            size="small"
+            type="text"
+          />
+        </Tooltip>
+      ) : null}
       <Tooltip title="接受变化">
         <Button
           aria-label={`接受 ${label}`}

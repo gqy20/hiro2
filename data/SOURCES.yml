@@ -33,3 +33,19 @@ sources:
     time_range: [2025-03, 2026-08]
     ingestion_mode: backfill
     notes: AI 早报归档 697 篇 Markdown + jueya-index.csv 索引（权威元数据以索引为准）
+
+  - id: jd-boss
+    type: job_board              # boss直聘：标注素材（无发布日期）
+    path: data/raw/jd/boss
+    license: 平台公开页面，仅限研究使用，不分发原文
+    time_range: [2026-08, 2026-08]
+    ingestion_mode: backfill
+    notes: OpenCLI 标签页 + mitm 网络层捕获；92 搜索 + 85 可用详情，明文薪资与技能标签
+
+  - id: jd-51job-har
+    type: job_board              # 51job 新采集（jdauto 通路）
+    path: data/raw/jd/opencli
+    license: 平台公开页面，仅限研究使用，不分发原文
+    time_range: [2025-09, 2026-08]
+    ingestion_mode: backfill
+    notes: 远程浏览器 CDP 通路；386 搜索（六城）+ 237 详情，与 jd-opencli 同目录按文件区分（jd_har_*）

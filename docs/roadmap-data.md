@@ -89,6 +89,11 @@ API开发    -> REST / OpenAPI / 认证 / 权限 / 接口监控
 
 ### D5 JD 详情与技能证据
 
+Phase 0 完成（2026-08-25）：
+- 存量修复：70 条 detail 全部归位（51job title 按 jobId join 搜索层修复、公司四列错位校正、location 拆分；boss 22 条本就干净），产出 `norm-jd.jsonl`。可用 38 条（51job 18 条带日期 + boss 20 条无日期），32 条 desc 不足（51job 反爬空页）。
+- 搜索层：1190 -> 1150（去重 40）；带日期的 51job 集中在 2026-03~07（556 条）；**2025 基准窗仅 16 条且无法通过当前搜索补齐**（平台只留存在招职位）——主案例 2 两窗口调整为 基准 2026-03~04 / 观察 2026-06~07，或以 Excel 专家基线为基准。
+- 补抓清单：`data/processed/jd-opencli/fetch-plan.md`（P0 AI Agent 工程师 / AI 应用工程师；沿用旧 opencli 管道 KEYWORDS，需在装有 opencli 的机器执行，详情按 2.5 倍冗余）。
+
 JD 分为：
 
 ```text

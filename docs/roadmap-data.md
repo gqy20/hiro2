@@ -96,6 +96,8 @@ Phase 0 完成（2026-08-25）：
 - 补抓通路（2026-08-25 打通）：`scripts/jdserve.py`（远程浏览器栈：Xvfb+Chrome/CDP+noVNC）→ 用户 noVNC 登录并手动搜索一次"焐热"WAF 信誉 → `scripts/jdauto.py run/detail` 在同一浏览器内自动抓搜索层与详情（冷浏览器/纯 cookie 注入均被软封锁，实测唯一可行通路）；`scripts/jdlisten.py` 为手动浏览时的被动监听兜底。已抓 6 关键词 115 个去重职位（100% 带发布日期）。
 - boss 通路（2026-08-25 打通）：boss 检测任何调试器附着（CDP/devtools/扩展 debugger）即返回空数据或刷新循环；唯一通路 = OpenCLI 扩展仅创建标签页（不附着）+ mitmproxy 网络层截获（`scripts/mitmjd.py`，页面零感知，`__zp_stoken__` 由页面正常计算）。`scripts/jdboss.py run` 已抓 6 关键词 92 条（含明文薪资与 skills 标签，54/90 带技能；无发布日期，仅作标注素材）。jdserve 已集成 mitm 启停。
 
+JD 解析完成（2026-08-25）：`prompts/jd-skill.yml` v2 + `backend/extraction` + `scripts/jdxtract.py`，三源合并 342 条全量解析（337 成功 / 5 隔离），每条含职责、任职要求（[必备]/[加分] 标记）、技能原词、词典归一、以及模型语义领域判定 `is_ai_role + domain_reason`（266 条 AI 域，71 条非 AI 带理由可审计）——**staged 层不丢数据，curated 层按判定过滤**。AI 域技能提及 3536 次，归一命中 37%；高频能力域：ML/DL 205、AI Agent 190、Python 186、LLM 应用 138、RAG 112。51job 扩采后搜索层 386 条（六城覆盖），详情可用 219+（158 条待冷却后续抓）；boss 搜索 92 条、详情可用 85。
+
 JD 分为：
 
 ```text

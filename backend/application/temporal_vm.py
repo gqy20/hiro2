@@ -104,8 +104,13 @@ def build_temporal() -> TemporalVM:
             )
         )
         records.extend(
-            BacktestRecordVM(as_of=r["as_of"], skill_id=r["skill_id"], predicted=r["predicted"],
-                             actual=r["actual"], hit=r["hit"])
+            BacktestRecordVM(
+                as_of=r["as_of"],
+                skill_id=r["skill_id"],
+                predicted=r["predicted"],
+                actual=r["actual"],
+                hit=r["hit"],
+            )
             for r in d["records"][:30]  # 截断防过大
         )
 
@@ -165,14 +170,36 @@ class SkillGraphVM(_VM):
 
 
 _TECH_MAP = {
-    "cap_01": "LLM", "cap_02": "LLM", "cap_03": "LLM", "cap_04": "Agent",
-    "cap_05": "多模态", "cap_06": "RAG", "cap_07": "数据", "cap_08": "数据",
-    "cap_09": "数据", "cap_10": "数据", "cap_11": "数据", "cap_12": "工程",
-    "cap_13": "工程", "cap_14": "工程", "cap_15": "工程", "cap_16": "工程",
-    "cap_17": "工程", "cap_18": "工程", "cap_19": "治理", "cap_20": "治理",
-    "cap_21": "工程", "cap_22": "工程", "cap_23": "工程", "cap_24": "工程",
-    "cap_25": "工程", "cap_26": "工程", "cap_27": "工程", "cap_28": "工程",
-    "cap_29": "工程", "cap_30": "治理",
+    "cap_01": "LLM",
+    "cap_02": "LLM",
+    "cap_03": "LLM",
+    "cap_04": "Agent",
+    "cap_05": "多模态",
+    "cap_06": "RAG",
+    "cap_07": "数据",
+    "cap_08": "数据",
+    "cap_09": "数据",
+    "cap_10": "数据",
+    "cap_11": "数据",
+    "cap_12": "工程",
+    "cap_13": "工程",
+    "cap_14": "工程",
+    "cap_15": "工程",
+    "cap_16": "工程",
+    "cap_17": "工程",
+    "cap_18": "工程",
+    "cap_19": "治理",
+    "cap_20": "治理",
+    "cap_21": "工程",
+    "cap_22": "工程",
+    "cap_23": "工程",
+    "cap_24": "工程",
+    "cap_25": "工程",
+    "cap_26": "工程",
+    "cap_27": "工程",
+    "cap_28": "工程",
+    "cap_29": "工程",
+    "cap_30": "治理",
 }
 
 
@@ -187,10 +214,17 @@ def build_skill_graph(job_version_id: str = "ai-agent-v2") -> SkillGraphVM:
 
     nodes, edges = [], []
     # 根节点（岗位）
-    nodes.append(SkillNodeVM(
-        id="root", label=job.get("title", job_version_id), capability_id="root",
-        role="required", status="added", position={"x": 400, "y": 40}, tech_stack="LLM",
-    ))
+    nodes.append(
+        SkillNodeVM(
+            id="root",
+            label=job.get("title", job_version_id),
+            capability_id="root",
+            role="required",
+            status="added",
+            position={"x": 400, "y": 40},
+            tech_stack="LLM",
+        )
+    )
     caps_file = P / "capability-matrix" / "capabilities.json"
     if caps_file.is_file():
         caps = json.loads(caps_file.read_text(encoding="utf-8"))["capabilities"]
@@ -200,14 +234,18 @@ def build_skill_graph(job_version_id: str = "ai-agent-v2") -> SkillGraphVM:
             is_pref = sid in preferred
             if not (is_req or is_pref):
                 continue
-            nodes.append(SkillNodeVM(
-                id=sid, label=c["name"], capability_id=sid,
-                role="required" if is_req else "preferred",
-                status="added" if is_req else "stable",
-                aliases=c.get("aliases", [])[:3],
-                position={"x": 400 + 280 * (1 if i % 2 else -1), "y": 140 + (i // 2) * 90},
-                tech_stack=_TECH_MAP.get(sid, "工程"),
-            ))
+            nodes.append(
+                SkillNodeVM(
+                    id=sid,
+                    label=c["name"],
+                    capability_id=sid,
+                    role="required" if is_req else "preferred",
+                    status="added" if is_req else "stable",
+                    aliases=c.get("aliases", [])[:3],
+                    position={"x": 400 + 280 * (1 if i % 2 else -1), "y": 140 + (i // 2) * 90},
+                    tech_stack=_TECH_MAP.get(sid, "工程"),
+                )
+            )
             edges.append(SkillEdgeVM(id=f"e-root-{sid}", source="root", target=sid))
     # 技能点
     skills_yml = ROOT / "data" / "SKILLS.yml"
@@ -221,20 +259,33 @@ def build_skill_graph(job_version_id: str = "ai-agent-v2") -> SkillGraphVM:
                 continue
             for j, (pt, _) in enumerate(entry.get("points", [])):
                 pid = f"{cap}.{pt}"
-                nodes.append(SkillNodeVM(
-                    id=pid, label=pt, capability_id=cap, point_name=pt,
-                    role="preferred", status="stable",
-                    position={"x": 400 + (j % 3 - 1) * 120 + (280 if cap in required else -280),
-                              "y": 400 + j * 60},
-                    tech_stack=_TECH_MAP.get(cap, "工程"),
-                ))
+                nodes.append(
+                    SkillNodeVM(
+                        id=pid,
+                        label=pt,
+                        capability_id=cap,
+                        point_name=pt,
+                        role="preferred",
+                        status="stable",
+                        position={
+                            "x": 400 + (j % 3 - 1) * 120 + (280 if cap in required else -280),
+                            "y": 400 + j * 60,
+                        },
+                        tech_stack=_TECH_MAP.get(cap, "工程"),
+                    )
+                )
                 edges.append(SkillEdgeVM(id=f"e-{cap}-{pid}", source=cap, target=pid))
 
     return SkillGraphVM(
         run={"id": "skill-graph-v1", "datasetVersion": "v6", "status": "REVIEWING"},
-        context={"jobTitle": job.get("title", ""), "baselineVersion": "v1",
-                 "targetVersion": job_version_id, "timeWindow": job.get("valid_from", "")},
-        nodes=nodes, edges=edges,
+        context={
+            "jobTitle": job.get("title", ""),
+            "baselineVersion": "v1",
+            "targetVersion": job_version_id,
+            "timeWindow": job.get("valid_from", ""),
+        },
+        nodes=nodes,
+        edges=edges,
         filter_options={
             "techStacks": list(set(_TECH_MAP.values())),
             "roles": ["required", "preferred"],
@@ -281,14 +332,19 @@ def build_tasks() -> TaskListVM:
         for i, r in enumerate(rows):
             done_col = next((c for c in r if "?" in c), "")
             status = "RESOLVED" if r.get(done_col, "").strip() else "PENDING"
-            tasks.append(ReviewTaskVM(
-                task_id=f"task-{task_type}-{i:03d}",
-                task_type=task_type,
-                source_record_id=r.get("jd_id", r.get("event_id", "")),
-                status=status,
-                priority="high" if i < 10 else "medium",
-                system_output={"title": r.get("职位名", r.get("标题", "")),
-                               "verdict_col": done_col},
-            ))
-    return TaskListVM(tasks=tasks, total=len(tasks),
-                      pending=sum(1 for t in tasks if t.status == "PENDING"))
+            tasks.append(
+                ReviewTaskVM(
+                    task_id=f"task-{task_type}-{i:03d}",
+                    task_type=task_type,
+                    source_record_id=r.get("jd_id", r.get("event_id", "")),
+                    status=status,
+                    priority="high" if i < 10 else "medium",
+                    system_output={
+                        "title": r.get("职位名", r.get("标题", "")),
+                        "verdict_col": done_col,
+                    },
+                )
+            )
+    return TaskListVM(
+        tasks=tasks, total=len(tasks), pending=sum(1 for t in tasks if t.status == "PENDING")
+    )

@@ -108,11 +108,7 @@ def cmd_stop() -> int:
 
 
 def cmd_status() -> int:
-    try:
-        urllib.request.urlopen("http://127.0.0.1:8888", timeout=1)
-        mitm = True
-    except Exception as exc:  # noqa: BLE001 - 连接被拒=端口活着；其它错误也视为在监听
-        mitm = not isinstance(exc, urllib.error.URLError) or "refused" not in str(exc).lower()
+    # mitmdump 存活检查走进程匹配（8888 端口语义见 status 的 mitmdump 行）
     ok = {
         "Xvfb": _alive("Xvfb :99"),
         "Chrome/CDP": _cdp_ok(),

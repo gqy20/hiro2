@@ -1,0 +1,37 @@
+李同学  
+138****0000 | li.tongxue@example.com | 广东深圳 | 求职意向：AI Agent 开发工程师（实习）
+
+教育背景  
+- 华南理工大学，计算机科学与技术，本科在读（2026届），GPA 3.6/4.0  
+- 相关课程：机器学习、自然语言处理、数据结构与算法、数据库系统  
+
+技能清单  
+- 精通 Python（3.9+），熟悉异步编程（asyncio/aiohttp）与类型注解，使用年限 2 年  
+- 熟悉 LangChain（0.2.x）框架，掌握 Agent 循环、工具调用（Tool/Function Calling）、Memory 机制与 Prompt 模板工程  
+- 熟悉 LangGraph 构建有状态/多节点工作流，了解 ReAct 与 Plan-and-Execute 模式差异  
+- 熟悉常用嵌入模型（text-embedding-3-small）与向量库（Chroma、FAISS），掌握 RAG 检索流程（分块、重排、Top-K）  
+- 了解 OpenAI/Anthropic API 与流式输出（SSE），了解 Dify/Coze 低代码工作流编排  
+- 了解 FastAPI（0.100+）与 Docker 基础，熟悉 Git 协作流程  
+
+项目经历  
+- 项目一：客服工单智能分流 Agent（2025.03 – 2025.06）  
+  - 职责：基于 LangChain 构建多工具 Agent，集成工单系统查询、知识库检索与时效计算工具，用于自动分类并派发工单  
+  - 技术栈：Python、LangChain、LangGraph、Chroma、FastAPI、GPT-4o-mini  
+  - 成果：Agent 在 300 条测试工单上准确率达 87%，平均响应耗时 1.8 秒；实现人工复核接口，降低误判率 15%  
+
+- 项目二：个人知识库问答助手（2024.10 – 2025.01）  
+  - 职责：实现 RAG 管线（文档解析 → 分块 → 向量化 → 混合检索），设计基于来源引用的回答生成 Prompt  
+  - 技术栈：LangChain、text-embedding-3-small、FAISS、Streamlit  
+  - 成果：在 200 页 PDF 文档集上召回率提升至 0.79（对比关键词检索），输出答案附带引用页码，支持多轮追问上下文  
+
+- 项目三：日程管理 + 邮件提醒工具调用 Agent（2024.06 – 2024.08）  
+  - 职责：定义自定义工具 schema（创建/查询日历、发送邮件），使用 Function Calling 机制处理多轮对话意图解析  
+  - 技术栈：Python、LangChain、OpenAI Function Calling、APScheduler、SMTP  
+  - 成果：在 50 条复杂指令（如“下周二下午3点前提醒我回复张工”）测试中，工具调用意图识别准确率 92%  
+
+- 项目四：GitHub Issue 分类工作流（课程设计，2024.03 – 2024.05）  
+  - 职责：利用 LangGraph 构建三节点工作流（预处理 → 分类 → 分配标签），支持失败重试与状态回滚  
+  - 技术栈：LangGraph、LangChain、scikit-learn、GitPython  
+  - 成果：对 1,000 条 Issue 数据分类 F1 值达 0.71，相比纯 prompt 分类提升 12%  
+
+可实习时间：每周 4 天以上，持续 6 个月以上。

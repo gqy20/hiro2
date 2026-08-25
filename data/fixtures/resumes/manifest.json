@@ -1,0 +1,126 @@
+{
+  "synthetic": true,
+  "count": 20,
+  "items": [
+    {
+      "file": "synth_agent_junior_00.pdf",
+      "track": "agent",
+      "level": "junior",
+      "synthetic": true
+    },
+    {
+      "file": "synth_agent_senior_02.txt",
+      "track": "agent",
+      "level": "senior",
+      "synthetic": true
+    },
+    {
+      "file": "synth_agent_mid_01.pdf",
+      "track": "agent",
+      "level": "mid",
+      "synthetic": true
+    },
+    {
+      "file": "synth_llm_mid_04.txt",
+      "track": "llm",
+      "level": "mid",
+      "synthetic": true
+    },
+    {
+      "file": "synth_llm_junior_03.txt",
+      "track": "llm",
+      "level": "junior",
+      "synthetic": true
+    },
+    {
+      "file": "synth_llm_senior_05.txt",
+      "track": "llm",
+      "level": "senior",
+      "synthetic": true
+    },
+    {
+      "file": "synth_rag_mid_07.txt",
+      "track": "rag",
+      "level": "mid",
+      "synthetic": true
+    },
+    {
+      "file": "synth_rag_junior_06.txt",
+      "track": "rag",
+      "level": "junior",
+      "synthetic": true
+    },
+    {
+      "file": "synth_rag_senior_08.txt",
+      "track": "rag",
+      "level": "senior",
+      "synthetic": true
+    },
+    {
+      "file": "synth_bigdata_junior_09.txt",
+      "track": "bigdata",
+      "level": "junior",
+      "synthetic": true
+    },
+    {
+      "file": "synth_bigdata_mid_10.txt",
+      "track": "bigdata",
+      "level": "mid",
+      "synthetic": true
+    },
+    {
+      "file": "synth_bigdata_senior_11.txt",
+      "track": "bigdata",
+      "level": "senior",
+      "synthetic": true
+    },
+    {
+      "file": "synth_algo_junior_12.txt",
+      "track": "algo",
+      "level": "junior",
+      "synthetic": true
+    },
+    {
+      "file": "synth_algo_senior_14.txt",
+      "track": "algo",
+      "level": "senior",
+      "synthetic": true
+    },
+    {
+      "file": "synth_algo_mid_13.txt",
+      "track": "algo",
+      "level": "mid",
+      "synthetic": true
+    },
+    {
+      "file": "synth_career_change_junior_15.txt",
+      "track": "career_change",
+      "level": "junior",
+      "synthetic": true
+    },
+    {
+      "file": "synth_career_change_mid_16.txt",
+      "track": "career_change",
+      "level": "mid",
+      "synthetic": true
+    },
+    {
+      "file": "synth_career_change_senior_17.txt",
+      "track": "career_change",
+      "level": "senior",
+      "synthetic": true
+    },
+    {
+      "file": "synth_agent_junior_18.docx",
+      "track": "agent",
+      "level": "junior",
+      "synthetic": true
+    },
+    {
+      "file": "synth_agent_mid_19.docx",
+      "track": "agent",
+      "level": "mid",
+      "synthetic": true
+    }
+  ]
+}

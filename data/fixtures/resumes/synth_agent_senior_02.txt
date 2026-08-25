@@ -1,0 +1,42 @@
+李同学  
+138****0000 | li.tong@example.com | 广东深圳 | 8 年后端与 AI 工程经验  
+
+教育背景  
+- 华中科技大学 计算机科学与技术 本科 2012-2016  
+
+技能清单  
+- 精通 Python（8 年）与 LangChain/LangGraph（4 年），熟练构建 ReAct、Plan-and-Execute 多智能体协作框架  
+- 熟悉主流 Agent 工具生态：Function Calling、OpenAI Assistants API、Claude Tool Use、AutoGen、CrewAI  
+- 熟悉工作流编排：n8n、LangSmith 链路追踪、Apache Airflow（3 年）  
+- 熟悉向量数据库：FAISS、Milvus、Pinecone，以及 RAG 优化策略（HyDE、重排序、混检）  
+- 熟悉 LLM 微调与评估：LoRA、Ollama 部署、RAGAS 评估指标  
+- 了解 Go/Java（可写生产代码），熟悉 Docker、K8s、Redis、Kafka  
+
+项目经历  
+
+项目一：企业级智能客服 Agent 平台（主导架构）  
+- 基于 LangGraph 构建有状态客服工作流，集成意图识别、多轮对话、订单查询/退改工具调用，支持人工接管  
+- 设计动态工具选择与容错重试机制，工具调用成功率从 72% 提升至 94%  
+- 搭建 RAG 知识库（Milvus + BGE 模型），引入查询改写与重排序，FAQ 命中准确率 89%  
+- 技术栈：LangGraph、FastAPI、Milvus、Redis Stream、Prometheus  
+
+项目二：数据分析 Copilot（技术负责，带 5 人小组）  
+- 开发自然语言到 SQL 的 Agent，支持多数据库方言与权限过滤，集成图表生成工具  
+- 实现基于 ReAct 的推理循环，利用少样本示例与错误反馈修正 SQL，生成正确率 83%（基于 Spider 测试集调优）  
+- 上线后周活 200+ 内部用户，平均查询耗时从 15 分钟降到 40 秒  
+- 技术栈：LangChain、OpenAI 函数调用、PostgreSQL、Streamlit、LangSmith  
+
+项目三：多智能体招聘筛选流水线（核心开发）  
+- 使用 CrewAI 构建筛选官与面试官 Agent 协作流程，自动解析简历、技术评估、生成面试报告  
+- 封装自定义工具调用 ATS 系统 API 与代码库扫描器，通过上下文压缩减少 Token 消耗 40%  
+- 技术栈：CrewAI、Claude API、Qdrant、Docker Compose  
+
+项目四：自动化运维工单 Agent（独立交付）  
+- 对接监控系统事件流，Agent 自动分类告警、执行日志排查脚本并调用工单系统  
+- 基于 LangChain 工具调用链实现权限校验与操作回滚，误报率降低 35%  
+- 技术栈：LangChain、Kafka、Ansible、SQLite、Grafana  
+
+自我评价  
+- 主持过多个 Agent 从 POC 到生产落地的全过程，具备复杂工作流拆解与团队指导经验  
+- 注重系统可观测性与成本控制，擅长在业务场景中平衡模型能力与可靠性  
+- 持续关注 Agent 工程化前沿（MCP、GraphRAG），并输出内部技术文档与分享

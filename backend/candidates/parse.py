@@ -31,7 +31,7 @@ class PdfParser:
 
         doc = fitz.open(path)
         try:
-            return "\n".join(page.get_text("text") for page in doc)
+            return "\n".join(doc[i].get_text("text") for i in range(doc.page_count))
         finally:
             doc.close()
 
@@ -43,10 +43,12 @@ class DocxParser:
         from docx import Document
 
         doc = Document(str(path))
-        parts = [p.text for p in doc.paragraphs if p.text.strip()]
-        for table in doc.tables:
-            for row in table.rows:
-                cells = [c.text.strip() for c in row.cells if c.text.strip()]
+        paragraphs = list(doc.paragraphs)  # 类型桩不完整，显式转 list
+        parts = [p.text for p in paragraphs if p.text.strip()]
+        tables = list(doc.tables)
+        for table in tables:
+            for row in list(table.rows):
+                cells = [c.text.strip() for c in list(row.cells) if c.text.strip()]
                 if cells:
                     parts.append(" | ".join(cells))
         return "\n".join(parts)
@@ -117,3 +119,73 @@ def build_profile(
 
 
 from .models import CandidateProfile  # noqa: E402,F401  (re-export for callers)
+
+
+class ResumeAliasResult(BaseModel):
+    """单条未命中提及的 LLM 归派候选。"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    mention: str = Field(min_length=1, max_length=60)
+    is_skill: bool
+    capability_id: str | None = Field(default=None, pattern=r"^cap_\d{2}$")
+    confidence: float = Field(ge=0.0, le=1.0)
+    reason: str = Field(default="", max_length=30)
+
+
+class ResumeAliasList(BaseModel):
+    """对应 prompts/resume-alias.yml 的 output_schema。"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    results: list[ResumeAliasResult] = Field(default_factory=list, max_length=40)
+
+
+async def llm_resolve_unmatched(mentions: list[str], context: str) -> dict[str, ResumeAliasResult]:
+    """LLM 归一层：词典未命中的提及批量归派，返回 mention -> 候选。
+
+    只产出候选（capability_id + 置信度 + 理由），置信度 >= 0.6 才被采用；
+    打分与岗位侧归一不受影响（岗位/日报侧仍纯词典，回测可复现）。
+    """
+    from ..infra.llm.promptspec import load_prompt
+    from ..infra.llm.provider import build_provider
+    from ..infra.llm.settings import LLMSettings
+    from ..skills.resolver import load_resolver
+
+    if not mentions:
+        return {}
+    spec = load_prompt("resume-alias")
+    provider = build_provider(LLMSettings())
+    resolver = load_resolver()
+    caps = "\n".join(
+        f"{e.capability_id} {e.name}（技能点: {'、'.join(p[0] for p in e.points) or '无'}）"
+        for e in resolver.entries
+    )
+    items = "\n".join(f"- {m}（上下文: {context[:120]}）" for m in mentions)
+    message = (
+        f"未命中的技能提及:\n{items}\n\n能力域清单:\n{caps}\n\n任务: {spec.task}。只输出 JSON。"
+    )
+    last_err = "unknown"
+    for attempt in range(2):
+        user = message if attempt == 0 else f"{message}\n\n上次失败: {last_err}\n重新输出 JSON。"
+        try:
+            raw = await provider.complete(
+                system=spec.system,
+                user=user,
+                max_tokens=int(spec.limits.get("max_tokens", 1500)),
+                timeout=float(spec.limits.get("timeout_seconds", 120)),
+            )
+            t = raw.strip()
+            if t.startswith("```"):
+                t = t.split("\n", 1)[1]
+                if t.rstrip().endswith("```"):
+                    t = t.rstrip()[:-3]
+            data = json.loads(t)
+            parsed = ResumeAliasList.model_validate(data)
+            return {r.mention: r for r in parsed.results}
+        except Exception as exc:  # noqa: BLE001
+            last_err = f"{type(exc).__name__}: {exc}"[:150]
+    return {}
+
+
+import json  # noqa: E402

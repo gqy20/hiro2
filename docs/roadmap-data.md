@@ -146,6 +146,12 @@ Markdown -> ReportEvent -> Evidence -> TrendSignal -> SignalCluster
 
 退出条件：岗位、技能、趋势和匹配结论均能通过 `evidence_id` 回链原文；正式岗位字段和关键匹配结论的证据覆盖率为 100%；来源冲突、单一来源热点和低置信结论进入审核队列，不能静默聚合为岗位事实。
 
+### 候选人测试集与 AI 归一层（2026-08-25）
+
+- **双层归一**：词典（确定性，岗位/日报侧不变、回测可复现）+ 简历专属 LLM 归层（`prompts/resume-alias.yml`，置信度>=0.6 采纳，每条带 reason 可人工修正）。20 份合成简历实测：658 次提及，词典命中 246（37%）+ LLM 归派 411（63%）+ 未命中 1，**综合归一率 99%**。
+- **合成测试集**：`scripts/genresume.py`，LLM 按 方向(6)×级别(3) 矩阵生成 20 份（txt 16 + PyMuPDF 生成 PDF 2 + python-docx 生成 DOCX 2，练解析器），`data/fixtures/resumes/` + manifest，synthetic 标记永不进评测指标。
+- **批量匹配**：20 份画像 vs ai-agent-v2 的 overall 分布 0.2~0.94，方向区分度清晰（Agent/LLM/RAG 方向 senior 0.82~0.94 零短板；算法/大数据方向 0.2~0.46 短板集中在 AI Agent/LLM 应用——跨方向转岗的真实差距信号）。
+
 ### 主案例 3：人岗诊断管线（2026-08-25）
 
 `backend/candidates`（PyMuPDF/python-docx 薄适配器 + resume-parse LLM 抽取 + 画像构建）与 `backend/matching`（确定性匹配引擎 match-v1 + 学练赛证路径模板）。前置完成岗位版本发布：`scripts/jobpub.py` 校验审核留痕（review-actions accepted）后固化 `published/ai-agent-v2.json`（hash f0f3fdb4，发布后不可变，幂等保护）。合成简历端到端（candmatch demo，标注 synthetic 不进指标）：10/10 技能归一、overall 0.48、四档判定（已具备/初级部分/点级部分/缺失）、关键短板 = LLM应用 + SQL、6 步学练赛证路径。

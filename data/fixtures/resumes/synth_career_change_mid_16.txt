@@ -1,0 +1,32 @@
+个人信息
+
+王同学，男，1998年生，现居上海。138****0000，wang.tongxue@email.com，3年软件开发经验，其中1年AI应用落地经验。
+
+教育背景
+
+2016.09 - 2020.06 华东理工大学 软件工程 本科，GPA 3.4/4.0。主修数据结构、数据库、概率论与统计。毕业设计基于LSTM的电商评论情感分类系统。
+
+技能清单
+
+- 熟悉Python开发，2年经验，熟练使用NumPy、Pandas、Matplotlib进行数据处理与分析
+- 熟悉PyTorch框架，1年半经验，掌握CNN、Transformer等基础模型搭建与微调流程，能独立完成训练脚本编写
+- 熟悉LangChain与LlamaIndex，可构建基于RAG的问答应用，熟练使用ChromaDB与FAISS向量数据库
+- 熟悉HuggingFace Transformers库，使用过BERT、ChatGLM2、Qwen-7B等预训练模型进行文本分类与指令微调（LoRA）
+- 熟悉Flask与FastAPI，能快速部署AI模型服务（TorchServe + Docker）
+- 熟悉MySQL、Redis，熟悉SQL调优与索引设计
+- 了解Linux环境，熟悉Shell脚本与Git协作流程
+- 了解K8s与ModelScope的基本部署流程
+
+项目经历
+
+项目一：智能合同审查助手（2024.03 - 2024.09）
+职责：负责核心抽取与问答模块开发。基于中文BERT模型（RoBERTa-wwm-ext）微调进行合同条款类型识别（F1 0.86），抽取关键字段（金额、违约责任期限），使用正则+规则兜底。基于LlamaIndex构建RAG QA模块，向量库使用FAISS，嵌入模型使用m3e-base，支持附件PDF/Word解析。上线后效率提升3倍，服务FastAPI部署，QPS峰值约45。
+技术栈：Python 3.10 / PyTorch 2.0 / Transformers / LlamaIndex / FAISS / FastAPI
+
+项目二：智能客服工单分类与推荐系统（2023.06 - 2023.11，后端测试转岗后首个AI项目）
+职责：连续转岗学员，负责工单文本预处理及数据标注清洗。搭建基于TextCNN与FastText的基线模型，后迁移至BERT实现多标签分类（准确率0.82）。搭建flask服务，输出部门路由及相似历史工单推荐（余弦相似度+TF-IDF）。参与A/B测试，分流10%流量，人工处理时长下降22%。
+技术栈：Pandas / Scikit-learn / PyTorch / Flask / Milvus
+
+项目三：通用规则引擎及测试平台（2022.06 - 2023.03，原后端职责）
+职责：负责测试平台配置规则条件和操作流，用Python编写并优化Django REST接口。期间自修机器学习基础与数据分析，完成一个影评情感分析的小Demo用于个人转岗。在此项目中培养了快速定位问题和数据流梳理的能力。
+技术栈：Django / PostgreSQL / Redis

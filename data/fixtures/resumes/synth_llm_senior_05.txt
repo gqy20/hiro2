@@ -1,0 +1,31 @@
+李同学  
+138****0000 | lidemo@email.com | 上海 | 8年后端与AI工程经验  
+
+教育背景  
+- 浙江大学 计算机科学与技术 硕士（2014-2017）  
+
+技能清单  
+- 精通 Python（7年）、PyTorch（5年）、Transformers 库（4年），熟悉 C++（3年）  
+- 熟悉大模型微调全流程：LoRA/QLoRA、DeepSpeed（ZeRO-3）、FlashAttention-2、Accelerate  
+- 熟悉推理部署：vLLM（PagedAttention）、Triton Inference Server、TensorRT-LLM、ONNX Runtime  
+- 熟悉 LLM 应用开发：LangChain、RAG（FAISS/Milvus）、Prompt 工程、Function Calling  
+- 了解分布式训练：Megatron-LM、Horovod，了解模型量化（GPTQ/AWQ）与 KV Cache 优化  
+- 熟悉 Kubernetes、Docker、GitLab CI、Prometheus/Grafana 监控体系  
+
+项目经历  
+
+- 智能客服大模型微调与落地（2024.03 - 至今）  
+  职责：主导金融领域 7B/13B 模型微调，设计指令数据清洗与增强流程，使用 LoRA + DeepSpeed ZeRO-3 在 8*H800 上训练，loss 收敛稳定。负责推理服务化，基于 vLLM 部署并优化前缀缓存与动态批处理，单卡 QPS 从 12 提升至 38，首 token 延迟 <200ms。指导2名初级工程师完成数据管线。  
+  技术栈：PyTorch、Transformers、DeepSpeed、vLLM、HuggingFace PEFT  
+
+- 通用 RAG 知识库系统（2022.08 - 2024.02）  
+  职责：设计混合检索（BM25 + Dense），基于 BGE-M3 生成向量，使用 Milvus 存储并实现重排序（Cross-Encoder）。可处理多轮对话上下文改写与引用溯源，评测 F1 提升15%。服务使用 Kubernetes 部署，支持弹性伸缩与灰度发布。  
+  技术栈：LangChain、FAISS/Milvus、BGE、FastAPI、Redis、K8s  
+
+- 语音助手端侧意图识别模型优化（2020.01 - 2022.06）  
+  职责：将 BERT-base 蒸馏至 TinyBERT 并 INT8 量化，端侧推理延迟降低60%，内存占用下降70%。搭建自动化评测平台，负责模型版本管理与 A/B 测试。协助团队完成 CI/CD 流水线改造。  
+  技术栈：PyTorch、ONNX Runtime、TensorRT、模型蒸馏框架、Docker  
+
+- 早期推荐系统特征平台（2017.07 - 2019.12）  
+  职责：开发实时特征计算与存储模块，支持高并发读写（峰值 5k QPS）。参与特征监控与异常检测规则设计，保障线上稳定性。  
+  技术栈：Python、Flink、Redis、Kafka、MongoDB

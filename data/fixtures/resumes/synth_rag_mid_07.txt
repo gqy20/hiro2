@@ -1,0 +1,36 @@
+李同学  
+138****0000 | li.tong@example.com | 上海  
+求职意向：RAG 应用开发工程师 / 知识库系统工程师  
+
+教育背景  
+- 华东理工大学，计算机科学与技术，本科，2018-2022  
+
+技能清单  
+- 精通 Python（3 年），熟悉 FastAPI、LangChain（0.1.x）、LlamaIndex（0.9.x）  
+- 熟悉向量数据库：Milvus（2.3）、Chroma，了解 Elasticsearch（8.x）及 BM25 混合检索  
+- 熟悉文档解析：PyPDF2、pdfplumber、unstructured、Tesseract OCR，了解表格结构识别  
+- 了解主流 Embedding 模型（bge-m3、text-embedding-ada-002）及重排模型（bge-reranker）  
+- 熟悉 Docker、MySQL、Redis，了解 Kubernetes 部署与监控  
+
+项目经历  
+
+项目一：企业合同智能问答系统（2023.09-2024.05）  
+- 负责合同 PDF 的批量解析与清洗，采用 pdfplumber+unstructured 提取文本与表格，处理扫描件时接入 Tesseract OCR，解析成功率由 82% 提升至 96%  
+- 设计并实现基于 LangChain 的 RAG 流程，使用 bge-m3 生成向量，存入 Milvus 2.3，配合 BM25 做混合检索，并融合 bge-reranker 重排，最终 Top-5 召回准确率约 91%  
+- 针对长合同切分优化策略（按章节+滑动窗口），显著降低上下文截断导致的答案缺失  
+- 技术栈：Python、FastAPI、LangChain、Milvus、Redis、Docker  
+
+项目二：客服知识库辅助平台（2022.10-2023.08）  
+- 参与知识库内容结构化重构，将历史 FAQ 与操作手册转换为 markdown 文档，并建立索引更新任务  
+- 实现问句改写与同义词扩展，缓解口语化表达匹配不足问题；使用 LlamaIndex 构建检索节点，实测首轮命中率提升 15%  
+- 支持增量更新与权限隔离（基于 Redis 缓存与 Milvus partition），支持多租户隔离部署  
+- 技术栈：LlamaIndex、Chroma、FastAPI、MySQL、K8s  
+
+项目三：文档摘要与关键词提取工具（2022.02-2022.10）  
+- 独立开发面向技术文档的预处理管道，基于规则+TF-IDF提取关键词，生成段落摘要供检索预览  
+- 负责接口设计与联调，优化并发性能，响应时间从 3s 降至 800ms 内  
+- 技术栈：Python、jieba、scikit-learn、Flask  
+
+其他信息  
+- 熟悉 Git 协作流程，有 CI/CD 基础配置经验，可编写基础测试用例  
+- 关注 RAG 领域前沿，持续学习 GraphRAG 及多模态检索方向

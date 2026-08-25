@@ -1,0 +1,45 @@
+王同学  
+电话 138****0000 ｜ 邮箱 wang.tongxue@example.com ｜ 现居杭州 ｜ 3年AI应用开发经验  
+
+教育背景  
+浙江理工大学 - 计算机科学与技术（本科） ｜ 2018.09 - 2022.06  
+
+技能清单  
+- 精通 Python，熟悉 FastAPI/Flask 服务框架，熟练使用 async 并发编程，3年  
+- 精通 LangChain 框架，熟悉 Chain/Agent/Router 等核心组件，能独立设计复杂多代理协作流程，2年  
+- 熟悉 OpenAI/Anthropic 大模型 API 接入，掌握 function calling，自定义工具注册与异常回退机制，2年  
+- 熟悉工作流编排（n8n / LangGraph），掌握状态机、条件分支、并行节点与人工审批节点配置，1.5年  
+- 了解向量数据库（FAISS / ChromaDB）与 RAG 检索增强生成，熟悉 text-embedding 与相似度检索调优，2年  
+- 了解 Gradio/Streamlit 快速原型开发，懂 Docker 部署与云上发布，1年  
+
+项目经历  
+
+1. 智能客服工单分类与优先排班助手（LangChain + React Agent + FAISS）  
+在2023.06-2023.12中，开发了一个用于ITSM工单自动分类及优先级的Agents系统。负责设计Agent工具集（工单查询、SLA计算、员工状态查询）、设计故障等级与优先级的映射规则，以及基于LangChain的ReAct Agent编排流程。实测将工单驳回率降至9.2%，分类准确率达94.5%。技术栈包括：LangChain, FAISS, Flask, OpenAI embeddings, React。  
+
+2. 私有知识库问答机器人（LangChain + ChromaDB + llamacpp）  
+在2024.01-2024.04中，为公司内部构建了一套基于vLLM的RAG问答系统。采集并清洗了各类制度文档与研发文档约126份，使用ChromaDB做向量检索，结合LlamaIndex自研重排模块，压制了反问绝对模型幻觉。项目上线后，问答系统月度PV达2.3万次，用户满意度从7.1分升至8.9分。技术栈包括：LangChain, ChromaDB, Ollama, Streamlit, FLAN-T5。  
+
+3. 多Agent数据洞察与报表自动化（LangGraph + n8n + SQL Agent）  
+在2024.04-2024.08中，开展了一个面向销售大区经理的数据洞察Agent项目。设计了一个由研究Agent、数据库Agent与汇总Agent组成的并行协作申联，利用Tool方式调用动态SQL查询及csv下载接口，并将结果按统一Markdown报表模板生成周报。4人维护的周报从平均3小时压缩至15分钟，数据异常检测集中在边标触发，显著减少漏报。技术栈包括：LangGraph, n8n, SQL代理，LightGBM，LlamaIndex。  
+
+项目经历摘录与技能补充存放：  
+除了以上项目，还通过合作与主动研究，独立实现过基于CLIP的电商图搜与metadata生成，进行fine-tuning与deployment。目前正参与一个隐向量增强的推荐系统项目，正在设计用于多级召回与候选对打分的Agent工作流。  
+
+补充技能清单：  
+- 熟悉 HuggingFace Model Hub 与 transformers，能用 Trainer API 进行微调，了解 PEFT/LoRA 等技术，1年  
+- 掌握 Dify 与 Coze 平台，能快速搭起内置工具类Agent的平台级应用，10月  
+- 了解 Grafana 与 Prometheus 监控体系，能通过分析日志延迟分布优化服务性能  
+
+关于社区与文档的贡献：  
+- 拥有个人技术博客，写过两篇LangChain源码解析与一版简易版的RAG实践指南（https：//blog.example.com），攒下约172 star与13k访问。  
+- 在GitHub上有两个开源retro仓库，分别涉及自动化工作流编排与非结构化数据抽取，目前共收获42个star。  
+
+主观评价与团队协同概况  
+乐于钻研新技术，有较强的自驱力，偏好端到端落地，能独立解决模型幻觉与复杂工具链集成；同时能主动与产品经理、后端和运维沟通，快速推进项目。  
+
+适合职位方向：AI Agent开发工程师、LangChain后端开发、大模型应用落地工程师  
+  
+该简历全文总字数=约1050字（含项目细节与技能），基本适合2-4年经验。如需缩减或分拆为单页，可压缩“补充技能清单”与“项目经历摘录”部分。  
+  
+另外，替代信息（如电话/邮箱）已按您的要求占位。请按需微调真名、学校与具体链接。

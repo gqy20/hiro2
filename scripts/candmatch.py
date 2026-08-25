@@ -94,14 +94,30 @@ def cmd_parse(resume: Path, candidate_id: str) -> dict:
     text = parse_document(resume)
     run.log("candmatch", "doc_parsed", "progress", count=len(text))
     raw = asyncio.run(_extract(text))
-    from backend.candidates.parse import ResumeRawExtraction
+    from backend.candidates.parse import ResumeRawExtraction, llm_resolve_unmatched
 
     profile = build_profile(candidate_id, ResumeRawExtraction.model_validate(raw), load_resolver())
+    # 归一层 2/2：词典未命中的提及交 LLM 归派（候选 + 置信度 >= 0.6 才采用）
+    unresolved = [s.mention for s in profile.skills if not s.skill_id]
+    if unresolved:
+        cands = asyncio.run(llm_resolve_unmatched(unresolved, text[:400]))
+        for s in profile.skills:
+            if s.skill_id or s.mention not in cands:
+                continue
+            c = cands[s.mention]
+            if c.is_skill and c.capability_id and c.confidence >= 0.6:
+                s.skill_id = c.capability_id
+                s.resolved_by = "llm"
+                s.reason = c.reason
+            else:
+                s.resolved_by = "unmatched"
     CAND_DIR.mkdir(parents=True, exist_ok=True)
     out = CAND_DIR / f"{candidate_id}.json"
     out.write_text(profile.model_dump_json(indent=2), encoding="utf-8")
-    hit = sum(1 for s in profile.skills if s.skill_id)
-    metrics = {"candidate": candidate_id, "skills": len(profile.skills), "resolved": hit}
+    by = {}
+    for s in profile.skills:
+        by[s.resolved_by] = by.get(s.resolved_by, 0) + 1
+    metrics = {"candidate": candidate_id, "skills": len(profile.skills), "resolved_by": by}
     run.finish(metrics)
     return metrics
 

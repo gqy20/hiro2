@@ -235,7 +235,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="newjob")
     sub = parser.add_subparsers(dest="cmd", required=True)
     sub.add_parser("run")
-    args = parser.parse_args(argv)
+    parser.parse_args(argv)
     result = cmd_run()
     print(json.dumps(result, ensure_ascii=False))
     return 0

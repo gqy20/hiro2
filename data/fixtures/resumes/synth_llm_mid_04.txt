@@ -1,0 +1,36 @@
+- 姓名：李同学  
+- 求职意向：大模型应用工程师  
+- 电话：138****0000 | 邮箱：li_tongxue@example.com  
+- 教育背景：XX大学 计算机科学与技术 本科 2020年毕业  
+
+- 技能清单  
+  - 精通 Python（3年+），熟悉 PyTorch 2.1、Transformers 4.36、PEFT 0.7  
+  - 熟悉 LoRA/QLoRA 微调流程，掌握 DeepSpeed ZeRO-2/3，多卡训练经验  
+  - 熟悉 FastAPI、Flask，熟练搭建 RESTful 服务，了解 gRPC 与流式输出（SSE）  
+  - 熟悉推理优化：vLLM 0.2.7、TGI，掌握量化（GPTQ/AWQ）、KV Cache、batching  
+  - 了解 LangChain 0.1、RAG（FAISS/Chroma + embedding 模型），熟悉 Prompt 工程  
+  - 了解 Docker、Kubernetes 基础，有 Shell 脚本、Git、CI/CD 基础  
+
+- 项目经历  
+
+- 项目一：企业知识库问答助手（RAG + LLM）  
+  - 职责：负责数据清洗、embedding 模型选型（bge-large-zh）、向量库构建与检索链路  
+  - 技术栈：LangChain、FAISS、ChatGLM2-6B、FastAPI  
+  - 成果：基于 2000+ 内部文档构建问答系统，检索命中率 82%，问答准确率 76%，支持流式回答，部署于 4 张 3090  
+
+- 项目二：法律文书摘要微调（LoRA）  
+  - 职责：负责数据处理（清洗、构造 instruction 格式）、微调脚本编写与调参  
+  - 技术栈：LLaMA-2-7B、PEFT/QLoRA、Transformers、DeepSpeed  
+  - 成果：使用 4-bit 量化 + LoRA（r=8, alpha=16）训练 3 万条样本，摘要 ROUGE-L 从 0.31 提升至 0.38，推理延迟 1.2s/条（vLLM）  
+
+- 项目三：智能工单分类与摘要系统  
+  - 职责：负责模型部署（TGI + 量化）、API 封装、并发性能调优  
+  - 技术栈：Flask、vLLM、GPTQ、Redis（缓存）、Docker  
+  - 成果：工单分类 F1 从 0.82 提升至 0.88，摘要上线后人工处理时长缩短 40%，支持 50 并发，P95 延迟 < 800ms  
+
+- 项目四：基于 LangChain 的 SQL 生成助手（实习/协作）  
+  - 职责：设计提示词、处理多表 schema 注入、实施错误回复重试机制  
+  - 技术栈：LangChain、GPT-3.5-turbo、MongoDB  
+  - 成果：SQL 生成执行成功率 71%，减少了数据查询窗口的人力工时，参与项目 POC 落地  
+
+- 补充：熟悉 Linux 环境，具备模型调优（学习率、sequence length 优化）经验，有模型分发、HuggingFace Hub 使用经验。

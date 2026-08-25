@@ -22,6 +22,8 @@ class EffectiveSkill(BaseModel):
     proficiency: Proficiency = "初级"
     years: float | None = None
     source: Literal["raw", "correction"] = "raw"
+    resolved_by: Literal["dict", "llm", "unmatched"] = "dict"
+    reason: str = ""
 
 
 class ProjectEntry(BaseModel):
@@ -29,7 +31,7 @@ class ProjectEntry(BaseModel):
 
     name: str
     description: str = ""
-    skill_mentions: list[str] = Field(default_factory=list, max_length=10)
+    skill_mentions: list[str] = Field(default_factory=list, max_length=15)
 
 
 class CandidateProfile(BaseModel):

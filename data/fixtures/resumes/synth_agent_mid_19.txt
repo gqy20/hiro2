@@ -1,0 +1,44 @@
+李同学  
+138****0000 | 138****0000@email.com | 3年AI应用开发经验 | 现居杭州  
+
+教育背景  
+2019.09 - 2022.06  浙江工业大学  计算机科学与技术（本科）  
+主修课程：数据结构、机器学习基础、数据库原理、软件工程  
+
+技能清单  
+- 精通 Python，熟悉 FastAPI/Flask 服务端开发，3年实际项目编写与调试经验  
+- 熟悉 LangChain 框架（0.1.x 及 0.2.x），熟练构建链式调用、记忆模块、ReAct 及 Plan-and-Execute 型 Agent  
+- 熟悉 OpenAI/通义千问/DeepSeek 等大模型 API 接入，掌握 Function Calling 机制与工具调用参数schema设计  
+- 掌握主流编排工具：Dify（工作流节点配置）、Coze 基础插件开发，了解 LangGraph 状态图及多Agent协作模式  
+- 熟悉向量数据库（Milvus、Chroma），掌握 RAG 的文档切分、embedding 模型选型及检索重排优化  
+- 熟练使用 Redis 缓存、MySQL 存储消息及会话历史，熟悉 Docker 部署与 docker-compose 编排  
+- 了解 Prompt Engineering 常见技巧（few-shot、CoT、约束输出），熟悉 BeautifulSoup/Selenium 数据采集  
+
+项目经历  
+
+项目一：智能客服工单处理Agent（某电商Saas公司）  
+2023.06 - 2024.02  
+职责：独立负责后端Agent逻辑开发及流程调优。  
+- 基于LangChain构建多轮对话Agent，对接订单查询、退换货、物流状态三类工具API，通过Function Calling解析用户意图并自动生成工单  
+- 设计工具调用失败时的兜底策略（LLM重试+人工转接），将工单生成准确率从70%提升至86%  
+- 使用Redis存储会话状态，设置内存过期时间，同时使用Chroma持久化高频FAQ文档用于RAG应答  
+技术栈：LangChain + FastAPI + MySQL + 通义千问qwen-plus  
+
+项目二：合同审查风险提取工作流（内部提效工具）  
+2024.03 - 2024.10  
+职责：负责工作流编排与提取效果优化。  
+- 在Dify中搭建文件上传→表格解析→风险条款定位→结构化输出 的流水线，处理PDF/Word合同  
+- 设计针对租金、违约金、保密条款的few-shot提取模板，并利用正则与LLM校验结果，遗漏率降低12%  
+- 编写Python脚本批量测试不同embedding（bge-large-zh vs m3e）对检索召回率的影响，最终固定为bge模型  
+技术栈：Dify + langchain-text-splitters + PyMuPDF + Flask  
+
+项目三：企业内部知识库问答机器人（POC阶段）  
+2024.11 - 至今  
+职责：负责核心检索链路搭建。  
+- 针对员工手册、研发规范等20+本地文档，实现父子分块策略（父块500字，子块150字重叠30）搭配Milvus检索  
+- 使用LangGraph构建“检索-判断-重写-回答”的状态流，解决首轮检索不充分的问题，答案相关性评分提升25%  
+- 完成docker-compose部署（含ollama+llama3.1:8b与API网关），供内部测试试用  
+技术栈：LangGraph + Milvus + Ollama + FastAPI  
+
+自我评价  
+沟通协作顺畅，能独立与产品对接需求并拆解为技术任务。习惯先写测试用例再编码，注重Agent输出可观测性（trace日志）。目前主动学习多Agent通信协议（A2A）与流式输出优化。

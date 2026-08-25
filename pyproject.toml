@@ -20,6 +20,7 @@ dependencies = [
 dev = [
   "mypy>=1.16",
   "pre-commit>=4.5",
+  "pymupdf-stubs>=1.28.2",
   "pytest>=9.0",
   "pytest-cov>=6.0",
   "ruff>=0.12",

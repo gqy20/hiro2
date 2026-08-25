@@ -69,22 +69,23 @@ D0 盘点结论（2026-08-24）：
 
 ### D4 技能本体与归一化
 
-进行中：
-- `data/SKILLS.yml` v4（人工先验：Excel 30 能力 + 技能点 + 别名）与 `data/SKILLS-EARNED.yml`（语料习得别名，带 `effective_from` 首见日期）。
-- `backend/skills/resolver.py` 确定性匹配；`resolve --as-of T` 时首见日期晚于 T 的习得别名不参与匹配（防回测规则泄漏：词典不得携带未来知识回翻译过去）。
-- `scripts/resolve.py events` 输出逐条映射、分桶覆盖率（中高频 >=2 次为验收口径，目标 >=80%；31 篇样本下中高频已 100%）与带上下文的未命中词单 `unmatched-words.jsonl`；`dates` 子命令重算首见日期。
-- 词典迭代以全量语料 top 未命中词为依据；未命中是新词队列，反复出现的新词经人工审核进入词典并递增 version。
+完成（2026-08-25 验收）：
 
-每个映射保存 `raw_mention`、`canonical_skill_id`、`skill_point_id`、`mapping_method`、`confidence`、`evidence_ids` 和 `review_status`。
+- 全量 697 篇事件共 12605 次提及；词典三层体系：`data/SKILLS.yml` v4（人工先验：Excel 30 能力 + 技能点 + 别名）+ `data/SKILLS-EARNED.yml` v3（755 个语料习得别名，全部带 `effective_from` 首见日期，其中 665 个经离线归一任务 + 置信度>=0.7 筛选合入）。
+- 覆盖率验收（按次加权）：中高频(>=2 次) 85.2%、高频(>=5 次) 94.0%，达标（目标 >=80%）。
+- 时间闸门实测：词典随 as_of 正确截断（2025-06 视角 59.8% / 2026-01 视角 70.7% / 当前 85.2%），回测无规则泄漏。
+- 离线归一任务：`prompts/skill-alias.yml` + `scripts/skillmap.py batch`，LLM 出候选、置信度筛选、人工抽审后入典；0.6~0.7 临界带 76 词留待细审。
+- `backend/skills/resolver.py` 确定性匹配，`resolve --as-of T` 时首见日期晚于 T 的习得别名不参与匹配；`scripts/resolve.py events` 输出逐条映射、分桶覆盖率与带上下文的未命中词单，`dates` 子命令重算首见日期。
+- 未命中是新词队列，反复出现的新词经离线归一 + 人工审核进入词典并递增 version。
 
-Excel 的 30 个能力维度作为初始能力域，并继续拆出技能点和别名：
+每个映射保存 `raw_mention`、`canonical_skill_id`、`skill_point_id`、`matched_by`、`rule_version`；JD 侧映射还需 `confidence`、`evidence_ids` 和 `review_status`（D5 起接入）。
+
+Excel 的 30 个能力维度作为初始能力域，技能点继续按需拆出：
 
 ```text
 RAG/知识库 -> 文档切分 / Embedding / 向量数据库 / Reranking / 检索评测
 API开发    -> REST / OpenAPI / 认证 / 权限 / 接口监控
 ```
-
-每个映射保存 `raw_mention`、`canonical_skill_id`、`skill_point_id`、`mapping_method`、`confidence`、`evidence_ids` 和 `review_status`。
 
 ### D5 JD 详情与技能证据
 
@@ -99,7 +100,7 @@ DetailEvidence 用于职责、要求、技能和岗位版本
 
 ### D6 日报事件与趋势信号
 
-进行中：`prompts/report-event.yml` v2 + `backend/temporal` 抽取管线已冒烟通过（.env 网关，单篇约 100s、15 事件/篇），全量 697 篇待跑。
+抽取侧完成（2026-08-25）：全量 697 篇 → 8350 个 ReportEvent（隔离 19 篇，2.7%），prompt v3，`published_at` 已全量回填（未索引文章用文件名日期，天粒度）；TrendSignal/SignalCluster 聚合待做（随 D8）。
 
 ```text
 Markdown -> ReportEvent -> Evidence -> TrendSignal -> SignalCluster

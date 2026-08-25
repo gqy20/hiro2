@@ -60,7 +60,7 @@ def load_articles(limit: int | None, force: bool) -> tuple[list[Article], set[st
             Article(
                 item_id=r["item_id"],
                 title=r["title"],
-                published_at=r.get("published_at"),
+                published_at=r.get("published_at") or r.get("published_date"),
                 text=text,
             )
         )

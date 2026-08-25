@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { CheckCircle, PencilSimple } from "@phosphor-icons/react";
-import { Button, Input, Tag } from "antd";
+import { Button, Select, Tag } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
@@ -24,6 +24,8 @@ export function DiagnosisWorkbench({
   const [selectedEvidence, setSelectedEvidence] = useState<ChangeItem | null>(
     null,
   );
+  const [reportScore, setReportScore] = useState(fixture.report.overallScore);
+  const [recalculating, setRecalculating] = useState(false);
   if (state === "error")
     return (
       <AppShell>
@@ -72,6 +74,26 @@ export function DiagnosisWorkbench({
     );
   }
 
+  function recalculate() {
+    setRecalculating(true);
+    window.setTimeout(() => {
+      const ready = skills.filter((skill) => skill.status === "ready").length;
+      const missing = skills.filter(
+        (skill) => skill.status === "missing",
+      ).length;
+      setReportScore(
+        Math.max(
+          0,
+          Math.min(
+            1,
+            fixture.report.overallScore + (ready - 1) * 0.08 - missing * 0.04,
+          ),
+        ),
+      );
+      setRecalculating(false);
+    }, 500);
+  }
+
   return (
     <AppShell>
       <div className="diagnosis-workbench">
@@ -108,15 +130,17 @@ export function DiagnosisWorkbench({
                 </div>
                 {editing === skill.name ? (
                   <>
-                    <Input
+                    <Select
                       aria-label={`编辑 ${skill.name}`}
-                      defaultValue={`${skill.level} · ${skill.years} 年`}
-                      onPressEnter={(event) => {
-                        updateSkill(index, {
-                          evidence: event.currentTarget.value,
-                        });
-                        setEditing(null);
-                      }}
+                      defaultValue={skill.status}
+                      onChange={(value) =>
+                        updateSkill(index, { status: value })
+                      }
+                      options={[
+                        { label: "已具备", value: "ready" },
+                        { label: "部分具备", value: "partial" },
+                        { label: "缺失", value: "missing" },
+                      ]}
                     />
                     <Button onClick={() => setEditing(null)} size="small">
                       完成
@@ -152,7 +176,7 @@ export function DiagnosisWorkbench({
           <section className="match-summary">
             <div>
               <span>匹配总览</span>
-              <ConfidenceMeter confidence={fixture.report.overallScore} />
+              <ConfidenceMeter confidence={reportScore} variant="prominent" />
             </div>
             <div>
               <span>已具备</span>
@@ -163,6 +187,17 @@ export function DiagnosisWorkbench({
               <b>{counts.partial + counts.missing}</b>
             </div>
           </section>
+          <div className="recalculate-bar">
+            <span>修改画像后重新计算匹配报告</span>
+            <Button
+              loading={recalculating}
+              onClick={recalculate}
+              size="small"
+              type="primary"
+            >
+              重新计算
+            </Button>
+          </div>
           <section className="gap-section">
             <SectionHeader
               action={

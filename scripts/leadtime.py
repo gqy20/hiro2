@@ -54,6 +54,8 @@ def build_signal_months() -> dict[str, Counter]:
     sig: dict[str, Counter] = defaultdict(Counter)
     for line in EVENTS.open(encoding="utf-8"):
         e = json.loads(line)
+        if not e.get("is_primary", True):
+            continue
         day = (e.get("published_at") or "")[:10]
         if not day:
             continue

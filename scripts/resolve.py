@@ -34,7 +34,11 @@ def _event_day(e: dict) -> str | None:
 def cmd_events(as_of: date | None) -> dict:
     run = RunContext("resolve", {"cmd": "events", "as_of": str(as_of) if as_of else None})
     resolver = load_resolver(as_of=as_of)
-    events = [json.loads(x) for x in (PROCESSED / "events.jsonl").open(encoding="utf-8")]
+    events = [
+        e
+        for e in (json.loads(x) for x in (PROCESSED / "events.jsonl").open(encoding="utf-8"))
+        if e.get("is_primary", True)
+    ]
 
     mappings = []
     word_total: Counter[str] = Counter()
@@ -121,7 +125,11 @@ def cmd_dates() -> dict:
     import yaml
 
     data = yaml.safe_load(EARNED_FILE.read_text(encoding="utf-8"))
-    events = [json.loads(x) for x in (PROCESSED / "events.jsonl").open(encoding="utf-8")]
+    events = [
+        e
+        for e in (json.loads(x) for x in (PROCESSED / "events.jsonl").open(encoding="utf-8"))
+        if e.get("is_primary", True)
+    ]
     first: dict[str, tuple[str, str]] = {}  # mention -> (day, event_id)
     for e in sorted(events, key=lambda ev: _event_day(ev) or ""):
         day = _event_day(e)

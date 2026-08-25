@@ -44,7 +44,11 @@ def cmd_run(horizon: int, start: date, end: date, data_end: date | None) -> dict
     run = RunContext(
         "backtest", {"cmd": "run", "horizon": horizon, "start": str(start), "end": str(end)}
     )
-    events = [json.loads(x) for x in (PROCESSED / "events.jsonl").open(encoding="utf-8")]
+    events = [
+        e
+        for e in (json.loads(x) for x in (PROCESSED / "events.jsonl").open(encoding="utf-8"))
+        if e.get("is_primary", True)
+    ]
     if data_end is None:
         days = sorted({(e.get("published_at") or "")[:10] for e in events if e.get("published_at")})
         data_end = parse_day(days[-1]) if days else end

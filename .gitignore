@@ -24,3 +24,7 @@ data/secrets/
 docs/assets/*.png
 
 .playwright-cli/
+
+# Playwright e2e artifacts
+playwright-report/
+test-results/

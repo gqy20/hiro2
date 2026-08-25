@@ -6,7 +6,7 @@ WEB_DIR ?= apps/web
 
 .DEFAULT_GOAL := help
 
-.PHONY: help init py-sync web-sync hooks fmt fmt-check lint type test test-py test-web test-cov build check verify ci precommit commit-check clean-runs
+.PHONY: help init py-sync web-sync hooks fmt fmt-check lint type test test-py test-web test-e2e test-cov build check verify ci precommit commit-check clean-runs
 
 help:
 	@printf '%s\n' "Hiro2 development commands"
@@ -16,6 +16,7 @@ help:
 	@printf '%s\n' "  make ci         Run the same checks used by GitHub Actions"
 	@printf '%s\n' "  make precommit  Run every pre-commit hook on all files"
 	@printf '%s\n' "  make commit-check MSG=.git/COMMIT_EDITMSG"
+	@printf '%s\n' "  make test-e2e   Run Playwright end-to-end tests"
 	@printf '%s\n' "  make build      Build the web application when it exists"
 
 init: py-sync web-sync hooks
@@ -66,7 +67,7 @@ type:
 		$(PNPM) --dir "$(WEB_DIR)" run typecheck; \
 	fi
 
-test: test-py test-web
+test: test-py test-web test-e2e
 
 test-py:
 	@if find tests backend/tests -type f -name 'test_*.py' -print -quit 2>/dev/null | grep -q .; then \
@@ -80,6 +81,14 @@ test-web:
 		$(PNPM) --dir "$(WEB_DIR)" run test; \
 	else \
 		echo "Skipping web tests: $(WEB_DIR)/package.json not found"; \
+	fi
+
+test-e2e:
+	@if [ -f "$(WEB_DIR)/playwright.config.ts" ]; then \
+		$(PNPM) --dir "$(WEB_DIR)" exec playwright install --with-deps chromium; \
+		$(PNPM) --dir "$(WEB_DIR)" run test:e2e; \
+	else \
+		echo "Skipping e2e: $(WEB_DIR)/playwright.config.ts not found"; \
 	fi
 
 test-cov:

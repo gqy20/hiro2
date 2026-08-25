@@ -314,6 +314,7 @@ function EditDefinition({
       <label>
         岗位名称
         <Input
+          aria-label="岗位名称"
           value={draft.title}
           onChange={(event) =>
             onChange({ ...draft, title: event.target.value })
@@ -324,6 +325,7 @@ function EditDefinition({
         摘要
         <Input.TextArea
           autoSize={{ minRows: 2, maxRows: 4 }}
+          aria-label="摘要"
           value={draft.summary}
           onChange={(event) =>
             onChange({ ...draft, summary: event.target.value })
@@ -334,6 +336,7 @@ function EditDefinition({
         为何是新岗位
         <Input.TextArea
           autoSize={{ minRows: 3, maxRows: 5 }}
+          aria-label="为何是新岗位"
           value={draft.whyNew}
           onChange={(event) =>
             onChange({ ...draft, whyNew: event.target.value })
@@ -345,6 +348,7 @@ function EditDefinition({
           核心职责
           <Input.TextArea
             autoSize
+            aria-label="核心职责"
             value={draft.responsibilities.join("\n")}
             onChange={(event) =>
               updateList("responsibilities", event.target.value)
@@ -355,6 +359,7 @@ function EditDefinition({
           必备技能
           <Input.TextArea
             autoSize
+            aria-label="必备技能"
             value={draft.requiredSkills.join("\n")}
             onChange={(event) =>
               updateList("requiredSkills", event.target.value)
@@ -365,6 +370,7 @@ function EditDefinition({
           加分技能
           <Input.TextArea
             autoSize
+            aria-label="加分技能"
             value={draft.preferredSkills.join("\n")}
             onChange={(event) =>
               updateList("preferredSkills", event.target.value)
@@ -375,6 +381,7 @@ function EditDefinition({
           典型场景
           <Input.TextArea
             autoSize
+            aria-label="典型场景"
             value={draft.scenarios.join("\n")}
             onChange={(event) => updateList("scenarios", event.target.value)}
           />

@@ -23,6 +23,8 @@
 
 - 完成 F-T3.3 简历画像增强：`/diagnosis` 项目证据从只读 `string[]` 升级为 `{id, text}[]`，新增增/改/删 UI（编辑态回滚 + 删除即移除）；技能 status 修改与项目增删改全部入 `userCorrections` 审计数组（带 ISO 时间戳 + 字段类型），UI 显示「本次会话已记录 N 条修改（仅本地）」。`DiagnosisFixture` 类型扩展：`ProjectEntry`、`UserCorrection`（含 `field`/`target`/`before`/`after`）；empty/error fixture 同步升 projects 格式 + userCorrections: []。补齐 `app/diagnosis/{loading,error}.tsx` 路由级边界（与 jobs/skills 模式一致）。后端持久化留待 I4 联调门接通后做。
 
+- 完成 F-T4.4 Playwright 端到端：新增 `@playwright/test@1.62.1` 依赖；`apps/web/playwright.config.ts`（单 worker + webServer 自动启 dev）；`tests/e2e/` 下 4 个 spec 共 10 个用例覆盖 4 条核心流程 + 空/错误变体：jobs（接受 6 条 → 发布 → 成功视图 → 返回）、diagnosis（项目增删改 + 审计计数 + 重新计算）、new-jobs（接受候选 + 编辑 5 要素 + 保存）、skills（41 节点 + 选中 cap_04 + 切换 MCP + 3 维筛选器）。`/new-jobs` 编辑器 5 个 textarea 补 aria-label 顺带 a11y。`Makefile` 加 `test-e2e` 目标（自动 `playwright install --with-deps chromium`）；`pnpm test:e2e` 一键跑；`.github/workflows/ci.yml` 加 e2e step + timeout 30min；`apps/web/vitest.config.ts` 排除 `tests/e2e/` 避免 vitest 误抓；`.gitignore` 加 `playwright-report/` 与 `test-results/`。本地 31.8s 全过。
+
 - 建立 D8 回测基础设施：SkillSnapshot 特征层（事实分级加权）、确定性方向预测 v1、月度滚动回测（双 as_of 闸门防泄漏）；v1 动量规则实测低于全平基线，错误集中在爆发后回落，结论如实记录。
 
 - 完成 D4 全量归一化验收：697 篇事件 12605 次提及，中高频覆盖率 85.2%、高频 94.0%；离线归一任务（skillmap）产出 1053 个候选，665 个高置信合入习得词典；时间闸门实测词典随 as_of 正确截断。

@@ -46,6 +46,16 @@
 
 - 完成 F-T4.5 生产构建 + 截图验收：`pnpm build` 成功（13 个页面，5 个静态 + 8 个动态），本地 `pnpm start` 跑 prod build 验证 200。Playwright 桌面 1280×720 截 6 页（`/`、`/jobs`、`/skills`、`/new-jobs`、`/diagnosis`、`/evaluation`）+ 移动 390×844 截 1 页（`/skills`）。视觉 review 通过：标题无冗余、文案简短（占位 CTA 显式）、符号规范（→ `·` `/` Tag 而非 `>` `x` 字符）、desktop 信息密度合理、mobile 折行 1 列 OK、F-T4.3 的 480px 断点与 F-T4.1 的 1180px 断点都生效。截图保存在 `/tmp/f45/`（7 张 PNG）。
 
+- 完成 F-T4.10/4.11/4.12 审核与质量看板：2 个新页面 `/tasks`、`/quality` + dashboard 加 2 张跳转卡：
+  * `/tasks` 一页 = 左 1/3 任务列表（F-T4.10）+ 右 2/3 工作区（F-T4.11），含 5 条 mock 任务（3 forecast_review + 2 job_review，2 条标记「需双审」），任务支持领取 → 审核中 → 提交 → 完成 4 状态机；右侧工作区按「系统结果 / 证据 / 人工决策」三段，决策按钮复用 `ReviewActions` 已有 onAccept/onModify/onReject
+  * `/quality` F-T4.12 看板：4 stat-card（任务完成率 80% / 双人复核率 67% / 平均响应 3.2d / 已解决 12）+ 6 类错误分布条 + 3 horizon Run 对比（A / B 双 Select）
+  * `lib/tasks-fixture.ts` DTO 严格照 `contracts.md:283-310`（8 task_type / 6 状态 / 4 decision），mock 数据复用 `temporal-fixture.ts` forecasts + `data/fixtures/job_update.json` changes
+  * 不扩 `review-ui.tsx` 的 4 态 ReviewStatus 枚举——避免影响 `job-update-workbench` 既有行为；任务用 task 自己的 status 字段 + Tag 着色
+  * `app/quality/page.tsx` 是 RSC + 调 `loadTemporalFixture()` + 把 `temporal` 数据传给 client `QualityWorkbench`（避免 client bundle 拉 `node:fs`）
+  * `globals.css` 加 ~180 行 `.tasks-*` 与 `.quality-*` 样式（含 1180px 响应式断点）
+  * 一级导航仍 6 项不变（`/tasks`、`/quality` 仅作次级路由），dashboard 加 `dashboard-temporal-grid` 横排 2 张跳转卡（我的任务 / 质量看板）
+  * 10 个 e2e 用例 regression 全过
+
 - 建立 D8 回测基础设施：SkillSnapshot 特征层（事实分级加权）、确定性方向预测 v1、月度滚动回测（双 as_of 闸门防泄漏）；v1 动量规则实测低于全平基线，错误集中在爆发后回落，结论如实记录。
 
 - 完成 D4 全量归一化验收：697 篇事件 12605 次提及，中高频覆盖率 85.2%、高频 94.0%；离线归一任务（skillmap）产出 1053 个候选，665 个高置信合入习得词典；时间闸门实测词典随 as_of 正确截断。

@@ -48,6 +48,20 @@ const temporalEntry = {
   meta: "信号流 / 趋势回测 / 预测复盘 / 影响建议",
 };
 
+const reviewEntry = {
+  href: "/tasks",
+  label: "我的任务",
+  value: "5",
+  meta: "3 待领取 · 2 进行中",
+};
+
+const qualityEntry = {
+  href: "/quality",
+  label: "质量看板",
+  value: "80%",
+  meta: "完成率 · 12 已解决",
+};
+
 export default function DashboardPage() {
   return (
     <AppShell>
@@ -77,6 +91,22 @@ export default function DashboardPage() {
           </strong>
           <span className="dashboard-card-meta">{temporalEntry.meta}</span>
         </Link>
+        <div className="dashboard-temporal-grid">
+          <Link className="dashboard-temporal-card" href={reviewEntry.href}>
+            <span className="dashboard-card-label">{reviewEntry.label}</span>
+            <strong className="dashboard-card-value">
+              {reviewEntry.value} 条
+            </strong>
+            <span className="dashboard-card-meta">{reviewEntry.meta}</span>
+          </Link>
+          <Link className="dashboard-temporal-card" href={qualityEntry.href}>
+            <span className="dashboard-card-label">{qualityEntry.label}</span>
+            <strong className="dashboard-card-value">
+              完成率 {qualityEntry.value}
+            </strong>
+            <span className="dashboard-card-meta">{qualityEntry.meta}</span>
+          </Link>
+        </div>
       </section>
     </AppShell>
   );

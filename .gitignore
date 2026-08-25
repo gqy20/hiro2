@@ -19,5 +19,6 @@ data/runs/*
 !data/runs/.gitkeep
 data/objects/*
 !data/objects/.gitkeep
+data/secrets/
 
 docs/assets/*.png

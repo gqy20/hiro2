@@ -148,6 +148,7 @@ export function JobUpdateWorkbench({
     return (
       <AppShell>
         <FixtureState
+          action={<Link href="/"><Button type="primary">返回工作台</Button></Link>}
           emptyText="当前版本暂未检测到能力变化。"
           state="empty"
         />

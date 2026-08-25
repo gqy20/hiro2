@@ -22,3 +22,5 @@ data/objects/*
 data/secrets/
 
 docs/assets/*.png
+
+.playwright-cli/

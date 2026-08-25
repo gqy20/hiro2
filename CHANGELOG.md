@@ -15,6 +15,8 @@
 
 - 完成一级导航补齐：新建 `app/skills/page.tsx`、`app/evaluation/page.tsx` 占位骨架（F-T3.1、F-T4.1 待接入），并把原 `app/[view]` 兜底路由删除（已被具体页面接管）；`app/page.tsx` 从 `redirect("/jobs")` 改为真实工作台（4 张数字卡：新岗位待审 / 岗位更新待审 / 诊断中 / 今日回测，跳转到对应一级页面）。`use client` 因 `next/link` 引入，不引新依赖。
 
+- 完成 F-T3.1 技能图谱：新增 `@xyflow/react` 依赖；`/skills` 从占位升级为真实图谱（30 capability + 11 skill points 共 41 节点），按 `JobVersion` 必备蓝 / 加分中性 / 新增蓝虚线 / 修改黄虚线着色；4 维筛选（技术栈 / 级别 / 能力类型 / 全部清除）；选中节点打开底部指标条 + 复用 `EvidenceDrawer`。`data/fixtures/skill{,_empty,_error}.json` + `lib/skill.ts`（类型）+ `lib/skill-fixture.ts`（RSC-safe loader）；`components/skill-graph.tsx`（xyflow 容器）+ `components/skills-workbench.tsx`（主 workbench）；RSC 页面直接处理 mock/real 切换，避免 `node:fs` 进客户端 bundle。F-T3.2 节点详情侧栏留独立 PR。
+
 - 建立 D8 回测基础设施：SkillSnapshot 特征层（事实分级加权）、确定性方向预测 v1、月度滚动回测（双 as_of 闸门防泄漏）；v1 动量规则实测低于全平基线，错误集中在爆发后回落，结论如实记录。
 
 - 完成 D4 全量归一化验收：697 篇事件 12605 次提及，中高频覆盖率 85.2%、高频 94.0%；离线归一任务（skillmap）产出 1053 个候选，665 个高置信合入习得词典；时间闸门实测词典随 as_of 正确截断。

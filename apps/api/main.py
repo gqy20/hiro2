@@ -14,6 +14,7 @@ from pydantic import BaseModel, Field
 
 from backend.application.diagnosis import build_diagnosis, list_candidates
 from backend.application.service import ApplicationService
+from backend.application.temporal_vm import build_skill_graph, build_tasks, build_temporal
 
 app = FastAPI(title="Hiro2 API", version="0.1.0")
 app.add_middleware(
@@ -82,3 +83,18 @@ def diagnosis(candidate_id: str, job: str = "ai-agent-v2") -> dict:
         return build_diagnosis(candidate_id, job).model_dump()
     except FileNotFoundError as exc:
         raise HTTPException(404, str(exc)) from exc
+
+
+@app.get("/api/v1/temporal/dataset")
+def temporal_dataset() -> dict:
+    return build_temporal().model_dump()
+
+
+@app.get("/api/v1/skills/graph")
+def skills_graph(job: str = "ai-agent-v2") -> dict:
+    return build_skill_graph(job).model_dump()
+
+
+@app.get("/api/v1/tasks/my")
+def my_tasks() -> dict:
+    return build_tasks().model_dump()

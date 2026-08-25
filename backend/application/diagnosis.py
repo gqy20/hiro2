@@ -41,7 +41,7 @@ class JobVM(_VM):
     title: str
     version: str
     window: str
-    evidenceCount: int
+    evidence_count: int
 
 
 class GapVM(_VM):
@@ -52,7 +52,7 @@ class GapVM(_VM):
 
 
 class DiagnosisVM(_VM):
-    fixtureVersion: str
+    fixture_version: str
     mode: str = "real"
     candidate: CandidateVM
     job: JobVM
@@ -96,7 +96,7 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
         if g.get("verdict") != "已具备"
     ]
     return DiagnosisVM(
-        fixtureVersion="v2",
+        fixture_version="v2",
         candidate=CandidateVM(
             id=cand["candidate_id"],
             name=cand.get("candidate_id", ""),
@@ -111,7 +111,7 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
             title=job.get("title", job_version_id),
             version=job_version_id,
             window=job.get("valid_from", ""),
-            evidenceCount=job.get("evidence", {}).get("jd_count", 0),
+            evidence_count=job.get("evidence", {}).get("jd_count", 0),
         ),
         report={
             "matchId": report.get("match_id", ""),

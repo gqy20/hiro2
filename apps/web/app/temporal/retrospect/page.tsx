@@ -1,13 +1,19 @@
 import { AppShell } from "@/components/app-shell";
 import { TemporalRetrospectWorkbench } from "@/components/temporal-retrospect-workbench";
 import { FixtureState } from "@/components/workflow-ui";
+import { apiFetch, isMockMode } from "@/lib/api/client";
 import { loadTemporalFixture } from "@/lib/temporal-fixture";
+import type { TemporalDataset } from "@/lib/temporal";
+
+async function fetchTemporalServer(): Promise<TemporalDataset> {
+  if (isMockMode()) return loadTemporalFixture();
+  return apiFetch<TemporalDataset>("/temporal/dataset");
+}
 
 export default async function TemporalRetrospectPage({
   searchParams,
 }: Readonly<{ searchParams: Promise<{ state?: string }> }>) {
   const { state } = await searchParams;
-  const fixture = await loadTemporalFixture();
   const variant =
     state === "empty" || state === "error" ? state : "ready";
   if (variant === "error") {
@@ -30,5 +36,6 @@ export default async function TemporalRetrospectPage({
       </AppShell>
     );
   }
-  return <TemporalRetrospectWorkbench backtests={fixture.backtests} />;
+  const data = await fetchTemporalServer();
+  return <TemporalRetrospectWorkbench backtests={data.backtests} />;
 }

@@ -17,7 +17,7 @@ from pathlib import Path
 from mitmproxy import http
 
 OUT = Path(__file__).resolve().parents[1] / "data" / "raw" / "jd" / "boss" / "mitm-capture.jsonl"
-WATCH = ("zhipin.com/wapi/zpgeek/search/joblist", "51job.com/api/job/search-pc")
+WATCH = ("zhipin.com/wapi/", "51job.com/api/job/search-pc")
 
 
 class JdCapture:
@@ -27,15 +27,21 @@ class JdCapture:
 
     def response(self, flow: http.HTTPFlow) -> None:
         url = flow.request.pretty_url
-        if not any(k in url for k in WATCH):
+        is_detail_html = "zhipin.com/job_detail/" in url
+        if not is_detail_html and not any(k in url for k in WATCH):
             return
-        ct = flow.response.headers.get("content-type", "") if flow.response else ""
-        if "json" not in ct:
+        if flow.response is None:
             return
-        try:
-            body = json.loads(flow.response.text)
-        except Exception:  # noqa: BLE001 - 非 JSON 跳过
-            return
+        if is_detail_html:
+            body: object = flow.response.text  # 详情页 SSR HTML 原文
+        else:
+            ct = flow.response.headers.get("content-type", "")
+            if "json" not in ct:
+                return
+            try:
+                body = json.loads(flow.response.text)
+            except Exception:  # noqa: BLE001 - 非 JSON 跳过
+                return
         rec = {
             "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
             "url": url,

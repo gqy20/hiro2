@@ -26,6 +26,12 @@
 
 - 完成 F-T4.4 Playwright 端到端：新增 `@playwright/test@1.62.1` 依赖；`apps/web/playwright.config.ts`（单 worker + webServer 自动启 dev）；`tests/e2e/` 下 4 个 spec 共 10 个用例覆盖 4 条核心流程 + 空/错误变体：jobs（接受 6 条 → 发布 → 成功视图 → 返回）、diagnosis（项目增删改 + 审计计数 + 重新计算）、new-jobs（接受候选 + 编辑 5 要素 + 保存）、skills（41 节点 + 选中 cap_04 + 切换 MCP + 3 维筛选器）。`/new-jobs` 编辑器 5 个 textarea 补 aria-label 顺带 a11y。`Makefile` 加 `test-e2e` 目标（自动 `playwright install --with-deps chromium`）；`pnpm test:e2e` 一键跑；`.github/workflows/ci.yml` 加 e2e step + timeout 30min；`apps/web/vitest.config.ts` 排除 `tests/e2e/` 避免 vitest 误抓；`.gitignore` 加 `playwright-report/` 与 `test-results/`。本地 31.8s 全过。
 
+- 完成 F-T4.1 评测中心：3 栏 workbench（数据集列表 + 运行指标 + 错误案例 + 待复盘），4 个数据集 + 1 个当前运行 RUN-0825-001（命中率/召回率/置信度 3 项指标 + 3 条错误案例），数据全部 inline mock（后端 B-T4 未开始；EvaluationMetrics 在 contracts.md 不存在）。1180/980 响应式断点与 jobs/skills/diagnosis 对齐。`components/evaluation-workbench.tsx` + `app/evaluation/page.tsx` 升级 + `app/evaluation/{loading,error}.tsx` 路由级边界。
+
+- 完成 F-T4.2 路由级 loading.tsx / error.tsx 补齐：`/`、`/new-jobs`、`/evaluation` 三个缺边界的页面现在与 jobs/skills/diagnosis 模式一致。`app/{loading,error}.tsx` + `app/new-jobs/{loading,error}.tsx` + `app/evaluation/{loading,error}.tsx` 共 6 个新文件，每个 ~35 行。
+
+- 完成 F-T4.3 响应式 + 字体 token + 空状态 CTA：`globals.css` :root 加 `--font-mono` token，4 处硬编码「IBM Plex Mono」统一改 `var(--font-mono)`；加 `@media (max-width: 480px)` 断点覆盖 390px 视口（workbench padding 减、3 栏转单列、metric grid 单列、标题字号 -1）。`workflow-ui.tsx` FixtureState 加 `action` prop，4 个 workbench empty state 补明确 CTA（jobs 回工作台、new-jobs 浏览现有岗位、skills 查看岗位更新、diagnosis 查看岗位）。10 个 e2e 用例全过。
+
 - 建立 D8 回测基础设施：SkillSnapshot 特征层（事实分级加权）、确定性方向预测 v1、月度滚动回测（双 as_of 闸门防泄漏）；v1 动量规则实测低于全平基线，错误集中在爆发后回落，结论如实记录。
 
 - 完成 D4 全量归一化验收：697 篇事件 12605 次提及，中高频覆盖率 85.2%、高频 94.0%；离线归一任务（skillmap）产出 1053 个候选，665 个高置信合入习得词典；时间闸门实测词典随 as_of 正确截断。

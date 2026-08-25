@@ -99,7 +99,7 @@ def cmd_run() -> dict:
                 "market_share": round(share, 3),
                 "market_rank": rank[sid],
                 "evidence_jd_count": n,
-                "evidence_jd_ids": evid[sid][:5],
+                "evidence_ids": [f"jd:{j}" for j in evid[sid][:5]],
             }
         )
     # 技能点级：市场证据揭示的细分点，Excel 基线只到能力域、无点级定义 -> add
@@ -115,6 +115,7 @@ def cmd_run() -> dict:
                 "market_share": round(n / total, 3),
                 "market_rank": None,
                 "evidence_jd_count": n,
+                "evidence_ids": None,  # 点级聚合，按需展开
                 "note": "基线为能力域级评分，市场证据细化到技能点",
             }
         )
@@ -138,7 +139,8 @@ def cmd_run() -> dict:
         ],
         "valid_from": "2026-06-01",
         "evidence": {
-            "jd_ids": agent_jd_ids,
+            "evidence_ids": [f"jd:{j}" for j in agent_jd_ids],
+            "baseline_evidence_id": f"xlsx:{agent_pos['position_id']}",
             "jd_count": len(agent_jd_ids),
             "signal_total_weight": emerging["evidence"]["signal_precedence"]["signal_total_weight"],
             "emerging_ref": str(EMERGING.relative_to(ROOT)),
@@ -161,7 +163,7 @@ def cmd_run() -> dict:
             "obs_share": c["obs_share"],
             "base_mentions": c["base_mentions"],
             "obs_mentions": c["obs_mentions"],
-            "evidence_jds": c["evidence_jds"],
+            "evidence_ids": [f"jd:{x['jd_id']}" for x in c["evidence_jds"]],
         }
         for c in diff["changes"]
     ]
@@ -194,7 +196,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="jobver")
     sub = parser.add_subparsers(dest="cmd", required=True)
     sub.add_parser("run")
-    args = parser.parse_args(argv)
+    parser.parse_args(argv)
     print(json.dumps(cmd_run(), ensure_ascii=False))
     return 0
 

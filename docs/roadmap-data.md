@@ -135,7 +135,8 @@ Markdown -> ReportEvent -> Evidence -> TrendSignal -> SignalCluster
 
 ### D7 证据质量与融合
 
-状态：**未开始**。当前证据以嵌入式引用存在（事件 urls、JD id 列表、changeset evidence 字段），contracts.md 的 Evidence 实体（evidence_id/claim_type/quality_score/支持-反证）未落地；正式岗位字段 100% 证据覆盖与统一审核队列未建立。
+状态：部分完成（2026-08-25）。`scripts/evidence.py build` 落地 Evidence 实体层（`data/processed/evidence/evidence.jsonl`，6645 条）：trend_signal 6333（日报主记录，质量=事实分级映射）/ job_requirement 266（AI 域 JD）/ expert_baseline 46（Excel 画像），每条含 source_span 回链与 content_hash；JobVersion 草稿与 JobChangeSet 引用已升级为 evidence_id。
+未完成：支持/反证关系标记（claim 与岗位字段的正反关系）、跨源冲突与单一来源热点的统一审核队列。
 
 ```text
 完整性 -> 时间 -> 去重 -> 交叉验证 -> 幻觉/异常拦截

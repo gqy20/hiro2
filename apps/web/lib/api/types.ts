@@ -23,3 +23,8 @@ export type {
   CapabilityType,
   TechStack,
 } from "@/lib/skill";
+
+export type {
+  NewJobsFixture as NewJobsView,
+  EmergingJobCandidate,
+} from "@/lib/new-jobs";

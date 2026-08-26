@@ -24,12 +24,18 @@ const navigation = [
   { href: "/skills", label: "能力全景", icon: Graph },
   { href: "/diagnosis", label: "候选诊断", icon: ClipboardText },
   { href: "/evaluation", label: "评测中心", icon: ShieldCheck },
+  { href: "/career", label: "求职成长", icon: ChartScatter },
+  { href: "/profile", label: "我的画像", icon: ClipboardText },
 ];
 
 export function AppShell({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
+  const careerMode = pathname.startsWith("/career") || pathname.startsWith("/profile");
+  const visibleNavigation = careerMode
+    ? navigation.filter((item) => ["/career", "/profile", "/diagnosis"].includes(item.href))
+    : navigation.filter((item) => !["/career", "/profile"].includes(item.href));
   const contentRef = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -66,7 +72,7 @@ export function AppShell({
           <span>HIRO2</span>
         </Link>
         <nav aria-label="主导航" className="main-nav">
-          {navigation.map(({ href, label, icon: Icon }) => (
+          {visibleNavigation.map(({ href, label, icon: Icon }) => (
             <Tooltip key={label} title={label}>
               <Link
                 className={

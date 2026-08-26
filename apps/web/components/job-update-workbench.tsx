@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   CheckCircle,
   FileText,
-  FunnelSimple,
   MagnifyingGlass,
   PaperPlaneTilt,
   Warning,
@@ -36,13 +35,6 @@ const labels: Record<ChangeKind, string> = {
   removed: "删除",
 };
 
-const filterOptions: Array<"全部" | ChangeKind> = [
-  "全部",
-  "added",
-  "removed",
-  "modified",
-];
-
 function splitWindow(value: string): { label: string; start: string; end: string }[] {
   return value.split(" vs ").map((part, index) => {
     const [start = "", end = ""] = part.split(":");
@@ -69,7 +61,6 @@ export function JobUpdateWorkbench({
     null,
   );
   const [publishError, setPublishError] = useState<string | null>(null);
-  const [filter, setFilter] = useState<"全部" | ChangeKind>("全部");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draftDetail, setDraftDetail] = useState("");
 
@@ -88,11 +79,7 @@ export function JobUpdateWorkbench({
     removed: items.filter((item) => item.kind === "removed").length,
     modified: items.filter((item) => item.kind === "modified").length,
   };
-  const visibleItems = useMemo(
-    () =>
-      filter === "全部" ? items : items.filter((item) => item.kind === filter),
-    [filter, items],
-  );
+  const visibleItems = items;
 
   function updateStatus(id: string, status: ReviewStatus) {
     setItems((current) =>
@@ -290,34 +277,7 @@ export function JobUpdateWorkbench({
               <h2 id="diff-title">能力变化</h2>
               <span>{`${visibleItems.length} 条结果`}</span>
             </div>
-            <div className="toolbar-actions">
-              <div className="filter-tabs" role="tablist" aria-label="变化类型">
-                {filterOptions.map((value) => (
-                  <button
-                    aria-selected={filter === value}
-                    className={
-                      filter === value
-                        ? "filter-tab filter-tab-active"
-                        : "filter-tab"
-                    }
-                    key={value}
-                    onClick={() => setFilter(value)}
-                    role="tab"
-                    type="button"
-                  >
-                    {value === "全部" ? "全部" : labels[value]}
-                  </button>
-                ))}
-              </div>
-              <Tooltip title="筛选高置信变化">
-                <Button
-                  aria-label="筛选高置信变化"
-                  icon={<FunnelSimple size={17} />}
-                  size="small"
-                  type="text"
-                />
-              </Tooltip>
-            </div>
+            <span className="diff-toolbar-status">按变化类型分组 · 共 {items.length} 条</span>
           </div>
 
           {running ? (

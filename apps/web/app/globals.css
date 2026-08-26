@@ -230,9 +230,13 @@ input:focus-visible {
 .workbench {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr) 320px;
+  grid-template-rows: minmax(0, 1fr);
   align-items: start;
   min-height: calc(100dvh - 58px);
 }
+
+.workbench > * { min-height: 0; }
+.diff-toolbar-status { color: var(--muted); font-family: var(--font-mono); font-size: 11px; }
 
 .pending-page {
   display: grid;
@@ -479,6 +483,8 @@ h3 {
   min-height: 0;
   flex-direction: column;
   background: var(--panel);
+  height: 100%;
+  overflow: hidden;
 }
 
 .diff-toolbar {
@@ -530,9 +536,16 @@ h3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
   padding: 0 20px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 .change-column {
   min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 .change-column-heading {
   display: flex;
@@ -2109,6 +2122,9 @@ h3 {
   #main-content { overflow-x: hidden; overflow-y: auto; }
   .workbench, .new-jobs-workbench, .diagnosis-workbench, .evaluation-workbench, .tasks-workbench, .temporal-workbench, .quality-workbench { height: auto; min-height: calc(100dvh - 58px); overflow: visible; }
   .context-panel, .diff-panel, .evidence-panel { max-width: 100%; overflow-x: hidden; }
+  .diff-panel { height: auto; overflow: visible; }
+  .change-grid { overflow: visible; }
+  .change-column { overflow: visible; }
   .page-heading h1 { font-size: 18px; }
   .skill-graph-toolbar { flex-direction: column; padding: 12px; gap: 8px; }
   .skill-graph-toolbar label { font-size: 11px; }

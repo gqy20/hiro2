@@ -60,9 +60,6 @@ export function SkillNodeDetail({
     <div className="skill-node-detail" aria-label={`${node.label} 节点详情`}>
       <header className="skill-node-detail-header">
         <h3>{node.label}</h3>
-        <span className="skill-node-detail-id">
-          {isPoint ? `${node.capabilityId}.${node.pointName}` : node.capabilityId}
-        </span>
         <div className="skill-node-detail-tags">
           <Tag>{`${roleLabels[node.role]} · ${node.techStack}`}</Tag>
           <Tag color={statusTone[node.status]}>{statusLabels[node.status]}</Tag>
@@ -94,7 +91,7 @@ export function SkillNodeDetail({
               onClick={() => onSelectNode(parentCapability.id)}
               type="button"
             >
-              {`${parentCapability.label} · ${parentCapability.capabilityId}`}
+              {parentCapability.label}
             </button>
           ) : (
             <p className="skill-node-detail-placeholder">父能力未加载</p>

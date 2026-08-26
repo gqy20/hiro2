@@ -1,9 +1,5 @@
-import { Skeleton } from "antd";
+import { LoadView } from "@/components/load-view";
 
 export default function Loading() {
-  return (
-    <section className="page-loading" aria-busy="true" aria-live="polite">
-      <Skeleton active paragraph={{ rows: 8 }} />
-    </section>
-  );
+  return <LoadView variant="skills" />;
 }

@@ -44,7 +44,6 @@ export function EvaluationWorkbench({ overview }: { overview: EvaluationOverview
               {`${currentRun.id} · ${currentRun.algorithmVersion} · ${currentRun.datasetVersion}`}
             </span>
           </div>
-          <Tag>{currentRun.status}</Tag>
         </header>
 
         <div className="evaluation-layout">
@@ -64,9 +63,8 @@ export function EvaluationWorkbench({ overview }: { overview: EvaluationOverview
                   key={ds.id}
                 >
                   <strong>{ds.name}</strong>
-                  <span>
-                    {`${ds.samples} 样本 · ${ds.jobVersion}`}
-                  </span>
+                  <span className="evaluation-dataset-samples">{`${ds.samples} 样本`}</span>
+                  <span className="evaluation-dataset-version">{ds.jobVersion}</span>
                 </li>
               ))}
             </ul>
@@ -86,7 +84,6 @@ export function EvaluationWorkbench({ overview }: { overview: EvaluationOverview
                       percent={Math.round(m.value * 100)}
                       status={metricTone(m.value)}
                     />
-                    {m.hint ? <small>{m.hint}</small> : null}
                   </div>
                 ))}
               </div>

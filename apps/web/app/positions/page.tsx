@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { AppShell } from "@/components/app-shell";
-import { WorkflowContext } from "@/components/workflow-context";
 import { apiFetch, isMockMode } from "@/lib/api/client";
 import type { DashboardOverview } from "@/lib/dashboard";
 
@@ -22,12 +21,6 @@ export default async function PositionsPage() {
   return (
     <AppShell>
       <div className="workflow-page">
-        <WorkflowContext
-          eyebrow="企业招聘"
-          title="我的岗位"
-          stage="管理岗位版本"
-          next="选择一个岗位查看详情"
-        />
         <main className="positions-page" aria-labelledby="positions-title">
           <header className="page-heading">
             <h1 id="positions-title">我的岗位</h1>
@@ -37,7 +30,6 @@ export default async function PositionsPage() {
             {jobs.map((job) => (
               <article className="position-card" key={job.href}>
                 <div className="position-card-main">
-                  <span className="dashboard-kicker">岗位版本</span>
                   <h2>{job.title}</h2>
                   <p>{job.version} · {job.status}</p>
                 </div>
@@ -54,7 +46,6 @@ export default async function PositionsPage() {
           </section>
           <section className="positions-create" aria-label="岗位操作">
             <div>
-              <span className="dashboard-kicker">扩展岗位库</span>
               <h2>需要建立新的岗位标准？</h2>
               <p>从市场中的新岗位候选开始，形成可审核的岗位定义。</p>
             </div>

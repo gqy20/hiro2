@@ -10,7 +10,7 @@ export async function loadEvaluationFixture(): Promise<EvaluationOverview> {
       { id: "ds-d", name: "回测 8 月", samples: 31, jobVersion: "backtest-2026-08" },
     ],
     metrics: [
-      { key: "precision", label: "命中率", value: 0.61, hint: "正确判定 / 总判定" },
+      { key: "precision", label: "命中率", value: 0.61 },
       { key: "recall", label: "召回率", value: 0.74 },
       { key: "confidence", label: "置信度", value: 0.84 },
     ],

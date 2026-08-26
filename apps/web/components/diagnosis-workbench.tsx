@@ -215,17 +215,6 @@ export function DiagnosisWorkbench({
             </div>
           </div>
           <p className="profile-location">{fixture.candidate.location}</p>
-          <div className="profile-counts">
-            <span>
-              <b>{counts.ready}</b>已具备
-            </span>
-            <span>
-              <b>{counts.partial}</b>部分具备
-            </span>
-            <span>
-              <b>{counts.missing}</b>缺失
-            </span>
-          </div>
           <h2>技能画像</h2>
           <div className="skill-list">
             {skills.map((skill, index) => (
@@ -260,12 +249,18 @@ export function DiagnosisWorkbench({
                     </Button>
                   </>
                 ) : (
-                  <button
-                    onClick={() => setEditing(skill.name)}
-                    type="button"
-                  >{`${skill.level} · ${skill.years} 年`}</button>
+                  <div className="profile-skill-meta">
+                    <button
+                      onClick={() => setEditing(skill.name)}
+                      type="button"
+                    >
+                      {[skill.level, skill.years == null ? "" : `${skill.years} 年`]
+                        .filter(Boolean)
+                        .join(" · ")}
+                    </button>
+                    <small>{skill.evidence}</small>
+                  </div>
                 )}
-                <small>{skill.evidence}</small>
               </article>
             ))}
           </div>

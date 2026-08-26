@@ -1,0 +1,404 @@
+/* ---------- 窄屏适配（F-T4.3，390px 视口） ---------- */
+
+@media (max-width: 480px) {
+  #main-content { overflow-x: hidden; overflow-y: auto; }
+  .workbench, .new-jobs-workbench, .diagnosis-workbench, .evaluation-workbench, .tasks-workbench, .temporal-workbench, .quality-workbench { height: auto; min-height: calc(100dvh - 58px); overflow: visible; }
+  .context-panel, .diff-panel, .evidence-panel { max-width: 100%; overflow-x: hidden; }
+  .diff-toolbar { align-items: flex-start; flex-wrap: wrap; }
+  .diff-toolbar-actions { width: 100%; justify-content: space-between; }
+  .diff-panel { height: auto; overflow: visible; }
+  .change-grid { overflow: visible; }
+  .change-column { overflow: visible; }
+  .page-heading h1 { font-size: 18px; }
+  .skill-graph-toolbar { flex-direction: column; padding: 12px; gap: 8px; }
+  .skill-graph-toolbar label { font-size: 11px; }
+  .skill-graph-detail { padding: 14px; }
+  .skill-node-detail-header h3 { font-size: 14px; }
+  .dashboard { padding: 16px; }
+  .workflow-context { grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 12px 16px; }
+  .workflow-context-next { grid-column: 1 / -1; justify-self: start; text-align: left; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .workbench { padding: 12px; }
+  .diagnosis-workbench,
+  .new-jobs-workbench,
+  .evaluation-workbench { padding: 12px; }
+  .skill-graph-layout,
+  .evaluation-layout { grid-template-columns: 1fr; min-height: 360px; }
+  .evaluation-metric-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- 时间情报四件套（F-T4.7/4.6/4.8/4.9） ---------- */
+
+.dashboard-temporal-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  margin-top: 12px;
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+
+.dashboard-temporal-card:hover {
+  border-color: var(--blue);
+}
+
+.dashboard-temporal-card .dashboard-card-label {
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.dashboard-temporal-card .dashboard-card-value {
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--blue);
+}
+
+.dashboard-temporal-card .dashboard-card-meta {
+  font-size: 12px;
+  color: var(--muted);
+  flex: 1;
+}
+
+.temporal-workbench {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  min-height: calc(100vh - 56px);
+}
+
+.temporal-nav {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+}
+
+.temporal-nav-tab {
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  border-radius: 3px;
+  border-bottom: 2px solid transparent;
+}
+
+.temporal-nav-tab.is-active {
+  color: var(--ink);
+  font-weight: 650;
+  border-bottom-color: var(--blue);
+}
+
+.temporal-filters {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.temporal-filter-tab {
+  padding: 4px 10px;
+  font-size: 12px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+.temporal-filter-tab.is-active {
+  border-color: var(--blue);
+  background: var(--saffron-soft);
+  font-weight: 650;
+}
+
+/* /temporal 索引 */
+
+.temporal-index {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.temporal-index-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.temporal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+
+.temporal-card:hover {
+  border-color: var(--blue);
+}
+
+.temporal-card-title {
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.temporal-card-desc {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.temporal-index-meta {
+  font-size: 12px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  margin: 0;
+}
+
+/* /temporal/signals */
+
+.temporal-signal-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 16px;
+}
+
+.temporal-signal-timeline,
+.temporal-signal-clusters {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 20px;
+  min-width: 0;
+}
+
+.temporal-signal-clusters ul {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+.temporal-signal-clusters li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+  border-top: 1px solid var(--line);
+}
+
+.temporal-signal-clusters li:first-child {
+  border-top: 0;
+}
+
+.temporal-signal-cluster-skill {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.temporal-signal-cluster-count {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.temporal-empty {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* /temporal/forecasts */
+
+.temporal-forecast-card {
+  margin-top: 8px;
+}
+
+.temporal-forecast-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.temporal-forecast-meta > span {
+  flex: 1;
+}
+
+.temporal-sparkline {
+  width: 100%;
+  height: 80px;
+  background: var(--paper-soft);
+  border-radius: 4px;
+}
+
+.temporal-sparkline path {
+  stroke: var(--blue);
+  fill: none;
+}
+
+.temporal-sparkline.graph-line-up path {
+  stroke: var(--green);
+}
+
+.temporal-sparkline.graph-line-down path {
+  stroke: var(--red);
+}
+
+.temporal-forecast-list ul {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+.temporal-forecast-list-item {
+  display: grid;
+  grid-template-columns: 120px auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+}
+
+.temporal-forecast-list-item.is-active {
+  background: var(--saffron-soft);
+  padding: 8px 12px;
+  margin: 0 -12px;
+  border-radius: 3px;
+}
+
+.temporal-forecast-list-item strong {
+  font-family: var(--font-mono);
+}
+
+/* /temporal/retrospect */
+
+.temporal-backtest-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.temporal-stat-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.temporal-stat-card small {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.temporal-backtest-errors {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 20px;
+}
+
+.temporal-backtest-error-row {
+  display: grid;
+  grid-template-columns: 100px 60px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 6px 0;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+}
+
+.temporal-backtest-error-row:first-child {
+  border-top: 0;
+}
+
+/* /temporal/suggestions */
+
+.temporal-suggestion-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.temporal-suggestion-item {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.temporal-suggestion-item.status-accepted {
+  opacity: 0.7;
+}
+
+.temporal-suggestion-item.status-rejected {
+  opacity: 0.5;
+}
+
+.temporal-suggestion-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.temporal-suggestion-meta strong {
+  font-family: var(--font-mono);
+}
+
+.temporal-suggestion-reason {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.temporal-suggestion-detail {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+
+.temporal-suggestion-actions {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 1180px) {
+  .temporal-backtest-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .temporal-signal-layout {
+    grid-template-columns: 1fr;
+  }
+  .temporal-index-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- F-T4.10/4.11 任务与审核 ---------- */

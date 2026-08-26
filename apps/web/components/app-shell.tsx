@@ -1,7 +1,10 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import {
   ChartScatter,
   ClipboardText,
@@ -11,6 +14,8 @@ import {
   ShieldCheck,
 } from "@phosphor-icons/react";
 import { Tooltip } from "antd";
+
+gsap.registerPlugin(useGSAP);
 
 const navigation = [
   { href: "/", label: "工作台", icon: ChartScatter },
@@ -25,6 +30,30 @@ export function AppShell({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
+  const contentRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const target = contentRef.current?.firstElementChild;
+      if (!target) return;
+      const media = gsap.matchMedia();
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.fromTo(
+          target,
+          { autoAlpha: 0.94, y: 6 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.32,
+            ease: "power2.out",
+            clearProps: "transform,opacity,visibility",
+          },
+        );
+      });
+      return () => media.revert();
+    },
+    { dependencies: [pathname], scope: contentRef, revertOnUpdate: true },
+  );
 
   return (
     <div className="app-shell">
@@ -60,7 +89,7 @@ export function AppShell({
           <span>数据截至 08-22</span>
         </div>
       </header>
-      <main id="main-content">{children}</main>
+      <main id="main-content" ref={contentRef}>{children}</main>
     </div>
   );
 }

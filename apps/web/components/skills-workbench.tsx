@@ -10,7 +10,6 @@ import { EvidenceDrawer } from "@/components/evidence-drawer";
 import { SkillGraph } from "@/components/skill-graph";
 import {
   SkillNodeDetail,
-  SkillNodeDetailEmpty,
 } from "@/components/skill-node-detail";
 import { FixtureState } from "@/components/workflow-ui";
 import { WorkflowContext } from "@/components/workflow-context";
@@ -55,7 +54,7 @@ function toChangeItem(node: SkillNode, context: JobUpdateContext): ChangeItem {
     id: node.id,
     kind: node.status === "added" ? "added" : node.status === "removed" ? "removed" : "modified",
     title: node.label,
-    detail: `${context.jobTitle} ${context.targetVersion} 中${roleLabels[node.role]}技能点（${node.capabilityId}${node.pointName ? `.${node.pointName}` : ""}）。`,
+    detail: `${context.jobTitle} ${context.targetVersion} 中的${roleLabels[node.role]}${node.pointName ? "技能点" : "能力域"}：${node.label}。`,
     confidence,
     status: node.status === "removed" ? "needs_evidence" : "accepted",
     evidence: buildNodeEvidence(node),
@@ -75,9 +74,11 @@ export function SkillsWorkbench({
   );
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [evidenceItem, setEvidenceItem] = useState<ChangeItem | null>(null);
+  const [view, setView] = useState<"requirements" | "graph">("requirements");
 
   const visibleNodes = useMemo(() => {
     return fixture.nodes.filter((node) => {
+      if (node.id === "root") return true;
       if (techStack !== "all" && node.techStack !== techStack) return false;
       if (roleFilter !== "all" && node.role !== roleFilter) return false;
       if (capabilityType !== "all") {
@@ -106,6 +107,16 @@ export function SkillsWorkbench({
     () => fixture.nodes.find((node) => node.id === selectedId) ?? null,
     [fixture.nodes, selectedId],
   );
+  const capabilityGroups = useMemo(() => {
+    const groups = new Map<string, { capability: SkillNode; points: SkillNode[] }>();
+    visibleNodes.filter((node) => node.pointName === null && node.id !== "root").forEach((capability) => {
+      groups.set(capability.id, { capability, points: [] });
+    });
+    visibleNodes.filter((node) => node.pointName !== null).forEach((point) => {
+      groups.get(point.capabilityId)?.points.push(point);
+    });
+    return [...groups.values()];
+  }, [visibleNodes]);
 
   function clearFilters() {
     setTechStack("all");
@@ -146,6 +157,11 @@ export function SkillsWorkbench({
             </span>
           </div>
         </header>
+
+        <div className="skill-view-tabs" role="tablist" aria-label="能力视图">
+          <button className={view === "requirements" ? "is-active" : ""} onClick={() => setView("requirements")} role="tab" aria-selected={view === "requirements"} type="button">岗位要求</button>
+          <button className={view === "graph" ? "is-active" : ""} onClick={() => setView("graph")} role="tab" aria-selected={view === "graph"} type="button">能力图谱</button>
+        </div>
 
         <div className="skill-graph-layout">
           <aside
@@ -212,14 +228,27 @@ export function SkillsWorkbench({
             </dl>
           </aside>
 
-          <div className="skill-graph-stage">
-            <SkillGraph
-              edges={visibleEdges}
-              nodes={visibleNodes}
-              onSelect={setSelectedId}
-              selectedId={selectedId}
-            />
-          </div>
+          {view === "requirements" ? (
+            <div className="skill-requirements" aria-label="岗位能力要求">
+              {(["required", "preferred"] as const).map((role) => (
+                <section key={role} className="skill-requirement-group">
+                  <div className="skill-requirement-heading"><h2>{roleLabels[role]}能力</h2><span>{capabilityGroups.filter((group) => group.capability.role === role).length} 项</span></div>
+                  <div className="skill-requirement-list">
+                    {capabilityGroups.filter((group) => group.capability.role === role).map((group) => (
+                      <button className="skill-requirement-item" key={group.capability.id} onClick={() => setSelectedId(group.capability.id)} type="button">
+                        <span><strong>{group.capability.label}</strong><small>{group.points.length ? `${group.points.length} 个技能点` : "能力域"}</small></span>
+                        <b>{group.capability.status === "added" ? "新增" : group.capability.status === "modified" ? "修改" : "查看"}</b>
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          ) : (
+            <div className="skill-graph-stage">
+              <SkillGraph edges={visibleEdges} nodes={visibleNodes} onSelect={setSelectedId} selectedId={selectedId} />
+            </div>
+          )}
 
           <aside className="skill-graph-detail" aria-label="节点详情">
             {selectedNode ? (
@@ -232,7 +261,7 @@ export function SkillsWorkbench({
                 onSelectNode={setSelectedId}
               />
             ) : (
-              <SkillNodeDetailEmpty />
+              <div className="skill-node-detail-empty"><strong>{fixture.context.jobTitle}</strong><p>{fixture.context.targetVersion} 岗位能力摘要</p><p>必备能力 {capabilityGroups.filter((group) => group.capability.role === "required").length} 项 · 加分能力 {capabilityGroups.filter((group) => group.capability.role === "preferred").length} 项</p><p>选择左侧能力查看技能点、别名和证据。</p></div>
             )}
           </aside>
         </div>

@@ -185,6 +185,11 @@
 .graph-node .react-flow__handle { width: 6px; height: 6px; border: 1px solid var(--panel); background: var(--line-strong); opacity: 0.55; }
 
 @media (max-width: 720px) {
+  .skill-workbench { height: auto; min-height: calc(100dvh - 52px); overflow: visible; padding: 16px; }
+  .skill-graph-layout { flex: none; overflow: visible; padding: 12px; }
+  .skill-graph-toolbar, .skill-graph-detail { overflow: visible; }
+  .skill-graph-stage { height: 480px; min-height: 480px; overflow: hidden; }
+  .skill-graph-canvas { min-height: 460px; }
   .graph-node { width: 132px; min-height: 54px; padding: 9px 10px; }
   .graph-node-label { font-size: 13px; }
   .graph-node-meta, .graph-node-meta b { font-size: 11px; }
@@ -213,14 +218,6 @@
   font-size: 15px;
   font-weight: 650;
   line-height: 1.3;
-}
-
-.skill-node-detail-id {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--muted);
-  margin-bottom: 8px;
 }
 
 .skill-node-detail-tags {

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Literal
 
@@ -69,6 +70,32 @@ def _load(p: Path) -> dict:
     return json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}
 
 
+def _candidate_display_name(candidate: dict) -> str:
+    """返回脱敏展示名，禁止将内部 candidate_id 直接暴露给界面。"""
+    if name := str(candidate.get("name", "")).strip():
+        return name
+    candidate_id = str(candidate.get("candidate_id", ""))
+    suffix = re.search(r"(?:^|_)(\d+)$", candidate_id)
+    return f"候选人 {suffix.group(1)}" if suffix else "候选人"
+
+
+def _format_experience(value: object) -> str:
+    if not isinstance(value, int | float):
+        return ""
+    years = f"{value:g}"
+    return f"{years} 年经验"
+
+
+def _format_headline(candidate: dict) -> str:
+    education = str(candidate.get("education", "")).strip()
+    experience = _format_experience(candidate.get("experience_years"))
+    return " · ".join(part for part in (education, experience) if part)
+
+
+def _skill_evidence(skill: dict) -> str:
+    return "人工修正" if skill.get("source") == "correction" else "简历提及"
+
+
 def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> DiagnosisVM:
     """从 processed 产物聚合 diagnosis 视图（确定性组装，无 LLM）。"""
     cand = _load(P / "candidates" / f"{candidate_id}.json")
@@ -84,7 +111,7 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
             level=s.get("proficiency", ""),
             years=s.get("years"),
             status="ready" if s.get("skill_id") else "missing",
-            evidence=f"来源: {s.get('resolved_by', 'dict')}",
+            evidence=_skill_evidence(s),
         )
         for s in cand.get("skills", [])
     ]
@@ -105,8 +132,8 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
         fixture_version="v2",
         candidate=CandidateVM(
             id=cand["candidate_id"],
-            name=cand.get("candidate_id", ""),
-            headline=f"{cand.get('education', '')} | {cand.get('experience_years', '')} 年",
+            name=_candidate_display_name(cand),
+            headline=_format_headline(cand),
             skills=skills,
             projects=[
                 ProjectVM(id=f"proj-{i}", text=p["name"])
@@ -137,6 +164,7 @@ def list_candidates() -> list[dict]:
             out.append(
                 {
                     "id": d["candidate_id"],
+                    "name": _candidate_display_name(d),
                     "education": d.get("education", ""),
                     "experienceYears": d.get("experience_years"),
                     "skills": len(d.get("skills", [])),

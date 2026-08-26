@@ -1,7 +1,7 @@
 export type SkillMatch = {
   name: string;
   level: string;
-  years: number;
+  years: number | null;
   status: "ready" | "partial" | "missing";
   evidence: string;
 };

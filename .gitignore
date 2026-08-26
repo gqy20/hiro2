@@ -10,6 +10,7 @@ node_modules/
 *.tsbuildinfo
 apps/web/.next/
 apps/web/coverage/
+apps/web/next-env.d.ts
 
 data/raw/*
 !data/raw/.gitkeep

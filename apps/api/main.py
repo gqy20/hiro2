@@ -193,9 +193,7 @@ def skills_graph(job: str = "ai-agent-v2") -> dict:
                 graph = graph.model_copy(
                     update={
                         "nodes": [
-                            n.model_copy(update={"role": roles[n.id]})
-                            if n.id in roles
-                            else n
+                            n.model_copy(update={"role": roles[n.id]}) if n.id in roles else n
                             for n in graph.nodes
                         ]
                     }

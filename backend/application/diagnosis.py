@@ -14,8 +14,9 @@ from .repos import P
 
 class _VM(BaseModel):
     model_config = ConfigDict(
-        alias_generator=lambda name: name.split("_")[0]
-        + "".join(part.capitalize() for part in name.split("_")[1:]),
+        alias_generator=lambda name: (
+            name.split("_")[0] + "".join(part.capitalize() for part in name.split("_")[1:])
+        ),
         populate_by_name=True,
         extra="forbid",
     )
@@ -129,6 +130,9 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
         for g in report.get("gaps", [])
         if g.get("verdict") != "已具备"
     ]
+    from .career import load_career_state
+
+    career_state = load_career_state(candidate_id, job_version_id)
     return DiagnosisVM(
         fixture_version="v2",
         candidate=CandidateVM(
@@ -152,6 +156,7 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
             "algorithmVersion": report.get("algorithm_version", ""),
             "overallScore": report.get("overall_score", 0),
             "gaps": [g.model_dump() for g in gaps],
+            "career": career_state,
         },
         target_jobs=list_target_jobs(candidate_id),
     )
@@ -174,7 +179,7 @@ def list_candidates() -> list[dict]:
     out = []
     for f in sorted((P / "candidates").glob("*.json")):
         d = _load(f)
-        if d:
+        if d.get("candidate_id"):
             out.append(
                 {
                     "id": d["candidate_id"],

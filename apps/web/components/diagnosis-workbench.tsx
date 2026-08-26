@@ -64,7 +64,7 @@ export function DiagnosisWorkbench({
   const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
   const [projectDraft, setProjectDraft] = useState("");
   const [editingProjectText, setEditingProjectText] = useState("");
-  const [completedSteps, setCompletedSteps] = useState<string[]>([]);
+  const [completedSteps, setCompletedSteps] = useState<string[]>(fixture.report.career?.completedSkills ?? []);
   const [proofSkill, setProofSkill] = useState<string | null>(null);
   const [proofTitle, setProofTitle] = useState("");
   const [proofDescription, setProofDescription] = useState("");

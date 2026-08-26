@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -30,7 +31,7 @@ from runlog import RunContext  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 P = ROOT / "data" / "processed"
-DEFAULT_DSN = "postgresql://postgres@localhost:5432/hiro2"
+DEFAULT_DSN = os.getenv("DATABASE_URL", "postgresql://hiro2:hiro2@localhost:5433/hiro2")
 
 
 def _load_jsonl(p: Path) -> list[dict]:
@@ -50,14 +51,22 @@ def cmd_run(dsn: str) -> dict:
     with psycopg.connect(dsn) as conn:
         with conn.cursor() as cur:
             # ---- sources ----
-            srcs = yaml.safe_load((ROOT / "data" / "SOURCES.yml").read_text(encoding="utf-8"))["sources"]
+            srcs = yaml.safe_load((ROOT / "data" / "SOURCES.yml").read_text(encoding="utf-8"))[
+                "sources"
+            ]
             for s in srcs:
                 cur.execute(
                     """INSERT INTO sources (source_id, source_type, license, time_range, ingestion_mode, notes)
                        VALUES (%s,%s,%s,%s,%s,%s)
                        ON CONFLICT (source_id) DO UPDATE SET source_type=EXCLUDED.source_type, notes=EXCLUDED.notes""",
-                    (s["id"], s["type"], s.get("license", ""), s.get("time_range", []),
-                     s.get("ingestion_mode", "backfill"), s.get("notes", "")),
+                    (
+                        s["id"],
+                        s["type"],
+                        s.get("license", ""),
+                        s.get("time_range", []),
+                        s.get("ingestion_mode", "backfill"),
+                        s.get("notes", ""),
+                    ),
                 )
             # 补登 evidence 使用的平台级 source_id
             for extra in ("51job", "boss"):
@@ -92,13 +101,20 @@ def cmd_run(dsn: str) -> dict:
                         (f"{cap}.{pt}", cap, pt, skills_yml["version"]),
                     )
                     n_skills += 1
-            earned_yml = yaml.safe_load((ROOT / "data" / "SKILLS-EARNED.yml").read_text(encoding="utf-8"))
+            earned_yml = yaml.safe_load(
+                (ROOT / "data" / "SKILLS-EARNED.yml").read_text(encoding="utf-8")
+            )
             for ea in earned_yml.get("aliases", []):
                 cur.execute(
                     """INSERT INTO skills (skill_id, capability_id, point_name, rule_version, effective_from, is_earned)
                        VALUES (%s,%s,%s,%s,%s,TRUE) ON CONFLICT (skill_id) DO UPDATE SET effective_from=EXCLUDED.effective_from""",
-                    (ea["mention"], ea["capability_id"], ea.get("point_name"),
-                     earned_yml.get("version", 1), ea.get("effective_from")),
+                    (
+                        ea["mention"],
+                        ea["capability_id"],
+                        ea.get("point_name"),
+                        earned_yml.get("version", 1),
+                        ea.get("effective_from"),
+                    ),
                 )
                 n_skills += 1
             counts["skills"] = n_skills
@@ -110,25 +126,46 @@ def cmd_run(dsn: str) -> dict:
                     """INSERT INTO evidence (evidence_id, source_id, claim_type, published_at, content_hash, quality_score, payload, urls, source_span)
                        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
                        ON CONFLICT (evidence_id) DO UPDATE SET quality_score=EXCLUDED.quality_score, payload=EXCLUDED.payload""",
-                    (e["evidence_id"], e["source_id"], e["claim_type"], e.get("published_at"),
-                     e.get("content_hash", ""), e.get("quality_score", 0.5),
-                     json.dumps(e.get("payload", {})), e.get("urls", []),
-                     json.dumps(e.get("source_span", {}))),
+                    (
+                        e["evidence_id"],
+                        e["source_id"],
+                        e["claim_type"],
+                        e.get("published_at"),
+                        e.get("content_hash", ""),
+                        e.get("quality_score", 0.5),
+                        json.dumps(e.get("payload", {})),
+                        e.get("urls", []),
+                        json.dumps(e.get("source_span", {})),
+                    ),
                 )
             counts["evidence"] = len(evs)
 
             # ---- report_events ----
-            events = [e for e in _load_jsonl(P / "wechat-mp" / "events.jsonl") if e.get("is_primary", True)]
+            events = [
+                e
+                for e in _load_jsonl(P / "wechat-mp" / "events.jsonl")
+                if e.get("is_primary", True)
+            ]
             for e in events:
                 cur.execute(
                     """INSERT INTO report_events (event_id, item_id, event_type, title, summary, entities, fact_grade, skill_mentions, urls, published_at, is_primary, duplicate_group_id, prompt_version, model_version)
                        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,TRUE,%s,%s,%s)
                        ON CONFLICT (event_id) DO UPDATE SET skill_mentions=EXCLUDED.skill_mentions""",
-                    (e["event_id"], e["item_id"], e.get("event_type", ""), e.get("title", ""),
-                     e.get("summary", ""), e.get("entities", []), e.get("fact_grade", "report"),
-                     e.get("skill_mentions", []), e.get("urls", []),
-                     (e.get("published_at") or "")[:10] or None,
-                     e.get("duplicate_group_id"), e.get("prompt_version"), e.get("model_version")),
+                    (
+                        e["event_id"],
+                        e["item_id"],
+                        e.get("event_type", ""),
+                        e.get("title", ""),
+                        e.get("summary", ""),
+                        e.get("entities", []),
+                        e.get("fact_grade", "report"),
+                        e.get("skill_mentions", []),
+                        e.get("urls", []),
+                        (e.get("published_at") or "")[:10] or None,
+                        e.get("duplicate_group_id"),
+                        e.get("prompt_version"),
+                        e.get("model_version"),
+                    ),
                 )
             counts["report_events"] = len(events)
 
@@ -139,11 +176,21 @@ def cmd_run(dsn: str) -> dict:
                     """INSERT INTO jd_records (jd_id, platform, title, is_ai_role, domain_reason, publish_date, city, salary, work_year, responsibilities, requirements, skill_mentions, resolved)
                        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
                        ON CONFLICT (jd_id) DO UPDATE SET skill_mentions=EXCLUDED.skill_mentions, resolved=EXCLUDED.resolved""",
-                    (r["jd_id"], r["platform"], r["title"], r.get("is_ai_role", True),
-                     r.get("domain_reason", ""), r.get("publish_date"), r.get("city"),
-                     r.get("salary", ""), r.get("work_year", ""),
-                     json.dumps(r.get("responsibilities", [])), json.dumps(r.get("requirements", [])),
-                     r.get("skill_mentions", []), json.dumps(r.get("resolved", []))),
+                    (
+                        r["jd_id"],
+                        r["platform"],
+                        r["title"],
+                        r.get("is_ai_role", True),
+                        r.get("domain_reason", ""),
+                        r.get("publish_date"),
+                        r.get("city"),
+                        r.get("salary", ""),
+                        r.get("work_year", ""),
+                        json.dumps(r.get("responsibilities", [])),
+                        json.dumps(r.get("requirements", [])),
+                        r.get("skill_mentions", []),
+                        json.dumps(r.get("resolved", [])),
+                    ),
                 )
             counts["jd_records"] = len(jds)
 
@@ -161,16 +208,80 @@ def cmd_run(dsn: str) -> dict:
                         """INSERT INTO job_versions (version_id, job_id, status, title, required_skills, preferred_skills, changeset, evidence_ids, version_hash, valid_from, published_at)
                            VALUES (%s,%s,'PUBLISHED',%s,%s,%s,%s,%s,%s,%s,%s)
                            ON CONFLICT (version_id) DO NOTHING""",
-                        (v["version_id"], v["job_id"], v["title"],
-                         json.dumps(v.get("required_skill_ids", [])),
-                         json.dumps(v.get("preferred_skill_ids", [])),
-                         json.dumps(v.get("changeset_vs_v1", [])),
-                         v.get("evidence", {}).get("evidence_ids", []),
-                         v.get("version_hash", ""),
-                         v.get("valid_from"), v.get("published_at")),
+                        (
+                            v["version_id"],
+                            v["job_id"],
+                            v["title"],
+                            json.dumps(v.get("required_skill_ids", [])),
+                            json.dumps(v.get("preferred_skill_ids", [])),
+                            json.dumps(v.get("changeset_vs_v1", [])),
+                            v.get("evidence", {}).get("evidence_ids", []),
+                            v.get("version_hash", ""),
+                            v.get("valid_from"),
+                            v.get("published_at"),
+                        ),
                     )
                     n_jv += 1
             counts["job_versions"] = n_jv
+
+            # ---- candidates + match_reports（个人成长任务的事实前提） ----
+            candidate_dir = P / "candidates"
+            candidate_files = sorted(candidate_dir.glob("*.json")) if candidate_dir.is_dir() else []
+            for file in candidate_files:
+                candidate = _load_json(file)
+                candidate_id = candidate.get("candidate_id")
+                if not candidate_id:
+                    continue
+                cur.execute(
+                    """
+                    INSERT INTO candidates (candidate_id, raw_extraction, effective_profile, correction_log)
+                    VALUES (%s, %s, %s, %s)
+                    ON CONFLICT (candidate_id) DO UPDATE
+                    SET effective_profile = EXCLUDED.effective_profile,
+                        correction_log = EXCLUDED.correction_log
+                    """,
+                    (
+                        candidate_id,
+                        json.dumps({"raw_extraction_id": candidate.get("raw_extraction_id", "")}),
+                        json.dumps(candidate),
+                        json.dumps(candidate.get("correction_log", [])),
+                    ),
+                )
+            counts["candidates"] = len(candidate_files)
+
+            match_dir = candidate_dir / "matches"
+            match_files = sorted(match_dir.glob("*-report.json")) if match_dir.is_dir() else []
+            n_reports = 0
+            for file in match_files:
+                report = _load_json(file)
+                if not report.get("candidate_id") or not report.get("job_version_id"):
+                    continue
+                cur.execute(
+                    """
+                    INSERT INTO match_reports
+                        (match_id, candidate_id, job_version_id, algorithm_version, overall_score,
+                         dimensions, gaps, evidence_ids, status)
+                    VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
+                    ON CONFLICT (match_id) DO UPDATE
+                    SET overall_score = EXCLUDED.overall_score,
+                        dimensions = EXCLUDED.dimensions,
+                        gaps = EXCLUDED.gaps,
+                        evidence_ids = EXCLUDED.evidence_ids
+                    """,
+                    (
+                        report.get("match_id"),
+                        report["candidate_id"],
+                        report["job_version_id"],
+                        report.get("algorithm_version", ""),
+                        report.get("overall_score", 0),
+                        json.dumps(report.get("dimensions", [])),
+                        json.dumps(report.get("gaps", [])),
+                        report.get("evidence_ids", []),
+                        report.get("status", "FINAL"),
+                    ),
+                )
+                n_reports += 1
+            counts["match_reports"] = n_reports
 
             # ---- review_tasks（由冻结评测集生成，幂等） ----
             manifest = _load_json(ROOT / "evaluation" / "samples" / "manifest.json")
@@ -204,8 +315,14 @@ def cmd_run(dsn: str) -> dict:
                                 ELSE review_tasks.status
                             END
                             """,
-                            (task_id, task_type, source_id, dataset_version, status,
-                             json.dumps({"title": row.get("职位名", row.get("标题", ""))})),
+                            (
+                                task_id,
+                                task_type,
+                                source_id,
+                                dataset_version,
+                                status,
+                                json.dumps({"title": row.get("职位名", row.get("标题", ""))}),
+                            ),
                         )
                         n_tasks += 1
             counts["review_tasks"] = n_tasks

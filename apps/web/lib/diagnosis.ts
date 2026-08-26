@@ -56,5 +56,6 @@ export type DiagnosisFixture = {
       priority: "high" | "medium";
       action: string;
     }>;
+    career?: { completedSkills: string[]; proofs: Array<{ id: number; skill: string; title: string; description: string; url: string | null; createdAt: string }> };
   };
 };

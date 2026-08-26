@@ -6,7 +6,7 @@ WEB_DIR ?= apps/web
 
 .DEFAULT_GOAL := help
 
-.PHONY: help init py-sync web-sync hooks fmt fmt-check lint type test test-py test-web test-e2e test-cov build check verify ci precommit commit-check clean-runs
+.PHONY: help init py-sync web-sync hooks fmt fmt-check lint type test test-py test-web test-e2e test-cov build check verify ci precommit commit-check clean-runs db-up db-migrate db-import
 
 help:
 	@printf '%s\n' "Hiro2 development commands"
@@ -18,6 +18,9 @@ help:
 	@printf '%s\n' "  make commit-check MSG=.git/COMMIT_EDITMSG"
 	@printf '%s\n' "  make test-e2e   Run Playwright end-to-end tests"
 	@printf '%s\n' "  make build      Build the web application when it exists"
+	@printf '%s\n' "  make db-up      Start PostgreSQL and Neo4j with Docker Compose"
+	@printf '%s\n' "  make db-migrate Apply pending SQL migrations"
+	@printf '%s\n' "  make db-import  Import processed facts into PostgreSQL"
 
 init: py-sync web-sync hooks
 
@@ -124,3 +127,12 @@ commit-check:
 
 clean-runs:
 	@echo "Run artifacts are retained by default; remove a specific run directory manually."
+
+db-up:
+	docker compose up -d postgres neo4j
+
+db-migrate:
+	@set -a; [ ! -f ./.env ] || . ./.env; set +a; DATABASE_URL="$${DATABASE_URL:-postgresql://hiro2:hiro2@localhost:5433/hiro2}" $(UV) run python scripts/dbmigr.py
+
+db-import:
+	@set -a; [ ! -f ./.env ] || . ./.env; set +a; DATABASE_URL="$${DATABASE_URL:-postgresql://hiro2:hiro2@localhost:5433/hiro2}" $(UV) run python scripts/dbimport.py run

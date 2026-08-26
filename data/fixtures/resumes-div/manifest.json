@@ -1,0 +1,1298 @@
+{
+  "synthetic": true,
+  "batch": "diverse-v1",
+  "count": 24,
+  "note": "生成时埋点 gold 供回归测试比对；synthetic 不进入官方评测指标（evaluation.md 规则）",
+  "items": [
+    {
+      "file": "md/div_buried_agent_09.md",
+      "profile": "buried",
+      "track": "agent",
+      "level": "mid",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "LangChain",
+            "section": "项目经历",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "工作流编排",
+            "section": "项目经历",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "工具调用",
+            "section": "项目经历",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "ReAct",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "FastAPI",
+            "section": "工作经历",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "向量数据库",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "Prompt 工程",
+            "section": "项目经历",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "异步任务队列",
+            "section": "工作经历",
+            "proficiency": "熟悉",
+            "years": 1
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_buried_bigdata_10.md",
+      "profile": "buried",
+      "track": "bigdata",
+      "level": "mid",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Spark",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "Flink",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "Hive",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "Kafka",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "HDFS",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "SQL",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 3
+          },
+          {
+            "mention": "数据仓库",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "ETL",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 2
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_buried_career_change_11.md",
+      "profile": "buried",
+      "track": "career_change",
+      "level": "mid",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Python",
+            "section": "项目经历",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "Django",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "NLP",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "SQL",
+            "section": "工作经历",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "scikit-learn",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "TensorFlow",
+            "section": "项目经历",
+            "proficiency": "了解",
+            "years": 0.5
+          },
+          {
+            "mention": "Kafka",
+            "section": "工作经历",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "Docker",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 1
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_long_agent_21.md",
+      "profile": "long",
+      "track": "agent",
+      "level": "senior",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "LangChain",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 4
+          },
+          {
+            "mention": "LangGraph",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 3
+          },
+          {
+            "mention": "工作流编排",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 4
+          },
+          {
+            "mention": "工具调用",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 4
+          },
+          {
+            "mention": "ReAct",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 3
+          },
+          {
+            "mention": "RAG",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 3
+          },
+          {
+            "mention": "向量数据库",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 3
+          },
+          {
+            "mention": "FastAPI",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_long_algo_23.md",
+      "profile": "long",
+      "track": "algo",
+      "level": "senior",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "PyTorch",
+            "section": "技能清单",
+            "proficiency": "精通",
+            "years": 5
+          },
+          {
+            "mention": "TensorFlow",
+            "section": "技能清单",
+            "proficiency": "熟悉",
+            "years": 3
+          },
+          {
+            "mention": "OpenCV",
+            "section": "技能清单",
+            "proficiency": "精通",
+            "years": 6
+          },
+          {
+            "mention": "YOLO系列",
+            "section": "项目经历",
+            "proficiency": "精通",
+            "years": 4
+          },
+          {
+            "mention": "图像分类",
+            "section": "项目经历",
+            "proficiency": "精通",
+            "years": 5
+          },
+          {
+            "mention": "目标检测",
+            "section": "项目经历",
+            "proficiency": "精通",
+            "years": 5
+          },
+          {
+            "mention": "语义分割",
+            "section": "技能清单",
+            "proficiency": "熟悉",
+            "years": 3
+          },
+          {
+            "mention": "模型剪枝",
+            "section": "项目经历",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "知识蒸馏",
+            "section": "项目经历",
+            "proficiency": "熟练",
+            "years": 2
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_long_bigdata_22.md",
+      "profile": "long",
+      "track": "bigdata",
+      "level": "senior",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Apache Spark",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 6
+          },
+          {
+            "mention": "Apache Flink",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 5
+          },
+          {
+            "mention": "Hive",
+            "section": "技能清单",
+            "proficiency": "精通",
+            "years": 6
+          },
+          {
+            "mention": "Kafka",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 5
+          },
+          {
+            "mention": "HBase",
+            "section": "技能清单",
+            "proficiency": "熟悉",
+            "years": 4
+          },
+          {
+            "mention": "数据仓库建模",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 6
+          },
+          {
+            "mention": "Iceberg",
+            "section": "技能清单",
+            "proficiency": "熟悉",
+            "years": 3
+          },
+          {
+            "mention": "Doris",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_mgmt_agent_15.md",
+      "profile": "mgmt",
+      "track": "agent",
+      "level": "senior",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Java",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 10
+          },
+          {
+            "mention": "Python",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 8
+          },
+          {
+            "mention": "Spark",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 6
+          },
+          {
+            "mention": "Flink",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 5
+          },
+          {
+            "mention": "LangChain",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 3
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_mgmt_bigdata_16.md",
+      "profile": "mgmt",
+      "track": "bigdata",
+      "level": "senior",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Spark",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 7
+          },
+          {
+            "mention": "Flink",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 5
+          },
+          {
+            "mention": "数据仓库",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 8
+          },
+          {
+            "mention": "Java",
+            "section": "技能",
+            "proficiency": "熟练掌握",
+            "years": 8
+          },
+          {
+            "mention": "Kafka",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 5
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_mgmt_llm_17.md",
+      "profile": "mgmt",
+      "track": "llm",
+      "level": "senior",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Java",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 10
+          },
+          {
+            "mention": "Python",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 8
+          },
+          {
+            "mention": "PyTorch",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 4
+          },
+          {
+            "mention": "Kubernetes",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 5
+          },
+          {
+            "mention": "Spark",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 6
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_noisy_algo_14.md",
+      "profile": "noisy",
+      "track": "algo",
+      "level": "senior",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Python",
+            "section": "技能",
+            "proficiency": "精通",
+            "years": 6
+          },
+          {
+            "mention": "PyTorch",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 4
+          },
+          {
+            "mention": "TensorFlow",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "OpenCV",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 4
+          },
+          {
+            "mention": "C++",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 3
+          },
+          {
+            "mention": "YOLO",
+            "section": "项目经历",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "ResNet",
+            "section": "项目经历",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "Docker",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 3
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_noisy_llm_12.md",
+      "profile": "noisy",
+      "track": "llm",
+      "level": "mid",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "PyTorch",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "LoRA",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "Flask",
+            "section": "技能",
+            "proficiency": "掌握",
+            "years": 1
+          },
+          {
+            "mention": "Docker",
+            "section": "项目经历",
+            "proficiency": "掌握",
+            "years": 2
+          },
+          {
+            "mention": "Transformers",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "vLLM",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "SQL",
+            "section": "技能",
+            "proficiency": "掌握",
+            "years": 2
+          },
+          {
+            "mention": "Git",
+            "section": "项目经历",
+            "proficiency": "掌握",
+            "years": 2
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_noisy_rag_13.md",
+      "profile": "noisy",
+      "track": "rag",
+      "level": "mid",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Elasticsearch",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "Milvus",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1.5
+          },
+          {
+            "mention": "FAISS",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "BERT",
+            "section": "技能",
+            "proficiency": "掌握",
+            "years": 1.5
+          },
+          {
+            "mention": "PaddleOCR",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "LangChain",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "Python",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "Pinecone",
+            "section": "技能",
+            "proficiency": "了解",
+            "years": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_sparse_agent_06.md",
+      "profile": "sparse",
+      "track": "agent",
+      "level": "junior",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Python",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "LangChain",
+            "section": "技能",
+            "proficiency": "了解",
+            "years": 0.5
+          },
+          {
+            "mention": "FastAPI",
+            "section": "技能",
+            "proficiency": "了解",
+            "years": 0.3
+          },
+          {
+            "mention": "Git",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "SQL",
+            "section": "技能",
+            "proficiency": "了解",
+            "years": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_sparse_llm_07.md",
+      "profile": "sparse",
+      "track": "llm",
+      "level": "junior",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Python",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "PyTorch",
+            "section": "技能",
+            "proficiency": "了解",
+            "years": 1
+          },
+          {
+            "mention": "Hugging Face Transformers",
+            "section": "技能",
+            "proficiency": "了解",
+            "years": 1
+          },
+          {
+            "mention": "Flask",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "Docker",
+            "section": "技能",
+            "proficiency": "了解",
+            "years": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_sparse_rag_08.md",
+      "profile": "sparse",
+      "track": "rag",
+      "level": "junior",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Python",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "FAISS",
+            "section": "项目经历",
+            "proficiency": "了解",
+            "years": 0.5
+          },
+          {
+            "mention": "Jieba",
+            "section": "技能",
+            "proficiency": "了解",
+            "years": 0.5
+          },
+          {
+            "mention": "Flask",
+            "section": "项目经历",
+            "proficiency": "了解",
+            "years": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_typo_agent_19.md",
+      "profile": "typo",
+      "track": "agent",
+      "level": "junior",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Ｐｙｔｈｏｎ",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 1
+          },
+          {
+            "mention": "LangChain",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "ＲＡＧ",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "FastAPI",
+            "section": "技能",
+            "proficiency": "了解",
+            "years": 0.5
+          },
+          {
+            "mention": "Prompt 工程",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 1
+          },
+          {
+            "mention": "向量数据库",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 0.5
+          },
+          {
+            "mention": "Git",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 1
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_typo_llm_20.md",
+      "profile": "typo",
+      "track": "llm",
+      "level": "mid",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Ｐｙｔｈｏｎ",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "RAG 检索",
+            "section": "技能清单",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "Prompt 工程",
+            "section": "技能清单",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "LoRA 微调",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "vLLM 推理",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "LangChain",
+            "section": "技能清单",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "Qwen",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 3
+          },
+          {
+            "mention": "Milvus",
+            "section": "项目经历",
+            "proficiency": "了解",
+            "years": 1
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_typo_rag_18.md",
+      "profile": "typo",
+      "track": "rag",
+      "level": "mid",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Ｐｙｔｈｏｎ",
+            "section": "技能清单",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "Ｆａｉｓｓ",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "ＲＡＧ",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "ＥＳ",
+            "section": "技能清单",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "ＬａｎｇＣｈａｉｎ",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "ＰｙＭｕＰＤＦ",
+            "section": "技能清单",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "ＢＭ２５",
+            "section": "项目经历",
+            "proficiency": "了解",
+            "years": 1
+          },
+          {
+            "mention": "Ｆｌａｓｋ",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 2
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_variant_agent_00.md",
+      "profile": "variant",
+      "track": "agent",
+      "level": "mid",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "LangChain 0.2",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "Python 3.10",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "torch",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "HuggingFace/transformers",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "sklearn",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "FastAPI",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "Docker Compose",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "Qdrant",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_variant_algo_04.md",
+      "profile": "variant",
+      "track": "algo",
+      "level": "mid",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "torch",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 3
+          },
+          {
+            "mention": "sklearn",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 3
+          },
+          {
+            "mention": "HuggingFace Transformers",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "LangChain 0.2",
+            "section": "项目经历",
+            "proficiency": "了解",
+            "years": 1
+          },
+          {
+            "mention": "Python 3.10",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "SFT/LoRA",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "OpenCV",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "ONNX Runtime",
+            "section": "项目经历",
+            "proficiency": "了解",
+            "years": 1
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_variant_bigdata_03.md",
+      "profile": "variant",
+      "track": "bigdata",
+      "level": "mid",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "Spark（PySpark 为主）",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "Flink（1.17 版本）",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "Hive/Spark SQL 调优",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "Airflow 调度（2.5+）",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "Kafka（2.8 起）",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "Hudi（0.13）",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_variant_career_change_05.md",
+      "profile": "variant",
+      "track": "career_change",
+      "level": "mid",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "torch",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "sklearn",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "HuggingFace Transformers",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "LangChain 0.2",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "SFT/LoRA",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "Python 3.10",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "FastAPI",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "RAG（检索增强生成）",
+            "section": "项目经历",
+            "proficiency": "熟悉",
+            "years": 1
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_variant_llm_01.md",
+      "profile": "variant",
+      "track": "llm",
+      "level": "mid",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "torch",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "sklearn",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "HF/HuggingFace",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "LangChain 0.2",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "Python 3.10",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "SFT/LoRA",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "vLLM",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "FAISS",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          }
+        ]
+      }
+    },
+    {
+      "file": "md/div_variant_rag_02.md",
+      "profile": "variant",
+      "track": "rag",
+      "level": "mid",
+      "synthetic": true,
+      "gold": {
+        "mentions": [
+          {
+            "mention": "LangChain 0.2",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 2
+          },
+          {
+            "mention": "torch",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "sklearn",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "HF/HuggingFace",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 1
+          },
+          {
+            "mention": "Python 3.10",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 3
+          },
+          {
+            "mention": "Elasticsearch 8.x",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          },
+          {
+            "mention": "ChromaDB",
+            "section": "技能",
+            "proficiency": "熟练",
+            "years": 1
+          },
+          {
+            "mention": "PaddleOCR",
+            "section": "技能",
+            "proficiency": "熟悉",
+            "years": 2
+          }
+        ]
+      }
+    }
+  ]
+}

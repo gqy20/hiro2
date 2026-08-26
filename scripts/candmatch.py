@@ -59,6 +59,9 @@ def _parse_llm(raw: str) -> dict:
     data = json.loads(t)
     if not isinstance(data, dict) or "skills" not in data:
         raise ValueError("输出缺少 skills")
+    # ponytail: prompt 限不住数量，超限时截断而不是整单拒绝（回归实测 long 简历 >40 条触发）
+    data["skills"] = data["skills"][:40]
+    data["projects"] = data.get("projects", [])[:8]
     return ResumeRawExtraction.model_validate(data).model_dump()
 
 

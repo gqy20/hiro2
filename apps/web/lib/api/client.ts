@@ -22,7 +22,7 @@ export class ApiError extends Error {
 }
 
 export type ApiOptions = {
-  method?: "GET" | "POST";
+  method?: "GET" | "POST" | "PUT";
   body?: unknown;
   signal?: AbortSignal;
   timeoutMs?: number;
@@ -75,7 +75,7 @@ export async function apiFetch<T>(
       headers,
       signal: controller.signal,
     };
-    if (method === "POST") {
+    if (method === "POST" || method === "PUT") {
       headers["Content-Type"] = "application/json";
       if (opts.body !== undefined) {
         init.body = JSON.stringify(opts.body);

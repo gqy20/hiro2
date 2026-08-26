@@ -325,4 +325,24 @@
 .evaluation-dataset-item.is-active { background: var(--saffron-soft); border-color: transparent; }
 .evaluation-metric small { display: none; }
 
+/* 求职成长工作区：把岗位标准翻译为个人下一步，而非审核报告。 */
+.career-kicker { display: block; margin-bottom: 6px; color: var(--muted); font-size: 14px; }
+.career-target-select { min-width: 260px; }
+.career-target-select .ant-select-selector { padding-inline: 0 !important; border: 0 !important; background: transparent !important; box-shadow: none !important; }
+.career-target-select .ant-select-selection-item { color: var(--ink); font-size: 24px; font-weight: 650; line-height: 1.25 !important; }
+.diagnosis-title h2 { margin-bottom: 4px; }
+.match-summary { border-radius: 10px; padding: 18px 20px; }
+.match-summary > div:first-child { min-width: 170px; }
+.gap-item { padding: 16px; border-radius: 8px; }
+.gap-item > span { display: block; margin-top: 10px; color: var(--ink); }
+.learning-panel ol { gap: 14px; margin: 20px 0; }
+.learning-panel li { padding-bottom: 14px; border-bottom: 1px solid var(--line-subtle); }
+.learning-panel li:last-child { padding-bottom: 0; border-bottom: 0; }
+.learning-panel li p { margin-top: 5px; }
+.learning-panel li p b { display: inline-block; width: 18px; color: var(--blue); font-size: 12px; }
+.learning-panel li .ant-btn { margin-top: 10px; }
+.proof-capture { display: grid; gap: 8px; margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line-subtle); }
+.proof-capture .section-heading { margin-bottom: 2px; }
+.proof-saved { color: var(--green); font-size: 12px; }
+
 @media (max-width: 1180px) {

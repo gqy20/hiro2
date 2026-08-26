@@ -64,6 +64,7 @@ class DiagnosisVM(_VM):
     candidate: CandidateVM
     job: JobVM
     report: dict
+    target_jobs: list[dict] = Field(default_factory=list)
 
 
 def _load(p: Path) -> dict:
@@ -152,7 +153,20 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
             "overallScore": report.get("overall_score", 0),
             "gaps": [g.model_dump() for g in gaps],
         },
+        target_jobs=list_target_jobs(candidate_id),
     )
+
+
+def list_target_jobs(candidate_id: str) -> list[dict]:
+    """只列出该候选人已有匹配报告的已发布岗位，避免无依据目标。"""
+    out = []
+    report_dir = P / "candidates" / "matches"
+    for report_file in sorted(report_dir.glob(f"{candidate_id}-*-report.json")):
+        version = report_file.name.removeprefix(f"{candidate_id}-").removesuffix("-report.json")
+        job = _load(P / "jobversions" / "published" / f"{version}.json")
+        if job:
+            out.append({"version": version, "title": job.get("title", version)})
+    return out
 
 
 def list_candidates() -> list[dict]:

@@ -44,6 +44,7 @@ export type DiagnosisFixture = {
     window: string;
     evidenceCount: number;
   };
+  targetJobs?: Array<{ version: string; title: string }>;
   report: {
     matchId: string;
     algorithmVersion: string;

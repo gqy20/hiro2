@@ -15,6 +15,7 @@ from fastapi import FastAPI, HTTPException, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
+from backend.application.career import add_proof, save_growth_task
 from backend.application.dashboard import build_dashboard
 from backend.application.diagnosis import build_diagnosis, list_candidates
 from backend.application.evaluation import build_evaluation_overview
@@ -36,6 +37,17 @@ svc = ApplicationService()
 class ReviewRequest(BaseModel):
     decision: str = Field(pattern="^(accepted|rejected|needs_evidence|modified)$")
     note: str = ""
+
+
+class GrowthTaskRequest(BaseModel):
+    completed: bool
+
+
+class ProofRequest(BaseModel):
+    skill_id: str = Field(min_length=1, max_length=80)
+    title: str = Field(min_length=1, max_length=120)
+    description: str = Field(default="", max_length=1000)
+    proof_url: str | None = Field(default=None, max_length=500)
 
 
 def _health_status() -> dict:
@@ -142,6 +154,24 @@ def diagnosis(candidate_id: str, job: str = "ai-agent-v2") -> dict:
         return build_diagnosis(candidate_id, job).model_dump(by_alias=True)
     except FileNotFoundError as exc:
         raise HTTPException(404, str(exc)) from exc
+
+
+@app.put("/api/v1/candidates/{candidate_id}/growth-tasks/{skill_id}")
+def update_growth_task(
+    candidate_id: str, skill_id: str, req: GrowthTaskRequest, job: str = "ai-agent-v2"
+) -> dict:
+    try:
+        return save_growth_task(candidate_id, job, skill_id, req.completed)
+    except RuntimeError as exc:
+        raise HTTPException(503, str(exc)) from exc
+
+
+@app.post("/api/v1/candidates/{candidate_id}/proofs")
+def create_proof(candidate_id: str, req: ProofRequest) -> dict:
+    try:
+        return add_proof(candidate_id, req.skill_id, req.title, req.description, req.proof_url)
+    except RuntimeError as exc:
+        raise HTTPException(503, str(exc)) from exc
 
 
 @app.get("/api/v1/temporal/dataset")

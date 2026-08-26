@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   CheckCircle,
@@ -23,6 +24,7 @@ import type {
   UserCorrection,
 } from "@/lib/diagnosis";
 import type { ChangeItem, JobUpdateContext } from "@/lib/job-update";
+import { createCandidateProof, updateGrowthTask } from "@/lib/api/queries";
 
 const SKILL_STATUSES: Array<SkillMatch["status"]> = ["ready", "partial", "missing"];
 
@@ -45,6 +47,7 @@ export function DiagnosisWorkbench({
   fixture: DiagnosisFixture;
   state?: "ready" | "empty" | "error";
 }) {
+  const router = useRouter();
   const [skills, setSkills] = useState(fixture.candidate.skills);
   const [projects, setProjects] = useState<ProjectEntry[]>(
     fixture.candidate.projects,
@@ -61,6 +64,11 @@ export function DiagnosisWorkbench({
   const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
   const [projectDraft, setProjectDraft] = useState("");
   const [editingProjectText, setEditingProjectText] = useState("");
+  const [completedSteps, setCompletedSteps] = useState<string[]>([]);
+  const [proofSkill, setProofSkill] = useState<string | null>(null);
+  const [proofTitle, setProofTitle] = useState("");
+  const [proofDescription, setProofDescription] = useState("");
+  const [proofSaved, setProofSaved] = useState(false);
 
   if (state === "error")
     return (
@@ -102,6 +110,8 @@ export function DiagnosisWorkbench({
     partial: skills.filter((skill) => skill.status === "partial").length,
     missing: skills.filter((skill) => skill.status === "missing").length,
   };
+  const requiredGaps = fixture.report.gaps.filter((gap) => gap.priority === "high");
+  const priorityGaps = requiredGaps.length > 0 ? requiredGaps : fixture.report.gaps;
 
   function pushCorrection(correction: UserCorrection) {
     setUserCorrections((current) => [...current, correction]);
@@ -144,6 +154,14 @@ export function DiagnosisWorkbench({
       );
       setRecalculating(false);
     }, 500);
+  }
+
+  async function saveProof() {
+    if (!proofSkill || !proofTitle.trim()) return;
+    await createCandidateProof(fixture.candidate.id, { skill_id: proofSkill, title: proofTitle.trim(), description: proofDescription.trim() });
+    setProofSaved(true);
+    setProofTitle("");
+    setProofDescription("");
   }
 
   function addProject() {
@@ -205,7 +223,7 @@ export function DiagnosisWorkbench({
   return (
     <AppShell>
       <div className="workflow-page">
-      <WorkflowContext eyebrow="人岗诊断" title={fixture.candidate.name} stage="确认能力画像" next="修正不确定技能后重新计算" />
+      <WorkflowContext eyebrow="求职成长" title="我的成长计划" stage="确认能力画像" next="补齐关键能力后重新诊断" />
       <div className="diagnosis-workbench">
         <aside className="diagnosis-profile" aria-label="候选人画像">
           <div className="diagnosis-heading">
@@ -342,16 +360,23 @@ export function DiagnosisWorkbench({
         <main className="diagnosis-report" aria-labelledby="diagnosis-title">
           <div className="diagnosis-title">
             <div>
-              <h2 id="diagnosis-title">
-                {fixture.job.title} <span>{fixture.job.version}</span>
-              </h2>
-              <p>{`${fixture.job.window} · ${fixture.job.evidenceCount} 条岗位依据`}</p>
+              <span className="career-kicker">目标岗位</span>
+              <Select
+                aria-label="选择目标岗位"
+                className="career-target-select"
+                onChange={(version) => {
+                  router.push(`/diagnosis?candidate=${encodeURIComponent(fixture.candidate.id)}&job=${encodeURIComponent(version)}`);
+                }}
+                options={(fixture.targetJobs ?? [{ version: fixture.job.version, title: fixture.job.title }]).map((job) => ({ label: `${job.title} · ${job.version}`, value: job.version }))}
+                value={fixture.job.version}
+              />
+              <p>{`${fixture.job.version} · 已发布岗位标准`}</p>
             </div>
             <Button aria-label="编辑画像" icon={<PencilSimple />} type="text" />
           </div>
           <section className="match-summary">
             <div>
-              <span>匹配总览</span>
+              <span>投递基础</span>
               <ConfidenceMeter confidence={reportScore} variant="prominent" />
             </div>
             <div>
@@ -359,12 +384,12 @@ export function DiagnosisWorkbench({
               <b>{counts.ready}</b>
             </div>
             <div>
-              <span>待提升</span>
-              <b>{counts.partial + counts.missing}</b>
+              <span>优先补齐</span>
+              <b>{priorityGaps.length}</b>
             </div>
           </section>
           <div className="recalculate-bar">
-            <span>修改画像后重新计算匹配报告</span>
+            <span>画像更新后，重新判断你的投递基础</span>
             <Button
               loading={recalculating}
               onClick={recalculate}
@@ -385,11 +410,11 @@ export function DiagnosisWorkbench({
                   查看依据
                 </Button>
               }
-              meta={`${fixture.report.gaps.length} 项`}
-              title="关键短板"
+              meta={`${priorityGaps.length} 项优先处理`}
+              title="先补什么"
             />
             <div className="gap-list">
-              {fixture.report.gaps.map((gap) => (
+              {priorityGaps.map((gap) => (
                 <article
                   className={`gap-item gap-${gap.priority}`}
                   key={gap.skill}
@@ -398,16 +423,16 @@ export function DiagnosisWorkbench({
                     <strong>{gap.skill}</strong>
                     <Tag>{gap.priority === "high" ? ("优先") : ("补强")}</Tag>
                   </div>
-                  <p>{gap.reason}</p>
+                  <p>{gap.reason || "岗位要求中尚未找到你的有效项目或技能证明。"}</p>
                   <span>{gap.action}</span>
                 </article>
               ))}
             </div>
           </section>
           <section className="match-evidence">
-            <h3>岗位与候选人依据</h3>
+            <h3>为什么这样判断</h3>
             <p>
-              报告同时使用已发布岗位版本和候选人项目证据，不以总分替代技能级判断。
+              结果同时依据已发布岗位标准和你的技能、项目证据，不以单一分数决定是否适合投递。
             </p>
             <Button
               onClick={() => setSelectedEvidence(reportEvidence)}
@@ -421,24 +446,45 @@ export function DiagnosisWorkbench({
         <aside className="learning-panel" aria-label="学习路径">
           <div className="section-heading">
             <div className="inline-heading">
-              <h2>学习路径</h2>
-              <span>按岗位优先级</span>
+              <h2>成长计划</h2>
+              <span>{`${completedSteps.length} / ${priorityGaps.length} 已完成`}</span>
             </div>
           </div>
           <ol>
-            {fixture.report.gaps.map((gap, index) => (
+            {priorityGaps.map((gap, index) => (
               <li key={gap.skill}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <div>
                   <strong>{gap.skill}</strong>
-                  <p>{gap.action}</p>
+                  <p><b>学</b>{gap.action}</p>
+                  <p><b>练</b>{`完成一个可展示的 ${gap.skill} 练习或项目。`}</p>
+                  <p><b>证</b>补充项目说明或可验证成果。</p>
+                  <Button
+                    onClick={async () => {
+                      const completed = !completedSteps.includes(gap.skill);
+                      setCompletedSteps((current) => completed ? [...current, gap.skill] : current.filter((skill) => skill !== gap.skill));
+                      await updateGrowthTask(fixture.candidate.id, fixture.job.version, gap.skill, completed);
+                    }}
+                    size="small"
+                    type={completedSteps.includes(gap.skill) ? "default" : "primary"}
+                  >
+                    {completedSteps.includes(gap.skill) ? "已完成" : "标记完成"}
+                  </Button>
                 </div>
               </li>
             ))}
           </ol>
+          <section className="proof-capture" aria-labelledby="proof-title">
+            <SectionHeader title="添加能力证明" meta="项目、作品或评测结果" />
+            <Select aria-label="选择要证明的能力" onChange={setProofSkill} options={priorityGaps.map((gap) => ({ label: gap.skill, value: gap.skill }))} placeholder="选择一项缺口" value={proofSkill ?? undefined} />
+            <Input aria-label="证明标题" onChange={(event) => setProofTitle(event.target.value)} placeholder="证明标题" value={proofTitle} />
+            <Input.TextArea aria-label="证明说明" onChange={(event) => setProofDescription(event.target.value)} placeholder="说明你完成了什么，以及结果如何" value={proofDescription} />
+            <Button disabled={!proofSkill || !proofTitle.trim()} onClick={saveProof} type="primary">保存证明</Button>
+            {proofSaved ? <span className="proof-saved">已保存到个人画像</span> : null}
+          </section>
           <div className="learning-note">
             <CheckCircle aria-hidden weight="fill" />
-            路径会随画像修正重新排序
+            完成后补充证明，再重新诊断
           </div>
         </aside>
         <EvidenceDrawer

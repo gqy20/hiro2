@@ -8,13 +8,15 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, UploadFile
+from fastapi import FastAPI, HTTPException, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from backend.application.diagnosis import build_diagnosis, list_candidates
+from backend.application.quality import build_quality_overview
 from backend.application.service import ApplicationService
 from backend.application.temporal_vm import build_skill_graph, build_tasks, build_temporal
 from backend.application.training import build_training_output
@@ -34,9 +36,51 @@ class ReviewRequest(BaseModel):
     note: str = ""
 
 
-@app.get("/health")
-def health() -> dict:
+def _health_status() -> dict:
+    postgres = "not_configured"
+    database_url = os.getenv("DATABASE_URL", "")
+    if database_url:
+        try:
+            import psycopg
+
+            with psycopg.connect(database_url, connect_timeout=2):
+                postgres = "ok"
+        except Exception:
+            postgres = "unavailable"
+
+    neo4j = "not_configured"
+    if os.getenv("NEO4J_URI"):
+        try:
+            from backend.infra.neo4j import check_neo4j
+
+            neo4j = "ok" if check_neo4j() else "unavailable"
+        except Exception:
+            neo4j = "unavailable"
+
+    required = [postgres] if database_url else []
+    status = "ok" if all(x == "ok" for x in required) else "degraded"
+    return {"status": status, "postgres": postgres, "neo4j": neo4j}
+
+
+@app.get("/health/live")
+def health_live() -> dict:
+    """Process liveness; does not require external dependencies."""
     return {"status": "ok"}
+
+
+@app.get("/health/ready")
+def health_ready(response: Response) -> dict:
+    """Readiness; PostgreSQL is required when configured, Neo4j is degradable."""
+    result = _health_status()
+    if result["status"] != "ok":
+        response.status_code = 503
+    return result
+
+
+@app.get("/health")
+def health(response: Response) -> dict:
+    """Backward-compatible alias for readiness checks."""
+    return health_ready(response)
 
 
 @app.get("/api/v1/jobs/default/update")
@@ -95,12 +139,27 @@ def temporal_dataset() -> dict:
 
 @app.get("/api/v1/skills/graph")
 def skills_graph(job: str = "ai-agent-v2") -> dict:
-    return build_skill_graph(job).model_dump()
+    graph = build_skill_graph(job)
+    if os.getenv("NEO4J_URI"):
+        try:
+            from backend.infra.neo4j import read_job_graph
+
+            nodes, edges = read_job_graph(job)
+            if nodes:
+                graph = graph.model_copy(update={"nodes": nodes, "edges": edges})
+        except Exception:
+            pass
+    return graph.model_dump()
 
 
 @app.get("/api/v1/tasks/my")
 def my_tasks() -> dict:
     return build_tasks().model_dump()
+
+
+@app.get("/api/v1/quality/overview")
+def quality_overview() -> dict:
+    return build_quality_overview(os.getenv("DATABASE_URL") or None).model_dump()
 
 
 @app.get("/api/v1/jobs/{job_version_id}/training-output")

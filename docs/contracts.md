@@ -362,6 +362,11 @@ POST /api/v1/tasks/{id}/submit
 POST /api/v1/tasks/{id}/return
 GET  /api/v1/quality/overview
 GET  /api/v1/evaluation/runs/{id}/compare
+GET  /health/live
+GET  /health/ready
+
+质量看板在配置 `DATABASE_URL` 时从 PostgreSQL `review_tasks` 与 `review_actions` 聚合；数据库不可用时回退离线评测产物。
+`scripts/outbox.py enqueue <version_id>` 写入 `JobVersionPublished`，`scripts/outbox.py consume` 领取并幂等投影到 Neo4j。
 ```
 
 ### JD 导入请求

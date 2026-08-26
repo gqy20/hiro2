@@ -6,6 +6,7 @@ import { Progress, Statistic, Tag } from "antd";
 import { AppShell } from "@/components/app-shell";
 import { SectionHeader } from "@/components/workflow-ui";
 import type { TemporalDataset } from "@/lib/temporal";
+import type { QualityOverview } from "@/lib/quality";
 
 const ERROR_LABELS: Record<string, string> = {
   skill_误判: "技能误判",
@@ -16,23 +17,7 @@ const ERROR_LABELS: Record<string, string> = {
   其他: "其他",
 };
 
-const ERROR_COUNTS_MOCK: Record<string, number> = {
-  skill_误判: 12,
-  范围遗漏: 8,
-  证据不足: 6,
-  标签冲突: 4,
-  规则过时: 3,
-  其他: 2,
-};
-
-const METRICS_MOCK = {
-  completionRate: 0.8,
-  dualReviewRate: 0.67,
-  avgResponseDays: 3.2,
-  resolvedTasks: 12,
-};
-
-export function QualityWorkbench({ temporal }: { temporal: TemporalDataset }) {
+export function QualityWorkbench({ temporal, quality }: { temporal: TemporalDataset; quality: QualityOverview }) {
   const [compareIds, setCompareIds] = useState<[string, string]>(() => [
     temporal.backtests[0].run_id,
     temporal.backtests[1].run_id,
@@ -48,10 +33,10 @@ export function QualityWorkbench({ temporal }: { temporal: TemporalDataset }) {
 
   const errorList = useMemo(
     () =>
-      Object.entries(ERROR_COUNTS_MOCK)
+      Object.entries(quality.error_distribution)
         .map(([key, count]) => ({ key, label: ERROR_LABELS[key] ?? key, count }))
         .sort((x, y) => y.count - x.count),
-    [],
+    [quality.error_distribution],
   );
   const maxErrorCount = errorList[0]?.count ?? 1;
 
@@ -60,7 +45,10 @@ export function QualityWorkbench({ temporal }: { temporal: TemporalDataset }) {
       <section className="quality-workbench" aria-labelledby="quality-title">
         <header className="page-heading">
           <h1 id="quality-title">质量看板</h1>
-          <p>F-T4.12 完成率、复核率、错误分布、Run 对比（mock）</p>
+          <p>
+            评测任务、审核动作与回测运行的质量汇总 · 数据源：
+            {quality.source === "postgres" ? "PostgreSQL" : "离线评测产物"}
+          </p>
         </header>
 
         <section
@@ -70,12 +58,12 @@ export function QualityWorkbench({ temporal }: { temporal: TemporalDataset }) {
           <div className="temporal-stat-card">
             <Statistic
               title="任务完成率"
-              value={METRICS_MOCK.completionRate}
+              value={quality.completion_rate}
               valueStyle={{ color: "var(--green)" }}
               precision={2}
             />
             <Progress
-              percent={Math.round(METRICS_MOCK.completionRate * 100)}
+              percent={Math.round(quality.completion_rate * 100)}
               showInfo={false}
               size="small"
               status="success"
@@ -84,11 +72,11 @@ export function QualityWorkbench({ temporal }: { temporal: TemporalDataset }) {
           <div className="temporal-stat-card">
             <Statistic
               title="双人复核率"
-              value={METRICS_MOCK.dualReviewRate}
+              value={quality.dual_review_rate ?? 0}
               precision={2}
             />
             <Progress
-              percent={Math.round(METRICS_MOCK.dualReviewRate * 100)}
+              percent={Math.round((quality.dual_review_rate ?? 0) * 100)}
               showInfo={false}
               size="small"
             />
@@ -96,12 +84,12 @@ export function QualityWorkbench({ temporal }: { temporal: TemporalDataset }) {
           <div className="temporal-stat-card">
             <Statistic
               title="平均响应时长（天）"
-              value={METRICS_MOCK.avgResponseDays}
+              value={quality.avg_response_days ?? "暂无"}
               precision={1}
             />
           </div>
           <div className="temporal-stat-card">
-            <Statistic title="已解决任务" value={METRICS_MOCK.resolvedTasks} />
+            <Statistic title="已解决任务" value={quality.task_resolved} />
           </div>
         </section>
 
@@ -111,7 +99,7 @@ export function QualityWorkbench({ temporal }: { temporal: TemporalDataset }) {
         >
           <SectionHeader
             meta={`${errorList.length} 类`}
-            title="错误类型分布（mock）"
+            title="错误类型分布"
           />
           <ul>
             {errorList.map((e) => (

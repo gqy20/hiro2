@@ -7,6 +7,7 @@ FileRepository 启动时加载 data/processed 产物（MB 级，内存供给，Y
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from typing import Protocol
 
@@ -108,3 +109,28 @@ class FileRepository:
         self._review_path.parent.mkdir(parents=True, exist_ok=True)
         with self._review_path.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(action, ensure_ascii=False) + "\n")
+        dsn = os.getenv("DATABASE_URL")
+        if not dsn:
+            return
+        try:
+            import psycopg
+
+            with psycopg.connect(dsn) as conn:
+                conn.execute(
+                    """
+                    INSERT INTO review_actions
+                        (task_id, target_id, decision, reviewer, note, evidence_ids)
+                    VALUES (NULL,%s,%s,%s,%s,%s)
+                    """,
+                    (
+                        action.get("target_id", ""),
+                        action.get("decision", "needs_evidence"),
+                        action.get("reviewer", os.getenv("HIRO2_REVIEWER", "system")),
+                        action.get("note", ""),
+                        action.get("evidence_ids", []),
+                    ),
+                )
+                conn.commit()
+        except Exception:
+            # File audit remains authoritative for offline mode; DB sync retries later.
+            return

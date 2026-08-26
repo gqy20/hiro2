@@ -1,0 +1,11 @@
+.git
+.playwright-cli
+.venv
+node_modules
+apps/web/.next
+data/raw
+data/runs
+coverage.xml
+htmlcov
+__pycache__
+*.pyc

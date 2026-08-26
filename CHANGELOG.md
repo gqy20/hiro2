@@ -5,6 +5,10 @@
 ## [Unreleased]
 
 ### Added
+- PostgreSQL 事实源切换：质量看板优先读取 `review_tasks/review_actions`，`dbimport` 导入冻结评测任务；新增 `outbox_events` 表、幂等事件写入器与 `scripts/outbox.py`。
+- outbox 增加 `consume` 投影消费者：使用 `FOR UPDATE SKIP LOCKED` 领取事件，成功/失败状态可追踪，`JobVersionPublished` 幂等写入 Neo4j。
+- 健康检查拆分为 `/health/live` 与 `/health/ready`；质量 fixture 改用 manifest/metrics 结构化数据；新增审核质量字段 migration；技能图谱 API 支持 Neo4j 查询并在不可用时回退文件图谱。
+- 完成交付基础设施：Docker Compose（PostgreSQL/Neo4j/API/Web）与依赖健康检查、真实质量看板 API（评测任务/审核动作聚合）、Neo4j 幂等图谱投影及 `quality.py` 五道质量门统一 JSON 报告；38 个 Python 测试覆盖率 65.12%，`make check` 强制 coverage>=60%。
 - 简历双层归一（词典 + LLM 归层，置信度门槛与 reason 留痕）：20 份合成简历 99% 综合归一率；genresume 按方向×级别矩阵生成 20 份测试简历（txt/pdf/docx），批量匹配 overall 0.2~0.94 方向区分度清晰。
 - 完成主案例 3 人岗诊断（candmatch/candidates/matching）：文档解析适配器 + LLM 简历抽取 + 确定性四档匹配引擎 + 学练赛证路径；岗位版本发布流程（jobpub 审核留痕校验 + 不可变发布）；修复 resolver 空格变体 bug，词典 v6。
 - D9 评测集骨架（evalset）：三层冻结样本（映射 100/领域 50/事件 30，分层+哈希+种子）与回流评分脚本。

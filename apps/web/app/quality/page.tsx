@@ -2,6 +2,8 @@ import { AppShell } from "@/components/app-shell";
 import { QualityWorkbench } from "@/components/quality-workbench";
 import { FixtureState } from "@/components/workflow-ui";
 import { loadTemporalFixture } from "@/lib/temporal-fixture";
+import { loadQualityFixture, type QualityOverview } from "@/lib/quality";
+import { apiFetch, isMockMode } from "@/lib/api/client";
 
 export default async function QualityPage({
   searchParams,
@@ -30,5 +32,8 @@ export default async function QualityPage({
     );
   }
   const temporal = await loadTemporalFixture();
-  return <QualityWorkbench temporal={temporal} />;
+  const quality = isMockMode()
+    ? await loadQualityFixture()
+    : await apiFetch<QualityOverview>("/api/v1/quality/overview");
+  return <QualityWorkbench temporal={temporal} quality={quality} />;
 }

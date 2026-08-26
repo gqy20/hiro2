@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import sys
 from pathlib import Path
@@ -170,6 +171,44 @@ def cmd_run(dsn: str) -> dict:
                     )
                     n_jv += 1
             counts["job_versions"] = n_jv
+
+            # ---- review_tasks（由冻结评测集生成，幂等） ----
+            manifest = _load_json(ROOT / "evaluation" / "samples" / "manifest.json")
+            dataset_version = manifest.get("dataset_version", "")
+            task_specs = (
+                ("role-mapping.csv", "role_level", "jd_id"),
+                ("domain-judgment.csv", "evidence_audit", "jd_id"),
+                ("event-extraction.csv", "skill_mapping", "event_id"),
+            )
+            n_tasks = 0
+            for filename, task_type, id_field in task_specs:
+                sample_path = ROOT / "evaluation" / "samples" / filename
+                if not sample_path.is_file():
+                    continue
+                with sample_path.open(encoding="utf-8-sig", newline="") as fh:
+                    for row in csv.DictReader(fh):
+                        source_id = row.get(id_field, "")
+                        if not source_id:
+                            continue
+                        task_id = f"task-{task_type}-{source_id}"
+                        verdict_col = next((key for key in row if "?" in key), "")
+                        status = "RESOLVED" if row.get(verdict_col, "").strip() else "PENDING"
+                        cur.execute(
+                            """
+                            INSERT INTO review_tasks
+                                (task_id, task_type, source_record_id, dataset_version, status, system_output)
+                            VALUES (%s,%s,%s,%s,%s,%s)
+                            ON CONFLICT (task_id) DO UPDATE
+                            SET status = CASE
+                                WHEN review_tasks.status = 'PENDING' THEN EXCLUDED.status
+                                ELSE review_tasks.status
+                            END
+                            """,
+                            (task_id, task_type, source_id, dataset_version, status,
+                             json.dumps({"title": row.get("职位名", row.get("标题", ""))})),
+                        )
+                        n_tasks += 1
+            counts["review_tasks"] = n_tasks
 
         conn.commit()
 

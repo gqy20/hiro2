@@ -35,3 +35,5 @@ export type {
   ProjectEntry,
   UserCorrection,
 } from "@/lib/diagnosis";
+
+export type { QualityOverview } from "@/lib/quality";

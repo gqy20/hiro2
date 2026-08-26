@@ -71,7 +71,7 @@ test: test-py test-web test-e2e
 
 test-py:
 	@if find tests backend/tests -type f -name 'test_*.py' -print -quit 2>/dev/null | grep -q .; then \
-		$(UV) run pytest; \
+		$(UV) run pytest --cov=backend --cov-report=term-missing --cov-fail-under=60; \
 	else \
 		echo "Skipping Python tests: no test files yet"; \
 	fi
@@ -93,7 +93,7 @@ test-e2e:
 
 test-cov:
 	@if find tests backend/tests -type f -name 'test_*.py' -print -quit 2>/dev/null | grep -q .; then \
-		$(UV) run pytest --cov=backend --cov-report=term-missing --cov-report=xml; \
+		$(UV) run pytest --cov=backend --cov-report=term-missing --cov-report=xml --cov-fail-under=60; \
 	else \
 		echo "Skipping coverage: no Python tests yet"; \
 	fi

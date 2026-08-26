@@ -25,7 +25,7 @@
 | B-T1.4 | PDF/DOCX 文本提取 | - | **完成** | 能输出文本 | PyMuPDF + python-docx 薄适配器（`backend/candidates/parse.py`） |
 | B-T1.5 | LLM Provider Adapter | 环境变量 | **完成** | 结构化输出 Pydantic 校验 | AnthropicProvider + MockProvider + PromptSpec YAML |
 | B-T1.6 | 技能标准和归一化 | Skill Catalog | **完成** | 别名、技能点、待审核 | SkillResolver v6 + SKILLS-EARNED 755 别名 + 时间闸门 |
-| B-T1.7 | 五道质量门 | B-T1.2-6 | **部分** | 完整性、去重、时效、交叉验证、幻觉拦截 | 去重(evdedup)、时效(as_of 闸门)、交叉验证(leadtime)各有实现，但未整合为统一五道门报告 |
+| B-T1.7 | 五道质量门 | B-T1.2-6 | **完成** | 完整性、去重、时效、交叉验证、幻觉拦截 | `scripts/quality.py run` 输出统一 JSON 报告并保留 run 产物 |
 | B-T1.8 | RSS 来源登记与采集 | B-T1.1/3 | **完成** | 保存 feed、原始 XML、时间 | SOURCES.yml 6 来源 + wechat-mp 697 篇归档 |
 | B-T1.9 | 历史日报回填 | B-T1.3 | **完成** | 区分 live/backfill | ingestion_mode=backfill 标记 + 时间戳回填 3459 条 |
 
@@ -46,7 +46,7 @@
 
 | ID | 任务 | 依赖 | 联调 | 状态 | 验收 | 实现 |
 | --- | --- | --- | --- | --- | --- | --- |
-| B-T3.1 | Neo4j Graph Projector | B-T2.6 | I3 | **未开始** | JobVersionPublished 可幂等投影 | 架构定位为可重建投影，非关键路径 |
+| B-T3.1 | Neo4j Graph Projector | B-T2.6 | I3 | **完成** | JobVersionPublished 可幂等投影 | `backend/infra/neo4j.py` 参数化 Cypher + 约束 + `scripts/graph.py` 重建 |
 | B-T3.2 | 图谱查询 API | B-T3.1 | I3 | **部分** | 技术栈、级别、技能点可筛选 | `GET /skills/graph` 内存构建 22 节点 21 边（非 Neo4j） |
 | B-T3.3 | CandidateProfile 服务 | B-T1.4/6 | I4 | **完成** | 原始抽取、用户修正、生效画像 | `backend/candidates/` raw+correction→effective，双层归一 99% |
 | B-T3.4 | 多维匹配算法 | B-T2.6/T3.3 | I4 | **完成** | 技能、熟练度、年限可解释 | `backend/matching/engine.py` match-v1 四档判定 |
@@ -61,14 +61,14 @@
 | B-T4.1 | Evaluation Case schema | B-T1.1 | **完成** | 输入、标准答案、预测、判定 | `evalset.py freeze` 三层冻结样本 |
 | B-T4.2 | 指标计算 CLI | B-T4.1 | **完成** | 指标可重跑 | `evalset.py score` 确定性计算 |
 | B-T4.3 | 100+ JD 测试集导入 | B-T4.1 | **完成** | 真实、来源、标注、synthetic 标记 | 337 条（266 AI 域），全部真实采集 |
-| B-T4.4 | 单元、契约、集成测试 | 全部 | **部分** | coverage>=60% | 34 个测试全绿；覆盖率未测 |
-| B-T4.5 | Pipeline Run / Outbox | B-T2 | **未开始** | 长任务可追踪，事件幂等 | RunContext 有 JSONL 日志，无 outbox_events 表 |
-| B-T4.6 | Docker Compose 和健康检查 | 全部 | **未开始** | 干净环境可启动 | `/health` 端点有；Compose 未做 |
+| B-T4.4 | 单元、契约、集成测试 | 全部 | **完成** | coverage>=60% | 38 个测试全绿，coverage 65.12%，Makefile 强制 fail-under=60 |
+| B-T4.5 | Pipeline Run / Outbox | B-T2 | **进行中** | 长任务可追踪，事件幂等 | `outbox_events` migration + `scripts/outbox.py enqueue/consume` 已完成；worker 常驻调度待补 |
+| B-T4.6 | Docker Compose 和健康检查 | 全部 | **完成** | 干净环境可启动 | `docker-compose.yml` 含 PostgreSQL/Neo4j/API/Web 健康依赖和 migration 初始化；`/health/live` + `/health/ready` |
 | B-T4.7 | 历史滚动回测 CLI | B-T2.8 | **完成** | 只用截止时间前数据 | `backtest.py` 月度滚动 + 双 as_of 闸门 |
 | B-T4.8 | 预测复盘与错误分析 | B-T4.7 | **完成** | 命中等级和改进建议 | error_types 分类（up->down 为主） |
 | B-T4.9 | ReviewTask 与任务分配 | B-T4.1 | **完成** | 自动生成、领取、提交 | 180 条任务从 evalset 自动生成 |
 | B-T4.10 | 审核标注与双人复核 | B-T4.9 | **未开始** | 20% 双人独立审核 | 无双审机制 |
-| B-T4.11 | 质量指标与运行对比 API | B-T4.2/10 | **部分** | 完成率、复核率、错误分布 | 页面有但指标数据来自 mock |
+| B-T4.11 | 质量指标与运行对比 API | B-T4.2/10 | **完成** | 完成率、复核率、错误分布 | `/api/v1/quality/overview` 从评测 CSV 与 append-only 审核动作计算，前端移除 mock 指标 |
 | B-T4.12 | CI 与迁移验证 | Makefile | **未开始** | CI 使用锁文件 | 无 GitHub Actions |
 
 ## 联调门

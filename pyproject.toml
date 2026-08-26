@@ -12,6 +12,7 @@ dependencies = [
     "pydantic>=2.13.4",
     "pydantic-settings>=2.15.0",
     "pymupdf>=1.28.2",
+    "neo4j>=6.0.0",
     "python-docx>=1.2.0",
     "python-multipart>=0.0.32",
     "pyyaml>=6.0.3",
@@ -35,6 +36,10 @@ target-version = "py313"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "UP", "W"]
+
+[tool.ruff.lint.per-file-ignores]
+# SQL statements are intentionally kept readable as complete statements.
+"scripts/dbimport.py" = ["E501"]
 
 [tool.ruff.format]
 quote-style = "double"

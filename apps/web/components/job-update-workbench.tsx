@@ -43,6 +43,13 @@ const filterOptions: Array<"全部" | ChangeKind> = [
   "modified",
 ];
 
+function splitWindow(value: string): { label: string; start: string; end: string }[] {
+  return value.split(" vs ").map((part, index) => {
+    const [start = "", end = ""] = part.split(":");
+    return { label: index === 0 ? "基准窗" : "观察窗", start, end };
+  });
+}
+
 type JobUpdateWorkbenchProps = {
   fixture: JobUpdateFixture;
   state?: "ready" | "empty" | "error";
@@ -52,6 +59,7 @@ export function JobUpdateWorkbench({
   fixture,
   state = "ready",
 }: JobUpdateWorkbenchProps) {
+  const windows = splitWindow(fixture.context.timeWindow);
   const [items, setItems] = useState(fixture.changes);
   const [selected, setSelected] = useState<ChangeItem | null>(null);
   const [running, setRunning] = useState(false);
@@ -201,10 +209,16 @@ export function JobUpdateWorkbench({
             </label>
             <label>
               观察窗口
-              <Select
-                defaultValue={fixture.context.timeWindow}
-                options={[{ value: fixture.context.timeWindow }]}
-              />
+              <div className="context-window" role="group" aria-label="观察窗口">
+                {windows.map((window) => (
+                  <div className="context-window-row" key={window.label}>
+                    <span>{window.label}</span>
+                    <strong>{window.start}</strong>
+                    <i>至</i>
+                    <strong>{window.end}</strong>
+                  </div>
+                ))}
+              </div>
             </label>
           </div>
 

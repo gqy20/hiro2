@@ -84,9 +84,71 @@ input:focus-visible {
 #main-content {
   height: calc(100dvh - 58px);
   min-height: 0;
-  overflow: auto;
+  overflow: hidden;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
+}
+
+/* 工作台内部滚动边界：外框和侧栏固定，主内容独立滚动。 */
+.workbench,
+.new-jobs-workbench,
+.diagnosis-workbench,
+.skill-workbench,
+.evaluation-workbench,
+.tasks-workbench,
+.temporal-workbench,
+.quality-workbench {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.workbench > .context-panel,
+.workbench > .evidence-panel,
+.workbench > .diff-panel,
+.new-jobs-workbench > .candidate-panel,
+.new-jobs-workbench > .candidate-definition,
+.diagnosis-workbench > .diagnosis-profile,
+.diagnosis-workbench > .diagnosis-report,
+.diagnosis-workbench > .learning-panel,
+.evaluation-workbench .evaluation-layout,
+.tasks-workbench .tasks-layout,
+.skill-workbench .skill-graph-layout {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.workbench > .diff-panel,
+.new-jobs-workbench > .candidate-definition,
+.diagnosis-workbench > .diagnosis-report,
+.evaluation-workbench .evaluation-detail,
+.tasks-workbench .tasks-workspace {
+  overflow-y: auto;
+}
+
+.quality-workbench,
+.temporal-workbench {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.skill-workbench .skill-graph-layout,
+.evaluation-workbench .evaluation-layout,
+.tasks-workbench .tasks-layout {
+  overflow: hidden;
+}
+
+.skill-workbench .skill-graph-toolbar,
+.skill-workbench .skill-graph-stage,
+.skill-workbench .skill-graph-detail,
+.evaluation-workbench .evaluation-dataset-list,
+.evaluation-workbench .evaluation-pending,
+.tasks-workbench .tasks-list,
+.tasks-workbench .tasks-workspace {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .brand,
@@ -203,6 +265,7 @@ input:focus-visible {
 .context-panel {
   padding: 22px 20px;
   background: var(--paper-soft);
+  overflow-x: hidden;
 }
 
 .page-heading,
@@ -305,6 +368,32 @@ h3 {
   border-radius: 4px !important;
   background: var(--panel) !important;
 }
+
+.context-form .ant-select { max-width: 100%; }
+
+.context-window {
+  display: grid;
+  gap: 6px;
+  max-width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel);
+}
+
+.context-window-row {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 14px minmax(0, 1fr);
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  font-size: 11px;
+}
+
+.context-window-row + .context-window-row { border-top: 1px solid var(--line-soft); padding-top: 6px; }
+.context-window-row span { color: var(--muted); }
+.context-window-row strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-mono); font-weight: 500; }
+.context-window-row i { color: var(--muted); font-style: normal; text-align: center; }
 
 .context-form .ant-select-focused .ant-select-selector {
   border-color: var(--blue) !important;
@@ -2017,6 +2106,9 @@ h3 {
 /* ---------- 窄屏适配（F-T4.3，390px 视口） ---------- */
 
 @media (max-width: 480px) {
+  #main-content { overflow-x: hidden; overflow-y: auto; }
+  .workbench, .new-jobs-workbench, .diagnosis-workbench, .evaluation-workbench, .tasks-workbench, .temporal-workbench, .quality-workbench { height: auto; min-height: calc(100dvh - 58px); overflow: visible; }
+  .context-panel, .diff-panel, .evidence-panel { max-width: 100%; overflow-x: hidden; }
   .page-heading h1 { font-size: 18px; }
   .skill-graph-toolbar { flex-direction: column; padding: 12px; gap: 8px; }
   .skill-graph-toolbar label { font-size: 11px; }

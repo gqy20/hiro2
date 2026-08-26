@@ -74,11 +74,6 @@ export function JobUpdateWorkbench({
       .length,
     reviewing: items.filter((item) => item.status === "reviewing").length,
   };
-  const kindCounts = {
-    added: items.filter((item) => item.kind === "added").length,
-    removed: items.filter((item) => item.kind === "removed").length,
-    modified: items.filter((item) => item.kind === "modified").length,
-  };
   const visibleItems = items;
 
   function updateStatus(id: string, status: ReviewStatus) {
@@ -262,10 +257,6 @@ export function JobUpdateWorkbench({
                   <strong className="delta delta-removed">-1</strong>
                 </dd>
               </div>
-              <div>
-                <dt>待审变化</dt>
-                <dd>{pending}</dd>
-              </div>
             </dl>
           </section>
         </section>
@@ -333,11 +324,6 @@ export function JobUpdateWorkbench({
             >
               <h3 id="impact-title">下游影响</h3>
               <span className="downstream-impact-copy">{items.length} 项变化会同步影响技能图谱与人岗诊断</span>
-              <ul aria-label="变化统计">
-                <li><span>新增</span><strong>{kindCounts.added}</strong></li>
-                <li><span>删除</span><strong>{kindCounts.removed}</strong></li>
-                <li><span>修改</span><strong>{kindCounts.modified}</strong></li>
-              </ul>
               <Link className="impact-link" href="/skills">
                 查看技能图谱 →
               </Link>

@@ -12,12 +12,13 @@ type ReviewProgressProps = {
 };
 
 export function ReviewProgress({ running, runId, steps }: ReviewProgressProps) {
+  const shortRunId = runId.length > 20 ? `${runId.slice(0, 10)}…${runId.slice(-6)}` : runId;
   return (
     <section className="review-progress" aria-labelledby="progress-title">
       <div className="section-heading">
         <div className="inline-heading">
           <h2 id="progress-title">分析记录</h2>
-          <span>{runId}</span>
+          <span title={runId}>{shortRunId}</span>
         </div>
         <Tag
           color={running ? "processing" : "gold"}

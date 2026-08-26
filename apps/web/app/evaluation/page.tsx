@@ -1,6 +1,9 @@
 import { AppShell } from "@/components/app-shell";
 import { EvaluationWorkbench } from "@/components/evaluation-workbench";
 import { FixtureState } from "@/components/workflow-ui";
+import { apiFetch, isMockMode } from "@/lib/api/client";
+import { loadEvaluationFixture } from "@/lib/evaluation-fixture";
+import type { EvaluationOverview } from "@/lib/evaluation";
 
 export default async function EvaluationPage({
   searchParams,
@@ -28,5 +31,8 @@ export default async function EvaluationPage({
       </AppShell>
     );
   }
-  return <EvaluationWorkbench />;
+  const overview = isMockMode()
+    ? await loadEvaluationFixture()
+    : await apiFetch<EvaluationOverview>("/evaluation/overview");
+  return <EvaluationWorkbench overview={overview} />;
 }

@@ -6,17 +6,19 @@
 
 1. [产品定义](product.md)：用户、范围、功能和验收。
 2. [用户场景](user-scenarios.md)：角色、决策路径、异常处理和体验验收。
-3. [系统总览](overview.md)：完整数据处理、预测、岗位和匹配链路。
-4. [技术架构](architecture.md)：模块边界、数据流和存储。
-5. [数据与接口契约](contracts.md)：核心对象、状态、API 和事件。
-6. [时间情报系统](temporal-system.md)：RSS、历史回测、未来预测和岗位影响建议。
-7. [数据 Roadmap](roadmap-data.md)：数据清洗、岗位阶梯、技能和证据进度。
-8. [前端 Roadmap](roadmap-frontend.md)：页面、交互和联调进度。
-9. [后端 Roadmap](roadmap-backend.md)：数据、API、管道和部署进度。
-10. [评测与交付](evaluation.md)：指标、测试、部署和答辩证据。
-11. [前端设计参考](design-references.md)：外部平台调研、AI 交互模式和可迁移设计规则。
-12. [架构决策记录](adr/README.md)：不可逆技术和数据决策。
-13. [研究资料](research/README.md)：发榜方契合度、竞品和产品取舍。
+3. [企业招聘工作区设计](design-recruiting.md)：招聘负责人和技术负责人的任务、页面和权限。
+4. [求职成长工作区设计](design-career.md)：求职青年的人岗诊断、缺口和学习路径。
+5. [系统总览](overview.md)：完整数据处理、预测、岗位和匹配链路。
+6. [技术架构](architecture.md)：模块边界、数据流和存储。
+7. [数据与接口契约](contracts.md)：核心对象、状态、API 和事件。
+8. [时间情报系统](temporal-system.md)：RSS、历史回测、未来预测和岗位影响建议。
+9. [数据 Roadmap](roadmap-data.md)：数据清洗、岗位阶梯、技能和证据进度。
+10. [前端 Roadmap](roadmap-frontend.md)：页面、交互和联调进度。
+11. [后端 Roadmap](roadmap-backend.md)：数据、API、管道和部署进度。
+12. [评测与交付](evaluation.md)：指标、测试、部署和答辩证据。
+13. [前端设计参考](design-references.md)：外部平台调研、AI 交互模式和可迁移设计规则。
+14. [架构决策记录](adr/README.md)：不可逆技术和数据决策。
+15. [研究资料](research/README.md)：发榜方契合度、竞品和产品取舍。
 
 完整历史版本保存在 [`archive/`](archive/)。历史文档只用于查阅，不作为当前实现依据。
 

@@ -34,6 +34,10 @@ class BacktestRecordVM(_VM):
     predicted: str
     actual: str
     hit: bool
+    confidence: float = 0.0
+    recent: float = 0.0
+    prior: float = 0.0
+    rule_version: int = 1
 
 
 class TrendSignalVM(_VM):
@@ -58,6 +62,11 @@ class ForecastVM(_VM):
     predicted_direction: str = "flat"
     predicted_heat: float = 0.0
     confidence: float = 0.4
+    forecast_valid_until: str = ""
+    model_version: str = "temporal-v1"
+    prompt_version: str = "report-event-v3"
+    rule_version: int = 1
+    evidence_ids: list[str] = Field(default_factory=list)
 
 
 class SuggestionVM(_VM):
@@ -110,6 +119,10 @@ def build_temporal() -> TemporalVM:
                 predicted=r["predicted"],
                 actual=r["actual"],
                 hit=r["hit"],
+                confidence=r.get("confidence", 0.0),
+                recent=r.get("recent", 0.0),
+                prior=r.get("prior", 0.0),
+                rule_version=r.get("rule_version", 1),
             )
             for r in d["records"][:30]  # 截断防过大
         )
@@ -128,10 +141,27 @@ def build_temporal() -> TemporalVM:
                     reason=f"{r['name']}：信号领先 {r['lead_days']} 天（{r['reliability']}）",
                 )
             )
+    latest = max((r.as_of for r in records), default="")
+    forecasts = [
+        ForecastVM(
+            forecast_id=f"fct-{record.skill_id}-{record.as_of}",
+            skill_id=record.skill_id,
+            mode="backtest",
+            as_of_date=record.as_of,
+            horizon_days=30,
+            predicted_direction=record.predicted,
+            predicted_heat=record.recent,
+            confidence=record.confidence,
+            forecast_valid_until=latest,
+            rule_version=record.rule_version,
+        )
+        for record in records
+        if record.as_of == latest
+    ]
     return TemporalVM(
         backtests=backtests,
         backtest_records=records,
-        forecasts=[],
+        forecasts=forecasts,
         signals=[],
         suggestions=suggestions,
     )

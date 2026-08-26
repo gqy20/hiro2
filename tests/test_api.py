@@ -32,3 +32,17 @@ def test_quality_overview_contract() -> None:
     body = response.json()
     assert body["task_total"] == 180
     assert "error_distribution" in body
+
+
+def test_dashboard_overview_contract() -> None:
+    response = TestClient(app).get("/api/v1/dashboard/overview")
+    assert response.status_code == 200
+    body = response.json()
+    assert body["focus"]["href"] == "/jobs"
+    assert len(body["queue"]) == 3
+
+
+def test_evaluation_overview_contract() -> None:
+    response = TestClient(app).get("/api/v1/evaluation/overview")
+    assert response.status_code == 200
+    assert response.json()["datasets"]

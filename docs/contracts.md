@@ -361,6 +361,9 @@ POST /api/v1/tasks/{id}/claim
 POST /api/v1/tasks/{id}/submit
 POST /api/v1/tasks/{id}/return
 GET  /api/v1/quality/overview
+GET  /api/v1/dashboard/overview
+GET  /api/v1/evaluation/overview
+GET  /api/v1/temporal/dataset
 GET  /api/v1/evaluation/runs/{id}/compare
 GET  /health/live
 GET  /health/ready

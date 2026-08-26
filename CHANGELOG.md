@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- 新增企业招聘工作区与求职成长工作区设计文档，明确角色入口、首屏信息层级、主流程、权限边界和验收标准。
 - PostgreSQL 事实源切换：质量看板优先读取 `review_tasks/review_actions`，`dbimport` 导入冻结评测任务；新增 `outbox_events` 表、幂等事件写入器与 `scripts/outbox.py`。
 - outbox 增加 `consume` 投影消费者：使用 `FOR UPDATE SKIP LOCKED` 领取事件，成功/失败状态可追踪，`JobVersionPublished` 幂等写入 Neo4j。
 - 健康检查拆分为 `/health/live` 与 `/health/ready`；质量 fixture 改用 manifest/metrics 结构化数据；新增审核质量字段 migration；技能图谱 API 支持 Neo4j 查询并在不可用时回退文件图谱。

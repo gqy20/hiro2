@@ -2,12 +2,16 @@ import { AppShell } from "@/components/app-shell";
 import { TemporalForecastsWorkbench } from "@/components/temporal-forecasts-workbench";
 import { FixtureState } from "@/components/workflow-ui";
 import { loadTemporalFixture } from "@/lib/temporal-fixture";
+import { apiFetch, isMockMode } from "@/lib/api/client";
+import type { TemporalDataset } from "@/lib/temporal";
 
 export default async function TemporalForecastsPage({
   searchParams,
 }: Readonly<{ searchParams: Promise<{ state?: string }> }>) {
   const { state } = await searchParams;
-  const fixture = await loadTemporalFixture();
+  const fixture = isMockMode()
+    ? await loadTemporalFixture()
+    : await apiFetch<TemporalDataset>("/temporal/dataset");
   const variant =
     state === "empty" || state === "error" ? state : "ready";
   if (variant === "error") {

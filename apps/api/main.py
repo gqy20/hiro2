@@ -15,7 +15,9 @@ from fastapi import FastAPI, HTTPException, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
+from backend.application.dashboard import build_dashboard
 from backend.application.diagnosis import build_diagnosis, list_candidates
+from backend.application.evaluation import build_evaluation_overview
 from backend.application.quality import build_quality_overview
 from backend.application.service import ApplicationService
 from backend.application.temporal_vm import build_skill_graph, build_tasks, build_temporal
@@ -95,6 +97,16 @@ def job_update(state: str = "ready") -> dict:
 @app.get("/api/v1/emerging-jobs")
 def emerging_jobs() -> dict:
     return svc.emerging_jobs().model_dump(by_alias=True)
+
+
+@app.get("/api/v1/dashboard/overview")
+def dashboard_overview() -> dict:
+    return build_dashboard().model_dump()
+
+
+@app.get("/api/v1/evaluation/overview")
+def evaluation_overview() -> dict:
+    return build_evaluation_overview()
 
 
 @app.get("/api/v1/emerging-jobs/{candidate_id}/review")

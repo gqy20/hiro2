@@ -1,6 +1,8 @@
 import { AppShell } from "@/components/app-shell";
 import { TasksWorkbench } from "@/components/tasks-workbench";
 import { FixtureState } from "@/components/workflow-ui";
+import { apiFetch, isMockMode } from "@/lib/api/client";
+import type { ReviewTask } from "@/lib/tasks-fixture";
 
 export default async function TasksPage({
   searchParams,
@@ -28,5 +30,8 @@ export default async function TasksPage({
       </AppShell>
     );
   }
-  return <TasksWorkbench />;
+  const tasks = isMockMode()
+    ? undefined
+    : (await apiFetch<{ tasks: ReviewTask[] }>("/tasks/my")).tasks;
+  return <TasksWorkbench initialTasks={tasks} />;
 }

@@ -67,7 +67,7 @@
 | F-T4.9 | 时间系统与岗位系统入口 | JobImpactSuggestion API | **完成** | `/temporal/suggestions` 3 条 PENDING 建议 + 接受/修改/拒绝（修改 Modal 改 suggested_level），按 design.md L108「不能与已发布岗位事实并列」独立成页。 |
 | F-T4.10 | 我的任务与领取流程 | ReviewTask API | **完成** | `/tasks` 左列表 5 条任务（3 forecast_review + 2 job_review，2 标「需双审」），领取 → 审核中 → 提交 → 完成 4 状态机。 |
 | F-T4.11 | 审核工作区 | ReviewTask/Evidence API | **完成** | `/tasks` 右侧 3 段工作区（系统结果 / 证据 / 人工决策），决策按钮复用 `ReviewActions`（onAccept/onModify/onReject）。 |
-| F-T4.12 | 质量看板与运行对比 | Quality/Evaluation API | **完成** | `/quality` 4 stat-card（完成率 80% / 复核率 67% / 响应 3.2d / 已解决 12）+ 6 类错误分布 + 3 horizon Run 对比。 |
+| F-T4.12 | 质量看板与运行对比 | Quality/Evaluation API | **进行中** | `/quality` 指标从 review/eval API 获取；Run 对比和错误分布仍需完成真实 API 接线。 |
 
 ## 联调门
 

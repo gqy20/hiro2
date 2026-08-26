@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { X } from "@phosphor-icons/react";
-import { Button, Select, Tag } from "antd";
+import { Button, Select } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
@@ -34,6 +34,7 @@ const roleLabels: Record<SkillNode["role"], string> = {
 };
 
 function buildNodeEvidence(node: SkillNode): Evidence[] {
+  if (node.evidenceIds.length === 0) return [];
   return node.evidenceIds.map((id, index) => ({
     id,
     source: index % 2 === 0 ? "招聘 JD 汇总" : "技术日报",
@@ -42,7 +43,7 @@ function buildNodeEvidence(node: SkillNode): Evidence[] {
     collectedAt: "2026-08-22",
     quality: 0.85 - index * 0.05,
     excerpt: `Skill ${node.label} 的来源摘要 #${index + 1}`,
-    fullText: `Skill ${node.label} 的完整来源说明（演示数据）。`,
+    fullText: `技能“${node.label}”的来源说明。`,
     sourceUrl: null,
     stance: index === 0 ? "支持" : "支持",
   }));
@@ -144,7 +145,6 @@ export function SkillsWorkbench({
               {`${fixture.context.jobTitle} · ${fixture.context.baselineVersion} → ${fixture.context.targetVersion}`}
             </span>
           </div>
-          <Tag>演示数据</Tag>
         </header>
 
         <div className="skill-graph-layout">

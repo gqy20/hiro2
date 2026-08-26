@@ -8,7 +8,7 @@ import {
   PencilSimple,
   XCircle,
 } from "@phosphor-icons/react";
-import { Button, Input, Tag, Tooltip } from "antd";
+import { Button, Input, Tooltip } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
@@ -131,7 +131,6 @@ export function NewJobsWorkbench({
               <h1>新岗位</h1>
               <span>{`${filtered.length} 个候选`}</span>
             </div>
-            <Tag>演示数据</Tag>
           </div>
           <Input
             allowClear

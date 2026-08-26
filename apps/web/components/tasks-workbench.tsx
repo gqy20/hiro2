@@ -46,8 +46,8 @@ function SystemOutputView({ output }: { output: Record<string, unknown> }) {
   );
 }
 
-export function TasksWorkbench() {
-  const [tasks, setTasks] = useState<ReviewTask[]>(() => buildMockTasks());
+export function TasksWorkbench({ initialTasks }: { initialTasks?: ReviewTask[] }) {
+  const [tasks, setTasks] = useState<ReviewTask[]>(() => initialTasks ?? buildMockTasks());
   const [selectedId, setSelectedId] = useState<string | null>(
     () => tasks[0]?.task_id ?? null,
   );

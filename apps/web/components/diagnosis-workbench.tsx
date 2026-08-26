@@ -213,7 +213,6 @@ export function DiagnosisWorkbench({
               <h1>{fixture.candidate.name}</h1>
               <span>{fixture.candidate.headline}</span>
             </div>
-            <Tag>演示数据</Tag>
           </div>
           <p className="profile-location">{fixture.candidate.location}</p>
           <div className="profile-counts">

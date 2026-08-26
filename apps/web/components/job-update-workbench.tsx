@@ -171,7 +171,6 @@ export function JobUpdateWorkbench({
               <h1 id="page-title">岗位更新</h1>
             </div>
             <div className="header-tags">
-              <Tag>演示数据</Tag>
               <Tag color="gold">{`草稿 ${fixture.context.targetVersion}`}</Tag>
             </div>
           </div>

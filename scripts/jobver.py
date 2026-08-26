@@ -1,7 +1,8 @@
 """jobver: 岗位版本草稿与变更集组装（产品核心对象，contracts.md 语义）。
 
 用法：
-    uv run scripts/jobver.py run
+    uv run scripts/jobver.py run                        # AI Agent 主案例（1+2）
+    uv run scripts/jobver.py run --job pos_01 --slug llm-algo   # 任意岗位 v2 草稿
 
 产物：
   jobversion-agent-draft.json   主案例 1：AI Agent 工程师 JobVersion(DRAFT)
@@ -9,6 +10,9 @@
          含逐能力 changeset（v1 评分 vs 市场份额）与证据引用
   jobchangeset-window-diff.json 主案例 2：两窗口 diff 归一为 JobChangeSet
       —— 变化项带证据 JD，供审核命令消费后创建新版本
+  jobversions/drafts/*.json     参数化岗位草稿（--job）
+      —— 同规则组装：Excel 基线为 v1，该岗位 JD 分布组装 v2 草稿；
+         emerging 涌现信号按岗位暂缺，先做两源（基线+JD）
 全部确定性组装，status=DRAFT/PENDING，发布须经人工审核（产品规则）。
 """
 
@@ -34,13 +38,13 @@ EMERGING = ROOT / "data" / "processed" / "jd-opencli" / "emerging-agent.json"
 JDDIFF = ROOT / "data" / "processed" / "jd-opencli" / "jd-diff.json"
 OUT_DRAFT = ROOT / "data" / "processed" / "jd-opencli" / "jobversion-agent-draft.json"
 OUT_CS = ROOT / "data" / "processed" / "jd-opencli" / "jobchangeset-window-diff.json"
+DRAFTS = ROOT / "data" / "processed" / "jobversions" / "drafts"
 
 AGENT_TARGET = "AI Agent开发工程师"
 # 变化判定用群内排名而非份额换算（份额与 Excel 0-5 评分不同量纲，直接换算不成立）
 
 
-def cmd_run() -> dict:
-    run = RunContext("jobver", {"cmd": "run"})
+def _load_common() -> tuple[list[dict], dict, dict[str, dict], list[dict]]:
     positions = [json.loads(x) for x in POSITIONS.open(encoding="utf-8")]
     caps = {
         c["capability_id"]: c["name"]
@@ -52,18 +56,17 @@ def cmd_run() -> dict:
     }
     parsed = {r["jd_id"]: r for r in (json.loads(x) for x in PARSED.open(encoding="utf-8"))}
     rolemap = [json.loads(x) for x in ROLEMAP.open(encoding="utf-8")]
-    emerging = json.loads(EMERGING.read_text(encoding="utf-8"))
+    return positions, caps, parsed, rolemap
 
-    agent_pos = next(p for p in positions if p["name"] == AGENT_TARGET)
-    agent_jd_ids = [
-        rm["jd_id"] for rm in rolemap if rm.get("position_id") == agent_pos["position_id"]
-    ]
 
-    # 市场侧能力分布（Agent 群）+ 每能力证据 JD
+def _market_changeset(
+    jd_ids: list[str], parsed: dict[str, dict], scores: dict, caps: dict
+) -> tuple[Counter, int, list[dict]]:
+    """岗位 JD 群的市场技能分布与逐能力 changeset（群内排名规则，岗位通用）。"""
     market: Counter = Counter()
     points: Counter = Counter()
     evid: dict[str, list[str]] = {}
-    for jid in agent_jd_ids:
+    for jid in jd_ids:
         r = parsed[jid]
         for x in r.get("resolved") or []:
             sid = x["skill_id"]
@@ -78,7 +81,7 @@ def cmd_run() -> dict:
     changeset = []
     for sid, n in market.most_common():
         share = n / total
-        v1 = agent_pos["scores"].get(sid)
+        v1 = scores.get(sid)
         if v1 is None:
             continue
         if v1 <= 2 and share >= 0.04:
@@ -119,6 +122,74 @@ def cmd_run() -> dict:
                 "note": "基线为能力域级评分，市场证据细化到技能点",
             }
         )
+    return market, total, changeset
+
+
+def _run_position(position_id: str, slug: str) -> dict:
+    """参数化岗位 v2 草稿：Excel 基线 v1 + 本岗位 JD 市场分布，两源组装。"""
+    run = RunContext("jobver", {"cmd": "run", "job": position_id})
+    positions, caps, parsed, rolemap = _load_common()
+    pos = next((p for p in positions if p["position_id"] == position_id), None)
+    if pos is None:
+        raise SystemExit(f"岗位不存在：{position_id}（见 capability-matrix/positions.jsonl）")
+    jd_ids = [rm["jd_id"] for rm in rolemap if rm.get("position_id") == position_id]
+    market, total, changeset = _market_changeset(jd_ids, parsed, pos["scores"], caps)
+
+    draft = {
+        "job_id": f"job_{position_id}",
+        "version_id": f"{slug}-v2-draft-{date.today().strftime('%Y%m%d')}",
+        "status": "DRAFT",
+        "title": pos["name"],
+        "basis": {
+            "v1": f"Excel 专家基线（{position_id} {pos['name']}）",
+            "v2": f"市场证据组装（{len(jd_ids)} 条 JD 技能分布）",
+        },
+        "required_skill_ids": [
+            {"skill_id": sid, "name": caps.get(sid, sid), "weight": round(n / total, 3)}
+            for sid, n in market.most_common(5)
+        ],
+        "preferred_skill_ids": [
+            {"skill_id": sid, "name": caps.get(sid, sid), "weight": round(n / total, 3)}
+            for sid, n in market.most_common(10)[5:]
+        ],
+        "valid_from": date.today().isoformat(),
+        "evidence": {
+            "evidence_ids": [f"jd:{j}" for j in jd_ids],
+            "baseline_evidence_id": f"xlsx:{position_id}",
+            "jd_count": len(jd_ids),
+        },
+        "changeset_vs_v1": changeset,
+        "review_status": "PENDING",
+        "generated_by": "jobver v1（确定性组装）",
+        "generated_at": date.today().isoformat(),
+    }
+    DRAFTS.mkdir(parents=True, exist_ok=True)
+    out = DRAFTS / f"{draft['version_id']}.json"
+    out.write_text(json.dumps(draft, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    metrics = {
+        "draft_changes": len(changeset),
+        "jd_count": len(jd_ids),
+        "draft": str(out.relative_to(ROOT)),
+    }
+    run.finish(metrics)
+    return metrics
+
+
+def cmd_run() -> dict:
+    run = RunContext("jobver", {"cmd": "run"})
+    positions, caps, parsed, rolemap = _load_common()
+    emerging = json.loads(EMERGING.read_text(encoding="utf-8"))
+
+    agent_pos = next(p for p in positions if p["name"] == AGENT_TARGET)
+    agent_jd_ids = [
+        rm["jd_id"] for rm in rolemap if rm.get("position_id") == agent_pos["position_id"]
+    ]
+
+    # 市场侧能力分布（Agent 群）+ 逐能力 changeset（与参数化岗位共用规则）
+    market, total, changeset = _market_changeset(
+        agent_jd_ids, parsed, agent_pos["scores"], caps
+    )
 
     draft = {
         "job_id": f"job_{agent_pos['position_id']}_agent",
@@ -195,9 +266,14 @@ def cmd_run() -> dict:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="jobver")
     sub = parser.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("run")
-    parser.parse_args(argv)
-    print(json.dumps(cmd_run(), ensure_ascii=False))
+    p_run = sub.add_parser("run")
+    p_run.add_argument("--job", default=None, help="position_id（如 pos_01）；缺省跑主案例")
+    p_run.add_argument("--slug", default=None, help="版本前缀（如 llm-algo），--job 时必填")
+    args = parser.parse_args(argv)
+    if args.job and not args.slug:
+        parser.error("--job 需要 --slug（版本前缀，如 llm-algo）")
+    result = _run_position(args.job, args.slug) if args.job else cmd_run()
+    print(json.dumps(result, ensure_ascii=False))
     return 0
 
 

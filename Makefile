@@ -6,7 +6,7 @@ WEB_DIR ?= apps/web
 
 .DEFAULT_GOAL := help
 
-.PHONY: help init py-sync web-sync hooks fmt fmt-check lint type test test-py test-web test-e2e test-cov build check verify ci precommit commit-check clean-runs db-up db-migrate db-import
+.PHONY: help init py-sync web-sync hooks fmt fmt-check lint type test test-py test-web test-e2e test-cov build check verify ci precommit commit-check clean-runs db-up db-migrate db-import graph-sync
 
 help:
 	@printf '%s\n' "Hiro2 development commands"
@@ -21,6 +21,7 @@ help:
 	@printf '%s\n' "  make db-up      Start PostgreSQL and Neo4j with Docker Compose"
 	@printf '%s\n' "  make db-migrate Apply pending SQL migrations"
 	@printf '%s\n' "  make db-import  Import processed facts into PostgreSQL"
+	@printf '%s\n' "  make graph-sync Consume outbox events into Neo4j"
 
 init: py-sync web-sync hooks
 
@@ -136,3 +137,6 @@ db-migrate:
 
 db-import:
 	@set -a; [ ! -f ./.env ] || . ./.env; set +a; DATABASE_URL="$${DATABASE_URL:-postgresql://hiro2:hiro2@localhost:5433/hiro2}" $(UV) run python scripts/dbimport.py run
+
+graph-sync:
+	@set -a; [ ! -f ./.env ] || . ./.env; set +a; DATABASE_URL="$${DATABASE_URL:-postgresql://hiro2:hiro2@localhost:5433/hiro2}" NEO4J_URI="$${NEO4J_URI:-bolt://localhost:7687}" NEO4J_USER="$${NEO4J_USER:-neo4j}" NEO4J_PASSWORD="$${NEO4J_PASSWORD:-hiro2password}" $(UV) run python scripts/outbox.py consume --limit 100

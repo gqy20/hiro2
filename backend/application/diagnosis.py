@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from pathlib import Path
 from typing import Literal
@@ -72,6 +73,51 @@ def _load(p: Path) -> dict:
     return json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}
 
 
+def _load_db_diagnosis(candidate_id: str, job_version_id: str) -> tuple[dict, dict, dict] | None:
+    """数据库可用时读取候选人当前画像、最新匹配报告和岗位版本。"""
+    dsn = os.getenv("DATABASE_URL")
+    if not dsn:
+        return None
+    import psycopg
+
+    with psycopg.connect(dsn) as conn, conn.cursor() as cur:
+        cur.execute(
+            "SELECT effective_profile FROM candidates WHERE candidate_id = %s", (candidate_id,)
+        )
+        candidate = cur.fetchone()
+        cur.execute(
+            """SELECT match_id, algorithm_version, overall_score, dimensions, gaps, evidence_ids
+               FROM match_reports WHERE candidate_id = %s AND job_version_id = %s
+               ORDER BY created_at DESC LIMIT 1""",
+            (candidate_id, job_version_id),
+        )
+        report = cur.fetchone()
+        cur.execute(
+            """SELECT title, valid_from, evidence_ids FROM job_versions
+               WHERE version_id = %s AND status = 'PUBLISHED'""",
+            (job_version_id,),
+        )
+        job = cur.fetchone()
+    if not candidate or not report or not job:
+        return None
+    return (
+        candidate[0],
+        {
+            "match_id": report[0],
+            "algorithm_version": report[1],
+            "overall_score": report[2],
+            "dimensions": report[3],
+            "gaps": report[4],
+            "evidence_ids": report[5],
+        },
+        {
+            "title": job[0],
+            "valid_from": job[1].isoformat() if job[1] else "",
+            "evidence": {"evidence_ids": job[2]},
+        },
+    )
+
+
 def _candidate_display_name(candidate: dict) -> str:
     """返回脱敏展示名，禁止将内部 candidate_id 直接暴露给界面。"""
     if name := str(candidate.get("name", "")).strip():
@@ -100,10 +146,19 @@ def _skill_evidence(skill: dict) -> str:
 
 def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> DiagnosisVM:
     """从 processed 产物聚合 diagnosis 视图（确定性组装，无 LLM）。"""
-    cand = _load(P / "candidates" / f"{candidate_id}.json")
-    report = _load(P / "candidates" / "matches" / f"{candidate_id}-{job_version_id}-report.json")
+    database = _load_db_diagnosis(candidate_id, job_version_id)
+    cand = database[0] if database else _load(P / "candidates" / f"{candidate_id}.json")
+    report = (
+        database[1]
+        if database
+        else _load(P / "candidates" / "matches" / f"{candidate_id}-{job_version_id}-report.json")
+    )
     path = _load(P / "candidates" / "matches" / f"{candidate_id}-{job_version_id}-path.json")
-    job = _load(P / "jobversions" / "published" / f"{job_version_id}.json")
+    job = (
+        database[2]
+        if database
+        else _load(P / "jobversions" / "published" / f"{job_version_id}.json")
+    )
     if not cand or not report:
         raise FileNotFoundError(f"候选人或匹配报告不存在: {candidate_id}")
 
@@ -149,7 +204,7 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
             title=job.get("title", job_version_id),
             version=job_version_id,
             window=job.get("valid_from", ""),
-            evidence_count=job.get("evidence", {}).get("jd_count", 0),
+            evidence_count=len(job.get("evidence", {}).get("evidence_ids", [])),
         ),
         report={
             "matchId": report.get("match_id", ""),
@@ -164,6 +219,19 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
 
 def list_target_jobs(candidate_id: str) -> list[dict]:
     """只列出该候选人已有匹配报告的已发布岗位，避免无依据目标。"""
+    dsn = os.getenv("DATABASE_URL")
+    if dsn:
+        import psycopg
+
+        with psycopg.connect(dsn) as conn, conn.cursor() as cur:
+            cur.execute(
+                """SELECT DISTINCT mr.job_version_id, jv.title
+                   FROM match_reports mr JOIN job_versions jv ON jv.version_id = mr.job_version_id
+                   WHERE mr.candidate_id = %s AND jv.status = 'PUBLISHED'
+                   ORDER BY jv.title""",
+                (candidate_id,),
+            )
+            return [{"version": row[0], "title": row[1]} for row in cur.fetchall()]
     out = []
     report_dir = P / "candidates" / "matches"
     for report_file in sorted(report_dir.glob(f"{candidate_id}-*-report.json")):

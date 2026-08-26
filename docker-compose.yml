@@ -13,6 +13,8 @@ services:
       - ./migrations/0002_review_quality.sql:/docker-entrypoint-initdb.d/0002_review_quality.sql:ro
       - ./migrations/0003_outbox.sql:/docker-entrypoint-initdb.d/0003_outbox.sql:ro
       - ./migrations/0004_career.sql:/docker-entrypoint-initdb.d/0004_career.sql:ro
+      - ./migrations/0005_profile.sql:/docker-entrypoint-initdb.d/0005_profile.sql:ro
+      - ./migrations/0006_temporal.sql:/docker-entrypoint-initdb.d/0006_temporal.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U hiro2 -d hiro2"]
       interval: 5s

@@ -221,6 +221,19 @@ def cmd_run(dsn: str) -> dict:
                             v.get("published_at"),
                         ),
                     )
+                    cur.execute(
+                        """
+                        INSERT INTO outbox_events
+                            (event_id, event_type, aggregate_type, aggregate_id, payload)
+                        VALUES (%s, 'JobVersionPublished', 'JobVersion', %s, %s)
+                        ON CONFLICT (event_id) DO NOTHING
+                        """,
+                        (
+                            f"job-published:{v['version_id']}",
+                            v["version_id"],
+                            json.dumps({"version_id": v["version_id"]}),
+                        ),
+                    )
                     n_jv += 1
             counts["job_versions"] = n_jv
 
@@ -282,6 +295,128 @@ def cmd_run(dsn: str) -> dict:
                 )
                 n_reports += 1
             counts["match_reports"] = n_reports
+
+            # ---- temporal：信号 / 回测 / 预测 / 岗位影响建议 ----
+            signals = _load_jsonl(P / "temporal" / "signals.jsonl")
+            for signal in signals:
+                cur.execute(
+                    """
+                    INSERT INTO trend_signals
+                        (signal_id, item_id, skill_id, signal_type, observed_at, confidence,
+                         evidence_ids, payload)
+                    VALUES (%s,%s,%s,%s,%s,%s,%s,%s)
+                    ON CONFLICT (signal_id) DO UPDATE
+                    SET confidence = EXCLUDED.confidence, evidence_ids = EXCLUDED.evidence_ids,
+                        payload = EXCLUDED.payload
+                    """,
+                    (
+                        signal["signal_id"],
+                        signal["item_id"],
+                        signal["canonical_skill_id"],
+                        signal.get("signal_type", "mention"),
+                        signal["observed_at"],
+                        signal.get("confidence", 0.6),
+                        signal.get("evidence_ids", []),
+                        json.dumps(signal),
+                    ),
+                )
+            counts["trend_signals"] = len(signals)
+
+            latest_records: list[dict] = []
+            for horizon in (30, 60, 90):
+                backtest = _load_json(P / "wechat-mp" / f"backtest-h{horizon}.json")
+                metrics = backtest.get("metrics", {})
+                run_id = f"bt-h{horizon}"
+                if not metrics:
+                    continue
+                cur.execute(
+                    """
+                    INSERT INTO pipeline_runs (run_id, run_type, status, dataset_version, metrics)
+                    VALUES (%s, 'backtest', 'SUCCEEDED', 'wechat-mp', %s)
+                    ON CONFLICT (run_id) DO UPDATE SET metrics = EXCLUDED.metrics, status = EXCLUDED.status
+                    """,
+                    (run_id, json.dumps(metrics)),
+                )
+                records = backtest.get("records", [])
+                for record in records:
+                    cur.execute(
+                        """
+                        INSERT INTO backtest_records
+                            (run_id, as_of_date, skill_id, predicted_direction, actual_direction,
+                             hit, confidence, recent, prior, rule_version)
+                        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+                        ON CONFLICT (run_id, as_of_date, skill_id) DO UPDATE
+                        SET predicted_direction = EXCLUDED.predicted_direction,
+                            actual_direction = EXCLUDED.actual_direction, hit = EXCLUDED.hit,
+                            confidence = EXCLUDED.confidence
+                        """,
+                        (
+                            run_id,
+                            record["as_of"],
+                            record["skill_id"],
+                            record["predicted"],
+                            record["actual"],
+                            record["hit"],
+                            record.get("confidence", 0),
+                            record.get("recent", 0),
+                            record.get("prior", 0),
+                            record.get("rule_version", 1),
+                        ),
+                    )
+                if horizon == 30:
+                    latest_records = records
+            counts["backtest_records"] = len(latest_records)
+
+            latest_as_of = max((record["as_of"] for record in latest_records), default="")
+            for record in latest_records:
+                if record["as_of"] != latest_as_of:
+                    continue
+                forecast_id = f"fct-{record['skill_id']}-{record['as_of']}"
+                cur.execute(
+                    """
+                    INSERT INTO forecasts
+                        (forecast_id, run_id, skill_id, as_of_date, horizon_days, predicted_direction,
+                         predicted_heat, confidence, valid_until, rule_version)
+                    VALUES (%s,'bt-h30',%s,%s,30,%s,%s,%s,%s,%s)
+                    ON CONFLICT (forecast_id) DO UPDATE
+                    SET predicted_direction = EXCLUDED.predicted_direction,
+                        predicted_heat = EXCLUDED.predicted_heat, confidence = EXCLUDED.confidence
+                    """,
+                    (
+                        forecast_id,
+                        record["skill_id"],
+                        record["as_of"],
+                        record["predicted"],
+                        record.get("recent", 0),
+                        record.get("confidence", 0),
+                        latest_as_of,
+                        record.get("rule_version", 1),
+                    ),
+                )
+            counts["forecasts"] = sum(record["as_of"] == latest_as_of for record in latest_records)
+
+            leadtime = _load_json(P / "wechat-mp" / "leadtime.json")
+            n_suggestions = 0
+            for row in leadtime.get("rows", []):
+                skill_id = row.get("capability_id")
+                if not skill_id:
+                    continue
+                cur.execute(
+                    """
+                    INSERT INTO job_impact_suggestions
+                        (suggestion_id, job_id, skill_id, change_type, reason)
+                    VALUES (%s, 'job_pos_02_agent', %s, %s, %s)
+                    ON CONFLICT (suggestion_id) DO UPDATE SET reason = EXCLUDED.reason
+                    """,
+                    (
+                        f"sug-{skill_id}",
+                        skill_id,
+                        "promote" if row.get("lead_days", 0) > 200 else "add",
+                        f"{row.get('name', skill_id)}：信号领先 {row.get('lead_days', 0)} 天（{row.get('reliability', '')}）",
+                    ),
+                )
+                n_suggestions += 1
+            counts["job_impact_suggestions"] = n_suggestions
 
             # ---- review_tasks（由冻结评测集生成，幂等） ----
             manifest = _load_json(ROOT / "evaluation" / "samples" / "manifest.json")

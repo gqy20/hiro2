@@ -12,7 +12,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
-from .repos import DataRepository, FileRepository
+from .repos import DataRepository, build_repository
 
 SourceType = Literal["招聘 JD", "技术日报", "职业标准"]
 EvidenceStance = Literal["支持", "反证"]
@@ -100,7 +100,7 @@ class ApplicationService:
     """Use Case：组装 View Model（读 Repository，联查摘录，映射枚举）。"""
 
     def __init__(self, repo: DataRepository | None = None) -> None:
-        self.repo = repo or FileRepository()
+        self.repo = repo or build_repository()
 
     # ---------- 证据 ----------
 

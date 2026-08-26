@@ -2,7 +2,12 @@
 
 from __future__ import annotations
 
+import json
 import os
+from datetime import UTC, datetime
+
+from ..candidates.models import CandidateProfile
+from ..matching.engine import match
 
 
 def _connect():
@@ -90,3 +95,98 @@ def load_career_state(candidate_id: str, job_version_id: str) -> dict:
             for row in cur.fetchall()
         ]
     return {"completedSkills": completed, "proofs": proofs}
+
+
+def set_active_target(candidate_id: str, job_version_id: str) -> dict:
+    with _connect() as conn, conn.cursor() as cur:
+        cur.execute(
+            "UPDATE candidate_targets SET is_active = FALSE WHERE candidate_id = %s",
+            (candidate_id,),
+        )
+        cur.execute(
+            """
+            INSERT INTO candidate_targets (candidate_id, job_version_id, is_active)
+            VALUES (%s, %s, TRUE)
+            ON CONFLICT (candidate_id, job_version_id) DO UPDATE
+            SET is_active = TRUE, selected_at = now()
+            """,
+            (candidate_id, job_version_id),
+        )
+    return {"candidateId": candidate_id, "jobVersionId": job_version_id, "isActive": True}
+
+
+def save_profile(candidate_id: str, updates: list[dict], projects: list[str]) -> dict:
+    """追加画像快照，并保存一份不可覆盖的确定性匹配报告。"""
+    with _connect() as conn, conn.cursor() as cur:
+        cur.execute(
+            "SELECT effective_profile, correction_log FROM candidates WHERE candidate_id = %s",
+            (candidate_id,),
+        )
+        row = cur.fetchone()
+        if row is None:
+            raise LookupError("候选人不存在")
+        profile = CandidateProfile.model_validate(row[0])
+        corrections = list(row[1] or [])
+        update_by_name = {item["name"]: item["status"] for item in updates}
+        for skill in profile.skills:
+            status = update_by_name.get(skill.mention)
+            if not status:
+                continue
+            before = skill.proficiency
+            if status == "missing":
+                skill.skill_id = None
+                skill.point_id = None
+            elif status == "partial":
+                skill.proficiency = "初级"
+            else:
+                skill.proficiency = "中级" if skill.proficiency == "初级" else skill.proficiency
+            corrections.append(
+                {
+                    "ts": datetime.now(UTC).isoformat(),
+                    "field": "skill_status",
+                    "target": skill.mention,
+                    "before": before,
+                    "after": status,
+                }
+            )
+        if projects:
+            profile.projects = [item for item in profile.projects if item.name in projects]
+        profile.correction_log = corrections
+        snapshot = profile.model_dump(mode="json")
+        cur.execute(
+            """UPDATE candidates SET effective_profile = %s, correction_log = %s
+               WHERE candidate_id = %s""",
+            (json.dumps(snapshot), json.dumps(corrections), candidate_id),
+        )
+        cur.execute(
+            """INSERT INTO candidate_profile_versions
+               (candidate_id, effective_profile, correction_log) VALUES (%s, %s, %s)""",
+            (candidate_id, json.dumps(snapshot), json.dumps(corrections)),
+        )
+        cur.execute(
+            "SELECT job_version_id FROM candidate_targets WHERE candidate_id = %s AND is_active",
+            (candidate_id,),
+        )
+        target = cur.fetchone()
+        job_version_id = target[0] if target else "ai-agent-v2"
+        report = match(profile, job_version_id)
+        report_id = f"{report.match_id}-{datetime.now(UTC).strftime('%Y%m%d%H%M%S')}"
+        cur.execute(
+            """
+            INSERT INTO match_reports (match_id, candidate_id, job_version_id, algorithm_version,
+                overall_score, dimensions, gaps, evidence_ids, status)
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
+            """,
+            (
+                report_id,
+                candidate_id,
+                job_version_id,
+                report.algorithm_version,
+                report.overall_score,
+                json.dumps(report.dimensions),
+                json.dumps([gap.model_dump() for gap in report.gaps]),
+                report.evidence_ids,
+                report.status,
+            ),
+        )
+    return {"profileVersion": "saved", "matchId": report_id, "overallScore": report.overall_score}

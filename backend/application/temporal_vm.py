@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import json
+import os
 from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -90,6 +91,8 @@ class TemporalVM(_VM):
 
 def build_temporal() -> TemporalVM:
     """从 backtest / leadtime / changeset 产物聚合 temporal 视图。"""
+    if os.getenv("DATABASE_URL"):
+        return _build_temporal_db(os.environ["DATABASE_URL"])
     backtests: list[BacktestRunVM] = []
     records: list[BacktestRecordVM] = []
     for h in (30, 60, 90):
@@ -164,6 +167,106 @@ def build_temporal() -> TemporalVM:
         forecasts=forecasts,
         signals=_load_signals(),
         suggestions=suggestions,
+    )
+
+
+def _build_temporal_db(dsn: str) -> TemporalVM:
+    """数据库事实主库模式：读取导入后的时间情报，不回退前端 fixture。"""
+    import psycopg
+
+    with psycopg.connect(dsn) as conn, conn.cursor(row_factory=psycopg.rows.dict_row) as cur:
+        cur.execute(
+            """SELECT run_id, metrics, status FROM pipeline_runs
+               WHERE run_type = 'backtest' ORDER BY run_id"""
+        )
+        runs = list(cur.fetchall())
+        cur.execute(
+            """SELECT run_id, as_of_date, skill_id, predicted_direction, actual_direction, hit,
+                      confidence, recent, prior, rule_version FROM backtest_records
+               ORDER BY as_of_date DESC LIMIT 30"""
+        )
+        records = list(cur.fetchall())
+        cur.execute(
+            """SELECT forecast_id, skill_id, as_of_date, horizon_days, predicted_direction,
+                      predicted_heat, confidence, valid_until, rule_version, evidence_ids
+               FROM forecasts ORDER BY as_of_date DESC"""
+        )
+        forecasts = list(cur.fetchall())
+        cur.execute(
+            """SELECT signal_id, item_id, skill_id, signal_type, observed_at, confidence,
+                      evidence_ids, payload FROM trend_signals
+               ORDER BY observed_at DESC LIMIT 500"""
+        )
+        signals = list(cur.fetchall())
+        cur.execute(
+            """SELECT suggestion_id, job_id, skill_id, change_type, reason, review_status
+               FROM job_impact_suggestions ORDER BY suggestion_id"""
+        )
+        suggestions = list(cur.fetchall())
+    return TemporalVM(
+        backtests=[
+            BacktestRunVM(
+                run_id=row["run_id"],
+                as_of_date=(row["metrics"].get("as_of_points") or [""])[0],
+                horizon_days=int(row["run_id"].removeprefix("bt-h")),
+                status=row["status"],
+                metrics=row["metrics"],
+            )
+            for row in runs
+        ],
+        backtest_records=[
+            BacktestRecordVM(
+                as_of=row["as_of_date"].isoformat(),
+                skill_id=row["skill_id"],
+                predicted=row["predicted_direction"],
+                actual=row["actual_direction"],
+                hit=row["hit"],
+                confidence=row["confidence"],
+                recent=row["recent"],
+                prior=row["prior"],
+                rule_version=row["rule_version"],
+            )
+            for row in records
+        ],
+        forecasts=[
+            ForecastVM(
+                forecast_id=row["forecast_id"],
+                skill_id=row["skill_id"],
+                as_of_date=row["as_of_date"].isoformat(),
+                horizon_days=row["horizon_days"],
+                predicted_direction=row["predicted_direction"],
+                predicted_heat=row["predicted_heat"],
+                confidence=row["confidence"],
+                forecast_valid_until=row["valid_until"].isoformat() if row["valid_until"] else "",
+                rule_version=row["rule_version"],
+                evidence_ids=row["evidence_ids"],
+            )
+            for row in forecasts
+        ],
+        signals=[
+            TrendSignalVM(
+                signal_id=row["signal_id"],
+                item_id=row["item_id"],
+                canonical_skill_id=row["skill_id"],
+                signal_type=row["signal_type"],
+                observed_at=row["observed_at"].isoformat(),
+                evidence_span=row["payload"].get("evidence_span", ""),
+                confidence=row["confidence"],
+                evidence_ids=row["evidence_ids"],
+            )
+            for row in signals
+        ],
+        suggestions=[
+            SuggestionVM(
+                suggestion_id=row["suggestion_id"],
+                job_id=row["job_id"],
+                skill_id=row["skill_id"],
+                change_type=row["change_type"],
+                reason=row["reason"],
+                review_status=row["review_status"],
+            )
+            for row in suggestions
+        ],
     )
 
 

@@ -15,7 +15,7 @@ from fastapi import FastAPI, HTTPException, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from backend.application.career import add_proof, save_growth_task
+from backend.application.career import add_proof, save_growth_task, save_profile, set_active_target
 from backend.application.dashboard import build_dashboard
 from backend.application.diagnosis import build_diagnosis, list_candidates
 from backend.application.evaluation import build_evaluation_overview
@@ -48,6 +48,20 @@ class ProofRequest(BaseModel):
     title: str = Field(min_length=1, max_length=120)
     description: str = Field(default="", max_length=1000)
     proof_url: str | None = Field(default=None, max_length=500)
+
+
+class TargetRequest(BaseModel):
+    job_version_id: str = Field(min_length=1, max_length=120)
+
+
+class ProfileSkillRequest(BaseModel):
+    name: str = Field(min_length=1, max_length=80)
+    status: str = Field(pattern="^(ready|partial|missing)$")
+
+
+class ProfileRequest(BaseModel):
+    skills: list[ProfileSkillRequest] = Field(default_factory=list, max_length=60)
+    projects: list[str] = Field(default_factory=list, max_length=10)
 
 
 def _health_status() -> dict:
@@ -170,6 +184,28 @@ def update_growth_task(
 def create_proof(candidate_id: str, req: ProofRequest) -> dict:
     try:
         return add_proof(candidate_id, req.skill_id, req.title, req.description, req.proof_url)
+    except RuntimeError as exc:
+        raise HTTPException(503, str(exc)) from exc
+
+
+@app.put("/api/v1/candidates/{candidate_id}/target")
+def update_target(candidate_id: str, req: TargetRequest) -> dict:
+    try:
+        return set_active_target(candidate_id, req.job_version_id)
+    except RuntimeError as exc:
+        raise HTTPException(503, str(exc)) from exc
+
+
+@app.patch("/api/v1/candidates/{candidate_id}/profile")
+def update_profile(candidate_id: str, req: ProfileRequest) -> dict:
+    try:
+        return save_profile(
+            candidate_id,
+            [skill.model_dump() for skill in req.skills],
+            req.projects,
+        )
+    except LookupError as exc:
+        raise HTTPException(404, str(exc)) from exc
     except RuntimeError as exc:
         raise HTTPException(503, str(exc)) from exc
 

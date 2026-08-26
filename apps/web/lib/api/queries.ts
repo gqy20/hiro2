@@ -22,6 +22,16 @@ export async function createCandidateProof(candidateId: string, body: { skill_id
   return apiFetch(`/candidates/${encodeURIComponent(candidateId)}/proofs`, { method: "POST", body });
 }
 
+export async function saveCandidateTarget(candidateId: string, jobVersionId: string) {
+  if (isMockMode()) return { candidateId, jobVersionId, isActive: true };
+  return apiFetch(`/candidates/${encodeURIComponent(candidateId)}/target`, { method: "PUT", body: { job_version_id: jobVersionId } });
+}
+
+export async function saveCandidateProfile(candidateId: string, skills: Array<{ name: string; status: string }>, projects: string[]) {
+  if (isMockMode()) return { profileVersion: "session", matchId: "mock-match", overallScore: 0 };
+  return apiFetch(`/candidates/${encodeURIComponent(candidateId)}/profile`, { method: "PATCH", body: { skills, projects } });
+}
+
 // ponytail: mock 模式无副作用 + 1.4s 模拟延迟，real 模式 POST。
 export async function publishJobVersion(
   jobId: string,

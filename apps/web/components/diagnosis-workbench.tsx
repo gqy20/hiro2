@@ -24,7 +24,7 @@ import type {
   UserCorrection,
 } from "@/lib/diagnosis";
 import type { ChangeItem, JobUpdateContext } from "@/lib/job-update";
-import { createCandidateProof, updateGrowthTask } from "@/lib/api/queries";
+import { createCandidateProof, saveCandidateTarget, updateGrowthTask } from "@/lib/api/queries";
 
 const SKILL_STATUSES: Array<SkillMatch["status"]> = ["ready", "partial", "missing"];
 
@@ -364,7 +364,8 @@ export function DiagnosisWorkbench({
               <Select
                 aria-label="选择目标岗位"
                 className="career-target-select"
-                onChange={(version) => {
+                onChange={async (version) => {
+                  await saveCandidateTarget(fixture.candidate.id, version);
                   router.push(`/diagnosis?candidate=${encodeURIComponent(fixture.candidate.id)}&job=${encodeURIComponent(version)}`);
                 }}
                 options={(fixture.targetJobs ?? [{ version: fixture.job.version, title: fixture.job.title }]).map((job) => ({ label: `${job.title} · ${job.version}`, value: job.version }))}

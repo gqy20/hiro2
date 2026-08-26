@@ -134,3 +134,87 @@ class FileRepository:
         except Exception:
             # File audit remains authoritative for offline mode; DB sync retries later.
             return
+
+
+class PostgresRepository(FileRepository):
+    """数据库事实优先；尚未关系化的计算产物保留 FileRepository 回退。"""
+
+    def __init__(self, dsn: str) -> None:
+        super().__init__()
+        self._dsn = dsn
+
+    def _rows(self, query: str, params: tuple = ()) -> list[dict]:
+        import psycopg
+
+        with (
+            psycopg.connect(self._dsn) as conn,
+            conn.cursor(row_factory=psycopg.rows.dict_row) as cur,
+        ):
+            cur.execute(query, params)
+            return list(cur.fetchall())
+
+    def evidence(self) -> list[dict]:
+        rows = self._rows(
+            """SELECT evidence_id, source_id, claim_type, published_at, collected_at, quality_score,
+                      payload, urls, source_span, review_status FROM evidence"""
+        )
+        return [
+            {
+                "evidence_id": row["evidence_id"],
+                "source_id": row["source_id"],
+                "claim_type": row["claim_type"],
+                "published_at": row["published_at"].isoformat() if row["published_at"] else None,
+                "quality_score": row["quality_score"],
+                "payload": row["payload"],
+                "urls": row["urls"],
+                "source_span": row["source_span"],
+                "review_status": row["review_status"],
+            }
+            for row in rows
+        ]
+
+    def events_primary(self) -> dict[str, dict]:
+        rows = self._rows(
+            """SELECT event_id, summary, title, urls, published_at FROM report_events
+               WHERE is_primary"""
+        )
+        return {
+            row["event_id"]: {
+                "summary": row["summary"],
+                "title": row["title"],
+                "urls": row["urls"],
+                "published_at": row["published_at"].isoformat() if row["published_at"] else None,
+            }
+            for row in rows
+        }
+
+    def jd_parsed(self) -> dict[str, dict]:
+        rows = self._rows("SELECT jd_id, responsibilities, requirements, resolved FROM jd_records")
+        return {
+            row["jd_id"]: {
+                "responsibilities": row["responsibilities"],
+                "requirements": row["requirements"],
+                "resolved": row["resolved"],
+            }
+            for row in rows
+        }
+
+    def capabilities(self) -> list[dict]:
+        rows = self._rows(
+            """SELECT capability_id, name, group_name, sort_order FROM capabilities
+               ORDER BY sort_order"""
+        )
+        return [
+            {
+                "capability_id": row["capability_id"],
+                "name": row["name"],
+                "group": row["group_name"],
+            }
+            for row in rows
+        ]
+
+
+def build_repository() -> DataRepository:
+    """DATABASE_URL 配置成功时走事实主库，否则保持可复现离线文件模式。"""
+    dsn = os.getenv("DATABASE_URL")
+    return PostgresRepository(dsn) if dsn else FileRepository()

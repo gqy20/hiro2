@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- 数据库事实主库推进：诊断、时间情报和 ApplicationService 的证据/JD/事件读取在配置 PostgreSQL 时优先走数据库；新增画像版本、当前目标、时间信号、回测、预测和岗位影响建议 schema，导入岗位版本自动写入 outbox，`make graph-sync` 幂等投影 Neo4j。
 - PostgreSQL 集成完善：新增 `dbmigr` 幂等迁移执行器、`make db-up/db-migrate/db-import` 命令，并将求职成长 migration 纳入 Compose 初始化与升级路径。
 - 求职成长界面打磨：移除重复眉题和重复入口，统一能力证明术语；画像页补充目标岗位上下文并修正标题对齐，求职模式导航仅保留诊断、成长和画像入口。
 - 求职成长工作区扩展：首页与我的画像独立入口，支持目标岗位切换、画像编辑、成长任务与能力证明关联。

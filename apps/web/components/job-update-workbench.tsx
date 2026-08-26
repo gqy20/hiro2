@@ -21,6 +21,7 @@ import {
   StatusMark,
 } from "@/components/review-ui";
 import { FixtureState } from "@/components/workflow-ui";
+import { WorkflowContext } from "@/components/workflow-context";
 import { publishJobVersion, type PublishResult } from "@/lib/api/queries";
 import {
   type ChangeItem,
@@ -161,6 +162,8 @@ export function JobUpdateWorkbench({
 
   return (
     <AppShell>
+      <div className="workflow-page">
+        <WorkflowContext eyebrow="岗位版本" title={fixture.context.jobTitle} stage="审核能力变化" next="完成审核后发布新版本" />
       <div className="workbench">
         <section className="context-panel" aria-labelledby="page-title">
           <div className="page-heading">
@@ -267,7 +270,25 @@ export function JobUpdateWorkbench({
               <h2 id="diff-title">能力变化</h2>
               <span>{`${visibleItems.length} 条结果`}</span>
             </div>
-            <span className="diff-toolbar-status">按变化类型分组 · 共 {items.length} 条</span>
+            <div className="diff-toolbar-actions">
+              <span className="diff-toolbar-status">按变化类型分组</span>
+              <Tooltip title={pending > 0 ? "请先完成右侧审核队列中的全部变化" : undefined}>
+                <span>
+                  <Button
+                    disabled={pending > 0}
+                    icon={<PaperPlaneTilt />}
+                    onClick={() => {
+                      setPublishError(null);
+                      setPublishModalOpen(true);
+                    }}
+                    size="small"
+                    type="primary"
+                  >
+                    发布版本
+                  </Button>
+                </span>
+              </Tooltip>
+            </div>
           </div>
 
           {running ? (
@@ -323,30 +344,13 @@ export function JobUpdateWorkbench({
               aria-labelledby="impact-title"
             >
               <h3 id="impact-title">下游影响</h3>
-              <span className="downstream-impact-copy">{items.length} 项变化会同步影响技能图谱与人岗诊断</span>
+              <span className="downstream-impact-copy">这些变化会同步影响技能图谱与人岗诊断</span>
               <Link className="impact-link" href="/skills">
                 查看技能图谱 →
               </Link>
             </section>
           ) : null}
 
-          <footer className="diff-footer">
-            <Tooltip title={pending > 0 ? "请先完成右侧审核队列中的全部变化" : undefined}>
-              <span>
-                <Button
-                  disabled={pending > 0}
-                  icon={<PaperPlaneTilt />}
-                  onClick={() => {
-                    setPublishError(null);
-                    setPublishModalOpen(true);
-                  }}
-                  type="primary"
-                >
-                  发布版本
-                </Button>
-              </span>
-            </Tooltip>
-          </footer>
         </section>
 
         <aside className="evidence-panel" aria-label="审核和证据">
@@ -396,6 +400,7 @@ export function JobUpdateWorkbench({
             <span>{`已接受的变化将进入 ${fixture.context.targetVersion} 草稿，发布后不可覆盖历史版本。`}</span>
           </div>
         </aside>
+      </div>
       </div>
 
       <EvidenceDrawer

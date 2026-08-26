@@ -11,6 +11,7 @@ import {
 import { Button, Input, Select, Tag } from "antd";
 
 import { AppShell } from "@/components/app-shell";
+import { WorkflowContext } from "@/components/workflow-context";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
 import { ConfidenceMeter, StatusMark } from "@/components/review-ui";
 import { FixtureState, skillStatusToReview } from "@/components/workflow-ui";
@@ -203,6 +204,8 @@ export function DiagnosisWorkbench({
 
   return (
     <AppShell>
+      <div className="workflow-page">
+      <WorkflowContext eyebrow="人岗诊断" title={fixture.candidate.name} stage="确认能力画像" next="修正不确定技能后重新计算" />
       <div className="diagnosis-workbench">
         <aside className="diagnosis-profile" aria-label="候选人画像">
           <div className="diagnosis-heading">
@@ -449,6 +452,7 @@ export function DiagnosisWorkbench({
           item={selectedEvidence}
           onClose={() => setSelectedEvidence(null)}
         />
+      </div>
       </div>
     </AppShell>
   );

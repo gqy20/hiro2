@@ -5,6 +5,7 @@ import { ArrowSquareOut, CheckCircle, Flag, XCircle } from "@phosphor-icons/reac
 import { Button, Empty, Input, Select, Tag } from "antd";
 
 import { AppShell } from "@/components/app-shell";
+import { WorkflowContext } from "@/components/workflow-context";
 import { SectionHeader } from "@/components/workflow-ui";
 import {
   buildMockTasks,
@@ -104,7 +105,9 @@ export function TasksWorkbench() {
 
   return (
     <AppShell>
-      <section className="tasks-workbench" aria-labelledby="tasks-title">
+      <div className="workflow-page">
+      <WorkflowContext eyebrow="审核工作区" title="我的任务" stage="处理待审核事项" next="领取一项任务" href="#task-workspace" />
+      <section className="tasks-workbench" id="task-workspace" aria-labelledby="tasks-title">
         <header className="page-heading">
           <h1 id="tasks-title">我的任务</h1>
           <p>
@@ -269,6 +272,7 @@ export function TasksWorkbench() {
           </section>
         </div>
       </section>
+      </div>
     </AppShell>
   );
 }

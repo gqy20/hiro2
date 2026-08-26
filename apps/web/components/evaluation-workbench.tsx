@@ -9,6 +9,7 @@ import { Button, Progress, Tag } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { SectionHeader } from "@/components/workflow-ui";
+import { WorkflowContext } from "@/components/workflow-context";
 
 // ponytail: 后端 B-T4 未开始；契约里也没有 EvaluationMetrics；
 // 数据全部 inline 在组件内，不抽 lib/evaluation.ts。
@@ -91,6 +92,8 @@ function priorityLabel(priority: "high" | "medium"): string {
 export function EvaluationWorkbench() {
   return (
     <AppShell>
+      <div className="workflow-page">
+      <WorkflowContext eyebrow="审核工作区" title="评测中心" stage="复盘系统判断" next="打开错误案例" />
       <section className="evaluation-workbench" aria-labelledby="evaluation-title">
         <header className="page-heading">
           <div className="title-with-meta">
@@ -191,6 +194,7 @@ export function EvaluationWorkbench() {
           </aside>
         </div>
       </section>
+      </div>
     </AppShell>
   );
 }

@@ -49,3 +49,12 @@ sources:
     time_range: [2025-09, 2026-08]
     ingestion_mode: backfill
     notes: 远程浏览器 CDP 通路；386 搜索（六城）+ 237 详情，与 jd-opencli 同目录按文件区分（jd_har_*）
+
+  - id: feeds
+    type: rss_direct              # 24 个直连 RSS/Atom 源（清单见 data/FEEDS.yml）
+    path: data/raw/feeds
+    license: 各源公开 RSS/Atom，仅限研究使用，不二次分发全文
+    time_range: [2015-12, 2026-08]
+    ingestion_mode: live
+    notes: 首期 24 源（优先级>=4 全量 + p2 精选），源自 rss2cubox feeds.txt [direct] 段；
+      feedtest 2026-08-26 全部通过；guid 幂等追加，rssget 每 3 小时增量抓取

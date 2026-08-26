@@ -1,0 +1,129 @@
+# FeedSource 订阅源配置（首期 25 个直连源）
+# 来源：rss2cubox feeds.txt [direct] 段按优先级精选；2026-08-26 feedtest 全部通过（HTTP 200 + RSS/Atom 特征）。
+# ingestion_mode: live（区别于 wechat-mp 归档的 backfill）；raw 落 data/raw/feeds/<id>.jsonl。
+version: 1
+
+sources:
+  # ---- 第 1 梯队：优先级 5/4 ----
+  - id: openai-news
+    priority: 5
+    alias: OpenAI News
+    url: https://openai.com/news/rss.xml
+    lang: en
+  - id: deepmind
+    priority: 5
+    alias: Google DeepMind News
+    url: https://deepmind.google/blog/rss.xml
+    lang: en
+  - id: ai-weekly
+    priority: 4
+    alias: AI Weekly
+    url: https://aiweekly.co/feed
+    lang: en
+  - id: bens-bites
+    priority: 4
+    alias: Ben's Bites
+    url: https://www.bensbites.com/feed
+    lang: en
+  - id: import-ai
+    priority: 4
+    alias: Import AI
+    url: https://importai.substack.com/feed
+    lang: en
+  - id: interconnects
+    priority: 4
+    alias: Interconnects
+    url: https://www.interconnects.ai/feed
+    lang: en
+  - id: last-week-in-ai
+    priority: 4
+    alias: Last Week in AI
+    url: https://lastweekin.ai/feed
+    lang: en
+  - id: the-decoder
+    priority: 4
+    alias: The Decoder
+    url: https://the-decoder.com/feed/
+    lang: en
+  - id: agents-radar
+    priority: 4
+    alias: agents-radar AI Agents 生态日报
+    url: https://duanyytop.github.io/agents-radar/feed.xml
+    lang: zh
+  - id: deeptrend
+    priority: 4
+    alias: deeptrend AI 趋势情报
+    url: https://chrbailey.github.io/deeptrend/feed.xml
+    lang: zh
+
+  # ---- 第 2 梯队：优先级 2 精选 ----
+  - id: hf-blog
+    priority: 2
+    alias: Hugging Face Blog
+    url: https://huggingface.co/blog/feed.xml
+    lang: en
+  - id: qwen-blog
+    priority: 2
+    alias: Qwen Blog 通义千问
+    url: https://qwenlm.github.io/blog/index.xml
+    lang: zh
+  - id: google-ai
+    priority: 2
+    alias: Google AI Blog
+    url: https://blog.google/technology/ai/rss/
+    lang: en
+  - id: openai-community
+    priority: 2
+    alias: OpenAI 开发者公告
+    url: https://community.openai.com/c/announcements.rss
+    lang: en
+  - id: together-ai
+    priority: 2
+    alias: Together AI Blog
+    url: https://www.together.ai/blog/rss.xml
+    lang: en
+  - id: eleuther
+    priority: 2
+    alias: Eleuther AI Blog
+    url: https://blog.eleuther.ai/index.xml
+    lang: en
+  - id: nvidia-dev
+    priority: 2
+    alias: NVIDIA Developer Blog
+    url: https://developer.nvidia.com/blog/feed
+    lang: en
+  - id: ibm-research
+    priority: 2
+    alias: IBM Research
+    url: https://research.ibm.com/rss
+    lang: en
+  - id: apple-ml
+    priority: 2
+    alias: Apple Machine Learning Research
+    url: https://machinelearning.apple.com/rss.xml
+    lang: en
+  - id: infoq-ai
+    priority: 2
+    alias: InfoQ AI/ML/Data Engineering
+    url: https://feed.infoq.com/ai-ml-data-eng/
+    lang: en
+  - id: venturebeat-ai
+    priority: 2
+    alias: VentureBeat AI
+    url: https://venturebeat.com/category/ai/feed/
+    lang: en
+  - id: media404
+    priority: 2
+    alias: 404 Media
+    url: https://www.404media.co/rss/
+    lang: en
+  - id: mit-ai
+    priority: 2
+    alias: MIT News AI
+    url: https://news.mit.edu/rss/topic/artificial-intelligence2
+    lang: en
+  - id: claude-code-rel
+    priority: 2
+    alias: Claude Code Releases
+    url: https://github.com/anthropics/claude-code/releases.atom
+    lang: en

@@ -20,7 +20,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).parent))
 
-from candmatch import _extract  # noqa: E402
 from runlog import RunContext  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -55,11 +54,11 @@ def hit_loose(word: str, extracted: list[str]) -> bool:
 async def eval_one(manifest_item: dict, layout: str) -> dict:
     """单份 x 单版式：读文件 -> LLM 抽取 -> gold 双口径匹配（宽松为主指标）。"""
     stem = Path(manifest_item["file"]).stem
-    from backend.candidates.parse import parse_document
+    from backend.candidates.parse import extract_resume, parse_document
 
     path = OUT_DIR / f"{stem}{LAYOUT_SUFFIX[layout]}"
     text = parse_document(path)
-    raw = await _extract(text)
+    raw = await extract_resume(text, stem)
     words = [s.get("mention", "") for s in raw.get("skills", []) if s.get("mention")]
     got = {norm(w) for w in words}
     gold = [g["mention"] for g in manifest_item["gold"]["mentions"]]

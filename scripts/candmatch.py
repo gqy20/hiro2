@@ -48,55 +48,14 @@ SYNTHETIC_RESUME = """张同学 | 本科 · 计算机科学 | 求职方向：AI 
 """
 
 
-def _parse_llm(raw: str) -> dict:
-    from backend.candidates.parse import ResumeRawExtraction
-
-    t = raw.strip()
-    if t.startswith("```"):
-        t = t.split("\n", 1)[1]
-        if t.rstrip().endswith("```"):
-            t = t.rstrip()[:-3]
-    data = json.loads(t)
-    if not isinstance(data, dict) or "skills" not in data:
-        raise ValueError("输出缺少 skills")
-    # ponytail: prompt 限不住数量，超限时截断而不是整单拒绝（回归实测 long 简历 >40 条触发）
-    data["skills"] = data["skills"][:40]
-    data["projects"] = data.get("projects", [])[:8]
-    return ResumeRawExtraction.model_validate(data).model_dump()
-
-
-async def _extract(text: str) -> dict:
-    from backend.infra.llm.promptspec import load_prompt
-    from backend.infra.llm.provider import build_provider
-    from backend.infra.llm.settings import LLMSettings
-
-    spec = load_prompt("resume-parse")
-    provider = build_provider(LLMSettings())
-    message = f"candidate_id: demo\n\n简历全文:\n{text[:8000]}"
-    last_err = "unknown"
-    for attempt in range(1 + MAX_RETRIES):
-        user = message if attempt == 0 else f"{message}\n\n上次失败: {last_err}\n重新输出 JSON。"
-        try:
-            raw = await provider.complete(
-                system=spec.system,
-                user=user,
-                max_tokens=int(spec.limits.get("max_tokens", 2000)),
-                timeout=float(spec.limits.get("timeout_seconds", 120)),
-            )
-            return _parse_llm(raw)
-        except Exception as exc:  # noqa: BLE001
-            last_err = f"{type(exc).__name__}: {exc}"[:200]
-    raise RuntimeError(f"简历抽取失败: {last_err}")
-
-
 def cmd_parse(resume: Path, candidate_id: str) -> dict:
     run = RunContext("candmatch", {"cmd": "parse", "candidate": candidate_id})
-    from backend.candidates.parse import build_profile, parse_document
+    from backend.candidates.parse import build_profile, extract_resume, parse_document
     from backend.skills.resolver import load_resolver
 
     text = parse_document(resume)
     run.log("candmatch", "doc_parsed", "progress", count=len(text))
-    raw = asyncio.run(_extract(text))
+    raw = asyncio.run(extract_resume(text, candidate_id))
     from backend.candidates.parse import ResumeRawExtraction, llm_resolve_unmatched
 
     profile = build_profile(candidate_id, ResumeRawExtraction.model_validate(raw), load_resolver())

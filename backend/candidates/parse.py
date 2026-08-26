@@ -22,7 +22,6 @@ class ResumeRawExtraction(BaseModel):
 class DocumentParser(Protocol):
     def parse(self, path: Path) -> str: ...
 
-
 class PdfParser:
     """PyMuPDF 文本抽取。已知局限：双栏版式阅读顺序可能错乱（升级项 MinerU）。"""
 
@@ -189,3 +188,47 @@ async def llm_resolve_unmatched(mentions: list[str], context: str) -> dict[str, 
 
 
 import json  # noqa: E402
+
+
+def _parse_llm(raw: str) -> dict:
+    """LLM 原文 -> ResumeRawExtraction dump；超限截断而不是整单拒绝。"""
+    t = raw.strip()
+    if t.startswith("```"):
+        t = t.split("\n", 1)[1]
+        if t.rstrip().endswith("```"):
+            t = t.rstrip()[:-3]
+    data = json.loads(t)
+    if not isinstance(data, dict) or "skills" not in data:
+        raise ValueError("输出缺少 skills")
+    # ponytail: prompt 限不住数量，超限时截断而不是整单拒绝（回归实测 long 简历 >40 条触发）
+    data["skills"] = data["skills"][:40]
+    data["projects"] = data.get("projects", [])[:8]
+    return ResumeRawExtraction.model_validate(data).model_dump()
+
+
+async def extract_resume(text: str, candidate_id: str = "demo") -> dict:
+    """简历全文 -> LLM 结构化抽取（resume-parse.yml，重试 2 次）。
+
+    被 candmatch/reseval/API 共用的域入口。
+    """
+    from ..infra.llm.promptspec import load_prompt
+    from ..infra.llm.provider import build_provider
+    from ..infra.llm.settings import LLMSettings
+
+    spec = load_prompt("resume-parse")
+    provider = build_provider(LLMSettings())
+    message = f"candidate_id: {candidate_id}\n\n简历全文:\n{text[:8000]}"
+    last_err = "unknown"
+    for attempt in range(3):
+        user = message if attempt == 0 else f"{message}\n\n上次失败: {last_err}\n重新输出 JSON。"
+        try:
+            raw = await provider.complete(
+                system=spec.system,
+                user=user,
+                max_tokens=int(spec.limits.get("max_tokens", 2000)),
+                timeout=float(spec.limits.get("timeout_seconds", 120)),
+            )
+            return _parse_llm(raw)
+        except Exception as exc:  # noqa: BLE001
+            last_err = f"{type(exc).__name__}: {exc}"[:200]
+    raise RuntimeError(f"简历抽取失败: {last_err}")

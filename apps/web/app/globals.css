@@ -22,10 +22,14 @@
 html {
   background: var(--paper);
   color: var(--ink);
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
   margin: 0;
+  height: 100%;
+  overflow: hidden;
   background: var(--paper);
   color: var(--ink);
   font-family:
@@ -70,6 +74,19 @@ input:focus-visible {
   align-items: stretch;
   border-bottom: 1px solid var(--line-strong);
   background: var(--paper-soft);
+}
+
+.app-shell {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+#main-content {
+  height: calc(100dvh - 58px);
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 .brand,

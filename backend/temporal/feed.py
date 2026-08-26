@@ -63,6 +63,22 @@ def clip_content(raw: str) -> tuple[str, bool]:
     return raw, False
 
 
+def html_to_text(html: str) -> str:
+    """RSS 正文 HTML -> 纯文本（剥标签 + 实体解码 + 压缩空行）。
+
+    ponytail: 正则够用（RSS 正文无嵌套复杂结构）；复杂版式交给上游网站自己渲染。
+    """
+    import html as html_mod
+    import re
+
+    text = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", html, flags=re.S | re.I)
+    text = re.sub(r"<br\s*/?>|</p>|</div>|</li>|</h[1-6]>", "\n", text, flags=re.I)
+    text = re.sub(r"<[^>]+>", "", text)
+    text = html_mod.unescape(text)
+    text = re.sub(r"[ \t]+", " ", text)
+    return re.sub(r"\n{2,}", "\n", text).strip()
+
+
 def _pick_content(entry) -> str:
     """content 优先，summary 兜底。"""
     raw = ""

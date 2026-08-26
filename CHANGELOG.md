@@ -5,10 +5,13 @@
 ## [Unreleased]
 
 ### Added
+- 时间情报每日闭环（daily 编排 + RSS 事件化）：extract 新增 feeds 通道（FeedItem 剥 HTML 后复用 report-event prompt 进同一 events 池，幂等键 content_hash，--days 控制增量窗口，<150 字纯标题条目跳过）；daily.py 编排 fetch→日报增量→feeds 增量→resolve→evdedup→evidence 六步（单步失败不阻塞）。整链实测：110 条近 7 天条目产出 522 事件（隔离 5），事件池 8350→9068；跨源重复 23.8% 被 evdedup 标记（多源报道同一新闻的去重价值直接体现）；evidence 重建 7219 条；词典加权覆盖 87.2%→60.3%（英文提及未命中进新词队列 3735 个，为词典习得原料）。存量 2700 条历史条目可 `extract.py feeds` 全量回填。
+- 打通 RSS 直连采集：feedtest 逐个测试 rss2cubox feeds.txt [direct] 段 140 个真直连源（116 可用，按优先级分组报告）；精选 24 源生成 `data/FEEDS.yml`（p5/p4 全量 10 + p2 精选 15，剔除与 openai-news 完全同 feed 的 openai-blog）；新增 `rssget` 抓取器（feedparser，guid 幂等追加、并发 8、失败源不阻塞），首轮 24/24 成功落 `data/raw/feeds/` 2718 条 FeedItem（published 2015-12~2026-08），复跑 0 新增验证幂等；SOURCES.yml 登记 `feeds`（live 模式）。
 - 打通 RSS 直连采集：feedtest 逐个测试 rss2cubox feeds.txt [direct] 段 140 个真直连源（116 可用，按优先级分组报告）；精选 24 源生成 `data/FEEDS.yml`（p5/p4 全量 10 + p2 精选 15，剔除与 openai-news 完全同 feed 的 openai-blog）；新增 `rssget` 抓取器（feedparser，guid 幂等追加、并发 8、失败源不阻塞），首轮 24/24 成功落 `data/raw/feeds/` 2718 条 FeedItem（published 2015-12~2026-08），复跑 0 新增验证幂等；SOURCES.yml 登记 `feeds`（live 模式）。
 - 采集与简历抽取域逻辑归位（AGENTS 分层惯例）：RSS 抓取/幂等落盘移入 `backend/temporal/feed.py`（Pydantic FeedItem + 不联网单测 3 例），`rssget` 变 CLI 壳；`candmatch._extract` 移入 `backend/candidates/parse.py` 为 `extract_resume` 域入口（消除 scripts 跨脚本 import），candmatch/reseval 改调域模块；feedparser 缺类型桩按 mypy overrides 豁免。50 测试全过。
 
 ### Fixed
+- 优化能力图谱与加载反馈：移除前端暴露的 `cap_XX` 内部能力 ID；各路由加载态改为匹配首页、Diff、图谱、诊断和评测实际结构的专属骨架；接入 GSAP 为路由切换和图谱重排提供轻量过渡，并完整支持减少动态效果偏好。
 - 修复 `.env.example` 存储段变量名与代码不一致：`HIRO2_DATABASE_URL`/`HIRO2_NEO4J_*` 改为代码实际读取的 `DATABASE_URL`/`NEO4J_URI`/`NEO4J_USER`/`NEO4J_PASSWORD`（原配置照抄必连不上库），默认值对齐 docker-compose，删除重复定义的 Phase B 段。
 - 简历抽取三处修复并回归验证（96 次调用 0 失败）：candmatch 对超限 skills/projects 截断而非整单拒绝（long 简历 >40 条曾触发 ValidationError）；resume-parse prompt 升 v2（技能定义纳入能力域词、密集列举逐项拆出）；reseval 宽松核心词匹配成为主指标（gold 侧短词仍全等防误报）。宽松口径召回 91.8% -> 96.5%（variant 63.6%->97.8%、typo 78.3%->89.1%、buried 99%、双栏 96.5%），严格口径 82.7% -> 86.1%。
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { ThoughtChain } from "@ant-design/x";
 import { ClockCounterClockwise, SpinnerGap } from "@phosphor-icons/react";
 import { Tag } from "antd";
 
@@ -13,24 +12,6 @@ type ReviewProgressProps = {
 };
 
 export function ReviewProgress({ running, runId, steps }: ReviewProgressProps) {
-  const renderedSteps = steps.map((step, index) => ({
-    description: step.detail,
-    icon:
-      step.state === "active" && running ? (
-        <SpinnerGap aria-hidden className="spin" size={16} />
-      ) : (
-        false
-      ),
-    key: step.id,
-    status:
-      step.state === "finished"
-        ? ("success" as const)
-        : running && index === 2
-          ? ("loading" as const)
-          : ("success" as const),
-    title: step.label,
-  }));
-
   return (
     <section className="review-progress" aria-labelledby="progress-title">
       <div className="section-heading">
@@ -51,7 +32,17 @@ export function ReviewProgress({ running, runId, steps }: ReviewProgressProps) {
           {running ? "分析中" : "待审核"}
         </Tag>
       </div>
-      <ThoughtChain items={renderedSteps} line="dashed" />
+      <ul className="review-progress-steps">
+        {steps.map((step) => (
+          <li key={step.id} className={`review-progress-step is-${step.state}`}>
+            <span className="review-progress-step-dot" aria-hidden>
+              {step.state === "active" && running ? <SpinnerGap className="spin" size={14} /> : null}
+            </span>
+            <strong>{step.label}</strong>
+            <span>{step.detail}</span>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

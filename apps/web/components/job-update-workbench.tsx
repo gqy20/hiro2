@@ -171,7 +171,6 @@ export function JobUpdateWorkbench({
           <div className="page-heading">
             <div className="title-with-meta">
               <h1 id="page-title">岗位更新</h1>
-              <span className="page-meta">{`${fixture.context.baselineVersion} → ${fixture.context.targetVersion}`}</span>
             </div>
             <div className="header-tags">
               <Tag>演示数据</Tag>
@@ -333,22 +332,11 @@ export function JobUpdateWorkbench({
               aria-labelledby="impact-title"
             >
               <h3 id="impact-title">下游影响</h3>
-              <p>
-                {`${items.length} 项能力变化将影响技能图谱和人岗诊断，建议在评测中心复跑匹配报告。`}
-              </p>
-              <ul>
-                <li>
-                  <span>新增</span>
-                  <strong>{kindCounts.added}</strong>
-                </li>
-                <li>
-                  <span>删除</span>
-                  <strong>{kindCounts.removed}</strong>
-                </li>
-                <li>
-                  <span>修改</span>
-                  <strong>{kindCounts.modified}</strong>
-                </li>
+              <span className="downstream-impact-copy">{items.length} 项变化会同步影响技能图谱与人岗诊断</span>
+              <ul aria-label="变化统计">
+                <li><span>新增</span><strong>{kindCounts.added}</strong></li>
+                <li><span>删除</span><strong>{kindCounts.removed}</strong></li>
+                <li><span>修改</span><strong>{kindCounts.modified}</strong></li>
               </ul>
               <Link className="impact-link" href="/skills">
                 查看技能图谱 →
@@ -360,7 +348,7 @@ export function JobUpdateWorkbench({
             <span>
               {pending === 0
                 ? "审核完成，可发布新版本"
-                : `还有 ${pending} 条变化待处理`}
+                : "完成审核后可发布新版本"}
             </span>
             <Button
               disabled={pending > 0}

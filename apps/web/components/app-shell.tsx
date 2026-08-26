@@ -14,10 +14,10 @@ import { Tooltip } from "antd";
 
 const navigation = [
   { href: "/", label: "工作台", icon: ChartScatter },
-  { href: "/new-jobs", label: "新岗位", icon: MagnifyingGlass },
-  { href: "/jobs", label: "岗位更新", icon: GitDiff },
-  { href: "/skills", label: "技能图谱", icon: Graph },
-  { href: "/diagnosis", label: "人岗诊断", icon: ClipboardText },
+  { href: "/new-jobs", label: "岗位发现", icon: MagnifyingGlass },
+  { href: "/positions", label: "我的岗位", icon: GitDiff },
+  { href: "/skills", label: "能力全景", icon: Graph },
+  { href: "/diagnosis", label: "候选诊断", icon: ClipboardText },
   { href: "/evaluation", label: "评测中心", icon: ShieldCheck },
 ];
 

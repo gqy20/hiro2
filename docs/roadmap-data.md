@@ -150,6 +150,7 @@ Markdown -> ReportEvent -> Evidence -> TrendSignal -> SignalCluster
 
 - **双层归一**：词典（确定性，岗位/日报侧不变、回测可复现）+ 简历专属 LLM 归层（`prompts/resume-alias.yml`，置信度>=0.6 采纳，每条带 reason 可人工修正）。20 份合成简历实测：658 次提及，词典命中 246（37%）+ LLM 归派 411（63%）+ 未命中 1，**综合归一率 99%**。
 - **合成测试集**：`scripts/genresume.py`，LLM 按 方向(6)×级别(3) 矩阵生成 20 份（txt 16 + PyMuPDF 生成 PDF 2 + python-docx 生成 DOCX 2，练解析器），`data/fixtures/resumes/` + manifest，synthetic 标记永不进评测指标。
+- **多样性批次（2026-08-26）**：`genresume diverse` 生成 24 份 Markdown 源（7 类边缘画像：写法变体/技能稀疏/技能埋项目/软技能噪声/管理向/全半角噪声/超长），带 171 个生成时埋点 gold 技能提及（供回归比对，不进官方指标）；`scripts/md2res.py`（pandoc + PyMuPDF Story）从 Markdown 统一转出 pdf 单栏/双栏、docx、txt 四版式，内容与版式解耦。双栏冒烟确认 PyMuPDF 存在词内断行与左右栏错序，是解析层升级 MinerU 的直接依据。
 - **批量匹配**：20 份画像 vs ai-agent-v2 的 overall 分布 0.2~0.94，方向区分度清晰（Agent/LLM/RAG 方向 senior 0.82~0.94 零短板；算法/大数据方向 0.2~0.46 短板集中在 AI Agent/LLM 应用——跨方向转岗的真实差距信号）。
 
 ### 主案例 3：人岗诊断管线（2026-08-25）

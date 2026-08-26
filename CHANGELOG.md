@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- 新增多样性合成简历批次（genresume diverse）：7 类边缘画像（写法变体/技能稀疏/技能埋项目/软技能噪声/管理向/全半角噪声/超长）× 方向级别共 24 份 Markdown 源，生成时埋点 171 个 gold 技能提及（落盘前校验与正文逐字对齐）；新增 md2res 转换器（pandoc + PyMuPDF Story）把 Markdown 统一转为 pdf 单栏/双栏、docx、txt 四版式，内容与版式解耦。冒烟确认双栏 PDF 经现有解析器出现词内断行（Ｐｙｔｈｏｎ 被栏宽切断），为解析层升级（MinerU）提供依据；synthetic 依规则不进入官方指标。
 - 新增企业招聘工作区与求职成长工作区设计文档，明确角色入口、首屏信息层级、主流程、权限边界和验收标准。
 - PostgreSQL 事实源切换：质量看板优先读取 `review_tasks/review_actions`，`dbimport` 导入冻结评测任务；新增 `outbox_events` 表、幂等事件写入器与 `scripts/outbox.py`。
 - outbox 增加 `consume` 投影消费者：使用 `FOR UPDATE SKIP LOCKED` 领取事件，成功/失败状态可追踪，`JobVersionPublished` 幂等写入 Neo4j。

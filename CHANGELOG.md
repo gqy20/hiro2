@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- 信号流接入真实数据（D6 TrendSignal 落地）：sigbuild 确定性生成提及级 TrendSignal（events 主记录 × 归一映射，6755 条/24 能力域，cap_04 AI Agent 2027 次居首，confidence 沿用事实分级映射，evidence_id 直回链 ev:{event_id}）；daily 增至七步（+sigbuild）；`/api/v1/temporal/dataset` signals 从空数组变为近 90 天 500 条；前端 `/temporal/signals` 从 mock 25 条切真实（近 90 天 ≤500 条），头部新增"最近信号"新鲜度指示。AI Agent 信号第一的既有结论在多源数据下复现。
 - 时间情报每日闭环（daily 编排 + RSS 事件化）：extract 新增 feeds 通道（FeedItem 剥 HTML 后复用 report-event prompt 进同一 events 池，幂等键 content_hash，--days 控制增量窗口，<150 字纯标题条目跳过）；daily.py 编排 fetch→日报增量→feeds 增量→resolve→evdedup→evidence 六步（单步失败不阻塞）。整链实测：110 条近 7 天条目产出 522 事件（隔离 5），事件池 8350→9068；跨源重复 23.8% 被 evdedup 标记（多源报道同一新闻的去重价值直接体现）；evidence 重建 7219 条；词典加权覆盖 87.2%→60.3%（英文提及未命中进新词队列 3735 个，为词典习得原料）。存量 2700 条历史条目可 `extract.py feeds` 全量回填。
 - 打通 RSS 直连采集：feedtest 逐个测试 rss2cubox feeds.txt [direct] 段 140 个真直连源（116 可用，按优先级分组报告）；精选 24 源生成 `data/FEEDS.yml`（p5/p4 全量 10 + p2 精选 15，剔除与 openai-news 完全同 feed 的 openai-blog）；新增 `rssget` 抓取器（feedparser，guid 幂等追加、并发 8、失败源不阻塞），首轮 24/24 成功落 `data/raw/feeds/` 2718 条 FeedItem（published 2015-12~2026-08），复跑 0 新增验证幂等；SOURCES.yml 登记 `feeds`（live 模式）。
 - 打通 RSS 直连采集：feedtest 逐个测试 rss2cubox feeds.txt [direct] 段 140 个真直连源（116 可用，按优先级分组报告）；精选 24 源生成 `data/FEEDS.yml`（p5/p4 全量 10 + p2 精选 15，剔除与 openai-news 完全同 feed 的 openai-blog）；新增 `rssget` 抓取器（feedparser，guid 幂等追加、并发 8、失败源不阻塞），首轮 24/24 成功落 `data/raw/feeds/` 2718 条 FeedItem（published 2015-12~2026-08），复跑 0 新增验证幂等；SOURCES.yml 登记 `feeds`（live 模式）。

@@ -42,6 +42,10 @@ export function TemporalSignalsWorkbench({
 }) {
   const [days, setDays] = useState(30);
 
+  const latest = useMemo(
+    () => signals.reduce((m, s) => (s.observed_at > m ? s.observed_at : m), ""),
+    [signals],
+  );
   const filtered = useMemo(() => {
     const cutoff = startOfToday();
     cutoff.setDate(cutoff.getDate() - days);
@@ -71,7 +75,10 @@ export function TemporalSignalsWorkbench({
       >
         <header className="page-heading">
           <h1 id="signals-title">信号流 + 信号簇</h1>
-          <p>{`${filtered.length} / ${signals.length} 条信号在选定时间窗内`}</p>
+          <p>
+            {`${filtered.length} / ${signals.length} 条信号在选定时间窗内`}
+            {latest ? ` · 最近信号 ${latest.slice(0, 10)}` : ""}
+          </p>
         </header>
         <TemporalNav />
 

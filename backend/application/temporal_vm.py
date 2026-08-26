@@ -162,9 +162,25 @@ def build_temporal() -> TemporalVM:
         backtests=backtests,
         backtest_records=records,
         forecasts=forecasts,
-        signals=[],
+        signals=_load_signals(),
         suggestions=suggestions,
     )
+
+
+def _load_signals(limit: int = 500) -> list[TrendSignalVM]:
+    """读 sigbuild 产物：近 90 天提及级 TrendSignal（最新优先，截断防 VM 过大）。"""
+    from datetime import UTC, datetime, timedelta
+
+    p = P / "temporal" / "signals.jsonl"
+    if not p.is_file():
+        return []
+    cutoff = (datetime.now(UTC) - timedelta(days=90)).isoformat()
+    rows = []
+    for line in p.open(encoding="utf-8"):
+        s = json.loads(line)
+        if s.get("observed_at", "") >= cutoff:
+            rows.append(TrendSignalVM(**s))
+    return rows[:limit]
 
 
 # ============================================================ skills graph

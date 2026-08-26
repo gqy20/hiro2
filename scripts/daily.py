@@ -30,6 +30,7 @@ def _steps(days: int) -> list[tuple[str, object]]:
     import extract
     import resolve
     import rssget
+    import sigbuild
 
     async def fetch() -> dict:
         return await rssget.cmd_fetch(None)
@@ -50,6 +51,7 @@ def _steps(days: int) -> list[tuple[str, object]]:
         ("resolve", resolve_events),
         ("evdedup", evdedup.cmd_run),
         ("evidence", evidence.cmd_build),
+        ("sigbuild", sigbuild.cmd_build),
     ]
 
 

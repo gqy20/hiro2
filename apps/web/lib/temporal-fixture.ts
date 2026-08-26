@@ -68,6 +68,29 @@ async function readEvents(): Promise<RawEvent[]> {
     .map((line) => JSON.parse(line) as RawEvent);
 }
 
+/** 信号流：读 sigbuild 真实产物（近 90 天，最多 500 条）；缺文件时为空。 */
+async function loadSignals(): Promise<TrendSignal[]> {
+  const signalsDir = path.resolve(
+    process.cwd(),
+    "../../data/processed/temporal",
+  );
+  try {
+    const content = await readFile(
+      path.join(signalsDir, "signals.jsonl"),
+      "utf8",
+    );
+    const cutoff = Date.now() - 90 * 24 * 3600 * 1000;
+    return content
+      .split("\n")
+      .filter((line) => line.trim().length > 0)
+      .map((line) => JSON.parse(line) as TrendSignal)
+      .filter((s) => new Date(s.observed_at).getTime() >= cutoff)
+      .slice(0, 500);
+  } catch {
+    return [];
+  }
+}
+
 export async function loadTemporalFixture(): Promise<TemporalDataset> {
   const [h30, h60, h90, events] = await Promise.all([
     readJson<RawBacktest>("backtest-h30.json"),
@@ -123,28 +146,8 @@ export async function loadTemporalFixture(): Promise<TemporalDataset> {
       .map((e) => e.event_id),
   }));
 
-  // 信号：取 events 抽 25 条
-  const signals: TrendSignal[] = events.slice(0, 25).map((e, idx) => {
-    const skill =
-      e.skill_mentions?.find((m) => m.startsWith("cap_")) ?? "cap_01";
-    return {
-      signal_id: `SIG-${idx.toString().padStart(3, "0")}`,
-      item_id: e.item_id,
-      entity_type: "skill" as const,
-      canonical_skill_id: skill,
-      signal_type: (e.event_type === "model_release"
-        ? "release"
-        : e.event_type === "adoption"
-          ? "adoption"
-          : e.event_type === "policy"
-            ? "policy"
-            : "mention") as TrendSignal["signal_type"],
-      observed_at: e.observed_at ?? e.published_at ?? "2026-08-01",
-      evidence_span: e.title.slice(0, 60),
-      confidence: 0.7,
-      evidence_ids: [e.event_id],
-    };
-  });
+  // 信号：读 sigbuild 真实产物（近 90 天，最多 500 条，最新优先）
+  const signals: TrendSignal[] = await loadSignals();
 
   // 建议：从前 3 个 forecast 各派生一个
   const suggestions: JobImpactSuggestion[] = forecasts.slice(0, 3).map((f) => {

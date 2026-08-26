@@ -127,7 +127,7 @@ def candidates() -> list[dict]:
 @app.get("/api/v1/diagnosis/{candidate_id}")
 def diagnosis(candidate_id: str, job: str = "ai-agent-v2") -> dict:
     try:
-        return build_diagnosis(candidate_id, job).model_dump()
+        return build_diagnosis(candidate_id, job).model_dump(by_alias=True)
     except FileNotFoundError as exc:
         raise HTTPException(404, str(exc)) from exc
 

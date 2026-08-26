@@ -6,13 +6,18 @@ import json
 from pathlib import Path
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 from .repos import P
 
 
 class _VM(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(
+        alias_generator=lambda name: name.split("_")[0]
+        + "".join(part.capitalize() for part in name.split("_")[1:]),
+        populate_by_name=True,
+        extra="forbid",
+    )
 
 
 class SkillMatchVM(_VM):
@@ -35,6 +40,7 @@ class CandidateVM(_VM):
     location: str = ""
     skills: list[SkillMatchVM]
     projects: list[ProjectVM]
+    user_corrections: list[dict] = Field(default_factory=list)
 
 
 class JobVM(_VM):

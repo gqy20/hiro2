@@ -720,6 +720,7 @@ h3 {
   background: var(--paper-soft);
   color: var(--muted);
   font-size: 12px;
+  justify-content: flex-end;
 }
 
 .downstream-impact {

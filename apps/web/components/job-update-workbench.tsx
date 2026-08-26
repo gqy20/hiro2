@@ -331,22 +331,21 @@ export function JobUpdateWorkbench({
           ) : null}
 
           <footer className="diff-footer">
-            <span>
-              {pending === 0
-                ? "审核完成，可发布新版本"
-                : "完成审核后可发布新版本"}
-            </span>
-            <Button
-              disabled={pending > 0}
-              icon={<PaperPlaneTilt />}
-              onClick={() => {
-                setPublishError(null);
-                setPublishModalOpen(true);
-              }}
-              type="primary"
-            >
-              发布版本
-            </Button>
+            <Tooltip title={pending > 0 ? "请先完成右侧审核队列中的全部变化" : undefined}>
+              <span>
+                <Button
+                  disabled={pending > 0}
+                  icon={<PaperPlaneTilt />}
+                  onClick={() => {
+                    setPublishError(null);
+                    setPublishModalOpen(true);
+                  }}
+                  type="primary"
+                >
+                  发布版本
+                </Button>
+              </span>
+            </Tooltip>
           </footer>
         </section>
 

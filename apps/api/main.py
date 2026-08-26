@@ -149,7 +149,43 @@ def skills_graph(job: str = "ai-agent-v2") -> dict:
                 graph = graph.model_copy(update={"nodes": nodes, "edges": edges})
         except Exception:
             pass
-    return graph.model_dump()
+    raw = graph.model_dump()
+    return {
+        "fixtureVersion": raw["fixture_version"],
+        "mode": raw["mode"],
+        "run": {
+            "id": raw["run"].get("id", ""),
+            "datasetVersion": raw["run"].get("datasetVersion", ""),
+            "status": raw["run"].get("status", "REVIEWING"),
+        },
+        "context": {
+            "jobTitle": raw["context"].get("jobTitle", ""),
+            "baselineVersion": raw["context"].get("baselineVersion", ""),
+            "targetVersion": raw["context"].get("targetVersion", ""),
+            "timeWindow": raw["context"].get("timeWindow", ""),
+        },
+        "nodes": [
+            {
+                "id": node["id"],
+                "label": node["label"],
+                "capabilityId": node["capability_id"],
+                "pointName": node["point_name"],
+                "role": node["role"],
+                "status": node["status"],
+                "aliases": node["aliases"],
+                "evidenceIds": node["evidence_ids"],
+                "position": node["position"],
+                "techStack": node["tech_stack"],
+            }
+            for node in raw["nodes"]
+        ],
+        "edges": raw["edges"],
+        "filterOptions": {
+            "techStacks": raw["filter_options"].get("techStacks", []),
+            "roles": raw["filter_options"].get("roles", []),
+            "capabilityTypes": raw["filter_options"].get("capabilityTypes", []),
+        },
+    }
 
 
 @app.get("/api/v1/tasks/my")

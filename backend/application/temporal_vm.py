@@ -257,7 +257,10 @@ def build_skill_graph(job_version_id: str = "ai-agent-v2") -> SkillGraphVM:
             cap = entry["capability_id"]
             if cap not in required and cap not in preferred:
                 continue
-            for j, (pt, _) in enumerate(entry.get("points", [])):
+            for j, point in enumerate(entry.get("points", [])):
+                pt = point.get("name", "") if isinstance(point, dict) else point[0]
+                if not pt:
+                    continue
                 pid = f"{cap}.{pt}"
                 nodes.append(
                     SkillNodeVM(

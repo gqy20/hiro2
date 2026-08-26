@@ -34,6 +34,6 @@ export default async function QualityPage({
   const temporal = await loadTemporalFixture();
   const quality = isMockMode()
     ? await loadQualityFixture()
-    : await apiFetch<QualityOverview>("/api/v1/quality/overview");
+    : await apiFetch<QualityOverview>("/quality/overview");
   return <QualityWorkbench temporal={temporal} quality={quality} />;
 }

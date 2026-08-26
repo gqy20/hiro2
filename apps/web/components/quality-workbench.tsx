@@ -59,7 +59,7 @@ export function QualityWorkbench({ temporal, quality }: { temporal: TemporalData
             <Statistic
               title="任务完成率"
               value={quality.completion_rate}
-              valueStyle={{ color: "var(--green)" }}
+              styles={{ content: { color: "var(--green)" } }}
               precision={2}
             />
             <Progress
@@ -189,11 +189,13 @@ export function QualityWorkbench({ temporal, quality }: { temporal: TemporalData
                   title="差异"
                   value={a.metrics.accuracy - b.metrics.accuracy}
                   precision={3}
-                  valueStyle={{
-                    color:
-                      a.metrics.accuracy >= b.metrics.accuracy
-                        ? "var(--green)"
-                        : "var(--red)",
+                  styles={{
+                    content: {
+                      color:
+                        a.metrics.accuracy >= b.metrics.accuracy
+                          ? "var(--green)"
+                          : "var(--red)",
+                    },
                   }}
                 />
                 <small>{"A 减 B，正数 = A 优"}</small>

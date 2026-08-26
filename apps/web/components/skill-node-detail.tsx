@@ -53,6 +53,8 @@ export function SkillNodeDetail({
     : allNodes.filter((n) => n.capabilityId === node.capabilityId && n.pointName !== null);
   const aliases = node.aliases.slice(0, MAX_ALIASES);
   const aliasOverflow = node.aliases.length - aliases.length;
+  const jobVersions = node.jobVersions ?? [];
+  const signal = node.signal ?? null;
 
   return (
     <div className="skill-node-detail" aria-label={`${node.label} 节点详情`}>
@@ -149,8 +151,26 @@ export function SkillNodeDetail({
 
       <section className="skill-node-detail-section" aria-label="关联岗位版本">
         <h4>关联岗位版本</h4>
-        <p className="skill-node-detail-placeholder">
-          关联 JobVersion / SkillSignal 待 F-T3.5 接入。
+        {jobVersions.length > 0 ? (
+          <div className="skill-node-detail-siblings">
+            {jobVersions.map((ref) => (
+              <span className="skill-node-detail-job" key={ref.versionId}>
+                {`${ref.title}（${ref.versionId}）`}
+                <Tag color={ref.role === "required" ? "gold" : "default"}>
+                  {`${roleLabels[ref.role]}${ref.weight !== null ? ` · ${ref.weight}` : ""}`}
+                </Tag>
+              </span>
+            ))}
+          </div>
+        ) : (
+          <p className="skill-node-detail-placeholder">
+            未进入任何已发布岗位版本。
+          </p>
+        )}
+        <p className="skill-node-detail-meta">
+          {signal
+            ? `市场信号：${signal.jdMentions} 条 JD 提及（占全部提及 ${Math.round(signal.mentionShare * 100)}%）`
+            : "市场信号待接入。"}
         </p>
       </section>
     </div>

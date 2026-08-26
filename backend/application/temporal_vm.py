@@ -180,6 +180,9 @@ class SkillNodeVM(_VM):
     aliases: list[str] = Field(default_factory=list)
     evidence_ids: list[str] = Field(default_factory=list)
     position: dict = Field(default_factory=dict)
+    # 关联岗位版本（published 扫描聚合）与市场信号基础档（JD 提及）
+    job_versions: list[dict] = Field(default_factory=list)
+    signal: dict = Field(default_factory=dict)
     tech_stack: str = "LLM"
 
 
@@ -233,8 +236,64 @@ _TECH_MAP = {
 }
 
 
+def _job_versions_index() -> dict[str, list[dict]]:
+    """skill_id -> 关联岗位版本列表（扫全部 published，按权重降序）。"""
+    index: dict[str, list[dict]] = {}
+    pub_dir = P / "jobversions" / "published"
+    for p in sorted(pub_dir.glob("*.json")) if pub_dir.is_dir() else []:
+        job = json.loads(p.read_text(encoding="utf-8"))
+        for role, key in (
+            ("required", "required_skill_ids"),
+            ("preferred", "preferred_skill_ids"),
+        ):
+            for s in job.get(key, []):
+                sid = s.get("skill_id", "")
+                if sid:
+                    index.setdefault(sid, []).append(
+                        {
+                            "version_id": job.get("version_id", p.stem),
+                            "title": job.get("title", ""),
+                            "role": role,
+                            "weight": s.get("weight"),
+                        }
+                    )
+    for refs in index.values():
+        refs.sort(key=lambda x: -(x["weight"] or 0))
+    return index
+
+
+def _mention_counts() -> tuple[dict[str, int], dict[str, int], int]:
+    """(能力域提及数, 技能点提及数, 总提及数)，源自 jd-parsed resolved。"""
+    caps: dict[str, int] = {}
+    points: dict[str, int] = {}
+    total = 0
+    parsed = P / "jd-opencli" / "jd-parsed.jsonl"
+    if not parsed.is_file():
+        return caps, points, total
+    for line in parsed.open(encoding="utf-8"):
+        for x in json.loads(line).get("resolved") or []:
+            sid = x.get("skill_id", "")
+            if sid:
+                caps[sid] = caps.get(sid, 0) + 1
+                total += 1
+            pid = x.get("point_id")
+            if pid:
+                points[pid] = points.get(pid, 0) + 1
+    return caps, points, total
+
+
 def build_skill_graph(job_version_id: str = "ai-agent-v2") -> SkillGraphVM:
     """从 published 版本 + SKILLS 词典构建技能图谱。"""
+    jobs_idx = _job_versions_index()
+    cap_counts, point_counts, mention_total = _mention_counts()
+
+    def _signal(counts: dict[str, int], key: str) -> dict:
+        n = counts.get(key, 0)
+        return {
+            "jd_mentions": n,
+            "mention_share": round(n / mention_total, 3) if mention_total else 0,
+        }
+
     job = {}
     p = P / "jobversions" / "published" / f"{job_version_id}.json"
     if p.is_file():
@@ -274,6 +333,8 @@ def build_skill_graph(job_version_id: str = "ai-agent-v2") -> SkillGraphVM:
                     aliases=c.get("aliases", [])[:3],
                     position={"x": 400 + 280 * (1 if i % 2 else -1), "y": 140 + (i // 2) * 90},
                     tech_stack=_TECH_MAP.get(sid, "工程"),
+                    job_versions=jobs_idx.get(sid, []),
+                    signal=_signal(cap_counts, sid),
                 )
             )
             edges.append(SkillEdgeVM(id=f"e-root-{sid}", source="root", target=sid))
@@ -305,6 +366,8 @@ def build_skill_graph(job_version_id: str = "ai-agent-v2") -> SkillGraphVM:
                             "y": 400 + j * 60,
                         },
                         tech_stack=_TECH_MAP.get(cap, "工程"),
+                        job_versions=jobs_idx.get(pid, []),
+                        signal=_signal(point_counts, pid),
                     )
                 )
                 edges.append(SkillEdgeVM(id=f"e-{cap}-{pid}", source=cap, target=pid))

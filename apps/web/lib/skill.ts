@@ -10,6 +10,18 @@ export type SkillStatus = "added" | "removed" | "modified" | "stable";
 export type CapabilityType = "capability" | "point";
 export type TechStack = "LLM" | "Agent" | "RAG" | "多模态" | "数据" | "工程" | "治理";
 
+export type SkillJobVersionRef = {
+  versionId: string;
+  title: string;
+  role: SkillRole;
+  weight: number | null;
+};
+
+export type SkillSignal = {
+  jdMentions: number;
+  mentionShare: number;
+};
+
 export type SkillNode = {
   id: string;
   label: string;
@@ -21,6 +33,9 @@ export type SkillNode = {
   evidenceIds: string[];
   position: { x: number; y: number };
   techStack: TechStack;
+  // 关联岗位版本与市场信号（后端聚合，mock 产物可缺省）
+  jobVersions?: SkillJobVersionRef[];
+  signal?: SkillSignal;
 };
 
 export type SkillEdge = {

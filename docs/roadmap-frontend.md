@@ -46,7 +46,7 @@
 | ID | 任务 | 依赖 | 联调 | 状态 | 验收 |
 | --- | --- | --- | --- | --- | --- |
 | F-T3.1 | 技能点图谱 | F-T1.2 | I3 | **完成** | `/skills` 30 capability + 11 skill point = 41 节点，xyflow 容器，4 维筛选，capability 必备蓝/加分中性/added/modified 虚线着色。 |
-| F-T3.2 | 图谱节点详情和证据 | F-T1.3 | I3 | **完成** | `skill-node-detail.tsx` 3 栏侧栏（信息/别名/兄弟技能点/证据摘要/JobVersion 占位）。 |
+| F-T3.2 | 图谱节点详情和证据 | F-T1.3 | I3 | **完成** | `skill-node-detail.tsx` 侧栏（信息/别名/兄弟技能点/证据摘要）+ 关联岗位版本与市场信号（扫 12 个 published 版本聚合 JobVersion 引用、JD 提及数与占比，替换原占位块）。 |
 | F-T3.3 | 手工技能画像 | `CandidateProfile` | I4 | **完成** | 技能 status 改写 + 项目 `{id,text}[]` 增删改 + `userCorrections[]` 审计数组（带 ISO 时间戳）。 |
 | F-T3.4 | PDF/DOCX 解析确认 | Resume API | I4 | **未开始**（等后端 B-T3.1）| 解析结果可编辑，保留原文片段。前端 mock 无意义，等 Resume API 实装再做。 |
 | F-T3.5 | 匹配报告和学习路径 | `MatchReport`、F-T1.6 | I4 | **完成** | `/diagnosis` 已含置信度卡 + 关键短板 + 排序学习路径 + recalculate 联动技能 status。 |

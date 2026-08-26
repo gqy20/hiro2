@@ -32,7 +32,31 @@
         "x": 80,
         "y": 80
       },
-      "techStack": "LLM"
+      "techStack": "LLM",
+      "jobVersions": [
+        {
+          "versionId": "ai-agent-v2",
+          "title": "AI Agent 工程师",
+          "role": "required",
+          "weight": 0.21
+        },
+        {
+          "versionId": "llm-algo-v2",
+          "title": "大模型算法工程师",
+          "role": "required",
+          "weight": 0.12
+        },
+        {
+          "versionId": "ai-pm-v2",
+          "title": "AI产品经理",
+          "role": "preferred",
+          "weight": 0.08
+        }
+      ],
+      "signal": {
+        "jdMentions": 153,
+        "mentionShare": 0.109
+      }
     },
     {
       "id": "cap_01.推理",

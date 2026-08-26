@@ -4,11 +4,15 @@
 
 ## [Unreleased]
 
+### Added
+- 打通 RSS 直连采集：feedtest 逐个测试 rss2cubox feeds.txt [direct] 段 140 个真直连源（116 可用，按优先级分组报告）；精选 24 源生成 `data/FEEDS.yml`（p5/p4 全量 10 + p2 精选 15，剔除与 openai-news 完全同 feed 的 openai-blog）；新增 `rssget` 抓取器（feedparser，guid 幂等追加、并发 8、失败源不阻塞），首轮 24/24 成功落 `data/raw/feeds/` 2718 条 FeedItem（published 2015-12~2026-08），复跑 0 新增验证幂等；SOURCES.yml 登记 `feeds`（live 模式）。
+
 ### Fixed
 - 修复 `.env.example` 存储段变量名与代码不一致：`HIRO2_DATABASE_URL`/`HIRO2_NEO4J_*` 改为代码实际读取的 `DATABASE_URL`/`NEO4J_URI`/`NEO4J_USER`/`NEO4J_PASSWORD`（原配置照抄必连不上库），默认值对齐 docker-compose，删除重复定义的 Phase B 段。
 - 简历抽取三处修复并回归验证（96 次调用 0 失败）：candmatch 对超限 skills/projects 截断而非整单拒绝（long 简历 >40 条曾触发 ValidationError）；resume-parse prompt 升 v2（技能定义纳入能力域词、密集列举逐项拆出）；reseval 宽松核心词匹配成为主指标（gold 侧短词仍全等防误报）。宽松口径召回 91.8% -> 96.5%（variant 63.6%->97.8%、typo 78.3%->89.1%、buried 99%、双栏 96.5%），严格口径 82.7% -> 86.1%。
 
 ### Added
+- 技能图谱节点详情接入关联岗位版本与市场信号（原 F-T3.5 占位块）：`/api/v1/skills/graph` 每个节点聚合 `jobVersions`（扫全部 published 版本的必备/加分引用，按权重降序）与 `signal`（jd-parsed 提及数 + 占比），前端 `skill-node-detail` 替换占位块渲染；Neo4j 分支改为仅校准 role、保留 VM 节点的别名/位置/关联字段（原实现裸覆盖会丢字段）；mock fixture 补示例数据。
 - 岗位版本管线参数化并批量发布 11 个岗位版本：`jobver.py run --job <position_id> --slug <前缀>` 将主案例精做脚本泛化为任意岗位管线（市场统计与 changeset 规则提取共用，pos_02 回归逐项一致）；按 JD 浓度发布 v2 版本——llm-algo（大模型算法，65 JD）、ai-pm（22）、nlp-mm/cv（各 17）、mlops（10）等，JD<10 的薄证据岗位（ai-trainer/bigdata/data-sec 等 6 个）在审核留痕中标注"方向性，扩采后升版复核"；全部经 review-action 留痕 + jobpub 不可变发布 + Neo4j 投影（12 版本含 ai-agent-v2 皆可查），`/skills/graph?job=<version_id>` 生效。
 - 新增简历抽取回归（reseval）：24 份 × 4 版式全管线（解析→LLM 抽取→gold 宽松比对）双口径报告。结论：解析层无瓶颈（双栏 94.2% 召回反而最高，PyMuPDF 无需替换）；严格口径 82.7%、宽松核心词口径 91.8%，差距主要来自 gold 埋点写法（版本号/括号注释）而非漏抽；真实缺口三类——能力域词（工具调用/数据仓库/向量数据库）系统性不抽、密集列举漏抽、技能超 40 条时 ResumeRawExtraction 校验整单失败。
 - 新增多样性合成简历批次（genresume diverse）：7 类边缘画像（写法变体/技能稀疏/技能埋项目/软技能噪声/管理向/全半角噪声/超长）× 方向级别共 24 份 Markdown 源，生成时埋点 171 个 gold 技能提及（落盘前校验与正文逐字对齐）；新增 md2res 转换器（pandoc + PyMuPDF Story）把 Markdown 统一转为 pdf 单栏/双栏、docx、txt 四版式，内容与版式解耦。冒烟确认双栏 PDF 经现有解析器出现词内断行（Ｐｙｔｈｏｎ 被栏宽切断），为解析层升级（MinerU）提供依据；synthetic 依规则不进入官方指标。

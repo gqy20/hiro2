@@ -156,9 +156,20 @@ def skills_graph(job: str = "ai-agent-v2") -> dict:
         try:
             from backend.infra.neo4j import read_job_graph
 
-            nodes, edges = read_job_graph(job)
+            nodes, _ = read_job_graph(job)
             if nodes:
-                graph = graph.model_copy(update={"nodes": nodes, "edges": edges})
+                # Neo4j 投影校准 role；VM 节点的别名/位置/关联版本/信号等字段保留
+                roles = {n["id"]: n["role"] for n in nodes if n["id"] != "root"}
+                graph = graph.model_copy(
+                    update={
+                        "nodes": [
+                            n.model_copy(update={"role": roles[n.id]})
+                            if n.id in roles
+                            else n
+                            for n in graph.nodes
+                        ]
+                    }
+                )
         except Exception:
             pass
     raw = graph.model_dump()
@@ -188,6 +199,21 @@ def skills_graph(job: str = "ai-agent-v2") -> dict:
                 "evidenceIds": node["evidence_ids"],
                 "position": node["position"],
                 "techStack": node["tech_stack"],
+                "jobVersions": [
+                    {
+                        "versionId": ref["version_id"],
+                        "title": ref["title"],
+                        "role": ref["role"],
+                        "weight": ref["weight"],
+                    }
+                    for ref in node["job_versions"]
+                ],
+                "signal": {
+                    "jdMentions": node["signal"].get("jd_mentions", 0),
+                    "mentionShare": node["signal"].get("mention_share", 0),
+                }
+                if node["signal"]
+                else None,
             }
             for node in raw["nodes"]
         ],

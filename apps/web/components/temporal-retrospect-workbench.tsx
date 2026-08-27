@@ -8,7 +8,10 @@ import { SectionHeader } from "@/components/workflow-ui";
 import { TemporalNav } from "@/components/temporal-nav";
 import type { BacktestRun } from "@/lib/temporal";
 
-function accuracyTone(acc: number, baseline: number): "success" | "exception" | "normal" {
+function accuracyTone(
+  acc: number,
+  baseline: number,
+): "success" | "exception" | "normal" {
   if (acc >= baseline) return "success";
   if (acc < baseline * 0.85) return "exception";
   return "normal";
@@ -61,10 +64,7 @@ export function TemporalRetrospectWorkbench({
           ))}
         </div>
 
-        <section
-          aria-label="指标"
-          className="temporal-backtest-metrics"
-        >
+        <section aria-label="指标" className="temporal-backtest-metrics">
           <div className="temporal-stat-card">
             <Statistic
               title="回测命中率"
@@ -110,20 +110,11 @@ export function TemporalRetrospectWorkbench({
           </div>
         </section>
 
-        <section
-          aria-label="误差分布"
-          className="temporal-backtest-errors"
-        >
-          <SectionHeader
-            meta={`${errorList.length} 类`}
-            title="误差类型分布"
-          />
+        <section aria-label="误差分布" className="temporal-backtest-errors">
+          <SectionHeader meta={`${errorList.length} 类`} title="误差类型分布" />
           <ul>
             {errorList.map((e) => (
-              <li
-                className="temporal-backtest-error-row"
-                key={e.transition}
-              >
+              <li className="temporal-backtest-error-row" key={e.transition}>
                 <Tag
                   color={
                     e.transition.startsWith("up->")

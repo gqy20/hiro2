@@ -85,7 +85,8 @@ export function buildMockTasks(): ReviewTask[] {
         horizon_days: 30,
         as_of_date: "2026-07-01",
         current_phase: "平稳期",
-        reason_summary: "cap_01 在 2026-07 预测为平稳，置信度 0.4，需要人工确认",
+        reason_summary:
+          "cap_01 在 2026-07 预测为平稳，置信度 0.4，需要人工确认",
       },
       evidence_ids: ["ev-skill-001", "ev-skill-002", "ev-skill-003"],
       needs_dual_review: false,
@@ -106,9 +107,15 @@ export function buildMockTasks(): ReviewTask[] {
         horizon_days: 30,
         as_of_date: "2026-07-01",
         current_phase: "上升期",
-        reason_summary: "cap_04 (AI Agent) 预测上升，置信度 0.85，建议升级为必备技能",
+        reason_summary:
+          "cap_04 (AI Agent) 预测上升，置信度 0.85，建议升级为必备技能",
       },
-      evidence_ids: ["ev-skill-010", "ev-skill-011", "ev-skill-012", "ev-skill-013"],
+      evidence_ids: [
+        "ev-skill-010",
+        "ev-skill-011",
+        "ev-skill-012",
+        "ev-skill-013",
+      ],
       needs_dual_review: true,
     },
     {

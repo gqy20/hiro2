@@ -12,10 +12,7 @@ import type {
   TrendSignal,
 } from "@/lib/temporal";
 
-const baseDir = path.resolve(
-  process.cwd(),
-  "../../data/processed/wechat-mp",
-);
+const baseDir = path.resolve(process.cwd(), "../../data/processed/wechat-mp");
 
 type RawBacktest = {
   metrics: {

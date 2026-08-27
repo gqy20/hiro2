@@ -12,8 +12,7 @@ export default async function TemporalSignalsPage({
   const fixture = isMockMode()
     ? await loadTemporalFixture()
     : await apiFetch<TemporalDataset>("/temporal/dataset");
-  const variant =
-    state === "empty" || state === "error" ? state : "ready";
+  const variant = state === "empty" || state === "error" ? state : "ready";
   if (variant === "error") {
     return (
       <AppShell>
@@ -27,10 +26,7 @@ export default async function TemporalSignalsPage({
   if (variant === "empty") {
     return (
       <AppShell>
-        <FixtureState
-          emptyText="当前时间窗内暂无信号。"
-          state="empty"
-        />
+        <FixtureState emptyText="当前时间窗内暂无信号。" state="empty" />
       </AppShell>
     );
   }

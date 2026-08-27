@@ -12,24 +12,62 @@ export type PublishResult = {
   reviewActionIds: string[];
 };
 
-export async function updateGrowthTask(candidateId: string, jobVersionId: string, skillId: string, completed: boolean) {
-  if (isMockMode()) return { taskId: 0, status: completed ? "COMPLETED" : "PENDING", completedAt: completed ? new Date().toISOString() : null };
-  return apiFetch(`/candidates/${encodeURIComponent(candidateId)}/growth-tasks/${encodeURIComponent(skillId)}?job=${encodeURIComponent(jobVersionId)}`, { method: "PUT", body: { completed } });
+export async function updateGrowthTask(
+  candidateId: string,
+  jobVersionId: string,
+  skillId: string,
+  completed: boolean,
+) {
+  if (isMockMode())
+    return {
+      taskId: 0,
+      status: completed ? "COMPLETED" : "PENDING",
+      completedAt: completed ? new Date().toISOString() : null,
+    };
+  return apiFetch(
+    `/candidates/${encodeURIComponent(candidateId)}/growth-tasks/${encodeURIComponent(skillId)}?job=${encodeURIComponent(jobVersionId)}`,
+    { method: "PUT", body: { completed } },
+  );
 }
 
-export async function createCandidateProof(candidateId: string, body: { skill_id: string; title: string; description: string }) {
-  if (isMockMode()) return { proofId: Date.now(), createdAt: new Date().toISOString() };
-  return apiFetch(`/candidates/${encodeURIComponent(candidateId)}/proofs`, { method: "POST", body });
+export async function createCandidateProof(
+  candidateId: string,
+  body: { skill_id: string; title: string; description: string },
+) {
+  if (isMockMode())
+    return { proofId: Date.now(), createdAt: new Date().toISOString() };
+  return apiFetch(`/candidates/${encodeURIComponent(candidateId)}/proofs`, {
+    method: "POST",
+    body,
+  });
 }
 
-export async function saveCandidateTarget(candidateId: string, jobVersionId: string) {
+export async function saveCandidateTarget(
+  candidateId: string,
+  jobVersionId: string,
+) {
   if (isMockMode()) return { candidateId, jobVersionId, isActive: true };
-  return apiFetch(`/candidates/${encodeURIComponent(candidateId)}/target`, { method: "PUT", body: { job_version_id: jobVersionId } });
+  return apiFetch(`/candidates/${encodeURIComponent(candidateId)}/target`, {
+    method: "PUT",
+    body: { job_version_id: jobVersionId },
+  });
 }
 
-export async function saveCandidateProfile(candidateId: string, skills: Array<{ name: string; status: string }>, projects: string[]) {
-  if (isMockMode()) return { profileVersion: "session", matchId: "mock-match", overallScore: 0 };
-  return apiFetch(`/candidates/${encodeURIComponent(candidateId)}/profile`, { method: "PATCH", body: { skills, projects } });
+export async function saveCandidateProfile(
+  candidateId: string,
+  skills: Array<{ name: string; status: string }>,
+  projects: string[],
+) {
+  if (isMockMode())
+    return {
+      profileVersion: "session",
+      matchId: "mock-match",
+      overallScore: 0,
+    };
+  return apiFetch(`/candidates/${encodeURIComponent(candidateId)}/profile`, {
+    method: "PATCH",
+    body: { skills, projects },
+  });
 }
 
 // ponytail: mock 模式无副作用 + 1.4s 模拟延迟，real 模式 POST。

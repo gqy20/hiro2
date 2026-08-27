@@ -44,7 +44,9 @@ function layoutGraph(nodes: Node<NodeData>[], edges: Edge[], compact: boolean) {
     marginx: compact ? 18 : 28,
     marginy: compact ? 18 : 28,
   });
-  nodes.forEach((node) => graph.setNode(node.id, { width: nodeWidth, height: nodeHeight }));
+  nodes.forEach((node) =>
+    graph.setNode(node.id, { width: nodeWidth, height: nodeHeight }),
+  );
   edges.forEach((edge) => graph.setEdge(edge.source, edge.target));
   dagre.layout(graph);
   return nodes.map((node) => {
@@ -59,14 +61,12 @@ function layoutGraph(nodes: Node<NodeData>[], edges: Edge[], compact: boolean) {
   });
 }
 
-function SkillNode({
-  data,
-  selected,
-}: {
-  data: NodeData;
-  selected: boolean;
-}) {
-  const classes = ["graph-node", `graph-node-${data.kind}`, `graph-node-${data.role}`];
+function SkillNode({ data, selected }: { data: NodeData; selected: boolean }) {
+  const classes = [
+    "graph-node",
+    `graph-node-${data.kind}`,
+    `graph-node-${data.role}`,
+  ];
   if (data.status !== "stable") classes.push(`graph-node-${data.status}`);
   if (selected) classes.push("graph-node-selected");
   return (
@@ -83,10 +83,16 @@ function SkillNode({
             ? "岗位"
             : data.kind === "group"
               ? "能力分组"
-            : `${data.pointName ? "技能点" : "能力域"} · ${data.role === "required" ? "必备" : "加分"}`}
+              : `${data.pointName ? "技能点" : "能力域"} · ${data.role === "required" ? "必备" : "加分"}`}
         </span>
         {data.status !== "stable" ? (
-          <b>{data.status === "added" ? "新增" : data.status === "removed" ? "删除" : "修改"}</b>
+          <b>
+            {data.status === "added"
+              ? "新增"
+              : data.status === "removed"
+                ? "删除"
+                : "修改"}
+          </b>
         ) : null}
       </div>
       <Handle position={Position.Right} type="source" />
@@ -108,7 +114,9 @@ export function SkillGraph({
   selectedId: string | null;
 }) {
   const [compact, setCompact] = useState(false);
-  const [activeRole, setActiveRole] = useState<SkillNodeData["role"] | null>(null);
+  const [activeRole, setActiveRole] = useState<SkillNodeData["role"] | null>(
+    null,
+  );
   const canvasRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -130,7 +138,9 @@ export function SkillGraph({
   const availableCapabilities = nodes.filter(
     (node) => node.id !== "root" && node.pointName === null,
   );
-  const availableRoles = new Set(availableCapabilities.map((node) => node.role));
+  const availableRoles = new Set(
+    availableCapabilities.map((node) => node.role),
+  );
   const compactRole =
     activeRole && availableRoles.has(activeRole)
       ? activeRole
@@ -138,12 +148,20 @@ export function SkillGraph({
         ? [...availableRoles][0]
         : null;
   const displayedNodes = nodes.filter((node) => {
-    if (!compact) return node.pointName === null || node.capabilityId === expandedCapabilityId;
+    if (!compact)
+      return (
+        node.pointName === null || node.capabilityId === expandedCapabilityId
+      );
     if (!compactRole) return node.id === "root";
     if (expandedCapabilityId) {
-      return node.id === expandedCapabilityId || node.capabilityId === expandedCapabilityId;
+      return (
+        node.id === expandedCapabilityId ||
+        node.capabilityId === expandedCapabilityId
+      );
     }
-    return node.pointName === null && node.id !== "root" && node.role === compactRole;
+    return (
+      node.pointName === null && node.id !== "root" && node.role === compactRole
+    );
   });
   const displayedIds = new Set(displayedNodes.map((node) => node.id));
   const displayedEdges = edges.filter(
@@ -159,7 +177,8 @@ export function SkillGraph({
     }))
     .filter(
       (group) =>
-        group.count > 0 && (!compact || !compactRole || group.role === compactRole),
+        group.count > 0 &&
+        (!compact || !compactRole || group.role === compactRole),
     )
     .map((group) => ({
       id: `group-${group.role}`,
@@ -175,20 +194,23 @@ export function SkillGraph({
       },
       selectable: false,
     }));
-  const dataNodes: Node<NodeData>[] = displayedNodes.map((node): Node<NodeData> => ({
-    id: node.id,
-    type: "skill",
-    position: { x: 0, y: 0 },
-    data: {
-      label: node.label,
-      role: node.role,
-      status: node.status,
-      capabilityId: node.capabilityId,
-      pointName: node.pointName,
-      kind: node.id === "root" ? "root" : node.pointName ? "point" : "capability",
-    },
-    selected: node.id === selectedId,
-  }));
+  const dataNodes: Node<NodeData>[] = displayedNodes.map(
+    (node): Node<NodeData> => ({
+      id: node.id,
+      type: "skill",
+      position: { x: 0, y: 0 },
+      data: {
+        label: node.label,
+        role: node.role,
+        status: node.status,
+        capabilityId: node.capabilityId,
+        pointName: node.pointName,
+        kind:
+          node.id === "root" ? "root" : node.pointName ? "point" : "capability",
+      },
+      selected: node.id === selectedId,
+    }),
+  );
   const baseNodes: Node<NodeData>[] = [...dataNodes, ...groupNodes];
 
   const hierarchyEdges = displayedEdges
@@ -225,13 +247,22 @@ export function SkillGraph({
       const media = gsap.matchMedia();
       const runAnimation = () => {
         media.add("(prefers-reduced-motion: no-preference)", () => {
-          const nodeTargets = canvasRef.current?.querySelectorAll(".graph-node");
-          const edgeTargets = canvasRef.current?.querySelectorAll(".react-flow__edge-path");
+          const nodeTargets =
+            canvasRef.current?.querySelectorAll(".graph-node");
+          const edgeTargets = canvasRef.current?.querySelectorAll(
+            ".react-flow__edge-path",
+          );
           if (nodeTargets?.length) {
             gsap.fromTo(
               nodeTargets,
               { autoAlpha: 0.72, scale: 0.98 },
-              { autoAlpha: 1, scale: 1, duration: 0.24, ease: "power2.out", stagger: 0.018 },
+              {
+                autoAlpha: 1,
+                scale: 1,
+                duration: 0.24,
+                ease: "power2.out",
+                stagger: 0.018,
+              },
             );
           }
           if (edgeTargets?.length) {

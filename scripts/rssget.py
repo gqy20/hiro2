@@ -44,7 +44,9 @@ async def cmd_fetch(only: str | None) -> dict:
 
     await asyncio.to_thread(run_all)
     metrics = {
-        "sources": len(sources), "ok": len(results), "failed": len(errors),
+        "sources": len(sources),
+        "ok": len(results),
+        "failed": len(errors),
         "new_items": sum(r["new"] for r in results),
         "by_source": sorted(results, key=lambda r: -r["new"]),
         "errors": errors,

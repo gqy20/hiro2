@@ -31,11 +31,19 @@ export default async function PositionsPage() {
               <article className="position-card" key={job.href}>
                 <div className="position-card-main">
                   <h2>{job.title}</h2>
-                  <p>{job.version} · {job.status}</p>
+                  <p>
+                    {job.version} · {job.status}
+                  </p>
                 </div>
                 <dl className="position-card-meta">
-                  <div><dt>待处理变化</dt><dd>{job.pending}</dd></div>
-                  <div><dt>下一步</dt><dd>审核并发布</dd></div>
+                  <div>
+                    <dt>待处理变化</dt>
+                    <dd>{job.pending}</dd>
+                  </div>
+                  <div>
+                    <dt>下一步</dt>
+                    <dd>审核并发布</dd>
+                  </div>
                 </dl>
                 <div className="position-card-actions">
                   <Link href={job.href}>继续审核 →</Link>
@@ -49,7 +57,9 @@ export default async function PositionsPage() {
               <h2>需要建立新的岗位标准？</h2>
               <p>从市场中的新岗位候选开始，形成可审核的岗位定义。</p>
             </div>
-            <Link className="dashboard-primary-action" href="/new-jobs">查看新岗位候选</Link>
+            <Link className="dashboard-primary-action" href="/new-jobs">
+              查看新岗位候选
+            </Link>
           </section>
         </main>
       </div>

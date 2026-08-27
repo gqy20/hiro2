@@ -8,7 +8,8 @@ import type { JobUpdateContext } from "@/lib/job-update";
 export type SkillRole = "required" | "preferred";
 export type SkillStatus = "added" | "removed" | "modified" | "stable";
 export type CapabilityType = "capability" | "point";
-export type TechStack = "LLM" | "Agent" | "RAG" | "多模态" | "数据" | "工程" | "治理";
+export type TechStack =
+  "LLM" | "Agent" | "RAG" | "多模态" | "数据" | "工程" | "治理";
 
 export type SkillJobVersionRef = {
   versionId: string;

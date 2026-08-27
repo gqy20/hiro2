@@ -39,16 +39,19 @@ export function AppShell({
   const pathname = usePathname();
   const router = useRouter();
   const [workspace, setWorkspace] = useState<Workspace>(() => {
-    const fallback = pathname.startsWith("/career") || pathname.startsWith("/profile")
-      ? "career"
-      : "recruiting";
+    const fallback =
+      pathname.startsWith("/career") || pathname.startsWith("/profile")
+        ? "career"
+        : "recruiting";
     if (typeof window === "undefined") return fallback;
     const stored = window.localStorage.getItem(WORKSPACE_KEY);
     return stored === "career" || stored === "recruiting" ? stored : fallback;
   });
   const careerMode = workspace === "career";
   const visibleNavigation = careerMode
-    ? navigation.filter((item) => ["/career", "/profile", "/diagnosis"].includes(item.href))
+    ? navigation.filter((item) =>
+        ["/career", "/profile", "/diagnosis"].includes(item.href),
+      )
     : navigation.filter((item) => !["/career", "/profile"].includes(item.href));
   const contentRef = useRef<HTMLElement>(null);
 
@@ -134,7 +137,9 @@ export function AppShell({
           <span>数据截至 08-22</span>
         </div>
       </header>
-      <main id="main-content" ref={contentRef}>{children}</main>
+      <main id="main-content" ref={contentRef}>
+        {children}
+      </main>
     </div>
   );
 }

@@ -10,7 +10,14 @@ const cards = [
     desc: "从日报、招聘、岗位需求中提取的实时信号，按 entity_type 聚类。",
     icon: (
       <svg aria-hidden height="20" viewBox="0 0 24 24" width="20">
-        <circle cx="11" cy="11" fill="none" r="7" stroke="currentColor" strokeWidth="2" />
+        <circle
+          cx="11"
+          cy="11"
+          fill="none"
+          r="7"
+          stroke="currentColor"
+          strokeWidth="2"
+        />
         <path d="m16 16 4 4" stroke="currentColor" strokeWidth="2" />
       </svg>
     ),
@@ -21,7 +28,12 @@ const cards = [
     desc: "30/60/90 天回测命中率 + 当前预测趋势。",
     icon: (
       <svg aria-hidden height="20" viewBox="0 0 24 24" width="20">
-        <path d="M3 20h18M5 17l5-7 4 5 5-9" fill="none" stroke="currentColor" strokeWidth="2" />
+        <path
+          d="M3 20h18M5 17l5-7 4 5 5-9"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        />
       </svg>
     ),
   },
@@ -31,7 +43,12 @@ const cards = [
     desc: "命中、错判、支持/反证证据与评分。",
     icon: (
       <svg aria-hidden height="20" viewBox="0 0 24 24" width="20">
-        <path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5" fill="none" stroke="currentColor" strokeWidth="2" />
+        <path
+          d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        />
       </svg>
     ),
   },
@@ -41,7 +58,12 @@ const cards = [
     desc: "预测建议可进入岗位审核，不直接发布版本。",
     icon: (
       <svg aria-hidden height="20" viewBox="0 0 24 24" width="20">
-        <path d="M12 2 2 21h20Zm0 7v5m0 3v.01" fill="none" stroke="currentColor" strokeWidth="2" />
+        <path
+          d="M12 2 2 21h20Zm0 7v5m0 3v.01"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        />
       </svg>
     ),
   },
@@ -54,7 +76,10 @@ export default async function TemporalIndexPage() {
   ).length;
   return (
     <AppShell>
-      <section className="temporal-index" aria-labelledby="temporal-index-title">
+      <section
+        className="temporal-index"
+        aria-labelledby="temporal-index-title"
+      >
         <header className="page-heading">
           <h1 id="temporal-index-title">时间情报</h1>
           <p>

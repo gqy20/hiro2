@@ -14,8 +14,7 @@ export default async function TemporalRetrospectPage({
   searchParams,
 }: Readonly<{ searchParams: Promise<{ state?: string }> }>) {
   const { state } = await searchParams;
-  const variant =
-    state === "empty" || state === "error" ? state : "ready";
+  const variant = state === "empty" || state === "error" ? state : "ready";
   if (variant === "error") {
     return (
       <AppShell>
@@ -29,10 +28,7 @@ export default async function TemporalRetrospectPage({
   if (variant === "empty") {
     return (
       <AppShell>
-        <FixtureState
-          emptyText="暂无回测记录。"
-          state="empty"
-        />
+        <FixtureState emptyText="暂无回测记录。" state="empty" />
       </AppShell>
     );
   }

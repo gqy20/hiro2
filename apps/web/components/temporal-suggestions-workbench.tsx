@@ -78,7 +78,11 @@ export function TemporalSuggestionsWorkbench({
     setItems((current) =>
       current.map((s) =>
         s.suggestion_id === editing.suggestion_id
-          ? { ...s, suggested_level: newLevel, review_status: "MODIFIED" as const }
+          ? {
+              ...s,
+              suggested_level: newLevel,
+              review_status: "MODIFIED" as const,
+            }
           : s,
       ),
     );

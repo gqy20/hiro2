@@ -15,9 +15,18 @@ export function WorkflowContext({
 }) {
   return (
     <div className="workflow-context" aria-label="当前流程">
-      <div className="workflow-context-title"><span>{eyebrow}</span><strong>{title}</strong></div>
-      <div className="workflow-context-stage"><span>当前阶段</span><b>{stage}</b></div>
-      <div className="workflow-context-next"><span>下一步</span>{href ? <Link href={href}>{next} →</Link> : <b>{next}</b>}</div>
+      <div className="workflow-context-title">
+        <span>{eyebrow}</span>
+        <strong>{title}</strong>
+      </div>
+      <div className="workflow-context-stage">
+        <span>当前阶段</span>
+        <b>{stage}</b>
+      </div>
+      <div className="workflow-context-next">
+        <span>下一步</span>
+        {href ? <Link href={href}>{next} →</Link> : <b>{next}</b>}
+      </div>
     </div>
   );
 }

@@ -5,6 +5,12 @@ import { loadDiagnosisFixture } from "@/lib/diagnosis-fixture";
 import type { DiagnosisFixture } from "@/lib/diagnosis";
 
 export default async function ProfilePage() {
-  const fixture = isMockMode() ? await loadDiagnosisFixture() : await apiFetch<DiagnosisFixture>("/diagnosis/synth_agent_senior_02");
-  return <AppShell><ProfileWorkbench fixture={fixture} /></AppShell>;
+  const fixture = isMockMode()
+    ? await loadDiagnosisFixture()
+    : await apiFetch<DiagnosisFixture>("/diagnosis/synth_agent_senior_02");
+  return (
+    <AppShell>
+      <ProfileWorkbench fixture={fixture} />
+    </AppShell>
+  );
 }

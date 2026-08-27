@@ -6,10 +6,7 @@ import { Card, Progress, Select, Tag } from "antd";
 import { AppShell } from "@/components/app-shell";
 import { SectionHeader } from "@/components/workflow-ui";
 import { TemporalNav } from "@/components/temporal-nav";
-import type {
-  BacktestRecord,
-  ForecastResult,
-} from "@/lib/temporal";
+import type { BacktestRecord, ForecastResult } from "@/lib/temporal";
 
 function directionColor(d: string): string {
   if (d === "up") return "green";
@@ -38,10 +35,8 @@ function Sparkline({
   const maxY = Math.max(...ys);
   const w = 480;
   const h = 80;
-  const sx = (x: number) =>
-    ((x - minX) / (maxX - minX || 1)) * w;
-  const sy = (y: number) =>
-    h - ((y - minY) / (maxY - minY || 1)) * h;
+  const sx = (x: number) => ((x - minX) / (maxX - minX || 1)) * w;
+  const sy = (y: number) => h - ((y - minY) / (maxY - minY || 1)) * h;
   const d = points
     .map(
       (p, i) =>
@@ -75,18 +70,14 @@ export function TemporalForecastsWorkbench({
   const current = forecasts.find((f) => f.skill_id === skillId);
 
   const series = useMemo(() => {
-    const filtered = backtestRecords.filter(
-      (r) => r.skill_id === skillId,
-    );
+    const filtered = backtestRecords.filter((r) => r.skill_id === skillId);
     const byAsOf = new Map<string, BacktestRecord[]>();
     for (const r of filtered) {
       const arr = byAsOf.get(r.as_of) ?? [];
       arr.push(r);
       byAsOf.set(r.as_of, arr);
     }
-    const sorted = [...byAsOf.entries()].sort(([a], [b]) =>
-      a.localeCompare(b),
-    );
+    const sorted = [...byAsOf.entries()].sort(([a], [b]) => a.localeCompare(b));
     return sorted.map(([asOf, recs]) => ({
       x: new Date(asOf).getTime(),
       y: recs.reduce((sum, r) => sum + r.recent, 0) / recs.length,
@@ -96,10 +87,7 @@ export function TemporalForecastsWorkbench({
 
   return (
     <AppShell>
-      <section
-        className="temporal-workbench"
-        aria-labelledby="forecasts-title"
-      >
+      <section className="temporal-workbench" aria-labelledby="forecasts-title">
         <header className="page-heading">
           <h1 id="forecasts-title">趋势回测与当前趋势</h1>
           <p>{`${forecasts.length} 条当前预测（h30 训练数据）`}</p>
@@ -147,14 +135,8 @@ export function TemporalForecastsWorkbench({
           />
         </Card>
 
-        <section
-          aria-label="当前预测列表"
-          className="temporal-forecast-list"
-        >
-          <SectionHeader
-            meta={`${forecasts.length} 条`}
-            title="当前预测"
-          />
+        <section aria-label="当前预测列表" className="temporal-forecast-list">
+          <SectionHeader meta={`${forecasts.length} 条`} title="当前预测" />
           <ul>
             {forecasts.map((f) => (
               <li

@@ -25,9 +25,17 @@ import type {
   UserCorrection,
 } from "@/lib/diagnosis";
 import type { ChangeItem, JobUpdateContext } from "@/lib/job-update";
-import { createCandidateProof, saveCandidateTarget, updateGrowthTask } from "@/lib/api/queries";
+import {
+  createCandidateProof,
+  saveCandidateTarget,
+  updateGrowthTask,
+} from "@/lib/api/queries";
 
-const SKILL_STATUSES: Array<SkillMatch["status"]> = ["ready", "partial", "missing"];
+const SKILL_STATUSES: Array<SkillMatch["status"]> = [
+  "ready",
+  "partial",
+  "missing",
+];
 
 function makeCorrectionId(prefix: string): string {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
@@ -65,13 +73,17 @@ export function DiagnosisWorkbench({
   const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
   const [projectDraft, setProjectDraft] = useState("");
   const [editingProjectText, setEditingProjectText] = useState("");
-  const [completedSteps, setCompletedSteps] = useState<string[]>(fixture.report.career?.completedSkills ?? []);
+  const [completedSteps, setCompletedSteps] = useState<string[]>(
+    fixture.report.career?.completedSkills ?? [],
+  );
   const [proofSkill, setProofSkill] = useState<string | null>(null);
   const [proofTitle, setProofTitle] = useState("");
   const [proofDescription, setProofDescription] = useState("");
   const [proofSaved, setProofSaved] = useState(false);
-  const [careerMode] = useState(() =>
-    typeof window !== "undefined" && window.localStorage.getItem("hiro2.workspace") === "career",
+  const [careerMode] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.localStorage.getItem("hiro2.workspace") === "career",
   );
 
   if (state === "error")
@@ -87,7 +99,11 @@ export function DiagnosisWorkbench({
     return (
       <AppShell>
         <FixtureState
-          action={<Link href="/jobs"><Button type="primary">查看岗位</Button></Link>}
+          action={
+            <Link href="/jobs">
+              <Button type="primary">查看岗位</Button>
+            </Link>
+          }
           emptyText="上传简历或录入技能后开始诊断。"
           state="empty"
         />
@@ -114,8 +130,11 @@ export function DiagnosisWorkbench({
     partial: skills.filter((skill) => skill.status === "partial").length,
     missing: skills.filter((skill) => skill.status === "missing").length,
   };
-  const requiredGaps = fixture.report.gaps.filter((gap) => gap.priority === "high");
-  const priorityGaps = requiredGaps.length > 0 ? requiredGaps : fixture.report.gaps;
+  const requiredGaps = fixture.report.gaps.filter(
+    (gap) => gap.priority === "high",
+  );
+  const priorityGaps =
+    requiredGaps.length > 0 ? requiredGaps : fixture.report.gaps;
 
   function pushCorrection(correction: UserCorrection) {
     setUserCorrections((current) => [...current, correction]);
@@ -162,7 +181,11 @@ export function DiagnosisWorkbench({
 
   async function saveProof() {
     if (!proofSkill || !proofTitle.trim()) return;
-    await createCandidateProof(fixture.candidate.id, { skill_id: proofSkill, title: proofTitle.trim(), description: proofDescription.trim() });
+    await createCandidateProof(fixture.candidate.id, {
+      skill_id: proofSkill,
+      title: proofTitle.trim(),
+      description: proofDescription.trim(),
+    });
     setProofSaved(true);
     setProofTitle("");
     setProofDescription("");
@@ -227,286 +250,382 @@ export function DiagnosisWorkbench({
   return (
     <AppShell>
       <div className="workflow-page">
-      <WorkflowContext eyebrow={careerMode ? "求职成长" : "候选诊断"} title={careerMode ? "我的成长计划" : fixture.candidate.name} stage={careerMode ? "确认能力画像" : "复核候选人画像"} next={careerMode ? "补齐关键能力后重新诊断" : "修正画像后重新计算"} />
-      <div className="diagnosis-workbench">
-        <aside className="diagnosis-profile" aria-label="候选人画像">
-          <div className="diagnosis-heading">
-            <div>
-              <h1>{fixture.candidate.name}</h1>
-              <span>{fixture.candidate.headline}</span>
+        <WorkflowContext
+          eyebrow={careerMode ? "求职成长" : "候选诊断"}
+          title={careerMode ? "我的成长计划" : fixture.candidate.name}
+          stage={careerMode ? "确认能力画像" : "复核候选人画像"}
+          next={careerMode ? "补齐关键能力后重新诊断" : "修正画像后重新计算"}
+        />
+        <div className="diagnosis-workbench">
+          <aside className="diagnosis-profile" aria-label="候选人画像">
+            <div className="diagnosis-heading">
+              <div>
+                <h1>{fixture.candidate.name}</h1>
+                <span>{fixture.candidate.headline}</span>
+              </div>
             </div>
-          </div>
-          <p className="profile-location">{fixture.candidate.location}</p>
-          <h2>技能画像</h2>
-          <div className="skill-list">
-            {skills.map((skill, index) => (
-              <article
-                className={`profile-skill profile-skill-${skill.status}`}
-                key={skill.name}
-              >
-                <div>
-                  <strong>{skill.name}</strong>
-                  <StatusMark status={skillStatusToReview(skill.status)} />
-                </div>
-                {editing === skill.name ? (
-                  <>
-                    <Select
-                      aria-label={`编辑 ${skill.name}`}
-                      defaultValue={skill.status}
-                      onChange={(value) =>
-                        updateSkill(index, { status: value })
-                      }
-                      options={SKILL_STATUSES.map((s) => ({
-                        label:
-                          s === "ready"
-                            ? "已具备"
-                            : s === "partial"
-                              ? "部分具备"
-                              : "缺失",
-                        value: s,
-                      }))}
-                    />
-                    <Button onClick={() => setEditing(null)} size="small">
-                      完成
-                    </Button>
-                  </>
-                ) : (
-                  <div className="profile-skill-meta">
-                    <button
-                      onClick={() => setEditing(skill.name)}
-                      type="button"
-                    >
-                      {[skill.level, skill.years == null ? "" : `${skill.years} 年`]
-                        .filter(Boolean)
-                        .join(" · ")}
-                    </button>
-                    <small>{skill.evidence}</small>
+            <p className="profile-location">{fixture.candidate.location}</p>
+            <h2>技能画像</h2>
+            <div className="skill-list">
+              {skills.map((skill, index) => (
+                <article
+                  className={`profile-skill profile-skill-${skill.status}`}
+                  key={skill.name}
+                >
+                  <div>
+                    <strong>{skill.name}</strong>
+                    <StatusMark status={skillStatusToReview(skill.status)} />
                   </div>
-                )}
-              </article>
-            ))}
-          </div>
-          <h2>项目证据</h2>
-          <ul className="project-list">
-            {projects.map((project) =>
-              editingProjectId === project.id ? (
-                <li className="project-row-editing" key={project.id}>
-                  <Input
-                    aria-label={`编辑项目 ${project.id}`}
-                    onChange={(event) =>
-                      setEditingProjectText(event.target.value)
-                    }
-                    onPressEnter={() => saveProjectEdit(project.id)}
-                    value={editingProjectText}
-                  />
-                  <Button
-                    onClick={() => saveProjectEdit(project.id)}
-                    size="small"
-                    type="primary"
-                  >
-                    保存
-                  </Button>
-                  <Button onClick={cancelProjectEdit} size="small">
-                    取消
-                  </Button>
-                </li>
-              ) : (
-                <li className="project-row" key={project.id}>
-                  <span>{project.text}</span>
-                  <span className="project-actions">
-                    <Button
+                  {editing === skill.name ? (
+                    <>
+                      <Select
+                        aria-label={`编辑 ${skill.name}`}
+                        defaultValue={skill.status}
+                        onChange={(value) =>
+                          updateSkill(index, { status: value })
+                        }
+                        options={SKILL_STATUSES.map((s) => ({
+                          label:
+                            s === "ready"
+                              ? "已具备"
+                              : s === "partial"
+                                ? "部分具备"
+                                : "缺失",
+                          value: s,
+                        }))}
+                      />
+                      <Button onClick={() => setEditing(null)} size="small">
+                        完成
+                      </Button>
+                    </>
+                  ) : (
+                    <div className="profile-skill-meta">
+                      <button
+                        onClick={() => setEditing(skill.name)}
+                        type="button"
+                      >
+                        {[
+                          skill.level,
+                          skill.years == null ? "" : `${skill.years} 年`,
+                        ]
+                          .filter(Boolean)
+                          .join(" · ")}
+                      </button>
+                      <small>{skill.evidence}</small>
+                    </div>
+                  )}
+                </article>
+              ))}
+            </div>
+            <h2>项目证据</h2>
+            <ul className="project-list">
+              {projects.map((project) =>
+                editingProjectId === project.id ? (
+                  <li className="project-row-editing" key={project.id}>
+                    <Input
                       aria-label={`编辑项目 ${project.id}`}
-                      icon={<PencilSimple size={14} />}
-                      onClick={() => {
-                        setEditingProjectId(project.id);
-                        setEditingProjectText(project.text);
-                      }}
-                      size="small"
-                      type="text"
+                      onChange={(event) =>
+                        setEditingProjectText(event.target.value)
+                      }
+                      onPressEnter={() => saveProjectEdit(project.id)}
+                      value={editingProjectText}
                     />
                     <Button
-                      aria-label={`删除项目 ${project.id}`}
-                      danger
-                      icon={<Trash size={14} />}
-                      onClick={() => removeProject(project.id)}
+                      onClick={() => saveProjectEdit(project.id)}
                       size="small"
-                      type="text"
-                    />
-                  </span>
-                </li>
-              ),
-            )}
-            <li className="project-row-new">
-              <Input
-                aria-label="新增项目"
-                onChange={(event) => setProjectDraft(event.target.value)}
-                onPressEnter={addProject}
-                placeholder="新增项目证据 · 回车保存"
-                value={projectDraft}
+                      type="primary"
+                    >
+                      保存
+                    </Button>
+                    <Button onClick={cancelProjectEdit} size="small">
+                      取消
+                    </Button>
+                  </li>
+                ) : (
+                  <li className="project-row" key={project.id}>
+                    <span>{project.text}</span>
+                    <span className="project-actions">
+                      <Button
+                        aria-label={`编辑项目 ${project.id}`}
+                        icon={<PencilSimple size={14} />}
+                        onClick={() => {
+                          setEditingProjectId(project.id);
+                          setEditingProjectText(project.text);
+                        }}
+                        size="small"
+                        type="text"
+                      />
+                      <Button
+                        aria-label={`删除项目 ${project.id}`}
+                        danger
+                        icon={<Trash size={14} />}
+                        onClick={() => removeProject(project.id)}
+                        size="small"
+                        type="text"
+                      />
+                    </span>
+                  </li>
+                ),
+              )}
+              <li className="project-row-new">
+                <Input
+                  aria-label="新增项目"
+                  onChange={(event) => setProjectDraft(event.target.value)}
+                  onPressEnter={addProject}
+                  placeholder="新增项目证据 · 回车保存"
+                  value={projectDraft}
+                />
+                <Button
+                  disabled={!projectDraft.trim()}
+                  icon={<Plus aria-hidden size={14} />}
+                  onClick={addProject}
+                  size="small"
+                  type="primary"
+                >
+                  新增
+                </Button>
+              </li>
+            </ul>
+            {userCorrections.length > 0 ? (
+              <p className="project-audit-meta">
+                {`本次会话已记录 ${userCorrections.length} 条修改（仅本地）`}
+              </p>
+            ) : null}
+          </aside>
+          <main className="diagnosis-report" aria-labelledby="diagnosis-title">
+            <div className="diagnosis-title">
+              <div>
+                <span className="career-kicker">目标岗位</span>
+                <Select
+                  aria-label="选择目标岗位"
+                  className="career-target-select"
+                  onChange={async (version) => {
+                    await saveCandidateTarget(fixture.candidate.id, version);
+                    router.push(
+                      `/diagnosis?candidate=${encodeURIComponent(fixture.candidate.id)}&job=${encodeURIComponent(version)}`,
+                    );
+                  }}
+                  options={(
+                    fixture.targetJobs ?? [
+                      {
+                        version: fixture.job.version,
+                        title: fixture.job.title,
+                      },
+                    ]
+                  ).map((job) => ({
+                    label: `${job.title} · ${job.version}`,
+                    value: job.version,
+                  }))}
+                  value={fixture.job.version}
+                />
+                <p>{`${fixture.job.version} · 已发布岗位标准`}</p>
+              </div>
+              <span className="diagnosis-title-actions">
+                <Button
+                  aria-label="编辑画像"
+                  icon={<PencilSimple />}
+                  type="text"
+                />
+                <Button
+                  icon={<ArrowClockwise />}
+                  loading={recalculating}
+                  onClick={recalculate}
+                  size="small"
+                  type="primary"
+                >
+                  重新计算
+                </Button>
+              </span>
+            </div>
+            <section className="match-summary">
+              <div>
+                <span>投递基础</span>
+                <ConfidenceMeter confidence={reportScore} variant="prominent" />
+              </div>
+              <div>
+                <span>已具备</span>
+                <b>{counts.ready}</b>
+              </div>
+              <div>
+                <span>优先补齐</span>
+                <b>{priorityGaps.length}</b>
+              </div>
+            </section>
+            <p className="recalculate-hint">画像更新后，重新判断你的投递基础</p>
+            <section className="gap-section">
+              <SectionHeader
+                action={
+                  <Button
+                    onClick={() => setSelectedEvidence(reportEvidence)}
+                    size="small"
+                    type="link"
+                  >
+                    查看依据
+                  </Button>
+                }
+                meta={`${priorityGaps.length} 项优先处理`}
+                title="先补什么"
               />
-              <Button
-                disabled={!projectDraft.trim()}
-                icon={<Plus aria-hidden size={14} />}
-                onClick={addProject}
-                size="small"
-                type="primary"
-              >
-                新增
-              </Button>
-            </li>
-          </ul>
-          {userCorrections.length > 0 ? (
-            <p className="project-audit-meta">
-              {`本次会话已记录 ${userCorrections.length} 条修改（仅本地）`}
-            </p>
-          ) : null}
-        </aside>
-        <main className="diagnosis-report" aria-labelledby="diagnosis-title">
-          <div className="diagnosis-title">
-            <div>
-              <span className="career-kicker">目标岗位</span>
-              <Select
-                aria-label="选择目标岗位"
-                className="career-target-select"
-                onChange={async (version) => {
-                  await saveCandidateTarget(fixture.candidate.id, version);
-                  router.push(`/diagnosis?candidate=${encodeURIComponent(fixture.candidate.id)}&job=${encodeURIComponent(version)}`);
-                }}
-                options={(fixture.targetJobs ?? [{ version: fixture.job.version, title: fixture.job.title }]).map((job) => ({ label: `${job.title} · ${job.version}`, value: job.version }))}
-                value={fixture.job.version}
-              />
-              <p>{`${fixture.job.version} · 已发布岗位标准`}</p>
-            </div>
-            <span className="diagnosis-title-actions">
-              <Button
-                aria-label="编辑画像"
-                icon={<PencilSimple />}
-                type="text"
-              />
-              <Button
-                icon={<ArrowClockwise />}
-                loading={recalculating}
-                onClick={recalculate}
-                size="small"
-                type="primary"
-              >
-                重新计算
-              </Button>
-            </span>
-          </div>
-          <section className="match-summary">
-            <div>
-              <span>投递基础</span>
-              <ConfidenceMeter confidence={reportScore} variant="prominent" />
-            </div>
-            <div>
-              <span>已具备</span>
-              <b>{counts.ready}</b>
-            </div>
-            <div>
-              <span>优先补齐</span>
-              <b>{priorityGaps.length}</b>
-            </div>
-          </section>
-          <p className="recalculate-hint">画像更新后，重新判断你的投递基础</p>
-          <section className="gap-section">
-            <SectionHeader
-              action={
+              <div className="gap-list">
+                {priorityGaps.map((gap) => (
+                  <article
+                    className={`gap-item gap-${gap.priority}`}
+                    key={gap.skill}
+                  >
+                    <div>
+                      <strong>{gap.skill}</strong>
+                      <Tag>{gap.priority === "high" ? "优先" : "补强"}</Tag>
+                    </div>
+                    <p>
+                      {gap.reason ||
+                        "岗位要求中尚未找到你的有效项目或技能证明。"}
+                    </p>
+                    <span>{gap.action}</span>
+                  </article>
+                ))}
+              </div>
+            </section>
+            <section className="match-evidence">
+              <div className="match-evidence-heading">
+                <h3>为什么这样判断</h3>
                 <Button
                   onClick={() => setSelectedEvidence(reportEvidence)}
                   size="small"
                   type="link"
                 >
-                  查看依据
+                  打开证据
                 </Button>
-              }
-              meta={`${priorityGaps.length} 项优先处理`}
-              title="先补什么"
-            />
-            <div className="gap-list">
-              {priorityGaps.map((gap) => (
-                <article
-                  className={`gap-item gap-${gap.priority}`}
-                  key={gap.skill}
-                >
-                  <div>
+              </div>
+              <p>
+                结果同时依据已发布岗位标准和你的技能、项目证据，不以单一分数决定是否适合投递。
+              </p>
+            </section>
+          </main>
+          <aside
+            className="learning-panel"
+            aria-label={careerMode ? "成长计划" : "诊断要点"}
+          >
+            <div className="section-heading">
+              <div className="inline-heading">
+                <h2>{careerMode ? "成长计划" : "诊断要点"}</h2>
+                <span>
+                  {careerMode
+                    ? `${completedSteps.length} / ${priorityGaps.length} 已完成`
+                    : `${priorityGaps.length} 项待关注`}
+                </span>
+              </div>
+            </div>
+            {careerMode ? (
+              <ol>
+                {priorityGaps.map((gap, index) => (
+                  <li key={gap.skill}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <div>
+                      <strong>{gap.skill}</strong>
+                      <p>
+                        <b>学</b>
+                        {gap.action}
+                      </p>
+                      <p>
+                        <b>练</b>
+                        {`完成一个可展示的 ${gap.skill} 练习或项目。`}
+                      </p>
+                      <p>
+                        <b>证</b>补充项目说明或可验证成果。
+                      </p>
+                      <Button
+                        onClick={async () => {
+                          const completed = !completedSteps.includes(gap.skill);
+                          setCompletedSteps((current) =>
+                            completed
+                              ? [...current, gap.skill]
+                              : current.filter((skill) => skill !== gap.skill),
+                          );
+                          await updateGrowthTask(
+                            fixture.candidate.id,
+                            fixture.job.version,
+                            gap.skill,
+                            completed,
+                          );
+                        }}
+                        size="small"
+                        type={
+                          completedSteps.includes(gap.skill)
+                            ? "default"
+                            : "primary"
+                        }
+                      >
+                        {completedSteps.includes(gap.skill)
+                          ? "已完成"
+                          : "标记完成"}
+                      </Button>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <ul className="recruiting-diagnosis-points">
+                {priorityGaps.map((gap) => (
+                  <li key={gap.skill}>
                     <strong>{gap.skill}</strong>
-                    <Tag>{gap.priority === "high" ? ("优先") : ("补强")}</Tag>
-                  </div>
-                  <p>{gap.reason || "岗位要求中尚未找到你的有效项目或技能证明。"}</p>
-                  <span>{gap.action}</span>
-                </article>
-              ))}
-            </div>
-          </section>
-          <section className="match-evidence">
-            <div className="match-evidence-heading">
-              <h3>为什么这样判断</h3>
-              <Button
-                onClick={() => setSelectedEvidence(reportEvidence)}
-                size="small"
-                type="link"
-              >
-                打开证据
-              </Button>
-            </div>
-            <p>
-              结果同时依据已发布岗位标准和你的技能、项目证据，不以单一分数决定是否适合投递。
-            </p>
-          </section>
-        </main>
-        <aside className="learning-panel" aria-label={careerMode ? "成长计划" : "诊断要点"}>
-          <div className="section-heading">
-            <div className="inline-heading">
-              <h2>{careerMode ? "成长计划" : "诊断要点"}</h2>
-              <span>{careerMode ? `${completedSteps.length} / ${priorityGaps.length} 已完成` : `${priorityGaps.length} 项待关注`}</span>
-            </div>
-          </div>
-          {careerMode ? <ol>
-            {priorityGaps.map((gap, index) => (
-              <li key={gap.skill}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <strong>{gap.skill}</strong>
-                  <p><b>学</b>{gap.action}</p>
-                  <p><b>练</b>{`完成一个可展示的 ${gap.skill} 练习或项目。`}</p>
-                  <p><b>证</b>补充项目说明或可验证成果。</p>
-                  <Button
-                    onClick={async () => {
-                      const completed = !completedSteps.includes(gap.skill);
-                      setCompletedSteps((current) => completed ? [...current, gap.skill] : current.filter((skill) => skill !== gap.skill));
-                      await updateGrowthTask(fixture.candidate.id, fixture.job.version, gap.skill, completed);
-                    }}
-                    size="small"
-                    type={completedSteps.includes(gap.skill) ? "default" : "primary"}
-                  >
-                    {completedSteps.includes(gap.skill) ? "已完成" : "标记完成"}
-                  </Button>
-                </div>
-              </li>
-            ))}
-          </ol> : <ul className="recruiting-diagnosis-points">
-            {priorityGaps.map((gap) => <li key={gap.skill}><strong>{gap.skill}</strong><span>{gap.reason || "候选人画像中暂无明确证明"}</span></li>)}
-          </ul>}
-          {careerMode ? <section className="proof-capture" aria-labelledby="proof-title">
-            <SectionHeader title="添加能力证明" meta="项目、作品或评测结果" />
-            <Select aria-label="选择要证明的能力" onChange={setProofSkill} options={priorityGaps.map((gap) => ({ label: gap.skill, value: gap.skill }))} placeholder="选择一项缺口" value={proofSkill ?? undefined} />
-            <Input aria-label="证明标题" onChange={(event) => setProofTitle(event.target.value)} placeholder="证明标题" value={proofTitle} />
-            <Input.TextArea aria-label="证明说明" onChange={(event) => setProofDescription(event.target.value)} placeholder="说明你完成了什么，以及结果如何" value={proofDescription} />
-            <Button disabled={!proofSkill || !proofTitle.trim()} onClick={saveProof} type="primary">保存证明</Button>
-            {proofSaved ? <span className="proof-saved">已保存到个人画像</span> : null}
-          </section> : null}
-          {careerMode ? <div className="learning-note">
-            <CheckCircle aria-hidden weight="fill" />
-            完成后补充证明，再重新诊断
-          </div> : null}
-        </aside>
-        <EvidenceDrawer
-          context={context}
-          item={selectedEvidence}
-          onClose={() => setSelectedEvidence(null)}
-        />
-      </div>
+                    <span>{gap.reason || "候选人画像中暂无明确证明"}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {careerMode ? (
+              <section className="proof-capture" aria-labelledby="proof-title">
+                <SectionHeader
+                  title="添加能力证明"
+                  meta="项目、作品或评测结果"
+                />
+                <Select
+                  aria-label="选择要证明的能力"
+                  onChange={setProofSkill}
+                  options={priorityGaps.map((gap) => ({
+                    label: gap.skill,
+                    value: gap.skill,
+                  }))}
+                  placeholder="选择一项缺口"
+                  value={proofSkill ?? undefined}
+                />
+                <Input
+                  aria-label="证明标题"
+                  onChange={(event) => setProofTitle(event.target.value)}
+                  placeholder="证明标题"
+                  value={proofTitle}
+                />
+                <Input.TextArea
+                  aria-label="证明说明"
+                  onChange={(event) => setProofDescription(event.target.value)}
+                  placeholder="说明你完成了什么，以及结果如何"
+                  value={proofDescription}
+                />
+                <Button
+                  disabled={!proofSkill || !proofTitle.trim()}
+                  onClick={saveProof}
+                  type="primary"
+                >
+                  保存证明
+                </Button>
+                {proofSaved ? (
+                  <span className="proof-saved">已保存到个人画像</span>
+                ) : null}
+              </section>
+            ) : null}
+            {careerMode ? (
+              <div className="learning-note">
+                <CheckCircle aria-hidden weight="fill" />
+                完成后补充证明，再重新诊断
+              </div>
+            ) : null}
+          </aside>
+          <EvidenceDrawer
+            context={context}
+            item={selectedEvidence}
+            onClose={() => setSelectedEvidence(null)}
+          />
+        </div>
       </div>
     </AppShell>
   );

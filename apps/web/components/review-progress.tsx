@@ -12,7 +12,8 @@ type ReviewProgressProps = {
 };
 
 export function ReviewProgress({ running, runId, steps }: ReviewProgressProps) {
-  const shortRunId = runId.length > 20 ? `${runId.slice(0, 10)}…${runId.slice(-6)}` : runId;
+  const shortRunId =
+    runId.length > 20 ? `${runId.slice(0, 10)}…${runId.slice(-6)}` : runId;
   return (
     <section className="review-progress" aria-labelledby="progress-title">
       <div className="section-heading">
@@ -37,7 +38,9 @@ export function ReviewProgress({ running, runId, steps }: ReviewProgressProps) {
         {steps.map((step) => (
           <li key={step.id} className={`review-progress-step is-${step.state}`}>
             <span className="review-progress-step-dot" aria-hidden>
-              {step.state === "active" && running ? <SpinnerGap className="spin" size={14} /> : null}
+              {step.state === "active" && running ? (
+                <SpinnerGap className="spin" size={14} />
+              ) : null}
             </span>
             <strong>{step.label}</strong>
             <span>{step.detail}</span>

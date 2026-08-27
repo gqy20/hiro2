@@ -23,12 +23,7 @@ export function FixtureState({
   if (state === "error")
     return (
       <section className="fixture-state">
-        <Alert
-          description={errorText}
-          showIcon
-          title="加载失败"
-          type="error"
-        />
+        <Alert description={errorText} showIcon title="加载失败" type="error" />
         {action}
       </section>
     );

@@ -17,7 +17,13 @@ const ERROR_LABELS: Record<string, string> = {
   其他: "其他",
 };
 
-export function QualityWorkbench({ temporal, quality }: { temporal: TemporalDataset; quality: QualityOverview }) {
+export function QualityWorkbench({
+  temporal,
+  quality,
+}: {
+  temporal: TemporalDataset;
+  quality: QualityOverview;
+}) {
   const [compareIds, setCompareIds] = useState<[string, string]>(() => [
     temporal.backtests[0].run_id,
     temporal.backtests[1].run_id,
@@ -34,7 +40,11 @@ export function QualityWorkbench({ temporal, quality }: { temporal: TemporalData
   const errorList = useMemo(
     () =>
       Object.entries(quality.error_distribution)
-        .map(([key, count]) => ({ key, label: ERROR_LABELS[key] ?? key, count }))
+        .map(([key, count]) => ({
+          key,
+          label: ERROR_LABELS[key] ?? key,
+          count,
+        }))
         .sort((x, y) => y.count - x.count),
     [quality.error_distribution],
   );
@@ -51,10 +61,7 @@ export function QualityWorkbench({ temporal, quality }: { temporal: TemporalData
           </p>
         </header>
 
-        <section
-          aria-label="核心指标"
-          className="temporal-backtest-metrics"
-        >
+        <section aria-label="核心指标" className="temporal-backtest-metrics">
           <div className="temporal-stat-card">
             <Statistic
               title="任务完成率"
@@ -93,20 +100,11 @@ export function QualityWorkbench({ temporal, quality }: { temporal: TemporalData
           </div>
         </section>
 
-        <section
-          aria-label="错误分布"
-          className="temporal-backtest-errors"
-        >
-          <SectionHeader
-            meta={`${errorList.length} 类`}
-            title="错误类型分布"
-          />
+        <section aria-label="错误分布" className="temporal-backtest-errors">
+          <SectionHeader meta={`${errorList.length} 类`} title="错误类型分布" />
           <ul>
             {errorList.map((e) => (
-              <li
-                className="temporal-backtest-error-row"
-                key={e.key}
-              >
+              <li className="temporal-backtest-error-row" key={e.key}>
                 <Tag>{e.label}</Tag>
                 <span>{e.count} 次</span>
                 <Progress
@@ -119,20 +117,14 @@ export function QualityWorkbench({ temporal, quality }: { temporal: TemporalData
           </ul>
         </section>
 
-        <section
-          aria-label="Run 对比"
-          className="temporal-backtest-errors"
-        >
+        <section aria-label="Run 对比" className="temporal-backtest-errors">
           <SectionHeader title="Run 对比" />
           <div className="temporal-filters">
             <span>A</span>
             <select
               aria-label="Run A"
               onChange={(e) => {
-                const next: [string, string] = [
-                  e.target.value,
-                  compareIds[1],
-                ];
+                const next: [string, string] = [e.target.value, compareIds[1]];
                 setCompareIds(next);
               }}
               value={compareIds[0]}
@@ -147,10 +139,7 @@ export function QualityWorkbench({ temporal, quality }: { temporal: TemporalData
             <select
               aria-label="Run B"
               onChange={(e) => {
-                const next: [string, string] = [
-                  compareIds[0],
-                  e.target.value,
-                ];
+                const next: [string, string] = [compareIds[0], e.target.value];
                 setCompareIds(next);
               }}
               value={compareIds[1]}

@@ -49,15 +49,23 @@ export function TrainingOutputSection({ versionId }: { versionId: string }) {
 
   if (isMockMode()) {
     return (
-      <section aria-labelledby="training-output-title" className="review-summary">
+      <section
+        aria-labelledby="training-output-title"
+        className="review-summary"
+      >
         <h2 id="training-output-title">下游输出</h2>
-        <p className="publish-hint">接入真实后端后，发布完成即生成 JD 模板与培养任务。</p>
+        <p className="publish-hint">
+          接入真实后端后，发布完成即生成 JD 模板与培养任务。
+        </p>
       </section>
     );
   }
   if (error) {
     return (
-      <section aria-labelledby="training-output-title" className="review-summary">
+      <section
+        aria-labelledby="training-output-title"
+        className="review-summary"
+      >
         <h2 id="training-output-title">下游输出</h2>
         <p className="publish-hint">下游输出暂不可用：{error}</p>
       </section>
@@ -65,7 +73,10 @@ export function TrainingOutputSection({ versionId }: { versionId: string }) {
   }
   if (!data) {
     return (
-      <section aria-labelledby="training-output-title" className="review-summary">
+      <section
+        aria-labelledby="training-output-title"
+        className="review-summary"
+      >
         <h2 id="training-output-title">下游输出</h2>
         <p className="publish-hint">正在生成 JD 模板与培养任务…</p>
       </section>

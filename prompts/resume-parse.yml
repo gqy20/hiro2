@@ -1,6 +1,6 @@
 id: resume_parse
-version: 2
-task: 从简历文本抽取技能、经验、教育、项目（候选人画像 raw extraction）
+version: 3
+task: 从简历文本抽取候选人职业档案（技能、经历、教育、项目与证明）
 enabled: true
 
 system: |
@@ -17,14 +17,21 @@ system: |
   2. 密集列举必须逐项拆出：如"熟悉图像分类、目标检测、语义分割"要输出 3 个
      独立技能，不要合并成"计算机视觉"或只抽其中一个。
   3. experience_years：总工作年限数字，无信号 null。
-  4. education：最高学历与专业，一句话。
-  5. projects：项目条目（名称、一句话描述、涉及技能原词，每项目最多 15 个），最多 8 个项目。
-  6. 只依据输入文本，不得编造；简历中没有的字段留空。
-  7. 忽略个人信息（姓名/电话/邮箱/身份证），不输出它们。
-  8. 只输出一个 JSON 对象，无嵌套包装，不要解释或 Markdown 围栏。输出形状：
+  4. location：城市级求职地点，无则留空；不得输出精确地址。
+  5. work_experiences：工作经历（公司、岗位、起止时间、职责摘要、成果、技能原词），最多 10 条。
+  6. education_history：教育经历（学校、专业、学历、起止时间），最多 8 条；education 保留最高学历摘要以兼容旧档案。
+  7. projects：项目条目（名称、一句话描述、涉及技能原词，每项目最多 15 个），最多 8 个项目。
+  8. certificates、portfolio_urls、languages：简历明确出现才输出；作品链接仅保留公开职业链接。
+  9. 只依据输入文本，不得编造；简历中没有的字段留空。
+  10. 忽略姓名、电话、邮箱、身份证和精确住址，不输出它们。
+  11. 只输出一个 JSON 对象，无嵌套包装，不要解释或 Markdown 围栏。输出形状：
      {"skills": [{"mention": "...", "proficiency": "中级", "years": 3}],
-      "experience_years": 4, "education": "...",
-      "projects": [{"name": "...", "description": "...", "skill_mentions": [...]}]}
+      "experience_years": 4, "location": "...", "education": "...",
+      "work_experiences": [{"company":"...","title":"...","start_date":"...","end_date":"...","summary":"...","achievements":[],"skill_mentions":[]}],
+      "education_history": [{"school":"...","major":"...","degree":"...","start_date":"...","end_date":"..."}],
+      "projects": [{"name": "...", "description": "...", "skill_mentions":[]}],
+      "certificates": [{"name":"...","issuer":"...","issued_date":"..."}],
+      "portfolio_urls": [], "languages": []}
 
 input_schema:
   candidate_id: 候选人标识

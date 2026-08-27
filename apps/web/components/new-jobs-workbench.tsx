@@ -61,7 +61,11 @@ export function NewJobsWorkbench({
     return (
       <AppShell>
         <FixtureState
-          action={<Link href="/jobs"><Button type="primary">浏览现有岗位</Button></Link>}
+          action={
+            <Link href="/jobs">
+              <Button type="primary">浏览现有岗位</Button>
+            </Link>
+          }
           emptyText="当前时间窗没有新的岗位候选。"
           state="empty"
         />
@@ -133,140 +137,145 @@ export function NewJobsWorkbench({
   return (
     <AppShell>
       <div className="workflow-page">
-      <WorkflowContext eyebrow="岗位发现" title={selected.title} stage="确认新岗位定义" next="编辑定义并提交审核" />
-      <div className="new-jobs-workbench">
-        <aside className="candidate-panel" aria-label="新岗位候选">
-          <div className="new-jobs-heading">
-            <div>
-              <h1>新岗位</h1>
-              <span>{`${filtered.length} 个候选`}</span>
+        <WorkflowContext
+          eyebrow="岗位发现"
+          title={selected.title}
+          stage="确认新岗位定义"
+          next="编辑定义并提交审核"
+        />
+        <div className="new-jobs-workbench">
+          <aside className="candidate-panel" aria-label="新岗位候选">
+            <div className="new-jobs-heading">
+              <div>
+                <h1>新岗位</h1>
+                <span>{`${filtered.length} 个候选`}</span>
+              </div>
             </div>
-          </div>
-          <Input
-            allowClear
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="搜索候选"
-            prefix={<FunnelSimple size={15} />}
-            value={query}
-          />
-          <div className="candidate-list">
-            {filtered.map((candidate) => (
-              <button
-                className={
-                  candidate.id === selected.id
-                    ? "candidate-item candidate-item-active"
-                    : "candidate-item"
-                }
-                key={candidate.id}
-                onClick={() => setSelectedId(candidate.id)}
-                type="button"
-              >
-                <div className="candidate-item-title">
-                  <strong>{candidate.title}</strong>
-                  <StatusMark status={candidate.status} />
-                </div>
-                <p>{candidate.summary}</p>
-                <span>{`${candidate.companies} 家企业 · ${candidate.sourceCount} 条来源`}</span>
-              </button>
-            ))}
-          </div>
-        </aside>
-
-        <main
-          className="candidate-definition"
-          aria-labelledby="candidate-title"
-        >
-          <div className="candidate-title-row">
-            <div>
-              <h2 id="candidate-title">{selected.title}</h2>
-              <p>{selected.summary}</p>
-            </div>
-            <div className="candidate-actions">
-              <Tooltip title={editing ? "取消编辑" : "编辑定义"}>
-                <Button
-                  aria-label="编辑定义"
-                  icon={<PencilSimple />}
-                  onClick={editing ? cancelEditing : startEditing}
-                  size="small"
-                  type="text"
-                />
-              </Tooltip>
-            </div>
-          </div>
-
-          <div className="candidate-decision" aria-label="候选判断">
-            <StatusMark status={selected.status} />
-            <span>{`${Math.round(selected.confidence * 100)}% 置信`}</span>
-            <span>{`${selected.companies} 家企业`}</span>
-            <span>{`${selected.sourceCount} 条来源`}</span>
-          </div>
-
-          {editing && draft ? (
-            <EditDefinition
-              draft={draft}
-              onChange={setDraft}
-              onCancel={cancelEditing}
-              onSave={saveEditing}
+            <Input
+              allowClear
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="搜索候选"
+              prefix={<FunnelSimple size={15} />}
+              value={query}
             />
-          ) : (
-            <section
-              className="definition-section"
-              aria-labelledby="why-new-title"
-            >
-              <div className="decision-heading">
-                <div>
-                  <h3 id="why-new-title">为何是新岗位</h3>
+            <div className="candidate-list">
+              {filtered.map((candidate) => (
+                <button
+                  className={
+                    candidate.id === selected.id
+                      ? "candidate-item candidate-item-active"
+                      : "candidate-item"
+                  }
+                  key={candidate.id}
+                  onClick={() => setSelectedId(candidate.id)}
+                  type="button"
+                >
+                  <div className="candidate-item-title">
+                    <strong>{candidate.title}</strong>
+                    <StatusMark status={candidate.status} />
+                  </div>
+                  <p>{candidate.summary}</p>
+                  <span>{`${candidate.companies} 家企业 · ${candidate.sourceCount} 条来源`}</span>
+                </button>
+              ))}
+            </div>
+          </aside>
+
+          <main
+            className="candidate-definition"
+            aria-labelledby="candidate-title"
+          >
+            <div className="candidate-title-row">
+              <div>
+                <h2 id="candidate-title">{selected.title}</h2>
+                <p>{selected.summary}</p>
+              </div>
+              <div className="candidate-actions">
+                <Tooltip title={editing ? "取消编辑" : "编辑定义"}>
+                  <Button
+                    aria-label="编辑定义"
+                    icon={<PencilSimple />}
+                    onClick={editing ? cancelEditing : startEditing}
+                    size="small"
+                    type="text"
+                  />
+                </Tooltip>
+              </div>
+            </div>
+
+            <div className="candidate-decision" aria-label="候选判断">
+              <StatusMark status={selected.status} />
+              <span>{`${Math.round(selected.confidence * 100)}% 置信`}</span>
+              <span>{`${selected.companies} 家企业`}</span>
+              <span>{`${selected.sourceCount} 条来源`}</span>
+            </div>
+
+            {editing && draft ? (
+              <EditDefinition
+                draft={draft}
+                onChange={setDraft}
+                onCancel={cancelEditing}
+                onSave={saveEditing}
+              />
+            ) : (
+              <section
+                className="definition-section"
+                aria-labelledby="why-new-title"
+              >
+                <div className="decision-heading">
+                  <div>
+                    <h3 id="why-new-title">为何是新岗位</h3>
+                  </div>
+                  <Button onClick={openEvidence} size="small" type="link">
+                    查看证据
+                  </Button>
                 </div>
-                <Button onClick={openEvidence} size="small" type="link">
-                  查看证据
+                <p className="why-new">{selected.whyNew}</p>
+              </section>
+            )}
+
+            {!editing ? (
+              <div className="definition-grid">
+                <DefinitionBlock
+                  title="必备技能"
+                  items={selected.requiredSkills}
+                  tone="primary"
+                />
+                <DefinitionBlock
+                  title="核心职责"
+                  items={selected.responsibilities}
+                  tone="primary"
+                />
+                <DefinitionBlock
+                  title="加分技能"
+                  items={selected.preferredSkills}
+                />
+                <DefinitionBlock title="典型场景" items={selected.scenarios} />
+              </div>
+            ) : null}
+
+            <footer className="candidate-review-bar">
+              <span>{`已检查 ${selected.evidence.length} 条证据；接受后进入岗位定义草稿，仍需人工编辑和发布。`}</span>
+              <div>
+                <Button
+                  danger
+                  icon={<XCircle />}
+                  onClick={() => updateStatus("rejected")}
+                  type="text"
+                >
+                  拒绝
+                </Button>
+                <Button
+                  icon={<CheckCircle />}
+                  onClick={() => updateStatus("accepted")}
+                  type="primary"
+                >
+                  接受候选
                 </Button>
               </div>
-              <p className="why-new">{selected.whyNew}</p>
-            </section>
-          )}
-
-          {!editing ? (
-            <div className="definition-grid">
-              <DefinitionBlock
-                title="必备技能"
-                items={selected.requiredSkills}
-                tone="primary"
-              />
-              <DefinitionBlock
-                title="核心职责"
-                items={selected.responsibilities}
-                tone="primary"
-              />
-              <DefinitionBlock
-                title="加分技能"
-                items={selected.preferredSkills}
-              />
-              <DefinitionBlock title="典型场景" items={selected.scenarios} />
-            </div>
-          ) : null}
-
-          <footer className="candidate-review-bar">
-            <span>{`已检查 ${selected.evidence.length} 条证据；接受后进入岗位定义草稿，仍需人工编辑和发布。`}</span>
-            <div>
-              <Button
-                danger
-                icon={<XCircle />}
-                onClick={() => updateStatus("rejected")}
-                type="text"
-              >
-                拒绝
-              </Button>
-              <Button
-                icon={<CheckCircle />}
-                onClick={() => updateStatus("accepted")}
-                type="primary"
-              >
-                接受候选
-              </Button>
-            </div>
-          </footer>
-        </main>
-      </div>
+            </footer>
+          </main>
+        </div>
       </div>
       <EvidenceDrawer
         context={context}

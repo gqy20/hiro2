@@ -50,7 +50,9 @@ export function SkillNodeDetail({
           n.pointName !== null &&
           n.id !== node.id,
       )
-    : allNodes.filter((n) => n.capabilityId === node.capabilityId && n.pointName !== null);
+    : allNodes.filter(
+        (n) => n.capabilityId === node.capabilityId && n.pointName !== null,
+      );
   const aliases = node.aliases.slice(0, MAX_ALIASES);
   const aliasOverflow = node.aliases.length - aliases.length;
   const jobVersions = node.jobVersions ?? [];
@@ -83,7 +85,10 @@ export function SkillNodeDetail({
       ) : null}
 
       {isPoint ? (
-        <section className="skill-node-detail-section" aria-label="父能力与兄弟">
+        <section
+          className="skill-node-detail-section"
+          aria-label="父能力与兄弟"
+        >
           <h4>父能力</h4>
           {parentCapability ? (
             <button

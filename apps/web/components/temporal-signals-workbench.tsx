@@ -69,10 +69,7 @@ export function TemporalSignalsWorkbench({
 
   return (
     <AppShell>
-      <section
-        className="temporal-workbench"
-        aria-labelledby="signals-title"
-      >
+      <section className="temporal-workbench" aria-labelledby="signals-title">
         <header className="page-heading">
           <h1 id="signals-title">信号流 + 信号簇</h1>
           <p>
@@ -99,10 +96,7 @@ export function TemporalSignalsWorkbench({
         </div>
 
         <div className="temporal-signal-layout">
-          <section
-            className="temporal-signal-timeline"
-            aria-label="信号时间线"
-          >
+          <section className="temporal-signal-timeline" aria-label="信号时间线">
             <SectionHeader meta={`${filtered.length} 条`} title="按时间倒序" />
             <Timeline
               items={filtered.slice(0, 20).map((s) => ({

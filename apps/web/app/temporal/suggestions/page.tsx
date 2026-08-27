@@ -12,8 +12,7 @@ export default async function TemporalSuggestionsPage({
   const fixture = isMockMode()
     ? await loadTemporalFixture()
     : await apiFetch<TemporalDataset>("/temporal/dataset");
-  const variant =
-    state === "empty" || state === "error" ? state : "ready";
+  const variant = state === "empty" || state === "error" ? state : "ready";
   if (variant === "error") {
     return (
       <AppShell>
@@ -27,10 +26,7 @@ export default async function TemporalSuggestionsPage({
   if (variant === "empty") {
     return (
       <AppShell>
-        <FixtureState
-          emptyText="暂无影响建议。"
-          state="empty"
-        />
+        <FixtureState emptyText="暂无影响建议。" state="empty" />
       </AppShell>
     );
   }

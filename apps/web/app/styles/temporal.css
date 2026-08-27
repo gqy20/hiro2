@@ -1,30 +1,94 @@
 /* ---------- 窄屏适配（F-T4.3，390px 视口） ---------- */
 
 @media (max-width: 480px) {
-  #main-content { overflow-x: hidden; overflow-y: auto; }
-  .workbench, .new-jobs-workbench, .diagnosis-workbench, .evaluation-workbench, .tasks-workbench, .temporal-workbench, .quality-workbench { height: auto; min-height: calc(100dvh - 58px); overflow: visible; }
-  .context-panel, .diff-panel, .evidence-panel { max-width: 100%; overflow-x: hidden; }
-  .diff-toolbar { align-items: flex-start; flex-wrap: wrap; }
-  .diff-toolbar-actions { width: 100%; justify-content: space-between; }
-  .diff-panel { height: auto; overflow: visible; }
-  .change-grid { overflow: visible; }
-  .change-column { overflow: visible; }
-  .page-heading h1 { font-size: 18px; }
-  .skill-graph-toolbar { flex-direction: column; padding: 12px; gap: 8px; }
-  .skill-graph-toolbar label { font-size: 11px; }
-  .skill-graph-detail { padding: 14px; }
-  .skill-node-detail-header h3 { font-size: 14px; }
-  .dashboard { padding: 16px; }
-  .workflow-context { grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 12px 16px; }
-  .workflow-context-next { grid-column: 1 / -1; justify-self: start; text-align: left; }
-  .dashboard-grid { grid-template-columns: 1fr; }
-  .workbench { padding: 12px; }
+  #main-content {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .workbench,
+  .new-jobs-workbench,
+  .diagnosis-workbench,
+  .evaluation-workbench,
+  .tasks-workbench,
+  .temporal-workbench,
+  .quality-workbench {
+    height: auto;
+    min-height: calc(100dvh - 58px);
+    overflow: visible;
+  }
+  .context-panel,
+  .diff-panel,
+  .evidence-panel {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .diff-toolbar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .diff-toolbar-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .diff-panel {
+    height: auto;
+    overflow: visible;
+  }
+  .change-grid {
+    overflow: visible;
+  }
+  .change-column {
+    overflow: visible;
+  }
+  .page-heading h1 {
+    font-size: 18px;
+  }
+  .skill-graph-toolbar {
+    flex-direction: column;
+    padding: 12px;
+    gap: 8px;
+  }
+  .skill-graph-toolbar label {
+    font-size: 11px;
+  }
+  .skill-graph-detail {
+    padding: 14px;
+  }
+  .skill-node-detail-header h3 {
+    font-size: 14px;
+  }
+  .dashboard {
+    padding: 16px;
+  }
+  .workflow-context {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    padding: 12px 16px;
+  }
+  .workflow-context-next {
+    grid-column: 1 / -1;
+    justify-self: start;
+    text-align: left;
+  }
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .workbench {
+    padding: 12px;
+  }
   .diagnosis-workbench,
   .new-jobs-workbench,
-  .evaluation-workbench { padding: 12px; }
+  .evaluation-workbench {
+    padding: 12px;
+  }
   .skill-graph-layout,
-  .evaluation-layout { grid-template-columns: 1fr; min-height: 360px; }
-  .evaluation-metric-grid { grid-template-columns: 1fr; }
+  .evaluation-layout {
+    grid-template-columns: 1fr;
+    min-height: 360px;
+  }
+  .evaluation-metric-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ---------- 时间情报四件套（F-T4.7/4.6/4.8/4.9） ---------- */

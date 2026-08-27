@@ -12,10 +12,7 @@ export type ProjectEntry = {
 };
 
 export type UserCorrectionField =
-  | "skill_status"
-  | "project_text"
-  | "project_added"
-  | "project_removed";
+  "skill_status" | "project_text" | "project_added" | "project_removed";
 
 export type UserCorrection = {
   id: string;
@@ -56,6 +53,16 @@ export type DiagnosisFixture = {
       priority: "high" | "medium";
       action: string;
     }>;
-    career?: { completedSkills: string[]; proofs: Array<{ id: number; skill: string; title: string; description: string; url: string | null; createdAt: string }> };
+    career?: {
+      completedSkills: string[];
+      proofs: Array<{
+        id: number;
+        skill: string;
+        title: string;
+        description: string;
+        url: string | null;
+        createdAt: string;
+      }>;
+    };
   };
 };

@@ -5,9 +5,7 @@ test("accepts candidate and edits five definition fields", async ({ page }) => {
 
   const acceptButton = page.getByRole("button", { name: "接受候选" });
   await acceptButton.click();
-  await expect(
-    page.locator(".status-mark").first(),
-  ).toContainText(/已接受/);
+  await expect(page.locator(".status-mark").first()).toContainText(/已接受/);
 
   await page.getByRole("button", { name: "编辑定义" }).click();
   await expect(page.locator(".definition-editor")).toBeVisible();

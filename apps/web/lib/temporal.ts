@@ -2,17 +2,9 @@
 // ponytail: 不预造超出契约的字段；信号/预测/复盘/JobImpactSuggestion
 // 类型直接照搬 contracts.md 形状。
 
-export type TrendSignalEntityType =
-  | "skill"
-  | "technology"
-  | "industry"
-  | "job";
+export type TrendSignalEntityType = "skill" | "technology" | "industry" | "job";
 export type TrendSignalType =
-  | "mention"
-  | "adoption"
-  | "job_requirement"
-  | "release"
-  | "policy";
+  "mention" | "adoption" | "job_requirement" | "release" | "policy";
 
 export type TrendSignal = {
   signal_id: string;
@@ -76,16 +68,9 @@ export type BacktestRecord = {
 };
 
 export type JobImpactChangeType =
-  | "add"
-  | "remove"
-  | "modify"
-  | "promote"
-  | "demote";
+  "add" | "remove" | "modify" | "promote" | "demote";
 export type JobImpactReviewStatus =
-  | "PENDING"
-  | "ACCEPTED"
-  | "MODIFIED"
-  | "REJECTED";
+  "PENDING" | "ACCEPTED" | "MODIFIED" | "REJECTED";
 
 export type JobImpactSuggestion = {
   suggestion_id: string;

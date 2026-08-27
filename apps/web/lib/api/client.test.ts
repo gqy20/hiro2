@@ -85,9 +85,7 @@ describe("apiFetch", () => {
         }),
     );
 
-    await expect(
-      apiFetch("/jobs/1", { timeoutMs: 50 }),
-    ).rejects.toMatchObject({
+    await expect(apiFetch("/jobs/1", { timeoutMs: 50 })).rejects.toMatchObject({
       name: "ApiError",
       message: expect.stringMatching(/timed out/),
     });

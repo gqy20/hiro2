@@ -11,7 +11,13 @@ type LoadVariant =
   | "tasks"
   | "temporal";
 
-function LoadPanel({ className = "", rows = 4 }: { className?: string; rows?: number }) {
+function LoadPanel({
+  className = "",
+  rows = 4,
+}: {
+  className?: string;
+  rows?: number;
+}) {
   return (
     <div className={`load-panel ${className}`}>
       <i className="load-title" />
@@ -23,7 +29,9 @@ function LoadPanel({ className = "", rows = 4 }: { className?: string; rows?: nu
 }
 
 export function LoadView({ variant }: { variant: LoadVariant }) {
-  const isThreeColumn = ["diagnosis", "evaluation", "jobs", "skills"].includes(variant);
+  const isThreeColumn = ["diagnosis", "evaluation", "jobs", "skills"].includes(
+    variant,
+  );
   return (
     <AppShell>
       <section
@@ -32,8 +40,15 @@ export function LoadView({ variant }: { variant: LoadVariant }) {
         aria-label="正在加载页面"
         aria-live="polite"
       >
-        <div className="load-context"><i /><i /><i /></div>
-        <header className="load-heading"><i /><i /></header>
+        <div className="load-context">
+          <i />
+          <i />
+          <i />
+        </div>
+        <header className="load-heading">
+          <i />
+          <i />
+        </header>
         {variant === "dashboard" ? (
           <div className="load-dashboard">
             <LoadPanel className="load-focus" rows={3} />
@@ -43,8 +58,14 @@ export function LoadView({ variant }: { variant: LoadVariant }) {
           </div>
         ) : isThreeColumn ? (
           <div className="load-three-column">
-            <LoadPanel className="load-side" rows={variant === "skills" ? 5 : 7} />
-            <LoadPanel className="load-primary" rows={variant === "jobs" ? 10 : 7} />
+            <LoadPanel
+              className="load-side"
+              rows={variant === "skills" ? 5 : 7}
+            />
+            <LoadPanel
+              className="load-primary"
+              rows={variant === "jobs" ? 10 : 7}
+            />
             <LoadPanel className="load-side" rows={6} />
           </div>
         ) : variant === "new-jobs" || variant === "tasks" ? (

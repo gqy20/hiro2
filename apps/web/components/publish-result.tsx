@@ -23,7 +23,10 @@ export function PublishResultView({
 }: PublishResultViewProps) {
   return (
     <AppShell>
-      <section className="publish-result" aria-labelledby="publish-result-title">
+      <section
+        className="publish-result"
+        aria-labelledby="publish-result-title"
+      >
         <div className="page-heading">
           <div className="title-with-meta">
             <h1 id="publish-result-title">岗位版本已发布</h1>

@@ -21,10 +21,20 @@
   scrollbar-width: thin;
 }
 
-*::-webkit-scrollbar { width: 7px; height: 7px; }
-*::-webkit-scrollbar-track { background: transparent; }
-*::-webkit-scrollbar-thumb { background: rgba(170, 162, 148, 0.45); border-radius: 8px; }
-*::-webkit-scrollbar-thumb:hover { background: rgba(98, 95, 88, 0.55); }
+*::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(170, 162, 148, 0.45);
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(98, 95, 88, 0.55);
+}
 
 html {
   background: var(--paper);
@@ -96,15 +106,59 @@ input:focus-visible {
   scrollbar-gutter: stable;
 }
 
-.workflow-page { display: flex; height: 100%; min-height: 0; flex-direction: column; overflow: hidden; }
-.workflow-context { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(180px, .8fr) minmax(240px, 1fr); align-items: center; gap: 20px; flex: none; min-height: 64px; padding: 12px 24px; border-bottom: 1px solid var(--line); background: var(--paper-soft); }
-.workflow-context > div { min-width: 0; }
-.workflow-context span { display: block; color: var(--muted); font: 10px/1.2 var(--font-mono); }
-.workflow-context strong, .workflow-context b, .workflow-context a { display: block; margin-top: 4px; font-size: 13px; }
-.workflow-context a { color: var(--blue); text-decoration: none; }
-.workflow-context a:hover { text-decoration: underline; }
-.workflow-context-next { justify-self: end; text-align: right; }
-.workflow-page > .workbench, .workflow-page > .tasks-workbench, .workflow-page > .diagnosis-workbench { flex: 1; min-height: 0; }
+.workflow-page {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+}
+.workflow-context {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(180px, 0.8fr) minmax(
+      240px,
+      1fr
+    );
+  align-items: center;
+  gap: 20px;
+  flex: none;
+  min-height: 64px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-soft);
+}
+.workflow-context > div {
+  min-width: 0;
+}
+.workflow-context span {
+  display: block;
+  color: var(--muted);
+  font: 10px/1.2 var(--font-mono);
+}
+.workflow-context strong,
+.workflow-context b,
+.workflow-context a {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+}
+.workflow-context a {
+  color: var(--blue);
+  text-decoration: none;
+}
+.workflow-context a:hover {
+  text-decoration: underline;
+}
+.workflow-context-next {
+  justify-self: end;
+  text-align: right;
+}
+.workflow-page > .workbench,
+.workflow-page > .tasks-workbench,
+.workflow-page > .diagnosis-workbench {
+  flex: 1;
+  min-height: 0;
+}
 
 /* 工作台内部滚动边界：外框和侧栏固定，主内容独立滚动。 */
 .workbench,
@@ -255,7 +309,11 @@ input:focus-visible {
   cursor: pointer;
   font: 12px/1.3 inherit;
 }
-.workspace-switch button.is-active { background: var(--panel); color: var(--ink); font-weight: 650; }
+.workspace-switch button.is-active {
+  background: var(--panel);
+  color: var(--ink);
+  font-weight: 650;
+}
 
 .live-dot {
   width: 6px;
@@ -272,8 +330,14 @@ input:focus-visible {
   min-height: calc(100dvh - 58px);
 }
 
-.workbench > * { min-height: 0; }
-.diff-toolbar-status { color: var(--muted); font-family: var(--font-mono); font-size: 11px; }
+.workbench > * {
+  min-height: 0;
+}
+.diff-toolbar-status {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
 
 .pending-page {
   display: grid;
@@ -410,7 +474,9 @@ h3 {
   background: var(--panel) !important;
 }
 
-.context-form .ant-select { max-width: 100%; }
+.context-form .ant-select {
+  max-width: 100%;
+}
 
 .context-window {
   display: grid;
@@ -431,10 +497,26 @@ h3 {
   font-size: 11px;
 }
 
-.context-window-row + .context-window-row { border-top: 1px solid var(--line-soft); padding-top: 6px; }
-.context-window-row span { color: var(--muted); }
-.context-window-row strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-mono); font-weight: 500; }
-.context-window-row i { color: var(--muted); font-style: normal; text-align: center; }
+.context-window-row + .context-window-row {
+  border-top: 1px solid var(--line-soft);
+  padding-top: 6px;
+}
+.context-window-row span {
+  color: var(--muted);
+}
+.context-window-row strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+.context-window-row i {
+  color: var(--muted);
+  font-style: normal;
+  text-align: center;
+}
 
 .context-form .ant-select-focused .ant-select-selector {
   border-color: var(--blue) !important;
@@ -529,7 +611,11 @@ h3 {
   padding: 15px 20px;
   background: var(--paper-soft);
 }
-.diff-toolbar-actions { display: flex; align-items: center; gap: 12px; }
+.diff-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 .toolbar-actions {
   display: flex;
   align-items: center;
@@ -765,19 +851,44 @@ h3 {
   color: var(--muted);
   font-size: 11px;
 }
-.downstream-impact h3 { color: var(--ink); font-size: 12px; white-space: nowrap; }
-.downstream-impact-copy { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.impact-link { color: var(--blue); white-space: nowrap; }
+.downstream-impact h3 {
+  color: var(--ink);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.downstream-impact-copy {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.impact-link {
+  color: var(--blue);
+  white-space: nowrap;
+}
 
 @media (max-width: 720px) {
-  .downstream-impact { align-items: flex-start; flex-wrap: wrap; gap: 8px 12px; }
-  .downstream-impact-copy { flex-basis: calc(100% - 90px); }
-  .impact-link { margin-left: auto; }
+  .downstream-impact {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+  .downstream-impact-copy {
+    flex-basis: calc(100% - 90px);
+  }
+  .impact-link {
+    margin-left: auto;
+  }
 }
 
 @media (max-width: 480px) {
-  .review-progress-step { grid-template-columns: 14px minmax(0, 1fr); }
-  .review-progress-step > span:last-child { grid-column: 2; }
+  .review-progress-step {
+    grid-template-columns: 14px minmax(0, 1fr);
+  }
+  .review-progress-step > span:last-child {
+    grid-column: 2;
+  }
 }
 .diff-skeleton {
   padding: 24px;
@@ -825,13 +936,45 @@ h3 {
 .review-progress .section-heading {
   margin-bottom: 16px;
 }
-.review-progress-steps { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
-.review-progress-step { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; align-items: center; gap: 7px; min-width: 0; font-size: 11px; }
-.review-progress-step strong { font-size: 12px; font-weight: 650; }
-.review-progress-step > span:last-child { color: var(--muted); font-family: var(--font-mono); white-space: nowrap; }
-.review-progress-step-dot { display: grid; width: 10px; height: 10px; place-items: center; border-radius: 50%; background: var(--green); color: var(--panel); }
-.review-progress-step.is-active .review-progress-step-dot { background: var(--blue); }
-.review-progress-step.is-waiting .review-progress-step-dot { background: var(--line-strong); }
+.review-progress-steps {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.review-progress-step {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  font-size: 11px;
+}
+.review-progress-step strong {
+  font-size: 12px;
+  font-weight: 650;
+}
+.review-progress-step > span:last-child {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+.review-progress-step-dot {
+  display: grid;
+  width: 10px;
+  height: 10px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--green);
+  color: var(--panel);
+}
+.review-progress-step.is-active .review-progress-step-dot {
+  background: var(--blue);
+}
+.review-progress-step.is-waiting .review-progress-step-dot {
+  background: var(--line-strong);
+}
 .spin {
   animation: spin 1.1s linear infinite;
 }

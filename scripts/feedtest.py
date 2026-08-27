@@ -45,8 +45,13 @@ def load_direct() -> list[dict]:
         m = re.match(r"^(\d*)\s+(https?://\S+?)(?:\s+#\s*(.+))?$", s)
         if not m:
             continue
-        feeds.append({"pri": int(m.group(1)) if m.group(1) else 0,
-                      "url": m.group(2), "alias": m.group(3) or m.group(2)})
+        feeds.append(
+            {
+                "pri": int(m.group(1)) if m.group(1) else 0,
+                "url": m.group(2),
+                "alias": m.group(3) or m.group(2),
+            }
+        )
     return feeds
 
 
@@ -59,15 +64,26 @@ def check(feed: dict, timeout: int) -> dict:
             body = resp.read(65536).decode("utf-8", errors="replace")
             status = resp.status
     except Exception as exc:  # noqa: BLE001
-        return {**feed, "ok": False, "reason": f"{type(exc).__name__}: {exc}"[:90],
-                "ms": int((time.monotonic() - t0) * 1000)}
+        return {
+            **feed,
+            "ok": False,
+            "reason": f"{type(exc).__name__}: {exc}"[:90],
+            "ms": int((time.monotonic() - t0) * 1000),
+        }
     ms = int((time.monotonic() - t0) * 1000)
     is_feed = any(tag in body for tag in ("<rss", "<feed", "<rdf:RDF"))
     items = max(len(re.findall(r"<item[ >]", body)), len(re.findall(r"<entry[ >]", body)))
-    return {**feed, "ok": status == 200 and is_feed, "status": status,
-            "is_feed": is_feed, "items": items, "ms": ms,
-            "reason": "" if status == 200 and is_feed else
-                      (f"http {status}" if status != 200 else "非 RSS/Atom 内容")}
+    return {
+        **feed,
+        "ok": status == 200 and is_feed,
+        "status": status,
+        "is_feed": is_feed,
+        "items": items,
+        "ms": ms,
+        "reason": ""
+        if status == 200 and is_feed
+        else (f"http {status}" if status != 200 else "非 RSS/Atom 内容"),
+    }
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -91,12 +107,22 @@ def main(argv: list[str] | None = None) -> int:
 
     ok = [r for r in results if r["ok"]]
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(
-        {"tested": len(results), "ok": len(ok),
-         "by_pri": {str(p): sum(1 for r in ok if r["pri"] == p)
-                    for p in sorted({r["pri"] for r in results}, reverse=True)},
-         "results": sorted(results, key=lambda r: (-r["pri"], not r["ok"], r["alias"]))},
-        ensure_ascii=False, indent=2), encoding="utf-8")
+    OUT.write_text(
+        json.dumps(
+            {
+                "tested": len(results),
+                "ok": len(ok),
+                "by_pri": {
+                    str(p): sum(1 for r in ok if r["pri"] == p)
+                    for p in sorted({r["pri"] for r in results}, reverse=True)
+                },
+                "results": sorted(results, key=lambda r: (-r["pri"], not r["ok"], r["alias"])),
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
 
     print(f"\n可用 {len(ok)}/{len(results)}，按优先级：")
     for p in sorted({r["pri"] for r in results}, reverse=True):

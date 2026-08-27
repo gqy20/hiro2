@@ -18,8 +18,7 @@ export default async function JobUpdatePage({
   searchParams,
 }: Readonly<{ searchParams: Promise<{ state?: string }> }>) {
   const { state } = await searchParams;
-  const variant =
-    state === "empty" || state === "error" ? state : "ready";
+  const variant = state === "empty" || state === "error" ? state : "ready";
   return (
     <JobUpdateWorkbench
       fixture={await fetchJobUpdateServer(variant)}

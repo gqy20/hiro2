@@ -12,8 +12,7 @@ export default async function TemporalForecastsPage({
   const fixture = isMockMode()
     ? await loadTemporalFixture()
     : await apiFetch<TemporalDataset>("/temporal/dataset");
-  const variant =
-    state === "empty" || state === "error" ? state : "ready";
+  const variant = state === "empty" || state === "error" ? state : "ready";
   if (variant === "error") {
     return (
       <AppShell>
@@ -27,10 +26,7 @@ export default async function TemporalForecastsPage({
   if (variant === "empty") {
     return (
       <AppShell>
-        <FixtureState
-          emptyText="当前没有可用的预测趋势。"
-          state="empty"
-        />
+        <FixtureState emptyText="当前没有可用的预测趋势。" state="empty" />
       </AppShell>
     );
   }

@@ -30,8 +30,12 @@ def test_to_iso_handles_none() -> None:
 
 def _fake_entry(guid: str, title: str) -> SimpleNamespace:
     return SimpleNamespace(
-        id=guid, link=f"https://example.com/{guid}", title=title,
-        summary=f"<p>{title} 正文</p>", published_parsed=None, updated_parsed=None,
+        id=guid,
+        link=f"https://example.com/{guid}",
+        title=title,
+        summary=f"<p>{title} 正文</p>",
+        published_parsed=None,
+        updated_parsed=None,
         content=[],
     )
 

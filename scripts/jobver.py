@@ -187,9 +187,7 @@ def cmd_run() -> dict:
     ]
 
     # 市场侧能力分布（Agent 群）+ 逐能力 changeset（与参数化岗位共用规则）
-    market, total, changeset = _market_changeset(
-        agent_jd_ids, parsed, agent_pos["scores"], caps
-    )
+    market, total, changeset = _market_changeset(agent_jd_ids, parsed, agent_pos["scores"], caps)
 
     draft = {
         "job_id": f"job_{agent_pos['position_id']}_agent",

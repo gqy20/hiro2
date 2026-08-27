@@ -8,8 +8,7 @@ export default async function TasksPage({
   searchParams,
 }: Readonly<{ searchParams: Promise<{ state?: string }> }>) {
   const { state } = await searchParams;
-  const variant =
-    state === "empty" || state === "error" ? state : "ready";
+  const variant = state === "empty" || state === "error" ? state : "ready";
   if (variant === "error") {
     return (
       <AppShell>
@@ -23,10 +22,7 @@ export default async function TasksPage({
   if (variant === "empty") {
     return (
       <AppShell>
-        <FixtureState
-          emptyText="暂无任务可领取。"
-          state="empty"
-        />
+        <FixtureState emptyText="暂无任务可领取。" state="empty" />
       </AppShell>
     );
   }

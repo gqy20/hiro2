@@ -139,7 +139,10 @@ def fetch_source(source: dict) -> dict:
             for it in new_items:
                 fh.write(json.dumps(it.model_dump(), ensure_ascii=False) + "\n")
     return {
-        "source": sid, "alias": source["alias"], "new": len(new_items),
-        "total_feed": len(parsed.entries), "stored": len(seen) if out.exists() else 0,
+        "source": sid,
+        "alias": source["alias"],
+        "new": len(new_items),
+        "total_feed": len(parsed.entries),
+        "stored": len(seen) if out.exists() else 0,
         "ms": int((time.monotonic() - t0) * 1000),
     }

@@ -31,10 +31,11 @@ export async function loadQualityFixture(): Promise<QualityOverview> {
     (sum, item) => sum + (item?.n ?? 0),
     0,
   );
-  const resolved = ["role_mapping", "domain_judgment", "event_extraction"].reduce(
-    (sum, key) => sum + (metrics[key]?.labeled ?? 0),
-    0,
-  );
+  const resolved = [
+    "role_mapping",
+    "domain_judgment",
+    "event_extraction",
+  ].reduce((sum, key) => sum + (metrics[key]?.labeled ?? 0), 0);
   return {
     source: "file",
     dataset_version: manifest.dataset_version ?? "",

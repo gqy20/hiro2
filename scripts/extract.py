@@ -146,8 +146,7 @@ def load_feed_items(
     if events_file.is_file() and not force:
         done = {json.loads(x)["item_id"] for x in events_file.open(encoding="utf-8")}
     cutoff = (
-        (datetime.now(UTC) - timedelta(days=days)).isoformat(timespec="seconds")
-        if days else ""
+        (datetime.now(UTC) - timedelta(days=days)).isoformat(timespec="seconds") if days else ""
     )
 
     items = []
@@ -184,15 +183,20 @@ async def run_feed_extraction(limit: int | None, force: bool, days: int | None =
     """RSS 条目 -> report-event prompt -> 同一 events.jsonl 池（下游统一消费）。"""
     settings = LLMSettings()
     run = RunContext(
-        "extract", {"cmd": "feeds", "limit": limit, "days": days,
-                    "provider": settings.hiro2_llm_provider}
+        "extract",
+        {"cmd": "feeds", "limit": limit, "days": days, "provider": settings.hiro2_llm_provider},
     )
     spec = load_prompt("report-event")
     provider = build_provider(settings)
 
     articles, done = load_feed_items(limit, force, days)
-    run.log("extract", "feed_items_loaded", "progress", count=len(articles),
-            detail=f"已完成 {len(done)}")
+    run.log(
+        "extract",
+        "feed_items_loaded",
+        "progress",
+        count=len(articles),
+        detail=f"已完成 {len(done)}",
+    )
 
     PROCESSED.mkdir(parents=True, exist_ok=True)
     events_fh = (PROCESSED / "events.jsonl").open("a", encoding="utf-8")
@@ -204,10 +208,14 @@ async def run_feed_extraction(limit: int | None, force: bool, days: int | None =
         if error is not None:
             issues_fh.write(
                 json.dumps(
-                    {"item_id": _article.item_id,
-                     "error_type": error[0], "error_message": error[1]},
+                    {
+                        "item_id": _article.item_id,
+                        "error_type": error[0],
+                        "error_message": error[1],
+                    },
                     ensure_ascii=False,
-                ) + "\n"
+                )
+                + "\n"
             )
         events_fh.flush()
         issues_fh.flush()
@@ -240,8 +248,9 @@ def main(argv: list[str] | None = None) -> int:
     p_events.add_argument("--force", action="store_true")
     p_feeds = sub.add_parser("feeds")
     p_feeds.add_argument("--limit", type=int, default=None)
-    p_feeds.add_argument("--days", type=int, default=None,
-                         help="只抽最近 N 天条目（日常增量）；缺省全量（存量回填）")
+    p_feeds.add_argument(
+        "--days", type=int, default=None, help="只抽最近 N 天条目（日常增量）；缺省全量（存量回填）"
+    )
     p_feeds.add_argument("--force", action="store_true")
     args = parser.parse_args(argv)
 

@@ -18,6 +18,17 @@ sources:
     ingestion_mode: backfill
     notes: 关键词“AI 工程师”；搜索层 1190 条（51job 650 / boss 540），详情层 70 条，正文可用约 38 条
 
+  - id: jd-corp
+    type: employer_site          # 企业官方招聘站：结构化 JD 与真实发布时间
+    path: data/raw/jd/corp
+    license: 企业招聘官网公开页面，仅限研究使用，不分发原文
+    time_range: [2026-01, 2026-08]
+    ingestion_mode: live
+    notes: 三站 13 关键词 x3 页共 682 条——字节 jobs.bytedance.com 376 条（Playwright
+      拦截同源 XHR，职责/要求正文+毫秒发布时间）、阿里 talent-holding 98 条
+      （POST /position/search，含学历与年限区间）、腾讯 careers.tencent.com 208 条
+      （GET /tencentcareer/api/post/Query 纯 HTTP）；均无登录/WAF 对抗，限速页间 2~4s
+
   - id: standards
     type: occupation_standard    # 官方职业标准：能力本体参考
     path: data/raw/standards

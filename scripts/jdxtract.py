@@ -103,6 +103,19 @@ def load_targets() -> list[dict]:
                 work_year=meta.get("jobExperience") or "",
                 salary=meta.get("salaryDesc") or "",
             )
+    for corp_file in sorted((ROOT / "data" / "raw" / "jd" / "corp").glob("*.jsonl")):
+        for line in corp_file.open(encoding="utf-8"):
+            rec = json.loads(line)
+            add(
+                rec["jd_id"],
+                platform=rec.get("platform", corp_file.stem),
+                title=rec.get("title") or "",
+                description=rec.get("description") or "",
+                publish_date=rec.get("publish_date"),
+                city=rec.get("city") or None,
+                work_year=rec.get("work_year") or "",
+                salary=rec.get("salary") or "",
+            )
     kept = [t for t in targets.values() if t["title"]]
     return sorted(kept, key=lambda x: (x["platform"], x["jd_id"]))
 

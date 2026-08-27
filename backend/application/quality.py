@@ -114,14 +114,15 @@ def _build_postgres_overview(dsn: str) -> QualityOverview:
     import psycopg
 
     with psycopg.connect(dsn) as conn:
-        task_total, task_resolved = conn.execute(
+        task_row = conn.execute(
             """
             SELECT count(*)::int,
                    count(*) FILTER (WHERE status = 'RESOLVED')::int
             FROM review_tasks
             """
-        ).fetchone()
-        dual_total, dual_resolved = conn.execute(
+        ).fetchone() or (0, 0)
+        task_total, task_resolved = task_row
+        dual_row = conn.execute(
             """
             SELECT count(*) FILTER (WHERE t.needs_dual_review)::int,
                    count(*) FILTER (
@@ -131,13 +132,15 @@ def _build_postgres_overview(dsn: str) -> QualityOverview:
                    )::int
             FROM review_tasks t
             """
-        ).fetchone()
-        avg_response = conn.execute(
+        ).fetchone() or (0, 0)
+        dual_total, dual_resolved = dual_row
+        avg_row = conn.execute(
             """
             SELECT avg(EXTRACT(EPOCH FROM (a.created_at - t.created_at)) / 86400.0)
-            FROM review_actions a JOIN review_tasks t ON t.task_id = a.task_id
+            FROM review_actions a JOIN review_tasks t ON a.task_id = t.task_id
             """
-        ).fetchone()[0]
+        ).fetchone()
+        avg_response = avg_row[0] if avg_row else None
         errors = conn.execute(
             """
             SELECT error_type, count(*)::int
@@ -146,9 +149,10 @@ def _build_postgres_overview(dsn: str) -> QualityOverview:
             GROUP BY error_type ORDER BY count(*) DESC, error_type
             """
         ).fetchall()
-        dataset_version = conn.execute(
+        ds_row = conn.execute(
             "SELECT coalesce(max(dataset_version), '') FROM review_tasks"
-        ).fetchone()[0]
+        ).fetchone()
+        dataset_version = ds_row[0] if ds_row else ""
 
     return QualityOverview(
         source="postgres",

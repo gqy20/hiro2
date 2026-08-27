@@ -4,7 +4,7 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: [".next/**", "node_modules/**", "coverage/**"] },
+  { ignores: [".next/**", ".next-e2e/**", "node_modules/**", "coverage/**"] },
   js.configs.recommended,
   ...nextVitals,
   ...tseslint.configs.recommended,

@@ -46,3 +46,24 @@ def test_evaluation_overview_contract() -> None:
     response = TestClient(app).get("/api/v1/evaluation/overview")
     assert response.status_code == 200
     assert response.json()["datasets"]
+
+
+def test_publish_job_idempotent_and_unknown_404() -> None:
+    client = TestClient(app)
+    # 已发布过的默认草稿：幂等返回既有 PUBLISHED 版本而非 409
+    ok = client.post(
+        "/api/v1/jobs/default/versions/v2/publish",
+        json={"reviewer": "pytest", "note": "幂等回归"},
+    )
+    assert ok.status_code == 200
+    body = ok.json()
+    assert body["versionId"] == "ai-agent-v2"
+    assert body["publishedAt"]
+    assert isinstance(body["reviewActionIds"], list)
+    # 复发仍幂等（发布后不可变，不得重复固化）
+    again = client.post("/api/v1/jobs/default/versions/v2/publish", json={})
+    assert again.status_code == 200
+    assert again.json()["versionId"] == "ai-agent-v2"
+    # 未知草稿 404
+    missing = client.post("/api/v1/jobs/unknown/versions/v9/publish", json={})
+    assert missing.status_code == 404

@@ -135,10 +135,10 @@ def _build_trends(temporal) -> list[dict[str, object]]:
                 monthly[month][str(skill_id)] += 1
     months = sorted(monthly)
     totals = {month: sum(counts.values()) for month, counts in monthly.items()}
-    skills = Counter()
+    skills: Counter[str] = Counter()
     for counts in monthly.values():
         skills.update(counts)
-    rows = []
+    rows: list[dict[str, object]] = []
     names = _capability_names()
     for skill_id, _ in skills.most_common(3):
         rows.append(

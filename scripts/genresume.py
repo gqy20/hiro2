@@ -156,7 +156,7 @@ PROFILE_SPECS = {
     "variant": (
         "技能名尽量用真实世界的变体写法：别名（torch、sklearn、HF/HuggingFace）、"
         "带版本号（LangChain 0.2、Python 3.10）、口语化措辞（玩过/搞过/踩过坑）、"
-        "中英夹杂（如\"大模型微调 (SFT/LoRA)\"）。不要用标准教科书式技能清单。"
+        '中英夹杂（如"大模型微调 (SFT/LoRA)"）。不要用标准教科书式技能清单。'
     ),
     "sparse": "技能极少（只有 3-5 个硬技能），应届生，课程项目为主，内容单薄真实。不要凑技能。",
     "buried": "不要独立的技能清单节：所有硬技能只出现在项目经历和工作经历的描述句子里。",
@@ -166,12 +166,12 @@ PROFILE_SPECS = {
     ),
     "mgmt": (
         "10 年以上经验、带团队 8 人以上的技术管理者的简历：技术栈压缩为一行"
-        "（如\"技术栈：Java / Python / Spark / Flink\"），重点写架构决策、团队管理和业务结果，"
+        '（如"技术栈：Java / Python / Spark / Flink"），重点写架构决策、团队管理和业务结果，'
         "技能细节淡化。"
     ),
     "typo": (
         "排版带真实世界的输入噪声：全角字母数字（如 Ｐｙｔｈｏｎ、ＲＡＧ）、"
-        "全半角标点混用、中英文之间多余空格（\"Prompt 工程\"、\"RAG 检索\"）、"
+        '全半角标点混用、中英文之间多余空格（"Prompt 工程"、"RAG 检索"）、'
         "个别错别字。噪声要自然，不要每行都有。"
     ),
     "long": "700-1000 字的长简历：5 个项目经历 + 3 段工作经历 + 教育背景 + 证书节，内容详实。",
@@ -180,13 +180,24 @@ PROFILE_SPECS = {
 DIV_PLAN = (
     [("variant", t, "mid") for t in TRACKS]  # 6：全方向覆盖
     + [
-        ("sparse", "agent", "junior"), ("sparse", "llm", "junior"), ("sparse", "rag", "junior"),
-        ("buried", "agent", "mid"), ("buried", "bigdata", "mid"),
+        ("sparse", "agent", "junior"),
+        ("sparse", "llm", "junior"),
+        ("sparse", "rag", "junior"),
+        ("buried", "agent", "mid"),
+        ("buried", "bigdata", "mid"),
         ("buried", "career_change", "mid"),
-        ("noisy", "llm", "mid"), ("noisy", "rag", "mid"), ("noisy", "algo", "senior"),
-        ("mgmt", "agent", "senior"), ("mgmt", "bigdata", "senior"), ("mgmt", "llm", "senior"),
-        ("typo", "rag", "mid"), ("typo", "agent", "junior"), ("typo", "llm", "mid"),
-        ("long", "agent", "senior"), ("long", "bigdata", "senior"), ("long", "algo", "senior"),
+        ("noisy", "llm", "mid"),
+        ("noisy", "rag", "mid"),
+        ("noisy", "algo", "senior"),
+        ("mgmt", "agent", "senior"),
+        ("mgmt", "bigdata", "senior"),
+        ("mgmt", "llm", "senior"),
+        ("typo", "rag", "mid"),
+        ("typo", "agent", "junior"),
+        ("typo", "llm", "mid"),
+        ("long", "agent", "senior"),
+        ("long", "bigdata", "senior"),
+        ("long", "algo", "senior"),
     ]
 )  # 24 份
 
@@ -248,7 +259,9 @@ async def cmd_diverse() -> dict:
 
     async def one(i: int, profile: str, track: str, level: str) -> None:
         spec = DIV_SPEC.format(
-            track=TRACK_CN[track], level=LEVEL_CN[level], profile_spec=PROFILE_SPECS[profile],
+            track=TRACK_CN[track],
+            level=LEVEL_CN[level],
+            profile_spec=PROFILE_SPECS[profile],
             n_skills=8 if profile not in ("sparse", "mgmt") else 5,
             length="700-1000 字" if profile == "long" else "300-600 字",
         )
@@ -257,7 +270,10 @@ async def cmd_diverse() -> dict:
             for attempt in range(1 + MAX_RETRIES):
                 try:
                     raw = await provider.complete(
-                        system=DIV_SYSTEM, user=spec, max_tokens=2500, timeout=180,
+                        system=DIV_SYSTEM,
+                        user=spec,
+                        max_tokens=2500,
+                        timeout=180,
                     )
                     gold, resume = _split_gold(raw)
                     break
@@ -272,19 +288,32 @@ async def cmd_diverse() -> dict:
             run.log("genresume", stem, "gold_mismatch", count=len(bad))
             return
         (DIV_MD / f"{stem}.md").write_text(resume + "\n", encoding="utf-8")
-        manifest.append({
-            "file": f"md/{stem}.md", "profile": profile, "track": track, "level": level,
-            "synthetic": True, "gold": gold,
-        })
+        manifest.append(
+            {
+                "file": f"md/{stem}.md",
+                "profile": profile,
+                "track": track,
+                "level": level,
+                "synthetic": True,
+                "gold": gold,
+            }
+        )
         run.log("genresume", stem, "ok", count=len(gold["mentions"]))
 
     await asyncio.gather(*(one(i, *plan) for i, plan in enumerate(DIV_PLAN)))
     (DIV_DIR / "manifest.json").write_text(
-        json.dumps({
-            "synthetic": True, "batch": "diverse-v1", "count": len(manifest),
-            "note": "埋点 gold 供回归测试比对；synthetic 不进入官方评测指标（evaluation.md 规则）",
-            "items": sorted(manifest, key=lambda x: x["file"]),
-        }, ensure_ascii=False, indent=2),
+        json.dumps(
+            {
+                "synthetic": True,
+                "batch": "diverse-v1",
+                "count": len(manifest),
+                "note": "埋点 gold 供回归测试比对；synthetic 不进入官方评测指标"
+                "（evaluation.md 规则）",
+                "items": sorted(manifest, key=lambda x: x["file"]),
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
         encoding="utf-8",
     )
     metrics = {"generated": len(manifest), "plan": len(DIV_PLAN), "dir": str(DIV_MD)}

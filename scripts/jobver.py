@@ -125,25 +125,80 @@ def _market_changeset(
     return market, total, changeset
 
 
-def _run_position(position_id: str, slug: str) -> dict:
-    """参数化岗位 v2 草稿：Excel 基线 v1 + 本岗位 JD 市场分布，两源组装。"""
-    run = RunContext("jobver", {"cmd": "run", "job": position_id})
+def _v3_changeset(market, total, caps, prev_req, prev_pref):
+    """v3 变更集：新市场 top10 对比已发布 v2 的必备/加分集合。"""
+    top10 = [sid for sid, _ in market.most_common(10)]
+    cs = []
+    for i, sid in enumerate(top10):
+        role = "required" if i < 5 else "preferred"
+        was = "required" if sid in prev_req else ("preferred" if sid in prev_pref else None)
+        if was is None:
+            ctype = "add"
+        elif was != role:
+            ctype = "promote" if role == "required" else "demote"
+        else:
+            continue
+        cs.append({
+            "level": "capability",
+            "skill_id": sid,
+            "name": caps.get(sid, sid),
+            "change_type": ctype,
+            "v2_role": was,
+            "v3_role": role,
+            "market_share": round(market[sid] / total, 3),
+            "market_rank": i + 1,
+            "note": f"v2 为{was or '未收录'}，v3 市场 rank {i + 1}",
+        })
+    for sid in sorted(prev_req | prev_pref - set(top10)):
+        cs.append({
+            "level": "capability",
+            "skill_id": sid,
+            "name": caps.get(sid, sid),
+            "change_type": "demote",
+            "v2_role": "required" if sid in prev_req else "preferred",
+            "v3_role": None,
+            "market_share": round(market.get(sid, 0) / total, 3),
+            "note": "跌出市场 top10",
+        })
+    return cs
+
+
+def _run_position(position_id: str, slug: str, version: int = 2) -> dict:
+    """参数化岗位草稿：v2 = Excel 基线 + JD 市场两源；v3 = 已发布 v2 + 扩采后市场重组装。"""
+    run = RunContext("jobver", {"cmd": "run", "job": position_id, "version": version})
     positions, caps, parsed, rolemap = _load_common()
     pos = next((p for p in positions if p["position_id"] == position_id), None)
     if pos is None:
         raise SystemExit(f"岗位不存在：{position_id}（见 capability-matrix/positions.jsonl）")
     jd_ids = [rm["jd_id"] for rm in rolemap if rm.get("position_id") == position_id]
     market, total, changeset = _market_changeset(jd_ids, parsed, pos["scores"], caps)
+    basis = {
+        "v1": f"Excel 专家基线（{position_id} {pos['name']}）",
+        "v2": f"市场证据组装（{len(jd_ids)} 条 JD 技能分布）",
+    }
+    changeset_key = "changeset_vs_v1"
+    if version >= 3:
+        prev_path = ROOT / "data" / "processed" / "jobversions" / "published" / f"{slug}-v2.json"
+        if not prev_path.is_file():
+            raise SystemExit(f"v3 需要先发布 {slug}-v2（未找到 {prev_path.name}）")
+        prev = json.loads(prev_path.read_text(encoding="utf-8"))
+        prev_req = {s["skill_id"] for s in prev.get("required_skill_ids", [])}
+        prev_pref = {s["skill_id"] for s in prev.get("preferred_skill_ids", [])}
+        changeset = _v3_changeset(market, total, caps, prev_req, prev_pref)
+        prev_jd = prev.get("evidence", {}).get("jd_count", "?")
+        basis = {
+            "v1": basis["v1"],
+            "v2": f"已发布 {slug}-v2（{prev_jd} 条 JD，标注方向性待复核）",
+            "v3": f"扩采后市场重组装（{len(jd_ids)} 条 JD 技能分布）",
+        }
+        changeset_key = "changeset_vs_v2"
 
     draft = {
         "job_id": f"job_{position_id}",
-        "version_id": f"{slug}-v2-draft-{date.today().strftime('%Y%m%d')}",
+        "version_id": f"{slug}-v{version}-draft-{date.today().strftime('%Y%m%d')}",
         "status": "DRAFT",
         "title": pos["name"],
-        "basis": {
-            "v1": f"Excel 专家基线（{position_id} {pos['name']}）",
-            "v2": f"市场证据组装（{len(jd_ids)} 条 JD 技能分布）",
-        },
+        "basis": basis,
         "required_skill_ids": [
             {"skill_id": sid, "name": caps.get(sid, sid), "weight": round(n / total, 3)}
             for sid, n in market.most_common(5)
@@ -158,7 +213,7 @@ def _run_position(position_id: str, slug: str) -> dict:
             "baseline_evidence_id": f"xlsx:{position_id}",
             "jd_count": len(jd_ids),
         },
-        "changeset_vs_v1": changeset,
+        changeset_key: changeset,
         "review_status": "PENDING",
         "generated_by": "jobver v1（确定性组装）",
         "generated_at": date.today().isoformat(),
@@ -267,10 +322,13 @@ def main(argv: list[str] | None = None) -> int:
     p_run = sub.add_parser("run")
     p_run.add_argument("--job", default=None, help="position_id（如 pos_01）；缺省跑主案例")
     p_run.add_argument("--slug", default=None, help="版本前缀（如 llm-algo），--job 时必填")
+    p_run.add_argument("--version", type=int, default=2,
+                       help="版本号：2=对比 Excel 基线；3=对比已发布 v2（扩采复核）")
     args = parser.parse_args(argv)
     if args.job and not args.slug:
         parser.error("--job 需要 --slug（版本前缀，如 llm-algo）")
-    result = _run_position(args.job, args.slug) if args.job else cmd_run()
+    result = (_run_position(args.job, args.slug, args.version) if args.job
+              else cmd_run())
     print(json.dumps(result, ensure_ascii=False))
     return 0
 

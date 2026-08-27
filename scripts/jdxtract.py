@@ -152,7 +152,7 @@ async def cmd_run(limit: int | None) -> dict:
         "jdxtract", "targets_loaded", "progress", count={"total": len(targets), "todo": len(todo)}
     )
 
-    sem = asyncio.Semaphore(4)
+    sem = asyncio.Semaphore(15)
     fh = OUT.open("a", encoding="utf-8")
     results, quarantined = [], []
 

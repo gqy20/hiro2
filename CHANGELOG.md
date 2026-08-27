@@ -8,6 +8,7 @@
 - Railway 部署适配：API/Web 使用平台动态端口，CORS 与简历档案路径支持环境变量，生产镜像排除本地密钥和原始文件。
 
 ### Added
+- JD 扩采全链路落地并兑现薄证据岗位升版：解析 corp 4167 条（并发 4→15 后 41 条/分钟，实测校准预估方法论）、rolemap 增量映射 3225 条（exact/alias/llm/unmatched = 107/684/1962/738）；46 岗位覆盖 43 个、≥15 条岗位从 6 → 21 个（大数据 4→334、数据分析师 5→158、数据安全 3→95、数据中心运维 5→31、AI训练师 6→25；智能传感器 4→7 仍薄）；`jobver --version 3` 支持对已发布 v2 的扩采复核（changeset_vs_v2 语义：新市场 top10 对比 v2 必备/加分，add/promote/demote），发布 5 个 v3 版本（bigdata/data-analyst/data-sec/dc-ops/ai-trainer），Neo4j 投影 17/17 可查；质量核对：中英技能原词抽取均好（13.8/10.5 每岗），英文词典归一短板（resolved 1.1 vs 4.8）归入新词消化任务。
 - 企业官方招聘站采集器 `jdcorp`（8 源 4248 条 JD）：字节/阿里/腾讯/美团/小红书/vivo 国内 6 厂（Playwright 拦截同源 XHR 或纯 HTTP，全部带职责/要求正文，7 成带真实发布时间）+ Anthropic 与 Greenhouse 通用 board adapter（Together AI/Scale/Databricks/Pinterest/Figma/Discord/Stripe/Duolingo 8 板块纯 HTTP 全量）；关键词级 7 天增量缓存（首屏无新增跳过整词）、`--keywords all` 全岗位池模式（不过度倾向技术岗）、`runall` 8 站并行；`jdxtract` 接入 corp 第四源自动合并解析，`SOURCES.yml` 登记 jd-corp 来源与限速纪律。放弃名单及原因：华为 404、百度 headless 反爬、快手登录墙、OpenAI 网络不通、DeepSeek SSR 内嵌且岗位量个位数、MiniMax careers 无职位数据、荣耀/蚂蚁/小米/B站连接层拒绝。
 - 简历档案审阅工作区：左侧去重档案列表，右侧当前文件审阅；支持 PDF 内嵌预览、DOCX 内容预览、TXT/MD 文本预览，以及文档预览与结构化档案 Tab 切换。
 - 简历档案批量解析：新增 `resparse` 命令，将已入档未解析的 PDF/DOCX/TXT/MD 逐份接入现有抽取与归一管线，更新结构化职业档案并保留失败记录。

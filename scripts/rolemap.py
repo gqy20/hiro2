@@ -138,7 +138,7 @@ async def cmd_run() -> dict:
             done.add(json.loads(line).get("jd_id"))
     todo = [r for r in rows if r["jd_id"] not in done]
 
-    sem = asyncio.Semaphore(4)
+    sem = asyncio.Semaphore(15)
     fh = OUT.open("a", encoding="utf-8")
     llm_hits = misses = 0
 

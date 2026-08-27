@@ -31,6 +31,14 @@ export type ApiOptions = {
 
 const DEFAULT_TIMEOUT_MS = 10_000;
 
+export function getApiBaseUrl(): string {
+  const configured = (process.env.NEXT_PUBLIC_API_BASE_URL ?? "").replace(/\/$/, "");
+  if (typeof window !== "undefined" && /https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/i.test(configured) && !["localhost", "127.0.0.1"].includes(window.location.hostname)) {
+    return `${window.location.protocol}//${window.location.hostname}:8000/api/v1`;
+  }
+  return configured;
+}
+
 // ponytail: mock 是当前默认（本地无后端），env 未设置或为 "true"/"1" 都视为 mock。
 export function isMockMode(): boolean {
   const raw = process.env.NEXT_PUBLIC_USE_MOCK;
@@ -48,7 +56,7 @@ export async function apiFetch<T>(
     );
   }
 
-  const baseUrl = (process.env.NEXT_PUBLIC_API_BASE_URL ?? "").replace(/\/$/, "");
+  const baseUrl = getApiBaseUrl();
   if (!baseUrl) {
     throw new ApiError("NEXT_PUBLIC_API_BASE_URL is not set");
   }

@@ -13,6 +13,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse
 from pydantic import BaseModel, Field
 
 from backend.application.career import add_proof, save_growth_task, save_profile, set_active_target
@@ -27,7 +28,8 @@ from backend.application.training import build_training_output
 app = FastAPI(title="Hiro2 API", version="0.1.0")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origin_regex=r"https?://10\.\d+\.\d+\.\d+(?::\d+)?$",
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -336,8 +338,9 @@ def publish_job(job_version_id: str, version: str, req: PublishRequest) -> dict:
     draft = json.loads(draft_path.read_text(encoding="utf-8"))
     vid = re.sub(r"-draft-\d{8}$", "", draft.get("version_id") or version)
     reviewer = req.reviewer or os.getenv("HIRO2_REVIEWER", "webui")
-    svc.submit_review(draft.get("job_id", job_version_id), "accepted",
-                      req.note or "Web 发布流审核通过")
+    svc.submit_review(
+        draft.get("job_id", job_version_id), "accepted", req.note or "Web 发布流审核通过"
+    )
 
     pub_path = root / "data/processed/jobversions/published" / f"{vid}.json"
     try:
@@ -407,7 +410,7 @@ async def upload_resume(file: UploadFile) -> dict:
             else:
                 s.resolved_by = "unmatched"
 
-    return {
+    result = {
         "rawText": text[:2000],
         "profile": profile.model_dump(),
         "stats": {
@@ -418,3 +421,75 @@ async def upload_resume(file: UploadFile) -> dict:
             "unresolved": sum(1 for s in profile.skills if s.resolved_by == "unmatched"),
         },
     }
+    # 入档：文件落 objects/resumes，元数据与画像追加 JSONL（幂等由 resume_id 唯一保证）
+    from backend.candidates.archive import save_to_archive
+
+    record = save_to_archive(content, file.filename or "resume", result)
+    return {**result, "resumeId": record["resume_id"], "source": "upload"}
+
+
+@app.get("/api/v1/candidates/resumes")
+def list_resume_archive() -> list[dict]:
+    """简历档案列表（轻字段，最新在前）。"""
+    from backend.candidates.archive import list_archive
+
+    return list_archive()
+
+
+@app.get("/api/v1/candidates/resumes/{resume_id}")
+def get_resume_archive(resume_id: str) -> dict:
+    """单个档案详情（含画像与原文片段）；imported 档案未解析时画像为空。"""
+    from backend.candidates.archive import get_archive
+
+    record = get_archive(resume_id)
+    if record is None:
+        raise HTTPException(404, f"档案不存在: {resume_id}")
+    return {
+        "resumeId": record["resume_id"],
+        "filename": record["filename"],
+        "size": record["size"],
+        "uploadedAt": record["uploaded_at"],
+        "source": record["source"],
+        "rawText": record.get("raw_text", ""),
+        "profile": record.get("profile") or {},
+        "stats": record.get("stats"),
+    }
+
+
+@app.get("/api/v1/candidates/resumes/{resume_id}/preview")
+def preview_resume_archive(resume_id: str):
+    """PDF 原件内嵌；DOCX 转安全只读 HTML；文本文件直接预览。"""
+    from html import escape
+
+    from backend.candidates.archive import get_stored_file
+
+    path = get_stored_file(resume_id)
+    if path is None:
+        raise HTTPException(404, f"原始文件不存在: {resume_id}")
+    suffix = path.suffix.lower()
+    if suffix == ".pdf":
+        return FileResponse(path, media_type="application/pdf", content_disposition_type="inline")
+    if suffix == ".docx":
+        from docx import Document
+
+        doc = Document(str(path))
+        blocks = [
+            f"<p>{escape(paragraph.text)}</p>"
+            for paragraph in doc.paragraphs
+            if paragraph.text.strip()
+        ]
+        for table in doc.tables:
+            rows = []
+            for row in table.rows:
+                cells = "".join(f"<td>{escape(cell.text)}</td>" for cell in row.cells)
+                rows.append(f"<tr>{cells}</tr>")
+            blocks.append(f"<table>{''.join(rows)}</table>")
+        html = """<!doctype html><meta charset='utf-8'><style>
+        body{margin:0;padding:32px;font:14px/1.7 system-ui;color:#20201d;background:#fff}
+        p{margin:0 0 10px;white-space:pre-wrap}
+        table{border-collapse:collapse;width:100%;margin:12px 0}
+        td{border:1px solid #ddd;padding:6px}</style>""" + "".join(blocks)
+        return HTMLResponse(html)
+    if suffix in (".txt", ".md"):
+        return PlainTextResponse(path.read_text(encoding="utf-8"))
+    raise HTTPException(415, f"暂不支持预览: {suffix}")

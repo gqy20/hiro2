@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   CheckCircle,
+  ArrowClockwise,
   PencilSimple,
   Plus,
   Trash,
@@ -69,6 +70,9 @@ export function DiagnosisWorkbench({
   const [proofTitle, setProofTitle] = useState("");
   const [proofDescription, setProofDescription] = useState("");
   const [proofSaved, setProofSaved] = useState(false);
+  const [careerMode] = useState(() =>
+    typeof window !== "undefined" && window.localStorage.getItem("hiro2.workspace") === "career",
+  );
 
   if (state === "error")
     return (
@@ -223,7 +227,7 @@ export function DiagnosisWorkbench({
   return (
     <AppShell>
       <div className="workflow-page">
-      <WorkflowContext eyebrow="求职成长" title="我的成长计划" stage="确认能力画像" next="补齐关键能力后重新诊断" />
+      <WorkflowContext eyebrow={careerMode ? "求职成长" : "候选诊断"} title={careerMode ? "我的成长计划" : fixture.candidate.name} stage={careerMode ? "确认能力画像" : "复核候选人画像"} next={careerMode ? "补齐关键能力后重新诊断" : "修正画像后重新计算"} />
       <div className="diagnosis-workbench">
         <aside className="diagnosis-profile" aria-label="候选人画像">
           <div className="diagnosis-heading">
@@ -373,7 +377,22 @@ export function DiagnosisWorkbench({
               />
               <p>{`${fixture.job.version} · 已发布岗位标准`}</p>
             </div>
-            <Button aria-label="编辑画像" icon={<PencilSimple />} type="text" />
+            <span className="diagnosis-title-actions">
+              <Button
+                aria-label="编辑画像"
+                icon={<PencilSimple />}
+                type="text"
+              />
+              <Button
+                icon={<ArrowClockwise />}
+                loading={recalculating}
+                onClick={recalculate}
+                size="small"
+                type="primary"
+              >
+                重新计算
+              </Button>
+            </span>
           </div>
           <section className="match-summary">
             <div>
@@ -389,17 +408,7 @@ export function DiagnosisWorkbench({
               <b>{priorityGaps.length}</b>
             </div>
           </section>
-          <div className="recalculate-bar">
-            <span>画像更新后，重新判断你的投递基础</span>
-            <Button
-              loading={recalculating}
-              onClick={recalculate}
-              size="small"
-              type="primary"
-            >
-              重新计算
-            </Button>
-          </div>
+          <p className="recalculate-hint">画像更新后，重新判断你的投递基础</p>
           <section className="gap-section">
             <SectionHeader
               action={
@@ -431,27 +440,29 @@ export function DiagnosisWorkbench({
             </div>
           </section>
           <section className="match-evidence">
-            <h3>为什么这样判断</h3>
+            <div className="match-evidence-heading">
+              <h3>为什么这样判断</h3>
+              <Button
+                onClick={() => setSelectedEvidence(reportEvidence)}
+                size="small"
+                type="link"
+              >
+                打开证据
+              </Button>
+            </div>
             <p>
               结果同时依据已发布岗位标准和你的技能、项目证据，不以单一分数决定是否适合投递。
             </p>
-            <Button
-              onClick={() => setSelectedEvidence(reportEvidence)}
-              size="small"
-              type="link"
-            >
-              打开证据
-            </Button>
           </section>
         </main>
-        <aside className="learning-panel" aria-label="学习路径">
+        <aside className="learning-panel" aria-label={careerMode ? "成长计划" : "诊断要点"}>
           <div className="section-heading">
             <div className="inline-heading">
-              <h2>成长计划</h2>
-              <span>{`${completedSteps.length} / ${priorityGaps.length} 已完成`}</span>
+              <h2>{careerMode ? "成长计划" : "诊断要点"}</h2>
+              <span>{careerMode ? `${completedSteps.length} / ${priorityGaps.length} 已完成` : `${priorityGaps.length} 项待关注`}</span>
             </div>
           </div>
-          <ol>
+          {careerMode ? <ol>
             {priorityGaps.map((gap, index) => (
               <li key={gap.skill}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
@@ -474,19 +485,21 @@ export function DiagnosisWorkbench({
                 </div>
               </li>
             ))}
-          </ol>
-          <section className="proof-capture" aria-labelledby="proof-title">
+          </ol> : <ul className="recruiting-diagnosis-points">
+            {priorityGaps.map((gap) => <li key={gap.skill}><strong>{gap.skill}</strong><span>{gap.reason || "候选人画像中暂无明确证明"}</span></li>)}
+          </ul>}
+          {careerMode ? <section className="proof-capture" aria-labelledby="proof-title">
             <SectionHeader title="添加能力证明" meta="项目、作品或评测结果" />
             <Select aria-label="选择要证明的能力" onChange={setProofSkill} options={priorityGaps.map((gap) => ({ label: gap.skill, value: gap.skill }))} placeholder="选择一项缺口" value={proofSkill ?? undefined} />
             <Input aria-label="证明标题" onChange={(event) => setProofTitle(event.target.value)} placeholder="证明标题" value={proofTitle} />
             <Input.TextArea aria-label="证明说明" onChange={(event) => setProofDescription(event.target.value)} placeholder="说明你完成了什么，以及结果如何" value={proofDescription} />
             <Button disabled={!proofSkill || !proofTitle.trim()} onClick={saveProof} type="primary">保存证明</Button>
             {proofSaved ? <span className="proof-saved">已保存到个人画像</span> : null}
-          </section>
-          <div className="learning-note">
+          </section> : null}
+          {careerMode ? <div className="learning-note">
             <CheckCircle aria-hidden weight="fill" />
             完成后补充证明，再重新诊断
-          </div>
+          </div> : null}
         </aside>
         <EvidenceDrawer
           context={context}

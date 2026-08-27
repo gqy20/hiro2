@@ -347,6 +347,8 @@
   color: var(--muted);
   font-size: 12px;
 }
+.diagnosis-title-actions { display: inline-flex; align-items: center; gap: 8px; }
+.recalculate-hint { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
 .profile-skill small {
   color: var(--muted);
   font-size: 11px;
@@ -488,6 +490,7 @@
   margin: 0;
   font-size: 14px;
 }
+.match-evidence-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .match-evidence p {
   margin: 0;
   color: var(--muted);
@@ -508,9 +511,13 @@
 .learning-panel li {
   display: grid;
   grid-template-columns: 28px 1fr;
-  gap: 10px;
+  gap: 12px;
+  align-items: start;
 }
 .learning-panel li > span {
+  display: block;
+  padding-top: 2px;
+  text-align: right;
   color: var(--muted);
   font:
     11px/1 "IBM Plex Mono",
@@ -536,6 +543,10 @@
 .learning-note svg {
   flex: 0 0 auto;
 }
+.recruiting-diagnosis-points { display: grid; gap: 14px; margin: 20px 0; padding: 0; list-style: none; }
+.recruiting-diagnosis-points li { display: grid; gap: 5px; padding-bottom: 14px; border-bottom: 1px solid var(--line-subtle); }
+.recruiting-diagnosis-points strong { font-size: 13px; }
+.recruiting-diagnosis-points span { color: var(--muted); font-size: 12px; line-height: 1.5; }
 
 @media (max-width: 1100px) {
   .diagnosis-workbench {

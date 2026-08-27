@@ -5,6 +5,8 @@
 ## [Unreleased]
 
 ### Added
+- 简历解析体验升级：新增上传后文件预览、多文件处理队列、单份解析与批量解析入口，逐份保留待解析/解析中/完成/失败状态。
+- 工作区切换：顶部新增“招聘 / 成长”分段切换，按角色切换首页、导航和工作区上下文，并记住最近选择。
 - 前后端断链补全六项（roadmap 前端 26/26 完成）：①发布流实装 `POST /jobs/{id}/versions/{version}/publish`（审核留痕 + 复用 jobpub 固化，重复发布幂等返回，TestClient 验证）；②新岗位候选接受/拒绝接 `POST /emerging-jobs/{id}/review`（留痕失败时前端不更新状态并提示）；③`/temporal/signals`、`/temporal/suggestions` 改走 `/temporal/dataset`（与 forecasts/retrospect 一致，真实 signals 500 条）；④证据抽屉无来源链接时提供「查看全文」（fullText 已在 VM）；⑤发布成功视图接入 `GET /jobs/{id}/training-output`（JD 模板 + 学练赛证培养任务 + 证明要求）；⑥新增 `/resumes` 解析确认页（上传 FormData → `POST /candidates/resumes` 90s 超时 → 归一结果可修正 + 原文片段，确认为会话内闭环）；`apiFetch` 支持 FormData，主案例 draft version_id 规范化为 `ai-agent-v2-draft-{date}`。
 - 数据库事实主库推进：诊断、时间情报和 ApplicationService 的证据/JD/事件读取在配置 PostgreSQL 时优先走数据库；新增画像版本、当前目标、时间信号、回测、预测和岗位影响建议 schema，导入岗位版本自动写入 outbox，`make graph-sync` 幂等投影 Neo4j。
 - PostgreSQL 集成完善：新增 `dbmigr` 幂等迁移执行器、`make db-up/db-migrate/db-import` 命令，并将求职成长 migration 纳入 Compose 初始化与升级路径。
@@ -19,6 +21,8 @@
 - 采集与简历抽取域逻辑归位（AGENTS 分层惯例）：RSS 抓取/幂等落盘移入 `backend/temporal/feed.py`（Pydantic FeedItem + 不联网单测 3 例），`rssget` 变 CLI 壳；`candmatch._extract` 移入 `backend/candidates/parse.py` 为 `extract_resume` 域入口（消除 scripts 跨脚本 import），candmatch/reseval 改调域模块；feedparser 缺类型桩按 mypy overrides 豁免。50 测试全过。
 
 ### Fixed
+- 修正招聘侧候选诊断上下文：招聘模式不再显示求职成长、学习计划或求职者证明提示；简历解析上传区扩展为主内容宽度。
+- 统一诊断工作区操作对齐：重新计算与编辑画像归入标题行右侧操作组，打开证据移至说明标题行；学习计划编号固定窄列并与内容基线对齐。
 - 优化能力图谱与加载反馈：移除前端暴露的 `cap_XX` 内部能力 ID；各路由加载态改为匹配首页、Diff、图谱、诊断和评测实际结构的专属骨架；接入 GSAP 为路由切换和图谱重排提供轻量过渡，并完整支持减少动态效果偏好。
 - 修复 `.env.example` 存储段变量名与代码不一致：`HIRO2_DATABASE_URL`/`HIRO2_NEO4J_*` 改为代码实际读取的 `DATABASE_URL`/`NEO4J_URI`/`NEO4J_USER`/`NEO4J_PASSWORD`（原配置照抄必连不上库），默认值对齐 docker-compose，删除重复定义的 Phase B 段。
 - 简历抽取三处修复并回归验证（96 次调用 0 失败）：candmatch 对超限 skills/projects 截断而非整单拒绝（long 简历 >40 条曾触发 ValidationError）；resume-parse prompt 升 v2（技能定义纳入能力域词、密集列举逐项拆出）；reseval 宽松核心词匹配成为主指标（gold 侧短词仍全等防误报）。宽松口径召回 91.8% -> 96.5%（variant 63.6%->97.8%、typo 78.3%->89.1%、buried 99%、双栏 96.5%），严格口径 82.7% -> 86.1%。

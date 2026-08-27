@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import {
@@ -30,15 +30,34 @@ const navigation = [
   { href: "/profile", label: "我的画像", icon: ClipboardText },
 ];
 
+type Workspace = "recruiting" | "career";
+const WORKSPACE_KEY = "hiro2.workspace";
+
 export function AppShell({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
-  const careerMode = pathname.startsWith("/career") || pathname.startsWith("/profile");
+  const router = useRouter();
+  const [workspace, setWorkspace] = useState<Workspace>(() => {
+    const fallback = pathname.startsWith("/career") || pathname.startsWith("/profile")
+      ? "career"
+      : "recruiting";
+    if (typeof window === "undefined") return fallback;
+    const stored = window.localStorage.getItem(WORKSPACE_KEY);
+    return stored === "career" || stored === "recruiting" ? stored : fallback;
+  });
+  const careerMode = workspace === "career";
   const visibleNavigation = careerMode
     ? navigation.filter((item) => ["/career", "/profile", "/diagnosis"].includes(item.href))
     : navigation.filter((item) => !["/career", "/profile"].includes(item.href));
   const contentRef = useRef<HTMLElement>(null);
+
+  function switchWorkspace(next: Workspace) {
+    if (next === workspace) return;
+    window.localStorage.setItem(WORKSPACE_KEY, next);
+    setWorkspace(next);
+    router.push(next === "career" ? "/career" : "/");
+  }
 
   useGSAP(
     () => {
@@ -93,6 +112,24 @@ export function AppShell({
           ))}
         </nav>
         <div className="topbar-meta">
+          <div className="workspace-switch" aria-label="切换工作区">
+            <button
+              aria-pressed={workspace === "recruiting"}
+              className={workspace === "recruiting" ? "is-active" : ""}
+              onClick={() => switchWorkspace("recruiting")}
+              type="button"
+            >
+              招聘
+            </button>
+            <button
+              aria-pressed={workspace === "career"}
+              className={workspace === "career" ? "is-active" : ""}
+              onClick={() => switchWorkspace("career")}
+              type="button"
+            >
+              成长
+            </button>
+          </div>
           <span className="live-dot" aria-hidden />
           <span>数据截至 08-22</span>
         </div>

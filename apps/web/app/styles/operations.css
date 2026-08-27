@@ -226,8 +226,37 @@
 }
 
 .resume-parse {
-  max-width: 760px;
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  padding: 28px 32px;
+  background: var(--paper);
 }
+
+.resume-parse > .page-heading { flex-direction: row; align-items: end; justify-content: space-between; margin-bottom: 20px; }
+.resume-parse > .page-heading h1 { margin: 0; font-size: 24px; }
+.resume-parse > .ant-upload-wrapper { width: min(100%, 1040px); }
+.resume-parse .ant-upload-drag { min-height: 170px; border: 1px dashed var(--line-strong); border-radius: 10px; background: var(--surface-raised); }
+.resume-parse .ant-upload-drag:hover { border-color: var(--blue); }
+.resume-parse-result { width: min(100%, 1040px); margin-top: 18px; padding: 24px; border-radius: 10px; background: var(--surface-raised); }
+.resume-parse-result h3 { margin: 24px 0 10px; font-size: 16px; }
+.resume-parse-result h3:first-of-type { margin-top: 8px; }
+.resume-parse-result .training-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.resume-queue, .resume-preview { width: min(100%, 1040px); margin-top: 16px; padding: 16px 20px; border-radius: 10px; background: var(--surface-raised); }
+.resume-queue-heading, .resume-queue-item { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.resume-queue-heading { padding-bottom: 10px; border-bottom: 1px solid var(--line-subtle); }
+.resume-queue-heading span, .resume-queue-item small, .resume-preview > div span { color: var(--muted); font-size: 12px; }
+.resume-queue-item { width: 100%; padding: 11px 4px; border: 0; border-bottom: 1px solid var(--line-subtle); background: transparent; color: var(--ink); text-align: left; cursor: pointer; }
+.resume-queue-item:last-child { border-bottom: 0; }
+.resume-queue-item > span { display: grid; gap: 3px; min-width: 0; }
+.resume-queue-item strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.resume-queue-item small { display: block; }
+.resume-queue-item:hover, .resume-queue-item.is-active { background: rgba(255, 245, 200, .55); }
+.resume-queue-item em { flex: none; font-size: 12px; font-style: normal; }
+.resume-status-已完成 { color: var(--green); }.resume-status-解析中 { color: var(--blue); }.resume-status-失败 { color: var(--red); }.resume-status-待解析 { color: var(--muted); }
+.resume-preview > div { display: flex; justify-content: space-between; gap: 12px; }
+.resume-preview pre { max-height: 180px; margin: 12px 0 0; padding: 14px; overflow: auto; border-radius: 8px; background: var(--paper); color: var(--muted); font-size: 12px; line-height: 1.6; white-space: pre-wrap; }
+.resume-preview p { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
 
 .resume-parse-actions {
   margin: 12px 0;
@@ -240,23 +269,34 @@
 }
 
 .resume-skill-list li {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) auto 160px 32px;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  min-height: 52px;
   padding: 8px 0;
-  border-top: 1px dashed var(--line);
+  border-top: 1px solid var(--line-subtle);
 }
 
 .resume-skill-list .publish-hint {
   flex-basis: 100%;
   margin: 0;
 }
+.resume-skill-list li .publish-hint { grid-column: 1 / -1; }
 
 .resume-raw pre {
   white-space: pre-wrap;
   font-size: 12px;
   background: var(--paper);
-  border: 1px solid var(--line);
+  border: 0;
+  border-radius: 8px;
   padding: 8px;
+}
+
+@media (max-width: 720px) {
+  .resume-parse { padding: 18px 16px; }
+  .resume-parse > .page-heading { align-items: flex-start; flex-direction: column; }
+  .resume-parse-result { padding: 16px; }
+  .resume-skill-list li { grid-template-columns: minmax(0, 1fr) auto 32px; }
+  .resume-skill-list li .ant-input { grid-column: 1 / -1; width: 100% !important; }
 }

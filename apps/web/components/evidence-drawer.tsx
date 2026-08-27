@@ -129,9 +129,15 @@ export function EvidenceDrawer({
                       >
                         打开来源
                       </Button>
-                    ) : (
-                      <Tag>原文待接入</Tag>
-                    )}
+                    ) : evidence.fullText ? (
+                      <Button
+                        onClick={() => setSelectedEvidence(evidence)}
+                        size="small"
+                        type="link"
+                      >
+                        查看全文
+                      </Button>
+                    ) : null}
                   </div>
                 </article>
               );

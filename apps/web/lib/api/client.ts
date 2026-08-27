@@ -76,9 +76,13 @@ export async function apiFetch<T>(
       signal: controller.signal,
     };
     if (method === "POST" || method === "PUT" || method === "PATCH") {
-      headers["Content-Type"] = "application/json";
-      if (opts.body !== undefined) {
-        init.body = JSON.stringify(opts.body);
+      if (opts.body instanceof FormData) {
+        init.body = opts.body; // 文件上传：浏览器自设 multipart boundary
+      } else {
+        headers["Content-Type"] = "application/json";
+        if (opts.body !== undefined) {
+          init.body = JSON.stringify(opts.body);
+        }
       }
     }
     const res = await fetch(`${baseUrl}${path}`, init);

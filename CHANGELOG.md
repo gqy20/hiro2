@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- 前后端断链补全六项（roadmap 前端 26/26 完成）：①发布流实装 `POST /jobs/{id}/versions/{version}/publish`（审核留痕 + 复用 jobpub 固化，重复发布幂等返回，TestClient 验证）；②新岗位候选接受/拒绝接 `POST /emerging-jobs/{id}/review`（留痕失败时前端不更新状态并提示）；③`/temporal/signals`、`/temporal/suggestions` 改走 `/temporal/dataset`（与 forecasts/retrospect 一致，真实 signals 500 条）；④证据抽屉无来源链接时提供「查看全文」（fullText 已在 VM）；⑤发布成功视图接入 `GET /jobs/{id}/training-output`（JD 模板 + 学练赛证培养任务 + 证明要求）；⑥新增 `/resumes` 解析确认页（上传 FormData → `POST /candidates/resumes` 90s 超时 → 归一结果可修正 + 原文片段，确认为会话内闭环）；`apiFetch` 支持 FormData，主案例 draft version_id 规范化为 `ai-agent-v2-draft-{date}`。
 - 数据库事实主库推进：诊断、时间情报和 ApplicationService 的证据/JD/事件读取在配置 PostgreSQL 时优先走数据库；新增画像版本、当前目标、时间信号、回测、预测和岗位影响建议 schema，导入岗位版本自动写入 outbox，`make graph-sync` 幂等投影 Neo4j。
 - PostgreSQL 集成完善：新增 `dbmigr` 幂等迁移执行器、`make db-up/db-migrate/db-import` 命令，并将求职成长 migration 纳入 Compose 初始化与升级路径。
 - 求职成长界面打磨：移除重复眉题和重复入口，统一能力证明术语；画像页补充目标岗位上下文并修正标题对齐，求职模式导航仅保留诊断、成长和画像入口。

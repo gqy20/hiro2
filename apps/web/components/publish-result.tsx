@@ -2,11 +2,13 @@ import { ArrowLeft } from "@phosphor-icons/react";
 import { Button, Result, Tag } from "antd";
 
 import { AppShell } from "@/components/app-shell";
+import { TrainingOutputSection } from "@/components/training-output-section";
 
 type PublishResultViewProps = {
   jobTitle: string;
   targetVersion: string;
   publishedAt: string;
+  versionId?: string;
   reviewCounts: { accepted: number; rejected: number; pending: number };
   onBack: () => void;
 };
@@ -15,6 +17,7 @@ export function PublishResultView({
   jobTitle,
   targetVersion,
   publishedAt,
+  versionId,
   reviewCounts,
   onBack,
 }: PublishResultViewProps) {
@@ -62,6 +65,8 @@ export function PublishResultView({
             </div>
           </dl>
         </section>
+
+        {versionId ? <TrainingOutputSection versionId={versionId} /> : null}
       </section>
     </AppShell>
   );

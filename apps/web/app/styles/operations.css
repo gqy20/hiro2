@@ -193,3 +193,70 @@
   font-size: 12px;
   margin-left: auto;
 }
+
+.training-block {
+  margin-top: 12px;
+}
+
+.training-block h3 {
+  font-size: 13px;
+  margin: 0 0 4px;
+}
+
+.training-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.training-tasks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.training-tasks li {
+  padding: 8px 0;
+  border-top: 1px dashed var(--line);
+}
+
+.training-tasks .task-name {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.resume-parse {
+  max-width: 760px;
+}
+
+.resume-parse-actions {
+  margin: 12px 0;
+}
+
+.resume-skill-list {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+}
+
+.resume-skill-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-top: 1px dashed var(--line);
+}
+
+.resume-skill-list .publish-hint {
+  flex-basis: 100%;
+  margin: 0;
+}
+
+.resume-raw pre {
+  white-space: pre-wrap;
+  font-size: 12px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 8px;
+}

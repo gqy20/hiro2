@@ -39,6 +39,11 @@ class ReviewRequest(BaseModel):
     note: str = ""
 
 
+class PublishRequest(BaseModel):
+    reviewer: str = ""
+    note: str = ""
+
+
 class GrowthTaskRequest(BaseModel):
     completed: bool
 
@@ -307,6 +312,46 @@ def training_output(job_version_id: str) -> dict:
         return build_training_output(job_version_id).model_dump()
     except FileNotFoundError as exc:
         raise HTTPException(404, str(exc)) from exc
+
+
+@app.post("/api/v1/jobs/{job_version_id}/versions/{version}/publish")
+def publish_job(job_version_id: str, version: str, req: PublishRequest) -> dict:
+    """发布流：审核留痕 + jobpub 固化为不可变 PUBLISHED；重复发布幂等返回。
+
+    当前只有 default（AI Agent 主案例草稿）一条发布路径，与
+    GET /jobs/default/update 同源；version 路径参数保留给未来多草稿。
+    """
+    import json
+    import re
+    import sys
+
+    root = Path(__file__).resolve().parents[2]
+    if str(root) not in sys.path:
+        sys.path.insert(0, str(root))
+    from scripts.jobpub import cmd_publish
+
+    draft_path = root / "data/processed/jd-opencli/jobversion-agent-draft.json"
+    if job_version_id != "default" or not draft_path.is_file():
+        raise HTTPException(404, f"草稿不存在: {job_version_id}")
+    draft = json.loads(draft_path.read_text(encoding="utf-8"))
+    vid = re.sub(r"-draft-\d{8}$", "", draft.get("version_id") or version)
+    reviewer = req.reviewer or os.getenv("HIRO2_REVIEWER", "webui")
+    svc.submit_review(draft.get("job_id", job_version_id), "accepted",
+                      req.note or "Web 发布流审核通过")
+
+    pub_path = root / "data/processed/jobversions/published" / f"{vid}.json"
+    try:
+        cmd_publish(draft_path, reviewer, req.note, vid)
+    except SystemExit as exc:
+        # 已发布过（发布后不可变）：读回幂等返回，而非报错打断 UI 流
+        if not pub_path.is_file():
+            raise HTTPException(409, str(exc)) from exc
+    pub = json.loads(pub_path.read_text(encoding="utf-8"))
+    return {
+        "versionId": pub["version_id"],
+        "publishedAt": pub.get("published_at", ""),
+        "reviewActionIds": pub.get("review_action_ids", []),
+    }
 
 
 @app.post("/api/v1/candidates/resumes")

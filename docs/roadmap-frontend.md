@@ -2,11 +2,11 @@
 
 > 范围：页面、交互、设计系统、Mock 数据、API 接入和端到端验收。
 > 依赖：[`design.md`](design.md)、[`contracts.md`](contracts.md)。
-> 当前阶段：**T1-T4 主体完成 24/26（92%）**。状态只使用：未开始、进行中、阻塞、待验收、完成。
+> 当前阶段：**T1-T4 主体完成 26/26（100%）**。状态只使用：未开始、进行中、阻塞、待验收、完成。
 >
-> 未做 2 项均依赖后端 FastAPI 实装：
-> - **F-T3.4 PDF/DOCX 解析确认**：等 B-T3.1（Resume API）
-> - **F-T3.6 岗位标准输出与培养任务**：等后端 PublishedJobVersion API
+> 曾阻塞 2 项已随后端端点实装接入：
+> - **F-T3.4 PDF/DOCX 解析确认**：`POST /candidates/resumes` 已接入，确认为会话内闭环（候选人持久化端点待后端）
+> - **F-T3.6 岗位标准输出与培养任务**：`GET /jobs/{id}/training-output` 已接入发布成功视图
 >
 > 详见 `roadmap-backend.md` B-T 全「未开始」状态。
 
@@ -16,7 +16,7 @@
 | --- | --- | --- |
 | T1 数据与证据 | 建立应用壳层和数据展示基础 | ✓ 设计 Token、6 项一级导航、证据抽屉、API Client 全部就绪 |
 | T2 岗位演化 | 完成新岗位和既有岗位页面 | ✓ 候选列表、5 要素编辑、3 栏 Diff、发布确认 + 成功视图 |
-| T3 图谱与诊断 | 完成人岗诊断闭环 | △ F-T3.1/3.2/3.3/3.5 完成；F-T3.4 / F-T3.6 等后端 |
+| T3 图谱与诊断 | 完成人岗诊断闭环 | ✓ F-T3.1/3.2/3.3/3.4/3.5/3.6 全部完成 |
 | T4 评测与交付 | 完成稳定性和答辩验收 | ✓ 评测中心、错误状态、响应式、Playwright 10/10、prod build、6 页面截图 |
 
 ## 任务清单
@@ -48,9 +48,9 @@
 | F-T3.1 | 技能点图谱 | F-T1.2 | I3 | **完成** | `/skills` 30 capability + 11 skill point = 41 节点，xyflow 容器，4 维筛选，capability 必备蓝/加分中性/added/modified 虚线着色。 |
 | F-T3.2 | 图谱节点详情和证据 | F-T1.3 | I3 | **完成** | `skill-node-detail.tsx` 侧栏（信息/别名/兄弟技能点/证据摘要）+ 关联岗位版本与市场信号（扫 12 个 published 版本聚合 JobVersion 引用、JD 提及数与占比，替换原占位块）。 |
 | F-T3.3 | 手工技能画像 | `CandidateProfile` | I4 | **完成** | 技能 status 改写 + 项目 `{id,text}[]` 增删改 + `userCorrections[]` 审计数组（带 ISO 时间戳）。 |
-| F-T3.4 | PDF/DOCX 解析确认 | Resume API | I4 | **未开始**（等后端 B-T3.1）| 解析结果可编辑，保留原文片段。前端 mock 无意义，等 Resume API 实装再做。 |
+| F-T3.4 | PDF/DOCX 解析确认 | Resume API | I4 | **完成** | `/resumes` 上传 → `POST /candidates/resumes`（FormData，90s 超时）→ 归一结果可修正（skill_id 编辑/删行）+ 原文片段折叠；确认为会话内闭环，候选人持久化待后端。 |
 | F-T3.5 | 匹配报告和学习路径 | `MatchReport`、F-T1.6 | I4 | **完成** | `/diagnosis` 已含置信度卡 + 关键短板 + 排序学习路径 + recalculate 联动技能 status。 |
-| F-T3.6 | 岗位标准输出与培养任务 | PublishedJobVersion API | I4 | **未开始**（等后端）| 导出 JD 能力模板、诊断标准、学练赛证式训练任务。 |
+| F-T3.6 | 岗位标准输出与培养任务 | PublishedJobVersion API | I4 | **完成** | 发布成功视图拉取 `GET /jobs/{id}/training-output`，渲染 JD 模板（职责/必备/加分）、学练赛证培养任务与能力证明要求；mock 模式显示占位说明。 |
 
 ### F-T4 评测与交付
 
@@ -98,5 +98,5 @@
 - [x] 历史回测页和当前趋势页不直接修改岗位版本，只展示预测和更新建议。`/temporal/forecasts` + `/temporal/retrospect` 只读 mock
 - [x] 时间情报页面使用自己的任务语义，不复制旧仿真项目的事件回放界面。
 - [x] 审核者无需下载数据包，即可在前端完成标注、复盘和岗位审核。`/tasks` + `/quality` 一页式 mock
-- [ ] **F-T3.4 PDF/DOCX 解析确认**：等后端 B-T3.1 Resume API
-- [ ] **F-T3.6 岗位标准输出与培养任务**：等后端 PublishedJobVersion API
+- [x] **F-T3.4 PDF/DOCX 解析确认**：`/resumes` 页接入 `POST /candidates/resumes`，解析归一结果可修正，确认闭环为会话内
+- [x] **F-T3.6 岗位标准输出与培养任务**：发布成功视图接入 `GET /jobs/{id}/training-output`

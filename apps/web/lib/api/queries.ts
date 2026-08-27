@@ -50,3 +50,21 @@ export async function publishJobVersion(
     { method: "POST", body: { jobId, version } },
   );
 }
+
+export type EmergingReviewDecision = "accepted" | "rejected";
+
+// 新岗位候选审核：real 模式 POST 后端留痕（append-only review-actions）。
+export async function reviewEmergingJob(
+  candidateId: string,
+  decision: EmergingReviewDecision,
+  note = "",
+): Promise<{ accepted: boolean }> {
+  if (isMockMode()) {
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    return { accepted: true };
+  }
+  return apiFetch<{ accepted: boolean }>(
+    `/emerging-jobs/${encodeURIComponent(candidateId)}/review`,
+    { method: "POST", body: { decision, note } },
+  );
+}

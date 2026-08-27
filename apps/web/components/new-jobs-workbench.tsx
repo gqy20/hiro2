@@ -8,13 +8,14 @@ import {
   PencilSimple,
   XCircle,
 } from "@phosphor-icons/react";
-import { Button, Input, Tooltip } from "antd";
+import { Button, Input, Tooltip, message } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
 import { StatusMark } from "@/components/review-ui";
 import { FixtureState } from "@/components/workflow-ui";
 import { WorkflowContext } from "@/components/workflow-context";
+import { reviewEmergingJob } from "@/lib/api/queries";
 import type { NewJobsFixture } from "@/lib/new-jobs";
 import type {
   ChangeItem,
@@ -74,7 +75,16 @@ export function NewJobsWorkbench({
     timeWindow: "2026-05 至 2026-08",
   };
 
-  function updateStatus(status: ReviewStatus) {
+  // ponytail: 决定走后端留痕（real），成功后才更新本地；失败提示并保持原状态
+  async function updateStatus(status: ReviewStatus) {
+    if (status === "accepted" || status === "rejected") {
+      try {
+        await reviewEmergingJob(selected.id, status);
+      } catch {
+        message.error("审核动作未能写入后端，请稍后重试");
+        return;
+      }
+    }
     setCandidates((current) =>
       current.map((candidate) =>
         candidate.id === selected.id ? { ...candidate, status } : candidate,

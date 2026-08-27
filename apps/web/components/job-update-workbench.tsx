@@ -151,6 +151,7 @@ export function JobUpdateWorkbench({
         jobTitle={fixture.context.jobTitle}
         onBack={() => setPublishedResult(null)}
         publishedAt={publishedResult.publishedAt}
+        versionId={publishedResult.versionId}
         reviewCounts={{
           accepted: reviewCounts.accepted,
           rejected: reviewCounts.rejected,

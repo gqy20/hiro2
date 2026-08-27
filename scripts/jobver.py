@@ -193,7 +193,7 @@ def cmd_run() -> dict:
 
     draft = {
         "job_id": f"job_{agent_pos['position_id']}_agent",
-        "version_id": "v2-draft-20260825",
+        "version_id": f"ai-agent-v2-draft-{date.today().strftime('%Y%m%d')}",
         "status": "DRAFT",
         "title": "AI Agent 工程师",
         "basis": {

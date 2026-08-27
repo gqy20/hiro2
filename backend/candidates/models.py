@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 Proficiency = Literal["初级", "中级", "高级"]
 Verdict = Literal["缺失", "部分具备", "已具备"]
@@ -34,6 +34,57 @@ class ProjectEntry(BaseModel):
     skill_mentions: list[str] = Field(default_factory=list, max_length=15)
 
 
+class WorkExperience(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    company: str = ""
+    title: str
+    start_date: str = ""
+    end_date: str = ""
+    summary: str = ""
+    achievements: list[str] = Field(default_factory=list, max_length=5)
+    skill_mentions: list[str] = Field(default_factory=list, max_length=15)
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_nulls(cls, obj):
+        if isinstance(obj, dict):
+            obj = {key: ("" if value is None else value) for key, value in obj.items()}
+        return obj
+
+
+class EducationEntry(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    school: str
+    major: str = ""
+    degree: str = ""
+    start_date: str = ""
+    end_date: str = ""
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_nulls(cls, obj):
+        if isinstance(obj, dict):
+            obj = {key: ("" if value is None else value) for key, value in obj.items()}
+        return obj
+
+
+class CertificateEntry(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    name: str
+    issuer: str = ""
+    issued_date: str = ""
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_nulls(cls, obj):
+        if isinstance(obj, dict):
+            obj = {key: ("" if value is None else value) for key, value in obj.items()}
+        return obj
+
+
 class CandidateProfile(BaseModel):
     """effective_profile = raw_extraction + user_corrections（原始抽取永不覆盖）。"""
 
@@ -45,6 +96,12 @@ class CandidateProfile(BaseModel):
     skills: list[EffectiveSkill] = Field(default_factory=list, max_length=60)
     experience_years: float | None = None
     education: str = ""
+    location: str = ""
+    work_experiences: list[WorkExperience] = Field(default_factory=list, max_length=10)
+    education_history: list[EducationEntry] = Field(default_factory=list, max_length=8)
+    certificates: list[CertificateEntry] = Field(default_factory=list, max_length=12)
+    portfolio_urls: list[str] = Field(default_factory=list, max_length=8)
+    languages: list[str] = Field(default_factory=list, max_length=8)
     projects: list[ProjectEntry] = Field(default_factory=list, max_length=10)
     correction_log: list[dict] = Field(default_factory=list)
 

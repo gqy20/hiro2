@@ -78,7 +78,8 @@ def _group(rows: list[dict]) -> dict:
     hit = sum(r["hit"] for r in rows)
     hit_strict = sum(r.get("hit_strict", 0) for r in rows)
     return {
-        "n": len(rows), "gold": gold,
+        "n": len(rows),
+        "gold": gold,
         "recall": round(hit / gold, 3) if gold else None,
         "recall_strict": round(hit_strict / gold, 3) if gold else None,
     }
@@ -100,9 +101,14 @@ async def cmd_run(layouts: list[str], limit: int | None, profiles: str | None) -
             try:
                 return await eval_one(it, ly)
             except Exception as exc:  # noqa: BLE001
-                return {"file": f"{Path(it['file']).stem}.{ly}", "profile": it["profile"],
-                        "gold": len(it["gold"]["mentions"]), "hit": 0,
-                        "miss": ["<extract_failed>"], "error": str(exc)[:120]}
+                return {
+                    "file": f"{Path(it['file']).stem}.{ly}",
+                    "profile": it["profile"],
+                    "gold": len(it["gold"]["mentions"]),
+                    "hit": 0,
+                    "miss": ["<extract_failed>"],
+                    "error": str(exc)[:120],
+                }
 
     rows = list(await asyncio.gather(*(guarded(*j) for j in jobs)))
     ok_rows = [r for r in rows if "error" not in r]
@@ -113,10 +119,13 @@ async def cmd_run(layouts: list[str], limit: int | None, profiles: str | None) -
         "calls": len(rows),
         "failed": len(rows) - len(ok_rows),
         "overall": _group(ok_rows),
-        "by_layout": {ly: _group([r for r in ok_rows if r["file"].endswith(f".{ly}")])
-                      for ly in layouts},
-        "by_profile": {p: _group([r for r in ok_rows if r["profile"] == p])
-                       for p in sorted({r["profile"] for r in ok_rows})},
+        "by_layout": {
+            ly: _group([r for r in ok_rows if r["file"].endswith(f".{ly}")]) for ly in layouts
+        },
+        "by_profile": {
+            p: _group([r for r in ok_rows if r["profile"] == p])
+            for p in sorted({r["profile"] for r in ok_rows})
+        },
         "miss_detail": [r for r in ok_rows if r["miss"]],
         "rows": ok_rows,
         "errors": [r for r in rows if "error" in r][:5],
@@ -136,8 +145,13 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--profiles", default=None)
     args = parser.parse_args(argv)
     report = asyncio.run(cmd_run(args.layouts.split(","), args.limit, args.profiles))
-    print(json.dumps({k: report[k] for k in ("overall", "by_layout", "by_profile")},
-                     ensure_ascii=False, indent=1))
+    print(
+        json.dumps(
+            {k: report[k] for k in ("overall", "by_layout", "by_profile")},
+            ensure_ascii=False,
+            indent=1,
+        )
+    )
     return 0
 
 

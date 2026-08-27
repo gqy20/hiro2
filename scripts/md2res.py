@@ -30,7 +30,9 @@ def pandoc(md_path: Path, fmt: str) -> str:
     """调用 pandoc 转换（原生能力优先，不重写解析器）。"""
     r = subprocess.run(
         ["pandoc", str(md_path), "-t", fmt, "--wrap=none"],
-        capture_output=True, text=True, check=True,
+        capture_output=True,
+        text=True,
+        check=True,
     )
     return r.stdout
 
@@ -108,7 +110,8 @@ def convert(md_path: Path, formats: list[str] | None = None) -> dict:
     if "docx" in formats:
         p = OUT_DIR / f"{stem}.docx"
         subprocess.run(
-            ["pandoc", str(md_path), "-o", str(p)], check=True,
+            ["pandoc", str(md_path), "-o", str(p)],
+            check=True,
         )
         made["docx"] = p.name
     if "txt" in formats:
@@ -122,7 +125,10 @@ def pandoc_text(md_text: str) -> str:
     """对 md 字符串（非文件）转 html。"""
     r = subprocess.run(
         ["pandoc", "-f", "markdown", "-t", "html"],
-        input=md_text, capture_output=True, text=True, check=True,
+        input=md_text,
+        capture_output=True,
+        text=True,
+        check=True,
     )
     return r.stdout
 

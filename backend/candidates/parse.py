@@ -16,11 +16,18 @@ class ResumeRawExtraction(BaseModel):
     skills: list[dict] = Field(default_factory=list, max_length=40)
     experience_years: float | None = None
     education: str = ""
+    location: str = ""
+    work_experiences: list[dict] = Field(default_factory=list, max_length=10)
+    education_history: list[dict] = Field(default_factory=list, max_length=8)
+    certificates: list[dict] = Field(default_factory=list, max_length=12)
+    portfolio_urls: list[str] = Field(default_factory=list, max_length=8)
+    languages: list[str] = Field(default_factory=list, max_length=8)
     projects: list[dict] = Field(default_factory=list, max_length=8)
 
 
 class DocumentParser(Protocol):
     def parse(self, path: Path) -> str: ...
+
 
 class PdfParser:
     """PyMuPDF 文本抽取。已知局限：双栏版式阅读顺序可能错乱（升级项 MinerU）。"""
@@ -71,7 +78,14 @@ def build_profile(
     corrections: list[dict] | None = None,
 ) -> CandidateProfile:
     """raw extraction + 用户修正 -> effective profile（原始永不覆盖，可审计）。"""
-    from .models import CandidateProfile, EffectiveSkill, ProjectEntry
+    from .models import (
+        CandidateProfile,
+        CertificateEntry,
+        EducationEntry,
+        EffectiveSkill,
+        ProjectEntry,
+        WorkExperience,
+    )
 
     skills: list[EffectiveSkill] = []
     seen: set[str] = set()
@@ -112,6 +126,12 @@ def build_profile(
         skills=skills,
         experience_years=raw.experience_years,
         education=raw.education,
+        location=raw.location,
+        work_experiences=[WorkExperience.model_validate(item) for item in raw.work_experiences],
+        education_history=[EducationEntry.model_validate(item) for item in raw.education_history],
+        certificates=[CertificateEntry.model_validate(item) for item in raw.certificates],
+        portfolio_urls=raw.portfolio_urls,
+        languages=raw.languages,
         projects=[ProjectEntry.model_validate(p) for p in raw.projects],
         correction_log=corrections or [],
     )
@@ -203,6 +223,15 @@ def _parse_llm(raw: str) -> dict:
     # ponytail: prompt 限不住数量，超限时截断而不是整单拒绝（回归实测 long 简历 >40 条触发）
     data["skills"] = data["skills"][:40]
     data["projects"] = data.get("projects", [])[:8]
+    proficiency_map = {"熟悉": "中级", "熟练": "中级", "精通": "高级", "了解": "初级"}
+    for skill in data["skills"]:
+        if skill.get("proficiency") in proficiency_map:
+            skill["proficiency"] = proficiency_map[skill["proficiency"]]
+    for project in data["projects"]:
+        project["skill_mentions"] = project.get("skill_mentions", [])[:15]
+    data["work_experiences"] = data.get("work_experiences", [])[:10]
+    data["education_history"] = data.get("education_history", [])[:8]
+    data["certificates"] = data.get("certificates", [])[:12]
     return ResumeRawExtraction.model_validate(data).model_dump()
 
 

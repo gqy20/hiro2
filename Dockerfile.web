@@ -6,12 +6,12 @@ COPY apps/web/package.json apps/web/pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 COPY apps/web ./
 
-# NEXT_PUBLIC_* 在构建期内联，API 地址须经 build-arg 注入（默认为 compose 内网名）
-ARG API_BASE_URL=http://api:8000
+# NEXT_PUBLIC_* 在构建期内联；生产构建必须注入 API 公网地址。
+ARG API_BASE_URL=
 ENV NODE_ENV=production
 ENV NEXT_PUBLIC_USE_MOCK=false
 ENV NEXT_PUBLIC_API_BASE_URL=${API_BASE_URL}
 RUN pnpm build
 
 EXPOSE 3000
-CMD ["pnpm", "start"]
+CMD ["sh", "-c", "exec pnpm start --hostname 0.0.0.0 --port \"${PORT:-3000}\""]

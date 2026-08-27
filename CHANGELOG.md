@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+### Changed
+- Railway 部署适配：API/Web 使用平台动态端口，CORS 与简历档案路径支持环境变量，生产镜像排除本地密钥和原始文件。
+
 ### Added
 - 企业官方招聘站采集器 `jdcorp`（8 源 4248 条 JD）：字节/阿里/腾讯/美团/小红书/vivo 国内 6 厂（Playwright 拦截同源 XHR 或纯 HTTP，全部带职责/要求正文，7 成带真实发布时间）+ Anthropic 与 Greenhouse 通用 board adapter（Together AI/Scale/Databricks/Pinterest/Figma/Discord/Stripe/Duolingo 8 板块纯 HTTP 全量）；关键词级 7 天增量缓存（首屏无新增跳过整词）、`--keywords all` 全岗位池模式（不过度倾向技术岗）、`runall` 8 站并行；`jdxtract` 接入 corp 第四源自动合并解析，`SOURCES.yml` 登记 jd-corp 来源与限速纪律。放弃名单及原因：华为 404、百度 headless 反爬、快手登录墙、OpenAI 网络不通、DeepSeek SSR 内嵌且岗位量个位数、MiniMax careers 无职位数据、荣耀/蚂蚁/小米/B站连接层拒绝。
 - 简历档案审阅工作区：左侧去重档案列表，右侧当前文件审阅；支持 PDF 内嵌预览、DOCX 内容预览、TXT/MD 文本预览，以及文档预览与结构化档案 Tab 切换。

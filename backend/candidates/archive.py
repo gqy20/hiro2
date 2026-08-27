@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import time
 import uuid
@@ -15,8 +16,13 @@ from pathlib import Path
 from threading import Lock
 
 ROOT = Path(__file__).resolve().parents[2]
-OBJECTS = ROOT / "data" / "objects" / "resumes"
-ARCHIVE = ROOT / "data" / "processed" / "candidates" / "resume-archive.jsonl"
+OBJECTS = Path(os.getenv("RESUME_OBJECTS_DIR", str(ROOT / "data" / "objects" / "resumes")))
+ARCHIVE = Path(
+    os.getenv(
+        "RESUME_ARCHIVE_PATH",
+        str(ROOT / "data" / "processed" / "candidates" / "resume-archive.jsonl"),
+    )
+)
 
 _LIST_FIELDS = ("resume_id", "filename", "size", "suffix", "uploaded_at", "source", "stats")
 _WRITE_LOCK = Lock()

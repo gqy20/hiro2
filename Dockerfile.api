@@ -14,4 +14,4 @@ COPY migrations ./migrations
 ENV PATH="/app/.venv/bin:$PATH"
 EXPOSE 8000
 # 配置了 DATABASE_URL 时先幂等应用迁移（托管 PG 无 initdb 挂载），再启动 API
-CMD ["sh", "-c", "if [ -n \"$DATABASE_URL\" ]; then python scripts/dbmigr.py; fi; exec uvicorn apps.api.main:app --host 0.0.0.0 --port 8000"]
+CMD ["sh", "-c", "if [ -n \"$DATABASE_URL\" ]; then python scripts/dbmigr.py; fi; exec uvicorn apps.api.main:app --host 0.0.0.0 --port \"${PORT:-8000}\""]

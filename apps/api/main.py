@@ -26,10 +26,21 @@ from backend.application.temporal_vm import build_skill_graph, build_tasks, buil
 from backend.application.training import build_training_output
 
 app = FastAPI(title="Hiro2 API", version="0.1.0")
+
+
+def _cors_origins() -> list[str]:
+    configured = os.getenv("CORS_ORIGINS", "")
+    extra = [origin.strip().rstrip("/") for origin in configured.split(",") if origin.strip()]
+    return ["http://localhost:3000", "http://127.0.0.1:3000", *extra]
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
-    allow_origin_regex=r"https?://10\.\d+\.\d+\.\d+(?::\d+)?$",
+    allow_origins=_cors_origins(),
+    allow_origin_regex=os.getenv(
+        "CORS_ORIGIN_REGEX",
+        r"https?://10\.\d+\.\d+\.\d+(?::\d+)?$",
+    ),
     allow_methods=["*"],
     allow_headers=["*"],
 )

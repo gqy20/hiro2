@@ -5,6 +5,11 @@
 ## [Unreleased]
 
 ### Added
+- 企业官方招聘站采集器 `jdcorp`（8 源 4248 条 JD）：字节/阿里/腾讯/美团/小红书/vivo 国内 6 厂（Playwright 拦截同源 XHR 或纯 HTTP，全部带职责/要求正文，7 成带真实发布时间）+ Anthropic 与 Greenhouse 通用 board adapter（Together AI/Scale/Databricks/Pinterest/Figma/Discord/Stripe/Duolingo 8 板块纯 HTTP 全量）；关键词级 7 天增量缓存（首屏无新增跳过整词）、`--keywords all` 全岗位池模式（不过度倾向技术岗）、`runall` 8 站并行；`jdxtract` 接入 corp 第四源自动合并解析，`SOURCES.yml` 登记 jd-corp 来源与限速纪律。放弃名单及原因：华为 404、百度 headless 反爬、快手登录墙、OpenAI 网络不通、DeepSeek SSR 内嵌且岗位量个位数、MiniMax careers 无职位数据、荣耀/蚂蚁/小米/B站连接层拒绝。
+- 简历档案审阅工作区：左侧去重档案列表，右侧当前文件审阅；支持 PDF 内嵌预览、DOCX 内容预览、TXT/MD 文本预览，以及文档预览与结构化档案 Tab 切换。
+- 简历档案批量解析：新增 `resparse` 命令，将已入档未解析的 PDF/DOCX/TXT/MD 逐份接入现有抽取与归一管线，更新结构化职业档案并保留失败记录。
+- 简历档案结构化升级：解析结果按职业摘要、工作经历、项目与能力证明、技能匹配、教育与补充信息、原始简历排序；解析 Schema 扩展经历、教育、城市、证书、作品链接和语言字段，内部能力 ID 改为“已识别/待确认”。
+- 简历档案持久化与可视化：新增 `backend/candidates/archive.py`（文件落 `data/objects/resumes/`、元数据与画像追加 `resume-archive.jsonl`，离线优先文件为权威）；`POST /candidates/resumes` 解析成功自动入档，新增 `GET /candidates/resumes`（轻字段列表）与 `GET /candidates/resumes/{id}`（详情）；`resumeimport` CLI 一次性导入 resumes-div 测试集 72 份（过滤 -2col 版式变体，imported 不解析、重复文件名幂等跳过）；`/resumes` 页新增档案网格（文件名/日期/大小/来源/技能与归一摘要），点已解析档案回看画像，上传成功即时置顶入档；档案域单测 2 例（入档往返、导入幂等）。
 - 简历解析体验升级：新增上传后文件预览、多文件处理队列、单份解析与批量解析入口，逐份保留待解析/解析中/完成/失败状态。
 - 工作区切换：顶部新增“招聘 / 成长”分段切换，按角色切换首页、导航和工作区上下文，并记住最近选择。
 - 前后端断链补全六项（roadmap 前端 26/26 完成）：①发布流实装 `POST /jobs/{id}/versions/{version}/publish`（审核留痕 + 复用 jobpub 固化，重复发布幂等返回，TestClient 验证）；②新岗位候选接受/拒绝接 `POST /emerging-jobs/{id}/review`（留痕失败时前端不更新状态并提示）；③`/temporal/signals`、`/temporal/suggestions` 改走 `/temporal/dataset`（与 forecasts/retrospect 一致，真实 signals 500 条）；④证据抽屉无来源链接时提供「查看全文」（fullText 已在 VM）；⑤发布成功视图接入 `GET /jobs/{id}/training-output`（JD 模板 + 学练赛证培养任务 + 证明要求）；⑥新增 `/resumes` 解析确认页（上传 FormData → `POST /candidates/resumes` 90s 超时 → 归一结果可修正 + 原文片段，确认为会话内闭环）；`apiFetch` 支持 FormData，主案例 draft version_id 规范化为 `ai-agent-v2-draft-{date}`。
@@ -17,10 +22,11 @@
 - 信号流接入真实数据（D6 TrendSignal 落地）：sigbuild 确定性生成提及级 TrendSignal（events 主记录 × 归一映射，6755 条/24 能力域，cap_04 AI Agent 2027 次居首，confidence 沿用事实分级映射，evidence_id 直回链 ev:{event_id}）；daily 增至七步（+sigbuild）；`/api/v1/temporal/dataset` signals 从空数组变为近 90 天 500 条；前端 `/temporal/signals` 从 mock 25 条切真实（近 90 天 ≤500 条），头部新增"最近信号"新鲜度指示。AI Agent 信号第一的既有结论在多源数据下复现。
 - 时间情报每日闭环（daily 编排 + RSS 事件化）：extract 新增 feeds 通道（FeedItem 剥 HTML 后复用 report-event prompt 进同一 events 池，幂等键 content_hash，--days 控制增量窗口，<150 字纯标题条目跳过）；daily.py 编排 fetch→日报增量→feeds 增量→resolve→evdedup→evidence 六步（单步失败不阻塞）。整链实测：110 条近 7 天条目产出 522 事件（隔离 5），事件池 8350→9068；跨源重复 23.8% 被 evdedup 标记（多源报道同一新闻的去重价值直接体现）；evidence 重建 7219 条；词典加权覆盖 87.2%→60.3%（英文提及未命中进新词队列 3735 个，为词典习得原料）。存量 2700 条历史条目可 `extract.py feeds` 全量回填。
 - 打通 RSS 直连采集：feedtest 逐个测试 rss2cubox feeds.txt [direct] 段 140 个真直连源（116 可用，按优先级分组报告）；精选 24 源生成 `data/FEEDS.yml`（p5/p4 全量 10 + p2 精选 15，剔除与 openai-news 完全同 feed 的 openai-blog）；新增 `rssget` 抓取器（feedparser，guid 幂等追加、并发 8、失败源不阻塞），首轮 24/24 成功落 `data/raw/feeds/` 2718 条 FeedItem（published 2015-12~2026-08），复跑 0 新增验证幂等；SOURCES.yml 登记 `feeds`（live 模式）。
-- 打通 RSS 直连采集：feedtest 逐个测试 rss2cubox feeds.txt [direct] 段 140 个真直连源（116 可用，按优先级分组报告）；精选 24 源生成 `data/FEEDS.yml`（p5/p4 全量 10 + p2 精选 15，剔除与 openai-news 完全同 feed 的 openai-blog）；新增 `rssget` 抓取器（feedparser，guid 幂等追加、并发 8、失败源不阻塞），首轮 24/24 成功落 `data/raw/feeds/` 2718 条 FeedItem（published 2015-12~2026-08），复跑 0 新增验证幂等；SOURCES.yml 登记 `feeds`（live 模式）。
 - 采集与简历抽取域逻辑归位（AGENTS 分层惯例）：RSS 抓取/幂等落盘移入 `backend/temporal/feed.py`（Pydantic FeedItem + 不联网单测 3 例），`rssget` 变 CLI 壳；`candmatch._extract` 移入 `backend/candidates/parse.py` 为 `extract_resume` 域入口（消除 scripts 跨脚本 import），candmatch/reseval 改调域模块；feedparser 缺类型桩按 mypy overrides 豁免。50 测试全过。
 
 ### Fixed
+- 收敛简历档案列表：主列表只展示 PDF/DOCX 可预览版本，隐藏 TXT/MD 和重复文件元信息；PDF 使用红色格式标记、DOCX 使用蓝色，已解析状态为绿色、未解析为灰色。
+- 五项质量债清零（`make verify` 全绿恢复）：mypy 5 错误修复（psycopg fetchone 判空兜底、dashboard 类型注解）；删除 CHANGELOG 重复的 RSS 条目；发布端点补幂等回归测试（重复发布 200 / 未知草稿 404）；`Dockerfile.api` CMD 启动前幂等执行 `dbmigr`（托管 PG 无 initdb 挂载）、`Dockerfile.web` API 地址改 build-arg 注入（Railway 适配）；e2e 恢复密闭性——独立端口 3100 + 独立 distDir + 强制 mock（不受 `apps/web/.env` real 模式与 8000 API 新旧影响，绕开 Next dev 单实例锁），jobs/skills spec 对齐双 Tab 图谱新 UI 与 GSAP 动画（dispatchEvent 点击）；修复 `dashboard.css` 截断的未闭合 @media、`resume-parse-workbench` useState 声明顺序、`genresume.py` 超长行，`.next-e2e` 产物入 eslint/prettier/git 忽略。
 - 修正招聘侧候选诊断上下文：招聘模式不再显示求职成长、学习计划或求职者证明提示；简历解析上传区扩展为主内容宽度。
 - 统一诊断工作区操作对齐：重新计算与编辑画像归入标题行右侧操作组，打开证据移至说明标题行；学习计划编号固定窄列并与内容基线对齐。
 - 优化能力图谱与加载反馈：移除前端暴露的 `cap_XX` 内部能力 ID；各路由加载态改为匹配首页、Diff、图谱、诊断和评测实际结构的专属骨架；接入 GSAP 为路由切换和图谱重排提供轻量过渡，并完整支持减少动态效果偏好。

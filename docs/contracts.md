@@ -354,6 +354,7 @@ POST /api/v1/candidates/profiles
 POST /api/v1/candidates/resumes
 POST /api/v1/matches
 GET  /api/v1/matches/{id}
+GET  /api/v1/pipeline-runs?limit=50&since_days=7
 GET  /api/v1/pipeline-runs/{id}
 POST /api/v1/job-impact-suggestions/{id}/review
 GET  /api/v1/tasks/my

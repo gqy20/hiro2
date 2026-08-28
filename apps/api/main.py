@@ -24,6 +24,7 @@ from backend.application.datasets import build_dataset_overview, build_dataset_o
 from backend.application.diagnosis import build_diagnosis, list_candidates
 from backend.application.evaluation import build_evaluation_overview
 from backend.application.insights import build_detected_changes, build_timeline
+from backend.application.pipeline_runs import build_pipeline_runs
 from backend.application.quality import build_quality_overview
 from backend.application.service import ApplicationService
 from backend.application.snapshot import snapshot_enabled, snapshot_loop
@@ -187,6 +188,12 @@ def datasets_overview() -> dict:
         except Exception:
             pass
     return build_dataset_overview().model_dump()
+
+
+@app.get("/api/v1/pipeline-runs")
+def pipeline_runs(limit: int = 50, since_days: int = 7) -> dict:
+    """最近 pipeline run 列表（默认 7 天 / 50 条）。只读，扫描 data/runs/。"""
+    return build_pipeline_runs(limit=limit, since_days=since_days).model_dump()
 
 
 @app.get("/api/v1/evaluation/overview")

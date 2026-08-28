@@ -264,6 +264,9 @@ export function DiagnosisWorkbench({
                 <h1>{fixture.candidate.name}</h1>
                 <span>{fixture.candidate.headline}</span>
               </div>
+              <Link className="diagnosis-import-link" href="/resumes">
+                从简历导入
+              </Link>
             </div>
             <p className="profile-location">{fixture.candidate.location}</p>
             <h2>技能画像</h2>

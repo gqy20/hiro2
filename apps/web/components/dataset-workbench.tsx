@@ -15,7 +15,13 @@ function statusClass(status: string) {
   return "dataset-status";
 }
 
-export function DatasetWorkbench({ overview }: { overview: DatasetOverview }) {
+export function DatasetWorkbench({
+  overview,
+  embedded = false,
+}: {
+  overview: DatasetOverview;
+  embedded?: boolean;
+}) {
   const [selected, setSelected] = useState<DatasetItem | null>(null);
 
   // Esc 关闭抽屉
@@ -32,16 +38,24 @@ export function DatasetWorkbench({ overview }: { overview: DatasetOverview }) {
     1,
   );
   return (
-    <section className="dataset-workbench" aria-labelledby="dataset-title">
-      <header className="page-heading dataset-heading">
-        <div>
-          <h1 id="dataset-title">数据资产</h1>
-          <p>岗位能力分析使用的数据，从来源到评测均可追溯。</p>
-        </div>
-        <span className="dataset-heading-meta">内部质量工作区</span>
-      </header>
+    <section
+      className="dataset-workbench"
+      {...(embedded
+        ? { "aria-label": "数据集目录" }
+        : { "aria-labelledby": "dataset-title" })}
+    >
+      {embedded ? null : (
+        <header className="page-heading dataset-heading">
+          <div>
+            <h1 id="dataset-title">数据资产</h1>
+            <p>岗位能力分析使用的数据，从来源到评测均可追溯。</p>
+          </div>
+          <span className="dataset-heading-meta">内部质量工作区</span>
+        </header>
+      )}
 
-      <div className="dataset-summary" aria-label="数据资产总览">
+      {embedded ? null : (
+        <div className="dataset-summary" aria-label="数据资产总览">
         <div>
           <span>数据集</span>
           <strong>{overview.total_datasets}</strong>
@@ -62,8 +76,10 @@ export function DatasetWorkbench({ overview }: { overview: DatasetOverview }) {
           <strong>{formatNumber(overview.pending_records)}</strong>
           <small>条待处理记录</small>
         </div>
-      </div>
+        </div>
+      )}
 
+      {embedded ? null : (
       <div className="dataset-main-grid">
         <section
           className="dataset-panel dataset-chart-panel"
@@ -122,6 +138,7 @@ export function DatasetWorkbench({ overview }: { overview: DatasetOverview }) {
           </p>
         </section>
       </div>
+      )}
 
       <section
         className="dataset-panel dataset-table-panel"

@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import type { QualityOverview } from "@/lib/quality";
 
-type Props = Readonly<{ quality: QualityOverview }>;
+type Props = Readonly<{ quality: QualityOverview; embedded?: boolean }>;
 
 function formatPercent(value: number | null): string {
   if (value == null) return "暂无数据";
@@ -28,7 +28,7 @@ const ERROR_NOTES: Record<string, string> = {
   规则过时: "标准文档更新未同步",
 };
 
-export function DataQualityWorkbench({ quality }: Props) {
+export function DataQualityWorkbench({ quality, embedded = false }: Props) {
   // data_quality 标记区分“数值为 0”与“该指标不可用”：unavailable 一律显示暂无数据
   const flags = quality.data_quality;
   const available = (key: string) => flags[key] === "available";
@@ -55,10 +55,17 @@ export function DataQualityWorkbench({ quality }: Props) {
   const maxErrorCount = errorList[0]?.count ?? 1;
 
   return (
-    <section className="data-quality" aria-labelledby="data-quality-title">
-      <h1 id="data-quality-title" className="sr-only">
-        标注质量
-      </h1>
+    <section
+      className="data-quality"
+      {...(embedded
+        ? { "aria-label": "人工审核质量" }
+        : { "aria-labelledby": "data-quality-title" })}
+    >
+      {embedded ? null : (
+        <h1 id="data-quality-title" className="sr-only">
+          标注质量
+        </h1>
+      )}
 
       <div className="data-quality-kpis" role="group" aria-label="质量指标">
         <div className="data-quality-kpi">

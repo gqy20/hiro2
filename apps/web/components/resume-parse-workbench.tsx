@@ -5,7 +5,8 @@
 // imported 档案仅登记未解析，确认闭环仍为会话内。
 
 import { useEffect, useState } from "react";
-import { FileArrowUp, Trash } from "@phosphor-icons/react";
+import Link from "next/link";
+import { ArrowRight, FileArrowUp, Trash } from "@phosphor-icons/react";
 import { Button, Tag, Upload, message } from "antd";
 
 import { AppShell } from "@/components/app-shell";
@@ -650,6 +651,11 @@ export function ResumeParseWorkbench({
               >
                 {confirmed ? "已确认" : "确认画像"}
               </Button>
+              {confirmed ? (
+                <Link className="resume-parse-goto" href="/diagnosis">
+                  前往诊断 <ArrowRight aria-hidden size={15} />
+                </Link>
+              ) : null}
             </div>
           </div>
         ) : null}

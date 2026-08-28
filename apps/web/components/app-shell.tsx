@@ -12,7 +12,6 @@ import {
   ChartScatter,
   ClipboardText,
   Database,
-  FileText,
   FlowArrow,
   Funnel,
   GitDiff,
@@ -29,10 +28,7 @@ const navigation = [
   { href: "/new-jobs", label: "岗位发现", icon: MagnifyingGlass },
   { href: "/positions", label: "我的岗位", icon: GitDiff },
   { href: "/skills", label: "能力全景", icon: Graph },
-  { href: "/resumes", label: "简历解析", icon: FileText },
   { href: "/diagnosis", label: "候选诊断", icon: ClipboardText },
-  { href: "/evaluation", label: "评测中心", icon: ShieldCheck },
-  { href: "/datasets", label: "数据资产", icon: Database },
   { href: "/career", label: "求职成长", icon: ChartScatter },
   { href: "/career/jobs", label: "目标岗位", icon: Graph },
   { href: "/profile", label: "我的画像", icon: ClipboardText },
@@ -52,7 +48,9 @@ const dataNavigation = [
   { href: "/data", label: "总览", icon: Database },
   { href: "/data/sources", label: "来源", icon: FlowArrow },
   { href: "/data/pipeline", label: "流水线", icon: Funnel },
-  { href: "/data/quality", label: "质量", icon: ShieldCheck },
+  { href: "/tasks", label: "审核任务", icon: ClipboardText },
+  { href: "/evaluation", label: "评测与质量", icon: ShieldCheck },
+  { href: "/temporal", label: "时间情报", icon: ChartScatter },
 ];
 
 type Workspace = "recruiting" | "career" | "data";
@@ -84,11 +82,17 @@ export function AppShell({
   }, []);
   const router = useRouter();
   const [workspace, setWorkspace] = useState<Workspace>(() => {
-    const fallback: Workspace = pathname.startsWith("/data")
-      ? "data"
-      : pathname.startsWith("/career") || pathname.startsWith("/profile")
-        ? "career"
-        : "recruiting";
+    const fallback: Workspace =
+      pathname.startsWith("/data") ||
+      pathname.startsWith("/temporal") ||
+      pathname.startsWith("/tasks") ||
+      pathname.startsWith("/evaluation") ||
+      pathname.startsWith("/quality") ||
+      pathname.startsWith("/datasets")
+        ? "data"
+        : pathname.startsWith("/career") || pathname.startsWith("/profile")
+          ? "career"
+          : "recruiting";
     if (typeof window === "undefined") return fallback;
     const stored = window.localStorage.getItem(WORKSPACE_KEY);
     if (stored === "recruiting" || stored === "career" || stored === "data") {

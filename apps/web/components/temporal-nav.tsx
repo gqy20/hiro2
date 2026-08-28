@@ -8,6 +8,7 @@ const tabs: Array<{ href: string; label: string }> = [
   { href: "/temporal/forecasts", label: "趋势回测" },
   { href: "/temporal/retrospect", label: "预测复盘" },
   { href: "/temporal/suggestions", label: "影响建议" },
+  { href: "/temporal/timeline", label: "时间轴" },
 ];
 
 export function TemporalNav() {

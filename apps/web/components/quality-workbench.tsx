@@ -20,9 +20,11 @@ const ERROR_LABELS: Record<string, string> = {
 export function QualityWorkbench({
   temporal,
   quality,
+  embedded = false,
 }: {
   temporal: TemporalDataset;
   quality: QualityOverview;
+  embedded?: boolean;
 }) {
   const [compareIds, setCompareIds] = useState<[string, string]>(() => [
     temporal.backtests[0].run_id,
@@ -52,14 +54,21 @@ export function QualityWorkbench({
 
   return (
     <AppShell>
-      <section className="quality-workbench" aria-labelledby="quality-title">
-        <header className="page-heading">
-          <h1 id="quality-title">质量看板</h1>
-          <p>
-            评测任务、审核动作与回测运行的质量汇总 · 数据源：
-            {quality.source === "postgres" ? "PostgreSQL" : "离线评测产物"}
-          </p>
-        </header>
+      <section
+        className="quality-workbench"
+        {...(embedded
+          ? { "aria-label": "运行对比与错误分布" }
+          : { "aria-labelledby": "quality-title" })}
+      >
+        {embedded ? null : (
+          <header className="page-heading">
+            <h1 id="quality-title">质量看板</h1>
+            <p>
+              评测任务、审核动作与回测运行的质量汇总 · 数据源：
+              {quality.source === "postgres" ? "PostgreSQL" : "离线评测产物"}
+            </p>
+          </header>
+        )}
 
         <section aria-label="核心指标" className="temporal-backtest-metrics">
           <div className="temporal-stat-card">

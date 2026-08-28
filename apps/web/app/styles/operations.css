@@ -905,3 +905,23 @@
   font-weight: 500;
   font-size: 12px;
 }
+
+.resume-parse-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.resume-parse-goto {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--blue);
+  font-size: 14px;
+  text-decoration: none;
+}
+.diagnosis-import-link {
+  color: var(--blue);
+  font-size: 13px;
+  text-decoration: none;
+  white-space: nowrap;
+}

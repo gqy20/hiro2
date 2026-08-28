@@ -1,5 +1,6 @@
 import { AppShell } from "@/components/app-shell";
 import { DataShowcase } from "@/components/data-showcase";
+import { DatasetWorkbench } from "@/components/dataset-workbench";
 import { apiFetch, isMockMode } from "@/lib/api/client";
 import type { DatasetOverview } from "@/lib/datasets";
 import type { PipelineRunList } from "@/lib/pipeline-runs";
@@ -31,6 +32,7 @@ export default async function DataPage() {
   return (
     <AppShell>
       <DataShowcase overview={overview} pipeline={pipeline} />
+      <DatasetWorkbench embedded overview={overview} />
     </AppShell>
   );
 }

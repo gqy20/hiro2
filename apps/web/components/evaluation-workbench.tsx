@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { ArrowSquareOut, Database, Warning } from "@phosphor-icons/react";
 import { Button, Progress, Tag } from "antd";
 
@@ -21,8 +22,10 @@ function priorityLabel(priority: "high" | "medium"): string {
 
 export function EvaluationWorkbench({
   overview,
+  extra,
 }: {
   overview: EvaluationOverview;
+  extra?: ReactNode;
 }) {
   const currentRun = {
     ...overview.run,
@@ -136,6 +139,7 @@ export function EvaluationWorkbench({
             </aside>
           </div>
         </section>
+        {extra}
       </div>
     </AppShell>
   );

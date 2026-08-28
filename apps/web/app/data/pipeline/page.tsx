@@ -11,8 +11,7 @@ const EMPTY: PipelineRunList = { runs: [], total: 0 };
 export default async function DataPipelinePage() {
   const data: PipelineRunList = isMockMode()
     ? await loadPipelineRunsFixture()
-    : (await apiFetch<PipelineRunList>("/api/v1/pipeline-runs?limit=50")) ??
-      EMPTY;
+    : (await apiFetch<PipelineRunList>("/pipeline-runs?limit=50")) ?? EMPTY;
 
   return (
     <AppShell>

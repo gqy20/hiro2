@@ -22,7 +22,7 @@ export default async function DataPage() {
 
   const pipeline: PipelineRunList = isMockMode()
     ? await loadPipelineRunsFixture()
-    : (await apiFetch<PipelineRunList>("/api/v1/pipeline-runs?limit=20")) ?? {
+    : (await apiFetch<PipelineRunList>("/pipeline-runs?limit=20")) ?? {
         runs: [],
         total: 0,
       };

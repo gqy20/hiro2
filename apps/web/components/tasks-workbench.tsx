@@ -228,6 +228,51 @@ export function TasksWorkbench({
                     <SystemOutputView output={selected.system_output} />
                   </section>
 
+                  {(() => {
+                    const prelabel = selected.system_output.prelabel as
+                      | {
+                          suggested_decision: ReviewDecision;
+                          confidence: number;
+                          rationale: string;
+                          corrected_payload?: { position_id?: string } | null;
+                        }
+                      | undefined;
+                    if (!prelabel) return null;
+                    return (
+                      <section
+                        aria-label="AI 建议"
+                        className="tasks-workspace-section tasks-prelabel"
+                      >
+                        <SectionHeader
+                          meta={`置信度 ${Math.round(prelabel.confidence * 100)}%`}
+                          title="AI 预标注建议（候选）"
+                        />
+                        <p>
+                          <Tag color="gold">
+                            {DECISION_OPTIONS.find(
+                              (o) => o.value === prelabel.suggested_decision,
+                            )?.label ?? prelabel.suggested_decision}
+                          </Tag>{" "}
+                          {prelabel.rationale}
+                        </p>
+                        {prelabel.corrected_payload?.position_id ? (
+                          <p className="tasks-prelabel-fix">
+                            {`建议修正为：${prelabel.corrected_payload.position_id}`}
+                          </p>
+                        ) : null}
+                        <Button
+                          onClick={() => {
+                            setDecision(prelabel.suggested_decision);
+                            setRationale(prelabel.rationale);
+                          }}
+                          size="small"
+                        >
+                          采纳建议（可修改后提交）
+                        </Button>
+                      </section>
+                    );
+                  })()}
+
                   <section
                     aria-label="证据"
                     className="tasks-workspace-section"

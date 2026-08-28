@@ -15,9 +15,26 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 ANNOTATIONS = ROOT / "evaluation" / "annotations.jsonl"
+PRELABELS = ROOT / "evaluation" / "prelabels.jsonl"
 DATASET_VERSION = "eval-v1-20260825"
 
 VALID_DECISIONS = ("ACCEPT", "MODIFY", "REJECT", "UNKNOWN")
+
+
+def load_prelabels() -> dict[str, dict[str, Any]]:
+    """读取 AI 预标注建议（scripts/prelabel.py 产物），返回 task_id -> 建议。
+
+    建议只是候选，不计入指标；人工提交后才写入 annotations。
+    """
+    latest: dict[str, dict[str, Any]] = {}
+    if not PRELABELS.is_file():
+        return latest
+    for line in PRELABELS.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        rec = json.loads(line)
+        latest[rec["task_id"]] = rec
+    return latest
 
 
 def load_annotations() -> dict[str, dict[str, Any]]:

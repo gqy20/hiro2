@@ -925,3 +925,11 @@
   text-decoration: none;
   white-space: nowrap;
 }
+
+.tasks-prelabel p {
+  margin: 8px 0;
+  font-size: 13px;
+}
+.tasks-prelabel-fix {
+  color: var(--muted);
+}

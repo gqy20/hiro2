@@ -532,10 +532,11 @@ class TaskListVM(_VM):
 
 
 def build_tasks() -> TaskListVM:
-    """从 evaluation/samples 生成 ReviewTask 列表，合并标注状态。"""
-    from .annotate import load_annotations
+    """从 evaluation/samples 生成 ReviewTask 列表，合并标注状态与 AI 预标注建议。"""
+    from .annotate import load_annotations, load_prelabels
 
     annotations = load_annotations()
+    prelabels = load_prelabels()
     tasks: list[ReviewTaskVM] = []
     samples_dir = ROOT / "evaluation" / "samples"
     for csv_name, task_type in [
@@ -559,6 +560,14 @@ def build_tasks() -> TaskListVM:
             if ann:
                 output["last_decision"] = ann["decision"]
                 output["last_rationale"] = ann.get("rationale", "")
+            pre = prelabels.get(task_id)
+            if pre and not ann:
+                output["prelabel"] = {
+                    "suggested_decision": pre["suggested_decision"],
+                    "confidence": pre["confidence"],
+                    "rationale": pre["rationale"],
+                    "corrected_payload": pre.get("corrected_payload"),
+                }
             tasks.append(
                 ReviewTaskVM(
                     task_id=task_id,

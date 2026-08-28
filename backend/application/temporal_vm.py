@@ -99,39 +99,43 @@ def build_temporal() -> TemporalVM:
     backtests: list[BacktestRunVM] = []
     records: list[BacktestRecordVM] = []
     for h in (30, 60, 90):
-        p = P / "wechat-mp" / f"backtest-h{h}.json"
-        if not p.is_file():
-            continue
-        d = json.loads(p.read_text(encoding="utf-8"))
-        m = d["metrics"]
-        backtests.append(
-            BacktestRunVM(
-                run_id=f"bt-h{h}",
-                as_of_date=m["as_of_points"][0] if m["as_of_points"] else "",
-                horizon_days=h,
-                status="SUCCEEDED",
-                metrics={
-                    "predictions": m["predictions"],
-                    "hits": m["hits"],
-                    "accuracy": m["accuracy"],
-                    "baseline": m["flat_baseline_accuracy"],
-                },
+        # 双规则版本读取：v1 为历史基线，v2（存在时）为当前生产规则
+        for rule, suffix in ((1, ""), (2, "-r2")):
+            p = P / "wechat-mp" / f"backtest-h{h}{suffix}.json"
+            if not p.is_file():
+                continue
+            d = json.loads(p.read_text(encoding="utf-8"))
+            m = d["metrics"]
+            backtests.append(
+                BacktestRunVM(
+                    run_id=f"bt-h{h}{'-r2' if rule == 2 else ''}",
+                    as_of_date=m["as_of_points"][0] if m["as_of_points"] else "",
+                    horizon_days=h,
+                    status="SUCCEEDED",
+                    metrics={
+                        "predictions": m["predictions"],
+                        "hits": m["hits"],
+                        "accuracy": m["accuracy"],
+                        "flat_baseline_accuracy": m["flat_baseline_accuracy"],
+                        "rule_version": m.get("rule_version", rule),
+                        "error_types": m.get("error_types", {}),
+                    },
+                )
             )
-        )
-        records.extend(
-            BacktestRecordVM(
-                as_of=r["as_of"],
-                skill_id=r["skill_id"],
-                predicted=r["predicted"],
-                actual=r["actual"],
-                hit=r["hit"],
-                confidence=r.get("confidence", 0.0),
-                recent=r.get("recent", 0.0),
-                prior=r.get("prior", 0.0),
-                rule_version=r.get("rule_version", 1),
+            records.extend(
+                BacktestRecordVM(
+                    as_of=r["as_of"],
+                    skill_id=r["skill_id"],
+                    predicted=r["predicted"],
+                    actual=r["actual"],
+                    hit=r["hit"],
+                    confidence=r.get("confidence", 0.0),
+                    recent=r.get("recent", 0.0),
+                    prior=r.get("prior", 0.0),
+                    rule_version=r.get("rule_version", rule),
+                )
+                for r in d["records"][:30]  # 截断防过大
             )
-            for r in d["records"][:30]  # 截断防过大
-        )
 
     # leadtime 转为 suggestions
     suggestions: list[SuggestionVM] = []
@@ -148,6 +152,8 @@ def build_temporal() -> TemporalVM:
                 )
             )
     latest = max((r.as_of for r in records), default="")
+    # 当前预测只取最新规则版本的记录（历史规则仅作复盘对比）
+    current_rule = max((r.rule_version for r in records), default=1)
     forecasts = [
         ForecastVM(
             forecast_id=f"fct-{record.skill_id}-{record.as_of}",
@@ -159,10 +165,11 @@ def build_temporal() -> TemporalVM:
             predicted_heat=record.recent,
             confidence=record.confidence,
             forecast_valid_until=latest,
+            model_version=f"temporal-r{record.rule_version}",
             rule_version=record.rule_version,
         )
         for record in records
-        if record.as_of == latest
+        if record.as_of == latest and record.rule_version == current_rule
     ]
     return TemporalVM(
         backtests=backtests,
@@ -211,7 +218,10 @@ def _build_temporal_db(dsn: str) -> TemporalVM:
             BacktestRunVM(
                 run_id=row["run_id"],
                 as_of_date=(row["metrics"].get("as_of_points") or [""])[0],
-                horizon_days=int(row["run_id"].removeprefix("bt-h")),
+                # run_id 形如 bt-h30 / bt-h30-r2，horizon 取数字段
+                horizon_days=int(
+                    row["run_id"].removeprefix("bt-h").split("-")[0]
+                ),
                 status=row["status"],
                 metrics=row["metrics"],
             )

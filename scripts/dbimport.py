@@ -479,12 +479,16 @@ def cmd_run(dsn: str) -> dict:
             counts["trend_signals"] = len(signals)
 
             latest_records: list[dict] = []
+            # 双规则版本：v1 历史基线 + v2 当前生产规则（r2 后缀文件存在时）
             for horizon in (30, 60, 90):
-                backtest = _load_json(P / "wechat-mp" / f"backtest-h{horizon}.json")
-                metrics = backtest.get("metrics", {})
-                run_id = f"bt-h{horizon}"
-                if not metrics:
-                    continue
+                for rule_suffix in ("", "-r2"):
+                    backtest = _load_json(
+                        P / "wechat-mp" / f"backtest-h{horizon}{rule_suffix}.json"
+                    )
+                    metrics = backtest.get("metrics", {})
+                    run_id = f"bt-h{horizon}{rule_suffix}"
+                    if not metrics:
+                        continue
                 cur.execute(
                     """
                     INSERT INTO pipeline_runs (run_id, run_type, status, dataset_version, metrics)
@@ -519,8 +523,8 @@ def cmd_run(dsn: str) -> dict:
                             record.get("rule_version", 1),
                         ),
                     )
-                if horizon == 30:
-                    latest_records = records
+                    if horizon == 30 and (rule_suffix == "-r2" or not latest_records):
+                        latest_records = records  # 当前预测优先取最新规则版本
             counts["backtest_records"] = len(latest_records)
 
             latest_as_of = max((record["as_of"] for record in latest_records), default="")
@@ -533,13 +537,15 @@ def cmd_run(dsn: str) -> dict:
                     INSERT INTO forecasts
                         (forecast_id, run_id, skill_id, as_of_date, horizon_days, predicted_direction,
                          predicted_heat, confidence, valid_until, rule_version)
-                    VALUES (%s,'bt-h30',%s,%s,30,%s,%s,%s,%s,%s)
+                    VALUES (%s,%s,%s,%s,30,%s,%s,%s,%s,%s)
                     ON CONFLICT (forecast_id) DO UPDATE
                     SET predicted_direction = EXCLUDED.predicted_direction,
-                        predicted_heat = EXCLUDED.predicted_heat, confidence = EXCLUDED.confidence
+                        predicted_heat = EXCLUDED.predicted_heat, confidence = EXCLUDED.confidence,
+                        rule_version = EXCLUDED.rule_version, run_id = EXCLUDED.run_id
                     """,
                     (
                         forecast_id,
+                        "bt-h30-r2" if record.get("rule_version", 1) >= 2 else "bt-h30",
                         record["skill_id"],
                         record["as_of"],
                         record["predicted"],

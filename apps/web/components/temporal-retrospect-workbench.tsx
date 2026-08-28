@@ -25,6 +25,21 @@ export function TemporalRetrospectWorkbench({
   const [runId, setRunId] = useState(backtests[0]?.run_id ?? "");
   const run = backtests.find((b) => b.run_id === runId) ?? backtests[0];
 
+  // 规则版本对比：按 horizon 配对 v1/v2（评测驱动迭代的证据）
+  const ruleCompare = useMemo(() => {
+    const byHorizon = new Map<number, { v1?: BacktestRun; v2?: BacktestRun }>();
+    for (const b of backtests) {
+      const rule = b.metrics.rule_version ?? 1;
+      const entry = byHorizon.get(b.horizon_days) ?? {};
+      if (rule >= 2) entry.v2 = b;
+      else entry.v1 = b;
+      byHorizon.set(b.horizon_days, entry);
+    }
+    return [...byHorizon.entries()]
+      .sort((a, b) => a[0] - b[0])
+      .filter(([, v]) => v.v1 && v.v2);
+  }, [backtests]);
+
   const errorList = useMemo(() => {
     if (!run) return [];
     return Object.entries(run.metrics.error_types)
@@ -48,6 +63,42 @@ export function TemporalRetrospectWorkbench({
         </header>
         <TemporalNav />
 
+        {ruleCompare.length > 0 ? (
+          <section aria-label="规则版本对比" className="temporal-rule-compare">
+            <SectionHeader
+              meta="回测驱动"
+              title="规则迭代对比（同一批历史事件）"
+            />
+            <ul>
+              {ruleCompare.map(([horizon, v]) => {
+                const v1 = v.v1!.metrics.accuracy;
+                const v2 = v.v2!.metrics.accuracy;
+                const delta = v2 - v1;
+                return (
+                  <li key={horizon}>
+                    <span className="temporal-rule-horizon">h{horizon}</span>
+                    <span>v1 {(v1 * 100).toFixed(1)}%</span>
+                    <b>→</b>
+                    <span className="temporal-rule-v2">
+                      v2 {(v2 * 100).toFixed(1)}%
+                    </span>
+                    <Tag color={delta > 0 ? "green" : "red"}>
+                      {delta > 0 ? "+" : ""}
+                      {(delta * 100).toFixed(1)}
+                    </Tag>
+                    <small>
+                      平基线 {`${(v.v2!.metrics.flat_baseline_accuracy * 100).toFixed(1)}%`}
+                    </small>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="temporal-rule-note">
+              v2 由 v1 回测错误分析推导（过热抑制 + down 保守化）；仍逊平基线如实呈现。
+            </p>
+          </section>
+        ) : null}
+
         <div className="temporal-filters">
           {backtests.map((b) => (
             <button
@@ -59,7 +110,7 @@ export function TemporalRetrospectWorkbench({
               onClick={() => setRunId(b.run_id)}
               type="button"
             >
-              {`h${b.horizon_days} · 命中率 ${(b.metrics.accuracy * 100).toFixed(0)}%`}
+              {`h${b.horizon_days} · v${b.metrics.rule_version ?? 1} · 命中率 ${(b.metrics.accuracy * 100).toFixed(0)}%`}
             </button>
           ))}
         </div>

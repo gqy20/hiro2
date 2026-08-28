@@ -48,6 +48,7 @@ export type BacktestRun = {
   metrics: {
     accuracy: number;
     flat_baseline_accuracy: number;
+    rule_version?: number;
     by_predicted: Record<string, number>;
     by_actual: Record<string, number>;
     error_types: Record<string, number>;

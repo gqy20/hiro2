@@ -25,7 +25,7 @@ from runlog import RunContext  # noqa: E402
 
 from backend.skills.resolver import load_resolver, parse_day  # noqa: E402
 from backend.temporal.features import build_series  # noqa: E402
-from backend.temporal.forecast import RULE_VERSION, forecast_skill, realized_direction  # noqa: E402
+from backend.temporal.forecast import forecast_skill, realized_direction  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 PROCESSED = ROOT / "data" / "processed" / "wechat-mp"
@@ -40,9 +40,10 @@ def month_starts(start: date, end: date) -> list[date]:
     return out
 
 
-def cmd_run(horizon: int, start: date, end: date, data_end: date | None) -> dict:
+def cmd_run(horizon: int, start: date, end: date, data_end: date | None, rule: int = 1) -> dict:
     run = RunContext(
-        "backtest", {"cmd": "run", "horizon": horizon, "start": str(start), "end": str(end)}
+        "backtest",
+        {"cmd": "run", "horizon": horizon, "start": str(start), "end": str(end), "rule": rule},
     )
     events = [
         e
@@ -65,7 +66,9 @@ def cmd_run(horizon: int, start: date, end: date, data_end: date | None) -> dict
         series_pred = build_series(events, resolver, as_of=as_of)  # 预测侧：数据时间闸门
         series_real = build_series(events, resolver_full, as_of=as_of + timedelta(days=horizon))
         for skill_id in sorted(set(series_pred) | set(series_real)):
-            pred = forecast_skill(skill_id, series_pred.get(skill_id, []), as_of, horizon)
+            pred = forecast_skill(
+                skill_id, series_pred.get(skill_id, []), as_of, horizon, rule=rule
+            )
             if pred is None:
                 continue
             actual = realized_direction(series_real.get(skill_id, []), as_of, horizon)
@@ -85,7 +88,7 @@ def cmd_run(horizon: int, start: date, end: date, data_end: date | None) -> dict
                     "confidence": pred.confidence,
                     "recent": pred.recent,
                     "prior": pred.prior,
-                    "rule_version": RULE_VERSION,
+                    "rule_version": rule,
                 }
             )
             if not hit:
@@ -104,9 +107,10 @@ def cmd_run(horizon: int, start: date, end: date, data_end: date | None) -> dict
         "by_predicted": dict(by_pred),
         "by_actual": dict(by_actual),
         "error_types": dict(errors),
-        "rule_version": RULE_VERSION,
+        "rule_version": rule,
     }
-    out = PROCESSED / f"backtest-h{horizon}.json"
+    out_name = f"backtest-h{horizon}.json" if rule == 1 else f"backtest-h{horizon}-r{rule}.json"
+    out = PROCESSED / out_name
     payload = {"metrics": metrics, "records": records}
     out.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     run.log("backtest", "finished", "succeeded", count={"predictions": len(records)})
@@ -121,12 +125,13 @@ def main(argv: list[str] | None = None) -> int:
     p_run.add_argument("--horizon", type=int, default=30)
     p_run.add_argument("--start", type=str, default="2025-09-01")
     p_run.add_argument("--end", type=str, default="2026-07-01")
+    p_run.add_argument("--rule", type=int, default=1, help="预测规则版本（forecast.py）")
     args = parser.parse_args(argv)
 
     start = parse_day(args.start)
     end = parse_day(args.end)
     assert start and end, "起止日期非法"
-    metrics = cmd_run(args.horizon, start, end, None)
+    metrics = cmd_run(args.horizon, start, end, None, rule=args.rule)
     print(
         json.dumps(
             {k: v for k, v in metrics.items() if k != "as_of_points"}, ensure_ascii=False, indent=1

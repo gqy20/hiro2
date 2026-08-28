@@ -17,8 +17,9 @@ sources:
     time_range: [2010, 2026]
     ingestion_mode: live
     notes: sousuo.www.gov.cn 政策文件库统一 API（国务院+部委两库，9 个关键词
-      109 条，含标题/发文机关/发布时间/全文链接）；新职业目录人工整理
-      new-occupations.yml（2019-2024 历批 AI/数据相关 14 个，含批次与定义）
+      109 条，含标题/发文机关/发布时间/全文链接）；职业目录取 osta.org.cn
+      职业分类大典系统结构化 API（2022 版 versionId=2，相关小类 61 个递归
+      311 个职业含官方编码/工种数），核心 20 个入 new-occupations.yml
 
   - id: resume-ner
     type: academic_dataset      # 公开学术 NER 数据集：实体抽取层对照检验

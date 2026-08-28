@@ -152,14 +152,10 @@ def build_dataset_overview() -> DatasetOverview:
         archive_path = processed / "candidates" / "resume-archive.jsonl"
         if archive_path.is_file():
             archive_rows = [
-                json.loads(line)
-                for line in archive_path.open(encoding="utf-8")
-                if line.strip()
+                json.loads(line) for line in archive_path.open(encoding="utf-8") if line.strip()
             ]
         latest_rows = {
-            str(row.get("resume_id")): row
-            for row in archive_rows
-            if row.get("resume_id")
+            str(row.get("resume_id")): row for row in archive_rows if row.get("resume_id")
         }
         parsed = sum(bool(row.get("profile")) for row in latest_rows.values())
         items[items.index(resume_item)] = resume_item.model_copy(
@@ -214,7 +210,7 @@ def build_dataset_overview_db(dsn: str) -> DatasetOverview:
                 valid_records=valid,
                 version=version,
                 status={"IMPORTED": "可用", "FROZEN": "已冻结", "PARTIAL": "部分完成"}.get(
-                    status, status
+                    status or "", status or "未知"
                 ),
                 formats=formats,
                 source=source,

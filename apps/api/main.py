@@ -23,6 +23,7 @@ from backend.application.dashboard import build_dashboard
 from backend.application.datasets import build_dataset_overview, build_dataset_overview_db
 from backend.application.diagnosis import build_diagnosis, list_candidates
 from backend.application.evaluation import build_evaluation_overview
+from backend.application.insights import build_detected_changes, build_timeline
 from backend.application.quality import build_quality_overview
 from backend.application.service import ApplicationService
 from backend.application.snapshot import snapshot_enabled, snapshot_loop
@@ -163,6 +164,18 @@ def emerging_jobs() -> dict:
 @app.get("/api/v1/dashboard/overview")
 def dashboard_overview() -> dict:
     return build_dashboard().model_dump()
+
+
+@app.get("/api/v1/jobs/detected-changes")
+def jobs_detected_changes() -> dict:
+    """快照 Diff 自动检测的岗位变化草稿（PENDING，审核后喂 jobver 升版）。"""
+    return build_detected_changes().model_dump()
+
+
+@app.get("/api/v1/temporal/timeline")
+def temporal_timeline() -> dict:
+    """四层时间轴：论文 arXiv -> PyPI/npm 包 -> 日报 -> JD 的传导。"""
+    return build_timeline().model_dump()
 
 
 @app.get("/api/v1/datasets/overview")

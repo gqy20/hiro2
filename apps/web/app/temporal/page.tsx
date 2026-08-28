@@ -38,6 +38,21 @@ const cards = [
     ),
   },
   {
+    href: "/temporal/timeline",
+    title: "四层时间轴",
+    desc: "论文 arXiv → 生态包 → 媒体传播 → 岗位需求 的技术传导。",
+    icon: (
+      <svg aria-hidden height="20" viewBox="0 0 24 24" width="20">
+        <path
+          d="M4 6h16M4 12h10M4 18h6"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        />
+      </svg>
+    ),
+  },
+  {
     href: "/temporal/retrospect",
     title: "预测复盘",
     desc: "命中、错判、支持/反证证据与评分。",

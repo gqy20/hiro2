@@ -128,27 +128,54 @@ def cmd_freeze() -> dict:
     return metrics
 
 
-def _score_csv(path: Path, verdict_col: str) -> dict:
+def _score_csv(path: Path, verdict_col: str, task_type: str, annotations: dict[str, dict]) -> dict:
+    """标注来源：annotations.jsonl 优先，CSV 手工判定列为兼容回退。
+
+    语义：ACCEPT=系统输出正确；MODIFY/REJECT=错误；UNKNOWN=无法判断不计入分母。
+    """
     if not path.is_file():
         return {"error": "missing"}
     rows = list(csv.DictReader(path.open(encoding="utf-8-sig")))
-    filled = [r for r in rows if r.get(verdict_col, "").strip()]
-    agree = sum(1 for r in filled if r[verdict_col].strip() in ("对", "是", "Y", "y"))
+    labeled = 0
+    agree = 0
+    for i, r in enumerate(rows):
+        ann = annotations.get(f"task-{task_type}-{i:03d}")
+        if ann is not None:
+            if ann["decision"] == "UNKNOWN":
+                continue
+            labeled += 1
+            if ann["decision"] == "ACCEPT":
+                agree += 1
+            continue
+        verdict = r.get(verdict_col, "").strip()
+        if verdict:
+            labeled += 1
+            if verdict in ("对", "是", "Y", "y"):
+                agree += 1
     return {
         "total": len(rows),
-        "labeled": len(filled),
+        "labeled": labeled,
         "agree": agree,
-        "accuracy": round(agree / len(filled), 3) if filled else None,
+        "accuracy": round(agree / labeled, 3) if labeled else None,
     }
 
 
 def cmd_score() -> dict:
     run = RunContext("evalset", {"cmd": "score"})
+    from backend.application.annotate import load_annotations
+
+    annotations = load_annotations()
     result = {
         "dataset_version": DATASET_VERSION,
-        "role_mapping": _score_csv(SAMPLES / "role-mapping.csv", "映射正确?(对/错)"),
-        "domain_judgment": _score_csv(SAMPLES / "domain-judgment.csv", "同意?(对/错)"),
-        "event_extraction": _score_csv(SAMPLES / "event-extraction.csv", "正确?(对/错)"),
+        "role_mapping": _score_csv(
+            SAMPLES / "role-mapping.csv", "映射正确?(对/错)", "role_level", annotations
+        ),
+        "domain_judgment": _score_csv(
+            SAMPLES / "domain-judgment.csv", "同意?(对/错)", "evidence_audit", annotations
+        ),
+        "event_extraction": _score_csv(
+            SAMPLES / "event-extraction.csv", "正确?(对/错)", "skill_mapping", annotations
+        ),
     }
     out = SAMPLES / "metrics.json"
     out.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")

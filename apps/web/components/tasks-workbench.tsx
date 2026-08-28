@@ -7,11 +7,12 @@ import {
   Flag,
   XCircle,
 } from "@phosphor-icons/react";
-import { Button, Empty, Input, Select, Tag } from "antd";
+import { Button, Empty, Input, message, Select, Tag } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { WorkflowContext } from "@/components/workflow-context";
 import { SectionHeader } from "@/components/workflow-ui";
+import { apiFetch, isMockMode } from "@/lib/api/client";
 import {
   buildMockTasks,
   REVIEW_PRIORITY_TONES,
@@ -66,6 +67,7 @@ export function TasksWorkbench({
   );
   const [decision, setDecision] = useState<ReviewDecision>("ACCEPT");
   const [rationale, setRationale] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const selected = useMemo(
     () => tasks.find((t) => t.task_id === selectedId) ?? null,
@@ -100,10 +102,29 @@ export function TasksWorkbench({
     );
   }
 
-  function handleSubmit() {
-    if (!selected) return;
-    transitionTo(selected.task_id, "SUBMITTED", { decision, rationale });
-    setRationale("");
+  async function handleSubmit() {
+    if (!selected || submitting) return;
+    // mock 模式无后端，保持纯本地状态机；real 模式提交到标注 API
+    if (isMockMode()) {
+      transitionTo(selected.task_id, "SUBMITTED", { decision, rationale });
+      setRationale("");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      await apiFetch(`/tasks/${selected.task_id}/decision`, {
+        method: "POST",
+        body: { decision, rationale },
+      });
+      transitionTo(selected.task_id, "SUBMITTED", { decision, rationale });
+      setRationale("");
+    } catch (error) {
+      message.error(
+        `提交失败：${error instanceof Error ? error.message : "网络异常"}`,
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   function handleClaim() {
@@ -258,8 +279,9 @@ export function TasksWorkbench({
                     {selected.status === "IN_REVIEW" ||
                     selected.status === "CLAIMED" ? (
                       <Button
+                        disabled={submitting}
                         icon={<CheckCircle aria-hidden size={15} />}
-                        loading={false}
+                        loading={submitting}
                         onClick={handleSubmit}
                         type="primary"
                       >

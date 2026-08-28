@@ -532,7 +532,10 @@ class TaskListVM(_VM):
 
 
 def build_tasks() -> TaskListVM:
-    """从 evaluation/samples 生成 ReviewTask 列表。"""
+    """从 evaluation/samples 生成 ReviewTask 列表，合并标注状态。"""
+    from .annotate import load_annotations
+
+    annotations = load_annotations()
     tasks: list[ReviewTaskVM] = []
     samples_dir = ROOT / "evaluation" / "samples"
     for csv_name, task_type in [
@@ -546,18 +549,24 @@ def build_tasks() -> TaskListVM:
         rows = list(csv.DictReader(p.open(encoding="utf-8-sig")))
         for i, r in enumerate(rows):
             done_col = next((c for c in r if "?" in c), "")
-            status = "RESOLVED" if r.get(done_col, "").strip() else "PENDING"
+            task_id = f"task-{task_type}-{i:03d}"
+            ann = annotations.get(task_id)
+            resolved = bool(r.get(done_col, "").strip()) or ann is not None
+            output = {
+                "title": r.get("职位名", r.get("标题", "")),
+                "verdict_col": done_col,
+            }
+            if ann:
+                output["last_decision"] = ann["decision"]
+                output["last_rationale"] = ann.get("rationale", "")
             tasks.append(
                 ReviewTaskVM(
-                    task_id=f"task-{task_type}-{i:03d}",
+                    task_id=task_id,
                     task_type=task_type,
                     source_record_id=r.get("jd_id", r.get("event_id", "")),
-                    status=status,
+                    status="RESOLVED" if resolved else "PENDING",
                     priority="high" if i < 10 else "medium",
-                    system_output={
-                        "title": r.get("职位名", r.get("标题", "")),
-                        "verdict_col": done_col,
-                    },
+                    system_output=output,
                 )
             )
     return TaskListVM(

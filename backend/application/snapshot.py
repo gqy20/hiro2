@@ -73,6 +73,18 @@ def _archive_snapshot() -> str:
     return stamp
 
 
+async def run_import_once() -> dict:
+    """启动时后台跑一次 dbimport（幂等，不阻塞 API 就绪）。
+
+    解决远端容器 SSH 手动导入的 FK 顺序问题——启动进程内环境完整，
+    capabilities/skills/evidence 等按 dbimport 内置顺序串行导入。
+    """
+    cmd = [sys.executable, "scripts/dbimport.py", "run"]
+    ok = await _run_step(99, cmd)  # 99 = import（不在 _STEP_TIMEOUTS 里，走默认 1h）
+    _log("import", "done" if ok else "failed")
+    return {"imported": ok}
+
+
 async def run_snapshot_once() -> dict:
     """单轮：采集 -> 归档 -> 分析。返回指标（也用于手动触发）。"""
     started = time.time()

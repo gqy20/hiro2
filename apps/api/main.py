@@ -34,14 +34,19 @@ from backend.application.training import build_training_output
 
 @asynccontextmanager
 async def _lifespan(_: FastAPI):
+    tasks: list[asyncio.Task] = []
+    # 配置了 PG 时启动即后台跑一次数据导入（幂等，不阻塞就绪）
+    if os.getenv("DATABASE_URL"):
+        from backend.application.snapshot import run_import_once
+        tasks.append(asyncio.create_task(run_import_once()))
+        print("[import] 后台数据导入任务已启动", flush=True)
     # JD 快照后台任务：HIRO2_SNAPSHOT_ENABLED=true 时启动即采集（周期见模块头）
-    task = None
     if snapshot_enabled():
-        task = asyncio.create_task(snapshot_loop())
+        tasks.append(asyncio.create_task(snapshot_loop()))
         print("[snapshot] 后台采集任务已启动", flush=True)
     yield
-    if task:
-        task.cancel()
+    for t in tasks:
+        t.cancel()
 
 
 app = FastAPI(title="Hiro2 API", version="0.1.0", lifespan=_lifespan)

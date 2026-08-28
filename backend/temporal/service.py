@@ -163,9 +163,17 @@ async def extract_events(
         if run is not None and (done % 25 == 0 or done == len(articles)):
             rate = done / (time.monotonic() - started) * 60
             eta = (len(articles) - done) / max(rate, 0.01)
-            run.log("extract", "progress", "progress",
-                    count={"done": done, "total": len(articles),
-                           "per_min": round(rate, 1), "eta_min": round(eta)})
+            run.log(
+                "extract",
+                "progress",
+                "progress",
+                count={
+                    "done": done,
+                    "total": len(articles),
+                    "per_min": round(rate, 1),
+                    "eta_min": round(eta),
+                },
+            )
 
     await asyncio.gather(*(tracked(a) for a in articles))
     return result

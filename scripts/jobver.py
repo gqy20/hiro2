@@ -138,28 +138,32 @@ def _v3_changeset(market, total, caps, prev_req, prev_pref):
             ctype = "promote" if role == "required" else "demote"
         else:
             continue
-        cs.append({
-            "level": "capability",
-            "skill_id": sid,
-            "name": caps.get(sid, sid),
-            "change_type": ctype,
-            "v2_role": was,
-            "v3_role": role,
-            "market_share": round(market[sid] / total, 3),
-            "market_rank": i + 1,
-            "note": f"v2 为{was or '未收录'}，v3 市场 rank {i + 1}",
-        })
+        cs.append(
+            {
+                "level": "capability",
+                "skill_id": sid,
+                "name": caps.get(sid, sid),
+                "change_type": ctype,
+                "v2_role": was,
+                "v3_role": role,
+                "market_share": round(market[sid] / total, 3),
+                "market_rank": i + 1,
+                "note": f"v2 为{was or '未收录'}，v3 市场 rank {i + 1}",
+            }
+        )
     for sid in sorted(prev_req | prev_pref - set(top10)):
-        cs.append({
-            "level": "capability",
-            "skill_id": sid,
-            "name": caps.get(sid, sid),
-            "change_type": "demote",
-            "v2_role": "required" if sid in prev_req else "preferred",
-            "v3_role": None,
-            "market_share": round(market.get(sid, 0) / total, 3),
-            "note": "跌出市场 top10",
-        })
+        cs.append(
+            {
+                "level": "capability",
+                "skill_id": sid,
+                "name": caps.get(sid, sid),
+                "change_type": "demote",
+                "v2_role": "required" if sid in prev_req else "preferred",
+                "v3_role": None,
+                "market_share": round(market.get(sid, 0) / total, 3),
+                "note": "跌出市场 top10",
+            }
+        )
     return cs
 
 
@@ -322,13 +326,16 @@ def main(argv: list[str] | None = None) -> int:
     p_run = sub.add_parser("run")
     p_run.add_argument("--job", default=None, help="position_id（如 pos_01）；缺省跑主案例")
     p_run.add_argument("--slug", default=None, help="版本前缀（如 llm-algo），--job 时必填")
-    p_run.add_argument("--version", type=int, default=2,
-                       help="版本号：2=对比 Excel 基线；3=对比已发布 v2（扩采复核）")
+    p_run.add_argument(
+        "--version",
+        type=int,
+        default=2,
+        help="版本号：2=对比 Excel 基线；3=对比已发布 v2（扩采复核）",
+    )
     args = parser.parse_args(argv)
     if args.job and not args.slug:
         parser.error("--job 需要 --slug（版本前缀，如 llm-algo）")
-    result = (_run_position(args.job, args.slug, args.version) if args.job
-              else cmd_run())
+    result = _run_position(args.job, args.slug, args.version) if args.job else cmd_run()
     print(json.dumps(result, ensure_ascii=False))
     return 0
 

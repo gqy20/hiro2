@@ -121,15 +121,15 @@ def run_greenhouse(boards: list[str], _pages: int) -> dict:
             except Exception:  # noqa: BLE001
                 continue
 
-    run = RunContext("jdcorp", {"cmd": "run", "site": "greenhouse",
-                                "boards": boards})
+    run = RunContext("jdcorp", {"cmd": "run", "site": "greenhouse", "boards": boards})
     per_board: dict[str, int] = {}
     for board in boards:
         fresh = 0
         try:
             req = urllib.request.Request(
                 f"https://boards-api.greenhouse.io/v1/boards/{board}/jobs?content=true",
-                headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/126"})
+                headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/126"},
+            )
             with urllib.request.urlopen(req, timeout=30) as r:
                 jobs = json.loads(r.read()).get("jobs") or []
         except Exception as exc:  # noqa: BLE001 - 单 board 失败不阻塞
@@ -145,8 +145,7 @@ def run_greenhouse(boards: list[str], _pages: int) -> dict:
         run.log("jdcorp", board, "succeeded", count={"new": fresh})
         per_board[board] = fresh
         time.sleep(random.uniform(1.5, 3.0))
-    metrics = {"new": sum(per_board.values()), "per_board": per_board,
-               "total_file": len(seen)}
+    metrics = {"new": sum(per_board.values()), "per_board": per_board, "total_file": len(seen)}
     run.finish(metrics)
     return metrics
 
@@ -168,7 +167,8 @@ def run_anthropic(_keywords: list[str], _pages: int) -> dict:
     run = RunContext("jdcorp", {"cmd": "run", "site": "anthropic"})
     req = urllib.request.Request(
         "https://boards-api.greenhouse.io/v1/boards/anthropic/jobs?content=true",
-        headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/126"})
+        headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/126"},
+    )
     with urllib.request.urlopen(req, timeout=30) as r:
         jobs = json.loads(r.read()).get("jobs") or []
     fresh = 0
@@ -219,25 +219,39 @@ def run_tencent(keywords: list[str], pages: int) -> dict:
             except Exception:  # noqa: BLE001 - 脏行跳过
                 continue
 
-    run = RunContext("jdcorp", {"cmd": "run", "site": "tencent",
-                                "keywords": keywords, "pages": pages})
+    run = RunContext(
+        "jdcorp", {"cmd": "run", "site": "tencent", "keywords": keywords, "pages": pages}
+    )
     cache = load_cache()
     per_keyword: dict[str, int] = {}
     for kw in keywords:
         warm = cached_keyword(cache, "tencent", kw)
         fresh = 0
         for page in range(1, pages + 1):
-            q = urllib.parse.urlencode({
-                "timestamp": str(int(time.time() * 1000)), "countryId": "", "cityId": "",
-                "bgIds": "", "productId": "", "categoryId": "", "parentCategoryId": "",
-                "attrId": "", "keyword": "" if kw == "ALL" else kw,
-                "pageIndex": page, "pageSize": 10,
-                "language": "zh-cn", "pt": "1",
-            })
+            q = urllib.parse.urlencode(
+                {
+                    "timestamp": str(int(time.time() * 1000)),
+                    "countryId": "",
+                    "cityId": "",
+                    "bgIds": "",
+                    "productId": "",
+                    "categoryId": "",
+                    "parentCategoryId": "",
+                    "attrId": "",
+                    "keyword": "" if kw == "ALL" else kw,
+                    "pageIndex": page,
+                    "pageSize": 10,
+                    "language": "zh-cn",
+                    "pt": "1",
+                }
+            )
             req = urllib.request.Request(
                 f"https://careers.tencent.com/tencentcareer/api/post/Query?{q}",
-                headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/126",
-                         "Referer": "https://careers.tencent.com/zh-cn/search.html"})
+                headers={
+                    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/126",
+                    "Referer": "https://careers.tencent.com/zh-cn/search.html",
+                },
+            )
             try:
                 with urllib.request.urlopen(req, timeout=15) as r:
                     posts = (json.loads(r.read()).get("Data") or {}).get("Posts") or []
@@ -264,8 +278,11 @@ def run_tencent(keywords: list[str], pages: int) -> dict:
         save_cache(cache)
         per_keyword[kw] = fresh
 
-    metrics = {"new": sum(per_keyword.values()), "per_keyword": per_keyword,
-               "total_file": len(seen)}
+    metrics = {
+        "new": sum(per_keyword.values()),
+        "per_keyword": per_keyword,
+        "total_file": len(seen),
+    }
     run.finish(metrics)
     return metrics
 
@@ -273,8 +290,9 @@ def run_tencent(keywords: list[str], pages: int) -> dict:
 def _normalize_mt(post: dict, keyword: str) -> dict | None:
     """美团 getJobList -> 统一 JD 记录。"""
     pid = post.get("jobUnionId") or post.get("projectId")
-    body = ((post.get("jobDuty") or "").strip() + "\n"
-            + (post.get("jobRequirement") or "").strip()).strip()
+    body = (
+        (post.get("jobDuty") or "").strip() + "\n" + (post.get("jobRequirement") or "").strip()
+    ).strip()
     if not pid or len(body) < MIN_DESC:
         return None
     cities = [c.get("name") for c in post.get("cityList") or [] if c.get("name")]
@@ -306,8 +324,9 @@ def run_meituan(keywords: list[str], pages: int) -> dict:
             except Exception:  # noqa: BLE001
                 continue
 
-    run = RunContext("jdcorp", {"cmd": "run", "site": "meituan",
-                                "keywords": keywords, "pages": pages})
+    run = RunContext(
+        "jdcorp", {"cmd": "run", "site": "meituan", "keywords": keywords, "pages": pages}
+    )
     cache = load_cache()
     per_keyword: dict[str, int] = {}
 
@@ -344,7 +363,8 @@ def run_meituan(keywords: list[str], pages: int) -> dict:
                 mt_q = f"keyword={urllib.parse.quote(kw)}" if kw != "ALL" else ""
                 page.goto(
                     "https://zhaopin.meituan.com/web/position?" + mt_q,
-                    wait_until="networkidle", timeout=45_000,
+                    wait_until="networkidle",
+                    timeout=45_000,
                 )
                 page.wait_for_timeout(2_500)
                 fresh += _drain(captured, kw)
@@ -378,8 +398,11 @@ def run_meituan(keywords: list[str], pages: int) -> dict:
             per_keyword[kw] = fresh
         browser.close()
 
-    metrics = {"new": sum(per_keyword.values()), "per_keyword": per_keyword,
-               "total_file": len(seen)}
+    metrics = {
+        "new": sum(per_keyword.values()),
+        "per_keyword": per_keyword,
+        "total_file": len(seen),
+    }
     run.finish(metrics)
     return metrics
 
@@ -387,8 +410,9 @@ def run_meituan(keywords: list[str], pages: int) -> dict:
 def _normalize_xhs(post: dict, keyword: str) -> dict | None:
     """小红书 pageQueryPosition -> 统一 JD 记录。"""
     pid = post.get("positionId")
-    body = ((post.get("duty") or "").strip() + "\n"
-            + (post.get("qualification") or "").strip()).strip()
+    body = (
+        (post.get("duty") or "").strip() + "\n" + (post.get("qualification") or "").strip()
+    ).strip()
     if not pid or len(body) < MIN_DESC:
         return None
     return {
@@ -419,8 +443,9 @@ def run_xiaohongshu(keywords: list[str], pages: int) -> dict:
             except Exception:  # noqa: BLE001
                 continue
 
-    run = RunContext("jdcorp", {"cmd": "run", "site": "xiaohongshu",
-                                "keywords": keywords, "pages": pages})
+    run = RunContext(
+        "jdcorp", {"cmd": "run", "site": "xiaohongshu", "keywords": keywords, "pages": pages}
+    )
     cache = load_cache()
     per_keyword: dict[str, int] = {}
 
@@ -457,7 +482,8 @@ def run_xiaohongshu(keywords: list[str], pages: int) -> dict:
                 xhs_q = f"positionName={urllib.parse.quote(kw)}" if kw != "ALL" else ""
                 page.goto(
                     "https://job.xiaohongshu.com/social/position?" + xhs_q,
-                    wait_until="networkidle", timeout=45_000,
+                    wait_until="networkidle",
+                    timeout=45_000,
                 )
                 page.wait_for_timeout(2_500)
                 fresh += _drain(captured, kw)
@@ -490,8 +516,11 @@ def run_xiaohongshu(keywords: list[str], pages: int) -> dict:
             per_keyword[kw] = fresh
         browser.close()
 
-    metrics = {"new": sum(per_keyword.values()), "per_keyword": per_keyword,
-               "total_file": len(seen)}
+    metrics = {
+        "new": sum(per_keyword.values()),
+        "per_keyword": per_keyword,
+        "total_file": len(seen),
+    }
     run.finish(metrics)
     return metrics
 
@@ -532,26 +561,37 @@ def run_vivo(keywords: list[str], pages: int) -> dict:
             except Exception:  # noqa: BLE001
                 continue
 
-    run = RunContext("jdcorp", {"cmd": "run", "site": "vivo",
-                                "keywords": keywords, "pages": pages})
+    run = RunContext("jdcorp", {"cmd": "run", "site": "vivo", "keywords": keywords, "pages": pages})
     cache = load_cache()
     per_keyword: dict[str, int] = {}
     for kw in keywords:
         warm = cached_keyword(cache, "vivo", kw)
         fresh = 0
         for page in range(1, pages + 1):
-            body = json.dumps({
-                "city_code_list": [], "company_id": 1, "group_id": 1, "user_id": None,
-                "job_category_id_list": [],
-                "keyword": "" if kw == "ALL" else kw,
-                "max_results": 10, "page": page, "yoe_list": [], "loading": True,
-            }).encode()
+            body = json.dumps(
+                {
+                    "city_code_list": [],
+                    "company_id": 1,
+                    "group_id": 1,
+                    "user_id": None,
+                    "job_category_id_list": [],
+                    "keyword": "" if kw == "ALL" else kw,
+                    "max_results": 10,
+                    "page": page,
+                    "yoe_list": [],
+                    "loading": True,
+                }
+            ).encode()
             req = urllib.request.Request(
                 "https://hr.vivo.com/api/social/webSite/portal/page",
-                data=body, method="POST",
-                headers={"Content-Type": "application/json",
-                         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/126",
-                         "Referer": "https://hr.vivo.com/jobs"})
+                data=body,
+                method="POST",
+                headers={
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/126",
+                    "Referer": "https://hr.vivo.com/jobs",
+                },
+            )
             try:
                 with urllib.request.urlopen(req, timeout=15) as r:
                     posts = json.loads(r.read()).get("data") or []
@@ -578,8 +618,11 @@ def run_vivo(keywords: list[str], pages: int) -> dict:
         save_cache(cache)
         per_keyword[kw] = fresh
 
-    metrics = {"new": sum(per_keyword.values()), "per_keyword": per_keyword,
-               "total_file": len(seen)}
+    metrics = {
+        "new": sum(per_keyword.values()),
+        "per_keyword": per_keyword,
+        "total_file": len(seen),
+    }
     run.finish(metrics)
     return metrics
 
@@ -594,8 +637,7 @@ def _normalize_ali(post: dict, keyword: str) -> dict | None:
         return None
     exp = post.get("experience") or {}
     work_year = (
-        f"{exp['from']}-"
-        + (str(exp["to"]) if exp.get("to") else "")
+        f"{exp['from']}-" + (str(exp["to"]) if exp.get("to") else "")
         if exp.get("from") is not None
         else ""
     )
@@ -627,8 +669,9 @@ def run_alibaba(keywords: list[str], pages: int) -> dict:
             except Exception:  # noqa: BLE001 - 脏行跳过
                 continue
 
-    run = RunContext("jdcorp", {"cmd": "run", "site": "alibaba",
-                                "keywords": keywords, "pages": pages})
+    run = RunContext(
+        "jdcorp", {"cmd": "run", "site": "alibaba", "keywords": keywords, "pages": pages}
+    )
     cache = load_cache()
     per_keyword: dict[str, int] = {}
 
@@ -664,9 +707,9 @@ def run_alibaba(keywords: list[str], pages: int) -> dict:
             try:
                 ali_q = f"search={urllib.parse.quote(kw)}&" if kw != "ALL" else ""
                 page.goto(
-                    "https://talent-holding.alibaba.com/off-campus/position-list"
-                    f"?lang=zh&{ali_q}",
-                    wait_until="networkidle", timeout=45_000,
+                    f"https://talent-holding.alibaba.com/off-campus/position-list?lang=zh&{ali_q}",
+                    wait_until="networkidle",
+                    timeout=45_000,
                 )
                 page.wait_for_timeout(2_500)
                 fresh += _drain(captured, out, kw, seen)
@@ -699,8 +742,11 @@ def run_alibaba(keywords: list[str], pages: int) -> dict:
             per_keyword[kw] = fresh
         browser.close()
 
-    metrics = {"new": sum(per_keyword.values()), "per_keyword": per_keyword,
-               "total_file": len(seen)}
+    metrics = {
+        "new": sum(per_keyword.values()),
+        "per_keyword": per_keyword,
+        "total_file": len(seen),
+    }
     run.finish(metrics)
     return metrics
 
@@ -741,8 +787,9 @@ def run_bytedance(keywords: list[str], pages: int, limit: int = 10) -> dict:
             except Exception:  # noqa: BLE001 - 脏行跳过
                 continue
 
-    run = RunContext("jdcorp", {"cmd": "run", "site": "bytedance",
-                                "keywords": keywords, "pages": pages})
+    run = RunContext(
+        "jdcorp", {"cmd": "run", "site": "bytedance", "keywords": keywords, "pages": pages}
+    )
     cache = load_cache()
     per_keyword: dict[str, int] = {}
     with sync_playwright() as p:
@@ -795,8 +842,11 @@ def run_bytedance(keywords: list[str], pages: int, limit: int = 10) -> dict:
             per_keyword[kw] = fresh
         browser.close()
 
-    metrics = {"new": sum(per_keyword.values()), "per_keyword": per_keyword,
-               "total_file": len(seen)}
+    metrics = {
+        "new": sum(per_keyword.values()),
+        "per_keyword": per_keyword,
+        "total_file": len(seen),
+    }
     run.finish(metrics)
     return metrics
 
@@ -806,12 +856,25 @@ def runall(keywords: list[str], pages: int, workers: int) -> int:
     import concurrent.futures as cf
 
     runners = {
-        "bytedance": run_bytedance, "alibaba": run_alibaba,
-        "tencent": run_tencent, "meituan": run_meituan,
-        "xiaohongshu": run_xiaohongshu, "anthropic": run_anthropic,
+        "bytedance": run_bytedance,
+        "alibaba": run_alibaba,
+        "tencent": run_tencent,
+        "meituan": run_meituan,
+        "xiaohongshu": run_xiaohongshu,
+        "anthropic": run_anthropic,
         "greenhouse": lambda kws, pgs: run_greenhouse(  # noqa: E731
-            ["togetherai", "scaleai", "databricks", "pinterest",
-             "figma", "discord", "stripe", "duolingo"], pgs),
+            [
+                "togetherai",
+                "scaleai",
+                "databricks",
+                "pinterest",
+                "figma",
+                "discord",
+                "stripe",
+                "duolingo",
+            ],
+            pgs,
+        ),
         "vivo": run_vivo,
     }
     results: dict[str, object] = {}
@@ -831,17 +894,32 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="jdcorp")
     sub = parser.add_subparsers(dest="cmd", required=True)
     p_run = sub.add_parser("run")
-    p_run.add_argument("--site", default="bytedance",
-                       choices=["bytedance", "alibaba", "tencent", "meituan",
-                                "xiaohongshu", "anthropic", "greenhouse",
-                                "vivo"])
-    p_run.add_argument("--keywords", nargs="+", required=True,
-                       help="关键词列表；传 all 全量抓取（greenhouse 站传 board 名单）")
+    p_run.add_argument(
+        "--site",
+        default="bytedance",
+        choices=[
+            "bytedance",
+            "alibaba",
+            "tencent",
+            "meituan",
+            "xiaohongshu",
+            "anthropic",
+            "greenhouse",
+            "vivo",
+        ],
+    )
+    p_run.add_argument(
+        "--keywords",
+        nargs="+",
+        required=True,
+        help="关键词列表；传 all 全量抓取（greenhouse 站传 board 名单）",
+    )
     p_run.add_argument("--pages", type=int, default=3)
     p_run.add_argument("--force", action="store_true", help="忽略 7 天关键词缓存")
     p_all = sub.add_parser("runall", help="全部站点并行采集")
-    p_all.add_argument("--keywords", nargs="+", default=["ALL"],
-                       help="默认 ALL 全量；也可传关键词列表")
+    p_all.add_argument(
+        "--keywords", nargs="+", default=["ALL"], help="默认 ALL 全量；也可传关键词列表"
+    )
     p_all.add_argument("--pages", type=int, default=10)
     p_all.add_argument("--workers", type=int, default=3)
     args = parser.parse_args(argv)
@@ -853,10 +931,15 @@ def main(argv: list[str] | None = None) -> int:
         cache.pop(args.site, None)
         save_cache(cache)
     keywords = ["ALL"] if args.keywords == ["all"] else args.keywords
-    runner = {"alibaba": run_alibaba, "tencent": run_tencent,
-              "meituan": run_meituan, "xiaohongshu": run_xiaohongshu,
-              "anthropic": run_anthropic, "greenhouse": run_greenhouse,
-              "vivo": run_vivo}.get(args.site, run_bytedance)
+    runner = {
+        "alibaba": run_alibaba,
+        "tencent": run_tencent,
+        "meituan": run_meituan,
+        "xiaohongshu": run_xiaohongshu,
+        "anthropic": run_anthropic,
+        "greenhouse": run_greenhouse,
+        "vivo": run_vivo,
+    }.get(args.site, run_bytedance)
     result = runner(keywords, args.pages)
     print(json.dumps(result, ensure_ascii=False))
     return 0

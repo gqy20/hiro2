@@ -39,18 +39,17 @@ GH_BOARDS = ["figma", "togetherai", "scaleai", "databricks", "stripe", "pinteres
 SITES = {
     "bytedance": {
         "prefix": "jobs.bytedance.com/api/v1/search/job/posts*",
-        "extract": lambda d: ((d.get("data") or {}).get("job_post_list") or []),
+        "extract": lambda d: (d.get("data") or {}).get("job_post_list") or [],
         "normalize": _normalize,
     },
     "tencent": {
         "prefix": "careers.tencent.com/tencentcareer/api/post/Query*",
-        "extract": lambda d: ((d.get("Data") or {}).get("Posts") or []),
+        "extract": lambda d: (d.get("Data") or {}).get("Posts") or [],
         "normalize": _normalize_tx,
     },
     "greenhouse": {
-        "prefix": [f"boards-api.greenhouse.io/v1/boards/{b}/jobs?content=true*"
-                   for b in GH_BOARDS],
-        "extract": lambda d: (d.get("jobs") or []),
+        "prefix": [f"boards-api.greenhouse.io/v1/boards/{b}/jobs?content=true*" for b in GH_BOARDS],
+        "extract": lambda d: d.get("jobs") or [],
         "normalize": None,  # 按 board 分发，见 run_site
     },
 }
@@ -69,16 +68,21 @@ def _fetch(url: str, timeout: int = 40, retries: int = 3) -> bytes:
     raise RuntimeError("unreachable")
 
 
-def list_snapshots(prefix: str | list[str], year_from: str,
-                   year_to: str) -> list[tuple[str, str]]:
+def list_snapshots(prefix: str | list[str], year_from: str, year_to: str) -> list[tuple[str, str]]:
     """CDX 枚举 [(timestamp, original_url)]，按时间升序（早->晚 append 保证首见=最早观测）。"""
     prefixes = prefix if isinstance(prefix, list) else [prefix]
     snaps: set[tuple[str, str]] = set()
     for p in prefixes:
-        q = urllib.parse.urlencode({
-            "url": p, "output": "json", "from": year_from, "to": year_to,
-            "filter": "statuscode:200", "limit": 5000,
-        })
+        q = urllib.parse.urlencode(
+            {
+                "url": p,
+                "output": "json",
+                "from": year_from,
+                "to": year_to,
+                "filter": "statuscode:200",
+                "limit": 5000,
+            }
+        )
         rows = json.loads(_fetch(f"{CDX}?{q}"))[1:]
         snaps |= {(r[1], r[2]) for r in rows}
         time.sleep(1.2)
@@ -97,8 +101,7 @@ def run_site(site: str, year_from: str, year_to: str, max_snapshots: int) -> dic
             except Exception:  # noqa: BLE001
                 continue
 
-    run = RunContext("jdarchive", {"cmd": "run", "site": site,
-                                   "from": year_from, "to": year_to})
+    run = RunContext("jdarchive", {"cmd": "run", "site": site, "from": year_from, "to": year_to})
     snaps = list_snapshots(cfg["prefix"], year_from, year_to)
     todo = [(ts, url) for ts, url in snaps if ts not in seen_snapshots][:max_snapshots]
     run.log("jdarchive", site, "progress", count={"snapshots": len(snaps), "todo": len(todo)})
@@ -137,13 +140,15 @@ def run_site(site: str, year_from: str, year_to: str, max_snapshots: int) -> dic
             elapsed = time.monotonic() - t0
             rate = (i + 1) / elapsed * 60
             eta = (len(todo) - i - 1) / max(rate, 0.01)
-            run.log("jdarchive", f"{site}:{i+1}/{len(todo)}", "progress",
-                    count={"records": fresh_records, "per_min": round(rate, 1),
-                           "eta_min": round(eta)})
+            run.log(
+                "jdarchive",
+                f"{site}:{i + 1}/{len(todo)}",
+                "progress",
+                count={"records": fresh_records, "per_min": round(rate, 1), "eta_min": round(eta)},
+            )
         time.sleep(1.2)  # archive.org 限速 ~1 req/s
 
-    metrics = {"snapshots_total": len(snaps), "snapshots_done": len(todo),
-               "records": fresh_records}
+    metrics = {"snapshots_total": len(snaps), "snapshots_done": len(todo), "records": fresh_records}
     run.finish(metrics)
     return metrics
 

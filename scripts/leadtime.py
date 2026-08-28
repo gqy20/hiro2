@@ -178,8 +178,9 @@ def cmd_run() -> dict:
         "signal_leads_jd_over_30d": len(led),
         "clean_leads_over_30d": len(clean),
         "jd_window_start": jd_window_start,
-        "median_lead_days": (sorted(r["lead_days"] for r in valid)[len(valid) // 2]
-                             if valid else None),
+        "median_lead_days": (
+            sorted(r["lead_days"] for r in valid)[len(valid) // 2] if valid else None
+        ),
         "jd_preceded_domains": sum(1 for r in rows if r["reliability"] == "jd_preceded"),
     }
     run.finish(metrics)

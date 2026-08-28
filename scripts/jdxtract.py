@@ -228,9 +228,17 @@ async def cmd_run(limit: int | None) -> dict:
             if done % 25 == 0 or done == len(todo):
                 rate = done / (time.monotonic() - started) * 60
                 eta = (len(todo) - done) / max(rate, 0.01)
-                run.log("progress", "progress", "progress",
-                        count={"done": done, "total": len(todo),
-                               "per_min": round(rate, 1), "eta_min": round(eta)})
+                run.log(
+                    "progress",
+                    "progress",
+                    "progress",
+                    count={
+                        "done": done,
+                        "total": len(todo),
+                        "per_min": round(rate, 1),
+                        "eta_min": round(eta),
+                    },
+                )
 
         await asyncio.gather(*(tracked(t) for t in todo))
     finally:

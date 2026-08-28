@@ -33,9 +33,9 @@ ROLEMAP = ROOT / "data" / "processed" / "jd-opencli" / "jd-role-map.jsonl"
 CAPS = ROOT / "data" / "processed" / "capability-matrix" / "capabilities.json"
 OUT = ROOT / "data/processed/jd-opencli/snapshot-changesets.json"
 
-MIN_JDS = 8           # 单池单岗位 JD 数低于此不比对（样本不足）
-DELTA = 0.02          # 份额差阈值（grow/shrink）
-PRESENCE = 0.005      # 出现/消失阈值（一侧占比超此、另一侧低于半值）
+MIN_JDS = 8  # 单池单岗位 JD 数低于此不比对（样本不足）
+DELTA = 0.02  # 份额差阈值（grow/shrink）
+PRESENCE = 0.005  # 出现/消失阈值（一侧占比超此、另一侧低于半值）
 
 
 def pool_ids(spec: str) -> set[str]:
@@ -63,8 +63,7 @@ def load_side_effects() -> tuple[dict, dict]:
     skills: dict[str, list[str]] = {}
     for line in PARSED.open(encoding="utf-8"):
         r = json.loads(line)
-        skills[r["jd_id"]] = [x["skill_id"] for x in (r.get("resolved") or [])
-                              if x.get("skill_id")]
+        skills[r["jd_id"]] = [x["skill_id"] for x in (r.get("resolved") or []) if x.get("skill_id")]
     pos: dict[str, str] = {}
     for line in ROLEMAP.open(encoding="utf-8"):
         r = json.loads(line)
@@ -73,8 +72,7 @@ def load_side_effects() -> tuple[dict, dict]:
     return skills, pos
 
 
-def share_by_position(ids: set[str], skills: dict, pos: dict
-                      ) -> dict[str, tuple[Counter, int]]:
+def share_by_position(ids: set[str], skills: dict, pos: dict) -> dict[str, tuple[Counter, int]]:
     """岗位 -> (技能提及计数, JD 数)。"""
     out: dict[str, tuple[Counter, int]] = {}
     for jid in ids:
@@ -92,8 +90,10 @@ def cmd_run(base_spec: str, obs_spec: str) -> dict:
     run = RunContext("snapshotdiff", {"cmd": "run", "base": base_spec, "obs": obs_spec})
     base_ids, obs_ids = pool_ids(base_spec), pool_ids(obs_spec)
     skills, pos = load_side_effects()
-    caps = {c["capability_id"]: c["name"] for c in json.loads(
-        CAPS.read_text(encoding="utf-8"))["capabilities"]}
+    caps = {
+        c["capability_id"]: c["name"]
+        for c in json.loads(CAPS.read_text(encoding="utf-8"))["capabilities"]
+    }
 
     base = share_by_position(base_ids, skills, pos)
     obs = share_by_position(obs_ids, skills, pos)
@@ -117,34 +117,62 @@ def cmd_run(base_spec: str, obs_spec: str) -> dict:
                 ctype = "shrink"
             else:
                 continue
-            changes.append({
-                "skill_id": sid, "name": caps.get(sid, sid),
-                "base_share": round(bs, 3), "obs_share": round(os_, 3),
-                "change_type": ctype,
-                "base_mentions": bc[sid], "obs_mentions": oc[sid],
-            })
+            changes.append(
+                {
+                    "skill_id": sid,
+                    "name": caps.get(sid, sid),
+                    "base_share": round(bs, 3),
+                    "obs_share": round(os_, 3),
+                    "change_type": ctype,
+                    "base_mentions": bc[sid],
+                    "obs_mentions": oc[sid],
+                }
+            )
         if not changes:
             continue
         changes.sort(key=lambda c: abs(c["obs_share"] - c["base_share"]), reverse=True)
-        changesets.append({
-            "position_id": pid, "job": caps.get(pid, pid),
-            "base": base_spec, "obs": obs_spec,
-            "base_jds": bn, "obs_jds": on,
-            "changes": changes,
-            "review_status": "PENDING",
-        })
+        changesets.append(
+            {
+                "position_id": pid,
+                "job": caps.get(pid, pid),
+                "base": base_spec,
+                "obs": obs_spec,
+                "base_jds": bn,
+                "obs_jds": on,
+                "changes": changes,
+                "review_status": "PENDING",
+            }
+        )
 
-    OUT.write_text(json.dumps(
-        {"base": base_spec, "obs": obs_spec, "changesets": changesets,
-         "params": {"min_jds": MIN_JDS, "delta": DELTA, "presence": PRESENCE,
-                    "note": "数据自动检测的岗位变化草稿，发布仍需人工审核"}},
-        ensure_ascii=False, indent=2), encoding="utf-8")
+    OUT.write_text(
+        json.dumps(
+            {
+                "base": base_spec,
+                "obs": obs_spec,
+                "changesets": changesets,
+                "params": {
+                    "min_jds": MIN_JDS,
+                    "delta": DELTA,
+                    "presence": PRESENCE,
+                    "note": "数据自动检测的岗位变化草稿，发布仍需人工审核",
+                },
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
 
-    metrics = {"base_jds": len(base_ids & set(skills)), "obs_jds": len(obs_ids & set(skills)),
-               "positions_compared": len(changesets),
-               "changes_total": sum(len(c["changes"]) for c in changesets),
-               "top": [(c["job"], len(c["changes"])) for c in
-                       sorted(changesets, key=lambda x: -len(x["changes"]))[:5]]}
+    metrics = {
+        "base_jds": len(base_ids & set(skills)),
+        "obs_jds": len(obs_ids & set(skills)),
+        "positions_compared": len(changesets),
+        "changes_total": sum(len(c["changes"]) for c in changesets),
+        "top": [
+            (c["job"], len(c["changes"]))
+            for c in sorted(changesets, key=lambda x: -len(x["changes"]))[:5]
+        ],
+    }
     run.finish(metrics)
     return metrics
 

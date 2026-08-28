@@ -68,8 +68,7 @@ def _catalog(resolver) -> str:
     return "\n".join(lines)
 
 
-async def cmd_batch(min_count: int, limit: int | None,
-                    input_path: Path | None = None) -> dict:
+async def cmd_batch(min_count: int, limit: int | None, input_path: Path | None = None) -> dict:
     settings = LLMSettings()
     run = RunContext("skillmap", {"cmd": "batch", "min_count": min_count})
     spec = load_prompt("skill-alias")
@@ -130,9 +129,17 @@ async def cmd_batch(min_count: int, limit: int | None,
         if done % 25 == 0 or done == len(words):
             rate = done / (time.monotonic() - started) * 60
             eta = (len(words) - done) / max(rate, 0.01)
-            run.log("progress", "progress", "progress",
-                    count={"done": done, "total": len(words),
-                           "per_min": round(rate, 1), "eta_min": round(eta)})
+            run.log(
+                "progress",
+                "progress",
+                "progress",
+                count={
+                    "done": done,
+                    "total": len(words),
+                    "per_min": round(rate, 1),
+                    "eta_min": round(eta),
+                },
+            )
 
     await asyncio.gather(*(tracked(w) for w in words))
 
@@ -163,8 +170,9 @@ def main(argv: list[str] | None = None) -> int:
     p_batch = sub.add_parser("batch")
     p_batch.add_argument("--min-count", type=int, default=2)
     p_batch.add_argument("--limit", type=int, default=None)
-    p_batch.add_argument("--input", default=None,
-                         help="词单路径（默认 wechat-mp/unmatched-words.jsonl）")
+    p_batch.add_argument(
+        "--input", default=None, help="词单路径（默认 wechat-mp/unmatched-words.jsonl）"
+    )
     args = parser.parse_args(argv)
     inp = Path(args.input) if args.input else None
     metrics = asyncio.run(cmd_batch(args.min_count, args.limit, inp))

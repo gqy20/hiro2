@@ -56,7 +56,9 @@ def _line_count(path: Path) -> int:
 
 def _manifest_version(path: Path) -> str:
     payload = _load_json(path)
-    return str(payload.get("dataset_version") or payload.get("version") or payload.get("batch") or "")
+    return str(
+        payload.get("dataset_version") or payload.get("version") or payload.get("batch") or ""
+    )
 
 
 def _sha256(path: Path) -> str:
@@ -97,8 +99,16 @@ def _register_dataset(
             manifest=EXCLUDED.manifest, run_id=EXCLUDED.run_id, imported_at=now()
         """,
         (
-            dataset_id, version, status, record_count, valid_count, pending,
-            quality, _sha256(manifest_path), json.dumps(manifest), run_id,
+            dataset_id,
+            version,
+            status,
+            record_count,
+            valid_count,
+            pending,
+            quality,
+            _sha256(manifest_path),
+            json.dumps(manifest),
+            run_id,
         ),
     )
 
@@ -135,9 +145,7 @@ def cmd_run(dsn: str) -> dict:
             evidence_rows = _load_jsonl(evidence_path)
             configured_ids = {str(source.get("id", "")) for source in srcs}
             inferred_ids = {
-                str(row.get("source_id", ""))
-                for row in evidence_rows
-                if row.get("source_id")
+                str(row.get("source_id", "")) for row in evidence_rows if row.get("source_id")
             }
             platform_ids = {"51job", "boss"} | (inferred_ids - configured_ids)
             for extra in sorted(platform_ids):
@@ -149,18 +157,58 @@ def cmd_run(dsn: str) -> dict:
 
             # ---- dataset_versions（导入快照登记，幂等） ----
             dataset_specs = (
-                ("jd", _manifest_version(P / "jd-opencli" / "manifest.json") or "jd-v3", P / "jd-opencli" / "norm-jd.jsonl", P / "jd-opencli" / "manifest.json"),
-                ("temporal", _manifest_version(P / "wechat-mp" / "manifest.json") or "temporal-v2", P / "wechat-mp" / "events.jsonl", P / "wechat-mp" / "manifest.json"),
-                ("capability", _manifest_version(P / "capability-matrix" / "manifest.json") or "skill-v6", P / "capability-matrix" / "position-skills.jsonl", P / "capability-matrix" / "manifest.json"),
-                ("evidence", _manifest_version(P / "evidence" / "manifest.json") or "evidence-v2", P / "evidence" / "evidence.jsonl", P / "evidence" / "manifest.json"),
-                ("evaluation", "eval-v1-20260825", ROOT / "evaluation" / "samples" / "manifest.json", ROOT / "evaluation" / "samples" / "manifest.json"),
-                ("resumes", "resume-v2", P / "candidates" / "resume-archive.jsonl", P / "candidates" / "resume-archive.jsonl"),
+                (
+                    "jd",
+                    _manifest_version(P / "jd-opencli" / "manifest.json") or "jd-v3",
+                    P / "jd-opencli" / "norm-jd.jsonl",
+                    P / "jd-opencli" / "manifest.json",
+                ),
+                (
+                    "temporal",
+                    _manifest_version(P / "wechat-mp" / "manifest.json") or "temporal-v2",
+                    P / "wechat-mp" / "events.jsonl",
+                    P / "wechat-mp" / "manifest.json",
+                ),
+                (
+                    "capability",
+                    _manifest_version(P / "capability-matrix" / "manifest.json") or "skill-v6",
+                    P / "capability-matrix" / "position-skills.jsonl",
+                    P / "capability-matrix" / "manifest.json",
+                ),
+                (
+                    "evidence",
+                    _manifest_version(P / "evidence" / "manifest.json") or "evidence-v2",
+                    P / "evidence" / "evidence.jsonl",
+                    P / "evidence" / "manifest.json",
+                ),
+                (
+                    "evaluation",
+                    "eval-v1-20260825",
+                    ROOT / "evaluation" / "samples" / "manifest.json",
+                    ROOT / "evaluation" / "samples" / "manifest.json",
+                ),
+                (
+                    "resumes",
+                    "resume-v2",
+                    P / "candidates" / "resume-archive.jsonl",
+                    P / "candidates" / "resume-archive.jsonl",
+                ),
             )
             for dataset_id, version, record_path, manifest_path in dataset_specs:
-                records = _line_count(record_path) if record_path.suffix == ".jsonl" else sum(
-                    max(0, _line_count(ROOT / "evaluation" / "samples" / name) - 1)
-                    for name in ("role-mapping.csv", "domain-judgment.csv", "event-extraction.csv")
-                ) if dataset_id == "evaluation" else 0
+                records = (
+                    _line_count(record_path)
+                    if record_path.suffix == ".jsonl"
+                    else sum(
+                        max(0, _line_count(ROOT / "evaluation" / "samples" / name) - 1)
+                        for name in (
+                            "role-mapping.csv",
+                            "domain-judgment.csv",
+                            "event-extraction.csv",
+                        )
+                    )
+                    if dataset_id == "evaluation"
+                    else 0
+                )
                 valid_count = records
                 if dataset_id == "resumes":
                     archive_rows = _load_jsonl(record_path)
@@ -172,9 +220,14 @@ def cmd_run(dsn: str) -> dict:
                     records = len(latest_rows)
                     valid_count = sum(bool(row.get("profile")) for row in latest_rows.values())
                 _register_dataset(
-                    cur, dataset_id=dataset_id, version=version, record_count=records,
-                    valid_count=valid_count, quality=0.67 if dataset_id == "resumes" else 1.0,
-                    manifest_path=manifest_path, run_id=run.run_id,
+                    cur,
+                    dataset_id=dataset_id,
+                    version=version,
+                    record_count=records,
+                    valid_count=valid_count,
+                    quality=0.67 if dataset_id == "resumes" else 1.0,
+                    manifest_path=manifest_path,
+                    run_id=run.run_id,
                     status="FROZEN" if dataset_id == "evaluation" else "IMPORTED",
                 )
             counts["dataset_versions"] = len(dataset_specs)

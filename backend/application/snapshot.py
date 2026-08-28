@@ -25,8 +25,17 @@ CORP = ROOT / "data" / "raw" / "jd" / "corp"
 SNAPSHOTS = CORP / "snapshots"
 
 # ponytail: 生产页深 5 + 全量 board 足够日级增量；缓存保证无新岗位时秒级跳过
-_SNAPSHOT_CMD = [sys.executable, "scripts/jdcorp.py", "runall",
-                 "--keywords", "ALL", "--pages", "5", "--workers", "3"]
+_SNAPSHOT_CMD = [
+    sys.executable,
+    "scripts/jdcorp.py",
+    "runall",
+    "--keywords",
+    "ALL",
+    "--pages",
+    "5",
+    "--workers",
+    "3",
+]
 _ANALYZE_CMDS = [
     [sys.executable, "scripts/jdxtract.py", "run"],
     [sys.executable, "scripts/rolemap.py", "run"],
@@ -41,10 +50,9 @@ def _log(step: str, msg: str) -> None:
 async def _run_step(idx: int, cmd: list[str]) -> bool:
     try:
         proc = await asyncio.create_subprocess_exec(
-            *cmd, cwd=ROOT,
-            stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.STDOUT)
-        out, _ = await asyncio.wait_for(
-            proc.communicate(), timeout=_STEP_TIMEOUTS.get(idx, 3600))
+            *cmd, cwd=ROOT, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.STDOUT
+        )
+        out, _ = await asyncio.wait_for(proc.communicate(), timeout=_STEP_TIMEOUTS.get(idx, 3600))
         tail = (out or b"").decode("utf-8", "replace").strip().splitlines()
         _log(cmd[1].split("/")[-1], tail[-1][:160] if tail else f"exit {proc.returncode}")
         return proc.returncode == 0
@@ -74,8 +82,12 @@ async def run_snapshot_once() -> dict:
     if ok and os.getenv("HIRO2_SNAPSHOT_ANALYZE", "true").lower() in ("1", "true"):
         for i, cmd in enumerate(_ANALYZE_CMDS, start=1):
             analyzed += await _run_step(i, cmd)
-    metrics = {"collected": ok, "snapshot": stamp, "analyzed_steps": analyzed,
-               "seconds": round(time.time() - started)}
+    metrics = {
+        "collected": ok,
+        "snapshot": stamp,
+        "analyzed_steps": analyzed,
+        "seconds": round(time.time() - started),
+    }
     _log("done", str(metrics))
     return metrics
 

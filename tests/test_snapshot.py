@@ -15,8 +15,7 @@ def test_enabled_default_off(monkeypatch: pytest.MonkeyPatch) -> None:
     assert snapshot.snapshot_enabled() is True
 
 
-def test_archive_snapshot_copies_once(tmp_path: Path,
-                                      monkeypatch: pytest.MonkeyPatch) -> None:
+def test_archive_snapshot_copies_once(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     corp = tmp_path / "corp"
     corp.mkdir()
     (corp / "tencent.jsonl").write_text('{"jd_id": "tx:1"}\n', encoding="utf-8")

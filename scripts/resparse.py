@@ -99,9 +99,17 @@ async def run(concurrency: int = 10) -> int:
         if done % 25 == 0 or done == len(rows):
             rate = done / (time.monotonic() - started) * 60
             eta = (len(rows) - done) / max(rate, 0.01)
-            run.log("progress", "progress", "progress",
-                    count={"done": done, "total": len(rows),
-                           "per_min": round(rate, 1), "eta_min": round(eta)})
+            run.log(
+                "progress",
+                "progress",
+                "progress",
+                count={
+                    "done": done,
+                    "total": len(rows),
+                    "per_min": round(rate, 1),
+                    "eta_min": round(eta),
+                },
+            )
         return r
 
     results = await asyncio.gather(*(tracked(row) for row in rows))

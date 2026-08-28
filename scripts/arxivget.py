@@ -39,10 +39,19 @@ NS = {"a": "http://www.w3.org/2005/Atom"}
 
 # 与能力域对齐的检索词（覆盖 30 域中信号价值最高的新兴域）
 DEFAULT_QUERIES = [
-    "large language model", "AI agent", "retrieval augmented generation",
-    "multimodal", "prompt engineering", "fine-tuning", "text embedding",
-    "speech recognition", "image generation", "recommendation system",
-    "knowledge graph", "reinforcement learning", "federated learning",
+    "large language model",
+    "AI agent",
+    "retrieval augmented generation",
+    "multimodal",
+    "prompt engineering",
+    "fine-tuning",
+    "text embedding",
+    "speech recognition",
+    "image generation",
+    "recommendation system",
+    "knowledge graph",
+    "reinforcement learning",
+    "federated learning",
 ]
 PAGE = 100
 SLEEP = 3.2  # arXiv 官方礼貌限速
@@ -50,16 +59,25 @@ SLEEP = 3.2  # arXiv 官方礼貌限速
 
 def _fetch(query: str, year: int, start: int) -> ET.Element:
     q = f'search_query=all:"{query}" AND submittedDate:[{year}01010000 TO {year}12312359]'
-    url = API + "?" + urllib.parse.urlencode(
-        {"search_query": q, "start": start, "max_results": PAGE,
-         "sortBy": "submittedDate", "sortOrder": "ascending"})
+    url = (
+        API
+        + "?"
+        + urllib.parse.urlencode(
+            {
+                "search_query": q,
+                "start": start,
+                "max_results": PAGE,
+                "sortBy": "submittedDate",
+                "sortOrder": "ascending",
+            }
+        )
+    )
     req = urllib.request.Request(url, headers={"User-Agent": "hiro2-research/0.1"})
     with urllib.request.urlopen(req, timeout=30) as r:
         return ET.fromstring(r.read())
 
 
-def fetch_year(query: str, year: int, max_pages: int, seen: set[str],
-               sink) -> int:
+def fetch_year(query: str, year: int, max_pages: int, seen: set[str], sink) -> int:
     """单词单年分页拉取，返回新入库条数。"""
     fresh = 0
     for page in range(max_pages):
@@ -114,16 +132,18 @@ def aggregate() -> dict:
             hit = resolver.resolve(m.strip())
             if hit.skill_id:
                 cnt[hit.skill_id] += 1
-    out = {"papers": n,
-           "monthly": {m: dict(sorted(c.items(), key=lambda x: -x[1]))
-                       for m, c in sorted(monthly.items())}}
+    out = {
+        "papers": n,
+        "monthly": {
+            m: dict(sorted(c.items(), key=lambda x: -x[1])) for m, c in sorted(monthly.items())
+        },
+    }
     OUT_AGG.parent.mkdir(parents=True, exist_ok=True)
     OUT_AGG.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     return out
 
 
-def cmd_run(queries: list[str], years: list[int], max_pages: int,
-            agg_only: bool) -> dict:
+def cmd_run(queries: list[str], years: list[int], max_pages: int, agg_only: bool) -> dict:
     run = RunContext("arxivget", {"cmd": "run", "queries": queries, "years": years})
     OUT_RAW.parent.mkdir(parents=True, exist_ok=True)
     seen: set[str] = set()
@@ -140,8 +160,12 @@ def cmd_run(queries: list[str], years: list[int], max_pages: int,
             per_query[q] = fresh_q
         fh.close()
     agg = aggregate()
-    metrics = {"new": sum(per_query.values()), "per_query": per_query,
-               "papers_total": agg["papers"], "months": len(agg["monthly"])}
+    metrics = {
+        "new": sum(per_query.values()),
+        "per_query": per_query,
+        "papers_total": agg["papers"],
+        "months": len(agg["monthly"]),
+    }
     run.finish(metrics)
     return metrics
 
@@ -150,12 +174,11 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="arxivget")
     sub = parser.add_subparsers(dest="cmd", required=True)
     p_run = sub.add_parser("run")
-    p_run.add_argument("--query", nargs="+", default=None,
-                       help="检索词；缺省用内置 13 词表")
-    p_run.add_argument("--year", nargs="+", type=int, default=None,
-                       help="年份列表；缺省 2015..2026")
-    p_run.add_argument("--max-pages", type=int, default=2,
-                       help="每词每年最多拉几页（100/页）")
+    p_run.add_argument("--query", nargs="+", default=None, help="检索词；缺省用内置 13 词表")
+    p_run.add_argument(
+        "--year", nargs="+", type=int, default=None, help="年份列表；缺省 2015..2026"
+    )
+    p_run.add_argument("--max-pages", type=int, default=2, help="每词每年最多拉几页（100/页）")
     p_run.add_argument("--agg-only", action="store_true", help="只重跑聚合")
     args = parser.parse_args(argv)
     queries = args.query or DEFAULT_QUERIES

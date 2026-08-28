@@ -1,0 +1,393 @@
+{
+  "candidate_id": "synth_rag_junior_06",
+  "raw_extraction_id": "synth_rag_junior_06:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "RAG",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "PyMuPDF",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "PDF解析工具"
+    },
+    {
+      "mention": "pdfplumber",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "PDF文本提取"
+    },
+    {
+      "mention": "Unstructured",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "文档解析库"
+    },
+    {
+      "mention": "RecursiveCharacterTextSplitter",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "文本分块工具"
+    },
+    {
+      "mention": "FAISS",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Milvus",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "混合检索",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "RAG检索策略"
+    },
+    {
+      "mention": "BM25",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "稀疏检索算法"
+    },
+    {
+      "mention": "稠密检索",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "向量检索方法"
+    },
+    {
+      "mention": "bge-reranker",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "重排序模型"
+    },
+    {
+      "mention": "向量数据库",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "OpenAI text-embedding-3-small",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "嵌入模型API"
+    },
+    {
+      "mention": "BAAI/bge-large-zh-v1.5",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "中文嵌入模型"
+    },
+    {
+      "mention": "HNSW",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "向量索引算法"
+    },
+    {
+      "mention": "IVF",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "向量索引方法"
+    },
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "pandas",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python库"
+    },
+    {
+      "mention": "numpy",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python数值库"
+    },
+    {
+      "mention": "requests",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python库"
+    },
+    {
+      "mention": "LangChain",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LlamaIndex",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Gradio",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python界面库"
+    },
+    {
+      "mention": "Streamlit",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python数据应用"
+    },
+    {
+      "mention": "LLM 微调",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型微调技术"
+    },
+    {
+      "mention": "LoRA",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Prompt Engineering",
+      "skill_id": "cap_02",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "提示词设计"
+    },
+    {
+      "mention": "Few-shot",
+      "skill_id": "cap_02",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "提示工程技巧"
+    },
+    {
+      "mention": "Chain-of-Thought",
+      "skill_id": "cap_01",
+      "point_id": "cap_01.推理",
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Git",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "elasticsearch",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "检索服务"
+    },
+    {
+      "mention": "sentence-transformers",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "嵌入模型库"
+    },
+    {
+      "mention": "Typer CLI",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "CLI开发库"
+    }
+  ],
+  "experience_years": null,
+  "education": "XX大学 计算机科学与技术（本科），2021.09 - 2025.06，GPA 3.6/4.0",
+  "projects": [
+    {
+      "name": "校园课程助手问答系统（RAG 全流程）",
+      "description": "从200+份课程PPT与大纲PDF中提取文本，实现分块、向量化、检索与生成，提升检索召回率与问答准确率。",
+      "skill_mentions": [
+        "Python",
+        "Milvus",
+        "LangChain",
+        "GLM-4-flash",
+        "PyMuPDF"
+      ]
+    },
+    {
+      "name": "企业 FAQ 知识库检索优化（重排序策略实验）",
+      "description": "基于FastAPI构建检索服务，对比混合检索与重排序效果，构建同义词词典提升专业术语语义匹配。",
+      "skill_mentions": [
+        "FastAPI",
+        "elasticsearch",
+        "FAISS",
+        "sentence-transformers"
+      ]
+    },
+    {
+      "name": "文档解析与结构化预处理脚本（工具类）",
+      "description": "开发脚本将docx/pdf转换为Markdown并保留结构，处理扫描件OCR，清洗成功率95%，打包为pip模块。",
+      "skill_mentions": [
+        "Python",
+        "Unstructured",
+        "pdfplumber",
+        "Typer CLI"
+      ]
+    }
+  ],
+  "correction_log": []
+}

@@ -1,0 +1,1439 @@
+{
+  "base": "archive",
+  "obs": "corp",
+  "changesets": [
+    {
+      "position_id": "pos_01",
+      "job": "pos_01",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 319,
+      "obs_jds": 387,
+      "changes": [
+        {
+          "skill_id": "cap_12",
+          "name": "ML/DL算法",
+          "base_share": 0.204,
+          "obs_share": 0.145,
+          "change_type": "shrink",
+          "base_mentions": 377,
+          "obs_mentions": 303
+        },
+        {
+          "skill_id": "cap_04",
+          "name": "AI Agent",
+          "base_share": 0.069,
+          "obs_share": 0.122,
+          "change_type": "grow",
+          "base_mentions": 128,
+          "obs_mentions": 255
+        },
+        {
+          "skill_id": "cap_05",
+          "name": "多模态AI",
+          "base_share": 0.17,
+          "obs_share": 0.121,
+          "change_type": "shrink",
+          "base_mentions": 313,
+          "obs_mentions": 252
+        },
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "base_share": 0.146,
+          "obs_share": 0.109,
+          "change_type": "shrink",
+          "base_mentions": 269,
+          "obs_mentions": 227
+        },
+        {
+          "skill_id": "cap_01",
+          "name": "LLM应用",
+          "base_share": 0.211,
+          "obs_share": 0.189,
+          "change_type": "shrink",
+          "base_mentions": 390,
+          "obs_mentions": 394
+        },
+        {
+          "skill_id": "cap_10",
+          "name": "数据标注",
+          "base_share": 0.002,
+          "obs_share": 0.017,
+          "change_type": "add",
+          "base_mentions": 4,
+          "obs_mentions": 35
+        },
+        {
+          "skill_id": "cap_14",
+          "name": "API开发",
+          "base_share": 0.001,
+          "obs_share": 0.008,
+          "change_type": "add",
+          "base_mentions": 2,
+          "obs_mentions": 17
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_02",
+      "job": "pos_02",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 39,
+      "obs_jds": 274,
+      "changes": [
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "base_share": 0.179,
+          "obs_share": 0.072,
+          "change_type": "shrink",
+          "base_mentions": 29,
+          "obs_mentions": 100
+        },
+        {
+          "skill_id": "cap_04",
+          "name": "AI Agent",
+          "base_share": 0.278,
+          "obs_share": 0.375,
+          "change_type": "grow",
+          "base_mentions": 45,
+          "obs_mentions": 518
+        },
+        {
+          "skill_id": "cap_12",
+          "name": "ML/DL算法",
+          "base_share": 0.093,
+          "obs_share": 0.041,
+          "change_type": "shrink",
+          "base_mentions": 15,
+          "obs_mentions": 56
+        },
+        {
+          "skill_id": "cap_03",
+          "name": "模型微调",
+          "base_share": 0.086,
+          "obs_share": 0.041,
+          "change_type": "shrink",
+          "base_mentions": 14,
+          "obs_mentions": 57
+        },
+        {
+          "skill_id": "cap_01",
+          "name": "LLM应用",
+          "base_share": 0.136,
+          "obs_share": 0.178,
+          "change_type": "grow",
+          "base_mentions": 22,
+          "obs_mentions": 246
+        },
+        {
+          "skill_id": "cap_06",
+          "name": "RAG/知识库",
+          "base_share": 0.049,
+          "obs_share": 0.085,
+          "change_type": "grow",
+          "base_mentions": 8,
+          "obs_mentions": 117
+        },
+        {
+          "skill_id": "cap_09",
+          "name": "大数据处理",
+          "base_share": 0.006,
+          "obs_share": 0.029,
+          "change_type": "grow",
+          "base_mentions": 1,
+          "obs_mentions": 40
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_04",
+      "job": "pos_04",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 151,
+      "obs_jds": 91,
+      "changes": [
+        {
+          "skill_id": "cap_12",
+          "name": "ML/DL算法",
+          "base_share": 0.292,
+          "obs_share": 0.2,
+          "change_type": "shrink",
+          "base_mentions": 224,
+          "obs_mentions": 104
+        },
+        {
+          "skill_id": "cap_13",
+          "name": "云计算",
+          "base_share": 0.021,
+          "obs_share": 0.069,
+          "change_type": "grow",
+          "base_mentions": 16,
+          "obs_mentions": 36
+        },
+        {
+          "skill_id": "cap_17",
+          "name": "嵌入式/硬件",
+          "base_share": 0.02,
+          "obs_share": 0.058,
+          "change_type": "grow",
+          "base_mentions": 15,
+          "obs_mentions": 30
+        },
+        {
+          "skill_id": "cap_04",
+          "name": "AI Agent",
+          "base_share": 0.017,
+          "obs_share": 0.046,
+          "change_type": "grow",
+          "base_mentions": 13,
+          "obs_mentions": 24
+        },
+        {
+          "skill_id": "cap_05",
+          "name": "多模态AI",
+          "base_share": 0.191,
+          "obs_share": 0.165,
+          "change_type": "shrink",
+          "base_mentions": 147,
+          "obs_mentions": 86
+        },
+        {
+          "skill_id": "cap_08",
+          "name": "SQL/数据库",
+          "base_share": 0.001,
+          "obs_share": 0.006,
+          "change_type": "add",
+          "base_mentions": 1,
+          "obs_mentions": 3
+        },
+        {
+          "skill_id": "cap_14",
+          "name": "API开发",
+          "base_share": 0.007,
+          "obs_share": 0.002,
+          "change_type": "remove",
+          "base_mentions": 5,
+          "obs_mentions": 1
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_05",
+      "job": "pos_05",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 62,
+      "obs_jds": 90,
+      "changes": [
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "base_share": 0.264,
+          "obs_share": 0.214,
+          "change_type": "shrink",
+          "base_mentions": 66,
+          "obs_mentions": 80
+        },
+        {
+          "skill_id": "cap_15",
+          "name": "系统架构",
+          "base_share": 0.004,
+          "obs_share": 0.04,
+          "change_type": "grow",
+          "base_mentions": 1,
+          "obs_mentions": 15
+        },
+        {
+          "skill_id": "cap_13",
+          "name": "云计算",
+          "base_share": 0.108,
+          "obs_share": 0.075,
+          "change_type": "shrink",
+          "base_mentions": 27,
+          "obs_mentions": 28
+        },
+        {
+          "skill_id": "cap_18",
+          "name": "自动化运维",
+          "base_share": 0.012,
+          "obs_share": 0.043,
+          "change_type": "grow",
+          "base_mentions": 3,
+          "obs_mentions": 16
+        },
+        {
+          "skill_id": "cap_08",
+          "name": "SQL/数据库",
+          "base_share": 0.004,
+          "obs_share": 0.032,
+          "change_type": "grow",
+          "base_mentions": 1,
+          "obs_mentions": 12
+        },
+        {
+          "skill_id": "cap_01",
+          "name": "LLM应用",
+          "base_share": 0.16,
+          "obs_share": 0.137,
+          "change_type": "shrink",
+          "base_mentions": 40,
+          "obs_mentions": 51
+        },
+        {
+          "skill_id": "cap_11",
+          "name": "数据可视化",
+          "base_share": 0.0,
+          "obs_share": 0.005,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 2
+        },
+        {
+          "skill_id": "cap_21",
+          "name": "领域知识",
+          "base_share": 0.0,
+          "obs_share": 0.005,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 2
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_06",
+      "job": "pos_06",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 155,
+      "obs_jds": 241,
+      "changes": [
+        {
+          "skill_id": "cap_09",
+          "name": "大数据处理",
+          "base_share": 0.206,
+          "obs_share": 0.076,
+          "change_type": "shrink",
+          "base_mentions": 70,
+          "obs_mentions": 44
+        },
+        {
+          "skill_id": "cap_04",
+          "name": "AI Agent",
+          "base_share": 0.1,
+          "obs_share": 0.206,
+          "change_type": "grow",
+          "base_mentions": 34,
+          "obs_mentions": 119
+        },
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "base_share": 0.038,
+          "obs_share": 0.086,
+          "change_type": "grow",
+          "base_mentions": 13,
+          "obs_mentions": 50
+        },
+        {
+          "skill_id": "cap_23",
+          "name": "项目管理",
+          "base_share": 0.044,
+          "obs_share": 0.01,
+          "change_type": "shrink",
+          "base_mentions": 15,
+          "obs_mentions": 6
+        },
+        {
+          "skill_id": "cap_22",
+          "name": "产品思维",
+          "base_share": 0.044,
+          "obs_share": 0.01,
+          "change_type": "shrink",
+          "base_mentions": 15,
+          "obs_mentions": 6
+        },
+        {
+          "skill_id": "cap_06",
+          "name": "RAG/知识库",
+          "base_share": 0.024,
+          "obs_share": 0.057,
+          "change_type": "grow",
+          "base_mentions": 8,
+          "obs_mentions": 33
+        },
+        {
+          "skill_id": "cap_08",
+          "name": "SQL/数据库",
+          "base_share": 0.047,
+          "obs_share": 0.071,
+          "change_type": "grow",
+          "base_mentions": 16,
+          "obs_mentions": 41
+        },
+        {
+          "skill_id": "cap_01",
+          "name": "LLM应用",
+          "base_share": 0.18,
+          "obs_share": 0.202,
+          "change_type": "grow",
+          "base_mentions": 61,
+          "obs_mentions": 117
+        },
+        {
+          "skill_id": "cap_12",
+          "name": "ML/DL算法",
+          "base_share": 0.097,
+          "obs_share": 0.076,
+          "change_type": "shrink",
+          "base_mentions": 33,
+          "obs_mentions": 44
+        },
+        {
+          "skill_id": "cap_16",
+          "name": "物联网/IoT",
+          "base_share": 0.0,
+          "obs_share": 0.005,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 3
+        },
+        {
+          "skill_id": "cap_25",
+          "name": "英语",
+          "base_share": 0.006,
+          "obs_share": 0.002,
+          "change_type": "remove",
+          "base_mentions": 2,
+          "obs_mentions": 1
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_07",
+      "job": "pos_07",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 9,
+      "obs_jds": 18,
+      "changes": [
+        {
+          "skill_id": "cap_05",
+          "name": "多模态AI",
+          "base_share": 0.0,
+          "obs_share": 0.214,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 18
+        },
+        {
+          "skill_id": "cap_09",
+          "name": "大数据处理",
+          "base_share": 0.217,
+          "obs_share": 0.024,
+          "change_type": "shrink",
+          "base_mentions": 5,
+          "obs_mentions": 2
+        },
+        {
+          "skill_id": "cap_03",
+          "name": "模型微调",
+          "base_share": 0.0,
+          "obs_share": 0.119,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 10
+        },
+        {
+          "skill_id": "cap_01",
+          "name": "LLM应用",
+          "base_share": 0.261,
+          "obs_share": 0.143,
+          "change_type": "shrink",
+          "base_mentions": 6,
+          "obs_mentions": 12
+        },
+        {
+          "skill_id": "cap_08",
+          "name": "SQL/数据库",
+          "base_share": 0.13,
+          "obs_share": 0.036,
+          "change_type": "shrink",
+          "base_mentions": 3,
+          "obs_mentions": 3
+        },
+        {
+          "skill_id": "cap_04",
+          "name": "AI Agent",
+          "base_share": 0.043,
+          "obs_share": 0.119,
+          "change_type": "grow",
+          "base_mentions": 1,
+          "obs_mentions": 10
+        },
+        {
+          "skill_id": "cap_23",
+          "name": "项目管理",
+          "base_share": 0.043,
+          "obs_share": 0.0,
+          "change_type": "remove",
+          "base_mentions": 1,
+          "obs_mentions": 0
+        },
+        {
+          "skill_id": "cap_12",
+          "name": "ML/DL算法",
+          "base_share": 0.043,
+          "obs_share": 0.083,
+          "change_type": "grow",
+          "base_mentions": 1,
+          "obs_mentions": 7
+        },
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "base_share": 0.13,
+          "obs_share": 0.095,
+          "change_type": "shrink",
+          "base_mentions": 3,
+          "obs_mentions": 8
+        },
+        {
+          "skill_id": "cap_20",
+          "name": "法规/审计",
+          "base_share": 0.0,
+          "obs_share": 0.012,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 1
+        },
+        {
+          "skill_id": "cap_30",
+          "name": "安全/风控意识",
+          "base_share": 0.0,
+          "obs_share": 0.012,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 1
+        },
+        {
+          "skill_id": "cap_19",
+          "name": "AI伦理合规",
+          "base_share": 0.0,
+          "obs_share": 0.012,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 1
+        },
+        {
+          "skill_id": "cap_14",
+          "name": "API开发",
+          "base_share": 0.0,
+          "obs_share": 0.012,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 1
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_08",
+      "job": "pos_08",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 35,
+      "obs_jds": 25,
+      "changes": [
+        {
+          "skill_id": "cap_05",
+          "name": "多模态AI",
+          "base_share": 0.316,
+          "obs_share": 0.457,
+          "change_type": "grow",
+          "base_mentions": 48,
+          "obs_mentions": 64
+        },
+        {
+          "skill_id": "cap_01",
+          "name": "LLM应用",
+          "base_share": 0.257,
+          "obs_share": 0.179,
+          "change_type": "shrink",
+          "base_mentions": 39,
+          "obs_mentions": 25
+        },
+        {
+          "skill_id": "cap_02",
+          "name": "Prompt工程",
+          "base_share": 0.039,
+          "obs_share": 0.0,
+          "change_type": "remove",
+          "base_mentions": 6,
+          "obs_mentions": 0
+        },
+        {
+          "skill_id": "cap_03",
+          "name": "模型微调",
+          "base_share": 0.079,
+          "obs_share": 0.043,
+          "change_type": "shrink",
+          "base_mentions": 12,
+          "obs_mentions": 6
+        },
+        {
+          "skill_id": "cap_04",
+          "name": "AI Agent",
+          "base_share": 0.007,
+          "obs_share": 0.036,
+          "change_type": "grow",
+          "base_mentions": 1,
+          "obs_mentions": 5
+        },
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "base_share": 0.059,
+          "obs_share": 0.086,
+          "change_type": "grow",
+          "base_mentions": 9,
+          "obs_mentions": 12
+        },
+        {
+          "skill_id": "cap_09",
+          "name": "大数据处理",
+          "base_share": 0.026,
+          "obs_share": 0.0,
+          "change_type": "remove",
+          "base_mentions": 4,
+          "obs_mentions": 0
+        },
+        {
+          "skill_id": "cap_22",
+          "name": "产品思维",
+          "base_share": 0.0,
+          "obs_share": 0.014,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 2
+        },
+        {
+          "skill_id": "cap_15",
+          "name": "系统架构",
+          "base_share": 0.013,
+          "obs_share": 0.0,
+          "change_type": "remove",
+          "base_mentions": 2,
+          "obs_mentions": 0
+        },
+        {
+          "skill_id": "cap_13",
+          "name": "云计算",
+          "base_share": 0.007,
+          "obs_share": 0.0,
+          "change_type": "remove",
+          "base_mentions": 1,
+          "obs_mentions": 0
+        },
+        {
+          "skill_id": "cap_11",
+          "name": "数据可视化",
+          "base_share": 0.007,
+          "obs_share": 0.0,
+          "change_type": "remove",
+          "base_mentions": 1,
+          "obs_mentions": 0
+        },
+        {
+          "skill_id": "cap_10",
+          "name": "数据标注",
+          "base_share": 0.007,
+          "obs_share": 0.0,
+          "change_type": "remove",
+          "base_mentions": 1,
+          "obs_mentions": 0
+        },
+        {
+          "skill_id": "cap_18",
+          "name": "自动化运维",
+          "base_share": 0.0,
+          "obs_share": 0.007,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 1
+        },
+        {
+          "skill_id": "cap_17",
+          "name": "嵌入式/硬件",
+          "base_share": 0.0,
+          "obs_share": 0.007,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 1
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_11",
+      "job": "pos_11",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 195,
+      "obs_jds": 286,
+      "changes": [
+        {
+          "skill_id": "cap_09",
+          "name": "大数据处理",
+          "base_share": 0.212,
+          "obs_share": 0.33,
+          "change_type": "grow",
+          "base_mentions": 118,
+          "obs_mentions": 298
+        },
+        {
+          "skill_id": "cap_12",
+          "name": "ML/DL算法",
+          "base_share": 0.169,
+          "obs_share": 0.053,
+          "change_type": "shrink",
+          "base_mentions": 94,
+          "obs_mentions": 48
+        },
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "base_share": 0.25,
+          "obs_share": 0.178,
+          "change_type": "shrink",
+          "base_mentions": 139,
+          "obs_mentions": 161
+        },
+        {
+          "skill_id": "cap_18",
+          "name": "自动化运维",
+          "base_share": 0.014,
+          "obs_share": 0.067,
+          "change_type": "grow",
+          "base_mentions": 8,
+          "obs_mentions": 61
+        },
+        {
+          "skill_id": "cap_15",
+          "name": "系统架构",
+          "base_share": 0.118,
+          "obs_share": 0.065,
+          "change_type": "shrink",
+          "base_mentions": 66,
+          "obs_mentions": 59
+        },
+        {
+          "skill_id": "cap_04",
+          "name": "AI Agent",
+          "base_share": 0.018,
+          "obs_share": 0.045,
+          "change_type": "grow",
+          "base_mentions": 10,
+          "obs_mentions": 41
+        },
+        {
+          "skill_id": "cap_08",
+          "name": "SQL/数据库",
+          "base_share": 0.083,
+          "obs_share": 0.103,
+          "change_type": "grow",
+          "base_mentions": 46,
+          "obs_mentions": 93
+        },
+        {
+          "skill_id": "cap_11",
+          "name": "数据可视化",
+          "base_share": 0.011,
+          "obs_share": 0.002,
+          "change_type": "remove",
+          "base_mentions": 6,
+          "obs_mentions": 2
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_12",
+      "job": "pos_12",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 9,
+      "obs_jds": 24,
+      "changes": [
+        {
+          "skill_id": "cap_12",
+          "name": "ML/DL算法",
+          "base_share": 0.233,
+          "obs_share": 0.067,
+          "change_type": "shrink",
+          "base_mentions": 7,
+          "obs_mentions": 6
+        },
+        {
+          "skill_id": "cap_05",
+          "name": "多模态AI",
+          "base_share": 0.1,
+          "obs_share": 0.233,
+          "change_type": "grow",
+          "base_mentions": 3,
+          "obs_mentions": 21
+        },
+        {
+          "skill_id": "cap_03",
+          "name": "模型微调",
+          "base_share": 0.133,
+          "obs_share": 0.022,
+          "change_type": "shrink",
+          "base_mentions": 4,
+          "obs_mentions": 2
+        },
+        {
+          "skill_id": "cap_01",
+          "name": "LLM应用",
+          "base_share": 0.067,
+          "obs_share": 0.167,
+          "change_type": "grow",
+          "base_mentions": 2,
+          "obs_mentions": 15
+        },
+        {
+          "skill_id": "cap_04",
+          "name": "AI Agent",
+          "base_share": 0.0,
+          "obs_share": 0.056,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 5
+        },
+        {
+          "skill_id": "cap_06",
+          "name": "RAG/知识库",
+          "base_share": 0.0,
+          "obs_share": 0.033,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 3
+        },
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "base_share": 0.133,
+          "obs_share": 0.1,
+          "change_type": "shrink",
+          "base_mentions": 4,
+          "obs_mentions": 9
+        },
+        {
+          "skill_id": "cap_14",
+          "name": "API开发",
+          "base_share": 0.033,
+          "obs_share": 0.0,
+          "change_type": "remove",
+          "base_mentions": 1,
+          "obs_mentions": 0
+        },
+        {
+          "skill_id": "cap_08",
+          "name": "SQL/数据库",
+          "base_share": 0.033,
+          "obs_share": 0.056,
+          "change_type": "grow",
+          "base_mentions": 1,
+          "obs_mentions": 5
+        },
+        {
+          "skill_id": "cap_17",
+          "name": "嵌入式/硬件",
+          "base_share": 0.033,
+          "obs_share": 0.011,
+          "change_type": "shrink",
+          "base_mentions": 1,
+          "obs_mentions": 1
+        },
+        {
+          "skill_id": "cap_23",
+          "name": "项目管理",
+          "base_share": 0.0,
+          "obs_share": 0.011,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 1
+        },
+        {
+          "skill_id": "cap_25",
+          "name": "英语",
+          "base_share": 0.0,
+          "obs_share": 0.011,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 1
+        },
+        {
+          "skill_id": "cap_30",
+          "name": "安全/风控意识",
+          "base_share": 0.0,
+          "obs_share": 0.011,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 1
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_13",
+      "job": "pos_13",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 158,
+      "obs_jds": 223,
+      "changes": [
+        {
+          "skill_id": "cap_12",
+          "name": "ML/DL算法",
+          "base_share": 0.091,
+          "obs_share": 0.039,
+          "change_type": "shrink",
+          "base_mentions": 44,
+          "obs_mentions": 27
+        },
+        {
+          "skill_id": "cap_04",
+          "name": "AI Agent",
+          "base_share": 0.048,
+          "obs_share": 0.087,
+          "change_type": "grow",
+          "base_mentions": 23,
+          "obs_mentions": 60
+        },
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "base_share": 0.263,
+          "obs_share": 0.227,
+          "change_type": "shrink",
+          "base_mentions": 127,
+          "obs_mentions": 156
+        },
+        {
+          "skill_id": "cap_09",
+          "name": "大数据处理",
+          "base_share": 0.041,
+          "obs_share": 0.07,
+          "change_type": "grow",
+          "base_mentions": 20,
+          "obs_mentions": 48
+        },
+        {
+          "skill_id": "cap_14",
+          "name": "API开发",
+          "base_share": 0.029,
+          "obs_share": 0.051,
+          "change_type": "grow",
+          "base_mentions": 14,
+          "obs_mentions": 35
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_14",
+      "job": "pos_14",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 39,
+      "obs_jds": 19,
+      "changes": [
+        {
+          "skill_id": "cap_04",
+          "name": "AI Agent",
+          "base_share": 0.022,
+          "obs_share": 0.111,
+          "change_type": "grow",
+          "base_mentions": 2,
+          "obs_mentions": 6
+        },
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "base_share": 0.275,
+          "obs_share": 0.204,
+          "change_type": "shrink",
+          "base_mentions": 25,
+          "obs_mentions": 11
+        },
+        {
+          "skill_id": "cap_14",
+          "name": "API开发",
+          "base_share": 0.0,
+          "obs_share": 0.056,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 3
+        },
+        {
+          "skill_id": "cap_17",
+          "name": "嵌入式/硬件",
+          "base_share": 0.077,
+          "obs_share": 0.037,
+          "change_type": "shrink",
+          "base_mentions": 7,
+          "obs_mentions": 2
+        },
+        {
+          "skill_id": "cap_23",
+          "name": "项目管理",
+          "base_share": 0.033,
+          "obs_share": 0.0,
+          "change_type": "remove",
+          "base_mentions": 3,
+          "obs_mentions": 0
+        },
+        {
+          "skill_id": "cap_13",
+          "name": "云计算",
+          "base_share": 0.253,
+          "obs_share": 0.222,
+          "change_type": "shrink",
+          "base_mentions": 23,
+          "obs_mentions": 12
+        },
+        {
+          "skill_id": "cap_06",
+          "name": "RAG/知识库",
+          "base_share": 0.0,
+          "obs_share": 0.019,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 1
+        },
+        {
+          "skill_id": "cap_08",
+          "name": "SQL/数据库",
+          "base_share": 0.0,
+          "obs_share": 0.019,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 1
+        },
+        {
+          "skill_id": "cap_09",
+          "name": "大数据处理",
+          "base_share": 0.011,
+          "obs_share": 0.0,
+          "change_type": "remove",
+          "base_mentions": 1,
+          "obs_mentions": 0
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_15",
+      "job": "pos_15",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 10,
+      "obs_jds": 12,
+      "changes": [
+        {
+          "skill_id": "cap_12",
+          "name": "ML/DL算法",
+          "base_share": 0.318,
+          "obs_share": 0.13,
+          "change_type": "shrink",
+          "base_mentions": 7,
+          "obs_mentions": 3
+        },
+        {
+          "skill_id": "cap_01",
+          "name": "LLM应用",
+          "base_share": 0.045,
+          "obs_share": 0.174,
+          "change_type": "grow",
+          "base_mentions": 1,
+          "obs_mentions": 4
+        },
+        {
+          "skill_id": "cap_13",
+          "name": "云计算",
+          "base_share": 0.136,
+          "obs_share": 0.043,
+          "change_type": "shrink",
+          "base_mentions": 3,
+          "obs_mentions": 1
+        },
+        {
+          "skill_id": "cap_05",
+          "name": "多模态AI",
+          "base_share": 0.0,
+          "obs_share": 0.087,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 2
+        },
+        {
+          "skill_id": "cap_18",
+          "name": "自动化运维",
+          "base_share": 0.0,
+          "obs_share": 0.043,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 1
+        },
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "base_share": 0.182,
+          "obs_share": 0.217,
+          "change_type": "grow",
+          "base_mentions": 4,
+          "obs_mentions": 5
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_27",
+      "job": "pos_27",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 66,
+      "obs_jds": 49,
+      "changes": [
+        {
+          "skill_id": "cap_12",
+          "name": "ML/DL算法",
+          "base_share": 0.337,
+          "obs_share": 0.232,
+          "change_type": "shrink",
+          "base_mentions": 103,
+          "obs_mentions": 58
+        },
+        {
+          "skill_id": "cap_17",
+          "name": "嵌入式/硬件",
+          "base_share": 0.01,
+          "obs_share": 0.104,
+          "change_type": "grow",
+          "base_mentions": 3,
+          "obs_mentions": 26
+        },
+        {
+          "skill_id": "cap_03",
+          "name": "模型微调",
+          "base_share": 0.026,
+          "obs_share": 0.104,
+          "change_type": "grow",
+          "base_mentions": 8,
+          "obs_mentions": 26
+        },
+        {
+          "skill_id": "cap_01",
+          "name": "LLM应用",
+          "base_share": 0.092,
+          "obs_share": 0.048,
+          "change_type": "shrink",
+          "base_mentions": 28,
+          "obs_mentions": 12
+        },
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "base_share": 0.147,
+          "obs_share": 0.124,
+          "change_type": "shrink",
+          "base_mentions": 45,
+          "obs_mentions": 31
+        },
+        {
+          "skill_id": "cap_09",
+          "name": "大数据处理",
+          "base_share": 0.013,
+          "obs_share": 0.0,
+          "change_type": "remove",
+          "base_mentions": 4,
+          "obs_mentions": 0
+        },
+        {
+          "skill_id": "cap_30",
+          "name": "安全/风控意识",
+          "base_share": 0.007,
+          "obs_share": 0.0,
+          "change_type": "remove",
+          "base_mentions": 2,
+          "obs_mentions": 0
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_28",
+      "job": "pos_28",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 70,
+      "obs_jds": 71,
+      "changes": [
+        {
+          "skill_id": "cap_12",
+          "name": "ML/DL算法",
+          "base_share": 0.44,
+          "obs_share": 0.333,
+          "change_type": "shrink",
+          "base_mentions": 131,
+          "obs_mentions": 93
+        },
+        {
+          "skill_id": "cap_05",
+          "name": "多模态AI",
+          "base_share": 0.131,
+          "obs_share": 0.039,
+          "change_type": "shrink",
+          "base_mentions": 39,
+          "obs_mentions": 11
+        },
+        {
+          "skill_id": "cap_03",
+          "name": "模型微调",
+          "base_share": 0.023,
+          "obs_share": 0.086,
+          "change_type": "grow",
+          "base_mentions": 7,
+          "obs_mentions": 24
+        },
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "base_share": 0.168,
+          "obs_share": 0.208,
+          "change_type": "grow",
+          "base_mentions": 50,
+          "obs_mentions": 58
+        },
+        {
+          "skill_id": "cap_04",
+          "name": "AI Agent",
+          "base_share": 0.02,
+          "obs_share": 0.054,
+          "change_type": "grow",
+          "base_mentions": 6,
+          "obs_mentions": 15
+        },
+        {
+          "skill_id": "cap_15",
+          "name": "系统架构",
+          "base_share": 0.0,
+          "obs_share": 0.022,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 6
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_35",
+      "job": "pos_35",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 102,
+      "obs_jds": 129,
+      "changes": [
+        {
+          "skill_id": "cap_04",
+          "name": "AI Agent",
+          "base_share": 0.01,
+          "obs_share": 0.078,
+          "change_type": "grow",
+          "base_mentions": 3,
+          "obs_mentions": 28
+        },
+        {
+          "skill_id": "cap_12",
+          "name": "ML/DL算法",
+          "base_share": 0.196,
+          "obs_share": 0.14,
+          "change_type": "shrink",
+          "base_mentions": 60,
+          "obs_mentions": 50
+        },
+        {
+          "skill_id": "cap_09",
+          "name": "大数据处理",
+          "base_share": 0.219,
+          "obs_share": 0.187,
+          "change_type": "shrink",
+          "base_mentions": 67,
+          "obs_mentions": 67
+        },
+        {
+          "skill_id": "cap_23",
+          "name": "项目管理",
+          "base_share": 0.01,
+          "obs_share": 0.0,
+          "change_type": "remove",
+          "base_mentions": 3,
+          "obs_mentions": 0
+        },
+        {
+          "skill_id": "cap_14",
+          "name": "API开发",
+          "base_share": 0.0,
+          "obs_share": 0.008,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 3
+        },
+        {
+          "skill_id": "cap_13",
+          "name": "云计算",
+          "base_share": 0.0,
+          "obs_share": 0.006,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 2
+        }
+      ],
+      "review_status": "PENDING"
+    },
+    {
+      "position_id": "pos_36",
+      "job": "pos_36",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 17,
+      "obs_jds": 62,
+      "changes": [
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "base_share": 0.361,
+          "obs_share": 0.191,
+          "change_type": "shrink",
+          "base_mentions": 13,
+          "obs_mentions": 31
+        },
+        {
+          "skill_id": "cap_18",
+          "name": "自动化运维",
+          "base_share": 0.0,
+          "obs_share": 0.068,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 11
+        },
+        {
+          "skill_id": "cap_01",
+          "name": "LLM应用",
+          "base_share": 0.056,
+          "obs_share": 0.099,
+          "change_type": "grow",
+          "base_mentions": 2,
+          "obs_mentions": 16
+        },
+        {
+          "skill_id": "cap_12",
+          "name": "ML/DL算法",
+          "base_share": 0.056,
+          "obs_share": 0.019,
+          "change_type": "shrink",
+          "base_mentions": 2,
+          "obs_mentions": 3
+        },
+        {
+          "skill_id": "cap_14",
+          "name": "API开发",
+          "base_share": 0.028,
+          "obs_share": 0.056,
+          "change_type": "grow",
+          "base_mentions": 1,
+          "obs_mentions": 9
+        },
+        {
+          "skill_id": "cap_09",
+          "name": "大数据处理",
+          "base_share": 0.083,
+          "obs_share": 0.056,
+          "change_type": "shrink",
+          "base_mentions": 3,
+          "obs_mentions": 9
+        },
+        {
+          "skill_id": "cap_04",
+          "name": "AI Agent",
+          "base_share": 0.111,
+          "obs_share": 0.136,
+          "change_type": "grow",
+          "base_mentions": 4,
+          "obs_mentions": 22
+        },
+        {
+          "skill_id": "cap_15",
+          "name": "系统架构",
+          "base_share": 0.028,
+          "obs_share": 0.049,
+          "change_type": "grow",
+          "base_mentions": 1,
+          "obs_mentions": 8
+        },
+        {
+          "skill_id": "cap_06",
+          "name": "RAG/知识库",
+          "base_share": 0.0,
+          "obs_share": 0.019,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 3
+        },
+        {
+          "skill_id": "cap_03",
+          "name": "模型微调",
+          "base_share": 0.0,
+          "obs_share": 0.019,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 3
+        },
+        {
+          "skill_id": "cap_19",
+          "name": "AI伦理合规",
+          "base_share": 0.0,
+          "obs_share": 0.006,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 1
+        },
+        {
+          "skill_id": "cap_02",
+          "name": "Prompt工程",
+          "base_share": 0.0,
+          "obs_share": 0.006,
+          "change_type": "add",
+          "base_mentions": 0,
+          "obs_mentions": 1
+        }
+      ],
+      "review_status": "PENDING"
+    }
+  ],
+  "params": {
+    "min_jds": 8,
+    "delta": 0.02,
+    "presence": 0.005,
+    "note": "数据自动检测的岗位变化草稿，发布仍需人工审核"
+  }
+}

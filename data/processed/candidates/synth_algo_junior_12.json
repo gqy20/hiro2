@@ -1,0 +1,409 @@
+{
+  "candidate_id": "synth_algo_junior_12",
+  "raw_extraction_id": "synth_algo_junior_12:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "C++",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "编程语言"
+    },
+    {
+      "mention": "NumPy",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python 数值库"
+    },
+    {
+      "mention": "Pandas",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python 数据处理库"
+    },
+    {
+      "mention": "Matplotlib",
+      "skill_id": "cap_11",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据可视化库"
+    },
+    {
+      "mention": "PyTorch",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 1.5,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "TensorFlow 2.x",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "深度学习框架"
+    },
+    {
+      "mention": "ResNet",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "CNN 网络模型"
+    },
+    {
+      "mention": "VGG",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "CNN 网络模型"
+    },
+    {
+      "mention": "YOLO",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "目标检测算法"
+    },
+    {
+      "mention": "U-Net",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "分割网络模型"
+    },
+    {
+      "mention": "Faster R-CNN",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "目标检测算法"
+    },
+    {
+      "mention": "SSD",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "目标检测算法"
+    },
+    {
+      "mention": "DeepLabV3",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "分割网络模型"
+    },
+    {
+      "mention": "ONNX",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型转换格式"
+    },
+    {
+      "mention": "OpenVINO",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "推理加速工具"
+    },
+    {
+      "mention": "Linux",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "操作系统技能"
+    },
+    {
+      "mention": "Git",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "SQL",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "SVM",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "机器学习算法"
+    },
+    {
+      "mention": "决策树",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "机器学习算法"
+    },
+    {
+      "mention": "随机森林",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "机器学习算法"
+    },
+    {
+      "mention": "Sklearn",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "机器学习库"
+    },
+    {
+      "mention": "YOLOv5s",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "目标检测模型"
+    },
+    {
+      "mention": "TensorRT",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "推理优化工具"
+    },
+    {
+      "mention": "LabelImg",
+      "skill_id": "cap_10",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据标注工具"
+    },
+    {
+      "mention": "TensorBoard",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "训练可视化工具"
+    },
+    {
+      "mention": "SE-Net",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "注意力网络模型"
+    },
+    {
+      "mention": "TQDM",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python 进度条库"
+    },
+    {
+      "mention": "AdamW",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "优化器算法"
+    },
+    {
+      "mention": "CLAHE",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "图像预处理方法"
+    },
+    {
+      "mention": "MobileNetV3-Small",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "轻量级网络模型"
+    },
+    {
+      "mention": "ECA-Net",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "注意力网络模块"
+    },
+    {
+      "mention": "ncnn",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "移动端推理框架"
+    },
+    {
+      "mention": "DnCNN",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "图像去噪网络"
+    }
+  ],
+  "experience_years": 0.0,
+  "education": "本科（双一流）计算机科学与技术，2021.09-2025.06，XX大学",
+  "projects": [
+    {
+      "name": "基于深度学习的交通标志检测与识别",
+      "description": "使用PyTorch实现YOLOv5s模型，在自建数据集上训练，mAP达92.3%，利用TensorRT量化实现实时检测。",
+      "skill_mentions": [
+        "PyTorch",
+        "YOLOv5s",
+        "TensorRT"
+      ]
+    },
+    {
+      "name": "基于U-Net的眼底图像血管分割",
+      "description": "设计改进注意力模块Skip-SE，应用于DRIVE数据集，Dice系数提升至0.82，使用PyTorch和AdamW优化。",
+      "skill_mentions": [
+        "U-Net",
+        "SE-Net",
+        "PyTorch",
+        "AdamW"
+      ]
+    },
+    {
+      "name": "轻量级图像分类模型设计",
+      "description": "基于MobileNetV3-Small，引入深度可分离卷积和ECA-Net，在CIFAR-10上准确率89.2%，并通过ONNX转ncnn实现边缘端部署。",
+      "skill_mentions": [
+        "MobileNetV3-Small",
+        "ECA-Net",
+        "ONNX",
+        "ncnn"
+      ]
+    },
+    {
+      "name": "基于CNN的图像噪声消除",
+      "description": "复现DnCNN网络，添加残差学习，在Gaussian噪声下PSNR达29.8dB，使用PyTorch实现数据管道。",
+      "skill_mentions": [
+        "DnCNN",
+        "PyTorch"
+      ]
+    }
+  ],
+  "correction_log": []
+}

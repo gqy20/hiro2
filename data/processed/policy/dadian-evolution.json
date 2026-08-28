@@ -1,0 +1,544 @@
+{
+ "note": "职业入典三段式：2015 版已有 / 2022 版新增 / 2022 后动态新增（各批新职业公告）",
+ "era_2015": "见 dadian-2015-careers.jsonl（Excel 子集 1036）",
+ "era_2022": "见 dadian-2022-gongshigao.jsonl（公示稿 1636，2022-07 定格）",
+ "era_2022plus": [
+  {
+   "career_code": "2-02-01-02",
+   "name": "地球物理地球化学与遥感勘查工程技术人员L/S",
+   "parent": "地质勘探工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-07-10",
+   "name": "特种设备管理和应用工程技术人员",
+   "parent": "机械工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-08-03",
+   "name": "航空动力装置设计工程技术人员",
+   "parent": "航空工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-08-04",
+   "name": "航空动力装置制造工程技术人员",
+   "parent": "航空工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-08-05",
+   "name": "航空产品试验与飞行试验工程技术人员",
+   "parent": "航空工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-08-08",
+   "name": "机载设备设计制造工程技术人员",
+   "parent": "航空工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-09-04",
+   "name": "电子仪器与电子测量工程技术人员",
+   "parent": "电子工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-10-06",
+   "name": "嵌入式系统设计工程技术人员S",
+   "parent": "信息和通信工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-10-08",
+   "name": "信息系统运行维护工程技术人员S",
+   "parent": "信息和通信工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-14-02",
+   "name": "广播电视传输覆盖工程技术人员S",
+   "parent": "广播电影电视及演艺设备工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-15-06",
+   "name": "无线电航标操作与维护工程技术人员",
+   "parent": "道路和水上运输工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-16-01",
+   "name": "民用航空器维修与适航工程技术人员",
+   "parent": "民用航空工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-20-04",
+   "name": "野生动植物保护利用工程技术人员L",
+   "parent": "林草工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-20-10",
+   "name": "林业资源调查与监测工程技术人员L",
+   "parent": "林草工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-21-02",
+   "name": "水生态和河湖治理管护工程技术人员L",
+   "parent": "水利工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-22-03",
+   "name": "海洋资源开发利用和保护工程技术人员L",
+   "parent": "海洋工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-22-04",
+   "name": "海洋工程勘察设计工程技术人员S",
+   "parent": "海洋工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-27-07",
+   "name": "碳管理工程技术人员L",
+   "parent": "环境保护工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-30-12",
+   "name": "检验检测管理工程技术人员",
+   "parent": "管理（工业）工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-31-02",
+   "name": "进出口商品检验鉴定工程技术人员",
+   "parent": "检验检疫工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-31-03",
+   "name": "进出境动物和植物检验检疫人员L",
+   "parent": "检验检疫工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-31-04",
+   "name": "特种设备检验检测工程技术人员",
+   "parent": "检验检疫工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-32-02",
+   "name": "生物工程技术人员",
+   "parent": "制药工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-02-37-01",
+   "name": "土地整治与生态修复工程技术人员L",
+   "parent": "国土空间规划与生态修复工程技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-01-06-03",
+   "name": "跨境电商运营管理师S",
+   "parent": "电子商务服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-04-05-12",
+   "name": "云网智能运维员S",
+   "parent": "软件和信息技术服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-04-05-13",
+   "name": "生成式人工智能系统应用员S",
+   "parent": "软件和信息技术服务人员",
+   "work_num": 1,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-04-05-14",
+   "name": "工业互联网运维员S",
+   "parent": "软件和信息技术服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-04-05-15",
+   "name": "智能网联汽车测试员S",
+   "parent": "软件和信息技术服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-05-02-02",
+   "name": "有色金属现货交易员",
+   "parent": "证券期货服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "6-25-01-17",
+   "name": "铁氧体磁体制造工",
+   "parent": "电子元件制造人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "6-25-02-06",
+   "name": "半导体分立器件和集成电路装调工",
+   "parent": "电子器件制造人员",
+   "work_num": 6,
+   "version_id": 2
+  },
+  {
+   "career_code": "1-04-03-00",
+   "name": "社会服务机构负责人",
+   "parent": "社会服务机构负责人",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-05-04-00",
+   "name": "少数民族医医师",
+   "parent": "少数民族医医师",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-05-07-02",
+   "name": "口腔修复技师",
+   "parent": "医疗卫生技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-05-07-13",
+   "name": "康复技师",
+   "parent": "医疗卫生技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-05-07-17",
+   "name": "口腔卫生技师",
+   "parent": "医疗卫生技术人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-06-05-00",
+   "name": "涉税服务专业人员",
+   "parent": "涉税服务专业人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-06-12-05",
+   "name": "版权管理专业人员",
+   "parent": "知识产权专业人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-06-12-09",
+   "name": "版权运营专业人员",
+   "parent": "知识产权专业人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-07-08-00",
+   "name": "检察辅助人员",
+   "parent": "检察辅助人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "2-07-11-04",
+   "name": "养老服务师",
+   "parent": "社会工作专业人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "3-01-01-05",
+   "name": "劝募师",
+   "parent": "行政业务办理人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "3-01-04-01",
+   "name": "村务和社区工作者",
+   "parent": "社区和村镇工作人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-02-02-06",
+   "name": "公路收费及监控员",
+   "parent": "道路运输服务人员",
+   "work_num": 1,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-02-04-07",
+   "name": "无人机群飞行规划员",
+   "parent": "航空运输服务人员",
+   "work_num": 1,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-06-02-04",
+   "name": "装修管家",
+   "parent": "房地产开发与交易服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-07-02-06",
+   "name": "用户增长运营师S",
+   "parent": "商务咨询服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-07-03-06",
+   "name": "劳务派遣管理员",
+   "parent": "人力资源服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-07-03-07",
+   "name": "劳务经纪人",
+   "parent": "人力资源服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-07-03-09",
+   "name": "工伤预防咨询师",
+   "parent": "人力资源服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-07-07-04",
+   "name": "会展搭建师",
+   "parent": "会议及展览服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-08-08-30",
+   "name": "文创产品策划运营师",
+   "parent": "专业化设计服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-08-08-31",
+   "name": "电子电路设计师",
+   "parent": "专业化设计服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-09-07-07",
+   "name": "室内环境治理员",
+   "parent": "环境治理服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-10-01-07",
+   "name": "家政服务经理人",
+   "parent": "生活照料服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-10-05-03",
+   "name": "婚姻家庭辅导师",
+   "parent": "婚姻服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-11-01-04",
+   "name": "储能电站运维管理员 L",
+   "parent": "电力供应服务人员",
+   "work_num": 3,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-11-01-05",
+   "name": "电能质量管理员 L",
+   "parent": "电力供应服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-11-01-06",
+   "name": "电力可靠性管理员L",
+   "parent": "电力供应服务人员",
+   "work_num": 1,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-11-01-07",
+   "name": "电力聚合运营员L/S",
+   "parent": "电力供应服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-13-01-09",
+   "name": "版权经纪人",
+   "parent": "社会文化活动服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-13-01-10",
+   "name": "网络主播 S",
+   "parent": "社会文化活动服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-13-04-04",
+   "name": "研学旅游指导师",
+   "parent": "教育服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "4-14-05-08",
+   "name": "滑雪巡救员",
+   "parent": "体育健身和娱乐场所服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "5-05-01-04",
+   "name": "农村集体经济经理人",
+   "parent": "农业生产服务人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "5-05-06-08",
+   "name": "代用茶加工工",
+   "parent": "农副林特产品初加工人员",
+   "work_num": 1,
+   "version_id": 2
+  },
+  {
+   "career_code": "6-02-01-01",
+   "name": "糕点面包烘焙师",
+   "parent": "焙烤食品制造人员",
+   "work_num": 4,
+   "version_id": 2
+  },
+  {
+   "career_code": "6-02-05-08",
+   "name": "酱腌菜制作工",
+   "parent": "调味品及食品添加剂制作人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "6-02-06-13",
+   "name": "咖啡加工工",
+   "parent": "酒、饮料及精制茶制造人员",
+   "work_num": 1,
+   "version_id": 2
+  },
+  {
+   "career_code": "6-03-03-03",
+   "name": "烟机设备机械修理工",
+   "parent": "烟草制品生产人员",
+   "work_num": 5,
+   "version_id": 2
+  },
+  {
+   "career_code": "6-13-01-03",
+   "name": "碳纤维制品成型制作工",
+   "parent": "化学纤维原料制造人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "6-17-01-08",
+   "name": "氢基直接还原炼铁工L",
+   "parent": "炼铁人员",
+   "work_num": 7,
+   "version_id": 2
+  },
+  {
+   "career_code": "6-29-02-18",
+   "name": "钢结构装配工",
+   "parent": "土木工程建筑施工人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "6-31-07-04",
+   "name": "智能制造系统运维员 S",
+   "parent": "工业机器人操作运维人员",
+   "work_num": 0,
+   "version_id": 2
+  },
+  {
+   "career_code": "6-31-07-05",
+   "name": "智能网联汽车装调运维员 S",
+   "parent": "工业机器人操作运维人员",
+   "work_num": 3,
+   "version_id": 2
+  }
+ ],
+ "counts": {
+  "gongshigao_2022": 1636,
+  "api_current": 1676,
+  "added_after_2022": 76
+ }
+}

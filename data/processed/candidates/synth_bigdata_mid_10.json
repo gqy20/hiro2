@@ -1,0 +1,245 @@
+{
+  "candidate_id": "synth_bigdata_mid_10",
+  "raw_extraction_id": "synth_bigdata_mid_10:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Spark",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Flink",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Hive",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "大数据仓库工具"
+    },
+    {
+      "mention": "Kafka",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "HBase",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "大数据列式数据库"
+    },
+    {
+      "mention": "Doris",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "大数据分析数据库"
+    },
+    {
+      "mention": "Redis",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "内存数据库"
+    },
+    {
+      "mention": "Airflow",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据工作流调度"
+    },
+    {
+      "mention": "DolphinScheduler",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "大数据调度工具"
+    },
+    {
+      "mention": "Shell",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.工具调用",
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Hadoop",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "ClickHouse",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "大数据OLAP引擎"
+    },
+    {
+      "mention": "Sqoop",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据迁移工具"
+    },
+    {
+      "mention": "Flink CDC",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "流式数据捕获"
+    },
+    {
+      "mention": "Grafana",
+      "skill_id": "cap_11",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据可视化监控"
+    },
+    {
+      "mention": "SQL",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Scala",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "编程语言"
+    },
+    {
+      "mention": "DataStream API",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "流处理API"
+    },
+    {
+      "mention": "Flink SQL",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "流式SQL查询"
+    }
+  ],
+  "experience_years": 3.0,
+  "education": "本科，计算机科学与技术，某某大学（2018.09-2022.06）",
+  "projects": [
+    {
+      "name": "用户行为实时分析平台",
+      "description": "负责实时链路搭建与数仓分层设计，消费Kafka数据实现分钟级统计，解决水位线乱序等问题",
+      "skill_mentions": [
+        "Flink",
+        "Kafka",
+        "ClickHouse",
+        "HBase",
+        "Redis"
+      ]
+    },
+    {
+      "name": "零售业务离线数仓建设",
+      "description": "承接ODS到DWD层开发与数据质量监控，基于Spark和Hive处理海量业务数据，优化任务性能",
+      "skill_mentions": [
+        "Spark",
+        "Hive",
+        "HDFS",
+        "DolphinScheduler",
+        "Sqoop"
+      ]
+    },
+    {
+      "name": "实时广告投放流量监控",
+      "description": "独立负责Flink作业开发，实现漏斗转化计算，引入Flink CDC更新维表，保障低延迟",
+      "skill_mentions": [
+        "Flink",
+        "Kafka",
+        "Doris",
+        "Flink CDC",
+        "Grafana"
+      ]
+    }
+  ],
+  "correction_log": []
+}

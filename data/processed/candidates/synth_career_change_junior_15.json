@@ -1,0 +1,434 @@
+{
+  "candidate_id": "synth_career_change_junior_15",
+  "raw_extraction_id": "synth_career_change_junior_15:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Java",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "编程语言，Python 域"
+    },
+    {
+      "mention": "C++",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "编程语言，Python 域"
+    },
+    {
+      "mention": "PyTorch",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "TensorFlow Lite",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 0.5,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "深度学习推理框架"
+    },
+    {
+      "mention": "HuggingFace Transformers",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 0.5,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "LLM 模型库"
+    },
+    {
+      "mention": "Pandas",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python 数据处理库"
+    },
+    {
+      "mention": "NumPy",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python 数值计算"
+    },
+    {
+      "mention": "SQL",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "MySQL",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "PostgreSQL",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Spark",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "ONNX Runtime",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型推理引擎"
+    },
+    {
+      "mention": "YOLOv5",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "目标检测模型"
+    },
+    {
+      "mention": "TensorRT",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "推理优化工具"
+    },
+    {
+      "mention": "Git",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Jupyter",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python 开发环境"
+    },
+    {
+      "mention": "VS Code",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "代码编辑器"
+    },
+    {
+      "mention": "Postman",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "API 测试工具"
+    },
+    {
+      "mention": "Linux",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "操作系统"
+    },
+    {
+      "mention": "BERT",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "预训练语言模型"
+    },
+    {
+      "mention": "Chinese-roberta-wwm",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "中文预训练模型"
+    },
+    {
+      "mention": "HuggingFace",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "LLM 模型平台"
+    },
+    {
+      "mention": "SQLite",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "轻量数据库"
+    },
+    {
+      "mention": "OpenCV",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "计算机视觉库"
+    },
+    {
+      "mention": "TensorRT Lite",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "推理优化框架"
+    },
+    {
+      "mention": "NCNN",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "移动端推理框架"
+    },
+    {
+      "mention": "INT8量化",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型量化技术"
+    },
+    {
+      "mention": "LSTM",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "循环神经网络"
+    },
+    {
+      "mention": "Keras",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "深度学习框架"
+    },
+    {
+      "mention": "TensorFlow 2",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "深度学习框架"
+    },
+    {
+      "mention": "ELK",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "日志分析栈"
+    },
+    {
+      "mention": "Flask",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LLaMA",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "开源 LLM"
+    },
+    {
+      "mention": "HuggingFace PEFT",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "参数高效微调库"
+    },
+    {
+      "mention": "Weights & Biases",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "实验追踪工具"
+    }
+  ],
+  "experience_years": 0.0,
+  "education": "本科在读，某某大学（双一流）软件工程专业，2024届",
+  "projects": [
+    {
+      "name": "智能客服意图识别",
+      "description": "基于BERT（Chinese-roberta-wwm）微调意图分类模型，覆盖8类常见咨询，准确率91.5%，API响应平均150ms，使用Docker打包部署至测试环境。",
+      "skill_mentions": [
+        "PyTorch",
+        "HuggingFace",
+        "FastAPI",
+        "SQLite",
+        "Docker"
+      ]
+    },
+    {
+      "name": "边缘端实时垃圾分拣模拟",
+      "description": "使用YOLOv5s + OpenCV在树莓派上实现可回收物识别（纸板/塑料瓶/金属），mAP 69.6%，帧率12FPS，并完成NCNN转换与INT8量化实验。",
+      "skill_mentions": [
+        "YOLOv5",
+        "OpenCV",
+        "TensorRT Lite",
+        "NCNN",
+        "INT8量化"
+      ]
+    },
+    {
+      "name": "后端迁移到AI日志异常检测",
+      "description": "将Java后端日志模块迁移为基于LSTM（Keras）的异常模式检测服务，通过滑动窗口预测日志事件，异常召回率85%，误报率每千条2.3次，减少人工巡检频率约40%。",
+      "skill_mentions": [
+        "Keras",
+        "TensorFlow 2",
+        "ELK",
+        "Flask",
+        "LSTM"
+      ]
+    },
+    {
+      "name": "科研辅助：大模型文本改写",
+      "description": "微调LLaMA-7B（LoRA低秩适配）用于学术论文标题润色，BLEU提升0.12，与指导老师合作撰写应用笔记，论文投稿中。",
+      "skill_mentions": [
+        "LLaMA",
+        "HuggingFace PEFT",
+        "Weights & Biases"
+      ]
+    }
+  ],
+  "correction_log": []
+}

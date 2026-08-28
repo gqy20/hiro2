@@ -1,0 +1,271 @@
+{
+  "candidate_id": "synth_bigdata_senior_11",
+  "raw_extraction_id": "synth_bigdata_senior_11:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Spark Core",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 5.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "大数据处理核心引擎"
+    },
+    {
+      "mention": "Spark SQL",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 5.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "SQL 分析框架"
+    },
+    {
+      "mention": "Structured Streaming",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 5.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "流处理框架"
+    },
+    {
+      "mention": "Flink DataStream",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "流处理引擎"
+    },
+    {
+      "mention": "Flink Table API",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "流批处理 API"
+    },
+    {
+      "mention": "Flink CEP",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "复杂事件处理"
+    },
+    {
+      "mention": "Hive",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据仓库工具"
+    },
+    {
+      "mention": "Kafka",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "HBase",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "分布式列存储"
+    },
+    {
+      "mention": "Phoenix",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "HBase SQL 层"
+    },
+    {
+      "mention": "Iceberg",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据湖表格式"
+    },
+    {
+      "mention": "Delta Lake",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据湖存储框架"
+    },
+    {
+      "mention": "Azkaban",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "工作流调度工具"
+    },
+    {
+      "mention": "DolphinScheduler",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "工作流调度系统"
+    },
+    {
+      "mention": "Yarn",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Scala",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "编程语言"
+    },
+    {
+      "mention": "Java",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "编程语言"
+    },
+    {
+      "mention": "RocksDB",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "嵌入式键值存储"
+    },
+    {
+      "mention": "Redis",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "内存数据库缓存"
+    },
+    {
+      "mention": "Flume",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "日志采集工具"
+    },
+    {
+      "mention": "Spark Streaming",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "准实时流处理"
+    },
+    {
+      "mention": "ES",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "搜索引擎数据库"
+    }
+  ],
+  "experience_years": 8.0,
+  "education": "武汉理工大学 计算机科学与技术 本科（2012.09 - 2016.06）",
+  "projects": [
+    {
+      "name": "实时用户行为分析平台",
+      "description": "接入App埋点日志与Kafka多主题，经FlinkSQL清洗关联至HBase与Redis，实现分钟级用户路径与漏斗分析，基于Iceberg实现实时明细入湖与Hive分区合并",
+      "skill_mentions": [
+        "Flink",
+        "Kafka",
+        "FlinkSQL",
+        "HBase",
+        "Redis",
+        "Iceberg",
+        "Hive"
+      ]
+    },
+    {
+      "name": "离线数仓与指标中台",
+      "description": "基于Hive+Spark SQL搭建四层数仓，设计主题域划分，使用拉链表处理会员状态变化，开发元数据校验工具提升数据质量",
+      "skill_mentions": [
+        "Hive",
+        "Spark SQL"
+      ]
+    },
+    {
+      "name": "实时风控特征计算引擎",
+      "description": "使用Flink DataStream对接风控规则引擎，设计基于事件时间的会话窗口，生成特征向量，覆盖支付登录等核心场景",
+      "skill_mentions": [
+        "Flink DataStream"
+      ]
+    },
+    {
+      "name": "日志采集与ETL平台",
+      "description": "负责Flume+Kafka+Spark Streaming日志采集链路，使用Spark Streaming做实时ETL并写入ES和Hive",
+      "skill_mentions": [
+        "Flume",
+        "Kafka",
+        "Spark Streaming",
+        "ES",
+        "Hive"
+      ]
+    }
+  ],
+  "correction_log": []
+}

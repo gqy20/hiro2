@@ -1,0 +1,323 @@
+{
+  "candidate_id": "synth_rag_mid_07",
+  "raw_extraction_id": "synth_rag_mid_07:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LangChain",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LlamaIndex",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Milvus",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Chroma",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Elasticsearch",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "知识库检索存储"
+    },
+    {
+      "mention": "BM25",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "检索算法"
+    },
+    {
+      "mention": "PyPDF2",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "文档解析工具"
+    },
+    {
+      "mention": "pdfplumber",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "PDF解析工具"
+    },
+    {
+      "mention": "unstructured",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "非结构化数据处理"
+    },
+    {
+      "mention": "Tesseract OCR",
+      "skill_id": "cap_05",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "OCR识别工具"
+    },
+    {
+      "mention": "表格结构识别",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "文档解析"
+    },
+    {
+      "mention": "bge-m3",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "嵌入模型"
+    },
+    {
+      "mention": "text-embedding-ada-002",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "嵌入模型"
+    },
+    {
+      "mention": "bge-reranker",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "重排序模型"
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "MySQL",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Redis",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "缓存数据库"
+    },
+    {
+      "mention": "Kubernetes",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "jieba",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "中文分词工具"
+    },
+    {
+      "mention": "scikit-learn",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "机器学习库"
+    },
+    {
+      "mention": "Flask",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Git",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "CI/CD",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "GraphRAG",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "图增强检索"
+    },
+    {
+      "mention": "多模态检索",
+      "skill_id": "cap_06",
+      "point_id": "cap_06.检索评测",
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    }
+  ],
+  "experience_years": 2.0,
+  "education": "华东理工大学 计算机科学与技术 本科 (2018-2022)",
+  "projects": [
+    {
+      "name": "企业合同智能问答系统",
+      "description": "负责合同PDF批量解析与清洗，使用pdfplumber+unstructured提取文本与表格，接入Tesseract OCR，解析成功率提升至96%；基于LangChain的RAG流程，使用bge-m3向量、Milvus存储、BM25混合检索及bge-reranker重排，Top-5召回准确率91%；优化长合同切分策略。",
+      "skill_mentions": [
+        "Python",
+        "FastAPI",
+        "LangChain",
+        "Milvus",
+        "Redis",
+        "Docker",
+        "pdfplumber",
+        "unstructured",
+        "Tesseract OCR",
+        "bge-m3",
+        "BM25",
+        "bge-reranker"
+      ]
+    },
+    {
+      "name": "客服知识库辅助平台",
+      "description": "参与知识库内容结构化重构，转换FAQ为markdown；实现问句改写与同义词扩展，使用LlamaIndex构建检索节点，首轮命中率提升15%；支持增量更新、权限隔离和多租户部署。",
+      "skill_mentions": [
+        "LlamaIndex",
+        "Chroma",
+        "FastAPI",
+        "MySQL",
+        "K8s",
+        "Redis",
+        "Milvus"
+      ]
+    },
+    {
+      "name": "文档摘要与关键词提取工具",
+      "description": "独立开发预处理管道，基于规则+TF-IDF提取关键词，生成摘要；优化并发性能，响应时间降至800ms内。",
+      "skill_mentions": [
+        "Python",
+        "jieba",
+        "scikit-learn",
+        "Flask"
+      ]
+    }
+  ],
+  "correction_log": []
+}

@@ -1,0 +1,278 @@
+{
+  "candidate_id": "synth_agent_junior_00",
+  "raw_extraction_id": "synth_agent_junior_00:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "LangChain",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LCEL",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "LangChain 表达式语言，Agent 编排"
+    },
+    {
+      "mention": "Tool Calling",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.工具调用",
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Memory",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.记忆",
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "pandas",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python 数据分析库"
+    },
+    {
+      "mention": "requests",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python HTTP 库"
+    },
+    {
+      "mention": "asyncio",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python 异步编程库"
+    },
+    {
+      "mention": "OpenAI API",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "LLM 模型接口调用"
+    },
+    {
+      "mention": "Function Calling",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.工具调用",
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Anthropic Claude",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "LLM 模型服务"
+    },
+    {
+      "mention": "Prompt 工程",
+      "skill_id": "cap_02",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Few-shot",
+      "skill_id": "cap_02",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Prompt 提示技巧"
+    },
+    {
+      "mention": "ReAct 模式",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Agent 推理决策方法"
+    },
+    {
+      "mention": "JSON Schema",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "PostgreSQL",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "向量数据库",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Chroma",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FAISS",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "RAG",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LangGraph",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    }
+  ],
+  "experience_years": 2.0,
+  "education": "上海理工大学 计算机科学与技术 本科（2021.09 - 2025.06）",
+  "projects": [
+    {
+      "name": "智能日程管理 Agent",
+      "description": "基于 LangChain 构建对话式日程助手，支持自然语言创建/查询/修改事件，并调用日历 API 和邮件发送工具",
+      "skill_mentions": [
+        "LangChain",
+        "Tool Calling",
+        "ReAct 模式"
+      ]
+    },
+    {
+      "name": "知识库问答 RAG 工作流",
+      "description": "使用 Chroma 和 text-embedding-ada-002 构建课程讲义检索库，通过 RetrievalQA 链结合 GPT-4o-mini 生成答案",
+      "skill_mentions": [
+        "Chroma",
+        "RAG",
+        "LangChain"
+      ]
+    },
+    {
+      "name": "客服工单分类 Agent 原型",
+      "description": "使用 LangChain Expression Language 构建工单自动分拣流水线，识别 9 个故障类别，最终分类 F1 达到 0.86",
+      "skill_mentions": [
+        "LangChain",
+        "LCEL",
+        "FastAPI",
+        "Docker"
+      ]
+    },
+    {
+      "name": "工具调用指令解析子模块",
+      "description": "使用 Python 手写基于 JSON 的 Tool 路由函数，解析用户意图并映射到模拟 API，实现参数缺失时的追问逻辑",
+      "skill_mentions": [
+        "Python",
+        "JSON"
+      ]
+    }
+  ],
+  "correction_log": []
+}

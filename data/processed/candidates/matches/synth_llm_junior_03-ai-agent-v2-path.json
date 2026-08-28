@@ -1,0 +1,48 @@
+{
+  "candidate_id": "synth_llm_junior_03",
+  "job_version_id": "ai-agent-v2",
+  "match_id": "match-synth_llm_junior_03-ai-agent-v2",
+  "steps": [
+    {
+      "skill_id": "cap_04",
+      "name": "AI Agent",
+      "priority": "P0 必备补齐",
+      "reason": "岗位必备能力缺失，优先补齐",
+      "learn": "学习 AI Agent 领域核心知识点与主流方法",
+      "practice": "完成一个包含 AI Agent 的实战小项目并沉淀到简历",
+      "evaluate": "在项目复盘中自评 AI Agent 的独立完成度",
+      "certify": "整理项目证据形成 AI Agent 能力证明材料"
+    },
+    {
+      "skill_id": "cap_08",
+      "name": "SQL/数据库",
+      "priority": "P0 必备补齐",
+      "reason": "岗位必备能力缺失，优先补齐",
+      "learn": "学习 SQL/数据库 领域核心知识点与主流方法",
+      "practice": "完成一个包含 SQL/数据库 的实战小项目并沉淀到简历",
+      "evaluate": "在项目复盘中自评 SQL/数据库 的独立完成度",
+      "certify": "整理项目证据形成 SQL/数据库 能力证明材料"
+    },
+    {
+      "skill_id": "cap_05",
+      "name": "多模态AI",
+      "priority": "P2 加分拓展",
+      "reason": "非必备，作为差异化加分项拓展",
+      "learn": "学习 多模态AI 领域核心知识点与主流方法",
+      "practice": "完成一个包含 多模态AI 的实战小项目并沉淀到简历",
+      "evaluate": "在项目复盘中自评 多模态AI 的独立完成度",
+      "certify": "整理项目证据形成 多模态AI 能力证明材料"
+    },
+    {
+      "skill_id": "cap_12",
+      "name": "ML/DL算法",
+      "priority": "P2 加分拓展",
+      "reason": "非必备，作为差异化加分项拓展",
+      "learn": "学习 ML/DL算法 领域核心知识点与主流方法",
+      "practice": "完成一个包含 ML/DL算法 的实战小项目并沉淀到简历",
+      "evaluate": "在项目复盘中自评 ML/DL算法 的独立完成度",
+      "certify": "整理项目证据形成 ML/DL算法 能力证明材料"
+    }
+  ],
+  "generated_by": "match-v1 模板化规则"
+}

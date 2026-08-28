@@ -1,0 +1,23 @@
+{
+  "as_of": null,
+  "mentions": 13226,
+  "matched": 7484,
+  "coverage_weighted": 0.566,
+  "coverage_midhigh_ge2": {
+    "words": 1332,
+    "mentions": 8937,
+    "matched": 7236
+  },
+  "coverage_high_ge5": {
+    "words": 359,
+    "mentions": 6506,
+    "matched": 6020
+  },
+  "coverage_tail_1": {
+    "words": 4289,
+    "mentions": 4289,
+    "matched": 248
+  },
+  "unmatched_distinct": 4612,
+  "rule_version": 6
+}

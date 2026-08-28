@@ -1,0 +1,14 @@
+{
+  "source_id": "capability-matrix",
+  "source_type": "expert_matrix",
+  "ingestion_mode": "backfill",
+  "file_count": 1,
+  "total_bytes": 25872,
+  "files": [
+    {
+      "path": "data/raw/capability-matrix/数字经济岗位能力矩阵 260819.xlsx",
+      "bytes": 25872,
+      "sha256": "77e103f2b73615469a1194d1358f7cc42af56e69682ee3e29af12245f667bfa3"
+    }
+  ]
+}

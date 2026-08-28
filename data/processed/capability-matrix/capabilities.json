@@ -1,0 +1,172 @@
+{
+  "capabilities": [
+    {
+      "capability_id": "cap_01",
+      "group": "AI与大模型",
+      "name": "LLM应用"
+    },
+    {
+      "capability_id": "cap_02",
+      "group": "AI与大模型",
+      "name": "Prompt工程"
+    },
+    {
+      "capability_id": "cap_03",
+      "group": "AI与大模型",
+      "name": "模型微调"
+    },
+    {
+      "capability_id": "cap_04",
+      "group": "AI与大模型",
+      "name": "AI Agent"
+    },
+    {
+      "capability_id": "cap_05",
+      "group": "AI与大模型",
+      "name": "多模态AI"
+    },
+    {
+      "capability_id": "cap_06",
+      "group": "AI与大模型",
+      "name": "RAG/知识库"
+    },
+    {
+      "capability_id": "cap_07",
+      "group": "数据与编程",
+      "name": "Python"
+    },
+    {
+      "capability_id": "cap_08",
+      "group": "数据与编程",
+      "name": "SQL/数据库"
+    },
+    {
+      "capability_id": "cap_09",
+      "group": "数据与编程",
+      "name": "大数据处理"
+    },
+    {
+      "capability_id": "cap_10",
+      "group": "数据与编程",
+      "name": "数据标注"
+    },
+    {
+      "capability_id": "cap_11",
+      "group": "数据与编程",
+      "name": "数据可视化"
+    },
+    {
+      "capability_id": "cap_12",
+      "group": "数据与编程",
+      "name": "ML/DL算法"
+    },
+    {
+      "capability_id": "cap_13",
+      "group": "工程与系统",
+      "name": "云计算"
+    },
+    {
+      "capability_id": "cap_14",
+      "group": "工程与系统",
+      "name": "API开发"
+    },
+    {
+      "capability_id": "cap_15",
+      "group": "工程与系统",
+      "name": "系统架构"
+    },
+    {
+      "capability_id": "cap_16",
+      "group": "工程与系统",
+      "name": "物联网/IoT"
+    },
+    {
+      "capability_id": "cap_17",
+      "group": "工程与系统",
+      "name": "嵌入式/硬件"
+    },
+    {
+      "capability_id": "cap_18",
+      "group": "工程与系统",
+      "name": "自动化运维"
+    },
+    {
+      "capability_id": "cap_19",
+      "group": "业务与合规",
+      "name": "AI伦理合规"
+    },
+    {
+      "capability_id": "cap_20",
+      "group": "业务与合规",
+      "name": "法规/审计"
+    },
+    {
+      "capability_id": "cap_21",
+      "group": "业务与合规",
+      "name": "领域知识"
+    },
+    {
+      "capability_id": "cap_22",
+      "group": "业务与合规",
+      "name": "产品思维"
+    },
+    {
+      "capability_id": "cap_23",
+      "group": "业务与合规",
+      "name": "项目管理"
+    },
+    {
+      "capability_id": "cap_24",
+      "group": "业务与合规",
+      "name": "培训/教学"
+    },
+    {
+      "capability_id": "cap_25",
+      "group": "软技能",
+      "name": "英语"
+    },
+    {
+      "capability_id": "cap_26",
+      "group": "软技能",
+      "name": "跨部门沟通"
+    },
+    {
+      "capability_id": "cap_27",
+      "group": "软技能",
+      "name": "团队管理"
+    },
+    {
+      "capability_id": "cap_28",
+      "group": "软技能",
+      "name": "战略思维"
+    },
+    {
+      "capability_id": "cap_29",
+      "group": "软技能",
+      "name": "创新思维"
+    },
+    {
+      "capability_id": "cap_30",
+      "group": "软技能",
+      "name": "安全/风控意识"
+    }
+  ],
+  "groups": [
+    "AI+垂直行业",
+    "AI应用与运营",
+    "AI研发",
+    "人机协作新岗位",
+    "合规与治理",
+    "数据与基础设施",
+    "硬件与具身智能"
+  ],
+  "score_legend": {
+    "0": "不需要 — 该岗位不涉及此能力",
+    "1": "了解 — 有基本概念认知即可",
+    "2": "基础 — 能在指导下完成任务",
+    "3": "熟练 — 能独立完成常规工作",
+    "4": "精通 — 能解决复杂问题、指导他人",
+    "5": "专家 — 行业领先水平，能制定标准/方法论",
+    "138": "138"
+  }
+}

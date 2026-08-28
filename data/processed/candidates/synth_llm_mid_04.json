@@ -1,0 +1,384 @@
+{
+  "candidate_id": "synth_llm_mid_04",
+  "raw_extraction_id": "synth_llm_mid_04:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "PyTorch",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Transformers",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "大模型核心框架"
+    },
+    {
+      "mention": "PEFT",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "参数高效微调技术"
+    },
+    {
+      "mention": "LoRA",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "QLoRA",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "量化微调方法"
+    },
+    {
+      "mention": "DeepSpeed",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "大模型训练优化"
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Flask",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "RESTful",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "API设计风格"
+    },
+    {
+      "mention": "gRPC",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "远程过程调用框架"
+    },
+    {
+      "mention": "SSE",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "服务端推送协议"
+    },
+    {
+      "mention": "vLLM",
+      "skill_id": "cap_01",
+      "point_id": "cap_01.推理",
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "TGI",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "文本生成推理工具"
+    },
+    {
+      "mention": "GPTQ",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型量化技术"
+    },
+    {
+      "mention": "AWQ",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "激活感知量化"
+    },
+    {
+      "mention": "KV Cache",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "batching",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "批处理技术"
+    },
+    {
+      "mention": "LangChain",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "RAG",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FAISS",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Chroma",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "embedding",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Prompt engineering",
+      "skill_id": "cap_02",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "提示词工程技术"
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Kubernetes",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Shell",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.工具调用",
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Git",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "CI/CD",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Redis",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "缓存数据库"
+    },
+    {
+      "mention": "MongoDB",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "NoSQL数据库"
+    },
+    {
+      "mention": "Linux",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "操作系统基础"
+    },
+    {
+      "mention": "HuggingFace Hub",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型仓库平台"
+    }
+  ],
+  "experience_years": 3.0,
+  "education": "本科，计算机科学与技术，XX大学，2020年毕业",
+  "projects": [
+    {
+      "name": "企业知识库问答助手",
+      "description": "基于RAG+LLM构建企业知识库问答系统，负责数据处理、embedding选型和检索链路，支持流式回答，部署于4张3090。",
+      "skill_mentions": [
+        "LangChain",
+        "FAISS",
+        "ChatGLM2-6B",
+        "FastAPI"
+      ]
+    },
+    {
+      "name": "法律文书摘要微调",
+      "description": "使用QLoRA对LLaMA-2-7B进行微调，提升法律文书摘要质量，ROUGE-L从0.31提升至0.38，推理延迟1.2s/条。",
+      "skill_mentions": [
+        "LLaMA-2-7B",
+        "PEFT",
+        "QLoRA",
+        "Transformers",
+        "DeepSpeed",
+        "vLLM"
+      ]
+    },
+    {
+      "name": "智能工单分类与摘要系统",
+      "description": "负责模型部署与API封装，实现工单分类和摘要，F1从0.82提升至0.88，支持50并发，P95延迟<800ms。",
+      "skill_mentions": [
+        "Flask",
+        "vLLM",
+        "GPTQ",
+        "Redis",
+        "Docker"
+      ]
+    },
+    {
+      "name": "基于LangChain的SQL生成助手",
+      "description": "设计提示词处理多表schema，实现SQL生成与错误重试，执行成功率71%，参与POC落地。",
+      "skill_mentions": [
+        "LangChain",
+        "GPT-3.5-turbo",
+        "MongoDB"
+      ]
+    }
+  ],
+  "correction_log": []
+}

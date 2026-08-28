@@ -1,0 +1,455 @@
+{
+  "candidate_id": "synth_agent_senior_02",
+  "raw_extraction_id": "synth_agent_senior_02:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 8.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LangChain",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LangGraph",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "ReAct",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.推理",
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Plan-and-Execute",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Agent 任务规划模式"
+    },
+    {
+      "mention": "Function Calling",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.工具调用",
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "OpenAI Assistants API",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Agent 构建 API"
+    },
+    {
+      "mention": "Claude Tool Use",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "工具调用能力"
+    },
+    {
+      "mention": "AutoGen",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "CrewAI",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "n8n",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "工作流自动化 Agent"
+    },
+    {
+      "mention": "LangSmith",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Agent 可观测性平台"
+    },
+    {
+      "mention": "Apache Airflow",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "大数据工作流编排"
+    },
+    {
+      "mention": "FAISS",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Milvus",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Pinecone",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "RAG",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "HyDE",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "检索增强生成技术"
+    },
+    {
+      "mention": "重排序",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "混检",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "混合检索相关"
+    },
+    {
+      "mention": "LoRA",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Ollama",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "RAGAS",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "RAG 评测框架"
+    },
+    {
+      "mention": "Go",
+      "skill_id": "cap_15",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "后端开发语言"
+    },
+    {
+      "mention": "Java",
+      "skill_id": "cap_15",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "后端开发语言"
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "K8s",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "容器编排平台"
+    },
+    {
+      "mention": "Redis",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "内存数据库"
+    },
+    {
+      "mention": "Kafka",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Redis Stream",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "消息队列"
+    },
+    {
+      "mention": "Prometheus",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "监控告警系统"
+    },
+    {
+      "mention": "PostgreSQL",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Streamlit",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "快速构建数据应用"
+    },
+    {
+      "mention": "Qdrant",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "向量数据库"
+    },
+    {
+      "mention": "Docker Compose",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "容器编排工具"
+    },
+    {
+      "mention": "Claude API",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "大模型调用接口"
+    },
+    {
+      "mention": "Ansible",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "自动化运维工具"
+    },
+    {
+      "mention": "SQLite",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "轻量级数据库"
+    },
+    {
+      "mention": "Grafana",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "监控可视化平台"
+    }
+  ],
+  "experience_years": 8.0,
+  "education": "华中科技大学 计算机科学与技术 本科（2012-2016）",
+  "projects": [
+    {
+      "name": "企业级智能客服 Agent 平台",
+      "description": "基于 LangGraph 构建有状态客服工作流，集成意图识别、多轮对话、订单查询/退改工具调用，支持人工接管；设计动态工具选择与容错重试机制，工具调用成功率从 72% 提升至 94%；搭建 RAG 知识库（Milvus + BGE 模型），FAQ 命中准确率 89%。",
+      "skill_mentions": [
+        "LangGraph",
+        "FastAPI",
+        "Milvus",
+        "Redis Stream",
+        "Prometheus"
+      ]
+    },
+    {
+      "name": "数据分析 Copilot",
+      "description": "开发自然语言到 SQL 的 Agent，支持多数据库方言与权限过滤，集成图表生成工具；实现基于 ReAct 的推理循环，利用少样本示例与错误反馈修正 SQL，生成正确率 83%；上线后周活 200+ 内部用户，平均查询耗时从 15 分钟降到 40 秒。",
+      "skill_mentions": [
+        "LangChain",
+        "OpenAI 函数调用",
+        "PostgreSQL",
+        "Streamlit",
+        "LangSmith"
+      ]
+    },
+    {
+      "name": "多智能体招聘筛选流水线",
+      "description": "使用 CrewAI 构建筛选官与面试官 Agent 协作流程，自动解析简历、技术评估、生成面试报告；封装自定义工具调用 ATS 系统 API 与代码库扫描器，通过上下文压缩减少 Token 消耗 40%。",
+      "skill_mentions": [
+        "CrewAI",
+        "Claude API",
+        "Qdrant",
+        "Docker Compose"
+      ]
+    },
+    {
+      "name": "自动化运维工单 Agent",
+      "description": "对接监控系统事件流，Agent 自动分类告警、执行日志排查脚本并调用工单系统；基于 LangChain 工具调用链实现权限校验与操作回滚，误报率降低 35%。",
+      "skill_mentions": [
+        "LangChain",
+        "Kafka",
+        "Ansible",
+        "SQLite",
+        "Grafana"
+      ]
+    }
+  ],
+  "correction_log": []
+}

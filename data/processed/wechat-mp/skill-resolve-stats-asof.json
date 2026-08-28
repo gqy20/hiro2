@@ -1,0 +1,23 @@
+{
+  "as_of": "2026-08-21",
+  "mentions": 12605,
+  "matched": 7872,
+  "coverage_weighted": 0.625,
+  "coverage_midhigh_ge2": {
+    "words": 1354,
+    "mentions": 9188,
+    "matched": 7824
+  },
+  "coverage_high_ge5": {
+    "words": 345,
+    "mentions": 6720,
+    "matched": 6314
+  },
+  "coverage_tail_1": {
+    "words": 3417,
+    "mentions": 3417,
+    "matched": 48
+  },
+  "unmatched_distinct": 3827,
+  "rule_version": 4
+}

@@ -1,0 +1,413 @@
+{
+  "candidate_id": "synth_agent_mid_01",
+  "raw_extraction_id": "synth_agent_mid_01:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Flask",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "async 并发编程",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python 并发编程技能"
+    },
+    {
+      "mention": "LangChain",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Chain/Agent/Router",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Agent 编排核心组件"
+    },
+    {
+      "mention": "OpenAI/Anthropic 大模型 API",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "大模型 API 应用"
+    },
+    {
+      "mention": "function calling",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.工具调用",
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "n8n",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.5,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "工作流自动化 Agent"
+    },
+    {
+      "mention": "LangGraph",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.5,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FAISS",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "ChromaDB",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "向量数据库知识库"
+    },
+    {
+      "mention": "RAG",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "text-embedding",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "嵌入模型用于检索"
+    },
+    {
+      "mention": "Gradio",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "快速 API 演示界面"
+    },
+    {
+      "mention": "Streamlit",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "快速 API 演示界面"
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "HuggingFace Model Hub",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型仓库与微调"
+    },
+    {
+      "mention": "transformers",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Transformer 模型库"
+    },
+    {
+      "mention": "Trainer API",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型训练接口"
+    },
+    {
+      "mention": "PEFT/LoRA",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "高效微调技术"
+    },
+    {
+      "mention": "Dify",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 0.8,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "LLM 应用编排平台"
+    },
+    {
+      "mention": "Coze",
+      "skill_id": null,
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 0.8,
+      "source": "raw",
+      "resolved_by": "unmatched",
+      "reason": ""
+    },
+    {
+      "mention": "Grafana",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "监控可视化工具"
+    },
+    {
+      "mention": "Prometheus",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "监控系统"
+    },
+    {
+      "mention": "React Agent",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 0.5,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Agent 推理模式"
+    },
+    {
+      "mention": "LlamaIndex",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Ollama",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "vLLM",
+      "skill_id": "cap_01",
+      "point_id": "cap_01.推理",
+      "proficiency": "初级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "SQL Agent",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 0.4,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据库交互 Agent"
+    },
+    {
+      "mention": "LightGBM",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 0.4,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "机器学习算法库"
+    },
+    {
+      "mention": "CLIP",
+      "skill_id": "cap_05",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "多模态模型"
+    },
+    {
+      "mention": "fine-tuning",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "deployment",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "部署运维相关"
+    },
+    {
+      "mention": "FLAN-T5",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 0.3,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "LLM 模型应用"
+    }
+  ],
+  "experience_years": 3.0,
+  "education": "浙江理工大学计算机科学与技术本科（2018.09-2022.06）",
+  "projects": [
+    {
+      "name": "智能客服工单分类与优先排班助手",
+      "description": "基于LangChain的ReAct Agent系统，实现ITSM工单自动分类与优先级判断，降低工单驳回率至9.2%，分类准确率达94.5%。",
+      "skill_mentions": [
+        "LangChain",
+        "React Agent",
+        "FAISS",
+        "Flask",
+        "OpenAI embeddings"
+      ]
+    },
+    {
+      "name": "私有知识库问答机器人",
+      "description": "基于vLLM的RAG问答系统，使用ChromaDB进行向量检索，结合LlamaIndex自研重排模块，压制模型幻觉，使月度PV达2.3万次。",
+      "skill_mentions": [
+        "LangChain",
+        "ChromaDB",
+        "Ollama",
+        "Streamlit",
+        "FLAN-T5",
+        "vLLM",
+        "LlamaIndex"
+      ]
+    },
+    {
+      "name": "多Agent数据洞察与报表自动化",
+      "description": "基于LangGraph和n8n的并行协作Agent系统，自动生成周报，将人工耗时从3小时压缩至15分钟。",
+      "skill_mentions": [
+        "LangGraph",
+        "n8n",
+        "SQL Agent",
+        "LightGBM",
+        "LlamaIndex"
+      ]
+    },
+    {
+      "name": "基于CLIP的电商图搜与metadata生成",
+      "description": "独立实现基于CLIP的电商图像检索与元数据生成，进行fine-tuning与部署。",
+      "skill_mentions": [
+        "CLIP",
+        "fine-tuning",
+        "deployment"
+      ]
+    },
+    {
+      "name": "隐向量增强的推荐系统项目",
+      "description": "设计用于多级召回与候选打分Agent工作流的推荐系统，当前进行中。",
+      "skill_mentions": [
+        "Agent工作流"
+      ]
+    }
+  ],
+  "correction_log": []
+}

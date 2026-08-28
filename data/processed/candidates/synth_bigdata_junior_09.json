@@ -1,0 +1,350 @@
+{
+  "candidate_id": "synth_bigdata_junior_09",
+  "raw_extraction_id": "synth_bigdata_junior_09:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Java",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "编程语言"
+    },
+    {
+      "mention": "Scala",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "编程语言"
+    },
+    {
+      "mention": "Flink",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Watermark",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "流处理概念"
+    },
+    {
+      "mention": "RocksDB",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "嵌入式数据库"
+    },
+    {
+      "mention": "Checkpoint",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "状态管理"
+    },
+    {
+      "mention": "Spark",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Spark SQL",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "大数据处理SQL"
+    },
+    {
+      "mention": "ETL",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据处理流程"
+    },
+    {
+      "mention": "Shuffle",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "大数据计算机制"
+    },
+    {
+      "mention": "Hive",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据仓库工具"
+    },
+    {
+      "mention": "星型模型",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据建模"
+    },
+    {
+      "mention": "雪花模型",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据建模"
+    },
+    {
+      "mention": "ODS",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据分层"
+    },
+    {
+      "mention": "DWD",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据分层"
+    },
+    {
+      "mention": "ADS",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据分层"
+    },
+    {
+      "mention": "UDF",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "自定义函数"
+    },
+    {
+      "mention": "HDFS",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "分布式存储"
+    },
+    {
+      "mention": "YARN",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Kafka",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "ClickHouse",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "OLAP数据库"
+    },
+    {
+      "mention": "Doris",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "OLAP数据库"
+    },
+    {
+      "mention": "物化视图",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据库优化"
+    },
+    {
+      "mention": "Zookeeper",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "分布式协调"
+    },
+    {
+      "mention": "Maven",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "构建工具"
+    },
+    {
+      "mention": "Git",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Linux Shell",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "脚本语言"
+    },
+    {
+      "mention": "Hadoop",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Flume",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "日志采集工具"
+    },
+    {
+      "mention": "Redis",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "缓存数据库"
+    }
+  ],
+  "experience_years": null,
+  "education": "中南大学 计算机科学与技术 本科（2021.09 - 2025.06）",
+  "projects": [
+    {
+      "name": "电商用户行为实时分析平台",
+      "description": "基于 Flink + Kafka + Redis 构建实时分析平台，消费用户点击与下单日志，清洗去重后按窗口统计 PV/UV，结果写入 Redis 供大屏查询。",
+      "skill_mentions": [
+        "Flink",
+        "Kafka",
+        "Redis",
+        "状态编程",
+        "布隆过滤器",
+        "Event Time",
+        "Watermark",
+        "Checkpoint"
+      ]
+    },
+    {
+      "name": "电商离线数仓分层建设",
+      "description": "基于 Spark + Hive 搭建 ODS-DWD-ADS 三层数仓，处理历史订单数据并开发常用指标，优化小文件问题。",
+      "skill_mentions": [
+        "Spark",
+        "Hive",
+        "Spark SQL",
+        "AQE",
+        "Parquet",
+        "MySQL"
+      ]
+    },
+    {
+      "name": "日志采集与基础监控系统",
+      "description": "使用 Flume + Kafka 采集 Nginx 日志，实时统计错误日志比例并触发告警，完成 YARN 队列配置与 HDFS 规划。",
+      "skill_mentions": [
+        "Flume",
+        "Kafka",
+        "Flink",
+        "Grafana",
+        "YARN",
+        "HDFS"
+      ]
+    }
+  ],
+  "correction_log": []
+}

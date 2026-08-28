@@ -1,0 +1,403 @@
+{
+  "candidate_id": "synth_llm_junior_03",
+  "raw_extraction_id": "synth_llm_junior_03:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "PyTorch",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Transformers",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型微调框架"
+    },
+    {
+      "mention": "HuggingFace",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型微调生态"
+    },
+    {
+      "mention": "datasets",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "微调数据处理库"
+    },
+    {
+      "mention": "peft",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "参数高效微调库"
+    },
+    {
+      "mention": "accelerate",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "微调训练加速库"
+    },
+    {
+      "mention": "LLM微调",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "核心微调技能"
+    },
+    {
+      "mention": "LoRA",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "QLoRA",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "量化微调技术"
+    },
+    {
+      "mention": "指令微调",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "DPO",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "trl",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "强化学习微调库"
+    },
+    {
+      "mention": "数据清洗",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "微调数据预处理"
+    },
+    {
+      "mention": "vLLM",
+      "skill_id": "cap_01",
+      "point_id": "cap_01.推理",
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "ONNX Runtime",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型推理优化"
+    },
+    {
+      "mention": "TensorRT",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型推理加速"
+    },
+    {
+      "mention": "GPTQ",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型量化技术"
+    },
+    {
+      "mention": "AWQ",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型量化技术"
+    },
+    {
+      "mention": "KV Cache优化",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "推理性能优化"
+    },
+    {
+      "mention": "FAISS",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Milvus",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "RAG",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Chunking",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "RAG文本分块"
+    },
+    {
+      "mention": "Embedding",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "重排",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "RAG重排技术"
+    },
+    {
+      "mention": "Git",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Linux",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "开发部署环境"
+    },
+    {
+      "mention": "Flask",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Streamlit",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "API网页界面库"
+    },
+    {
+      "mention": "Qwen2",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "开源大模型"
+    },
+    {
+      "mention": "Llama3",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "开源大模型"
+    },
+    {
+      "mention": "ChatGLM3",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "开源大模型"
+    },
+    {
+      "mention": "prompt工程",
+      "skill_id": "cap_02",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "评测",
+      "skill_id": "cap_06",
+      "point_id": "cap_06.检索评测",
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    }
+  ],
+  "experience_years": 1.0,
+  "education": "北京理工大学，计算机科学与技术，本科（2024届）",
+  "projects": [
+    {
+      "name": "法律条文问答助手",
+      "description": "基于RAG的智能客服，独立负责整体pipeline，实现法律条文抽取、切分、embedding存储、混合检索及Qwen2-7B生成服务。",
+      "skill_mentions": [
+        "Python",
+        "Milvus",
+        "vLLM",
+        "Qwen2",
+        "Streamlit"
+      ]
+    },
+    {
+      "name": "电商商品评论情感微调（LoRA）",
+      "description": "负责数据清洗与微调脚本编写，基于5万条评论数据构造指令模板，采用Qwen2-7B进行LoRA微调，提升情感分类F1值。",
+      "skill_mentions": [
+        "PyTorch",
+        "trl",
+        "peft",
+        "deepspeed"
+      ]
+    }
+  ],
+  "correction_log": []
+}

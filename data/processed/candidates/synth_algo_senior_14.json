@@ -1,0 +1,389 @@
+{
+  "candidate_id": "synth_algo_senior_14",
+  "raw_extraction_id": "synth_algo_senior_14:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "CNN",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 5.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "深度学习经典模型"
+    },
+    {
+      "mention": "Transformer",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 5.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "PyTorch",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 5.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "TensorFlow",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 5.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "深度学习框架"
+    },
+    {
+      "mention": "混合精度训练",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型训练优化技术"
+    },
+    {
+      "mention": "DDP",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "分布式训练"
+    },
+    {
+      "mention": "Deepspeed",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "分布式训练框架"
+    },
+    {
+      "mention": "ResNet",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 6.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "CNN 网络结构"
+    },
+    {
+      "mention": "EfficientNet",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 6.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "CNN 网络结构"
+    },
+    {
+      "mention": "YOLO",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 6.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "目标检测模型"
+    },
+    {
+      "mention": "FCOS",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 6.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "目标检测模型"
+    },
+    {
+      "mention": "ONNX",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型转换格式"
+    },
+    {
+      "mention": "TensorRT",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "推理优化工具"
+    },
+    {
+      "mention": "INT8量化",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型压缩技术"
+    },
+    {
+      "mention": "OpenCV",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "视觉处理库"
+    },
+    {
+      "mention": "图像配准",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "视觉处理技术"
+    },
+    {
+      "mention": "CLIP",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "多模态模型"
+    },
+    {
+      "mention": "CoCa",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "多模态模型"
+    },
+    {
+      "mention": "Milvus",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "剪枝",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "蒸馏",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "AutoML",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "自动机器学习"
+    },
+    {
+      "mention": "NNI",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "AutoML 工具"
+    },
+    {
+      "mention": "Grad-CAM",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型解释工具"
+    },
+    {
+      "mention": "SHAP",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型解释工具"
+    },
+    {
+      "mention": "A/B实验",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "实验评估方法"
+    },
+    {
+      "mention": "Linux",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "操作系统技能"
+    },
+    {
+      "mention": "C++",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "编程语言"
+    },
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Git",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "K8s",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "容器编排平台"
+    },
+    {
+      "mention": "数据清洗",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据处理技术"
+    },
+    {
+      "mention": "特征工程",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "机器学习预处理"
+    }
+  ],
+  "experience_years": 8.0,
+  "education": "北京航空航天大学 计算机科学与技术 本科（2012-2016）",
+  "projects": [
+    {
+      "name": "工业缺陷检测平台",
+      "description": "主导面板缺陷检测算法研发，基于YOLOv5s+改进CSP模块，降低漏检率，设计蒸馏方案并完成TensorRT INT8部署，管理团队搭建数据闭环。",
+      "skill_mentions": [
+        "YOLOv5s",
+        "CSP",
+        "EfficientNet",
+        "ResNet18",
+        "TensorRT",
+        "INT8",
+        "数据闭环"
+      ]
+    },
+    {
+      "name": "智能相册人像聚类",
+      "description": "实现人像检测+特征提取+层次聚类，开发特征压缩与索引，推动模型迁移至TFLite并优化端侧性能。",
+      "skill_mentions": [
+        "人像检测",
+        "ArcFace",
+        "层次聚类",
+        "PCA",
+        "HNSW",
+        "TFLite"
+      ]
+    },
+    {
+      "name": "遥感影像变化检测",
+      "description": "基于U-Net+注意力机制检测建筑物变化，构建数据增强流程并产出内部工具库。",
+      "skill_mentions": [
+        "U-Net",
+        "CBAM",
+        "FCN",
+        "数据增强",
+        "辐射校正",
+        "随机镶嵌"
+      ]
+    }
+  ],
+  "correction_log": []
+}

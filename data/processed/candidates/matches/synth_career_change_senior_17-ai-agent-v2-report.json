@@ -1,0 +1,118 @@
+{
+  "match_id": "match-synth_career_change_senior_17-ai-agent-v2",
+  "candidate_id": "synth_career_change_senior_17",
+  "job_version_id": "ai-agent-v2",
+  "algorithm_version": "match-v1",
+  "overall_score": 0.94,
+  "required_coverage": 1.0,
+  "preferred_coverage": 0.8,
+  "dimensions": [
+    {
+      "name": "必备能力覆盖",
+      "value": 1.0
+    },
+    {
+      "name": "加分能力覆盖",
+      "value": 0.8
+    }
+  ],
+  "gaps": [
+    {
+      "skill_id": "cap_04",
+      "name": "AI Agent",
+      "verdict": "已具备",
+      "is_required": true,
+      "job_evidence_ids": [
+        ""
+      ],
+      "candidate_evidence": "简历技能：LangChain"
+    },
+    {
+      "skill_id": "cap_01",
+      "name": "LLM应用",
+      "verdict": "已具备",
+      "is_required": true,
+      "job_evidence_ids": [
+        ""
+      ],
+      "candidate_evidence": "简历技能：LLM 应用开发（3.0 年，高级）"
+    },
+    {
+      "skill_id": "cap_07",
+      "name": "Python",
+      "verdict": "已具备",
+      "is_required": true,
+      "job_evidence_ids": [
+        ""
+      ],
+      "candidate_evidence": "简历技能：Python（7.0 年，高级）"
+    },
+    {
+      "skill_id": "cap_06",
+      "name": "RAG/知识库",
+      "verdict": "已具备",
+      "is_required": true,
+      "job_evidence_ids": [
+        ""
+      ],
+      "candidate_evidence": "简历技能：RAG 架构"
+    },
+    {
+      "skill_id": "cap_08",
+      "name": "SQL/数据库",
+      "verdict": "已具备",
+      "is_required": true,
+      "job_evidence_ids": [
+        ""
+      ],
+      "candidate_evidence": "简历技能：Redis"
+    },
+    {
+      "skill_id": "cap_02",
+      "name": "Prompt工程",
+      "verdict": "已具备",
+      "is_required": false,
+      "job_evidence_ids": [],
+      "candidate_evidence": "简历技能：Prompt 工程"
+    },
+    {
+      "skill_id": "cap_18",
+      "name": "自动化运维",
+      "verdict": "缺失",
+      "is_required": false,
+      "job_evidence_ids": [],
+      "candidate_evidence": "简历中无该能力域任何证据"
+    },
+    {
+      "skill_id": "cap_03",
+      "name": "模型微调",
+      "verdict": "已具备",
+      "is_required": false,
+      "job_evidence_ids": [],
+      "candidate_evidence": "简历技能：LoRA"
+    },
+    {
+      "skill_id": "cap_05",
+      "name": "多模态AI",
+      "verdict": "已具备",
+      "is_required": false,
+      "job_evidence_ids": [],
+      "candidate_evidence": "简历技能：多模态模型"
+    },
+    {
+      "skill_id": "cap_12",
+      "name": "ML/DL算法",
+      "verdict": "已具备",
+      "is_required": false,
+      "job_evidence_ids": [],
+      "candidate_evidence": "简历技能：Scikit-learn"
+    }
+  ],
+  "key_shortboards": [],
+  "evidence_ids": [
+    "",
+    "",
+    ""
+  ],
+  "status": "FINAL"
+}

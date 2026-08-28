@@ -1,0 +1,48 @@
+{
+  "candidate_id": "synth_llm_mid_04",
+  "job_version_id": "ai-agent-v2",
+  "match_id": "match-synth_llm_mid_04-ai-agent-v2",
+  "steps": [
+    {
+      "skill_id": "cap_04",
+      "name": "AI Agent",
+      "priority": "P1 巩固提升",
+      "reason": "已有相邻基础，向目标技能点深化",
+      "learn": "学习 AI Agent 领域核心知识点与主流方法",
+      "practice": "完成一个包含 AI Agent 的实战小项目并沉淀到简历",
+      "evaluate": "在项目复盘中自评 AI Agent 的独立完成度",
+      "certify": "整理项目证据形成 AI Agent 能力证明材料"
+    },
+    {
+      "skill_id": "cap_06",
+      "name": "RAG/知识库",
+      "priority": "P1 巩固提升",
+      "reason": "已有相邻基础，向目标技能点深化",
+      "learn": "学习 RAG/知识库 领域核心知识点与主流方法",
+      "practice": "完成一个包含 RAG/知识库 的实战小项目并沉淀到简历",
+      "evaluate": "在项目复盘中自评 RAG/知识库 的独立完成度",
+      "certify": "整理项目证据形成 RAG/知识库 能力证明材料"
+    },
+    {
+      "skill_id": "cap_05",
+      "name": "多模态AI",
+      "priority": "P2 加分拓展",
+      "reason": "非必备，作为差异化加分项拓展",
+      "learn": "学习 多模态AI 领域核心知识点与主流方法",
+      "practice": "完成一个包含 多模态AI 的实战小项目并沉淀到简历",
+      "evaluate": "在项目复盘中自评 多模态AI 的独立完成度",
+      "certify": "整理项目证据形成 多模态AI 能力证明材料"
+    },
+    {
+      "skill_id": "cap_18",
+      "name": "自动化运维",
+      "priority": "P2 加分拓展",
+      "reason": "非必备，作为差异化加分项拓展",
+      "learn": "学习 自动化运维 领域核心知识点与主流方法",
+      "practice": "完成一个包含 自动化运维 的实战小项目并沉淀到简历",
+      "evaluate": "在项目复盘中自评 自动化运维 的独立完成度",
+      "certify": "整理项目证据形成 自动化运维 能力证明材料"
+    }
+  ],
+  "generated_by": "match-v1 模板化规则"
+}

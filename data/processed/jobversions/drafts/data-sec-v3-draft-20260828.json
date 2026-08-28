@@ -1,0 +1,289 @@
+{
+  "job_id": "job_pos_36",
+  "version_id": "data-sec-v3-draft-20260828",
+  "status": "DRAFT",
+  "title": "数据安全工程师",
+  "basis": {
+    "v1": "Excel 专家基线（pos_36 数据安全工程师）",
+    "v2": "已发布 data-sec-v2（3 条 JD，标注方向性待复核）",
+    "v3": "扩采后市场重组装（95 条 JD 技能分布）"
+  },
+  "required_skill_ids": [
+    {
+      "skill_id": "cap_07",
+      "name": "Python",
+      "weight": 0.192
+    },
+    {
+      "skill_id": "cap_30",
+      "name": "安全/风控意识",
+      "weight": 0.15
+    },
+    {
+      "skill_id": "cap_04",
+      "name": "AI Agent",
+      "weight": 0.132
+    },
+    {
+      "skill_id": "cap_01",
+      "name": "LLM应用",
+      "weight": 0.102
+    },
+    {
+      "skill_id": "cap_08",
+      "name": "SQL/数据库",
+      "weight": 0.066
+    }
+  ],
+  "preferred_skill_ids": [
+    {
+      "skill_id": "cap_18",
+      "name": "自动化运维",
+      "weight": 0.066
+    },
+    {
+      "skill_id": "cap_13",
+      "name": "云计算",
+      "weight": 0.066
+    },
+    {
+      "skill_id": "cap_09",
+      "name": "大数据处理",
+      "weight": 0.054
+    },
+    {
+      "skill_id": "cap_14",
+      "name": "API开发",
+      "weight": 0.054
+    },
+    {
+      "skill_id": "cap_15",
+      "name": "系统架构",
+      "weight": 0.048
+    }
+  ],
+  "valid_from": "2026-08-28",
+  "evidence": {
+    "evidence_ids": [
+      "jd:51job:167884657",
+      "jd:51job:167910712",
+      "jd:boss:bf72a50ef74153b00nBy092-FFZS",
+      "jd:bd:7542413209527290120",
+      "jd:bd:7002809612144396581",
+      "jd:bd:7244153021764438309",
+      "jd:bd:7042607435878353182",
+      "jd:bd:7469705370141214994",
+      "jd:bd:7516376894167517458",
+      "jd:bd:7577228502858221829",
+      "jd:bd:7594743264476285189",
+      "jd:bd:7603296982419294469",
+      "jd:bd:7659336867259779381",
+      "jd:ali:100019860007",
+      "jd:ali:100033620003",
+      "jd:ali:100034860002",
+      "jd:anth:4595463008",
+      "jd:anth:4887959008",
+      "jd:anth:5074937008",
+      "jd:anth:5074908008",
+      "jd:anth:5098092008",
+      "jd:anth:5123039008",
+      "jd:anth:5120512008",
+      "jd:anth:4982193008",
+      "jd:anth:5250052008",
+      "jd:anth:5270442008",
+      "jd:anth:5257689008",
+      "jd:anth:5290426008",
+      "jd:anth:5361411008",
+      "jd:anth:5366149008",
+      "jd:anth:5383114008",
+      "jd:anth:5397319008",
+      "jd:anth:5398227008",
+      "jd:anth:5397751008",
+      "jd:gh-databricks:7274459002",
+      "jd:gh-databricks:7274488002",
+      "jd:gh-databricks:7274875002",
+      "jd:gh-databricks:7274619002",
+      "jd:gh-databricks:7274563002",
+      "jd:gh-databricks:7274557002",
+      "jd:gh-databricks:7274908002",
+      "jd:gh-databricks:7274902002",
+      "jd:gh-databricks:7882009002",
+      "jd:gh-databricks:7993609002",
+      "jd:gh-databricks:7994790002",
+      "jd:gh-databricks:7994770002",
+      "jd:gh-databricks:7994801002",
+      "jd:gh-databricks:7994759002",
+      "jd:gh-databricks:8026634002",
+      "jd:gh-databricks:8224828002",
+      "jd:gh-databricks:8301830002",
+      "jd:gh-databricks:8298018002",
+      "jd:gh-databricks:8400563002",
+      "jd:gh-databricks:8519350002",
+      "jd:gh-databricks:8519396002",
+      "jd:gh-databricks:8589172002",
+      "jd:gh-databricks:8612870002",
+      "jd:gh-databricks:8612863002",
+      "jd:gh-databricks:8618455002",
+      "jd:gh-databricks:8622164002",
+      "jd:gh-discord:8545675002",
+      "jd:gh-discord:8649856002",
+      "jd:gh-discord:8656854002",
+      "jd:gh-figma:5829751004",
+      "jd:gh-pinterest:7494708",
+      "jd:gh-pinterest:7896332",
+      "jd:gh-pinterest:8015490",
+      "jd:gh-pinterest:8157108",
+      "jd:gh-scaleai:4646888005",
+      "jd:gh-scaleai:4651559005",
+      "jd:gh-scaleai:4643029005",
+      "jd:gh-scaleai:4704551005",
+      "jd:gh-scaleai:4712321005",
+      "jd:gh-scaleai:4710484005",
+      "jd:gh-scaleai:4718258005",
+      "jd:gh-scaleai:4711898005",
+      "jd:gh-scaleai:4715352005",
+      "jd:gh-stripe:7396679",
+      "jd:gh-stripe:7761694",
+      "jd:gh-stripe:7776179",
+      "jd:gh-stripe:7867389",
+      "jd:gh-stripe:7982720",
+      "jd:gh-stripe:8039800",
+      "jd:gh-stripe:8073092",
+      "jd:gh-stripe:8089353",
+      "jd:gh-stripe:8113337",
+      "jd:gh-stripe:8142302",
+      "jd:mt:4697296162",
+      "jd:tx:1950032115714359296",
+      "jd:tx:1993867523589824512",
+      "jd:tx:2067161121072263168",
+      "jd:tx:2084173708678836224",
+      "jd:tx:2083853733489459200",
+      "jd:vivo:M1953305911669084162",
+      "jd:xhs:21020"
+    ],
+    "baseline_evidence_id": "xlsx:pos_36",
+    "jd_count": 95
+  },
+  "changeset_vs_v2": [
+    {
+      "level": "capability",
+      "skill_id": "cap_04",
+      "name": "AI Agent",
+      "change_type": "add",
+      "v2_role": null,
+      "v3_role": "required",
+      "market_share": 0.132,
+      "market_rank": 3,
+      "note": "v2 为未收录，v3 市场 rank 3"
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_08",
+      "name": "SQL/数据库",
+      "change_type": "add",
+      "v2_role": null,
+      "v3_role": "required",
+      "market_share": 0.066,
+      "market_rank": 5,
+      "note": "v2 为未收录，v3 市场 rank 5"
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_18",
+      "name": "自动化运维",
+      "change_type": "add",
+      "v2_role": null,
+      "v3_role": "preferred",
+      "market_share": 0.066,
+      "market_rank": 6,
+      "note": "v2 为未收录，v3 市场 rank 6"
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_13",
+      "name": "云计算",
+      "change_type": "add",
+      "v2_role": null,
+      "v3_role": "preferred",
+      "market_share": 0.066,
+      "market_rank": 7,
+      "note": "v2 为未收录，v3 市场 rank 7"
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_09",
+      "name": "大数据处理",
+      "change_type": "add",
+      "v2_role": null,
+      "v3_role": "preferred",
+      "market_share": 0.054,
+      "market_rank": 8,
+      "note": "v2 为未收录，v3 市场 rank 8"
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_14",
+      "name": "API开发",
+      "change_type": "add",
+      "v2_role": null,
+      "v3_role": "preferred",
+      "market_share": 0.054,
+      "market_rank": 9,
+      "note": "v2 为未收录，v3 市场 rank 9"
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_15",
+      "name": "系统架构",
+      "change_type": "add",
+      "v2_role": null,
+      "v3_role": "preferred",
+      "market_share": 0.048,
+      "market_rank": 10,
+      "note": "v2 为未收录，v3 市场 rank 10"
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_01",
+      "name": "LLM应用",
+      "change_type": "demote",
+      "v2_role": "required",
+      "v3_role": null,
+      "market_share": 0.102,
+      "note": "跌出市场 top10"
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_07",
+      "name": "Python",
+      "change_type": "demote",
+      "v2_role": "required",
+      "v3_role": null,
+      "market_share": 0.192,
+      "note": "跌出市场 top10"
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_12",
+      "name": "ML/DL算法",
+      "change_type": "demote",
+      "v2_role": "required",
+      "v3_role": null,
+      "market_share": 0.024,
+      "note": "跌出市场 top10"
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_30",
+      "name": "安全/风控意识",
+      "change_type": "demote",
+      "v2_role": "required",
+      "v3_role": null,
+      "market_share": 0.15,
+      "note": "跌出市场 top10"
+    }
+  ],
+  "review_status": "PENDING",
+  "generated_by": "jobver v1（确定性组装）",
+  "generated_at": "2026-08-28"
+}

@@ -1,0 +1,461 @@
+{
+  "candidate_id": "synth_career_change_senior_17",
+  "raw_extraction_id": "synth_career_change_senior_17:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 7.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Flask",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Django",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Web后端框架"
+    },
+    {
+      "mention": "异步编程",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python核心技能"
+    },
+    {
+      "mention": "类型注解",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python语言特性"
+    },
+    {
+      "mention": "LLM 应用开发",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "LLM应用开发"
+    },
+    {
+      "mention": "LangChain",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LangGraph",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "RAG 架构",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "RAG架构设计"
+    },
+    {
+      "mention": "向量检索",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "重排",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "RAG检索优化"
+    },
+    {
+      "mention": "Prompt 工程",
+      "skill_id": "cap_02",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Function Calling",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.工具调用",
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Milvus",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Qdrant",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "向量数据库"
+    },
+    {
+      "mention": "FAISS",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "混合检索",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "RAG检索技术"
+    },
+    {
+      "mention": "HyDE 策略",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "RAG增强策略"
+    },
+    {
+      "mention": "Scikit-learn",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "传统ML库"
+    },
+    {
+      "mention": "XGBoost",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "梯度提升框架"
+    },
+    {
+      "mention": "PyTorch",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Transformer",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "特征工程",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "ML流程环节"
+    },
+    {
+      "mention": "LoRA",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "vLLM",
+      "skill_id": "cap_01",
+      "point_id": "cap_01.推理",
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Triton",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "推理服务框架"
+    },
+    {
+      "mention": "ONNX Runtime",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型推理引擎"
+    },
+    {
+      "mention": "量化",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "缓存策略",
+      "skill_id": "cap_15",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "系统性能优化"
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Kubernetes",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Redis",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "键值存储数据库"
+    },
+    {
+      "mention": "Kafka",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "PostgreSQL",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "高并发系统",
+      "skill_id": "cap_15",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "系统架构设计"
+    },
+    {
+      "mention": "Agent 框架",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "AutoGen",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "CrewAI",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "多模态模型",
+      "skill_id": "cap_05",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    }
+  ],
+  "experience_years": 8.0,
+  "education": "中南大学 软件工程 硕士（2014-2017）",
+  "projects": [
+    {
+      "name": "智能客服知识库问答系统（RAG）",
+      "description": "企业级 RAG 系统，服务 2000+ 员工，覆盖 30 万+ 文档，检索召回率提升至 89%，答案准确率 91%，支持峰值 QPS 200+，延迟<1.5s。",
+      "skill_mentions": [
+        "LangChain",
+        "Milvus",
+        "RAG 架构",
+        "混合检索",
+        "重排",
+        "bge-reranker",
+        "BM25",
+        "FastAPI",
+        "Docker",
+        "Kubernetes"
+      ]
+    },
+    {
+      "name": "智能文档审核与合同审查助手（Agent）",
+      "description": "基于 Function Calling 的多轮 Agent，自动完成合同风险条款提取与合规比对，审核效率提升 5 倍。",
+      "skill_mentions": [
+        "Function Calling",
+        "Agent",
+        "DAG",
+        "PyTorch",
+        "LoRA",
+        "vLLM",
+        "PagedAttention"
+      ]
+    },
+    {
+      "name": "交易风控实时预警平台",
+      "description": "实时特征计算流水线，每秒处理 10 万+ 事件，命中<200ms，盗刷率下降 35%，服务可用性 99.99%。",
+      "skill_mentions": [
+        "Kafka",
+        "Flink",
+        "Redis",
+        "Drools",
+        "微服务",
+        "MySQL"
+      ]
+    },
+    {
+      "name": "电商用户行为分析平台",
+      "description": "离线数据仓库与用户行为标签表，优化慢查询与数据倾斜，核心报表时间缩短至 25 分钟。",
+      "skill_mentions": [
+        "Hive",
+        "Spark"
+      ]
+    }
+  ],
+  "correction_log": []
+}

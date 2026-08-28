@@ -1,0 +1,121 @@
+{"ts": "2026-08-25T21:05:20", "target_id": "emerging-agent", "decision": "accepted", "note": "主案例1验收通过"}
+{"ts": "2026-08-26T15:10:00", "target_id": "job_pos_01", "decision": "accepted", "note": "大模型算法工程师 v2 审核通过：top5 与 Agent 岗区分清晰，采纳 2 项 demote 与 8 项点级新增（LLM推理证据最强 14 JD）"}
+{"ts": "2026-08-26T23:16:33", "target_id": "job_pos_06", "decision": "accepted", "note": "AI产品经理 v2 批量审核：8 项变化（add 5/promote 2/demote 1），22 条 JD"}
+{"ts": "2026-08-26T23:16:33", "target_id": "job_pos_07", "decision": "accepted", "note": "AI训练师/数据标注主管 v2 批量审核：9 项变化（add 8/promote 1/demote 0），6 条 JD；证据薄，结论方向性，扩采后应升版复核"}
+{"ts": "2026-08-26T23:16:33", "target_id": "job_pos_11", "decision": "accepted", "note": "大数据工程师 v2 批量审核：6 项变化（add 6/promote 0/demote 0），4 条 JD；证据薄，结论方向性，扩采后应升版复核"}
+{"ts": "2026-08-26T23:16:33", "target_id": "job_pos_27", "decision": "accepted", "note": "计算机视觉工程师 v2 批量审核：3 项变化（add 3/promote 0/demote 0），17 条 JD"}
+{"ts": "2026-08-26T23:16:33", "target_id": "job_pos_35", "decision": "accepted", "note": "数据分析师(AI增强) v2 批量审核：3 项变化（add 2/promote 1/demote 0），5 条 JD；证据薄，结论方向性，扩采后应升版复核"}
+{"ts": "2026-08-26T23:16:33", "target_id": "job_pos_36", "decision": "accepted", "note": "数据安全工程师 v2 批量审核：2 项变化（add 2/promote 0/demote 0），3 条 JD；证据薄，结论方向性，扩采后应升版复核"}
+{"ts": "2026-08-26T23:16:33", "target_id": "job_pos_14", "decision": "accepted", "note": "数据中心运维工程师 v2 批量审核：4 项变化（add 4/promote 0/demote 0），5 条 JD；证据薄，结论方向性，扩采后应升版复核"}
+{"ts": "2026-08-26T23:16:33", "target_id": "job_pos_05", "decision": "accepted", "note": "AI模型部署工程师(MLOps) v2 批量审核：11 项变化（add 6/promote 1/demote 4），10 条 JD"}
+{"ts": "2026-08-26T23:16:33", "target_id": "job_pos_04", "decision": "accepted", "note": "NLP/多模态研究员 v2 批量审核：4 项变化（add 4/promote 0/demote 0），17 条 JD"}
+{"ts": "2026-08-26T23:16:33", "target_id": "job_pos_38", "decision": "accepted", "note": "智能传感器工程师 v2 批量审核：2 项变化（add 1/promote 1/demote 0），4 条 JD；证据薄，结论方向性，扩采后应升版复核"}
+{"ts": "2026-08-27T03:09:11", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "联调"}
+{"ts": "2026-08-27T03:15:27", "target_id": "cand-agent-01", "decision": "rejected", "note": "联调"}
+{"ts": "2026-08-27T12:04:13", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T12:04:13", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T12:06:16", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T12:06:16", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T12:07:10", "target_id": "emerging-agent", "decision": "accepted", "note": ""}
+{"ts": "2026-08-27T12:08:34", "target_id": "emerging-agent", "decision": "accepted", "note": ""}
+{"ts": "2026-08-27T12:09:53", "target_id": "emerging-agent", "decision": "accepted", "note": ""}
+{"ts": "2026-08-27T12:11:33", "target_id": "emerging-agent", "decision": "accepted", "note": ""}
+{"ts": "2026-08-27T12:20:58", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T12:20:58", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T12:21:45", "target_id": "emerging-agent", "decision": "accepted", "note": ""}
+{"ts": "2026-08-27T12:22:48", "target_id": "emerging-agent", "decision": "accepted", "note": ""}
+{"ts": "2026-08-27T12:23:35", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T12:23:35", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T12:24:32", "target_id": "emerging-agent", "decision": "accepted", "note": ""}
+{"ts": "2026-08-27T12:25:48", "target_id": "emerging-agent", "decision": "accepted", "note": ""}
+{"ts": "2026-08-27T12:27:37", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T12:27:37", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T12:34:44", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T12:34:44", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T12:38:03", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T12:38:03", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T12:42:51", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T12:42:51", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T12:52:27", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T12:52:27", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T14:34:40", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T14:34:40", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T15:22:05", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T15:22:05", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T15:38:44", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T15:38:44", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T15:54:08", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T15:54:08", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T20:00:59", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T20:00:59", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T23:10:57", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T23:10:57", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T23:14:06", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T23:14:06", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-27T23:20:10", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-27T23:20:10", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T02:05:33", "target_id": "job_pos_07", "decision": "accepted", "note": "AI训练师/数据标注主管 v3 扩采复核：12 项变化（add 2/promote 1/demote 9），25 条 JD（v2 时证据薄，已兑现升版复核）"}
+{"ts": "2026-08-28T02:05:33", "target_id": "job_pos_11", "decision": "accepted", "note": "大数据工程师 v3 扩采复核：13 项变化（add 4/promote 0/demote 9），334 条 JD（v2 时证据薄，已兑现升版复核）"}
+{"ts": "2026-08-28T02:05:33", "target_id": "job_pos_35", "decision": "accepted", "note": "数据分析师(AI增强) v3 扩采复核：10 项变化（add 3/promote 0/demote 7），158 条 JD（v2 时证据薄，已兑现升版复核）"}
+{"ts": "2026-08-28T02:05:33", "target_id": "job_pos_36", "decision": "accepted", "note": "数据安全工程师 v3 扩采复核：11 项变化（add 7/promote 0/demote 4），95 条 JD（v2 时证据薄，已兑现升版复核）"}
+{"ts": "2026-08-28T02:05:33", "target_id": "job_pos_14", "decision": "accepted", "note": "数据中心运维工程师 v3 扩采复核：11 项变化（add 3/promote 1/demote 7），31 条 JD（v2 时证据薄，已兑现升版复核）"}
+{"ts": "2026-08-28T02:06:35", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T02:06:35", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T03:21:25", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T03:21:25", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T03:30:41", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T03:30:41", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T03:32:21", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T03:32:21", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T03:33:58", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T03:33:58", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T11:15:49", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T11:15:49", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T11:36:02", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T11:36:02", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T11:46:26", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T11:46:26", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T11:58:04", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T11:58:04", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T12:20:00", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T12:20:00", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T12:23:56", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T12:23:56", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T12:59:56", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T12:59:56", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T13:01:06", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T13:01:06", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T16:28:31", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T16:28:31", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T16:29:51", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T16:29:51", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T16:30:31", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T16:30:31", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T16:43:48", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T16:43:48", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T17:11:07", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T17:11:07", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T17:27:44", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T17:27:44", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T17:39:52", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T17:39:52", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T18:28:29", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T18:28:29", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T18:36:52", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T18:36:52", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T18:41:34", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T18:41:34", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T18:50:04", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T18:50:04", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T18:56:15", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T18:56:15", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T20:08:59", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T20:08:59", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T20:27:21", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T20:27:22", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T20:52:58", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T20:52:58", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T21:00:15", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T21:00:15", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}
+{"ts": "2026-08-28T21:40:37", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "幂等回归"}
+{"ts": "2026-08-28T21:40:37", "target_id": "job_pos_02_agent", "decision": "accepted", "note": "Web 发布流审核通过"}

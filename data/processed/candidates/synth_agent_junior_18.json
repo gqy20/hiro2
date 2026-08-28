@@ -1,0 +1,355 @@
+{
+  "candidate_id": "synth_agent_junior_18",
+  "raw_extraction_id": "synth_agent_junior_18:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "asyncio",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python 异步编程库"
+    },
+    {
+      "mention": "aiohttp",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python 异步 HTTP 库"
+    },
+    {
+      "mention": "类型注解",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python 编程特性"
+    },
+    {
+      "mention": "LangChain",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Tool Calling",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.工具调用",
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Function Calling",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.工具调用",
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Memory机制",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Agent 记忆机制"
+    },
+    {
+      "mention": "Prompt模板工程",
+      "skill_id": "cap_02",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Prompt 相关技能"
+    },
+    {
+      "mention": "LangGraph",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "ReAct",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.推理",
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Plan-and-Execute",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "LLM 推理策略"
+    },
+    {
+      "mention": "text-embedding-3-small",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Embedding 模型"
+    },
+    {
+      "mention": "Chroma",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FAISS",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "RAG",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "OpenAI API",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "外部 API 集成"
+    },
+    {
+      "mention": "Anthropic API",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "外部 API 集成"
+    },
+    {
+      "mention": "SSE",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "实时通信协议接口"
+    },
+    {
+      "mention": "Dify",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Agent 开发平台"
+    },
+    {
+      "mention": "Coze",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Agent 开发平台"
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Git",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "GPT-4o-mini",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "LLM 模型应用"
+    },
+    {
+      "mention": "Streamlit",
+      "skill_id": "cap_11",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "交互式可视化应用"
+    },
+    {
+      "mention": "APScheduler",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "任务调度工具"
+    },
+    {
+      "mention": "SMTP",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "协议对接开发"
+    },
+    {
+      "mention": "scikit-learn",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "机器学习库"
+    },
+    {
+      "mention": "GitPython",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python Git 库"
+    }
+  ],
+  "experience_years": null,
+  "education": "华南理工大学，计算机科学与技术，本科在读（2026届），GPA 3.6/4.0",
+  "projects": [
+    {
+      "name": "客服工单智能分流 Agent",
+      "description": "基于 LangChain 构建多工具 Agent，集成工单系统查询、知识库检索与时效计算工具，用于自动分类并派发工单。",
+      "skill_mentions": [
+        "Python",
+        "LangChain",
+        "LangGraph",
+        "Chroma",
+        "FastAPI",
+        "GPT-4o-mini"
+      ]
+    },
+    {
+      "name": "个人知识库问答助手",
+      "description": "实现 RAG 管线（文档解析 → 分块 → 向量化 → 混合检索），设计基于来源引用的回答生成 Prompt。",
+      "skill_mentions": [
+        "LangChain",
+        "text-embedding-3-small",
+        "FAISS",
+        "Streamlit"
+      ]
+    },
+    {
+      "name": "日程管理 + 邮件提醒工具调用 Agent",
+      "description": "定义自定义工具 schema（创建/查询日历、发送邮件），使用 Function Calling 机制处理多轮对话意图解析。",
+      "skill_mentions": [
+        "Python",
+        "LangChain",
+        "OpenAI Function Calling",
+        "APScheduler",
+        "SMTP"
+      ]
+    },
+    {
+      "name": "GitHub Issue 分类工作流",
+      "description": "利用 LangGraph 构建三节点工作流（预处理 → 分类 → 分配标签），支持失败重试与状态回滚。",
+      "skill_mentions": [
+        "LangGraph",
+        "LangChain",
+        "scikit-learn",
+        "GitPython"
+      ]
+    }
+  ],
+  "correction_log": []
+}

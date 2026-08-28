@@ -1,0 +1,445 @@
+{
+  "candidate_id": "synth_algo_mid_13",
+  "raw_extraction_id": "synth_algo_mid_13:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "C++",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "编程语言"
+    },
+    {
+      "mention": "Shell",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.工具调用",
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "PyTorch",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "TensorFlow",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "深度学习框架"
+    },
+    {
+      "mention": "OpenCV",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "CV 库"
+    },
+    {
+      "mention": "PIL",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "图像处理库"
+    },
+    {
+      "mention": "albumentations",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据增强库"
+    },
+    {
+      "mention": "NumPy",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python 科学计算库"
+    },
+    {
+      "mention": "Pandas",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python 数据分析库"
+    },
+    {
+      "mention": "ResNet",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "CV 网络结构"
+    },
+    {
+      "mention": "EfficientNet",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "CV 网络结构"
+    },
+    {
+      "mention": "YOLOv5",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "目标检测模型"
+    },
+    {
+      "mention": "YOLOv8",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "目标检测模型"
+    },
+    {
+      "mention": "Mask R-CNN",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "实例分割模型"
+    },
+    {
+      "mention": "DeepLabV3+",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "语义分割模型"
+    },
+    {
+      "mention": "模型压缩",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "剪枝",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "量化",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "PTQ",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型量化技术"
+    },
+    {
+      "mention": "QAT",
+      "skill_id": "cap_12",
+      "point_id": "cap_12.量化感知训练",
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "TensorRT",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "推理优化工具"
+    },
+    {
+      "mention": "XGBoost",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "机器学习算法"
+    },
+    {
+      "mention": "LR",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "逻辑回归"
+    },
+    {
+      "mention": "SKlearn",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "机器学习库"
+    },
+    {
+      "mention": "Linux",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "操作系统"
+    },
+    {
+      "mention": "Git",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Flask",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Go",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "编程语言"
+    },
+    {
+      "mention": "Redis",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据库/缓存"
+    },
+    {
+      "mention": "U-Net",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "语义分割模型"
+    },
+    {
+      "mention": "ResNet3D",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "3D 网络结构"
+    },
+    {
+      "mention": "LSTM",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "循环神经网络"
+    },
+    {
+      "mention": "光流法",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "视频分析算法"
+    },
+    {
+      "mention": "TSM",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "时序动作识别"
+    },
+    {
+      "mention": "MixUp",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据增强方法"
+    },
+    {
+      "mention": "Mosaic",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据增强方法"
+    },
+    {
+      "mention": "CopyPaste",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据增强方法"
+    }
+  ],
+  "experience_years": null,
+  "education": "华南理工大学 计算机科学与技术 硕士（2019-2022）",
+  "projects": [
+    {
+      "name": "工业缺陷检测系统",
+      "description": "负责光学字符区域分割与缺陷识别算法研发，从数据清洗到模型上线迭代，通过自研同域自适应增强策略将漏检率从1.8%降至0.7%，并使用TensorRT FP16加速实现单张推理17ms。",
+      "skill_mentions": [
+        "PyTorch",
+        "YOLOv5",
+        "DeepLabV3+",
+        "TensorRT",
+        "OpenCV"
+      ]
+    },
+    {
+      "name": "遥感影像道路提取",
+      "description": "设计轻量化分割网络，面向高分辨率卫星图进行道路拓扑提取，基于DeepLabV3+结合注意力机制达到mIoU 72.3%，结构化剪枝后FLOPs降低45%。",
+      "skill_mentions": [
+        "PyTorch",
+        "U-Net",
+        "模型剪枝",
+        "DeepLabV3+"
+      ]
+    },
+    {
+      "name": "视频监控异常行为检测",
+      "description": "负责帧级特征提取与时间序列模型融合，实现跌倒、斗殴等动作识别，使用TSM模块替换部分3D卷积，在UCF-Crime子集上AUC达91.5%，并部署为FastAPI REST服务。",
+      "skill_mentions": [
+        "PyTorch",
+        "ResNet3D",
+        "LSTM",
+        "光流法",
+        "TSM",
+        "FastAPI"
+      ]
+    }
+  ],
+  "correction_log": []
+}

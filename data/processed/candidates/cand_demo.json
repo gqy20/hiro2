@@ -1,0 +1,118 @@
+{
+  "candidate_id": "cand_demo",
+  "raw_extraction_id": "cand_demo:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw"
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw"
+    },
+    {
+      "mention": "REST API",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw"
+    },
+    {
+      "mention": "LangChain",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw"
+    },
+    {
+      "mention": "RAG",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw"
+    },
+    {
+      "mention": "Milvus",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw"
+    },
+    {
+      "mention": "Prompt 工程",
+      "skill_id": "cap_02",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw"
+    },
+    {
+      "mention": "Git",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw"
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw"
+    },
+    {
+      "mention": "机器学习",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw"
+    }
+  ],
+  "experience_years": 1.0,
+  "education": "本科 · 计算机科学（XX大学 计算机科学与技术）",
+  "projects": [
+    {
+      "name": "校园问答助手",
+      "description": "基于 LangChain + Milvus 的 RAG 问答系统，负责检索链路与 Prompt 模板",
+      "skill_mentions": [
+        "LangChain",
+        "Milvus",
+        "RAG",
+        "Prompt 工程"
+      ]
+    },
+    {
+      "name": "数据抓取小工具",
+      "description": "Python 多线程爬虫 + FastAPI 接口，处理 10 万条数据",
+      "skill_mentions": [
+        "Python",
+        "FastAPI"
+      ]
+    },
+    {
+      "name": "课程设计",
+      "description": "手写朴素贝叶斯分类器完成文本分类",
+      "skill_mentions": [
+        "机器学习",
+        "Python"
+      ]
+    }
+  ],
+  "correction_log": []
+}

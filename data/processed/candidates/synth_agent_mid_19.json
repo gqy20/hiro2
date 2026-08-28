@@ -1,0 +1,299 @@
+{
+  "candidate_id": "synth_agent_mid_19",
+  "raw_extraction_id": "synth_agent_mid_19:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Flask",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LangChain",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LangGraph",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "OpenAI API",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "LLM API调用开发"
+    },
+    {
+      "mention": "通义千问",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "国内LLM模型应用"
+    },
+    {
+      "mention": "DeepSeek",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "开源LLM模型应用"
+    },
+    {
+      "mention": "Function Calling",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.工具调用",
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Dify",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Agent应用开发平台"
+    },
+    {
+      "mention": "Coze",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Agent编排平台"
+    },
+    {
+      "mention": "Milvus",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Chroma",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "RAG",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Redis",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "缓存数据库"
+    },
+    {
+      "mention": "MySQL",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "docker-compose",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "容器编排部署"
+    },
+    {
+      "mention": "Prompt Engineering",
+      "skill_id": "cap_02",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "提示词工程设计"
+    },
+    {
+      "mention": "BeautifulSoup",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python网页解析库"
+    },
+    {
+      "mention": "Selenium",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python自动化测试库"
+    },
+    {
+      "mention": "PyMuPDF",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "Python PDF处理库"
+    },
+    {
+      "mention": "Ollama",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "llama3.1:8b",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "本地LLM模型部署"
+    },
+    {
+      "mention": "langchain-text-splitters",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "RAG文本切分工具"
+    }
+  ],
+  "experience_years": 3.0,
+  "education": "本科，浙江工业大学，计算机科学与技术（2019.09-2022.06）",
+  "projects": [
+    {
+      "name": "智能客服工单处理Agent",
+      "description": "基于LangChain构建多轮对话Agent，对接订单查询、退换货、物流状态工具API，通过Function Calling解析意图并生成工单，设计兜底策略提升准确率至86%。",
+      "skill_mentions": [
+        "LangChain",
+        "FastAPI",
+        "MySQL",
+        "通义千问",
+        "Function Calling",
+        "Redis",
+        "Chroma",
+        "RAG"
+      ]
+    },
+    {
+      "name": "合同审查风险提取工作流",
+      "description": "在Dify中搭建文件上传到结构化输出的流水线，设计few-shot提取模板并用正则与LLM校验，遗漏率降低12%，测试不同embedding模型。",
+      "skill_mentions": [
+        "Dify",
+        "langchain-text-splitters",
+        "PyMuPDF",
+        "Flask",
+        "bge-large-zh"
+      ]
+    },
+    {
+      "name": "企业内部知识库问答机器人",
+      "description": "实现父子分块策略搭配Milvus检索，用LangGraph构建状态流提升答案相关性评分25%，完成docker-compose部署。",
+      "skill_mentions": [
+        "LangGraph",
+        "Milvus",
+        "Ollama",
+        "FastAPI",
+        "docker-compose",
+        "llama3.1:8b"
+      ]
+    }
+  ],
+  "correction_log": []
+}

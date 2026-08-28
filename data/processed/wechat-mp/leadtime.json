@@ -1,0 +1,155 @@
+{
+  "rows": [
+    {
+      "capability_id": "cap_12",
+      "name": "ML/DL算法",
+      "signal_onset": "2017-07",
+      "jd_onset": "2018-07",
+      "lead_days": 365,
+      "reliability": "lower_bound",
+      "signal_total": 871.3,
+      "jd_total": 1540,
+      "jd_peak_month": "2025-02"
+    },
+    {
+      "capability_id": "cap_06",
+      "name": "RAG/知识库",
+      "signal_onset": "2025-03",
+      "jd_onset": "2023-08",
+      "lead_days": -578,
+      "reliability": "jd_preceded",
+      "signal_total": 134.3,
+      "jd_total": 276,
+      "jd_peak_month": "2025-02"
+    },
+    {
+      "capability_id": "cap_02",
+      "name": "Prompt工程",
+      "signal_onset": "2025-07",
+      "jd_onset": "2022-09",
+      "lead_days": -1034,
+      "reliability": "jd_preceded",
+      "signal_total": 45.3,
+      "jd_total": 82,
+      "jd_peak_month": "2025-02"
+    },
+    {
+      "capability_id": "cap_30",
+      "name": "安全/风控意识",
+      "signal_onset": "2025-04",
+      "jd_onset": "2021-06",
+      "lead_days": -1400,
+      "reliability": "jd_preceded",
+      "signal_total": 114.1,
+      "jd_total": 86,
+      "jd_peak_month": "2025-02"
+    },
+    {
+      "capability_id": "cap_04",
+      "name": "AI Agent",
+      "signal_onset": "2025-03",
+      "jd_onset": "2021-04",
+      "lead_days": -1430,
+      "reliability": "jd_preceded",
+      "signal_total": 2083.6,
+      "jd_total": 692,
+      "jd_peak_month": "2026-06"
+    },
+    {
+      "capability_id": "cap_15",
+      "name": "系统架构",
+      "signal_onset": "2025-04",
+      "jd_onset": "2021-04",
+      "lead_days": -1461,
+      "reliability": "jd_preceded",
+      "signal_total": 61.4,
+      "jd_total": 287,
+      "jd_peak_month": "2025-02"
+    },
+    {
+      "capability_id": "cap_01",
+      "name": "LLM应用",
+      "signal_onset": "2024-01",
+      "jd_onset": "2019-12",
+      "lead_days": -1492,
+      "reliability": "jd_preceded",
+      "signal_total": 1298.3,
+      "jd_total": 1145,
+      "jd_peak_month": "2025-02"
+    },
+    {
+      "capability_id": "cap_13",
+      "name": "云计算",
+      "signal_onset": "2025-04",
+      "jd_onset": "2021-03",
+      "lead_days": -1492,
+      "reliability": "jd_preceded",
+      "signal_total": 85.9,
+      "jd_total": 219,
+      "jd_peak_month": "2025-02"
+    },
+    {
+      "capability_id": "cap_14",
+      "name": "API开发",
+      "signal_onset": "2025-04",
+      "jd_onset": "2020-11",
+      "lead_days": -1612,
+      "reliability": "jd_preceded",
+      "signal_total": 183.1,
+      "jd_total": 78,
+      "jd_peak_month": "2026-04"
+    },
+    {
+      "capability_id": "cap_17",
+      "name": "嵌入式/硬件",
+      "signal_onset": "2025-04",
+      "jd_onset": "2020-11",
+      "lead_days": -1612,
+      "reliability": "jd_preceded",
+      "signal_total": 88.1,
+      "jd_total": 121,
+      "jd_peak_month": "2025-02"
+    },
+    {
+      "capability_id": "cap_18",
+      "name": "自动化运维",
+      "signal_onset": "2026-02",
+      "jd_onset": "2021-04",
+      "lead_days": -1767,
+      "reliability": "jd_preceded",
+      "signal_total": 30.1,
+      "jd_total": 76,
+      "jd_peak_month": "2026-08"
+    },
+    {
+      "capability_id": "cap_03",
+      "name": "模型微调",
+      "signal_onset": "2025-03",
+      "jd_onset": "2019-12",
+      "lead_days": -1917,
+      "reliability": "jd_preceded",
+      "signal_total": 284.2,
+      "jd_total": 407,
+      "jd_peak_month": "2025-02"
+    },
+    {
+      "capability_id": "cap_05",
+      "name": "多模态AI",
+      "signal_onset": "2024-08",
+      "jd_onset": "2018-09",
+      "lead_days": -2161,
+      "reliability": "jd_preceded",
+      "signal_total": 1618.1,
+      "jd_total": 929,
+      "jd_peak_month": "2025-02"
+    }
+  ],
+  "params": {
+    "signal_onset": 3.0,
+    "jd_onset": 2,
+    "granularity": "月",
+    "dictionary": "两侧同用当前全词典（描述性口径）",
+    "jd_sources": "51job/bytedance/tencent（含 Wayback 历史池）",
+    "caveats": "jd_preceded 表示 JD 需求早于信号池可检测的启动月——多为存量技能或事件侧早期覆盖薄/词典语义漂移（如 agent 在 2021 与 2025 含义不同），该类域不构成'信号先导'证据；仅 reliability=clean/lower_bound 的域计入统计"
+  }
+}

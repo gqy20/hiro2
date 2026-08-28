@@ -1,0 +1,458 @@
+{
+  "candidate_id": "synth_llm_senior_05",
+  "raw_extraction_id": "synth_llm_senior_05:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 7.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "PyTorch",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 5.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Transformers 库",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型训练与微调库"
+    },
+    {
+      "mention": "C++",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "编程语言属基础技能"
+    },
+    {
+      "mention": "LoRA/QLoRA",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "轻量微调技术"
+    },
+    {
+      "mention": "DeepSpeed (ZeRO-3)",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "分布式训练优化"
+    },
+    {
+      "mention": "FlashAttention-2",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "注意力加速训练"
+    },
+    {
+      "mention": "Accelerate",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "训练加速工具"
+    },
+    {
+      "mention": "vLLM",
+      "skill_id": "cap_01",
+      "point_id": "cap_01.推理",
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "PagedAttention",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "推理内存优化"
+    },
+    {
+      "mention": "Triton Inference Server",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "推理服务部署"
+    },
+    {
+      "mention": "TensorRT-LLM",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "LLM推理优化"
+    },
+    {
+      "mention": "ONNX Runtime",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "跨平台推理引擎"
+    },
+    {
+      "mention": "LangChain",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "RAG",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FAISS",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Milvus",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Prompt 工程",
+      "skill_id": "cap_02",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Function Calling",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.工具调用",
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Megatron-LM",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "大规模训练框架"
+    },
+    {
+      "mention": "Horovod",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "分布式训练框架"
+    },
+    {
+      "mention": "GPTQ",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型量化微调"
+    },
+    {
+      "mention": "AWQ",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "权重量化技术"
+    },
+    {
+      "mention": "KV Cache",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Kubernetes",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "GitLab CI",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "CI/CD持续集成"
+    },
+    {
+      "mention": "Prometheus",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "监控告警系统"
+    },
+    {
+      "mention": "Grafana",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "可视化监控工具"
+    },
+    {
+      "mention": "HuggingFace PEFT",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "参数高效微调库"
+    },
+    {
+      "mention": "BGE-M3",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "通用Embedding模型"
+    },
+    {
+      "mention": "Cross-Encoder",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "检索重排序模型"
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Redis",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "缓存数据库技术"
+    },
+    {
+      "mention": "TinyBERT",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "轻量级BERT模型"
+    },
+    {
+      "mention": "INT8",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型量化精度"
+    },
+    {
+      "mention": "模型蒸馏框架",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "模型压缩技术"
+    },
+    {
+      "mention": "Flink",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Kafka",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "MongoDB",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "数据库技术"
+    }
+  ],
+  "experience_years": 8.0,
+  "education": "浙江大学 计算机科学与技术 硕士（2014-2017）",
+  "projects": [
+    {
+      "name": "智能客服大模型微调与落地",
+      "description": "主导金融领域 7B/13B 模型微调，设计指令数据清洗与增强流程，使用 LoRA + DeepSpeed ZeRO-3 在 8*H800 上训练，负责推理服务化，基于 vLLM 部署并优化，单卡 QPS 从 12 提升至 38，首 token 延迟 <200ms，指导初级工程师完成数据管线。",
+      "skill_mentions": [
+        "PyTorch",
+        "Transformers",
+        "DeepSpeed",
+        "vLLM",
+        "HuggingFace PEFT"
+      ]
+    },
+    {
+      "name": "通用 RAG 知识库系统",
+      "description": "设计混合检索（BM25 + Dense），基于 BGE-M3 生成向量，使用 Milvus 存储并实现重排序（Cross-Encoder），处理多轮对话上下文改写与引用溯源，评测 F1 提升 15%，服务基于 Kubernetes 部署。",
+      "skill_mentions": [
+        "LangChain",
+        "FAISS",
+        "Milvus",
+        "BGE",
+        "FastAPI",
+        "Redis",
+        "K8s"
+      ]
+    },
+    {
+      "name": "语音助手端侧意图识别模型优化",
+      "description": "将 BERT-base 蒸馏至 TinyBERT 并 INT8 量化，端侧推理延迟降低 60%，内存占用下降 70%，搭建自动化评测平台，负责模型版本管理与 A/B 测试，协助 CI/CD 流水线改造。",
+      "skill_mentions": [
+        "PyTorch",
+        "ONNX Runtime",
+        "TensorRT",
+        "模型蒸馏框架",
+        "Docker"
+      ]
+    },
+    {
+      "name": "早期推荐系统特征平台",
+      "description": "开发实时特征计算与存储模块，支持高并发读写（峰值 5k QPS），参与特征监控与异常检测规则设计。",
+      "skill_mentions": [
+        "Python",
+        "Flink",
+        "Redis",
+        "Kafka",
+        "MongoDB"
+      ]
+    }
+  ],
+  "correction_log": []
+}

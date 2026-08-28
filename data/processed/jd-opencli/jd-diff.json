@@ -1,0 +1,321 @@
+{
+  "metrics": {
+    "base_window": "2026-03-01:2026-05-01",
+    "obs_window": "2026-06-01:2026-08-01",
+    "base_jds": 24,
+    "obs_jds": 49,
+    "base_mentions": 101,
+    "obs_mentions": 210,
+    "changes": 13,
+    "by_type": {
+      "add": 5,
+      "promote": 1,
+      "demote": 5,
+      "remove": 2
+    }
+  },
+  "changes": [
+    {
+      "capability_id": "cap_03",
+      "name": "模型微调",
+      "change_type": "add",
+      "base_mentions": 0,
+      "obs_mentions": 14,
+      "base_share": 0.0,
+      "obs_share": 0.0667,
+      "evidence_jds": [
+        {
+          "jd_id": "51job:167831529",
+          "title": "软件开发岗（AI模型方向）",
+          "date": "2026-07-21"
+        },
+        {
+          "jd_id": "51job:169077861",
+          "title": "AI算法实习生 (谱图识别方向)",
+          "date": "2026-07-21"
+        },
+        {
+          "jd_id": "51job:170223691",
+          "title": "算法工程师（人工智能）",
+          "date": "2026-07-09"
+        }
+      ]
+    },
+    {
+      "capability_id": "cap_18",
+      "name": "自动化运维",
+      "change_type": "add",
+      "base_mentions": 1,
+      "obs_mentions": 6,
+      "base_share": 0.0099,
+      "obs_share": 0.0286,
+      "evidence_jds": [
+        {
+          "jd_id": "51job:160655814",
+          "title": "软件测试助理工程师(RD41)",
+          "date": "2026-06-16"
+        },
+        {
+          "jd_id": "51job:172348483",
+          "title": "Agent开发实习生-中国交易与广告",
+          "date": "2026-06-01"
+        },
+        {
+          "jd_id": "51job:172977486",
+          "title": "资深全栈工程师（AI 原生 B2B 平台 / 工程 Owner）",
+          "date": "2026-07-20"
+        }
+      ]
+    },
+    {
+      "capability_id": "cap_13",
+      "name": "云计算",
+      "change_type": "add",
+      "base_mentions": 1,
+      "obs_mentions": 4,
+      "base_share": 0.0099,
+      "obs_share": 0.019,
+      "evidence_jds": [
+        {
+          "jd_id": "51job:167831529",
+          "title": "软件开发岗（AI模型方向）",
+          "date": "2026-07-21"
+        },
+        {
+          "jd_id": "51job:172419759",
+          "title": "AI算法工程师",
+          "date": "2026-06-04"
+        },
+        {
+          "jd_id": "51job:173072667",
+          "title": "AI训练师",
+          "date": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "capability_id": "cap_15",
+      "name": "系统架构",
+      "change_type": "add",
+      "base_mentions": 1,
+      "obs_mentions": 3,
+      "base_share": 0.0099,
+      "obs_share": 0.0143,
+      "evidence_jds": [
+        {
+          "jd_id": "51job:172419759",
+          "title": "AI算法工程师",
+          "date": "2026-06-04"
+        },
+        {
+          "jd_id": "51job:172702967",
+          "title": "AI应用工程师",
+          "date": "2026-06-26"
+        },
+        {
+          "jd_id": "51job:172924281",
+          "title": "信息岗",
+          "date": "2026-07-15"
+        }
+      ]
+    },
+    {
+      "capability_id": "cap_10",
+      "name": "数据标注",
+      "change_type": "add",
+      "base_mentions": 0,
+      "obs_mentions": 2,
+      "base_share": 0.0,
+      "obs_share": 0.0095,
+      "evidence_jds": [
+        {
+          "jd_id": "51job:144684768",
+          "title": "某行招AI智能训练师",
+          "date": "2026-07-29"
+        },
+        {
+          "jd_id": "51job:172514611",
+          "title": "A训练师 接受应届 包三餐",
+          "date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "capability_id": "cap_01",
+      "name": "LLM应用",
+      "change_type": "promote",
+      "base_mentions": 6,
+      "obs_mentions": 27,
+      "base_share": 0.0594,
+      "obs_share": 0.1286,
+      "evidence_jds": [
+        {
+          "jd_id": "51job:160655814",
+          "title": "软件测试助理工程师(RD41)",
+          "date": "2026-06-16"
+        },
+        {
+          "jd_id": "51job:167831529",
+          "title": "软件开发岗（AI模型方向）",
+          "date": "2026-07-21"
+        },
+        {
+          "jd_id": "51job:169077861",
+          "title": "AI算法实习生 (谱图识别方向)",
+          "date": "2026-07-21"
+        }
+      ]
+    },
+    {
+      "capability_id": "cap_05",
+      "name": "多模态AI",
+      "change_type": "demote",
+      "base_mentions": 8,
+      "obs_mentions": 10,
+      "base_share": 0.0792,
+      "obs_share": 0.0476,
+      "evidence_jds": [
+        {
+          "jd_id": "51job:144684768",
+          "title": "某行招AI智能训练师",
+          "date": "2026-07-29"
+        },
+        {
+          "jd_id": "51job:172419759",
+          "title": "AI算法工程师",
+          "date": "2026-06-04"
+        },
+        {
+          "jd_id": "51job:172514611",
+          "title": "A训练师 接受应届 包三餐",
+          "date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "capability_id": "cap_08",
+      "name": "SQL/数据库",
+      "change_type": "demote",
+      "base_mentions": 6,
+      "obs_mentions": 7,
+      "base_share": 0.0594,
+      "obs_share": 0.0333,
+      "evidence_jds": [
+        {
+          "jd_id": "51job:160655814",
+          "title": "软件测试助理工程师(RD41)",
+          "date": "2026-06-16"
+        },
+        {
+          "jd_id": "51job:172055674",
+          "title": "JAVA软件开发工程师(RD19)",
+          "date": "2026-06-16"
+        },
+        {
+          "jd_id": "51job:172490214",
+          "title": "AI实习生",
+          "date": "2026-06-10"
+        }
+      ]
+    },
+    {
+      "capability_id": "cap_02",
+      "name": "Prompt工程",
+      "change_type": "demote",
+      "base_mentions": 5,
+      "obs_mentions": 5,
+      "base_share": 0.0495,
+      "obs_share": 0.0238,
+      "evidence_jds": [
+        {
+          "jd_id": "51job:172560012",
+          "title": "大模型开发实习",
+          "date": "2026-06-15"
+        },
+        {
+          "jd_id": "51job:172615464",
+          "title": "AI图片视频师",
+          "date": "2026-06-18"
+        },
+        {
+          "jd_id": "51job:172791400",
+          "title": "AI大模型算法工程师",
+          "date": "2026-07-03"
+        }
+      ]
+    },
+    {
+      "capability_id": "cap_17",
+      "name": "嵌入式/硬件",
+      "change_type": "demote",
+      "base_mentions": 3,
+      "obs_mentions": 3,
+      "base_share": 0.0297,
+      "obs_share": 0.0143,
+      "evidence_jds": [
+        {
+          "jd_id": "51job:172343443",
+          "title": "软件算法工程师（双休）",
+          "date": "2026-07-27"
+        },
+        {
+          "jd_id": "51job:172764196",
+          "title": "谱育科技2027校园招聘(002616)",
+          "date": "2026-07-02"
+        },
+        {
+          "jd_id": "51job:172815641",
+          "title": "生产技术员",
+          "date": "2026-07-07"
+        }
+      ]
+    },
+    {
+      "capability_id": "cap_14",
+      "name": "API开发",
+      "change_type": "demote",
+      "base_mentions": 5,
+      "obs_mentions": 2,
+      "base_share": 0.0495,
+      "obs_share": 0.0095,
+      "evidence_jds": [
+        {
+          "jd_id": "51job:172560012",
+          "title": "大模型开发实习",
+          "date": "2026-06-15"
+        },
+        {
+          "jd_id": "51job:173069855",
+          "title": "AI应用工程师 实习生",
+          "date": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "capability_id": "cap_23",
+      "name": "项目管理",
+      "change_type": "remove",
+      "base_mentions": 2,
+      "obs_mentions": 1,
+      "base_share": 0.0198,
+      "obs_share": 0.0048,
+      "evidence_jds": [
+        {
+          "jd_id": "51job:144684768",
+          "title": "某行招AI智能训练师",
+          "date": "2026-07-29"
+        }
+      ]
+    },
+    {
+      "capability_id": "cap_30",
+      "name": "安全/风控意识",
+      "change_type": "remove",
+      "base_mentions": 2,
+      "obs_mentions": 0,
+      "base_share": 0.0198,
+      "obs_share": 0.0,
+      "evidence_jds": []
+    }
+  ]
+}

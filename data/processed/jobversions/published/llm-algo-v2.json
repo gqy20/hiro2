@@ -1,0 +1,274 @@
+{
+  "job_id": "job_pos_01",
+  "version_id": "llm-algo-v2",
+  "status": "PUBLISHED",
+  "title": "大模型算法工程师",
+  "basis": {
+    "v1": "Excel 专家基线（pos_01 大模型算法工程师）",
+    "v2": "市场证据组装（65 条 JD 技能分布）"
+  },
+  "required_skill_ids": [
+    {
+      "skill_id": "cap_12",
+      "name": "ML/DL算法",
+      "weight": 0.209
+    },
+    {
+      "skill_id": "cap_07",
+      "name": "Python",
+      "weight": 0.143
+    },
+    {
+      "skill_id": "cap_03",
+      "name": "模型微调",
+      "weight": 0.127
+    },
+    {
+      "skill_id": "cap_01",
+      "name": "LLM应用",
+      "weight": 0.12
+    },
+    {
+      "skill_id": "cap_06",
+      "name": "RAG/知识库",
+      "weight": 0.101
+    }
+  ],
+  "preferred_skill_ids": [
+    {
+      "skill_id": "cap_04",
+      "name": "AI Agent",
+      "weight": 0.095
+    },
+    {
+      "skill_id": "cap_05",
+      "name": "多模态AI",
+      "weight": 0.072
+    },
+    {
+      "skill_id": "cap_02",
+      "name": "Prompt工程",
+      "weight": 0.03
+    },
+    {
+      "skill_id": "cap_13",
+      "name": "云计算",
+      "weight": 0.023
+    },
+    {
+      "skill_id": "cap_09",
+      "name": "大数据处理",
+      "weight": 0.023
+    }
+  ],
+  "valid_from": "2026-08-26",
+  "evidence": {
+    "evidence_ids": [
+      "jd:51job:158252341",
+      "jd:51job:167723860",
+      "jd:51job:168554917",
+      "jd:51job:169551695",
+      "jd:51job:171271385",
+      "jd:51job:171900881",
+      "jd:51job:171958675",
+      "jd:51job:172031199",
+      "jd:51job:172560012",
+      "jd:51job:172791400",
+      "jd:51job:172859717",
+      "jd:51job:173219809",
+      "jd:51job:173290176",
+      "jd:boss:0c324255bdd4e5570nJ52tq0FltY",
+      "jd:boss:0fe16234e87748ad0nJ72tS1ElVS",
+      "jd:boss:1173de14b79679140nFz3t-_E1JS",
+      "jd:boss:40a7a64f6e63fa880nF83N61E1tW",
+      "jd:boss:61217913318a6d710nJ80t-7FlNZ",
+      "jd:boss:85507c1998015376",
+      "jd:boss:b0261a2a753105590nRy39q0EVJQ",
+      "jd:boss:d4e0b0b425d5ed6d0nB-09q-FlBR",
+      "jd:boss:dd381b3c286b53bb0nJ90tS_GVJQ",
+      "jd:boss:df87bdf4925872a20nF539-4ElJU",
+      "jd:boss:dff114f6dd6084050nJ93NW0FFJY",
+      "jd:boss:f97e65366a4aaa220nJy09-9FlJU",
+      "jd:boss:5b7c29aa11f48ea00nB939W9FVFX",
+      "jd:boss:dbdd9948a8565c9b0nB_3tq7E1NS",
+      "jd:51job:167831529",
+      "jd:51job:168730784",
+      "jd:51job:169271311",
+      "jd:51job:169817361",
+      "jd:51job:170223691",
+      "jd:51job:170283636",
+      "jd:51job:170985731",
+      "jd:51job:171039997",
+      "jd:51job:171425075",
+      "jd:51job:171352340",
+      "jd:51job:171474057",
+      "jd:51job:172189393",
+      "jd:51job:172117594",
+      "jd:51job:172304482",
+      "jd:51job:172292586",
+      "jd:51job:172292553",
+      "jd:51job:172312058",
+      "jd:51job:172410733",
+      "jd:51job:172428511",
+      "jd:51job:172419759",
+      "jd:51job:172635971",
+      "jd:51job:172702967",
+      "jd:51job:173184858",
+      "jd:51job:173191329",
+      "jd:51job:173143106",
+      "jd:51job:173312988",
+      "jd:51job:173358665",
+      "jd:boss:08f44d875c2470c703B53di8FFJQ",
+      "jd:boss:03a786db43e1d9b5",
+      "jd:boss:1dcd2a0cbcfe839003150tS7FFpY",
+      "jd:boss:534a749a0d6994200nB72964FlNX",
+      "jd:boss:5ca31e3018f05eec1X1-2tu4EFpT",
+      "jd:boss:695ebbd6a2b35a7a",
+      "jd:boss:7c7e3561642e6c9e",
+      "jd:boss:83f6b0746d999837",
+      "jd:boss:bb02191dad38ed980nF539y4F1BQ",
+      "jd:boss:f7cee7df2ad0287a",
+      "jd:boss:fa008e83c1eed7d10nJ52tW5E1FV"
+    ],
+    "baseline_evidence_id": "xlsx:pos_01",
+    "jd_count": 65
+  },
+  "changeset_vs_v1": [
+    {
+      "level": "capability",
+      "skill_id": "cap_14",
+      "name": "API开发",
+      "change_type": "demote",
+      "v1_score": 4,
+      "market_share": 0.008,
+      "market_rank": 12,
+      "evidence_jd_count": 4,
+      "evidence_ids": [
+        "jd:51job:172560012",
+        "jd:boss:d4e0b0b425d5ed6d0nB-09q-FlBR",
+        "jd:boss:f97e65366a4aaa220nJy09-9FlJU",
+        "jd:51job:171474057"
+      ]
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_25",
+      "name": "英语",
+      "change_type": "demote",
+      "v1_score": 4,
+      "market_share": 0.002,
+      "market_rank": 19,
+      "evidence_jd_count": 1,
+      "evidence_ids": [
+        "jd:51job:172117594"
+      ]
+    },
+    {
+      "level": "point",
+      "skill_id": "cap_01.推理",
+      "name": "LLM应用 · 推理",
+      "change_type": "add",
+      "v1_score": null,
+      "market_share": 0.03,
+      "market_rank": null,
+      "evidence_jd_count": 14,
+      "evidence_ids": null,
+      "note": "基线为能力域级评分，市场证据细化到技能点"
+    },
+    {
+      "level": "point",
+      "skill_id": "cap_05.语音",
+      "name": "多模态AI · 语音",
+      "change_type": "add",
+      "v1_score": null,
+      "market_share": 0.011,
+      "market_rank": null,
+      "evidence_jd_count": 5,
+      "evidence_ids": null,
+      "note": "基线为能力域级评分，市场证据细化到技能点"
+    },
+    {
+      "level": "point",
+      "skill_id": "cap_04.工具调用",
+      "name": "AI Agent · 工具调用",
+      "change_type": "add",
+      "v1_score": null,
+      "market_share": 0.011,
+      "market_rank": null,
+      "evidence_jd_count": 5,
+      "evidence_ids": null,
+      "note": "基线为能力域级评分，市场证据细化到技能点"
+    },
+    {
+      "level": "point",
+      "skill_id": "cap_04.MCP",
+      "name": "AI Agent · MCP",
+      "change_type": "add",
+      "v1_score": null,
+      "market_share": 0.006,
+      "market_rank": null,
+      "evidence_jd_count": 3,
+      "evidence_ids": null,
+      "note": "基线为能力域级评分，市场证据细化到技能点"
+    },
+    {
+      "level": "point",
+      "skill_id": "cap_01.代码生成",
+      "name": "LLM应用 · 代码生成",
+      "change_type": "add",
+      "v1_score": null,
+      "market_share": 0.006,
+      "market_rank": null,
+      "evidence_jd_count": 3,
+      "evidence_ids": null,
+      "note": "基线为能力域级评分，市场证据细化到技能点"
+    },
+    {
+      "level": "point",
+      "skill_id": "cap_04.记忆",
+      "name": "AI Agent · 记忆",
+      "change_type": "add",
+      "v1_score": null,
+      "market_share": 0.006,
+      "market_rank": null,
+      "evidence_jd_count": 3,
+      "evidence_ids": null,
+      "note": "基线为能力域级评分，市场证据细化到技能点"
+    },
+    {
+      "level": "point",
+      "skill_id": "cap_06.检索评测",
+      "name": "RAG/知识库 · 检索评测",
+      "change_type": "add",
+      "v1_score": null,
+      "market_share": 0.004,
+      "market_rank": null,
+      "evidence_jd_count": 2,
+      "evidence_ids": null,
+      "note": "基线为能力域级评分，市场证据细化到技能点"
+    },
+    {
+      "level": "point",
+      "skill_id": "cap_05.图像识别",
+      "name": "多模态AI · 图像识别",
+      "change_type": "add",
+      "v1_score": null,
+      "market_share": 0.004,
+      "market_rank": null,
+      "evidence_jd_count": 2,
+      "evidence_ids": null,
+      "note": "基线为能力域级评分，市场证据细化到技能点"
+    }
+  ],
+  "review_status": "PENDING",
+  "generated_by": "jobver v1（确定性组装）",
+  "generated_at": "2026-08-26",
+  "published_at": "2026-08-26T23:10:59",
+  "reviewer": "gqy20",
+  "review_note": "第2个岗位版本：两源组装（Excel基线+65JD），管线参数化后首发",
+  "review_action_ids": [
+    "ra-0",
+    "ra-1"
+  ],
+  "version_hash": "25911182601b7059"
+}

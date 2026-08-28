@@ -1,0 +1,390 @@
+{
+  "candidate_id": "synth_rag_senior_08",
+  "raw_extraction_id": "synth_rag_senior_08:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 8.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Java",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 8.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "通用编程语言"
+    },
+    {
+      "mention": "RAG",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 5.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LlamaIndex",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LangChain",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Milvus",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FAISS",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "bge-reranker",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "RAG 重排序模型"
+    },
+    {
+      "mention": "Elasticsearch",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 4.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "检索与存储引擎"
+    },
+    {
+      "mention": "BM25",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "稀疏检索算法"
+    },
+    {
+      "mention": "PaddleOCR",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "文档解析 OCR 工具"
+    },
+    {
+      "mention": "Unstructured",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "文档解析库"
+    },
+    {
+      "mention": "Tika",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "文档解析工具"
+    },
+    {
+      "mention": "向量化",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "RAG 核心环节"
+    },
+    {
+      "mention": "降维",
+      "skill_id": "cap_12",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "机器学习技术"
+    },
+    {
+      "mention": "GPT API",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "LLM 模型接口"
+    },
+    {
+      "mention": "Claude API",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "LLM 模型接口"
+    },
+    {
+      "mention": "微调",
+      "skill_id": "cap_03",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Kubernetes",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Docker",
+      "skill_id": "cap_13",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Kafka",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Spark",
+      "skill_id": "cap_09",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Prometheus",
+      "skill_id": "cap_18",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "监控运维工具"
+    },
+    {
+      "mention": "Spring Boot",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "后端开发框架"
+    },
+    {
+      "mention": "MySQL",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Redis",
+      "skill_id": "cap_08",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "缓存数据库"
+    },
+    {
+      "mention": "Qwen2-72B",
+      "skill_id": "cap_01",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "开源 LLM 模型"
+    },
+    {
+      "mention": "SentenceTransformer",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "嵌入模型库"
+    },
+    {
+      "mention": "OCR",
+      "skill_id": "cap_05",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "混合检索",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "RAG 检索技术"
+    },
+    {
+      "mention": "重排序",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LLM-as-a-judge",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "检索评测方法"
+    },
+    {
+      "mention": "bge-m3",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 1.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "嵌入模型"
+    },
+    {
+      "mention": "QAnything",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "RAG 框架"
+    },
+    {
+      "mention": "llama_index",
+      "skill_id": "cap_06",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 2.0,
+      "source": "raw",
+      "resolved_by": "llm",
+      "reason": "RAG 编排框架"
+    }
+  ],
+  "experience_years": 8.0,
+  "education": "某大学 计算机科学与技术 本科（2013.09-2017.06）",
+  "projects": [
+    {
+      "name": "企业合同智能审阅知识库",
+      "description": "整体架构设计与调优，自定义条款级分块结合版面分析与结构化解析，实现合同字段抽取与风险条款问答，审阅效率提升3倍，漏检率降低40%。",
+      "skill_mentions": [
+        "LlamaIndex",
+        "Milvus",
+        "Qwen2-72B",
+        "OCR"
+      ]
+    },
+    {
+      "name": "多模态运维文档问答系统",
+      "description": "主导数据清洗与检索优化，针对运维手册图片/表格混合排版编写自定义解析插件，解决复杂表格检索错误，Top5答案命中率82%。",
+      "skill_mentions": [
+        "Unstructured",
+        "SentenceTransformer",
+        "Elasticsearch"
+      ]
+    },
+    {
+      "name": "政务政策问答平台",
+      "description": "负责检索模块与百科库同步，优化同义词扩展与近义改写，支持模糊查询高容错，服务12个政府单位。",
+      "skill_mentions": [
+        "Spring Boot",
+        "ES",
+        "自研检索接口"
+      ]
+    }
+  ],
+  "correction_log": []
+}

@@ -1,0 +1,172 @@
+{
+  "job_id": "job_pos_11",
+  "version_id": "bigdata-v2",
+  "status": "PUBLISHED",
+  "title": "大数据工程师",
+  "basis": {
+    "v1": "Excel 专家基线（pos_11 大数据工程师）",
+    "v2": "市场证据组装（4 条 JD 技能分布）"
+  },
+  "required_skill_ids": [
+    {
+      "skill_id": "cap_07",
+      "name": "Python",
+      "weight": 0.167
+    },
+    {
+      "skill_id": "cap_09",
+      "name": "大数据处理",
+      "weight": 0.167
+    },
+    {
+      "skill_id": "cap_08",
+      "name": "SQL/数据库",
+      "weight": 0.125
+    },
+    {
+      "skill_id": "cap_12",
+      "name": "ML/DL算法",
+      "weight": 0.083
+    },
+    {
+      "skill_id": "cap_03",
+      "name": "模型微调",
+      "weight": 0.083
+    }
+  ],
+  "preferred_skill_ids": [
+    {
+      "skill_id": "cap_06",
+      "name": "RAG/知识库",
+      "weight": 0.083
+    },
+    {
+      "skill_id": "cap_04",
+      "name": "AI Agent",
+      "weight": 0.042
+    },
+    {
+      "skill_id": "cap_01",
+      "name": "LLM应用",
+      "weight": 0.042
+    },
+    {
+      "skill_id": "cap_11",
+      "name": "数据可视化",
+      "weight": 0.042
+    },
+    {
+      "skill_id": "cap_02",
+      "name": "Prompt工程",
+      "weight": 0.042
+    }
+  ],
+  "valid_from": "2026-08-26",
+  "evidence": {
+    "evidence_ids": [
+      "jd:51job:170486111",
+      "jd:51job:172789342",
+      "jd:boss:01139080a8f5e02c",
+      "jd:51job:173350656"
+    ],
+    "baseline_evidence_id": "xlsx:pos_11",
+    "jd_count": 4
+  },
+  "changeset_vs_v1": [
+    {
+      "level": "capability",
+      "skill_id": "cap_12",
+      "name": "ML/DL算法",
+      "change_type": "add",
+      "v1_score": 2,
+      "market_share": 0.083,
+      "market_rank": 4,
+      "evidence_jd_count": 2,
+      "evidence_ids": [
+        "jd:51job:170486111",
+        "jd:51job:170486111"
+      ]
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_03",
+      "name": "模型微调",
+      "change_type": "add",
+      "v1_score": 1,
+      "market_share": 0.083,
+      "market_rank": 5,
+      "evidence_jd_count": 2,
+      "evidence_ids": [
+        "jd:51job:170486111",
+        "jd:51job:170486111"
+      ]
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_06",
+      "name": "RAG/知识库",
+      "change_type": "add",
+      "v1_score": 1,
+      "market_share": 0.083,
+      "market_rank": 6,
+      "evidence_jd_count": 2,
+      "evidence_ids": [
+        "jd:51job:172789342",
+        "jd:boss:01139080a8f5e02c"
+      ]
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_04",
+      "name": "AI Agent",
+      "change_type": "add",
+      "v1_score": 1,
+      "market_share": 0.042,
+      "market_rank": 7,
+      "evidence_jd_count": 1,
+      "evidence_ids": [
+        "jd:51job:172789342"
+      ]
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_01",
+      "name": "LLM应用",
+      "change_type": "add",
+      "v1_score": 2,
+      "market_share": 0.042,
+      "market_rank": 8,
+      "evidence_jd_count": 1,
+      "evidence_ids": [
+        "jd:51job:172789342"
+      ]
+    },
+    {
+      "level": "capability",
+      "skill_id": "cap_02",
+      "name": "Prompt工程",
+      "change_type": "add",
+      "v1_score": 1,
+      "market_share": 0.042,
+      "market_rank": 10,
+      "evidence_jd_count": 1,
+      "evidence_ids": [
+        "jd:boss:01139080a8f5e02c"
+      ]
+    }
+  ],
+  "review_status": "PENDING",
+  "generated_by": "jobver v1（确定性组装）",
+  "generated_at": "2026-08-26",
+  "published_at": "2026-08-26T23:16:33",
+  "reviewer": "gqy20",
+  "review_note": "大数据工程师 v2 批量审核：6 项变化（add 6/promote 0/demote 0），4 条 JD；证据薄，结论方向性，扩采后应升版复核",
+  "review_action_ids": [
+    "ra-0",
+    "ra-1",
+    "ra-2",
+    "ra-3",
+    "ra-4"
+  ],
+  "version_hash": "5ffdd43dcb171fd1"
+}

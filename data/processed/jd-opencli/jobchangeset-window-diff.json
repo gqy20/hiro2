@@ -1,0 +1,189 @@
+{
+  "changeset_id": "cs_window_diff_20260304_20260607",
+  "job_scope": "AI 域综合（51job、AI 判定、带日期）",
+  "base_window": "2026-03-01:2026-05-01",
+  "obs_window": "2026-06-01:2026-08-01",
+  "sample": {
+    "base_jds": 24,
+    "obs_jds": 49,
+    "note": "基准窗样本受平台在招职位时效限制，结论为方向性"
+  },
+  "changes": [
+    {
+      "skill_id": "cap_03",
+      "name": "模型微调",
+      "change_type": "add",
+      "base_share": 0.0,
+      "obs_share": 0.0667,
+      "base_mentions": 0,
+      "obs_mentions": 14,
+      "evidence_ids": [
+        "jd:51job:167831529",
+        "jd:51job:169077861",
+        "jd:51job:170223691"
+      ]
+    },
+    {
+      "skill_id": "cap_18",
+      "name": "自动化运维",
+      "change_type": "add",
+      "base_share": 0.0099,
+      "obs_share": 0.0286,
+      "base_mentions": 1,
+      "obs_mentions": 6,
+      "evidence_ids": [
+        "jd:51job:160655814",
+        "jd:51job:172348483",
+        "jd:51job:172977486"
+      ]
+    },
+    {
+      "skill_id": "cap_13",
+      "name": "云计算",
+      "change_type": "add",
+      "base_share": 0.0099,
+      "obs_share": 0.019,
+      "base_mentions": 1,
+      "obs_mentions": 4,
+      "evidence_ids": [
+        "jd:51job:167831529",
+        "jd:51job:172419759",
+        "jd:51job:173072667"
+      ]
+    },
+    {
+      "skill_id": "cap_15",
+      "name": "系统架构",
+      "change_type": "add",
+      "base_share": 0.0099,
+      "obs_share": 0.0143,
+      "base_mentions": 1,
+      "obs_mentions": 3,
+      "evidence_ids": [
+        "jd:51job:172419759",
+        "jd:51job:172702967",
+        "jd:51job:172924281"
+      ]
+    },
+    {
+      "skill_id": "cap_10",
+      "name": "数据标注",
+      "change_type": "add",
+      "base_share": 0.0,
+      "obs_share": 0.0095,
+      "base_mentions": 0,
+      "obs_mentions": 2,
+      "evidence_ids": [
+        "jd:51job:144684768",
+        "jd:51job:172514611"
+      ]
+    },
+    {
+      "skill_id": "cap_01",
+      "name": "LLM应用",
+      "change_type": "promote",
+      "base_share": 0.0594,
+      "obs_share": 0.1286,
+      "base_mentions": 6,
+      "obs_mentions": 27,
+      "evidence_ids": [
+        "jd:51job:160655814",
+        "jd:51job:167831529",
+        "jd:51job:169077861"
+      ]
+    },
+    {
+      "skill_id": "cap_05",
+      "name": "多模态AI",
+      "change_type": "demote",
+      "base_share": 0.0792,
+      "obs_share": 0.0476,
+      "base_mentions": 8,
+      "obs_mentions": 10,
+      "evidence_ids": [
+        "jd:51job:144684768",
+        "jd:51job:172419759",
+        "jd:51job:172514611"
+      ]
+    },
+    {
+      "skill_id": "cap_08",
+      "name": "SQL/数据库",
+      "change_type": "demote",
+      "base_share": 0.0594,
+      "obs_share": 0.0333,
+      "base_mentions": 6,
+      "obs_mentions": 7,
+      "evidence_ids": [
+        "jd:51job:160655814",
+        "jd:51job:172055674",
+        "jd:51job:172490214"
+      ]
+    },
+    {
+      "skill_id": "cap_02",
+      "name": "Prompt工程",
+      "change_type": "demote",
+      "base_share": 0.0495,
+      "obs_share": 0.0238,
+      "base_mentions": 5,
+      "obs_mentions": 5,
+      "evidence_ids": [
+        "jd:51job:172560012",
+        "jd:51job:172615464",
+        "jd:51job:172791400"
+      ]
+    },
+    {
+      "skill_id": "cap_17",
+      "name": "嵌入式/硬件",
+      "change_type": "demote",
+      "base_share": 0.0297,
+      "obs_share": 0.0143,
+      "base_mentions": 3,
+      "obs_mentions": 3,
+      "evidence_ids": [
+        "jd:51job:172343443",
+        "jd:51job:172764196",
+        "jd:51job:172815641"
+      ]
+    },
+    {
+      "skill_id": "cap_14",
+      "name": "API开发",
+      "change_type": "demote",
+      "base_share": 0.0495,
+      "obs_share": 0.0095,
+      "base_mentions": 5,
+      "obs_mentions": 2,
+      "evidence_ids": [
+        "jd:51job:172560012",
+        "jd:51job:173069855"
+      ]
+    },
+    {
+      "skill_id": "cap_23",
+      "name": "项目管理",
+      "change_type": "remove",
+      "base_share": 0.0198,
+      "obs_share": 0.0048,
+      "base_mentions": 2,
+      "obs_mentions": 1,
+      "evidence_ids": [
+        "jd:51job:144684768"
+      ]
+    },
+    {
+      "skill_id": "cap_30",
+      "name": "安全/风控意识",
+      "change_type": "remove",
+      "base_share": 0.0198,
+      "obs_share": 0.0,
+      "base_mentions": 2,
+      "obs_mentions": 0,
+      "evidence_ids": []
+    }
+  ],
+  "review_status": "PENDING",
+  "generated_by": "jobver v1（确定性组装，源自 jddiff）"
+}

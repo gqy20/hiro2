@@ -1,0 +1,398 @@
+{
+  "target": "AI Agent开发工程师",
+  "evidence": {
+    "emergence": {
+      "jd_total": 56,
+      "dated_jds": 23,
+      "monthly": {
+        "2025-12": 1,
+        "2026-01": 1,
+        "2026-03": 2,
+        "2026-04": 2,
+        "2026-05": 3,
+        "2026-06": 3,
+        "2026-07": 4,
+        "2026-08": 7
+      },
+      "title_variants": 44,
+      "title_variants_top": [
+        {
+          "title": "AI Agent工程师",
+          "count": 5
+        },
+        {
+          "title": "AI Agent 工程师",
+          "count": 5
+        },
+        {
+          "title": "AI应用工程师",
+          "count": 3
+        },
+        {
+          "title": "ai应用工程师",
+          "count": 2
+        },
+        {
+          "title": "AI agent工程师",
+          "count": 2
+        }
+      ]
+    },
+    "skill_profile": {
+      "agent_top_capabilities": [
+        {
+          "name": "AI Agent",
+          "share": 0.311
+        },
+        {
+          "name": "LLM应用",
+          "share": 0.119
+        },
+        {
+          "name": "Python",
+          "share": 0.114
+        },
+        {
+          "name": "RAG/知识库",
+          "share": 0.106
+        },
+        {
+          "name": "SQL/数据库",
+          "share": 0.068
+        },
+        {
+          "name": "Prompt工程",
+          "share": 0.051
+        },
+        {
+          "name": "自动化运维",
+          "share": 0.04
+        },
+        {
+          "name": "模型微调",
+          "share": 0.03
+        }
+      ],
+      "neighbors_by_cosine": [
+        {
+          "position": "AI模型部署工程师(MLOps)",
+          "cosine": 0.788,
+          "pid": "pos_05"
+        },
+        {
+          "position": "AI产品经理",
+          "cosine": 0.733,
+          "pid": "pos_06"
+        },
+        {
+          "position": "大模型算法工程师",
+          "cosine": 0.645,
+          "pid": "pos_01"
+        },
+        {
+          "position": "计算机视觉工程师",
+          "cosine": 0.396,
+          "pid": "pos_27"
+        }
+      ],
+      "min_cluster": 10
+    },
+    "diffusion": {
+      "distinct_companies": 27,
+      "companies_top": [
+        {
+          "name": "上海某大型电子商务公司",
+          "count": 1
+        },
+        {
+          "name": "合肥中贸科技有限公司",
+          "count": 1
+        },
+        {
+          "name": "青瓷游戏",
+          "count": 1
+        },
+        {
+          "name": "赛时捷",
+          "count": 1
+        },
+        {
+          "name": "某大型全球头部多品类游戏娱乐公司",
+          "count": 1
+        },
+        {
+          "name": "火烧云数据",
+          "count": 1
+        },
+        {
+          "name": "华尔街见闻",
+          "count": 1
+        },
+        {
+          "name": "厦门温特沃斯电子商务",
+          "count": 1
+        }
+      ],
+      "industries_top": [
+        {
+          "name": "电子商务",
+          "count": 5
+        },
+        {
+          "name": "计算机软件",
+          "count": 5
+        },
+        {
+          "name": "人工智能",
+          "count": 5
+        },
+        {
+          "name": "游戏",
+          "count": 3
+        },
+        {
+          "name": "互联网",
+          "count": 2
+        },
+        {
+          "name": "半导体/芯片",
+          "count": 2
+        },
+        {
+          "name": "进出口贸易",
+          "count": 1
+        },
+        {
+          "name": "广告营销",
+          "count": 1
+        }
+      ],
+      "note": "公司/行业元数据来自 boss 侧；51job 侧未入此统计"
+    },
+    "signal_precedence": {
+      "capability": "AI Agent",
+      "signal_monthly_top": [
+        {
+          "month": "2025-03",
+          "weight": 14.6
+        },
+        {
+          "month": "2025-04",
+          "weight": 80.4
+        },
+        {
+          "month": "2025-05",
+          "weight": 81.4
+        },
+        {
+          "month": "2025-06",
+          "weight": 66.8
+        },
+        {
+          "month": "2025-07",
+          "weight": 85.6
+        },
+        {
+          "month": "2025-08",
+          "weight": 88.0
+        },
+        {
+          "month": "2025-09",
+          "weight": 86.8
+        },
+        {
+          "month": "2025-10",
+          "weight": 109.8
+        },
+        {
+          "month": "2025-11",
+          "weight": 82.2
+        },
+        {
+          "month": "2025-12",
+          "weight": 78.2
+        },
+        {
+          "month": "2026-01",
+          "weight": 97.6
+        },
+        {
+          "month": "2026-02",
+          "weight": 119.0
+        },
+        {
+          "month": "2026-03",
+          "weight": 168.3
+        },
+        {
+          "month": "2026-04",
+          "weight": 113.9
+        },
+        {
+          "month": "2026-05",
+          "weight": 159.9
+        },
+        {
+          "month": "2026-06",
+          "weight": 172.4
+        },
+        {
+          "month": "2026-07",
+          "weight": 129.1
+        },
+        {
+          "month": "2026-08",
+          "weight": 81.9
+        }
+      ],
+      "signal_total_weight": 1815.9,
+      "note": "与 leadtime.json 的 AI Agent 行对照（信号 2025-03 启动，JD 2025-09 落地）"
+    },
+    "definition_card": {
+      "name": "AI Agent 工程师",
+      "core_responsibilities": [
+        {
+          "phrase": "搭建垂直知识库AI问答系统",
+          "count": 2
+        },
+        {
+          "phrase": "集成数据库与向量服务",
+          "count": 2
+        },
+        {
+          "phrase": "AI智能体设计开发",
+          "count": 1
+        },
+        {
+          "phrase": "低代码平台开发",
+          "count": 1
+        },
+        {
+          "phrase": "算法研究与模型训练",
+          "count": 1
+        },
+        {
+          "phrase": "Agent交互逻辑设计",
+          "count": 1
+        }
+      ],
+      "required_skills": [
+        {
+          "phrase": "掌握知识图谱搭建与检索应用",
+          "count": 2
+        },
+        {
+          "phrase": "本科及以上学历",
+          "count": 2
+        },
+        {
+          "phrase": "本科及以上，计算机相关专业",
+          "count": 2
+        },
+        {
+          "phrase": "熟练掌握Python",
+          "count": 2
+        },
+        {
+          "phrase": "相关专业统招本科",
+          "count": 1
+        },
+        {
+          "phrase": "熟练Python及MySQL、Redis",
+          "count": 1
+        },
+        {
+          "phrase": "熟练Numpy、Scipy等科学计算工具",
+          "count": 1
+        },
+        {
+          "phrase": "熟练阅读IT类英文文档",
+          "count": 1
+        }
+      ],
+      "preferred_skills": [
+        {
+          "phrase": "有智能制造项目经验",
+          "count": 1
+        },
+        {
+          "phrase": "熟悉 LangChain、dify 或 LlamaIndex",
+          "count": 1
+        },
+        {
+          "phrase": "熟悉 Git、Docker",
+          "count": 1
+        },
+        {
+          "phrase": "有自定义Skills/Tools开发经历",
+          "count": 1
+        },
+        {
+          "phrase": "了解多智能体协作协议如A2A",
+          "count": 1
+        },
+        {
+          "phrase": "有AI相关项目作品",
+          "count": 1
+        }
+      ],
+      "typical_industries": [
+        {
+          "name": "电子商务",
+          "count": 5
+        },
+        {
+          "name": "计算机软件",
+          "count": 5
+        },
+        {
+          "name": "人工智能",
+          "count": 5
+        },
+        {
+          "name": "游戏",
+          "count": 3
+        },
+        {
+          "name": "互联网",
+          "count": 2
+        }
+      ],
+      "evidence": {
+        "jd_count": 56,
+        "monthly_jd_counts": {
+          "2025-12": 1,
+          "2026-01": 1,
+          "2026-03": 2,
+          "2026-04": 2,
+          "2026-05": 3,
+          "2026-06": 3,
+          "2026-07": 4,
+          "2026-08": 7
+        },
+        "title_variants_top": [
+          {
+            "title": "AI Agent工程师",
+            "count": 5
+          },
+          {
+            "title": "AI Agent 工程师",
+            "count": 5
+          },
+          {
+            "title": "AI应用工程师",
+            "count": 3
+          },
+          {
+            "title": "ai应用工程师",
+            "count": 2
+          },
+          {
+            "title": "AI agent工程师",
+            "count": 2
+          }
+        ]
+      }
+    }
+  }
+}

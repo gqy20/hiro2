@@ -101,6 +101,21 @@ class ApplicationService:
 
     def __init__(self, repo: DataRepository | None = None) -> None:
         self.repo = repo or build_repository()
+        self._events_cache: dict | None = None
+        self._jd_cache: dict | None = None
+
+    # ponytail: 全表联查在实例内只拉一次；原先每条证据各重扫全表（14k 行 x 32 次 ~15s）。
+    # 缓存在实例上：请求内新建的实例（build_dashboard）天然新鲜；main.py 长驻实例
+    # 会陈旧到重启，数据入库走 dbimport + 重启，可接受。
+    def _events_primary(self) -> dict:
+        if self._events_cache is None:
+            self._events_cache = self.repo.events_primary()
+        return self._events_cache
+
+    def _jd_parsed(self) -> dict:
+        if self._jd_cache is None:
+            self._jd_cache = self.repo.jd_parsed()
+        return self._jd_cache
 
     # ---------- 证据 ----------
 
@@ -110,11 +125,11 @@ class ApplicationService:
         span = ev.get("source_span") or {}
         excerpt, full, url = "", "", None
         if prefix == "ev":
-            src = self.repo.events_primary().get(span.get("event_id", ""), {})
+            src = self._events_primary().get(span.get("event_id", ""), {})
             full = src.get("summary") or payload.get("title") or ""
             url = (ev.get("urls") or [None])[0]
         elif prefix == "jd":
-            src = self.repo.jd_parsed().get(span.get("jd_id", ""), {})
+            src = self._jd_parsed().get(span.get("jd_id", ""), {})
             full = "；".join((src.get("responsibilities") or []) + (src.get("requirements") or []))
             url = None
         else:
@@ -167,6 +182,8 @@ class ApplicationService:
                 changes=[],
                 progress_steps=[],
             )
+        # ponytail: 全量证据索引只建一次，原先每个 change 各查一遍导致 N 次 14k 行全表扫描（~15s）。
+        ev_index = {e["evidence_id"]: e for e in self.repo.evidence()}
         changes = [
             ChangeItemVM(
                 id=f"chg-{c['skill_id']}",
@@ -178,7 +195,7 @@ class ApplicationService:
                 ),
                 confidence=round(min(0.5 + (c.get("obs_mentions", 0) or 0) / 40, 0.95), 2),
                 status="reviewing",
-                evidence=[self._evidence_vm(e) for e in self._jd_evidence(c)],
+                evidence=[self._evidence_vm(e) for e in self._jd_evidence(c, ev_index)],
             )
             for c in cs.get("changes", [])
         ]
@@ -222,8 +239,7 @@ class ApplicationService:
             ],
         )
 
-    def _jd_evidence(self, change: dict) -> list[dict]:
-        ev_index = {e["evidence_id"]: e for e in self.repo.evidence()}
+    def _jd_evidence(self, change: dict, ev_index: dict[str, dict]) -> list[dict]:
         out = []
         for eid in change.get("evidence_ids") or []:
             ev = ev_index.get(eid)

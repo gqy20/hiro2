@@ -17,6 +17,40 @@ RUNS_DIR = ROOT / "data" / "runs"
 
 _MAX_RUNS = 200  # 目录扫描上限，避免一次性加载过多
 
+# component -> 流转图四阶段映射。依据各脚本 docstring 核实：
+# 采集：jdcorp/jdauto/jdarchive 为 JD 采集，rssget/arxivget/dadianget/policyget 为外部源采集；
+# 标准化：jdxtract 解析+词典归一，extract 事件抽取，evdedup 去重，
+# resolve/skillmap 技能归一，rolemap 岗位映射；
+# 证据化：evidence 证据实体层；
+# 信号化：sigbuild TrendSignal，snapshotdiff JobChangeSet，leadtime/pypidl 信号对比。
+# 未列入的组件（jobpub/jobver/dbimport 等发布与入库环节）归为 other，不在四步图展示。
+COMPONENT_STAGE: dict[str, str] = {
+    "jdcorp": "ingest",
+    "jdauto": "ingest",
+    "jdarchive": "ingest",
+    "jdboss": "ingest",
+    "rssget": "ingest",
+    "arxivget": "ingest",
+    "dadianget": "ingest",
+    "policyget": "ingest",
+    "genresume": "ingest",
+    "md2res": "ingest",
+    "resumeimport": "ingest",
+    "jdxtract": "extract",
+    "jdclean": "extract",
+    "extract": "extract",
+    "evdedup": "extract",
+    "resolve": "extract",
+    "rolemap": "extract",
+    "skillmap": "extract",
+    "exskill": "extract",
+    "evidence": "evidence",
+    "sigbuild": "signal",
+    "snapshotdiff": "signal",
+    "leadtime": "signal",
+    "pypidl": "signal",
+}
+
 
 class _VM(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -117,11 +151,12 @@ def _aggregate_run(run_dir: Path) -> PipelineRunVM | None:
         duration_ms = int((end_dt - start_dt).total_seconds() * 1000)
 
     count = (finished or failed or {}).get("count")
+    component = str(head.get("component", "unknown"))
     return PipelineRunVM(
         run_id=str(head.get("run_id", run_dir.name)),
-        component=str(head.get("component", "unknown")),
-        status=status,
-        stage=str(head.get("stage", "run")),
+        component=component,
+        status=status.upper(),
+        stage=COMPONENT_STAGE.get(component, "other"),
         started_at=started_at,
         finished_at=str((finished or failed or {}).get("ts", "")) or None,
         duration_ms=duration_ms,
@@ -130,9 +165,7 @@ def _aggregate_run(run_dir: Path) -> PipelineRunVM | None:
     )
 
 
-def build_pipeline_runs(
-    limit: int = 50, since_days: int = 7
-) -> PipelineRunListVM:
+def build_pipeline_runs(limit: int = 50, since_days: int = 7) -> PipelineRunListVM:
     if not RUNS_DIR.is_dir():
         return PipelineRunListVM(runs=[], total=0)
 
@@ -153,7 +186,6 @@ def build_pipeline_runs(
         if started_dt and started_dt < cutoff:
             continue
         runs.append(vm)
-        if len(runs) >= limit:
-            break
 
-    return PipelineRunListVM(runs=runs, total=len(runs))
+    # total 必须是窗口内的真实总数，不能等于当前页条数
+    return PipelineRunListVM(runs=runs[:limit], total=len(runs))

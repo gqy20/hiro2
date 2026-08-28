@@ -2,12 +2,24 @@
 
 from __future__ import annotations
 
+import functools
 import json
 from pathlib import Path
 
+import yaml
 from pydantic import BaseModel, Field
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+class DatasetSource(BaseModel):
+    """单个来源通道（来自 data/SOURCES.yml 的 D0 登记）。"""
+
+    id: str
+    type: str = ""
+    time_range: list[str] = Field(default_factory=list)
+    ingestion_mode: str = ""
+    notes: str = ""
 
 
 class DatasetItem(BaseModel):
@@ -22,6 +34,7 @@ class DatasetItem(BaseModel):
     source: str = ""
     updated_at: str = ""
     quality: int = 0
+    sources: list[DatasetSource] = Field(default_factory=list)
 
 
 class DatasetOverview(BaseModel):
@@ -30,6 +43,48 @@ class DatasetOverview(BaseModel):
     ready_datasets: int = 0
     pending_records: int = 0
     datasets: list[DatasetItem] = Field(default_factory=list)
+
+
+# 数据集 -> SOURCES.yml 登记的来源通道。派生（evidence）、受控（resumes）、
+# 冻结评测集（evaluation）无外部来源登记，留空由前端展示派生说明。
+DATASET_SOURCES: dict[str, list[str]] = {
+    "jd": ["jd-corp", "jd-opencli", "jd-51job-har", "jd-boss", "jd-archive"],
+    "temporal": ["wechat-mp", "feeds", "arxiv", "pypi-pkgstats"],
+    "capability": ["capability-matrix", "standards", "onet-history", "policy"],
+}
+
+
+@functools.lru_cache(maxsize=1)
+def _source_registry() -> dict[str, DatasetSource]:
+    """读取 data/SOURCES.yml（D0 来源登记），失败时返回空表。"""
+    path = ROOT / "data" / "SOURCES.yml"
+    if not path.is_file():
+        return {}
+    try:
+        payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError):
+        return {}
+    registry: dict[str, DatasetSource] = {}
+    for raw in (payload or {}).get("sources", []):
+        if not isinstance(raw, dict) or not raw.get("id"):
+            continue
+        time_range = [str(v) for v in raw.get("time_range") or []]
+        registry[str(raw["id"])] = DatasetSource(
+            id=str(raw["id"]),
+            type=str(raw.get("type", "")),
+            time_range=time_range,
+            ingestion_mode=str(raw.get("ingestion_mode", "")),
+            notes=str(raw.get("notes", "")).strip(),
+        )
+    return registry
+
+
+def _attach_sources(items: list[DatasetItem]) -> None:
+    registry = _source_registry()
+    for item in items:
+        item.sources = [
+            registry[sid] for sid in DATASET_SOURCES.get(item.id, []) if sid in registry
+        ]
 
 
 def _line_count(path: Path) -> int:
@@ -164,6 +219,7 @@ def build_dataset_overview() -> DatasetOverview:
     total = sum(item.records for item in items)
     ready = sum(item.status in {"可用", "已审核", "已冻结"} for item in items)
     pending = sum(item.records - item.valid_records for item in items)
+    _attach_sources(items)
     return DatasetOverview(
         total_datasets=len(items),
         total_records=total,
@@ -218,6 +274,7 @@ def build_dataset_overview_db(dsn: str) -> DatasetOverview:
                 quality=round(float(quality) * 100),
             )
         )
+    _attach_sources(datasets)
     return DatasetOverview(
         total_datasets=len(datasets),
         total_records=sum(item.records for item in datasets),

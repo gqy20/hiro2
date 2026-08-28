@@ -24,6 +24,17 @@ sources:
       2015→2022 版本 diff 落盘（数字技术域新增 23 个职业，总 diff 数因两侧覆盖
       不对等不可按字面读，官方口径净增 158）
 
+  - id: onet-history
+    type: occupational_database   # O*NET 官方历史版本：美国侧职业/技能演化对照
+    path: data/raw/onet
+    license: O*NET 官方公开数据（CC BY 4.0），仅限研究使用
+    time_range: [2005, 2025]
+    ingestion_mode: backfill
+    notes: onetcenter.org 官方 db_releases.html 历史版本直取（老版 /dl_files/db_X.zip
+      新版 /dl_files/database/db_X_text.zip 双 URL 模式）；代表版本 5 个
+      （2005/2010/2015/2020/2025），核心表 Occupation Data + Technology/Software
+      Skills（表名随版本演化）；来源为 B 站 CNPaperData11 资源帖的官方原始出处
+
   - id: resume-ner
     type: academic_dataset      # 公开学术 NER 数据集：实体抽取层对照检验
     path: data/raw/resume-ner

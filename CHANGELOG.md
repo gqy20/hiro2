@@ -5,16 +5,22 @@
 ## [Unreleased]
 
 ### Changed
+- 数据首页 KPI 重排为单条面板：总记录数（英雄数字 38px）+ 每项数字与补充信息同行（如"就绪数据集 6 / 6 个数据域"），消除三行卡片的碎片感。
+- 数据工作区去方框感：卡片/面板圆角 4px→12px、SVG 节点 rx=12、边框统一减弱为 `--line-soft`；选择框/输入框圆角→10px 并加 saffron focus 光晕；表格去掉每行横线（仅留表头底线）、行距加大；状态徽章 pill 化（999px 圆角 + 更饱满内边距）；流水线四步改单容器 + 细分隔；顶栏工作区切换按钮 pill 化。
+- 数据工作区导航与顶栏统一：数据工作区不再使用页内独立 `DataNav` subnav，四个入口（总览 / 来源 / 流水线 / 质量）并入顶部主导航（`AppShell` 数据模式），与招聘 / 成长工作区同构；`isActive` 改前缀匹配支持子路由高亮；`data-nav` 组件与 subnav 样式删除。
+- 数据工作区密度与可操作性优化（对标 Linear/Stripe 驾驶舱范式）：`/data` KPI 从 2 卡扩为 4 卡并去掉 640px 宽度限制（总记录数 / 今日处理 / 就绪数据集 / 待处理记录），移除从未使用的 sparkline 占位；流水线 strip 每步节点补充最近运行时间与计数；`/data/sources` 与 `/data/pipeline` 表格支持点击表头排序（默认记录数降序 / 开始时间降序）；`/data/*` 四页新增 `loading.tsx` 骨架。
 - Railway 部署适配：API/Web 使用平台动态端口，CORS 与简历档案路径支持环境变量，生产镜像排除本地密钥和原始文件。
 - 新增内部质量模式的数据资产工作区，展示数据域规模、质量、版本和可重建流转链路。
 - 数据导入升级为版本化快照登记：新增 `dataset_versions` 表，`dbimport` 记录 manifest 哈希、`run_id`、数量和质量状态，数据资产 API 优先读取 PostgreSQL。
 
 ### Added
+- 合成简历真实化（身份要素注入）：genresume 新增真实感信息池（40 中文人名 / 32 所按 AI 岗分布分层的大学 / 34 家公司覆盖大厂-AI独角兽-中厂-外企 / 11 项真实竞赛 / 8 类证书 / 10 城市），按画像级别抽取身份要素（seed 可复现：senior 三段公司序列、junior 实习），prompt 要求原样使用真实名称禁止"某某/XX"占位；重生成 24 份 diverse 简历（旧版备份 md-v2/，占位检查 0 命中，样例：南京邮电大学+虾皮→MiniMax+ACM-ICPC 铜奖），md2res 转四版式 96 份，清理旧 imported 档案 191 条后重新导入 72 条（同文件名幂等跳过问题以清旧重导解决）。
 - 数据全景工作区（`/data`）：AppShell 扩展 Workspace 三元（招聘 / 成长 / 数据）+ localStorage 兼容；`/data` 入口五段叙事（数据来源 / 处理流水线 / 时间情报 / 服务对象）+ 三个钻取子页（`/data/sources` 来源、`/data/pipeline` 流水线、`/data/quality` 质量）；H1 改叙述式"从原始素材到两个用户界面"，KPI 卡主次优先级区分（主 2 列宽 + sparkline 占位 / 次 1 列宽），错误分布顶部红色 annotation，服务对象改独立 CTA 按钮；复用 paper / ink / saffron 既有色板，未引入新色。
 - Pipeline run 列表 API（`GET /api/v1/pipeline-runs?limit=50&since_days=7`）：扫描 `data/runs/<run_id>/events.jsonl` 聚合最近运行（默认 7 天 / 50 条），返回 run_id / component / status / duration / count_summary 等字段；只读不写库，HR / 评委视角。
 - `make dev` / `make stop` / `make dev-logs` 一键工具：`make dev` 后台启动 API (8000) + Web (3000) 并写入 `.run/{api,web}.pid`，幂等检查避免重复启动；`make stop` 关闭两服务并兜底清理 pnpm 派生的 next-server 残留；`make dev-logs` 实时跟踪两份日志。前端默认连真实 API（`NEXT_PUBLIC_USE_MOCK=false`）。
 
 ### Fixed
+- 工作台加载失败（错误编号/digest，页面停在 error 边界）：根因是 `GET /api/v1/dashboard/overview` 耗时 ~17s 超过前端 10s 超时。`ApplicationService` 组装岗位变化时为 13 项 changes 每条重建 14,173 行证据索引、为 32 条证据每条重扫全量 `jd_records`（85.9 万次 JSON 解析）；改为请求内一次索引 + 联查表实例级缓存，17s → 2.3s，`/` 恢复 200（~2.9s）。
 - `apps/web/app/data/page.tsx` 与 `apps/web/app/data/pipeline/page.tsx` 调用 `apiFetch` 时重复拼接 `/api/v1`，因 `NEXT_PUBLIC_API_BASE_URL` 已含该前缀，请求变成 `/api/v1/api/v1/pipeline-runs` 触发 404；改为相对路径 `/pipeline-runs` 后 `/data` 与 `/data/pipeline` 在真实数据模式下正常加载。
 - 数据驱动演化闭环到前端：新增 `GET /jobs/detected-changes`（快照 Diff 变化草稿，16 岗位 139 项）与 `GET /temporal/timeline`（四层时间轴 18 域）两端点（backend/application/insights.py VM）；`/positions` 页新增"系统检测到的岗位变化"区块（岗位卡片 + top3 变化标签 base%→obs%，按 add/grow 蓝标与 shrink 灰标区分）；`/temporal/timeline` 新子页四层传导表（论文→PyPI→npm→日报→JD→论文到 JD 月数）+ temporal 首页导航卡；mock 模式分别给示例与管线说明占位。
 - arXiv 论文信号采集与四层时间轴验证（`scripts/arxivget.py` + `arxiv` 来源登记）：export.arxiv.org 公开 API 按 13 个技能关键词 x 2015~2026 拉取 14,830 篇预印本 metadata（幂等 arxiv_id，3.2s 限速，词x年粒度 runlog），词典归一聚合为月 x 能力域序列；与 relsignal 的包/日报/JD 三层并排首次完成六大新兴域四层传导验证——LLM应用 论文2020-01→包2023-02→日报2024-01→JD2025-10（全程70个月）、AI Agent 81 个月、RAG 79 个月（论文2019-05→JD 跨 6.5 年）、Prompt 工程 26 个月速通（实践先于学术化的反例）；结论：论文到岗位需求的完整传导约 5~7 年，其中论文→包 1~3 年、包→传播→JD 2~4 年。

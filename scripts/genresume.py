@@ -152,6 +152,80 @@ DIV_DIR = ROOT / "data" / "fixtures" / "resumes-div"
 DIV_MD = DIV_DIR / "md"
 
 # 7 类边缘画像：每一类瞄准管线的一个薄弱环节
+# 真实感身份要素池：合成人 + 真实机构名（行业标准测试数据做法，manifest 标 synthetic）。
+# 学校按 AI 岗真实分布分层；公司覆盖大厂/AI 独角兽/中厂/外企；竞赛与证书均为真实存在。
+NAMES = [
+    "李文轩", "王雨桐", "陈嘉禾", "周子墨", "林歆瑶", "张若愚", "刘一诺", "黄承宇",
+    "吴思远", "赵清扬", "孙浩然", "徐晚晴", "胡明睿", "郭子谦", "何静姝", "高逸飞",
+    "罗嘉树", "郑知行", "梁沐阳", "谢云舒", "宋亦舟", "唐启铭", "韩若冰", "冯乐瑶",
+    "蒋一帆", "沈书言", "曹沛然", "严子昂", "金晓楠", "魏泽宇", "陶思齐", "姜承泽",
+    "叶南嘉", "白书豪", "程羽墨", "苏砚青", "任飞白", "方闻笛", "石开济", "廖望舒",
+]
+SCHOOLS = [
+    # 顶尖研究型
+    "清华大学", "北京大学", "上海交通大学", "浙江大学", "复旦大学", "南京大学",
+    "中国科学技术大学", "哈尔滨工业大学",
+    # 电子/信息强校（AI 就业主力分布）
+    "电子科技大学", "西安电子科技大学", "北京邮电大学", "华中科技大学", "东南大学",
+    "杭州电子科技大学", "南京邮电大学", "重庆邮电大学",
+    # 综合与理工
+    "武汉大学", "中山大学", "华南理工大学", "四川大学", "同济大学", "天津大学",
+    "大连理工大学", "厦门大学", "山东大学", "中南大学",
+    # 海外
+    "卡内基梅隆大学", "新加坡国立大学", "香港科技大学", "南洋理工大学",
+]
+MAJORS = [
+    "计算机科学与技术", "软件工程", "人工智能", "数据科学与大数据技术",
+    "电子信息工程", "自动化", "信息与计算科学", "通信工程",
+]
+COMPANIES = [
+    # 大厂
+    "字节跳动", "腾讯", "阿里巴巴", "华为", "百度", "美团", "蚂蚁集团", "京东",
+    # AI 公司
+    "商汤科技", "旷视科技", "第四范式", "科大讯飞", "智谱AI", "月之暗面", "MiniMax",
+    # 中厂/垂直
+    "OPPO", "vivo", "蔚来汽车", "小鹏汽车", "SHEIN", "虾皮（Shopee）", "涂鸦智能",
+    "同花顺", "恒生电子", "海康威视", "大华股份",
+    # 外企
+    "微软中国", "英伟达", "亚马逊中国", "高通",
+]
+CONTESTS = [
+    "ACM-ICPC 亚洲区域赛", "全国大学生数学建模竞赛", "美国大学生数学建模竞赛（MCM）",
+    "Kaggle 竞赛", "天池大数据竞赛", "蓝桥杯全国软件大赛", "中国大学生计算机设计大赛",
+    '"互联网+"大学生创新创业大赛', "挑战杯全国大学生课外学术科技作品竞赛",
+    "Google Summer of Code（GSoC）", "全国大学生英语竞赛",
+]
+CERTS = [
+    "软考中级（软件设计师）", "软考高级（系统架构设计师）", "CET-6（580 分）",
+    "TOEFL 105", "IELTS 7.0", "AWS 解决方案架构师助理（SAA）",
+    "阿里云 ACA 认证", "华为 HCIA-AI 认证",
+]
+CITIES = ["北京", "上海", "深圳", "杭州", "成都", "武汉", "南京", "广州", "西安", "苏州"]
+
+import random  # noqa: E402
+
+
+def draw_identity(rng: random.Random, level: str) -> str:
+    """按画像级别抽取一份身份要素（prompt 注入用，seed 可复现）。"""
+    edu = rng.choice(SCHOOLS)
+    major = rng.choice(MAJORS)
+    # 公司序列：senior 三段、mid 两段、junior 一段 + 实习
+    if level == "senior":
+        corps = rng.sample(COMPANIES, 3)
+        work = f"{corps[0]}（5 年+）→ {corps[1]}（3 年）→ {corps[2]}（至今）"
+    elif level == "mid":
+        c = rng.sample(COMPANIES, 2)
+        work = f"{c[0]}（2-3 年）→ {c[1]}（至今）"
+    else:
+        work = f"实习：{rng.choice(COMPANIES)}（6 个月，可转正）"
+    return (
+        f"姓名：{rng.choice(NAMES)}；常驻城市：{rng.choice(CITIES)}；"
+        f"教育：{edu} · {major}；工作经历的公司：{work}；"
+        f"可提及的在校活动/竞赛（选 1-2 个）：{rng.choice(CONTESTS)}、{rng.choice(CONTESTS)}；"
+        f"证书（可选其一）：{rng.choice(CERTS)}"
+    )
+
+
 PROFILE_SPECS = {
     "variant": (
         "技能名尽量用真实世界的变体写法：别名（torch、sklearn、HF/HuggingFace）、"
@@ -210,7 +284,8 @@ DIV_SPEC = """请生成一份中文技术简历，Markdown 格式。
 - 级别：{level}
 - 画像特征（必须严格遵守）：{profile_spec}
 - 节标题用 ## 二级标题，节名从这些里选：基本信息、技能、技能清单、项目经历、工作经历、教育背景、证书
-- 个人信息用占位（"李同学"等假名，电话写 138****0000），不要真实联系方式
+- 身份要素（必须原样使用，不得改写为"某某/XX"占位）：{identity}
+  学校、公司、竞赛、证书都用上面给出的真实名称；邮箱电话仍脱敏（如 138****0000、name@example.com）
 - 技术细节真实合理，硬技能 {n_skills} 个左右（画像特征另有要求时以画像为准）
 - 长度 {length}
 
@@ -258,10 +333,12 @@ async def cmd_diverse() -> dict:
     sem = asyncio.Semaphore(3)
 
     async def one(i: int, profile: str, track: str, level: str) -> None:
+        rng = random.Random(f"div-{profile}-{track}-{level}-{i}")
         spec = DIV_SPEC.format(
             track=TRACK_CN[track],
             level=LEVEL_CN[level],
             profile_spec=PROFILE_SPECS[profile],
+            identity=draw_identity(rng, level),
             n_skills=8 if profile not in ("sparse", "mgmt") else 5,
             length="700-1000 字" if profile == "long" else "300-600 字",
         )

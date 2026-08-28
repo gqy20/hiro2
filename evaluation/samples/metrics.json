@@ -2,20 +2,20 @@
   "dataset_version": "eval-v1-20260825",
   "role_mapping": {
     "total": 100,
-    "labeled": 0,
-    "agree": 0,
-    "accuracy": null
+    "labeled": 100,
+    "agree": 74,
+    "accuracy": 0.74
   },
   "domain_judgment": {
     "total": 50,
-    "labeled": 0,
-    "agree": 0,
-    "accuracy": null
+    "labeled": 50,
+    "agree": 48,
+    "accuracy": 0.96
   },
   "event_extraction": {
     "total": 30,
-    "labeled": 0,
-    "agree": 0,
-    "accuracy": null
+    "labeled": 30,
+    "agree": 30,
+    "accuracy": 1.0
   }
 }

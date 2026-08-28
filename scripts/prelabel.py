@@ -1,19 +1,25 @@
 """prelabel: 评测样本 AI 预标注——生成建议判定，供人工确认后回流。
 
 用法：
-    uv run scripts/prelabel.py
+    uv run scripts/prelabel.py          # 生成/重新生成预标注建议
+    uv run scripts/prelabel.py apply    # 批量采纳建议写入正式标注（透明标记）
 
 原则（与产品哲学一致）：AI 只产候选，不直接成为标注事实。
 本脚本输出 evaluation/prelabels.jsonl（建议判定 + 置信度 + 理由），
 不计入 evalset.py score；人工在 /tasks 页确认或修改后才写入
 annotations.jsonl 并计入指标。
+apply 子命令用于基线摸底：批量采纳的标注以 reviewer_id=ai-prelabel-batch
+透明标记，与人工判定可区分；正式指标宣称前仍需人工抽检覆盖。
 """
 
 from __future__ import annotations
 
 import json
+import sys
 from datetime import UTC, datetime
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "evaluation" / "prelabels.jsonl"
@@ -136,6 +142,27 @@ EVENT: dict[int, tuple[str, float, str]] = {
 
 
 def main() -> int:
+    mode = sys.argv[1] if len(sys.argv) > 1 else "generate"
+    if mode == "apply":
+        # 批量采纳预标注为正式标注（基线摸底用；reviewer_id 透明标记）
+        from backend.application.annotate import submit_annotation
+
+        prelabels = (
+            json.loads("[]")
+            if not OUT.is_file()
+            else [json.loads(x) for x in OUT.read_text(encoding="utf-8").splitlines() if x.strip()]
+        )
+        for rec in prelabels:
+            submit_annotation(
+                rec["task_id"],
+                rec["suggested_decision"],
+                rationale=f"[AI预标注批量采纳] {rec['rationale']}",
+                reviewer_id="ai-prelabel-batch",
+                corrected_payload=rec.get("corrected_payload"),
+            )
+        print(f"已批量采纳 {len(prelabels)} 条预标注（reviewer_id=ai-prelabel-batch）")
+        return 0
+
     rows: list[dict] = []
     ts = datetime.now(UTC).isoformat()
     for i, (decision, conf, rationale, fix) in ROLE.items():

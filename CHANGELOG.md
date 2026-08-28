@@ -4,7 +4,18 @@
 
 ## [Unreleased]
 
+### Added
+- 求职区首页双态与诊断求职视图深化：`GET /api/v1/career/home` 端点（读取 `candidate_targets` 活跃目标，DB 不可用时回退演示候选人）；`/career` 首页按目标存在性双态渲染——未选岗位只留“选择目标岗位/上传简历”两个入口，已选显示目标岗位与版本；诊断工作台与首页的“投递基础”让位于“必备能力 x/n”（`requiredMet/requiredTotal`，总分降为小字辅助），成长计划从手写模板改为渲染真实学练赛证四段字段；学练赛证渲染抽为共享组件 `gap-steps.tsx`（学习路径页与诊断页复用）。
+- 求职流程 e2e 用例 3 条（`tests/e2e/career.spec.ts`）：目标岗位卡与族筛选、首页 ready/empty 双态、学习路径学练赛证步骤；全量 13/13 通过。
+- 三工作区设计文档成套：`docs/design-data.md` 新建（数据工作区六页：总览/来源/流水线/审核任务/评测与质量/时间情报，明确收纳 `/datasets`、`/quality`、时间情报等游离页）；`docs/design-recruiting.md` 扩充岗位发现、能力图谱、候选人诊断三个页面章节；`docs/design-career.md` 校准目标岗位页、诊断三栏布局并新增“我的画像”章节。
+- `docs/competition.md` 比赛对标与亮点叙事：官方硬指标现状表（337 条 JD 与 65.12% 覆盖率达标，三项准确率因标注 0/180 未产生数值）、四项评分项差距分析、四层亮点叙事与 8 分钟演示动线、按 ROI 排序的行动清单。
+- 求职成长工作区补齐为五页闭环：`/career/jobs` 目标岗位页（岗位卡：名称/版本/首条职责/必备加分能力数/生效时间，岗位族 Segmented 筛选）与 `/career/path` 学习路径页（缺口按优先级排序，学练赛证四段呈现，顶部 WorkflowContext 固定目标岗位与版本上下文）；顶栏 career 工作区导航 3→5 项（首页/目标岗位/我的画像/候选诊断/学习路径），招聘与数据工作区导航不受影响。
+- `GET /api/v1/jobs/published` 已发布岗位版本列表端点（`backend/application/joblist.py`）：每岗位取最新发布版本，经 job_id 内嵌 pos_XX 结构化关联岗位目录补充岗位族与首条职责，12 岗位。
+
 ### Fixed
+- 诊断 DB 路径岗位版本查询补齐 `required_skills` 列（原 SELECT 缺列导致 `requiredTotal` 恒为 0），与文件路径键名对齐。
+- 评测标注管道断链修复：新增 `POST /api/v1/tasks/{task_id}/decision` 提交端点与 `backend/application/annotate.py`（append-only 写入 `evaluation/annotations.jsonl`，不动冻结样本 CSV 的 manifest 哈希）；`/tasks` 页提交按钮从纯本地状态改为接入真实 API（mock 模式保持本地状态机）；`evalset.py score` 计算时按 task_id 优先合并标注记录（ACCEPT=对 / MODIFY·REJECT=错 / UNKNOWN 不计入分母），CSV 手工判定列保留为兼容回退——修复前“freeze→任务→提交→指标”链路在提交处完全断开，标注结果无法回流为准确率。
+- 匹配报告缺口字段补全学练赛证四段：`GapVM` 新增 `practice`/`evaluate`/`certify`，从学习路径 steps 合入（原仅有 action=learn 一段）。
 - 数据流转图四步流水线状态修复：后端 `pipeline_runs` View Model 新增已核实的 component → stage 映射（ingest/extract/evidence/signal/other，依据各采集/处理脚本 docstring），不再让前端按组件名猜测导致永远“暂无运行”；`/data` 运行拉取窗口 20 → 100，保证四阶段能取到最近一次运行。
 - `GET /pipeline-runs` 的 `total` 字段修复：此前直接等于当前页条数（limit=5 返回 total=5），现返回时间窗口内真实总数；流水线页显示“显示最近 50 / 共 200 次运行”。
 - Pipeline run 状态大小写归一：后端读取时统一大写（历史 events.jsonl 存在 `succeeded`/`SUCCEEDED` 混写）；前端僵死识别——RUNNING 超过 30 分钟无终态事件显示为“疑似中断”（灰色），不再与真实进行中混淆。

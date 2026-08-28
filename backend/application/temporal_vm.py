@@ -93,7 +93,9 @@ class TemporalVM(_VM):
 def build_temporal() -> TemporalVM:
     """从 backtest / leadtime / changeset 产物聚合 temporal 视图。"""
     if os.getenv("DATABASE_URL"):
-        return _build_temporal_db(os.environ["DATABASE_URL"])
+        vm = _build_temporal_db(os.environ["DATABASE_URL"])
+        merged = _apply_suggestion_reviews(vm.suggestions)
+        return TemporalVM(**{**vm.model_dump(), "suggestions": merged})
     backtests: list[BacktestRunVM] = []
     records: list[BacktestRecordVM] = []
     for h in (30, 60, 90):
@@ -167,7 +169,7 @@ def build_temporal() -> TemporalVM:
         backtest_records=records,
         forecasts=forecasts,
         signals=_load_signals(),
-        suggestions=suggestions,
+        suggestions=_apply_suggestion_reviews(suggestions),
     )
 
 
@@ -269,6 +271,50 @@ def _build_temporal_db(dsn: str) -> TemporalVM:
             for row in suggestions
         ],
     )
+
+
+def _load_suggestion_reviews() -> dict[str, dict]:
+    """读取建议审核动作：review-actions.jsonl 中 sug- 前缀目标的最新一条。
+
+    审核记录为 append-only（与岗位审核同一份事实日志），此处只取终态。
+    """
+    path = ROOT / "data" / "processed" / "review" / "review-actions.jsonl"
+    latest: dict[str, dict] = {}
+    if not path.is_file():
+        return latest
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        rec = json.loads(line)
+        tid = rec.get("target_id", "")
+        if tid.startswith("sug-"):
+            latest[tid] = rec
+    return latest
+
+
+_DECISION_TO_STATUS = {
+    "accepted": "ACCEPTED",
+    "rejected": "REJECTED",
+    "modified": "MODIFIED",
+    "needs_evidence": "PENDING",
+}
+
+
+def _apply_suggestion_reviews(suggestions: list[SuggestionVM]) -> list[SuggestionVM]:
+    """把审核动作合并到建议 VM（状态 + 修改后的建议级别）。"""
+    reviews = _load_suggestion_reviews()
+    merged: list[SuggestionVM] = []
+    for s in suggestions:
+        rec = reviews.get(s.suggestion_id)
+        if rec is None:
+            merged.append(s)
+            continue
+        data = s.model_dump()
+        data["review_status"] = _DECISION_TO_STATUS.get(rec["decision"], "PENDING")
+        if rec.get("suggested_level"):
+            data["suggested_level"] = rec["suggested_level"]
+        merged.append(SuggestionVM(**data))
+    return merged
 
 
 def _load_signals(limit: int = 500) -> list[TrendSignalVM]:

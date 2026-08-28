@@ -466,3 +466,12 @@
 }
 
 /* ---------- F-T4.10/4.11 任务与审核 ---------- */
+
+.temporal-suggestion-goto {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--blue);
+  font-size: 13px;
+  text-decoration: none;
+}

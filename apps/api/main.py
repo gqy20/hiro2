@@ -306,6 +306,27 @@ def temporal_dataset() -> dict:
     return build_temporal().model_dump()
 
 
+class SuggestionReviewRequest(BaseModel):
+    decision: str = Field(pattern="^(accepted|rejected|needs_evidence|modified)$")
+    note: str = ""
+    suggested_level: str = ""
+
+
+@app.post("/api/v1/temporal/suggestions/{suggestion_id}/review")
+def temporal_suggestion_review(suggestion_id: str, req: SuggestionReviewRequest) -> dict:
+    """岗位影响建议审核：写入 append-only 审核日志（与岗位审核同一份事实）。
+
+    边界：建议被接受不直接修改岗位版本，只标记建议状态；
+    后续岗位变更仍须走招聘区的 Diff 审核与发布流程。
+    """
+    known = {s.suggestion_id for s in build_temporal().suggestions}
+    if suggestion_id not in known:
+        raise HTTPException(404, f"建议不存在: {suggestion_id}")
+    extra = {"suggested_level": req.suggested_level} if req.suggested_level else {}
+    action = svc.submit_review(suggestion_id, req.decision, req.note, **extra)
+    return {**action, "suggestion_id": suggestion_id}
+
+
 @app.get("/api/v1/skills/graph")
 def skills_graph(job: str = "ai-agent-v2") -> dict:
     graph = build_skill_graph(job)

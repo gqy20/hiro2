@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { ArrowSquareOut, PencilSimple } from "@phosphor-icons/react";
-import { Button, Input, Modal, Select, Tag } from "antd";
+import { Button, Input, Modal, Select, Tag, message } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { SectionHeader } from "@/components/workflow-ui";
 import { TemporalNav } from "@/components/temporal-nav";
+import { apiFetch, isMockMode } from "@/lib/api/client";
 import type {
   JobImpactChangeType,
   JobImpactReviewStatus,
@@ -50,8 +52,38 @@ export function TemporalSuggestionsWorkbench({
   const [items, setItems] = useState(initial);
   const [editing, setEditing] = useState<JobImpactSuggestion | null>(null);
   const [newLevel, setNewLevel] = useState<string>("");
+  const [submitting, setSubmitting] = useState(false);
 
-  function accept(id: string) {
+  // 审核动作持久化到后端审核日志；mock 模式保持纯本地状态
+  async function submitReview(
+    id: string,
+    decision: "accepted" | "rejected" | "modified",
+    suggestedLevel?: string,
+  ): Promise<boolean> {
+    if (isMockMode()) return true;
+    setSubmitting(true);
+    try {
+      await apiFetch(`/temporal/suggestions/${id}/review`, {
+        method: "POST",
+        body: {
+          decision,
+          note: "Web 影响建议审核",
+          ...(suggestedLevel ? { suggested_level: suggestedLevel } : {}),
+        },
+      });
+      return true;
+    } catch (error) {
+      message.error(
+        `审核提交失败：${error instanceof Error ? error.message : "网络异常"}`,
+      );
+      return false;
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  async function accept(id: string) {
+    if (!(await submitReview(id, "accepted"))) return;
     setItems((current) =>
       current.map((s) =>
         s.suggestion_id === id
@@ -60,7 +92,8 @@ export function TemporalSuggestionsWorkbench({
       ),
     );
   }
-  function reject(id: string) {
+  async function reject(id: string) {
+    if (!(await submitReview(id, "rejected"))) return;
     setItems((current) =>
       current.map((s) =>
         s.suggestion_id === id
@@ -73,8 +106,10 @@ export function TemporalSuggestionsWorkbench({
     setEditing(s);
     setNewLevel(s.suggested_level);
   }
-  function saveModify() {
+  async function saveModify() {
     if (!editing) return;
+    if (!(await submitReview(editing.suggestion_id, "modified", newLevel)))
+      return;
     setItems((current) =>
       current.map((s) =>
         s.suggestion_id === editing.suggestion_id
@@ -143,6 +178,7 @@ export function TemporalSuggestionsWorkbench({
               {s.review_status === "PENDING" ? (
                 <div className="temporal-suggestion-actions">
                   <Button
+                    disabled={submitting}
                     onClick={() => accept(s.suggestion_id)}
                     size="small"
                     type="primary"
@@ -150,6 +186,7 @@ export function TemporalSuggestionsWorkbench({
                     接受
                   </Button>
                   <Button
+                    disabled={submitting}
                     icon={<PencilSimple size={14} />}
                     onClick={() => startModify(s)}
                     size="small"
@@ -158,11 +195,24 @@ export function TemporalSuggestionsWorkbench({
                   </Button>
                   <Button
                     danger
+                    disabled={submitting}
                     onClick={() => reject(s.suggestion_id)}
                     size="small"
                   >
                     拒绝
                   </Button>
+                </div>
+              ) : null}
+              {s.review_status === "ACCEPTED" ||
+              s.review_status === "MODIFIED" ? (
+                <div className="temporal-suggestion-actions">
+                  <Link
+                    className="temporal-suggestion-goto"
+                    href="/jobs"
+                    aria-label={`前往岗位更新流程处理 ${s.skill_id}`}
+                  >
+                    前往岗位更新流程 <ArrowSquareOut aria-hidden size={14} />
+                  </Link>
                 </div>
               ) : null}
             </li>

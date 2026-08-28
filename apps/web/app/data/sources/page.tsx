@@ -16,7 +16,7 @@ const EMPTY: DatasetOverview = {
 export default async function DataSourcesPage() {
   const overview: DatasetOverview = isMockMode()
     ? EMPTY
-    : (await apiFetch<DatasetOverview>("/datasets/overview")) ?? EMPTY;
+    : ((await apiFetch<DatasetOverview>("/datasets/overview")) ?? EMPTY);
 
   return (
     <AppShell>

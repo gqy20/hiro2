@@ -12,13 +12,107 @@
   --blue: #2457e6;
   --red: #dc3c34;
   --green: #17824b;
-  --font-mono: "IBM Plex Mono", Consolas, monospace;
+  /* 字体栈：西文由 next/font 自托管（--font-inter / --font-plex-mono / --font-archivo-narrow），
+     中文不打包，落到系统中文字体；逐字符回退，中西文混排无需额外处理 */
+  --font-sans:
+    var(--font-inter), "Noto Sans SC", "PingFang SC", "Microsoft YaHei",
+    sans-serif;
+  --font-mono: var(--font-plex-mono), "IBM Plex Mono", Consolas, monospace;
+  --font-display:
+    var(--font-archivo-narrow), "Arial Narrow", var(--font-inter),
+    "Noto Sans SC", sans-serif;
+  /* 字号尺度：全站只用这几级；12px 是中文下限，亚 12px 只允许纯数字/ID 场景 */
+  --fs-display: 30px; /* KPI 大数字 */
+  --fs-title: 24px; /* 页面 H1 */
+  --fs-section: 16px; /* 区块标题 */
+  --fs-table: 15px; /* 数据表正文（表格密度高，比正文大提高可读性） */
+  --fs-table-aux: 13px; /* 表头与表内辅助（版本号、状态徽章、筛选器） */
+  --fs-body: 13px; /* 正文/表格 */
+  --fs-aux: 12px; /* 辅助说明、徽章、表头 */
 }
 
 * {
   box-sizing: border-box;
   scrollbar-color: rgba(170, 162, 148, 0.55) transparent;
   scrollbar-width: thin;
+}
+
+/* 视觉隐藏但保留给屏幕阅读器：页面标题已由顶部导航表达时使用 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- 统一数据表（sources / pipeline / datasets 共用，页面差异只留专属类） ---------- */
+.t-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-table);
+  table-layout: fixed;
+}
+.t-table th,
+.t-table td {
+  text-align: left;
+  padding: 9px 14px;
+  vertical-align: middle;
+}
+.t-table thead th {
+  font-size: var(--fs-table-aux);
+  font-weight: 500;
+  color: var(--muted);
+  background: var(--paper-soft);
+  border-bottom: 1px solid var(--line-strong);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.t-table .col-filter {
+  appearance: none;
+  width: 100%; /* 跟随固定列宽，选中项文字变化时不再伸缩 */
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* 高度/行高写死为偶数，文字中心与 chevron（背景 50%）严格同轴 */
+  height: 26px;
+  line-height: 16px;
+  padding: 4px 26px 4px 10px;
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  background: var(--panel)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 8 5'%3E%3Cpath d='M1 1l3 3 3-3' fill='none' stroke='%23625f58' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E")
+    no-repeat right 9px center;
+  font-size: var(--fs-table-aux);
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+.t-table .col-filter:hover {
+  border-color: var(--line-strong);
+}
+.t-table .col-filter:focus-visible {
+  outline: none;
+  border-color: var(--saffron);
+  box-shadow: 0 0 0 3px rgba(228, 184, 16, 0.18);
+}
+.t-table tbody tr {
+  transition: background 150ms ease;
+}
+.t-table tbody tr:hover {
+  background: var(--paper-soft);
+}
+.t-table .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 *::-webkit-scrollbar {
@@ -49,8 +143,7 @@ body {
   overflow: hidden;
   background: var(--paper);
   color: var(--ink);
-  font-family:
-    Inter, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--font-sans);
   font-size: 14px;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -133,7 +226,8 @@ input:focus-visible {
 .workflow-context span {
   display: block;
   color: var(--muted);
-  font: 10px/1.2 var(--font-mono);
+  font-size: var(--fs-aux);
+  line-height: 1.2;
 }
 .workflow-context strong,
 .workflow-context b,
@@ -246,7 +340,7 @@ input:focus-visible {
   border: 1px solid var(--ink);
   background: var(--ink);
   color: var(--panel);
-  font-family: "Arial Narrow", Arial, sans-serif;
+  font-family: var(--font-display);
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0;
@@ -295,15 +389,15 @@ input:focus-visible {
   display: inline-flex;
   align-items: center;
   margin-right: 14px;
-  padding: 2px;
-  border-radius: 7px;
+  padding: 3px;
+  border-radius: 999px;
   background: rgba(170, 162, 148, 0.16);
 }
 .workspace-switch button {
   min-width: 42px;
-  padding: 4px 7px;
+  padding: 4px 10px;
   border: 0;
-  border-radius: 5px;
+  border-radius: 999px;
   background: transparent;
   color: var(--muted);
   cursor: pointer;
@@ -438,7 +532,7 @@ p {
 
 h1 {
   margin-bottom: 0;
-  font-size: 22px;
+  font-size: var(--fs-title);
   line-height: 1.25;
   letter-spacing: 0;
 }
@@ -540,7 +634,7 @@ h3 {
   padding: 2px 0;
 }
 .context-summary strong {
-  font-family: "Arial Narrow", Arial, sans-serif;
+  font-family: var(--font-display);
   font-size: 24px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
@@ -735,10 +829,7 @@ h3 {
 }
 .confidence-meter b {
   color: var(--ink);
-  font:
-    600 10px/1 "IBM Plex Mono",
-    Consolas,
-    monospace;
+  font: 600 11px/1 var(--font-mono);
 }
 .confidence-meter i {
   display: block;
@@ -1007,10 +1098,7 @@ h3 {
 }
 .review-distribution b {
   color: var(--ink);
-  font:
-    600 11px/1 "IBM Plex Mono",
-    Consolas,
-    monospace;
+  font: 600 11px/1 var(--font-mono);
 }
 .review-distribution small {
   font-size: 11px;

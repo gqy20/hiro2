@@ -60,15 +60,12 @@
   white-space: nowrap;
 }
 .dashboard-title-metrics strong {
-  font:
-    500 24px/1 "Arial Narrow",
-    Arial,
-    sans-serif;
+  font: 500 24px/1 var(--font-display);
   font-variant-numeric: tabular-nums;
 }
 .dashboard-title-metrics small {
   color: var(--muted);
-  font-size: 10px;
+  font-size: var(--fs-aux);
   white-space: nowrap;
 }
 .dashboard-space-label {
@@ -449,10 +446,7 @@
 }
 .dashboard-overview-strip strong {
   color: var(--ink);
-  font:
-    500 32px/1 "Arial Narrow",
-    Arial,
-    sans-serif;
+  font: 500 32px/1 var(--font-display);
   font-variant-numeric: tabular-nums;
 }
 .dashboard-overview-strip span {
@@ -542,11 +536,11 @@
 }
 .dashboard-chart-label {
   fill: var(--muted);
-  font-size: 10px;
+  font-size: 11px;
 }
 .dashboard-trend-range {
   color: var(--muted);
-  font: 10px/1.4 var(--font-mono);
+  font: 11px/1.4 var(--font-mono);
   white-space: nowrap;
 }
 .dashboard-attention ul {
@@ -1097,10 +1091,7 @@
   gap: 10px;
 }
 .career-progress-card strong {
-  font:
-    500 48px/1 Arial Narrow,
-    Arial,
-    sans-serif;
+  font: 500 48px/1 var(--font-display);
 }
 .career-progress-card b {
   display: inline-flex;

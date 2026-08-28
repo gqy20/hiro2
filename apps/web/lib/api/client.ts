@@ -32,8 +32,15 @@ export type ApiOptions = {
 const DEFAULT_TIMEOUT_MS = 10_000;
 
 export function getApiBaseUrl(): string {
-  const configured = (process.env.NEXT_PUBLIC_API_BASE_URL ?? "").replace(/\/$/, "");
-  if (typeof window !== "undefined" && /https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/i.test(configured) && !["localhost", "127.0.0.1"].includes(window.location.hostname)) {
+  const configured = (process.env.NEXT_PUBLIC_API_BASE_URL ?? "").replace(
+    /\/$/,
+    "",
+  );
+  if (
+    typeof window !== "undefined" &&
+    /https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/i.test(configured) &&
+    !["localhost", "127.0.0.1"].includes(window.location.hostname)
+  ) {
     return `${window.location.protocol}//${window.location.hostname}:8000/api/v1`;
   }
   return configured;

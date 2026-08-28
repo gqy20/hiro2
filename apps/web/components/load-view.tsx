@@ -2,6 +2,7 @@ import { AppShell } from "@/components/app-shell";
 
 type LoadVariant =
   | "dashboard"
+  | "data"
   | "diagnosis"
   | "evaluation"
   | "jobs"
@@ -55,6 +56,12 @@ export function LoadView({ variant }: { variant: LoadVariant }) {
             <LoadPanel rows={3} />
             <LoadPanel className="load-chart" rows={5} />
             <LoadPanel rows={3} />
+          </div>
+        ) : variant === "data" ? (
+          <div className="load-data">
+            <LoadPanel className="load-data-kpis" rows={2} />
+            <LoadPanel className="load-primary" rows={5} />
+            <LoadPanel rows={1} />
           </div>
         ) : isThreeColumn ? (
           <div className="load-three-column">

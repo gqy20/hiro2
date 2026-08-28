@@ -78,10 +78,7 @@
 .evidence-id {
   margin-top: 8px;
   color: var(--muted);
-  font:
-    10px/1 "IBM Plex Mono",
-    Consolas,
-    monospace;
+  font: 11px/1 var(--font-mono);
 }
 .evidence-actions {
   justify-content: flex-end;
@@ -132,10 +129,8 @@
 .candidate-item > span,
 .candidate-proof span {
   color: var(--muted);
-  font:
-    10px/1.2 "IBM Plex Mono",
-    Consolas,
-    monospace;
+  font-size: var(--fs-aux);
+  line-height: 1.2;
 }
 .candidate-panel .ant-input-affix-wrapper {
   border-radius: 4px;
@@ -199,10 +194,7 @@
   gap: 12px;
   margin-top: 18px;
   color: var(--muted);
-  font:
-    11px/1.2 "IBM Plex Mono",
-    Consolas,
-    monospace;
+  font: 11px/1.2 var(--font-mono);
 }
 .candidate-decision > span:not(.status-mark) {
   padding-left: 12px;
@@ -293,10 +285,7 @@
 }
 .profile-counts b {
   color: var(--ink);
-  font:
-    20px/1 "Arial Narrow",
-    Arial,
-    sans-serif;
+  font: 20px/1 var(--font-display);
 }
 .diagnosis-profile h2 {
   margin: 24px 0 10px;
@@ -418,10 +407,7 @@
 }
 .diagnosis-title h2 span {
   color: var(--muted);
-  font:
-    11px/1 "IBM Plex Mono",
-    Consolas,
-    monospace;
+  font: 11px/1 var(--font-mono);
 }
 .diagnosis-title p:last-child {
   margin: 0;
@@ -445,16 +431,10 @@
   font-size: 11px;
 }
 .match-summary strong {
-  font:
-    26px/1 "Arial Narrow",
-    Arial,
-    sans-serif;
+  font: 26px/1 var(--font-display);
 }
 .match-summary b {
-  font:
-    22px/1 "Arial Narrow",
-    Arial,
-    sans-serif;
+  font: 22px/1 var(--font-display);
 }
 .gap-section {
   margin-top: 34px;
@@ -535,10 +515,7 @@
   padding-top: 2px;
   text-align: right;
   color: var(--muted);
-  font:
-    11px/1 "IBM Plex Mono",
-    Consolas,
-    monospace;
+  font: 11px/1 var(--font-mono);
 }
 .learning-panel li strong {
   font-size: 13px;

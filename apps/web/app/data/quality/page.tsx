@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export default async function DataQualityPage() {
   const quality: QualityOverview = isMockMode()
     ? await loadQualityFixture()
-    : (await apiFetch<QualityOverview>("/quality/overview")) ?? {
+    : ((await apiFetch<QualityOverview>("/quality/overview")) ?? {
         source: "file",
         dataset_version: "",
         task_total: 0,
@@ -18,7 +18,7 @@ export default async function DataQualityPage() {
         avg_response_days: null,
         error_distribution: {},
         data_quality: {},
-      };
+      });
 
   return (
     <AppShell>

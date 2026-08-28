@@ -11,11 +11,11 @@ const EMPTY: PipelineRunList = { runs: [], total: 0 };
 export default async function DataPipelinePage() {
   const data: PipelineRunList = isMockMode()
     ? await loadPipelineRunsFixture()
-    : (await apiFetch<PipelineRunList>("/pipeline-runs?limit=50")) ?? EMPTY;
+    : ((await apiFetch<PipelineRunList>("/pipeline-runs?limit=50")) ?? EMPTY);
 
   return (
     <AppShell>
-      <DataPipelineWorkbench runs={data.runs} />
+      <DataPipelineWorkbench runs={data.runs} total={data.total} />
     </AppShell>
   );
 }

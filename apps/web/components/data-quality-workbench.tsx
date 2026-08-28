@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import { DataNav } from "@/components/data-nav";
 import type { QualityOverview } from "@/lib/quality";
 
 type Props = Readonly<{ quality: QualityOverview }>;
@@ -30,33 +29,48 @@ const ERROR_NOTES: Record<string, string> = {
 };
 
 export function DataQualityWorkbench({ quality }: Props) {
+  // data_quality 标记区分“数值为 0”与“该指标不可用”：unavailable 一律显示暂无数据
+  const flags = quality.data_quality;
+  const available = (key: string) => flags[key] === "available";
+  const completionRate = available("completion")
+    ? quality.completion_rate
+    : null;
+  const dualReviewRate = available("dual_review")
+    ? quality.dual_review_rate
+    : null;
+  const avgResponseDays = available("response_time")
+    ? quality.avg_response_days
+    : null;
+
   const errorList = useMemo(
     () =>
-      Object.entries(quality.error_distribution)
-        .map(([key, count]) => ({ key, count: Number(count) }))
-        .sort((a, b) => b.count - a.count),
-    [quality.error_distribution],
+      available("errors")
+        ? Object.entries(quality.error_distribution)
+            .map(([key, count]) => ({ key, count: Number(count) }))
+            .sort((a, b) => b.count - a.count)
+        : [],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [quality.error_distribution, flags],
   );
   const maxErrorCount = errorList[0]?.count ?? 1;
 
   return (
     <section className="data-quality" aria-labelledby="data-quality-title">
-      <h1 id="data-quality-title" className="data-quality-title">
-        质量与回测
+      <h1 id="data-quality-title" className="sr-only">
+        标注质量
       </h1>
-      <DataNav />
 
       <div className="data-quality-kpis" role="group" aria-label="质量指标">
         <div className="data-quality-kpi">
           <span className="data-quality-kpi-label">任务完成率</span>
           <strong
             className={
-              quality.completion_rate == null
+              completionRate == null
                 ? "data-quality-kpi-value is-empty"
                 : "data-quality-kpi-value"
             }
           >
-            {formatPercent(quality.completion_rate)}
+            {formatPercent(completionRate)}
           </strong>
           <span className="data-quality-kpi-meta">
             {quality.task_resolved} / {quality.task_total}
@@ -66,37 +80,39 @@ export function DataQualityWorkbench({ quality }: Props) {
           <span className="data-quality-kpi-label">双重审核率</span>
           <strong
             className={
-              quality.dual_review_rate == null
+              dualReviewRate == null
                 ? "data-quality-kpi-value is-empty"
                 : "data-quality-kpi-value"
             }
           >
-            {formatPercent(quality.dual_review_rate)}
+            {formatPercent(dualReviewRate)}
           </strong>
-          <span className="data-quality-kpi-meta">
-            同任务至少两人审核
-          </span>
+          <span className="data-quality-kpi-meta">同任务至少两人审核</span>
         </div>
         <div className="data-quality-kpi">
           <span className="data-quality-kpi-label">平均响应</span>
           <strong
             className={
-              quality.avg_response_days == null
+              avgResponseDays == null
                 ? "data-quality-kpi-value is-empty"
                 : "data-quality-kpi-value"
             }
           >
-            {formatDays(quality.avg_response_days)}
+            {formatDays(avgResponseDays)}
           </strong>
-          <span className="data-quality-kpi-meta">
-            任务分配到提交
-          </span>
+          <span className="data-quality-kpi-meta">任务分配到提交</span>
         </div>
       </div>
 
-      <section className="data-quality-panel" aria-labelledby="data-quality-errors-title">
+      <section
+        className="data-quality-panel"
+        aria-labelledby="data-quality-errors-title"
+      >
         <header className="data-quality-panel-head">
-          <h2 id="data-quality-errors-title" className="data-quality-panel-title">
+          <h2
+            id="data-quality-errors-title"
+            className="data-quality-panel-title"
+          >
             错误类型分布
           </h2>
         </header>

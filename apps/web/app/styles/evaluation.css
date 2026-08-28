@@ -62,7 +62,7 @@
 .evaluation-dataset-item span {
   color: var(--muted);
   font-size: 11px;
-  font-family: monospace;
+  font-family: var(--font-mono);
 }
 
 .evaluation-detail {
@@ -127,7 +127,7 @@
 
 .evaluation-error-item strong {
   display: block;
-  font-family: var(--font-mono, monospace);
+  font-family: var(--font-mono);
   font-size: 12px;
   margin-bottom: 2px;
 }

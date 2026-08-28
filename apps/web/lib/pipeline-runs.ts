@@ -1,10 +1,5 @@
 export type PipelineRunStatus =
-  | "PENDING"
-  | "RUNNING"
-  | "SUCCEEDED"
-  | "FAILED"
-  | "RETRYING"
-  | "UNKNOWN";
+  "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED" | "RETRYING" | "UNKNOWN";
 
 export type PipelineRun = {
   run_id: string;

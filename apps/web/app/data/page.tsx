@@ -18,14 +18,15 @@ const EMPTY_DATASETS: DatasetOverview = {
 export default async function DataPage() {
   const overview: DatasetOverview = isMockMode()
     ? EMPTY_DATASETS
-    : (await apiFetch<DatasetOverview>("/datasets/overview")) ?? EMPTY_DATASETS;
+    : ((await apiFetch<DatasetOverview>("/datasets/overview")) ??
+      EMPTY_DATASETS);
 
   const pipeline: PipelineRunList = isMockMode()
     ? await loadPipelineRunsFixture()
-    : (await apiFetch<PipelineRunList>("/pipeline-runs?limit=20")) ?? {
+    : ((await apiFetch<PipelineRunList>("/pipeline-runs?limit=100")) ?? {
         runs: [],
         total: 0,
-      };
+      });
 
   return (
     <AppShell>

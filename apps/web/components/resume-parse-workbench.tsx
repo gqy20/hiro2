@@ -33,8 +33,22 @@ type ParseResponse = {
     education: string;
     experience_years: number | null;
     location?: string;
-    work_experiences?: Array<{ company: string; title: string; start_date: string; end_date: string; summary: string; achievements: string[]; skill_mentions: string[] }>;
-    education_history?: Array<{ school: string; major: string; degree: string; start_date: string; end_date: string }>;
+    work_experiences?: Array<{
+      company: string;
+      title: string;
+      start_date: string;
+      end_date: string;
+      summary: string;
+      achievements: string[];
+      skill_mentions: string[];
+    }>;
+    education_history?: Array<{
+      school: string;
+      major: string;
+      degree: string;
+      start_date: string;
+      end_date: string;
+    }>;
     certificates?: Array<{ name: string; issuer: string; issued_date: string }>;
     portfolio_urls?: string[];
     languages?: string[];
@@ -77,8 +91,26 @@ const DEMO_RESULT: ParseResponse = {
     education: "本科 计算机科学",
     experience_years: 5,
     location: "深圳",
-    work_experiences: [{ company: "某科技公司", title: "后端工程师", start_date: "2021-07", end_date: "至今", summary: "负责智能客服与检索服务的后端架构。", achievements: ["带领 3 人团队交付智能客服机器人"], skill_mentions: ["LangChain", "Milvus"] }],
-    education_history: [{ school: "某大学", major: "计算机科学", degree: "本科", start_date: "2016", end_date: "2020" }],
+    work_experiences: [
+      {
+        company: "某科技公司",
+        title: "后端工程师",
+        start_date: "2021-07",
+        end_date: "至今",
+        summary: "负责智能客服与检索服务的后端架构。",
+        achievements: ["带领 3 人团队交付智能客服机器人"],
+        skill_mentions: ["LangChain", "Milvus"],
+      },
+    ],
+    education_history: [
+      {
+        school: "某大学",
+        major: "计算机科学",
+        degree: "本科",
+        start_date: "2016",
+        end_date: "2020",
+      },
+    ],
     certificates: [],
     portfolio_urls: [],
     languages: [],
@@ -126,11 +158,15 @@ export function ResumeParseWorkbench({
   const [preview, setPreview] = useState("");
   const [archive, setArchive] = useState<ResumeArchiveItem[]>(initialArchive);
   const [activeArchiveId, setActiveArchiveId] = useState<string | null>(null);
-  const [previewMode, setPreviewMode] = useState<"document" | "profile">("profile");
+  const [previewMode, setPreviewMode] = useState<"document" | "profile">(
+    "profile",
+  );
   const [previewError, setPreviewError] = useState(false);
   const selected = items.find((item) => item.uid === selectedUid) ?? null;
   const file = selected?.file ?? null;
-  const reviewArchive = archive.filter((entry) => [".pdf", ".docx"].includes(entry.suffix || getSuffix(entry.filename)));
+  const reviewArchive = archive.filter((entry) =>
+    [".pdf", ".docx"].includes(entry.suffix || getSuffix(entry.filename)),
+  );
 
   useEffect(() => {
     if (!file || !file.type.startsWith("text/")) return;
@@ -249,7 +285,10 @@ export function ResumeParseWorkbench({
 
   return (
     <AppShell>
-      <section aria-labelledby="resume-parse-title" className={`resume-parse${activeArchiveId || result ? " has-selection" : ""}`}>
+      <section
+        aria-labelledby="resume-parse-title"
+        className={`resume-parse${activeArchiveId || result ? " has-selection" : ""}`}
+      >
         <div className="page-heading">
           <div className="title-with-meta">
             <h1 id="resume-parse-title">简历解析确认</h1>
@@ -322,7 +361,13 @@ export function ResumeParseWorkbench({
                       未解析
                     </em>
                   )}
-                  <Tag className={`resume-format resume-format-${(entry.suffix || getSuffix(entry.filename)).slice(1)}`}>{(entry.suffix || getSuffix(entry.filename)).slice(1).toUpperCase()}</Tag>
+                  <Tag
+                    className={`resume-format resume-format-${(entry.suffix || getSuffix(entry.filename)).slice(1)}`}
+                  >
+                    {(entry.suffix || getSuffix(entry.filename))
+                      .slice(1)
+                      .toUpperCase()}
+                  </Tag>
                 </button>
               ))}
             </div>
@@ -399,23 +444,69 @@ export function ResumeParseWorkbench({
           </section>
         ) : null}
 
-        {(activeArchiveId || result) ? (
+        {activeArchiveId || result ? (
           <div className="resume-selection-header">
-            <div><strong>当前简历</strong><span>{activeArchiveId ? archive.find((entry) => entry.resume_id === activeArchiveId)?.filename : file?.name}</span></div>
+            <div>
+              <strong>当前简历</strong>
+              <span>
+                {activeArchiveId
+                  ? archive.find((entry) => entry.resume_id === activeArchiveId)
+                      ?.filename
+                  : file?.name}
+              </span>
+            </div>
             <span>{result ? "已解析" : "待解析"}</span>
           </div>
         ) : null}
 
-        {(activeArchiveId || result) ? (
-          <div className="resume-document-tabs" role="tablist" aria-label="简历查看方式">
-            <button className={previewMode === "document" ? "is-active" : ""} onClick={() => setPreviewMode("document")} role="tab" aria-selected={previewMode === "document"} type="button">文档预览</button>
-            <button className={previewMode === "profile" ? "is-active" : ""} onClick={() => setPreviewMode("profile")} role="tab" aria-selected={previewMode === "profile"} type="button">结构化档案</button>
+        {activeArchiveId || result ? (
+          <div
+            className="resume-document-tabs"
+            role="tablist"
+            aria-label="简历查看方式"
+          >
+            <button
+              className={previewMode === "document" ? "is-active" : ""}
+              onClick={() => setPreviewMode("document")}
+              role="tab"
+              aria-selected={previewMode === "document"}
+              type="button"
+            >
+              文档预览
+            </button>
+            <button
+              className={previewMode === "profile" ? "is-active" : ""}
+              onClick={() => setPreviewMode("profile")}
+              role="tab"
+              aria-selected={previewMode === "profile"}
+              type="button"
+            >
+              结构化档案
+            </button>
           </div>
         ) : null}
 
         {previewMode === "document" && activeArchiveId ? (
-          <section className="resume-document-preview" aria-label="原始文档预览">
-            {previewError ? <div className="resume-document-preview-error"><strong>文档预览暂时不可用</strong><span>可以继续查看结构化档案，或稍后重试。</span><button onClick={() => setPreviewError(false)} type="button">重新加载</button></div> : <iframe key={activeArchiveId} title="原始简历文档预览" onError={() => setPreviewError(true)} src={`${getApiBaseUrl()}/candidates/resumes/${encodeURIComponent(activeArchiveId)}/preview`} />}
+          <section
+            className="resume-document-preview"
+            aria-label="原始文档预览"
+          >
+            {previewError ? (
+              <div className="resume-document-preview-error">
+                <strong>文档预览暂时不可用</strong>
+                <span>可以继续查看结构化档案，或稍后重试。</span>
+                <button onClick={() => setPreviewError(false)} type="button">
+                  重新加载
+                </button>
+              </div>
+            ) : (
+              <iframe
+                key={activeArchiveId}
+                title="原始简历文档预览"
+                onError={() => setPreviewError(true)}
+                src={`${getApiBaseUrl()}/candidates/resumes/${encodeURIComponent(activeArchiveId)}/preview`}
+              />
+            )}
           </section>
         ) : null}
 
@@ -424,43 +515,121 @@ export function ResumeParseWorkbench({
             <section className="resume-profile-summary">
               <div>
                 <h2>职业档案</h2>
-                <p>{[result.profile.location, result.profile.experience_years === null ? "" : `${result.profile.experience_years} 年经验`, result.profile.education].filter(Boolean).join(" · ") || "请确认职业信息"}</p>
+                <p>
+                  {[
+                    result.profile.location,
+                    result.profile.experience_years === null
+                      ? ""
+                      : `${result.profile.experience_years} 年经验`,
+                    result.profile.education,
+                  ]
+                    .filter(Boolean)
+                    .join(" · ") || "请确认职业信息"}
+                </p>
               </div>
               <div className="training-tags">
                 <Tag color="blue">{`技能 ${result.stats.totalSkills}`}</Tag>
                 <Tag color="green">{`已归一 ${result.stats.resolved}`}</Tag>
-                {result.stats.unresolved ? <Tag color="orange">{`${result.stats.unresolved} 项待确认`}</Tag> : null}
+                {result.stats.unresolved ? (
+                  <Tag color="orange">{`${result.stats.unresolved} 项待确认`}</Tag>
+                ) : null}
               </div>
             </section>
 
-            {result.profile.work_experiences?.length ? <section className="resume-structured-section"><h3>工作经历</h3>{result.profile.work_experiences.map((work, index) => <article className="resume-experience" key={`${work.company}-${work.title}-${index}`}><div><strong>{work.title}</strong><span>{work.company}</span></div><small>{[work.start_date, work.end_date].filter(Boolean).join(" - ")}</small>{work.summary ? <p>{work.summary}</p> : null}{work.achievements?.length ? <ul>{work.achievements.map((item) => <li key={item}>{item}</li>)}</ul> : null}</article>)}</section> : null}
+            {result.profile.work_experiences?.length ? (
+              <section className="resume-structured-section">
+                <h3>工作经历</h3>
+                {result.profile.work_experiences.map((work, index) => (
+                  <article
+                    className="resume-experience"
+                    key={`${work.company}-${work.title}-${index}`}
+                  >
+                    <div>
+                      <strong>{work.title}</strong>
+                      <span>{work.company}</span>
+                    </div>
+                    <small>
+                      {[work.start_date, work.end_date]
+                        .filter(Boolean)
+                        .join(" - ")}
+                    </small>
+                    {work.summary ? <p>{work.summary}</p> : null}
+                    {work.achievements?.length ? (
+                      <ul>
+                        {work.achievements.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </article>
+                ))}
+              </section>
+            ) : null}
 
-            {result.profile.projects.length > 0 ? <section className="resume-structured-section"><h3>项目与能力证明</h3><div className="resume-project-grid">{result.profile.projects.map((p) => <article key={p.name}><strong>{p.name}</strong><p>{p.description}</p></article>)}</div></section> : null}
+            {result.profile.projects.length > 0 ? (
+              <section className="resume-structured-section">
+                <h3>项目与能力证明</h3>
+                <div className="resume-project-grid">
+                  {result.profile.projects.map((p) => (
+                    <article key={p.name}>
+                      <strong>{p.name}</strong>
+                      <p>{p.description}</p>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            ) : null}
 
-            <section className="resume-structured-section"><h3>技能与匹配</h3>
-            <ul className="resume-skill-list">
-              {skills.map((s, i) => (
-                <li key={`${s.mention}-${i}`}>
-                  <span className="task-name">{s.mention}</span>
-                  <Tag color={s.skill_id ? "green" : "orange"}>
-                    {RESOLVED_LABELS[s.resolved_by] ?? "待确认"}
-                  </Tag>
-                  <span className="resume-skill-level">{s.proficiency}</span>
-                  <Button
-                    icon={<Trash aria-hidden size={14} />}
-                    onClick={() =>
-                      setSkills((cur) => cur.filter((_, j) => j !== i))
-                    }
-                    size="small"
-                    type="text"
-                  />
-                  {s.reason ? <p className="publish-hint">{s.reason}</p> : null}
-                </li>
-              ))}
-            </ul>
+            <section className="resume-structured-section">
+              <h3>技能与匹配</h3>
+              <ul className="resume-skill-list">
+                {skills.map((s, i) => (
+                  <li key={`${s.mention}-${i}`}>
+                    <span className="task-name">{s.mention}</span>
+                    <Tag color={s.skill_id ? "green" : "orange"}>
+                      {RESOLVED_LABELS[s.resolved_by] ?? "待确认"}
+                    </Tag>
+                    <span className="resume-skill-level">{s.proficiency}</span>
+                    <Button
+                      icon={<Trash aria-hidden size={14} />}
+                      onClick={() =>
+                        setSkills((cur) => cur.filter((_, j) => j !== i))
+                      }
+                      size="small"
+                      type="text"
+                    />
+                    {s.reason ? (
+                      <p className="publish-hint">{s.reason}</p>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
             </section>
 
-            {result.profile.education_history?.length || result.profile.certificates?.length || result.profile.languages?.length ? <section className="resume-structured-section resume-background"><h3>教育与补充信息</h3><div>{result.profile.education_history?.map((edu, index) => <p key={`${edu.school}-${index}`}><strong>{edu.school}</strong>{` · ${[edu.major, edu.degree, [edu.start_date, edu.end_date].filter(Boolean).join(" - ")].filter(Boolean).join(" · ")}`}</p>)}{result.profile.certificates?.map((certificate) => <p key={certificate.name}><strong>{certificate.name}</strong>{certificate.issuer ? ` · ${certificate.issuer}` : ""}</p>)}{result.profile.languages?.length ? <p>{`语言：${result.profile.languages.join(" · ")}`}</p> : null}</div></section> : null}
+            {result.profile.education_history?.length ||
+            result.profile.certificates?.length ||
+            result.profile.languages?.length ? (
+              <section className="resume-structured-section resume-background">
+                <h3>教育与补充信息</h3>
+                <div>
+                  {result.profile.education_history?.map((edu, index) => (
+                    <p key={`${edu.school}-${index}`}>
+                      <strong>{edu.school}</strong>
+                      {` · ${[edu.major, edu.degree, [edu.start_date, edu.end_date].filter(Boolean).join(" - ")].filter(Boolean).join(" · ")}`}
+                    </p>
+                  ))}
+                  {result.profile.certificates?.map((certificate) => (
+                    <p key={certificate.name}>
+                      <strong>{certificate.name}</strong>
+                      {certificate.issuer ? ` · ${certificate.issuer}` : ""}
+                    </p>
+                  ))}
+                  {result.profile.languages?.length ? (
+                    <p>{`语言：${result.profile.languages.join(" · ")}`}</p>
+                  ) : null}
+                </div>
+              </section>
+            ) : null}
 
             <h3>原始简历</h3>
             <details className="resume-raw">

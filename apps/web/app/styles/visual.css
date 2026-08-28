@@ -185,7 +185,8 @@
 .load-dashboard,
 .load-grid,
 .load-three-column,
-.load-two-column {
+.load-two-column,
+.load-data {
   flex: 1;
   min-height: 0;
   gap: 16px;
@@ -210,6 +211,13 @@
   display: grid;
   grid-template-columns: 300px minmax(0, 1fr);
 }
+.load-data {
+  display: flex;
+  flex-direction: column;
+}
+.load-data-kpis {
+  min-height: 88px;
+}
 .load-panel {
   display: flex;
   min-width: 0;
@@ -217,7 +225,7 @@
   flex-direction: column;
   gap: 14px;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--surface-raised, var(--panel));
 }
 .load-title {

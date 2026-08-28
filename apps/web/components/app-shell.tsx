@@ -1,15 +1,20 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { apiFetch, isMockMode } from "@/lib/api/client";
+import type { DatasetOverview } from "@/lib/datasets";
+import { formatDate } from "@/lib/time";
 import {
   ChartScatter,
   ClipboardText,
   Database,
   FileText,
+  FlowArrow,
+  Funnel,
   GitDiff,
   Graph,
   MagnifyingGlass,
@@ -32,6 +37,13 @@ const navigation = [
   { href: "/profile", label: "我的画像", icon: ClipboardText },
 ];
 
+const dataNavigation = [
+  { href: "/data", label: "总览", icon: Database },
+  { href: "/data/sources", label: "来源", icon: FlowArrow },
+  { href: "/data/pipeline", label: "流水线", icon: Funnel },
+  { href: "/data/quality", label: "质量", icon: ShieldCheck },
+];
+
 type Workspace = "recruiting" | "career" | "data";
 const WORKSPACE_KEY = "hiro2.workspace";
 
@@ -39,6 +51,26 @@ export function AppShell({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
+  // 顶栏“数据截至”取数据集最近更新时间，mock 模式或请求失败时不显示
+  const [dataAsOf, setDataAsOf] = useState<string | null>(null);
+  useEffect(() => {
+    if (isMockMode()) return;
+    let cancelled = false;
+    apiFetch<DatasetOverview>("/datasets/overview")
+      .then((overview) => {
+        if (cancelled) return;
+        const latest = overview.datasets
+          .map((d) => d.updated_at)
+          .filter(Boolean)
+          .sort()
+          .at(-1);
+        setDataAsOf(latest ? formatDate(latest).slice(5) : null);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   const router = useRouter();
   const [workspace, setWorkspace] = useState<Workspace>(() => {
     const fallback: Workspace = pathname.startsWith("/data")
@@ -56,12 +88,19 @@ export function AppShell({
   const careerMode = workspace === "career";
   const dataMode = workspace === "data";
   const visibleNavigation = dataMode
-    ? navigation.filter((item) => item.href === "/datasets")
+    ? dataNavigation
     : careerMode
       ? navigation.filter((item) =>
           ["/career", "/profile", "/diagnosis"].includes(item.href),
         )
-      : navigation.filter((item) => !["/career", "/profile"].includes(item.href));
+      : navigation.filter(
+          (item) => !["/career", "/profile"].includes(item.href),
+        );
+
+  function isActive(href: string): boolean {
+    // 精确匹配：避免 /data 在 /data/sources 等子页下误亮（总览不再一直亮）
+    return pathname === href;
+  }
   const contentRef = useRef<HTMLElement>(null);
 
   function switchWorkspace(next: Workspace) {
@@ -111,14 +150,14 @@ export function AppShell({
             <Tooltip key={label} title={label}>
               <Link
                 className={
-                  pathname === href ? "nav-link nav-link-active" : "nav-link"
+                  isActive(href) ? "nav-link nav-link-active" : "nav-link"
                 }
                 href={href}
               >
                 <Icon
                   aria-hidden
                   size={17}
-                  weight={pathname === href ? "fill" : "regular"}
+                  weight={isActive(href) ? "fill" : "regular"}
                 />
                 <span>{label}</span>
               </Link>
@@ -153,7 +192,7 @@ export function AppShell({
             </button>
           </div>
           <span className="live-dot" aria-hidden />
-          <span>数据截至 08-22</span>
+          {dataAsOf ? <span>数据截至 {dataAsOf}</span> : null}
         </div>
       </header>
       <main id="main-content" ref={contentRef}>

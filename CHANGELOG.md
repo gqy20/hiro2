@@ -27,6 +27,8 @@
 - 来源明细硬编码数字移除：`/datasets/overview` 的 DatasetItem 新增 `sources` 字段，由后端读取 `data/SOURCES.yml`（D0 来源登记）按数据集挂载来源通道（jd→5 条采集通道、temporal→wechat-mp/feeds/arxiv/pypi-pkgstats、capability→含政策/O*NET 历史），前端删除写死的 SOURCE_DETAIL（“字节 376/51job 650/Wayback 13,071”等与 KPI 对不上的旧数字）；派生（evidence）、受控（resumes）、冻结（evaluation）数据集显示派生说明而非虚构通道。
 
 ### Changed
+- 数据工作区收纳为六项导航（总览/来源/流水线/审核任务/评测与质量/时间情报）：`/datasets` 并入总览页数据集目录区块（`DatasetWorkbench` 新增 embedded 模式），`/data/quality` 与 `/quality` 并入评测与质量页（`DataQualityWorkbench`/`QualityWorkbench` embedded），旧路由全部重定向不 404；`/temporal` 五子页归入数据工作区并补“时间轴”二级 tab；招聘工作区导航收敛为五项（工作台/岗位发现/我的岗位/能力全景/候选诊断），评测中心、数据资产、简历解析撤出业务导航。
+- 简历解析并入诊断流程：`/resumes` 确认画像后可“前往诊断”，诊断页画像区新增“从简历导入”入口；我的岗位卡片审核入口带待处理计数（“审核变化（13）→”）。
 - `/data` 总览删除“时间情报”窄带（信息与流转图重复），流转图高度余量放大，主要内容获得更多纵向空间；四个数据页页内大标题移除（顶部导航已承担当前位置表达），改为 sr-only 隐藏标题保留无障碍文档大纲。
 - 全站最小字号清理：中文辅助文字一律 ≥12px（工作台指标标签、workflow-context 阶段标签、new-jobs 候选人标签等 10px→12px），纯数字/ID/图表刻度 ≥11px；流转图 SVG 文字整体上抬（meta 11→12、status 11→12、time 10→11）。
 - 来源详情抽屉排版重做：统计格从 4 列挤排改为 2×2 卡片（值 22px）；来源列表改为通道卡片（id 等宽字体 + 中文类型徽章 + 时间窗/采集模式 meta 行 + notes 正文段落）；抽屉内层级统一为标题 18px / 小节 13px / 正文 12px。

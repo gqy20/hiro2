@@ -20,7 +20,7 @@ from pydantic import BaseModel, Field
 
 from backend.application.career import add_proof, save_growth_task, save_profile, set_active_target
 from backend.application.dashboard import build_dashboard
-from backend.application.datasets import build_dataset_overview
+from backend.application.datasets import build_dataset_overview, build_dataset_overview_db
 from backend.application.diagnosis import build_diagnosis, list_candidates
 from backend.application.evaluation import build_evaluation_overview
 from backend.application.quality import build_quality_overview
@@ -167,6 +167,12 @@ def dashboard_overview() -> dict:
 
 @app.get("/api/v1/datasets/overview")
 def datasets_overview() -> dict:
+    dsn = os.getenv("DATABASE_URL")
+    if dsn:
+        try:
+            return build_dataset_overview_db(dsn).model_dump()
+        except Exception:
+            pass
     return build_dataset_overview().model_dump()
 
 

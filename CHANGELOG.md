@@ -7,8 +7,10 @@
 ### Changed
 - Railway 部署适配：API/Web 使用平台动态端口，CORS 与简历档案路径支持环境变量，生产镜像排除本地密钥和原始文件。
 - 新增内部质量模式的数据资产工作区，展示数据域规模、质量、版本和可重建流转链路。
+- 数据导入升级为版本化快照登记：新增 `dataset_versions` 表，`dbimport` 记录 manifest 哈希、`run_id`、数量和质量状态，数据资产 API 优先读取 PostgreSQL。
 
 ### Added
+- 快照 Diff 检测器（`scripts/snapshotdiff.py`）：任意两 JD 池（archive/corp/snapshots 日期）按岗位分组对比技能份额，自动产出岗位级 JobChangeSet 草稿（add/remove/grow/shrink + 证据提及计数，阈值 min_jds=8/delta=2%/presence=0.5%）；首版跨年 diff（Wayback 历史池 4089 JD vs 现行池 4219 JD）检出 16 岗位 139 项变化，AI 产品经理的演化与手工五年对比一致且落到岗位粒度（AI Agent 要求 10.0%→20.6% grow、RAG 2.4%→5.7% grow、大数据处理 20.6%→7.6% shrink）——快照机制从存档升级为岗位演化引擎，changeset 审核后可喂 jobver 升版。
 - leadtime 接入历史 JD 窗口并修正先导口径：JD 源从仅 51job 扩为 51job/字节/腾讯（含 Wayback 历史池，观测窗起点 2025-09→2018-07）；跨期数据揭示原"12/13 域领先、中位 214 天"是窗口截断伪影——历史 JD 证明 12/13 域需求早已存在（新增 jd_preceded 分类：多为存量技能、事件侧早期覆盖薄或词典语义漂移），从统计排除；可证先导仅 ML/DL算法 1 域（信号 2017-07→JD 2018-07，+365 天，深度学习研究热→工业化招聘的真实跨期例证）；caveats 口径写入产物 params。
 - 词典新词核对与修正：逐条审查首批合入词，撤 10 个错配（Java/JS/Go/PHP/Node.js 等编程语言被归入 cap_07"Python"域会扭曲岗位画像——Java 岗 Python 权重虚高；Typescript 大小写双写跨域；CPU 歧义）并修正 ISO 27001 归属（法规域→安全/风控域），终态 72 词；核对代价命中率 27.4%→25.6%（换 Python 域纯净）；三项下游验证——英文岗位 resolved 重归一模拟 1.0→1.6、五年演化结论在新词典下四大崛起域与大数据收缩方向全部一致（幅度略小，结论不依赖词典版本，稳健）。
 - JD 侧词典新词消化（首批）：skillmap 支持 `--input` 词单路径与并发 15，JD 未命中词统计（89225 提及 / 词典命中仅 19.9% / 去重 22577 词）生成高频词单（count>=20 共 422 词覆盖 25489 次提及，样例上下文取自 JD 正文）；LLM 归派 388 候选（skill-alias prompt v1）——高置信（≥0.9）82 词自动合入 SKILLS-EARNED v4（Java/GCP/Azure/Spark/LLMs/MLOps/TensorFlow 等，effective_from 2026-08-28 尊重时间闸门）、中置信 116 词留 alias-candidates.jsonl 人工复核、噪声 187 词拒绝（产品/公司名）；词典生效后全池命中率 19.9%→27.4%（英文 18.7%），快照循环的新解析自动受益，存量 resolved 重归一为可选后续。

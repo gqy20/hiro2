@@ -175,3 +175,57 @@ def build_dataset_overview() -> DatasetOverview:
         pending_records=pending,
         datasets=items,
     )
+
+
+def build_dataset_overview_db(dsn: str) -> DatasetOverview:
+    """读取线上事实库中每个数据域的最新登记版本。"""
+    import psycopg
+
+    with psycopg.connect(dsn) as conn:
+        rows = conn.execute(
+            """
+            SELECT DISTINCT ON (dataset_id)
+                   dataset_id, dataset_version, status, record_count,
+                   valid_record_count, pending_record_count, quality_score,
+                   imported_at
+            FROM dataset_versions
+            ORDER BY dataset_id, imported_at DESC
+            """
+        ).fetchall()
+    labels = {
+        "jd": ("招聘岗位", "业务数据", ["JSONL", "CSV"], "企业招聘站、招聘平台"),
+        "temporal": ("时间情报", "事件数据", ["JSONL"], "日报与 RSS 来源"),
+        "capability": ("能力标准", "主数据", ["JSON", "JSONL", "YAML"], "职业标准与能力矩阵"),
+        "evidence": ("证据记录", "分析数据", ["JSONL"], "岗位、日报与标准数据"),
+        "resumes": ("简历档案", "候选人数据", ["PDF", "DOCX", "JSONL"], "候选人上传与受控导入"),
+        "evaluation": ("评测样本", "评测集", ["CSV", "JSON"], "冻结标注集"),
+    }
+    datasets = []
+    for dataset_id, version, status, records, valid, pending, quality, imported_at in rows:
+        name, category, formats, source = labels.get(
+            dataset_id, (dataset_id, "其他", ["JSON"], "内部导入")
+        )
+        datasets.append(
+            DatasetItem(
+                id=dataset_id,
+                name=name,
+                category=category,
+                records=records,
+                valid_records=valid,
+                version=version,
+                status={"IMPORTED": "可用", "FROZEN": "已冻结", "PARTIAL": "部分完成"}.get(
+                    status, status
+                ),
+                formats=formats,
+                source=source,
+                updated_at=imported_at.isoformat() if imported_at else "",
+                quality=round(float(quality) * 100),
+            )
+        )
+    return DatasetOverview(
+        total_datasets=len(datasets),
+        total_records=sum(item.records for item in datasets),
+        ready_datasets=sum(item.status in {"可用", "已审核", "已冻结"} for item in datasets),
+        pending_records=sum(item.records - item.valid_records for item in datasets),
+        datasets=datasets,
+    )

@@ -30,6 +30,8 @@ data/processed/<src>/feat*.jsonl         日/周/月特征和历史快照
 data/runs/                               清洗、回测和评测运行产物
 ```
 
+数据资产版本登记已接入 PostgreSQL（迁移 `0007_dataset_versions.sql`）。本地处理产物通过 `dbimport` 写入 `dataset_id`、`dataset_version`、记录数、有效数、质量分、manifest 哈希和 `run_id`；数据资产 API 线上优先读取最新登记快照。
+
 ## 阶段计划
 
 ### D0 数据盘点与清单
@@ -132,6 +134,13 @@ Markdown -> ReportEvent -> Evidence -> TrendSignal -> SignalCluster
 事件类型至少包括研究、规范发布、模型发布、开源、产品化、采用、政策和传闻。事实、报道和观点分级保存。
 
 退出条件：日报可按日期重建，事件可回到正文和引用链接，历史回填与实时数据分开。
+
+第三方技术信号冒烟（2026-08-27，`data/PKGS.yml` 32 包 -> 14 能力域 + `scripts/pypidl.py`）：
+
+- 通路实测三则：pypistats 全端点仅近 180 天，PyPI 下载历史无 key 通路不存在（正式版 pepy.tech key 或 BigQuery Linehaul 二选一）；GitHub stargazers 列表端点 2026-06-30 起仅限仓库管理员，star 时序不可得；现行信号 = pypi.org JSON API 全版本 `upload_time`（萌芽锚点，无刷量、as_of 干净）。
+- 三层时间轴成立（`data/processed/pypi/relsignal.json`，13 域对齐）：包首发（萌芽）→ 日报信号（传播）→ JD 落地（采用）。AI 域首发到 JD 中位 670~1796 天；老基建域（SQL/运维/云）7~20 年；日报领先 JD 中位 243 天不变。leadtime 的解释力取决于信号锚定的生命周期阶段，单一"领先天数"不可跨信号比较。
+- 口径教训归档：下载绝对量阈值被生态通胀证伪（onset 全被拖到 2026 初）；跨仓份额分母被大仓截断扭曲；萌芽锚点用"首发月中位数"。国内 pip 走镜像源，官方下载对中国使用为系统性低估，正式版结论须注明。
+- 正式版（2026-08-28）：`data/PKGS.yml` v6 定稿（PyPI 160 包/19 域 + npm 24 包/5 域，npm 份额独立分母不与 PyPI 混算）。补包三层依据：JD 高频英文技能原词反查（Databricks 250 次/Kafka 116/Lakehouse 89 等）→ hugovk top-15000 月度下载 dump 按域词根扫描（发现 ollama/browser-use/sglang/mem0ai/firecrawl 等凭知识遗漏的增长型包，+30）→ 人工剔除主包拆包与传递依赖（langchain-openai 等是传递结构、typing-extensions 等是依赖不是技能）；无词典域的前端技能不进表（limitation 注明）。BigQuery Linehaul 通路打通（项目 hiro2-pypi-research，dry-run 实测 2018 起全历史 324GB，扫描量只随月数增长与包数无关）；**额度事件**：三次真实测试查询各 324GB 将当月免费额度（1TB）烧尽，PyPI 拉数顺延至 9/1 重置后执行（教训：真实查询前只 dry-run、正式查询一次成型）。npm 侧已全量落地：24 包 2015 起月度下载（`npm` 子命令，段级 404 容忍 + 429 退避），**npm 份额 onset 领先 JD 中位 304 天**（3 域有效对齐：LLM应用 304/Agent 31/API开发为 2015 老域无意义），与日报 245 天同量级——开发者采用与媒体传播是可分层的两层信号；cap_04 Agent 域 npm 采用与 JD 几乎同步（JS 侧 Agent 框架 2025 才起量，晚于 LLM SDK），双生态对照价值显现。萌芽信号 18 域已出（v6 中位领先 3044 天，明细留 `pkg_first_releases` 复查）。
 
 ### D7 证据质量与融合
 

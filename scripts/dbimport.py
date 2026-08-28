@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import os
 import sys
@@ -39,7 +40,67 @@ def _load_jsonl(p: Path) -> list[dict]:
 
 
 def _load_json(p: Path) -> dict:
-    return json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}
+    if not p.is_file():
+        return {}
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+def _line_count(path: Path) -> int:
+    if not path.is_file():
+        return 0
+    return sum(1 for line in path.open(encoding="utf-8", errors="ignore") if line.strip())
+
+
+def _manifest_version(path: Path) -> str:
+    payload = _load_json(path)
+    return str(payload.get("dataset_version") or payload.get("version") or payload.get("batch") or "")
+
+
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    if not path.is_file():
+        return ""
+    with path.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _register_dataset(
+    cur,
+    *,
+    dataset_id: str,
+    version: str,
+    record_count: int,
+    valid_count: int,
+    quality: float,
+    manifest_path: Path,
+    run_id: str,
+    status: str = "IMPORTED",
+) -> None:
+    manifest = _load_json(manifest_path)
+    pending = max(0, record_count - valid_count)
+    cur.execute(
+        """
+        INSERT INTO dataset_versions
+            (dataset_id, dataset_version, status, record_count, valid_record_count,
+             pending_record_count, quality_score, manifest_hash, manifest, run_id)
+        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+        ON CONFLICT (dataset_id, dataset_version) DO UPDATE SET
+            status=EXCLUDED.status, record_count=EXCLUDED.record_count,
+            valid_record_count=EXCLUDED.valid_record_count,
+            pending_record_count=EXCLUDED.pending_record_count,
+            quality_score=EXCLUDED.quality_score, manifest_hash=EXCLUDED.manifest_hash,
+            manifest=EXCLUDED.manifest, run_id=EXCLUDED.run_id, imported_at=now()
+        """,
+        (
+            dataset_id, version, status, record_count, valid_count, pending,
+            quality, _sha256(manifest_path), json.dumps(manifest), run_id,
+        ),
+    )
 
 
 def cmd_run(dsn: str) -> dict:
@@ -68,13 +129,55 @@ def cmd_run(dsn: str) -> dict:
                         s.get("notes", ""),
                     ),
                 )
-            # 补登 evidence 使用的平台级 source_id
-            for extra in ("51job", "boss"):
+            # 补登 evidence 使用的平台级 source_id。处理产物可能包含未进入
+            # SOURCES.yml 的企业招聘站标识，先登记再写入外键表。
+            evidence_path = P / "evidence" / "evidence.jsonl"
+            evidence_rows = _load_jsonl(evidence_path)
+            configured_ids = {str(source.get("id", "")) for source in srcs}
+            inferred_ids = {
+                str(row.get("source_id", ""))
+                for row in evidence_rows
+                if row.get("source_id")
+            }
+            platform_ids = {"51job", "boss"} | (inferred_ids - configured_ids)
+            for extra in sorted(platform_ids):
                 cur.execute(
-                    "INSERT INTO sources (source_id, source_type, license) VALUES (%s, 'job_board', 'platform') ON CONFLICT DO NOTHING",
+                    "INSERT INTO sources (source_id, source_type, license, notes) VALUES (%s, 'job_board', 'platform', '从处理产物推断的平台来源') ON CONFLICT DO NOTHING",
                     (extra,),
                 )
-            counts["sources"] = len(srcs) + 2
+            counts["sources"] = len(srcs) + len(platform_ids - configured_ids)
+
+            # ---- dataset_versions（导入快照登记，幂等） ----
+            dataset_specs = (
+                ("jd", _manifest_version(P / "jd-opencli" / "manifest.json") or "jd-v3", P / "jd-opencli" / "norm-jd.jsonl", P / "jd-opencli" / "manifest.json"),
+                ("temporal", _manifest_version(P / "wechat-mp" / "manifest.json") or "temporal-v2", P / "wechat-mp" / "events.jsonl", P / "wechat-mp" / "manifest.json"),
+                ("capability", _manifest_version(P / "capability-matrix" / "manifest.json") or "skill-v6", P / "capability-matrix" / "position-skills.jsonl", P / "capability-matrix" / "manifest.json"),
+                ("evidence", _manifest_version(P / "evidence" / "manifest.json") or "evidence-v2", P / "evidence" / "evidence.jsonl", P / "evidence" / "manifest.json"),
+                ("evaluation", "eval-v1-20260825", ROOT / "evaluation" / "samples" / "manifest.json", ROOT / "evaluation" / "samples" / "manifest.json"),
+                ("resumes", "resume-v2", P / "candidates" / "resume-archive.jsonl", P / "candidates" / "resume-archive.jsonl"),
+            )
+            for dataset_id, version, record_path, manifest_path in dataset_specs:
+                records = _line_count(record_path) if record_path.suffix == ".jsonl" else sum(
+                    max(0, _line_count(ROOT / "evaluation" / "samples" / name) - 1)
+                    for name in ("role-mapping.csv", "domain-judgment.csv", "event-extraction.csv")
+                ) if dataset_id == "evaluation" else 0
+                valid_count = records
+                if dataset_id == "resumes":
+                    archive_rows = _load_jsonl(record_path)
+                    latest_rows = {
+                        str(row.get("resume_id")): row
+                        for row in archive_rows
+                        if row.get("resume_id")
+                    }
+                    records = len(latest_rows)
+                    valid_count = sum(bool(row.get("profile")) for row in latest_rows.values())
+                _register_dataset(
+                    cur, dataset_id=dataset_id, version=version, record_count=records,
+                    valid_count=valid_count, quality=0.67 if dataset_id == "resumes" else 1.0,
+                    manifest_path=manifest_path, run_id=run.run_id,
+                    status="FROZEN" if dataset_id == "evaluation" else "IMPORTED",
+                )
+            counts["dataset_versions"] = len(dataset_specs)
 
             # ---- capabilities ----
             caps = _load_json(P / "capability-matrix" / "capabilities.json").get("capabilities", [])
@@ -120,7 +223,7 @@ def cmd_run(dsn: str) -> dict:
             counts["skills"] = n_skills
 
             # ---- evidence ----
-            evs = _load_jsonl(P / "evidence" / "evidence.jsonl")
+            evs = evidence_rows
             for e in evs:
                 cur.execute(
                     """INSERT INTO evidence (evidence_id, source_id, claim_type, published_at, content_hash, quality_score, payload, urls, source_span)

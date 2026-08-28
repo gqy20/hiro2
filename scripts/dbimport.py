@@ -618,6 +618,84 @@ def cmd_run(dsn: str) -> dict:
                         n_tasks += 1
             counts["review_tasks"] = n_tasks
 
+            # ---- policies（gov.cn 政策文件库产物） ----
+            n = 0
+            pol_path = ROOT / "data/processed/policy/policies.jsonl"
+            if pol_path.is_file():
+                for line in pol_path.open(encoding="utf-8"):
+                    r = json.loads(line)
+                    cur.execute(
+                        """INSERT INTO policies (policy_id, title, puborg, pubdate, url, keyword, library)
+                           VALUES (%s,%s,%s,%s,%s,%s,%s)
+                           ON CONFLICT (policy_id) DO NOTHING""",
+                        (r.get("policy_id", ""), r.get("title", ""), r.get("puborg", ""),
+                         r.get("pubdate") or None, r.get("url", ""),
+                         r.get("keyword", ""), r.get("library", "")),
+                    )
+                    n += 1
+            counts["policies"] = n
+
+            # ---- dadian_careers（大典 2015 Excel / 2022 公示稿 / API 活数据） ----
+            n = 0
+            for path, vid in [
+                ("data/processed/policy/dadian-2015-careers.jsonl", 2015),
+                ("data/processed/policy/dadian-2022-gongshigao.jsonl", 2022),
+                ("data/processed/policy/dadian-careers-2.jsonl", 2),
+            ]:
+                fp = ROOT / path
+                if not fp.is_file():
+                    continue
+                for line in fp.open(encoding="utf-8"):
+                    r = json.loads(line)
+                    code = r.get("career_code", "")
+                    if not code:  # 2015 版部分无编码
+                        continue
+                    cur.execute(
+                        """INSERT INTO dadian_careers (career_code, name, parent, work_num, version_id)
+                           VALUES (%s,%s,%s,%s,%s)
+                           ON CONFLICT (career_code, version_id) DO NOTHING""",
+                        (code, r.get("name", ""), r.get("parent", ""),
+                         r.get("work_num", 0) or 0, vid),
+                    )
+                    n += 1
+            counts["dadian_careers"] = n
+
+            # ---- arxiv_papers ----
+            n = 0
+            arx_path = ROOT / "data/raw/arxiv/papers.jsonl"
+            if arx_path.is_file():
+                for line in arx_path.open(encoding="utf-8"):
+                    r = json.loads(line)
+                    cur.execute(
+                        """INSERT INTO arxiv_papers (arxiv_id, title, summary, published, categories, query)
+                           VALUES (%s,%s,%s,%s,%s,%s)
+                           ON CONFLICT (arxiv_id) DO NOTHING""",
+                        (r.get("arxiv_id", ""), r.get("title", ""),
+                         (r.get("summary") or "")[:2000], r.get("published") or None,
+                         r.get("categories") or [], r.get("query", "")),
+                    )
+                    n += 1
+            counts["arxiv_papers"] = n
+
+            # ---- resume_archive ----
+            n = 0
+            res_path = ROOT / "data/processed/candidates/resume-archive.jsonl"
+            if res_path.is_file():
+                for line in res_path.open(encoding="utf-8"):
+                    r = json.loads(line)
+                    cur.execute(
+                        """INSERT INTO resume_archive (resume_id, filename, size, uploaded_at, source, stats, profile)
+                           VALUES (%s,%s,%s,%s,%s,%s,%s)
+                           ON CONFLICT (resume_id) DO NOTHING""",
+                        (r.get("resume_id", ""), r.get("filename", ""),
+                         r.get("size", 0) or 0, r.get("uploaded_at") or None,
+                         r.get("source", ""),
+                         json.dumps(r.get("stats") or {}),
+                         json.dumps(r.get("profile") or {})),
+                    )
+                    n += 1
+            counts["resume_archive"] = n
+
         conn.commit()
 
     run.log("dbimport", "finished", "succeeded", count=counts)

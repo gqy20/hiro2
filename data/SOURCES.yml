@@ -10,6 +10,16 @@ sources:
     ingestion_mode: backfill
     notes: 数字经济岗位能力矩阵，46 岗位 x 30 能力 x 7 分组，0-5 评分
 
+  - id: policy
+    type: government_policy      # 政策文件：岗位演化的政策层锚点
+    path: data/raw/policy
+    license: 政府公开文件（gov.cn 统一检索 API），公开信息
+    time_range: [2010, 2026]
+    ingestion_mode: live
+    notes: sousuo.www.gov.cn 政策文件库统一 API（国务院+部委两库，9 个关键词
+      109 条，含标题/发文机关/发布时间/全文链接）；新职业目录人工整理
+      new-occupations.yml（2019-2024 历批 AI/数据相关 14 个，含批次与定义）
+
   - id: resume-ner
     type: academic_dataset      # 公开学术 NER 数据集：实体抽取层对照检验
     path: data/raw/resume-ner

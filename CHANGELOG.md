@@ -5,6 +5,9 @@
 ## [Unreleased]
 
 ### Changed
+- 流水线页重构：删除与真实数据脱节的"四步抽象阶段"条（按 ingest/extract/evidence/signal 匹配组件永远为空，`signal` 永不匹配），删除独立筛选工具栏，将组件/状态筛选移入对应列头（下拉内嵌表头），控制即列头；表格向上扩展利用更多纵向空间。
+- 数据首页来源节点可点开：点击数据流转图的源节点展开厂商/时间窗明细面板（如"招聘岗位"展开为 jd-corp 字节 376/腾讯 208/阿里 98 · jd-opencli 51job 650/BOSS 540 · jd-archive Wayback 13,071 条三条通道及各自时间窗），明细来自 `data/SOURCES.yml` 登记；关闭按钮收起。
+- 修复数据工作区导航高亮错误：`isActive` 前缀匹配导致"总览"（`/data`）在 `/data/sources` 等子页下也点亮；改为精确匹配，仅当前路由高亮。
 - 数据首页 KPI 重排为单条面板：总记录数（英雄数字 38px）+ 每项数字与补充信息同行（如"就绪数据集 6 / 6 个数据域"），消除三行卡片的碎片感。
 - 数据工作区去方框感：卡片/面板圆角 4px→12px、SVG 节点 rx=12、边框统一减弱为 `--line-soft`；选择框/输入框圆角→10px 并加 saffron focus 光晕；表格去掉每行横线（仅留表头底线）、行距加大；状态徽章 pill 化（999px 圆角 + 更饱满内边距）；流水线四步改单容器 + 细分隔；顶栏工作区切换按钮 pill 化。
 - 数据工作区导航与顶栏统一：数据工作区不再使用页内独立 `DataNav` subnav，四个入口（总览 / 来源 / 流水线 / 质量）并入顶部主导航（`AppShell` 数据模式），与招聘 / 成长工作区同构；`isActive` 改前缀匹配支持子路由高亮；`data-nav` 组件与 subnav 样式删除。
@@ -14,6 +17,7 @@
 - 数据导入升级为版本化快照登记：新增 `dataset_versions` 表，`dbimport` 记录 manifest 哈希、`run_id`、数量和质量状态，数据资产 API 优先读取 PostgreSQL。
 
 ### Added
+- 政策数据接入（`scripts/policyget.py` + `policy` 来源）：gov.cn 统一检索 API 直通（国务院+部委两库，纯 HTTP JSON），9 个关键词扫描 109 条政策文件（标题/发文机关/发布时间/全文链接，URL 幂等），核心锚点含 2017 新一代 AI 发展规划、2025"人工智能+"行动意见、2026 各行业 AI+ 实施意见，按年覆盖 2010~2026；新职业目录人工整理 new-occupations.yml（2019-2024 历批 AI/数据相关 14 个新职业含批次时间与职业定义——人工智能工程技术人员 2019、人工智能训练师 2020-02、数据安全工程技术人员 2021、生成式人工智能系统应用员 2024-05），为 46 岗位矩阵提供政策诞生时间锚点；人社部官网 JS 反爬+路径多变判定爬取不优于手工整理。
 - 合成简历真实化（身份要素注入）：genresume 新增真实感信息池（40 中文人名 / 32 所按 AI 岗分布分层的大学 / 34 家公司覆盖大厂-AI独角兽-中厂-外企 / 11 项真实竞赛 / 8 类证书 / 10 城市），按画像级别抽取身份要素（seed 可复现：senior 三段公司序列、junior 实习），prompt 要求原样使用真实名称禁止"某某/XX"占位；重生成 24 份 diverse 简历（旧版备份 md-v2/，占位检查 0 命中，样例：南京邮电大学+虾皮→MiniMax+ACM-ICPC 铜奖），md2res 转四版式 96 份，清理旧 imported 档案 191 条后重新导入 72 条（同文件名幂等跳过问题以清旧重导解决）。
 - 数据全景工作区（`/data`）：AppShell 扩展 Workspace 三元（招聘 / 成长 / 数据）+ localStorage 兼容；`/data` 入口五段叙事（数据来源 / 处理流水线 / 时间情报 / 服务对象）+ 三个钻取子页（`/data/sources` 来源、`/data/pipeline` 流水线、`/data/quality` 质量）；H1 改叙述式"从原始素材到两个用户界面"，KPI 卡主次优先级区分（主 2 列宽 + sparkline 占位 / 次 1 列宽），错误分布顶部红色 annotation，服务对象改独立 CTA 按钮；复用 paper / ink / saffron 既有色板，未引入新色。
 - Pipeline run 列表 API（`GET /api/v1/pipeline-runs?limit=50&since_days=7`）：扫描 `data/runs/<run_id>/events.jsonl` 聚合最近运行（默认 7 天 / 50 条），返回 run_id / component / status / duration / count_summary 等字段；只读不写库，HR / 评委视角。

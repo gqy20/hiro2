@@ -98,6 +98,8 @@ sources:
     notes: 映射表 data/PKGS.yml v6（PyPI 160 包/19 域 + npm 24 包/5 域，npm 份额独立
       分母）。萌芽锚点 = pypi.org JSON API 全版本 upload_time；量级信号 = npm
       downloads/range API（2015 起全历史已拉）+ BigQuery Linehaul 2018 起月度下载
-      （项目 hiro2-pypi-research，2026-08-28 额度被测试查询耗尽，9/1 重置后
-      `scripts/pypidl.py hist` 拉取）。已死通路：pypistats 全端点仅 180 天、
-      GitHub stargazers 端点 2026-06-30 起仅限仓库管理员
+      （项目 hiro2-pypi-research，2026-08-28 额度被测试查询耗尽且实测切账号不可绕过
+      ——免费查询额度按高于账号的维度聚合，9/1 重置后 `scripts/pypidl.py hist` 拉取）
+      + pepy.tech 近 90 天滚动通路（`pepy` 子命令，key 在 .env 的 PEPY_API_KEY，
+      每月跑一次自建下载历史，已覆盖 2026-05~08 四个月 160 包）。已死通路：pypistats
+      全端点仅 180 天、GitHub stargazers 端点 2026-06-30 起仅限仓库管理员

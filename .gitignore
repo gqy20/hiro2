@@ -33,3 +33,4 @@ test-results/
 # 可重建的简历版式产物（md2res all 重建；PDF 嵌全字体体积大）
 data/fixtures/resumes-div/out/
 apps/web/.next-e2e/
+PEPY_API_KEY

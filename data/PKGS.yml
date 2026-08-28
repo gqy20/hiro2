@@ -1,0 +1,212 @@
+# PyPI 包 -> 能力域信号映射（正式版 v6，160 包 / 19 域 + npm 24 包 / 5 域，9/1 拉数前定稿）。
+# 补包依据（2026-08-28）三层：JD 语料高频英文技能原词反查（Databricks 250 次/Kafka 116 等）
+#   -> hugovk top-15000 月度下载 dump 按域词根扫描（发现 ollama/browser-use/sglang 等增长型遗漏）
+#   -> 人工判定剔除主包拆包（langchain-*/langgraph-checkpoint 等传递结构）与传递依赖
+#   （typing-extensions/botocore/opentelemetry-* 是依赖不是技能）。
+# 数据通路（2026-08-28 实测）：
+#   PyPI 下载历史 = BigQuery 公共数据集 bigquery-public-data.pypi.file_downloads（Linehaul 原始日志），
+#     2018-01 起全历史月度聚合，实测扫描 324GB / 免费额度 1TB 每月；扫描量只随月数增长、与包数无关。
+#   npm 下载历史 = api.npmjs.org /downloads/range（2015-01 起，18 个月一段，无 key 免费实测可用）；
+#     npm 份额独立分母（PyPI/npm 两生态不混算），AI SDK JS 版与 PyPI 同域对照。
+#   萌芽锚点 = pypi.org JSON API 全版本 upload_time（scripts/pypidl.py rels）。
+#   已死通路：pypistats 全端点仅 180 天；GitHub stargazers 端点 2026-06-30 起仅限仓库管理员。
+# 信号口径：域月度下载份额（当月该域 / 当月同生态受监控包总量）首次 >= share_onset 且其后累计 >= sustain。
+#   份额按月归一对消生态级下载通胀（CI/bot/传递安装逐年上涨，绝对量阈值已证伪）。
+#   份额口径绑定映射表版本：改表即全量重拉（PyPI 侧 324GB），故拉数前定稿，后续扩容递增 version 并重跑。
+# limitation：国内 pip 走镜像源使官方下载低估中国使用且包间不均匀；2018 前无 PyPI 数据（老域标左删失）；
+#   词典 30 域无前端域，React/TypeScript 等 JD 高频前端技能不做包映射（硬映射造脏数据，留词典扩展）；
+#   Scala/Go/Rust 为非 Python 生态（JVM/modules/cargo），超出本表范围。
+
+version: 6
+share_onset: 0.02
+sustain: 0.30
+min_monthly_downloads: 10000
+
+packages:
+  - { pkg: "anthropic", cap: cap_01 }
+  - { pkg: "cohere", cap: cap_01 }
+  - { pkg: "google-cloud-aiplatform", cap: cap_01 }
+  - { pkg: "google-genai", cap: cap_01 }
+  - { pkg: "groq", cap: cap_01 }
+  - { pkg: "httpx-sse", cap: cap_01 }
+  - { pkg: "instructor", cap: cap_01 }
+  - { pkg: "litellm", cap: cap_01 }
+  - { pkg: "mistralai", cap: cap_01 }
+  - { pkg: "ollama", cap: cap_01 }
+  - { pkg: "openai", cap: cap_01 }
+  - { pkg: "outlines", cap: cap_01 }
+  - { pkg: "sse-starlette", cap: cap_01 }
+  - { pkg: "tiktoken", cap: cap_01 }
+  - { pkg: "tokenizers", cap: cap_01 }
+  - { pkg: "deepeval", cap: cap_02 }
+  - { pkg: "jinja2", cap: cap_02 }
+  - { pkg: "langfuse", cap: cap_02 }
+  - { pkg: "langsmith", cap: cap_02 }
+  - { pkg: "prompt-toolkit", cap: cap_02 }
+  - { pkg: "promptflow", cap: cap_02 }
+  - { pkg: "accelerate", cap: cap_03 }
+  - { pkg: "bitsandbytes", cap: cap_03 }
+  - { pkg: "deepspeed", cap: cap_03 }
+  - { pkg: "liger-kernel", cap: cap_03 }
+  - { pkg: "mlflow", cap: cap_03 }
+  - { pkg: "peft", cap: cap_03 }
+  - { pkg: "pytorch-lightning", cap: cap_03 }
+  - { pkg: "trl", cap: cap_03 }
+  - { pkg: "unsloth", cap: cap_03 }
+  - { pkg: "wandb", cap: cap_03 }
+  - { pkg: "agno", cap: cap_04 }
+  - { pkg: "autogen", cap: cap_04 }
+  - { pkg: "autogen-agentchat", cap: cap_04 }
+  - { pkg: "azure-ai-agents", cap: cap_04 }
+  - { pkg: "bedrock-agentcore", cap: cap_04 }
+  - { pkg: "browser-use", cap: cap_04 }
+  - { pkg: "claude-agent-sdk", cap: cap_04 }
+  - { pkg: "crewai", cap: cap_04 }
+  - { pkg: "deepagents", cap: cap_04 }
+  - { pkg: "fastapi-mcp", cap: cap_04 }
+  - { pkg: "fastmcp", cap: cap_04 }
+  - { pkg: "firecrawl-py", cap: cap_04 }
+  - { pkg: "google-adk", cap: cap_04 }
+  - { pkg: "langchain", cap: cap_04 }
+  - { pkg: "langgraph", cap: cap_04 }
+  - { pkg: "letta", cap: cap_04 }
+  - { pkg: "llama-index", cap: cap_04 }
+  - { pkg: "mcp", cap: cap_04 }
+  - { pkg: "mem0ai", cap: cap_04 }
+  - { pkg: "mini-swe-agent", cap: cap_04 }
+  - { pkg: "openai-agents", cap: cap_04 }
+  - { pkg: "pydantic-ai", cap: cap_04 }
+  - { pkg: "semantic-kernel", cap: cap_04 }
+  - { pkg: "smolagents", cap: cap_04 }
+  - { pkg: "strands-agents", cap: cap_04 }
+  - { pkg: "diffusers", cap: cap_05 }
+  - { pkg: "easyocr", cap: cap_05 }
+  - { pkg: "faster-whisper", cap: cap_05 }
+  - { pkg: "google-cloud-speech", cap: cap_05 }
+  - { pkg: "google-cloud-texttospeech", cap: cap_05 }
+  - { pkg: "google-cloud-vision", cap: cap_05 }
+  - { pkg: "insightface", cap: cap_05 }
+  - { pkg: "livekit-agents", cap: cap_05 }
+  - { pkg: "openai-whisper", cap: cap_05 }
+  - { pkg: "opencv-python", cap: cap_05 }
+  - { pkg: "paddleocr", cap: cap_05 }
+  - { pkg: "rembg", cap: cap_05 }
+  - { pkg: "chromadb", cap: cap_06 }
+  - { pkg: "elasticsearch", cap: cap_06 }
+  - { pkg: "faiss-cpu", cap: cap_06 }
+  - { pkg: "fastembed", cap: cap_06 }
+  - { pkg: "haystack-ai", cap: cap_06 }
+  - { pkg: "lancedb", cap: cap_06 }
+  - { pkg: "llama-parse", cap: cap_06 }
+  - { pkg: "pgvector", cap: cap_06 }
+  - { pkg: "pinecone-client", cap: cap_06 }
+  - { pkg: "pymilvus", cap: cap_06 }
+  - { pkg: "pymupdf4llm", cap: cap_06 }
+  - { pkg: "qdrant-client", cap: cap_06 }
+  - { pkg: "rank-bm25", cap: cap_06 }
+  - { pkg: "sentence-transformers", cap: cap_06 }
+  - { pkg: "txtai", cap: cap_06 }
+  - { pkg: "weaviate-client", cap: cap_06 }
+  - { pkg: "aiohttp", cap: cap_07 }
+  - { pkg: "httpx", cap: cap_07 }
+  - { pkg: "numpy", cap: cap_07 }
+  - { pkg: "pandas", cap: cap_07 }
+  - { pkg: "pydantic", cap: cap_07 }
+  - { pkg: "requests", cap: cap_07 }
+  - { pkg: "alembic", cap: cap_08 }
+  - { pkg: "psycopg", cap: cap_08 }
+  - { pkg: "pymongo", cap: cap_08 }
+  - { pkg: "pymysql", cap: cap_08 }
+  - { pkg: "redis", cap: cap_08 }
+  - { pkg: "sqlalchemy", cap: cap_08 }
+  - { pkg: "sqlglot", cap: cap_08 }
+  - { pkg: "sqlparse", cap: cap_08 }
+  - { pkg: "apache-airflow", cap: cap_09 }
+  - { pkg: "apache-flink", cap: cap_09 }
+  - { pkg: "confluent-kafka", cap: cap_09 }
+  - { pkg: "dask", cap: cap_09 }
+  - { pkg: "databricks-sdk", cap: cap_09 }
+  - { pkg: "dbt-core", cap: cap_09 }
+  - { pkg: "deltalake", cap: cap_09 }
+  - { pkg: "duckdb", cap: cap_09 }
+  - { pkg: "google-cloud-bigquery", cap: cap_09 }
+  - { pkg: "google-cloud-pubsub", cap: cap_09 }
+  - { pkg: "kafka-python", cap: cap_09 }
+  - { pkg: "polars", cap: cap_09 }
+  - { pkg: "pyarrow", cap: cap_09 }
+  - { pkg: "pyspark", cap: cap_09 }
+  - { pkg: "ray", cap: cap_09 }
+  - { pkg: "cleanlab", cap: cap_10 }
+  - { pkg: "great-expectations", cap: cap_10 }
+  - { pkg: "label-studio", cap: cap_10 }
+  - { pkg: "dash", cap: cap_11 }
+  - { pkg: "gradio", cap: cap_11 }
+  - { pkg: "matplotlib", cap: cap_11 }
+  - { pkg: "plotly", cap: cap_11 }
+  - { pkg: "seaborn", cap: cap_11 }
+  - { pkg: "streamlit", cap: cap_11 }
+  - { pkg: "catboost", cap: cap_12 }
+  - { pkg: "huggingface-hub", cap: cap_12 }
+  - { pkg: "jax", cap: cap_12 }
+  - { pkg: "keras", cap: cap_12 }
+  - { pkg: "lightgbm", cap: cap_12 }
+  - { pkg: "llama-cpp-python", cap: cap_12 }
+  - { pkg: "nltk", cap: cap_12 }
+  - { pkg: "scikit-learn", cap: cap_12 }
+  - { pkg: "sglang", cap: cap_12 }
+  - { pkg: "spacy", cap: cap_12 }
+  - { pkg: "tensorflow", cap: cap_12 }
+  - { pkg: "torch", cap: cap_12 }
+  - { pkg: "transformers", cap: cap_12 }
+  - { pkg: "vllm", cap: cap_12 }
+  - { pkg: "xgboost", cap: cap_12 }
+  - { pkg: "awswrangler", cap: cap_13 }
+  - { pkg: "azure-identity", cap: cap_13 }
+  - { pkg: "boto3", cap: cap_13 }
+  - { pkg: "google-cloud-storage", cap: cap_13 }
+  - { pkg: "kubernetes", cap: cap_13 }
+  - { pkg: "django", cap: cap_14 }
+  - { pkg: "fastapi", cap: cap_14 }
+  - { pkg: "flask", cap: cap_14 }
+  - { pkg: "gunicorn", cap: cap_14 }
+  - { pkg: "starlette", cap: cap_14 }
+  - { pkg: "uvicorn", cap: cap_14 }
+  - { pkg: "websockets", cap: cap_14 }
+  - { pkg: "celery", cap: cap_15 }
+  - { pkg: "grpcio", cap: cap_15 }
+  - { pkg: "onnxruntime", cap: cap_17 }
+  - { pkg: "ultralytics", cap: cap_17 }
+  - { pkg: "ansible", cap: cap_18 }
+  - { pkg: "docker", cap: cap_18 }
+  - { pkg: "opentelemetry-sdk", cap: cap_18 }
+  - { pkg: "paramiko", cap: cap_18 }
+  - { pkg: "interpret", cap: cap_19 }
+  - { pkg: "lime", cap: cap_19 }
+  - { pkg: "shap", cap: cap_19 }
+
+# npm 段：独立生态独立分母；AI SDK JS 版与 PyPI 同域对照（LangChain py/js 采用对比本身是信号）。
+npm_packages:
+  - { pkg: "@anthropic-ai/sdk", cap: cap_01 }
+  - { pkg: "@google/genai", cap: cap_01 }
+  - { pkg: "ai", cap: cap_01 }
+  - { pkg: "openai", cap: cap_01 }
+  - { pkg: "@copilotkit/core", cap: cap_04 }
+  - { pkg: "@langchain/core", cap: cap_04 }
+  - { pkg: "@langchain/langgraph", cap: cap_04 }
+  - { pkg: "@openai/agents", cap: cap_04 }
+  - { pkg: "llamaindex", cap: cap_04 }
+  - { pkg: "mastra", cap: cap_04 }
+  - { pkg: "@huggingface/transformers", cap: cap_06 }
+  - { pkg: "@lancedb/lancedb", cap: cap_06 }
+  - { pkg: "chart.js", cap: cap_11 }
+  - { pkg: "d3", cap: cap_11 }
+  - { pkg: "echarts", cap: cap_11 }
+  - { pkg: "plotly.js", cap: cap_11 }
+  - { pkg: "recharts", cap: cap_11 }
+  - { pkg: "vega", cap: cap_11 }
+  - { pkg: "@nestjs/core", cap: cap_14 }
+  - { pkg: "express", cap: cap_14 }
+  - { pkg: "fastify", cap: cap_14 }
+  - { pkg: "hono", cap: cap_14 }
+  - { pkg: "koa", cap: cap_14 }
+  - { pkg: "next", cap: cap_14 }

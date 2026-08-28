@@ -10,6 +10,7 @@
 - 数据导入升级为版本化快照登记：新增 `dataset_versions` 表，`dbimport` 记录 manifest 哈希、`run_id`、数量和质量状态，数据资产 API 优先读取 PostgreSQL。
 
 ### Added
+- arXiv 论文信号采集与四层时间轴验证（`scripts/arxivget.py` + `arxiv` 来源登记）：export.arxiv.org 公开 API 按 13 个技能关键词 x 2015~2026 拉取 14,830 篇预印本 metadata（幂等 arxiv_id，3.2s 限速，词x年粒度 runlog），词典归一聚合为月 x 能力域序列；与 relsignal 的包/日报/JD 三层并排首次完成六大新兴域四层传导验证——LLM应用 论文2020-01→包2023-02→日报2024-01→JD2025-10（全程70个月）、AI Agent 81 个月、RAG 79 个月（论文2019-05→JD 跨 6.5 年）、Prompt 工程 26 个月速通（实践先于学术化的反例）；结论：论文到岗位需求的完整传导约 5~7 年，其中论文→包 1~3 年、包→传播→JD 2~4 年。
 - 快照 Diff 检测器（`scripts/snapshotdiff.py`）：任意两 JD 池（archive/corp/snapshots 日期）按岗位分组对比技能份额，自动产出岗位级 JobChangeSet 草稿（add/remove/grow/shrink + 证据提及计数，阈值 min_jds=8/delta=2%/presence=0.5%）；首版跨年 diff（Wayback 历史池 4089 JD vs 现行池 4219 JD）检出 16 岗位 139 项变化，AI 产品经理的演化与手工五年对比一致且落到岗位粒度（AI Agent 要求 10.0%→20.6% grow、RAG 2.4%→5.7% grow、大数据处理 20.6%→7.6% shrink）——快照机制从存档升级为岗位演化引擎，changeset 审核后可喂 jobver 升版。
 - leadtime 接入历史 JD 窗口并修正先导口径：JD 源从仅 51job 扩为 51job/字节/腾讯（含 Wayback 历史池，观测窗起点 2025-09→2018-07）；跨期数据揭示原"12/13 域领先、中位 214 天"是窗口截断伪影——历史 JD 证明 12/13 域需求早已存在（新增 jd_preceded 分类：多为存量技能、事件侧早期覆盖薄或词典语义漂移），从统计排除；可证先导仅 ML/DL算法 1 域（信号 2017-07→JD 2018-07，+365 天，深度学习研究热→工业化招聘的真实跨期例证）；caveats 口径写入产物 params。
 - 词典新词核对与修正：逐条审查首批合入词，撤 10 个错配（Java/JS/Go/PHP/Node.js 等编程语言被归入 cap_07"Python"域会扭曲岗位画像——Java 岗 Python 权重虚高；Typescript 大小写双写跨域；CPU 歧义）并修正 ISO 27001 归属（法规域→安全/风控域），终态 72 词；核对代价命中率 27.4%→25.6%（换 Python 域纯净）；三项下游验证——英文岗位 resolved 重归一模拟 1.0→1.6、五年演化结论在新词典下四大崛起域与大数据收缩方向全部一致（幅度略小，结论不依赖词典版本，稳健）。

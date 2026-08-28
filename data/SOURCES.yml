@@ -10,6 +10,16 @@ sources:
     ingestion_mode: backfill
     notes: 数字经济岗位能力矩阵，46 岗位 x 30 能力 x 7 分组，0-5 评分
 
+  - id: arxiv
+    type: academic_preprint     # arXiv 预印本：技术先导信号的最上游
+    path: data/raw/arxiv
+    license: arXiv 公开 metadata（CC BY），仅限研究使用
+    time_range: [2015, 2026]
+    ingestion_mode: backfill
+    notes: export.arxiv.org API 按 13 个技能关键词 x 12 年拉取 14830 篇
+      （标题/摘要/分类/提交日期），词典归一聚合月 x 能力域；
+      与 relsignal 的包/日报/JD 三层并排构成四层时间轴
+
   - id: jd-opencli
     type: job_board              # 招聘 JD：企业岗位需求验证
     path: data/raw/jd/opencli
@@ -80,13 +90,14 @@ sources:
       feedtest 2026-08-26 全部通过；guid 幂等追加，rssget 每 3 小时增量抓取
 
   - id: pypi-pkgstats
-    type: package_registry       # PyPI 包发布/下载：技术萌芽与采用信号
+    type: package_registry       # PyPI/npm 包发布/下载：技术萌芽与采用信号
     path: data/raw/pypi
-    license: PyPI JSON API 与 pypistats.org 公开数据，仅限研究使用
+    license: PyPI JSON API、pypistats.org、BigQuery 公共数据集与 npm downloads API 公开数据，仅限研究使用
     time_range: [2006-02, 2026-08]
     ingestion_mode: backfill
-    notes: 映射表 data/PKGS.yml（32 包 -> 能力域，含 GitHub 仓映射）。pypi.org JSON
-      API 全版本 upload_time 作萌芽锚点（scripts/pypidl.py rels/run）；pypistats
-      /overall 仅近 180 天下载（短窗参考）。下载历史正式版通路二选一：pepy.tech key
-      或 BigQuery Linehaul（2018 起月度分区）。GitHub stargazers 列表端点 2026-06-30
-      起仅限仓库管理员，star 时序已不可得
+    notes: 映射表 data/PKGS.yml v6（PyPI 160 包/19 域 + npm 24 包/5 域，npm 份额独立
+      分母）。萌芽锚点 = pypi.org JSON API 全版本 upload_time；量级信号 = npm
+      downloads/range API（2015 起全历史已拉）+ BigQuery Linehaul 2018 起月度下载
+      （项目 hiro2-pypi-research，2026-08-28 额度被测试查询耗尽，9/1 重置后
+      `scripts/pypidl.py hist` 拉取）。已死通路：pypistats 全端点仅 180 天、
+      GitHub stargazers 端点 2026-06-30 起仅限仓库管理员

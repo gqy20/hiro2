@@ -6,8 +6,11 @@
 
 ### Changed
 - Railway 部署适配：API/Web 使用平台动态端口，CORS 与简历档案路径支持环境变量，生产镜像排除本地密钥和原始文件。
+- 新增内部质量模式的数据资产工作区，展示数据域规模、质量、版本和可重建流转链路。
 
 ### Added
+- Wayback 历史 JD 回溯（`scripts/jdarchive.py`，jd-archive 来源）：CDX 枚举字节/腾讯/Greenhouse 招聘 API 的全部 200 快照逐份拉取（id_ 原始响应 + gzip 解压，1.2s 限速，断点续跑），13071 条历史记录 / 4148 个去重岗位（观测时间 2022~2026 五年连续），记录带 snapshot_ts 锚点、jdxtract 按 jd_id 首见去重（最早观测优先）；解析 4135 条 + rolemap 映射 2424 条后首次实现真历史窗口对比——2022-23（334 条）vs 2025-26（1513 条）：多模态 +6.4%/LLM应用 +6.1%/AI Agent +4.9%/RAG +2.6% 崛起，大数据处理 -10.8%/SQL -2.7%/云计算 -2.3% 收缩，与行业真实演化吻合；放弃源及死因：拉勾快照为反爬响应、阿里 POST 无 body、百度/网易 SPA 壳、华为/51job 无存档——结论为 Wayback 仅 GET 型 JSON API 有可存档响应体。
+- 第三方技术信号冒烟（`data/PKGS.yml` 32 包 -> 14 能力域 + `scripts/pypidl.py` fetch/rels/run + `pypi-pkgstats` 来源登记）：实测通路三则——pypistats 全端点仅 180 天（PyPI 下载历史无 key 通路不存在）、GitHub stargazers 端点 2026-06-30 起仅限管理员（star 时序不可得）、现行萌芽信号用 pypi.org JSON API 全版本 upload_time；三层时间轴成立（包首发 → 日报传播 → JD 采用，AI 域首发到 JD 中位 670~1796 天 vs 日报领先 243 天），leadtime 解释力取决于信号锚定的生命周期阶段。
 - JD 扩采全链路落地并兑现薄证据岗位升版：解析 corp 4167 条（并发 4→15 后 41 条/分钟，实测校准预估方法论）、rolemap 增量映射 3225 条（exact/alias/llm/unmatched = 107/684/1962/738）；46 岗位覆盖 43 个、≥15 条岗位从 6 → 21 个（大数据 4→334、数据分析师 5→158、数据安全 3→95、数据中心运维 5→31、AI训练师 6→25；智能传感器 4→7 仍薄）；`jobver --version 3` 支持对已发布 v2 的扩采复核（changeset_vs_v2 语义：新市场 top10 对比 v2 必备/加分，add/promote/demote），发布 5 个 v3 版本（bigdata/data-analyst/data-sec/dc-ops/ai-trainer），Neo4j 投影 17/17 可查；质量核对：中英技能原词抽取均好（13.8/10.5 每岗），英文词典归一短板（resolved 1.1 vs 4.8）归入新词消化任务。
 - 企业官方招聘站采集器 `jdcorp`（8 源 4248 条 JD）：字节/阿里/腾讯/美团/小红书/vivo 国内 6 厂（Playwright 拦截同源 XHR 或纯 HTTP，全部带职责/要求正文，7 成带真实发布时间）+ Anthropic 与 Greenhouse 通用 board adapter（Together AI/Scale/Databricks/Pinterest/Figma/Discord/Stripe/Duolingo 8 板块纯 HTTP 全量）；关键词级 7 天增量缓存（首屏无新增跳过整词）、`--keywords all` 全岗位池模式（不过度倾向技术岗）、`runall` 8 站并行；`jdxtract` 接入 corp 第四源自动合并解析，`SOURCES.yml` 登记 jd-corp 来源与限速纪律。放弃名单及原因：华为 404、百度 headless 反爬、快手登录墙、OpenAI 网络不通、DeepSeek SSR 内嵌且岗位量个位数、MiniMax careers 无职位数据、荣耀/蚂蚁/小米/B站连接层拒绝。
 - 简历档案审阅工作区：左侧去重档案列表，右侧当前文件审阅；支持 PDF 内嵌预览、DOCX 内容预览、TXT/MD 文本预览，以及文档预览与结构化档案 Tab 切换。

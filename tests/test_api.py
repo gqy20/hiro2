@@ -48,6 +48,14 @@ def test_evaluation_overview_contract() -> None:
     assert response.json()["datasets"]
 
 
+def test_dataset_overview_contract() -> None:
+    response = TestClient(app).get("/api/v1/datasets/overview")
+    assert response.status_code == 200
+    body = response.json()
+    assert body["total_datasets"] >= 5
+    assert {item["id"] for item in body["datasets"]} >= {"jd", "evaluation", "capability"}
+
+
 def test_publish_job_idempotent_and_unknown_404() -> None:
     client = TestClient(app)
     # 已发布过的默认草稿：幂等返回既有 PUBLISHED 版本而非 409

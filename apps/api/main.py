@@ -18,6 +18,7 @@ from pydantic import BaseModel, Field
 
 from backend.application.career import add_proof, save_growth_task, save_profile, set_active_target
 from backend.application.dashboard import build_dashboard
+from backend.application.datasets import build_dataset_overview
 from backend.application.diagnosis import build_diagnosis, list_candidates
 from backend.application.evaluation import build_evaluation_overview
 from backend.application.quality import build_quality_overview
@@ -146,6 +147,11 @@ def emerging_jobs() -> dict:
 @app.get("/api/v1/dashboard/overview")
 def dashboard_overview() -> dict:
     return build_dashboard().model_dump()
+
+
+@app.get("/api/v1/datasets/overview")
+def datasets_overview() -> dict:
+    return build_dataset_overview().model_dump()
 
 
 @app.get("/api/v1/evaluation/overview")

@@ -18,6 +18,15 @@ sources:
     ingestion_mode: backfill
     notes: 关键词“AI 工程师”；搜索层 1190 条（51job 650 / boss 540），详情层 70 条，正文可用约 38 条
 
+  - id: jd-archive
+    type: web_archive          # Wayback Machine 历史快照：回溯 2022~2025 真实岗位池
+    path: data/raw/jd/archive
+    license: Internet Archive 公开快照，仅限研究使用，不分发原文
+    time_range: [2022-01, 2025-05]
+    ingestion_mode: backfill
+    notes: CDX 枚举字节/腾讯招聘 API 的全部 200 快照（搜索响应逐份拉取），
+      记录带 snapshot_ts 观测时间锚点；jdxtract 按 jd_id 首见去重（最早观测优先）
+
   - id: jd-corp
     type: employer_site          # 企业官方招聘站：结构化 JD 与真实发布时间
     path: data/raw/jd/corp
@@ -69,3 +78,15 @@ sources:
     ingestion_mode: live
     notes: 首期 24 源（优先级>=4 全量 + p2 精选），源自 rss2cubox feeds.txt [direct] 段；
       feedtest 2026-08-26 全部通过；guid 幂等追加，rssget 每 3 小时增量抓取
+
+  - id: pypi-pkgstats
+    type: package_registry       # PyPI 包发布/下载：技术萌芽与采用信号
+    path: data/raw/pypi
+    license: PyPI JSON API 与 pypistats.org 公开数据，仅限研究使用
+    time_range: [2006-02, 2026-08]
+    ingestion_mode: backfill
+    notes: 映射表 data/PKGS.yml（32 包 -> 能力域，含 GitHub 仓映射）。pypi.org JSON
+      API 全版本 upload_time 作萌芽锚点（scripts/pypidl.py rels/run）；pypistats
+      /overall 仅近 180 天下载（短窗参考）。下载历史正式版通路二选一：pepy.tech key
+      或 BigQuery Linehaul（2018 起月度分区）。GitHub stargazers 列表端点 2026-06-30
+      起仅限仓库管理员，star 时序已不可得

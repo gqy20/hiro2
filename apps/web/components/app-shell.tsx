@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import {
   ChartScatter,
   ClipboardText,
+  Database,
   FileText,
   GitDiff,
   Graph,
@@ -26,6 +27,7 @@ const navigation = [
   { href: "/resumes", label: "简历解析", icon: FileText },
   { href: "/diagnosis", label: "候选诊断", icon: ClipboardText },
   { href: "/evaluation", label: "评测中心", icon: ShieldCheck },
+  { href: "/datasets", label: "数据资产", icon: Database },
   { href: "/career", label: "求职成长", icon: ChartScatter },
   { href: "/profile", label: "我的画像", icon: ClipboardText },
 ];

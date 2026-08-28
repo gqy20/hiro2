@@ -1175,3 +1175,114 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* 求职区：目标岗位列表 */
+.career-jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.career-job-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  border-radius: 10px;
+  background: var(--surface-raised);
+}
+.career-job-card > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.career-job-card h2 {
+  margin: 0;
+  font-size: 17px;
+}
+.career-job-duty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.career-job-meta {
+  display: flex;
+  gap: 24px;
+  margin: 0;
+}
+.career-job-meta div {
+  display: grid;
+  gap: 2px;
+}
+.career-job-meta dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+.career-job-meta dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.career-job-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  color: var(--blue);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+/* 求职区：学习路径 */
+.career-path-list {
+  display: grid;
+  gap: 16px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.career-path-item {
+  padding: 24px;
+  border-radius: 10px;
+  background: var(--surface-raised);
+}
+.career-path-item > header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.career-path-index {
+  color: var(--muted);
+  font: 500 18px/1 var(--font-mono);
+}
+.career-path-item h2 {
+  margin: 0;
+  font-size: 17px;
+}
+.career-path-reason {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.career-path-steps {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--line-subtle);
+  list-style: none;
+}
+.career-path-steps li {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 10px;
+  align-items: baseline;
+}
+.career-path-steps b {
+  color: var(--blue);
+  font-size: 13px;
+}
+.career-path-steps span {
+  font-size: 13px;
+}

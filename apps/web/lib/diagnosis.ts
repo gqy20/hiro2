@@ -46,12 +46,17 @@ export type DiagnosisFixture = {
     matchId: string;
     algorithmVersion: string;
     overallScore: number;
+    requiredMet?: number;
+    requiredTotal?: number;
     evidence: import("@/lib/job-update").Evidence[];
     gaps: Array<{
       skill: string;
       reason: string;
       priority: "high" | "medium";
       action: string;
+      practice?: string;
+      evaluate?: string;
+      certify?: string;
     }>;
     career?: {
       completedSkills: string[];

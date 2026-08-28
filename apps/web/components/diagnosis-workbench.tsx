@@ -15,6 +15,7 @@ import { Button, Input, Select, Tag } from "antd";
 import { AppShell } from "@/components/app-shell";
 import { WorkflowContext } from "@/components/workflow-context";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
+import { GapSteps } from "@/components/gap-steps";
 import { ConfidenceMeter, StatusMark } from "@/components/review-ui";
 import { FixtureState, skillStatusToReview } from "@/components/workflow-ui";
 import { SectionHeader } from "@/components/workflow-ui";
@@ -439,13 +440,40 @@ export function DiagnosisWorkbench({
             </div>
             <section className="match-summary">
               <div>
-                <span>投递基础</span>
-                <ConfidenceMeter confidence={reportScore} variant="prominent" />
+                {careerMode && fixture.report.requiredTotal ? (
+                  <>
+                    <span>必备能力</span>
+                    <b>
+                      {fixture.report.requiredMet ?? 0} /{" "}
+                      {fixture.report.requiredTotal}
+                    </b>
+                    <small>
+                      投递基础 {Math.round(reportScore * 100)}%
+                    </small>
+                  </>
+                ) : (
+                  <>
+                    <span>投递基础</span>
+                    <ConfidenceMeter confidence={reportScore} variant="prominent" />
+                  </>
+                )}
               </div>
               <div>
                 <span>已具备</span>
                 <b>{counts.ready}</b>
               </div>
+              {careerMode ? (
+                <>
+                  <div>
+                    <span>部分具备</span>
+                    <b>{counts.partial}</b>
+                  </div>
+                  <div>
+                    <span>缺失</span>
+                    <b>{counts.missing}</b>
+                  </div>
+                </>
+              ) : null}
               <div>
                 <span>优先补齐</span>
                 <b>{priorityGaps.length}</b>
@@ -522,17 +550,7 @@ export function DiagnosisWorkbench({
                     <span>{String(index + 1).padStart(2, "0")}</span>
                     <div>
                       <strong>{gap.skill}</strong>
-                      <p>
-                        <b>学</b>
-                        {gap.action}
-                      </p>
-                      <p>
-                        <b>练</b>
-                        {`完成一个可展示的 ${gap.skill} 练习或项目。`}
-                      </p>
-                      <p>
-                        <b>证</b>补充项目说明或可验证成果。
-                      </p>
+                      <GapSteps gap={gap} className="career-path-steps" />
                       <Button
                         onClick={async () => {
                           const completed = !completedSteps.includes(gap.skill);

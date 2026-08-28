@@ -34,8 +34,19 @@ const navigation = [
   { href: "/evaluation", label: "评测中心", icon: ShieldCheck },
   { href: "/datasets", label: "数据资产", icon: Database },
   { href: "/career", label: "求职成长", icon: ChartScatter },
+  { href: "/career/jobs", label: "目标岗位", icon: Graph },
   { href: "/profile", label: "我的画像", icon: ClipboardText },
+  { href: "/career/path", label: "学习路径", icon: FlowArrow },
 ];
+
+// 求职成长工作区导航项（/diagnosis 为两区共享，不在排除列）
+const CAREER_ONLY_HREFS = new Set([
+  "/career",
+  "/career/jobs",
+  "/career/path",
+  "/profile",
+]);
+const CAREER_NAV_HREFS = new Set([...CAREER_ONLY_HREFS, "/diagnosis"]);
 
 const dataNavigation = [
   { href: "/data", label: "总览", icon: Database },
@@ -90,12 +101,8 @@ export function AppShell({
   const visibleNavigation = dataMode
     ? dataNavigation
     : careerMode
-      ? navigation.filter((item) =>
-          ["/career", "/profile", "/diagnosis"].includes(item.href),
-        )
-      : navigation.filter(
-          (item) => !["/career", "/profile"].includes(item.href),
-        );
+      ? navigation.filter((item) => CAREER_NAV_HREFS.has(item.href))
+      : navigation.filter((item) => !CAREER_ONLY_HREFS.has(item.href));
 
   function isActive(href: string): boolean {
     // 精确匹配：避免 /data 在 /data/sources 等子页下误亮（总览不再一直亮）

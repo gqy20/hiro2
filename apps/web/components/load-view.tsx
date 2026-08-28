@@ -1,6 +1,7 @@
 import { AppShell } from "@/components/app-shell";
 
 type LoadVariant =
+  | "career"
   | "dashboard"
   | "data"
   | "diagnosis"

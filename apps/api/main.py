@@ -18,12 +18,20 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse
 from pydantic import BaseModel, Field
 
-from backend.application.career import add_proof, save_growth_task, save_profile, set_active_target
+from backend.application.annotate import submit_annotation
+from backend.application.career import (
+    add_proof,
+    get_career_home,
+    save_growth_task,
+    save_profile,
+    set_active_target,
+)
 from backend.application.dashboard import build_dashboard
 from backend.application.datasets import build_dataset_overview, build_dataset_overview_db
 from backend.application.diagnosis import build_diagnosis, list_candidates
 from backend.application.evaluation import build_evaluation_overview
 from backend.application.insights import build_detected_changes, build_timeline
+from backend.application.joblist import build_published_jobs
 from backend.application.pipeline_runs import build_pipeline_runs
 from backend.application.quality import build_quality_overview
 from backend.application.service import ApplicationService
@@ -38,6 +46,7 @@ async def _lifespan(_: FastAPI):
     # 配置了 PG 时启动即后台跑一次数据导入（幂等，不阻塞就绪）
     if os.getenv("DATABASE_URL"):
         from backend.application.snapshot import run_import_once
+
         tasks.append(asyncio.create_task(run_import_once()))
         print("[import] 后台数据导入任务已启动", flush=True)
     # JD 快照后台任务：HIRO2_SNAPSHOT_ENABLED=true 时启动即采集（周期见模块头）
@@ -178,6 +187,12 @@ def jobs_detected_changes() -> dict:
     return build_detected_changes().model_dump()
 
 
+@app.get("/api/v1/jobs/published")
+def jobs_published() -> dict:
+    """已发布岗位版本列表（每岗位取最新版本），求职区目标岗位页数据源。"""
+    return build_published_jobs().model_dump()
+
+
 @app.get("/api/v1/temporal/timeline")
 def temporal_timeline() -> dict:
     """四层时间轴：论文 arXiv -> PyPI/npm 包 -> 日报 -> JD 的传导。"""
@@ -226,6 +241,11 @@ def evidence(evidence_id: str) -> dict:
     if vm is None:
         raise HTTPException(404, f"证据不存在: {evidence_id}")
     return vm.model_dump(by_alias=True)
+
+
+@app.get("/api/v1/career/home")
+def career_home() -> dict:
+    return get_career_home()
 
 
 @app.get("/api/v1/candidates")
@@ -361,9 +381,37 @@ def skills_graph(job: str = "ai-agent-v2") -> dict:
     }
 
 
+class TaskDecisionRequest(BaseModel):
+    decision: str = Field(pattern="^(ACCEPT|MODIFY|REJECT|UNKNOWN)$")
+    rationale: str = ""
+    reviewer_id: str = "local"
+    error_type: str | None = None
+    corrected_payload: dict | None = None
+
+
 @app.get("/api/v1/tasks/my")
 def my_tasks() -> dict:
     return build_tasks().model_dump()
+
+
+@app.post("/api/v1/tasks/{task_id}/decision")
+def task_decision(task_id: str, req: TaskDecisionRequest) -> dict:
+    known = {t.task_id for t in build_tasks().tasks}
+    if task_id not in known:
+        raise HTTPException(404, f"任务不存在: {task_id}")
+    rec = submit_annotation(
+        task_id,
+        req.decision,
+        rationale=req.rationale,
+        reviewer_id=req.reviewer_id,
+        error_type=req.error_type,
+        corrected_payload=req.corrected_payload,
+    )
+    return {
+        "task_id": task_id,
+        "status": "RESOLVED",
+        "annotation_id": rec["annotation_id"],
+    }
 
 
 @app.get("/api/v1/quality/overview")

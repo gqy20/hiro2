@@ -37,3 +37,5 @@ export type {
 } from "@/lib/diagnosis";
 
 export type { QualityOverview } from "@/lib/quality";
+
+export type { PublishedJob, PublishedJobsView } from "@/lib/career-jobs";

@@ -4,9 +4,44 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react";
 import type { DiagnosisFixture } from "@/lib/diagnosis";
 
+export function CareerHomeEmpty() {
+  return (
+    <section className="career-home" aria-labelledby="career-home-title">
+      <header className="career-home-heading">
+        <div>
+          <h1 id="career-home-title">开始你的成长诊断</h1>
+          <p>选择目标岗位，或上传简历直接开始。</p>
+        </div>
+      </header>
+      <div className="career-home-grid">
+        <Link className="career-next-action" href="/career/jobs">
+          <span>第一步</span>
+          <strong>选择目标岗位</strong>
+          <p>浏览全部已发布岗位标准，找到你的方向。</p>
+          <b>
+            查看岗位 <ArrowRight size={16} />
+          </b>
+        </Link>
+        <Link className="career-progress-card" href="/resumes">
+          <span>已有简历</span>
+          <strong>上传简历开始诊断</strong>
+          <p>支持 PDF / DOCX，解析结果可修正。</p>
+          <b>
+            上传简历 <ArrowRight size={16} />
+          </b>
+        </Link>
+      </div>
+    </section>
+  );
+}
+
 export function CareerHome({ fixture }: { fixture: DiagnosisFixture }) {
   const gaps = fixture.report.gaps.filter((gap) => gap.priority === "high");
   const focus = gaps[0] ?? fixture.report.gaps[0];
+  const required =
+    fixture.report.requiredTotal && fixture.report.requiredTotal > 0
+      ? `${fixture.report.requiredMet ?? 0}/${fixture.report.requiredTotal}`
+      : null;
   return (
     <section className="career-home" aria-labelledby="career-home-title">
       <header className="career-home-heading">
@@ -33,8 +68,10 @@ export function CareerHome({ fixture }: { fixture: DiagnosisFixture }) {
           </b>
         </Link>
         <Link className="career-progress-card" href="/diagnosis">
-          <span>投递基础</span>
-          <strong>{Math.round(fixture.report.overallScore * 100)}%</strong>
+          <span>{required ? "必备能力" : "投递基础"}</span>
+          <strong>
+            {required ?? `${Math.round(fixture.report.overallScore * 100)}%`}
+          </strong>
           <p>
             已具备{" "}
             {
@@ -42,6 +79,9 @@ export function CareerHome({ fixture }: { fixture: DiagnosisFixture }) {
                 .length
             }{" "}
             项能力
+            {required
+              ? ` · 投递基础 ${Math.round(fixture.report.overallScore * 100)}%`
+              : ""}
           </p>
           <b>
             查看完整诊断 <ArrowRight size={16} />

@@ -67,6 +67,28 @@ def add_proof(
     return {"proofId": proof_id, "createdAt": created_at.isoformat()}
 
 
+def get_career_home() -> dict:
+    """求职区首页状态：有活跃目标返回 ready + 候选人/版本，否则 empty。
+
+    DB 不可用时回退演示候选人，保持离线诊断可用。
+    """
+    if not os.getenv("DATABASE_URL"):
+        return {
+            "status": "ready",
+            "candidateId": "synth_agent_senior_02",
+            "jobVersionId": "ai-agent-v2",
+        }
+    with _connect() as conn, conn.cursor() as cur:
+        cur.execute(
+            """SELECT candidate_id, job_version_id FROM candidate_targets
+               WHERE is_active = TRUE ORDER BY selected_at DESC LIMIT 1""",
+        )
+        row = cur.fetchone()
+    if not row:
+        return {"status": "empty"}
+    return {"status": "ready", "candidateId": row[0], "jobVersionId": row[1]}
+
+
 def load_career_state(candidate_id: str, job_version_id: str) -> dict:
     """读取个人成长事实；未配置数据库时返回空状态以保持离线诊断可用。"""
     if not os.getenv("DATABASE_URL"):

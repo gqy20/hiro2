@@ -58,6 +58,9 @@ class GapVM(_VM):
     reason: str
     priority: Literal["high", "medium"]
     action: str
+    practice: str = ""
+    evaluate: str = ""
+    certify: str = ""
 
 
 class DiagnosisVM(_VM):
@@ -93,7 +96,7 @@ def _load_db_diagnosis(candidate_id: str, job_version_id: str) -> tuple[dict, di
         )
         report = cur.fetchone()
         cur.execute(
-            """SELECT title, valid_from, evidence_ids FROM job_versions
+            """SELECT title, valid_from, evidence_ids, required_skills FROM job_versions
                WHERE version_id = %s AND status = 'PUBLISHED'""",
             (job_version_id,),
         )
@@ -114,6 +117,8 @@ def _load_db_diagnosis(candidate_id: str, job_version_id: str) -> tuple[dict, di
             "title": job[0],
             "valid_from": job[1].isoformat() if job[1] else "",
             "evidence": {"evidence_ids": job[2]},
+            # 对齐文件路径的键名，供 requiredTotal 计算复用
+            "required_skill_ids": job[3] or [],
         },
     )
 
@@ -172,15 +177,22 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
         )
         for s in cand.get("skills", [])
     ]
+
+    def _step(skill_id: str) -> dict:
+        return next(
+            (st for st in path.get("steps", []) if st["skill_id"] == skill_id),
+            {},
+        )
+
     gaps = [
         GapVM(
             skill=g["name"],
             reason=g.get("candidate_evidence", ""),
             priority="high" if g.get("is_required") else "medium",
-            action=next(
-                (st["learn"] for st in path.get("steps", []) if st["skill_id"] == g["skill_id"]),
-                "",
-            ),
+            action=_step(g["skill_id"]).get("learn", ""),
+            practice=_step(g["skill_id"]).get("practice", ""),
+            evaluate=_step(g["skill_id"]).get("evaluate", ""),
+            certify=_step(g["skill_id"]).get("certify", ""),
         )
         for g in report.get("gaps", [])
         if g.get("verdict") != "已具备"
@@ -210,6 +222,12 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
             "matchId": report.get("match_id", ""),
             "algorithmVersion": report.get("algorithm_version", ""),
             "overallScore": report.get("overall_score", 0),
+            "requiredMet": sum(
+                1
+                for g in report.get("gaps", [])
+                if g.get("is_required") and g.get("verdict") == "已具备"
+            ),
+            "requiredTotal": len(job.get("required_skill_ids", [])),
             "gaps": [g.model_dump() for g in gaps],
             "career": career_state,
         },

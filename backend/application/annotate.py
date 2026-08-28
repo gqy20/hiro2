@@ -16,7 +16,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 ANNOTATIONS = ROOT / "evaluation" / "annotations.jsonl"
 PRELABELS = ROOT / "evaluation" / "prelabels.jsonl"
-DATASET_VERSION = "eval-v1-20260825"
+DATASET_VERSION = "eval-v2-20260828"
 
 VALID_DECISIONS = ("ACCEPT", "MODIFY", "REJECT", "UNKNOWN")
 
@@ -38,7 +38,7 @@ def load_prelabels() -> dict[str, dict[str, Any]]:
 
 
 def load_annotations() -> dict[str, dict[str, Any]]:
-    """读取标注记录，返回 task_id -> 最新一条标注。"""
+    """读取标注记录，返回 task_id -> 最新一条标注（仅当前数据集版本）。"""
     latest: dict[str, dict[str, Any]] = {}
     if not ANNOTATIONS.is_file():
         return latest
@@ -46,6 +46,8 @@ def load_annotations() -> dict[str, dict[str, Any]]:
         if not line.strip():
             continue
         rec = json.loads(line)
+        if rec.get("dataset_version") != DATASET_VERSION:
+            continue
         latest[rec["task_id"]] = rec
     return latest
 

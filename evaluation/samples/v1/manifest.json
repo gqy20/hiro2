@@ -1,0 +1,16 @@
+{
+  "dataset_version": "eval-v1-20260825",
+  "seed": 20260825,
+  "role": {
+    "n": 100,
+    "sha": "f12be7b936129a52"
+  },
+  "domain": {
+    "n": 50,
+    "sha": "e30491cc4e40594d"
+  },
+  "event": {
+    "n": 30,
+    "sha": "22c472a2c123f7e0"
+  }
+}

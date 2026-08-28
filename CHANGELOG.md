@@ -5,6 +5,8 @@
 ## [Unreleased]
 
 ### Added
+- 岗位映射 v2 迭代（评测驱动改进的第一轮完整闭环）：`rolemap.py` 扩充别名表（泛称与应用类关键词，机器学习/深度学习从 NLP 研究员改归算法主体岗——原映射为系统性偏差源）、新增 LLM 结果后置校验（族关键词一致性 + 置信度 <0.6 强制降级）与 `repair` 子命令（零 LLM 成本重判全量 5915 条：规则改判 359 + 校验修正 187）；修复别名匹配对含空格关键词永不命中的 bug。评测集升版 `eval-v2-20260828`（v1 归档 `evaluation/samples/v1/`，标注记录按数据集版本隔离），重冻结 100 条分层样本并重判——**role_mapping 基线 74% → 84%**（+10 点），domain 96%、event 100% 持平。剩余失分：LLM 对非技术岗强行归类（产品经理/销售/TPM/FDE 9 条）、别名误中运营岗（2 条）、族关键词漏“视频”与“AI全栈”（2 条），改进项已记录待下一轮。
+- 评测中心接入真实硬指标：`/evaluation/overview` 的 metrics 新增三项准确率（岗位映射/领域判定/事件抽取，读 `evaluation/samples/metrics.json`，标注回流后重跑 `evalset.py score` 即更新），回测命中率与平基线保留为时间情报指标。
 - 评测基线首次产出（`prelabel.py apply` 批量采纳 180 条预标注，透明标记 `reviewer_id=ai-prelabel-batch`）：`evalset.py score` 结果 role_mapping **74%**（100 条，llm 映射方法错配 16 + 漏判 2 为主要失分）、domain_judgment **96%**、event_extraction **100%**；任务列表 180 条全部 RESOLVED。role 层距 90% 目标差 16 点，改进方向明确（llm 映射候选集约束 + 泛称职位兜底映射）；正式指标宣称前需人工抽检覆盖（建议 28 条非 ACCEPT 全复核 + ACCEPT 抽 10%）。
 - 评测样本 AI 预标注（`scripts/prelabel.py` -> `evaluation/prelabels.jsonl`）：180 条冻结样本逐条建议判定（ACCEPT 152 / MODIFY 16 / REJECT 12），每条带置信度与理由、MODIFY 带修正岗位 id；任务 VM 挂载 `system_output.prelabel`，`/tasks` 页新增“AI 预标注建议（候选）”区块与“采纳建议（可修改后提交）”按钮——建议不计入指标，人工确认提交后才写入 annotations.jsonl，遵循“AI 只产候选、人来发布”原则。预标注初判：role_mapping 约 74%（llm 方法为主要错源）、domain 约 94%、event 约 100%，role 层距 90% 目标线有差距，需人工复核后确认真实基线。
 - 求职区首页双态与诊断求职视图深化：`GET /api/v1/career/home` 端点（读取 `candidate_targets` 活跃目标，DB 不可用时回退演示候选人）；`/career` 首页按目标存在性双态渲染——未选岗位只留“选择目标岗位/上传简历”两个入口，已选显示目标岗位与版本；诊断工作台与首页的“投递基础”让位于“必备能力 x/n”（`requiredMet/requiredTotal`，总分降为小字辅助），成长计划从手写模板改为渲染真实学练赛证四段字段；学练赛证渲染抽为共享组件 `gap-steps.tsx`（学习路径页与诊断页复用）。

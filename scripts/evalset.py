@@ -28,11 +28,11 @@ sys.path.insert(0, str(Path(__file__).parent))
 from runlog import RunContext  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-ROLEMAP = ROOT / "data" / "processed" / "jd-opencli" / "jd-role-map.jsonl"
+ROLEMAP = ROOT / "data" / "processed" / "jd-opencli" / "jd-role-map-v2.jsonl"
 PARSED = ROOT / "data" / "processed" / "jd-opencli" / "jd-parsed.jsonl"
 EVENTS = ROOT / "data" / "processed" / "wechat-mp" / "events.jsonl"
 SAMPLES = ROOT / "evaluation" / "samples"
-DATASET_VERSION = "eval-v1-20260825"
+DATASET_VERSION = "eval-v2-20260828"
 RNG_SEED = 20260825
 
 QUOTAS_ROLE = {"exact": 15, "alias": 25, "llm": 50, "unmatched": 10}
@@ -63,9 +63,11 @@ def cmd_freeze() -> dict:
     SAMPLES.mkdir(parents=True, exist_ok=True)
     manifest: dict[str, object] = {"dataset_version": DATASET_VERSION, "seed": RNG_SEED}
 
-    # role：岗位映射
+    # role：岗位映射（llm-repair 与 llm 同桶，保证分层配额覆盖修正后条目）
     roles = [json.loads(x) for x in ROLEMAP.open(encoding="utf-8")]
-    role_sample = _stratified(roles, lambda r: r.get("method") or "unmatched", QUOTAS_ROLE)
+    role_sample = _stratified(
+        roles, lambda r: (r.get("method") or "unmatched").replace("llm-repair", "llm"), QUOTAS_ROLE
+    )
     with (SAMPLES / "role-mapping.csv").open("w", encoding="utf-8-sig", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(

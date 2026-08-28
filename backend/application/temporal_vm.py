@@ -516,8 +516,8 @@ class ReviewTaskVM(_VM):
     task_id: str
     task_type: str
     source_record_id: str
-    run_id: str = "eval-v1"
-    dataset_version: str = "eval-v1-20260825"
+    run_id: str = "eval-v2"
+    dataset_version: str = "eval-v2-20260828"
     priority: str = "medium"
     assignee_id: str = ""
     status: str = "PENDING"

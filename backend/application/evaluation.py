@@ -48,6 +48,13 @@ def build_evaluation_overview() -> dict:
         }
         for index, (key, value) in enumerate(run_metrics.get("error_types", {}).items(), 1)
     ]
+    score_path = samples / "metrics.json"
+    scores = json.loads(score_path.read_text(encoding="utf-8")) if score_path.is_file() else {}
+
+    def _acc(key: str) -> float:
+        value = scores.get(key, {}).get("accuracy")
+        return value if isinstance(value, int | float) else 0.0
+
     return {
         "run": {
             "id": "backtest-h30",
@@ -58,8 +65,26 @@ def build_evaluation_overview() -> dict:
         "datasets": datasets,
         "metrics": [
             {
+                "key": "role_mapping",
+                "label": "岗位映射准确率",
+                "value": _acc("role_mapping"),
+                "hint": "目标 ≥0.90 · evalset score",
+            },
+            {
+                "key": "domain_judgment",
+                "label": "领域判定准确率",
+                "value": _acc("domain_judgment"),
+                "hint": "目标 ≥0.90",
+            },
+            {
+                "key": "event_extraction",
+                "label": "事件抽取准确率",
+                "value": _acc("event_extraction"),
+                "hint": "目标 ≥0.90",
+            },
+            {
                 "key": "accuracy",
-                "label": "命中率",
+                "label": "回测命中率",
                 "value": run_metrics.get("accuracy", 0),
                 "hint": "正确判定 / 总判定",
             },

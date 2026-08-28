@@ -12,6 +12,7 @@ COPY scripts ./scripts
 COPY data ./data
 COPY evaluation ./evaluation
 COPY migrations ./migrations
+COPY prompts ./prompts
 
 ENV PATH="/app/.venv/bin:$PATH"
 EXPOSE 8000

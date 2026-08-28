@@ -11,6 +11,7 @@ node_modules/
 apps/web/.next/
 apps/web/coverage/
 apps/web/next-env.d.ts
+.run/
 
 data/raw/*
 !data/raw/.gitkeep

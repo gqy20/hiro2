@@ -18,8 +18,11 @@ sources:
     ingestion_mode: live
     notes: sousuo.www.gov.cn 政策文件库统一 API（国务院+部委两库，9 个关键词
       109 条，含标题/发文机关/发布时间/全文链接）；职业目录取 osta.org.cn
-      职业分类大典系统结构化 API（2022 版 versionId=2，相关小类 61 个递归
-      311 个职业含官方编码/工种数），核心 20 个入 new-occupations.yml
+      职业分类大典系统结构化 API（2022 版 versionId=2，全 450 小类 1676 个职业含官方
+      编码/工种数，dadianget.py 可复用）；2015 版取石首市政府网转载的结构化 Excel
+      （1036 个职业，有国家职业标准的 3-6 大类子集）+ 官方完整 PDF 164MB 备档；
+      2015→2022 版本 diff 落盘（数字技术域新增 23 个职业，总 diff 数因两侧覆盖
+      不对等不可按字面读，官方口径净增 158）
 
   - id: resume-ner
     type: academic_dataset      # 公开学术 NER 数据集：实体抽取层对照检验

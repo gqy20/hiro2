@@ -5,6 +5,8 @@
 ## [Unreleased]
 
 ### Changed
+- 字体全站统一并自托管：通过 `next/font/google` 内嵌 Inter（正文西文）、IBM Plex Mono 400/500/600（run_id / 版本号 / 时间戳等等宽场景）、Archivo Narrow（KPI 大数字与页面标题的窄体西文，替代系统字体 Arial Narrow），构建期内嵌字体文件，不再依赖用户系统是否安装；中文不打包，继续走系统栈（Noto Sans SC / PingFang SC / Microsoft YaHei）。`foundation.css` 新增 `--font-sans` / `--font-mono` / `--font-display` 三级字体 token，清除 `data/dashboard/datasets/layout/evaluation` 五个样式表中所有硬编码 `"IBM Plex Mono"` / `"Arial Narrow"` / 裸 `monospace` 栈，统一走 token。修复前 Linux 环境下 IBM Plex Mono 未安装导致等宽场景退化为文泉驿正黑（非等宽、数字对齐失效）的问题，实测各页等宽渲染 1/W 同宽。
+- 数据工作区字号体系统一：新增 5 级字号 token（`--fs-display: 30px` KPI 大数字 / `--fs-title: 24px` 页面 H1 / `--fs-section: 16px` 区块标题 / `--fs-body: 13px` 正文表格 / `--fs-aux: 12px` 辅助说明，12px 为中文下限）；五个数据页 H1 统一 24px（原 34/30/22 三种），KPI 大数字统一 30px（删除首卡 38px 特例、质量页 36px、资产页 28px）；状态徽章、列头筛选、表格辅助列从 9~11px 提升到 12px；中文标签去掉对其无效的 uppercase + letter-spacing + 西文 mono 字体（mono 仅保留给 run_id、版本号等纯 ASCII 字段）；流转图 SVG 内文字 9/10px 提升到 10/11px。
 - 数据流转图来源明细改右侧栏：点击来源节点不再挤占大图下方，改为右侧 320px 明细栏展开厂商/时间窗明细，大图保持完整可见；选中节点高亮。数据来源页同步接入：点击表格行在右侧展开同一份明细（复用 `SOURCE_DETAIL`），类型/状态筛选移入对应列头、搜索移到标题行，独立工具栏删除。
 - 流水线页重构：删除与真实数据脱节的"四步抽象阶段"条（按 ingest/extract/evidence/signal 匹配组件永远为空，`signal` 永不匹配），删除独立筛选工具栏，将组件/状态筛选移入对应列头（下拉内嵌表头），控制即列头；表格向上扩展利用更多纵向空间。
 - 数据首页来源节点可点开：点击数据流转图的源节点展开厂商/时间窗明细面板（如"招聘岗位"展开为 jd-corp 字节 376/腾讯 208/阿里 98 · jd-opencli 51job 650/BOSS 540 · jd-archive Wayback 13,071 条三条通道及各自时间窗），明细来自 `data/SOURCES.yml` 登记；关闭按钮收起。
@@ -18,6 +20,7 @@
 - 数据导入升级为版本化快照登记：新增 `dataset_versions` 表，`dbimport` 记录 manifest 哈希、`run_id`、数量和质量状态，数据资产 API 优先读取 PostgreSQL。
 
 ### Added
+- 职业大典 2015→2022 版本对比：dadianget --all 拉取 2022 版全量 1,676 职业；2015 版从政府网转载源下载结构化 Excel（1,036 职业，含 2019 首批新职业入典记录）+ 164MB 官方 PDF 备档；名称归一 diff 落盘 dadian-2015-2022-diff.json——数字技术域 2015→2022 新增 23 个职业（数据安全工程技术人员/生成式 AI 系统应用员/数字化解决方案设计师/智能硬件装调员等，全部带官方编码与工种数），2015 版 AI 相关仅 6 个；如实注明 diff 总数（+758/-118）因两侧覆盖不对等（Excel 为有标准的子集）不可按字面读（官方口径净增 158）。
 - 政策数据接入（`scripts/policyget.py` + `policy` 来源）：gov.cn 统一检索 API 直通（国务院+部委两库，纯 HTTP JSON），9 个关键词扫描 109 条政策文件（标题/发文机关/发布时间/全文链接，URL 幂等），核心锚点含 2017 新一代 AI 发展规划、2025"人工智能+"行动意见、2026 各行业 AI+ 实施意见，按年覆盖 2010~2026；职业目录改用 osta.org.cn 职业分类大典系统结构化 API 并脚本化 `dadianget.py`（versions/run 两命令，--version 参数、按 career_code 幂等、--all 支持全 450 小类，产物带版本号 dadian-careers-<ver>.jsonl；版本探测实测 versionId 1/3/4 树在但职业明细为空，仅 2=2022 版可用——旧版 1999/2015 不在 API，需走 PDF 转载源）（官方权威编码）——初版模型知识整理被联网核对证伪（5 个编码错 3：人工智能工程技术人员实为 2-02-38-01 而非 2-02-10-01、生成式 AI 系统应用员实为 4-04-05-13），已废弃并以 API 提取的官方数据替换（61 个相关小类递归 311 个职业，AI/数据/安全核心 20 个入 YAML 含官方编码/工种数/所属类目），为 46 岗位矩阵提供政策锚点。
 - 合成简历真实化（身份要素注入）：genresume 新增真实感信息池（40 中文人名 / 32 所按 AI 岗分布分层的大学 / 34 家公司覆盖大厂-AI独角兽-中厂-外企 / 11 项真实竞赛 / 8 类证书 / 10 城市），按画像级别抽取身份要素（seed 可复现：senior 三段公司序列、junior 实习），prompt 要求原样使用真实名称禁止"某某/XX"占位；重生成 24 份 diverse 简历（旧版备份 md-v2/，占位检查 0 命中，样例：南京邮电大学+虾皮→MiniMax+ACM-ICPC 铜奖），md2res 转四版式 96 份，清理旧 imported 档案 191 条后重新导入 72 条（同文件名幂等跳过问题以清旧重导解决）。
 - 数据全景工作区（`/data`）：AppShell 扩展 Workspace 三元（招聘 / 成长 / 数据）+ localStorage 兼容；`/data` 入口五段叙事（数据来源 / 处理流水线 / 时间情报 / 服务对象）+ 三个钻取子页（`/data/sources` 来源、`/data/pipeline` 流水线、`/data/quality` 质量）；H1 改叙述式"从原始素材到两个用户界面"，KPI 卡主次优先级区分（主 2 列宽 + sparkline 占位 / 次 1 列宽），错误分布顶部红色 annotation，服务对象改独立 CTA 按钮；复用 paper / ink / saffron 既有色板，未引入新色。

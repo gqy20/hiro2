@@ -68,10 +68,15 @@ def build_signal_months() -> dict[str, Counter]:
 
 
 def build_jd_months() -> dict[str, Counter]:
+    """JD 月度提及：带真实发布日期且解析可靠的中文源（含 Wayback 历史池）。
+
+    英文源（greenhouse/anthropic）resolved 贫瘠且语域不同，不纳入；
+    boss 无发布日期，day 为空自然过滤。
+    """
     jd: dict[str, Counter] = defaultdict(Counter)
     for line in PARSED.open(encoding="utf-8"):
         r = json.loads(line)
-        if not r.get("is_ai_role") or r.get("platform") != "51job":
+        if not r.get("is_ai_role") or r.get("platform") not in ("51job", "bytedance", "tencent"):
             continue
         day = r.get("publish_date") or ""
         if not day:
@@ -116,8 +121,12 @@ def cmd_run() -> dict:
             continue
         lead = (month_start(j_onset) - month_start(s_onset)).days
         # 可信度：clean = 信号启动在 JD 观测窗内，全程可验证；
-        # lower_bound = 信号早于观测窗，真实提前量 >= 观测窗内部分
-        if s_onset >= (jd_window_start or "9999-99"):
+        # lower_bound = 信号早于观测窗，真实提前量 >= 观测窗内部分；
+        # jd_preceded = JD 先于信号出现（存量技能，事件侧早期覆盖薄），
+        #               该域不存在"信号先导"故事，统计中排除但不丢行
+        if lead <= 0:
+            reliability = "jd_preceded"
+        elif s_onset >= (jd_window_start or "9999-99"):
             reliability = "clean"
         elif j_onset >= (jd_window_start or "9999-99"):
             reliability = "lower_bound"
@@ -137,7 +146,9 @@ def cmd_run() -> dict:
             }
         )
     rows.sort(key=lambda r: -r["lead_days"])
-    led = [r for r in rows if r["lead_days"] > 30]
+    # 统计口径：只算信号确实领先的域（lead>30 且非 jd_preceded/invalid）
+    valid = [r for r in rows if r["reliability"] in ("clean", "lower_bound")]
+    led = [r for r in valid if r["lead_days"] > 30]
     OUT.write_text(
         json.dumps(
             {
@@ -147,6 +158,12 @@ def cmd_run() -> dict:
                     "jd_onset": JD_ONSET,
                     "granularity": "月",
                     "dictionary": "两侧同用当前全词典（描述性口径）",
+                    "jd_sources": "51job/bytedance/tencent（含 Wayback 历史池）",
+                    "caveats": (
+                        "jd_preceded 表示 JD 需求早于信号池可检测的启动月——多为存量技能"
+                        "或事件侧早期覆盖薄/词典语义漂移（如 agent 在 2021 与 2025 含义不同），"
+                        "该类域不构成'信号先导'证据；仅 reliability=clean/lower_bound 的域计入统计"
+                    ),
                 },
             },
             ensure_ascii=False,
@@ -161,7 +178,9 @@ def cmd_run() -> dict:
         "signal_leads_jd_over_30d": len(led),
         "clean_leads_over_30d": len(clean),
         "jd_window_start": jd_window_start,
-        "median_lead_days": sorted(r["lead_days"] for r in rows)[len(rows) // 2] if rows else None,
+        "median_lead_days": (sorted(r["lead_days"] for r in valid)[len(valid) // 2]
+                             if valid else None),
+        "jd_preceded_domains": sum(1 for r in rows if r["reliability"] == "jd_preceded"),
     }
     run.finish(metrics)
     return metrics

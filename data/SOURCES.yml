@@ -10,6 +10,17 @@ sources:
     ingestion_mode: backfill
     notes: 数字经济岗位能力矩阵，46 岗位 x 30 能力 x 7 分组，0-5 评分
 
+  - id: resume-ner
+    type: academic_dataset      # 公开学术 NER 数据集：实体抽取层对照检验
+    path: data/raw/resume-ner
+    license: Yang et al. 2018 (LatticeLSTM) 论文公开数据，仅限研究使用
+    time_range: [2018, 2018]
+    ingestion_mode: backfill
+    notes: 新浪财经上市公司高管简历 BMES 标注（8 类实体：NAME/TITLE/ORG/EDU/PRO/
+      CONT/RACE/LOC，157,850 行），GitHub 原始仓库直取；转换为 240 份文档级
+      JSONL（data/processed/resume-ner/）供实体抽取对照检验；注意为高管简介
+      段落而非完整求职简历，无技能层 gold
+
   - id: arxiv
     type: academic_preprint     # arXiv 预印本：技术先导信号的最上游
     path: data/raw/arxiv

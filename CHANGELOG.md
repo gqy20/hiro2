@@ -13,8 +13,17 @@
 - 数据总览 KPI 口径修复：“今日处理”suffix 计入进行中（如“成功 6 · 进行中 14”，此前 19 个 RUNNING 被静默吞掉）；待处理记录占比 0.096% 不再被四舍五入成“0%”，显示 `<0.1%`。
 - 质量页消费 `data_quality` 可用性标记：unavailable 的指标（双重审核率/平均响应/错误分布）显示“暂无数据”而非 0 值；标题由“质量与回测”改为与实际内容一致的“标注质量”。
 - 术语统一：“数据域”全站改为“数据集”；数据资产页“记录总量”的误导性标注“条有效记录”改为“条记录”（total_records 含无效记录）。
+- 来源明细硬编码数字移除：`/datasets/overview` 的 DatasetItem 新增 `sources` 字段，由后端读取 `data/SOURCES.yml`（D0 来源登记）按数据集挂载来源通道（jd→5 条采集通道、temporal→wechat-mp/feeds/arxiv/pypi-pkgstats、capability→含政策/O*NET 历史），前端删除写死的 SOURCE_DETAIL（“字节 376/51job 650/Wayback 13,071”等与 KPI 对不上的旧数字）；派生（evidence）、受控（resumes）、冻结（evaluation）数据集显示派生说明而非虚构通道。
 
 ### Changed
+- `/data` 总览删除“时间情报”窄带（信息与流转图重复），流转图高度余量放大，主要内容获得更多纵向空间；四个数据页页内大标题移除（顶部导航已承担当前位置表达），改为 sr-only 隐藏标题保留无障碍文档大纲。
+- 全站最小字号清理：中文辅助文字一律 ≥12px（工作台指标标签、workflow-context 阶段标签、new-jobs 候选人标签等 10px→12px），纯数字/ID/图表刻度 ≥11px；流转图 SVG 文字整体上抬（meta 11→12、status 11→12、time 10→11）。
+- 来源详情抽屉排版重做：统计格从 4 列挤排改为 2×2 卡片（值 22px）；来源列表改为通道卡片（id 等宽字体 + 中文类型徽章 + 时间窗/采集模式 meta 行 + notes 正文段落）；抽屉内层级统一为标题 18px / 小节 13px / 正文 12px。
+- 表格体系统一：新增 `.t-table` 共享基础样式（9px/14px 单元格距、垂直居中、粘附表头 + 底线、行 hover、`.num` 右对齐表格数字），`/data/sources`、`/data/pipeline`、`/datasets` 三张表共用，页面差异只保留专属类（列宽、行内双行单元格、min-width）；流水线表行高 62→50px、run_id 列 220→172px，消除过多留白。
+- 表头字号 12px→13px（与正文同级，小字表头不易读）；列头筛选 select 统一为 `.col-filter` 共享样式（自绘 chevron、8px 圆角、saffron focus 光晕，替换原灰字 pill）。
+- 质量页布局填满：错误分布面板 flex 拉伸占满剩余高度，空态文案垂直居中，页脚贴底，消除下半屏留白。
+- 流转图 caption“5 个数据源 · 4 步处理 · 2 个用户界面”删除（与图内节点信息重复）。
+- `/data` 总览布局填满：流转图容器改 stretch 撑满剩余高度，底部留白 131px→32px；流转图来源节点 meta 去掉常态冗余的“可用”，版本号只保留 vN 段（jd-v3 → v3，前缀与节点名重复），状态非常态时才追加显示。
 - 来源明细交互重构：`/data` 流转图节点与 `/data/sources` 表格行的详情面板，从“挤压主内容的右侧栏”改为复用 `/datasets` 的右侧抽屉模式（遮罩 + 滑入动画 + reduced-motion 降级）；新增 Esc 关闭、再点同一来源 toggle、打开时焦点落到关闭按钮、遮罩点击关闭；`/data/sources` 无 SOURCE_DETAIL 明细的行（如评测样本）也可打开查看统计；`/datasets` 抽屉同步补 Esc 关闭。
 - 字体全站统一并自托管：通过 `next/font/google` 内嵌 Inter（正文西文）、IBM Plex Mono 400/500/600（run_id / 版本号 / 时间戳等等宽场景）、Archivo Narrow（KPI 大数字与页面标题的窄体西文，替代系统字体 Arial Narrow），构建期内嵌字体文件，不再依赖用户系统是否安装；中文不打包，继续走系统栈（Noto Sans SC / PingFang SC / Microsoft YaHei）。`foundation.css` 新增 `--font-sans` / `--font-mono` / `--font-display` 三级字体 token，清除 `data/dashboard/datasets/layout/evaluation` 五个样式表中所有硬编码 `"IBM Plex Mono"` / `"Arial Narrow"` / 裸 `monospace` 栈，统一走 token。修复前 Linux 环境下 IBM Plex Mono 未安装导致等宽场景退化为文泉驿正黑（非等宽、数字对齐失效）的问题，实测各页等宽渲染 1/W 同宽。
 - 数据工作区字号体系统一：新增 5 级字号 token（`--fs-display: 30px` KPI 大数字 / `--fs-title: 24px` 页面 H1 / `--fs-section: 16px` 区块标题 / `--fs-body: 13px` 正文表格 / `--fs-aux: 12px` 辅助说明，12px 为中文下限）；五个数据页 H1 统一 24px（原 34/30/22 三种），KPI 大数字统一 30px（删除首卡 38px 特例、质量页 36px、资产页 28px）；状态徽章、列头筛选、表格辅助列从 9~11px 提升到 12px；中文标签去掉对其无效的 uppercase + letter-spacing + 西文 mono 字体（mono 仅保留给 run_id、版本号等纯 ASCII 字段）；流转图 SVG 内文字 9/10px 提升到 10/11px。
@@ -31,6 +40,7 @@
 - 数据导入升级为版本化快照登记：新增 `dataset_versions` 表，`dbimport` 记录 manifest 哈希、`run_id`、数量和质量状态，数据资产 API 优先读取 PostgreSQL。
 
 ### Added
+- 词典批次二（中频词消化）：count 5~19 共 2,171 词（覆盖 19,279 次提及）LLM 归派 2,003 候选——高置信 ≥0.9 有 342 词，扣除红线词（编程语言域外）与已有词后自动合入 310 词入 SKILLS-EARNED v5（Natural Language Processing/multi-agent orchestration/GPU programming/query optimization 等，ML/DL算法 42 词最多、云计算 35、SQL/数据库 28）；中置信 638 词留 alias-candidates.jsonl 人工复核；噪声 1,011 词拒绝；命中率全池 25.6%→30.8%（英文 18.7%→21.8%），350 万 input tokens / 4,636 次调用 / 25 分钟（进度日志 ETA 实时可见）。
 - O*NET 历史版本采集与美国侧技术演化（`scripts/onetget.py` + `onet-history` 来源，B 站资源帖溯源至官方 onetcenter.org/db_releases.html）：5 个代表版本（2005~2025）双 URL 模式下载，表名随版本演化适配（Technology Skills→Software Skills，Workplace Example 列名差异，修'Skills'模糊匹配误中'Skills to Work Context'两处数据坑）；技术演化结论——Python 标注职业 2020 93→2025 132、Apache Spark 7→23、PyTorch 4/TensorFlow 5（2025 新标注）、Hugging Face 1，2005-2015 全零（AI 技术在职业标准中 2020 后才成体系出现）；职业维度 Data Scientists 2020 首现（15-2051.00），2005-2015 无任何 AI 命名职业；与美国侧对照的中国侧演化链完整（大典 2015→2022→动态新增 + 四层时间轴）。
 - 职业大典三段式演化（用户提供 2022 版社会公示稿 PDF 570 页）：PyMuPDF 提取公示稿全量 1,636 职业条目（官方口径 1,639，99.8%），与 osta API 活数据（1,676）对照——**公示后动态新增 76 个职业**（含 2023~2025 全部批次：生成式 AI 系统应用员、网络主播、用户增长运营师、无人机群飞行规划员、养老服务师、智能制造系统运维员等），反向差异 36 个抽查为名称截断/格式差异非真缺失；三段式入典时间轴落盘 dadian-evolution.json（2015 版已有 → 2022 版新增 → 2022 后动态新增），每个职业可回答"政策上何时诞生"。
 - 职业大典 2015→2022 版本对比：dadianget --all 拉取 2022 版全量 1,676 职业；2015 版从政府网转载源下载结构化 Excel（1,036 职业，含 2019 首批新职业入典记录）+ 164MB 官方 PDF 备档；名称归一 diff 落盘 dadian-2015-2022-diff.json——数字技术域 2015→2022 新增 23 个职业（数据安全工程技术人员/生成式 AI 系统应用员/数字化解决方案设计师/智能硬件装调员等，全部带官方编码与工种数），2015 版 AI 相关仅 6 个；如实注明 diff 总数（+758/-118）因两侧覆盖不对等（Excel 为有标准的子集）不可按字面读（官方口径净增 158）。

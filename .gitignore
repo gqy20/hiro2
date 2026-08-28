@@ -15,8 +15,7 @@ apps/web/next-env.d.ts
 
 data/raw/*
 !data/raw/.gitkeep
-data/processed/*
-!data/processed/.gitkeep
+# data/processed 已入库作为种子数据（138 文件 ~50MB）
 data/runs/*
 !data/runs/.gitkeep
 data/objects/*

@@ -12,6 +12,10 @@
 ### Added
 - 数据全景工作区（`/data`）：AppShell 扩展 Workspace 三元（招聘 / 成长 / 数据）+ localStorage 兼容；`/data` 入口五段叙事（数据来源 / 处理流水线 / 时间情报 / 服务对象）+ 三个钻取子页（`/data/sources` 来源、`/data/pipeline` 流水线、`/data/quality` 质量）；H1 改叙述式"从原始素材到两个用户界面"，KPI 卡主次优先级区分（主 2 列宽 + sparkline 占位 / 次 1 列宽），错误分布顶部红色 annotation，服务对象改独立 CTA 按钮；复用 paper / ink / saffron 既有色板，未引入新色。
 - Pipeline run 列表 API（`GET /api/v1/pipeline-runs?limit=50&since_days=7`）：扫描 `data/runs/<run_id>/events.jsonl` 聚合最近运行（默认 7 天 / 50 条），返回 run_id / component / status / duration / count_summary 等字段；只读不写库，HR / 评委视角。
+- `make dev` / `make stop` / `make dev-logs` 一键工具：`make dev` 后台启动 API (8000) + Web (3000) 并写入 `.run/{api,web}.pid`，幂等检查避免重复启动；`make stop` 关闭两服务并兜底清理 pnpm 派生的 next-server 残留；`make dev-logs` 实时跟踪两份日志。前端默认连真实 API（`NEXT_PUBLIC_USE_MOCK=false`）。
+
+### Fixed
+- `apps/web/app/data/page.tsx` 与 `apps/web/app/data/pipeline/page.tsx` 调用 `apiFetch` 时重复拼接 `/api/v1`，因 `NEXT_PUBLIC_API_BASE_URL` 已含该前缀，请求变成 `/api/v1/api/v1/pipeline-runs` 触发 404；改为相对路径 `/pipeline-runs` 后 `/data` 与 `/data/pipeline` 在真实数据模式下正常加载。
 - 数据驱动演化闭环到前端：新增 `GET /jobs/detected-changes`（快照 Diff 变化草稿，16 岗位 139 项）与 `GET /temporal/timeline`（四层时间轴 18 域）两端点（backend/application/insights.py VM）；`/positions` 页新增"系统检测到的岗位变化"区块（岗位卡片 + top3 变化标签 base%→obs%，按 add/grow 蓝标与 shrink 灰标区分）；`/temporal/timeline` 新子页四层传导表（论文→PyPI→npm→日报→JD→论文到 JD 月数）+ temporal 首页导航卡；mock 模式分别给示例与管线说明占位。
 - arXiv 论文信号采集与四层时间轴验证（`scripts/arxivget.py` + `arxiv` 来源登记）：export.arxiv.org 公开 API 按 13 个技能关键词 x 2015~2026 拉取 14,830 篇预印本 metadata（幂等 arxiv_id，3.2s 限速，词x年粒度 runlog），词典归一聚合为月 x 能力域序列；与 relsignal 的包/日报/JD 三层并排首次完成六大新兴域四层传导验证——LLM应用 论文2020-01→包2023-02→日报2024-01→JD2025-10（全程70个月）、AI Agent 81 个月、RAG 79 个月（论文2019-05→JD 跨 6.5 年）、Prompt 工程 26 个月速通（实践先于学术化的反例）；结论：论文到岗位需求的完整传导约 5~7 年，其中论文→包 1~3 年、包→传播→JD 2~4 年。
 - 快照 Diff 检测器（`scripts/snapshotdiff.py`）：任意两 JD 池（archive/corp/snapshots 日期）按岗位分组对比技能份额，自动产出岗位级 JobChangeSet 草稿（add/remove/grow/shrink + 证据提及计数，阈值 min_jds=8/delta=2%/presence=0.5%）；首版跨年 diff（Wayback 历史池 4089 JD vs 现行池 4219 JD）检出 16 岗位 139 项变化，AI 产品经理的演化与手工五年对比一致且落到岗位粒度（AI Agent 要求 10.0%→20.6% grow、RAG 2.4%→5.7% grow、大数据处理 20.6%→7.6% shrink）——快照机制从存档升级为岗位演化引擎，changeset 审核后可喂 jobver 升版。

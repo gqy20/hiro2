@@ -17,6 +17,7 @@ import asyncio
 import csv
 import json
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -218,7 +219,21 @@ async def cmd_run() -> dict:
         fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
     try:
-        await asyncio.gather(*(one(r) for r in todo))
+        done = 0
+        started = time.monotonic()
+
+        async def tracked(r: dict) -> None:
+            nonlocal done
+            await one(r)
+            done += 1
+            if done % 25 == 0 or done == len(todo):
+                rate = done / (time.monotonic() - started) * 60
+                eta = (len(todo) - done) / max(rate, 0.01)
+                run.log("progress", "progress", "progress",
+                        count={"done": done, "total": len(todo),
+                               "per_min": round(rate, 1), "eta_min": round(eta)})
+
+        await asyncio.gather(*(tracked(r) for r in todo))
     finally:
         fh.close()
     all_recs = [json.loads(x) for x in OUT.open(encoding="utf-8")] if OUT.is_file() else []

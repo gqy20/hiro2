@@ -16,6 +16,7 @@ import argparse
 import asyncio
 import json
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -217,7 +218,21 @@ async def cmd_run(limit: int | None) -> dict:
         quarantined.append({"jd_id": t["jd_id"], "error": last_err})
 
     try:
-        await asyncio.gather(*(one(t) for t in todo))
+        done = 0
+        started = time.monotonic()
+
+        async def tracked(t: dict) -> None:
+            nonlocal done
+            await one(t)
+            done += 1
+            if done % 25 == 0 or done == len(todo):
+                rate = done / (time.monotonic() - started) * 60
+                eta = (len(todo) - done) / max(rate, 0.01)
+                run.log("progress", "progress", "progress",
+                        count={"done": done, "total": len(todo),
+                               "per_min": round(rate, 1), "eta_min": round(eta)})
+
+        await asyncio.gather(*(tracked(t) for t in todo))
     finally:
         fh.close()
     metrics = {

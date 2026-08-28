@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import time
 from dataclasses import dataclass, field
 
 from pydantic import ValidationError
@@ -17,7 +18,7 @@ from .models import ExtractedEvent, ReportEventList
 
 MAX_TEXT_CHARS = 8000
 MAX_RETRIES = 2
-CONCURRENCY = 5
+CONCURRENCY = 15
 
 
 @dataclass
@@ -152,13 +153,19 @@ async def extract_events(
                 await maybe
 
     done = 0
+    started = time.monotonic()
 
     async def tracked(article: Article) -> None:
         nonlocal done
         await worker(article)
         done += 1
-        if run is not None and done % 50 == 0:
-            run.log("extract", "progress", "progress", count=done)
+        # 每 25 篇与收尾各打一条完整进度（done/total/速率/ETA），供直接读日志估时
+        if run is not None and (done % 25 == 0 or done == len(articles)):
+            rate = done / (time.monotonic() - started) * 60
+            eta = (len(articles) - done) / max(rate, 0.01)
+            run.log("extract", "progress", "progress",
+                    count={"done": done, "total": len(articles),
+                           "per_min": round(rate, 1), "eta_min": round(eta)})
 
     await asyncio.gather(*(tracked(a) for a in articles))
     return result

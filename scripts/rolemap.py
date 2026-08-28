@@ -46,6 +46,7 @@ TITLE_ALIASES: dict[str, str] = {
     "Agent": "AI Agent开发工程师",
     "智能体": "AI Agent开发工程师",
     # 机器学习/深度学习是算法主体岗，不是 NLP 研究员（原映射为系统性偏差源）
+    "感知算法": "自动驾驶感知工程师",
     "机器学习": "大模型算法工程师",
     "深度学习": "大模型算法工程师",
     "计算机视觉": "计算机视觉工程师",
@@ -67,10 +68,11 @@ TITLE_ALIASES: dict[str, str] = {
     "Prompt": "Prompt工程师",
     # 泛称与应用类（v2 新增）：应用开发岗归 Agent 开发，泛 AI 工程师归算法主体岗
     # 注意：别名匹配在去空格的 norm 上进行，别名本身不得含空格
-    "感知算法": "自动驾驶感知工程师",
+    # 顺序：更具体的词必须排在泛词前（“感知算法”先于“机器学习”）
     "AI应用": "AI Agent开发工程师",
     "应用AI": "AI Agent开发工程师",
     "AINative": "AI Agent开发工程师",
+    "AI全栈": "AI Agent开发工程师",
     "AI开发": "AI Agent开发工程师",
     "AI工程师": "大模型算法工程师",
     "人工智能工程师": "大模型算法工程师",
@@ -81,13 +83,77 @@ TITLE_ALIASES: dict[str, str] = {
 
 # LLM 结果后置校验族（v2）：title 命中族关键词而 LLM 未选族内岗位时修正。
 # 顺序即优先级：视觉/部署/安全先于算法/应用（避免“图像算法”被“算法”截胡）。
+# “视频”限定为算法/感知/生成语境，避免“视频号/短视频”产品名误中（v3 回归修复）。
 FAMILY_CHECK: list[tuple[tuple[str, ...], str]] = [
-    (("计算机视觉", "图像", "视觉", "谱图识别"), "pos_27"),
+    (("计算机视觉", "图像", "视觉", "谱图识别", "视频感知", "视频生成", "视频算法"), "pos_27"),
     (("部署", "MLOps"), "pos_05"),
     (("网安", "网络安全", "信息安全", "数据安全"), "pos_36"),
     (("大模型", "LLM", "算法", "AI工程师", "人工智能工程师", "AI研发", "AI技术"), "pos_01"),
     (("AI应用", "应用AI", "AI Native", "AI开发", "Agent", "智能体", "RAG"), "pos_02"),
 ]
+
+# 域专门岗集合：族校验不得覆盖 LLM 对专门域岗位的判断
+# （如“智慧交通/算法类”->pos_44 不应被“算法”族抢回 pos_01）
+DOMAIN_SPECIFIC_PIDS: frozenset[str] = frozenset(
+    {"pos_37", "pos_39", "pos_41", "pos_42", "pos_43", "pos_44", "pos_45", "pos_46"}
+)
+
+# 商务/管理信号词：title 命中且无任何技术信号时，岗位不属技术目录，应 unmatched
+BIZ_SIGNALS: tuple[str, ...] = (
+    "销售",
+    "市场",
+    "品牌",
+    "运营",
+    "渠道",
+    "测试工程师",
+    "测试员",
+    "技术支持",
+    "Account Executive",
+    "Product Marketing",
+    "Engagement Manager",
+    "Customer Success",
+    "GTM",
+    "Legal",
+    "Counsel",
+    "Program Manager",
+    "Project Manager",
+    "Forward Deployed",
+    "Field Engineer",
+    "Solutions Architect",
+    "Solutions Consultant",
+    "Developer Relations",
+    "Revenue",
+    "Enablement",
+)
+
+# 技术执行岗集合：alias 命中技术岗而 title 含商务信号时跳过该别名
+TECH_PIDS: frozenset[str] = frozenset(
+    {
+        "pos_01",
+        "pos_02",
+        "pos_03",
+        "pos_04",
+        "pos_05",
+        "pos_11",
+        "pos_13",
+        "pos_14",
+        "pos_15",
+        "pos_16",
+        "pos_17",
+        "pos_23",
+        "pos_27",
+        "pos_28",
+        "pos_29",
+        "pos_30",
+        "pos_35",
+        "pos_36",
+        "pos_37",
+        "pos_38",
+        "pos_39",
+        "pos_41",
+        "pos_44",
+    }
+)
 
 LEVEL_BY_EXPERIENCE = [
     (("在校", "应届", "实习", "1年以内", "经验不限"), "L1", "经验要求"),
@@ -102,18 +168,47 @@ LEVEL_BY_TITLE = [
 ]
 
 
+def _has_biz_signal(norm_lower: str) -> bool:
+    """title（去空格小写）是否含商务/管理/运营信号。"""
+    return any(s.replace(" ", "").lower() in norm_lower for s in BIZ_SIGNALS)
+
+
+def _family_override(title: str, pid: str) -> tuple[str, str]:
+    """别名命中后的族覆写：高优先族（视觉/部署/安全）优先于泛别名。
+
+    修复“AI应用部署工程师”被“AI应用”接进 pos_02 而“部署”才是核心职责的回归。
+    """
+    norm = title.replace(" ", "").lower()
+    for keys, family_pid in FAMILY_CHECK[:3]:
+        if any(k.replace(" ", "").lower() in norm for k in keys):
+            # 别名已精确命中域专门岗（如“感知算法”->pos_39）时不覆写
+            if pid in DOMAIN_SPECIFIC_PIDS:
+                return pid, ""
+            if pid in TECH_PIDS and family_pid != pid:
+                return family_pid, f"族覆写 {pid}->{family_pid}"
+    return pid, ""
+
+
 def match_by_rule(title: str, positions: list[dict]) -> tuple[str | None, float, str]:
-    """规则匹配：标准名包含 > 别名包含。返回 (position_id, confidence, method)。"""
+    """规则匹配：标准名包含 > 别名包含。返回 (position_id, confidence, method)。
+
+    v3：别名命中技术执行岗但 title 带商务/管理信号时跳过（“大模型平台运营”
+    不应被“大模型”别名接进算法岗）。
+    """
     norm = title.replace(" ", "").replace("（", "(")
     for p in positions:
         base = p["name"].replace("（", "(").split("(")[0]
         if base and base in norm:
             return p["position_id"], 1.0, "exact"
+    has_biz = _has_biz_signal(norm.lower())
     for alias, target in TITLE_ALIASES.items():
         if alias.replace(" ", "") in norm:
             for p in positions:
                 if p["name"] == target:
-                    return p["position_id"], 0.7, "alias"
+                    if has_biz and p["position_id"] in TECH_PIDS:
+                        break
+                    final_pid, _ = _family_override(title, p["position_id"])
+                    return final_pid, 0.7, "alias"
     return None, 0.0, ""
 
 
@@ -135,18 +230,33 @@ def _catalog(positions: list[dict]) -> str:
 
 
 def post_check(title: str, position_id: str | None, confidence: float) -> tuple[str | None, str]:
-    """LLM 映射后置校验（v2）：
+    """LLM 映射后置校验：
 
     1. confidence < 0.6 强制 unmatched（prompt 规则 5 的代码层兜底）；
-    2. title 命中族关键词而结果不在族内 -> 修正为族指向；
+    2. v3：title 带商务/管理信号且目标为技术执行岗或无技术族命中 -> unmatched
+      （非技术岗强行归类的主要防线）；
+    3. title 命中族关键词而结果不在族内 -> 修正为族指向。
     返回 (修正后 position_id, 修正说明)；未修正说明为空。
     """
     if position_id and confidence < 0.6:
         return None, f"置信度 {confidence:.2f} 低于 0.6，降级 unmatched"
     norm = title.replace(" ", "").lower()
+    has_biz = _has_biz_signal(norm)
+    tech_hit = any(k.replace(" ", "").lower() in norm for keys, _ in FAMILY_CHECK for k in keys)
+    if has_biz and (position_id in TECH_PIDS or not tech_hit):
+        return None, "商务/管理岗信号，排除出技术目录"
+    # v3：无任何技术信号（族关键词、别名技术词、AI 裸词都不命中）的 LLM 结果
+    # 是脑补映射——目录是 AI 技术岗位目录，无信号即降级
+    has_ai_word = any(w in norm for w in ("ai", "人工智能", "智能", "机器人", "运维"))
+    has_alias_word = any(a.replace(" ", "").lower() in norm for a in TITLE_ALIASES)
+    if position_id and not (tech_hit or has_ai_word or has_alias_word):
+        return None, "title 无技术信号，LLM 脑补映射排除"
     for keys, family_pid in FAMILY_CHECK:
         if any(k.replace(" ", "").lower() in norm for k in keys):
             if position_id != family_pid:
+                # 域专门岗保护：LLM 已判定专门域岗位时不被泛族关键词抢回
+                if position_id in DOMAIN_SPECIFIC_PIDS:
+                    return position_id, ""
                 return (
                     family_pid,
                     f"族校验修正：命中族关键词，{position_id or 'unmatched'} -> {family_pid}",
@@ -356,18 +466,19 @@ def cmd_label() -> dict:
 
 
 def cmd_repair() -> dict:
-    """v2 重判：规则层重跑 + LLM 结果后置校验，零 LLM 成本。
+    """v3 重判：规则层重跑 + 后置校验，零 LLM 成本。
 
-    读取现有 jd-role-map.jsonl，输出 jd-role-map-v2.jsonl：
-    - exact/alias/unmatched：用扩充后的别名表重新走规则层；
-    - llm：保留 LLM 判断，但过 post_check 族一致性校验。
+    读取现有 jd-role-map.jsonl，输出 jd-role-map-repaired.jsonl：
+    - 规则层（扩充别名 + 商务信号过滤）能接住的以规则为准；
+    - 规则层未接住的统一过 post_check（族一致性 + 非技术岗排除），
+      含曾被旧别名误中的条目（过滤后降级 unmatched）。
     """
     run = RunContext("rolemap", {"cmd": "repair"})
     positions = [json.loads(x) for x in POSITIONS.open(encoding="utf-8")]
-    out_v2 = OUT.with_name("jd-role-map-v2.jsonl")
+    out_repaired = OUT.with_name("jd-role-map-repaired.jsonl")
     changed = repaired = 0
     recs = [json.loads(x) for x in OUT.open(encoding="utf-8")]
-    with out_v2.open("w", encoding="utf-8") as fh:
+    with out_repaired.open("w", encoding="utf-8") as fh:
         for rec in recs:
             title = rec["title"]
             pid, conf, method = match_by_rule(title, positions)
@@ -378,13 +489,16 @@ def cmd_repair() -> dict:
                 rec["position_id"] = pid
                 rec["confidence"] = conf
                 rec["method"] = method
-            elif rec.get("method") == "llm":
+            else:
+                # 规则层未接住：统一过 post_check（LLM 修正 / 商务排除 / 族校验）
                 new_pid, note = post_check(title, rec.get("position_id"), rec.get("confidence", 0))
                 if new_pid != rec.get("position_id"):
                     repaired += 1
                     rec["position_id"] = new_pid
                     rec["method"] = "llm-repair" if new_pid else "unmatched"
                     rec["repair_note"] = note
+                    if not new_pid:
+                        rec["confidence"] = 0
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
     from collections import Counter
 

@@ -16,7 +16,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 ANNOTATIONS = ROOT / "evaluation" / "annotations.jsonl"
 PRELABELS = ROOT / "evaluation" / "prelabels.jsonl"
-DATASET_VERSION = "eval-v2-20260828"
+DATASET_VERSION = "eval-v3-20260828"
 
 VALID_DECISIONS = ("ACCEPT", "MODIFY", "REJECT", "UNKNOWN")
 

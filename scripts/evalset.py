@@ -28,11 +28,11 @@ sys.path.insert(0, str(Path(__file__).parent))
 from runlog import RunContext  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-ROLEMAP = ROOT / "data" / "processed" / "jd-opencli" / "jd-role-map-v2.jsonl"
+ROLEMAP = ROOT / "data" / "processed" / "jd-opencli" / "jd-role-map-repaired.jsonl"
 PARSED = ROOT / "data" / "processed" / "jd-opencli" / "jd-parsed.jsonl"
 EVENTS = ROOT / "data" / "processed" / "wechat-mp" / "events.jsonl"
 SAMPLES = ROOT / "evaluation" / "samples"
-DATASET_VERSION = "eval-v2-20260828"
+DATASET_VERSION = "eval-v3-20260828"
 RNG_SEED = 20260825
 
 QUOTAS_ROLE = {"exact": 15, "alias": 25, "llm": 50, "unmatched": 10}

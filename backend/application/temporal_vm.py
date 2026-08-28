@@ -9,6 +9,7 @@ from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from .annotate import DATASET_VERSION
 from .repos import P
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -516,8 +517,8 @@ class ReviewTaskVM(_VM):
     task_id: str
     task_type: str
     source_record_id: str
-    run_id: str = "eval-v2"
-    dataset_version: str = "eval-v2-20260828"
+    run_id: str = "eval-v3"
+    dataset_version: str = DATASET_VERSION
     priority: str = "medium"
     assignee_id: str = ""
     status: str = "PENDING"

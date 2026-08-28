@@ -1,10 +1,10 @@
 {
-  "dataset_version": "eval-v3-20260828",
+  "dataset_version": "eval-v2-20260828",
   "role_mapping": {
     "total": 100,
     "labeled": 100,
-    "agree": 78,
-    "accuracy": 0.78
+    "agree": 84,
+    "accuracy": 0.84
   },
   "domain_judgment": {
     "total": 50,

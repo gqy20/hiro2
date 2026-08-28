@@ -104,6 +104,7 @@ def run_site(site: str, year_from: str, year_to: str, max_snapshots: int) -> dic
     run.log("jdarchive", site, "progress", count={"snapshots": len(snaps), "todo": len(todo)})
 
     fresh_records = 0
+    t0 = time.monotonic()
     for i, (ts, orig) in enumerate(todo):
         try:
             body = _fetch(f"http://web.archive.org/web/{ts}id_/{orig}")
@@ -132,9 +133,13 @@ def run_site(site: str, year_from: str, year_to: str, max_snapshots: int) -> dic
                     fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
                 got += 1
         fresh_records += got
-        if (i + 1) % 10 == 0:
+        if (i + 1) % 10 == 0 or (i + 1) == len(todo):
+            elapsed = time.monotonic() - t0
+            rate = (i + 1) / elapsed * 60
+            eta = (len(todo) - i - 1) / max(rate, 0.01)
             run.log("jdarchive", f"{site}:{i+1}/{len(todo)}", "progress",
-                    count={"records": fresh_records})
+                    count={"records": fresh_records, "per_min": round(rate, 1),
+                           "eta_min": round(eta)})
         time.sleep(1.2)  # archive.org 限速 ~1 req/s
 
     metrics = {"snapshots_total": len(snaps), "snapshots_done": len(todo),

@@ -14,6 +14,7 @@ import argparse
 import asyncio
 import json
 import sys
+import time
 import unicodedata
 from pathlib import Path
 
@@ -110,7 +111,22 @@ async def cmd_run(layouts: list[str], limit: int | None, profiles: str | None) -
                     "error": str(exc)[:120],
                 }
 
-    rows = list(await asyncio.gather(*(guarded(*j) for j in jobs)))
+    done = 0
+    started = time.monotonic()
+
+    async def tracked(j: tuple) -> object:
+        nonlocal done
+        r = await guarded(*j)
+        done += 1
+        if done % 25 == 0 or done == len(jobs):
+            rate = done / (time.monotonic() - started) * 60
+            eta = (len(jobs) - done) / max(rate, 0.01)
+            run.log("progress", "progress", "progress",
+                    count={"done": done, "total": len(jobs),
+                           "per_min": round(rate, 1), "eta_min": round(eta)})
+        return r
+
+    rows = list(await asyncio.gather(*(tracked(j) for j in jobs)))
     ok_rows = [r for r in rows if "error" not in r]
     report = {
         "dataset": manifest.get("batch", "diverse-v1"),

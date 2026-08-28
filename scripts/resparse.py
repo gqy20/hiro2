@@ -4,9 +4,12 @@ import argparse
 import asyncio
 import json
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from runlog import RunContext  # noqa: E402
 
 from backend.candidates.archive import OBJECTS, update_archive  # noqa: E402
 from backend.candidates.parse import (  # noqa: E402
@@ -84,7 +87,24 @@ async def run(concurrency: int = 10) -> int:
     rows = [row for row in _rows() if not row.get("stats")]
     resolver = load_resolver()
     semaphore = asyncio.Semaphore(max(1, min(concurrency, 10)))
-    results = await asyncio.gather(*(_run_one(row, resolver, semaphore) for row in rows))
+    run = RunContext("resparse", {"rows": len(rows)})
+
+    done = 0
+    started = time.monotonic()
+
+    async def tracked(row: dict) -> dict:
+        nonlocal done
+        r = await _run_one(row, resolver, semaphore)
+        done += 1
+        if done % 25 == 0 or done == len(rows):
+            rate = done / (time.monotonic() - started) * 60
+            eta = (len(rows) - done) / max(rate, 0.01)
+            run.log("progress", "progress", "progress",
+                    count={"done": done, "total": len(rows),
+                           "per_min": round(rate, 1), "eta_min": round(eta)})
+        return r
+
+    results = await asyncio.gather(*(tracked(row) for row in rows))
     parsed = failed = 0
     for status, result in results:
         if status == "parsed":

@@ -14,6 +14,7 @@ import argparse
 import asyncio
 import json
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -119,7 +120,21 @@ async def cmd_batch(min_count: int, limit: int | None,
             return
         quarantined.append({"word": word["word"], "error": last_error})
 
-    await asyncio.gather(*(one(w) for w in words))
+    done = 0
+    started = time.monotonic()
+
+    async def tracked(w: dict) -> None:
+        nonlocal done
+        await one(w)
+        done += 1
+        if done % 25 == 0 or done == len(words):
+            rate = done / (time.monotonic() - started) * 60
+            eta = (len(words) - done) / max(rate, 0.01)
+            run.log("progress", "progress", "progress",
+                    count={"done": done, "total": len(words),
+                           "per_min": round(rate, 1), "eta_min": round(eta)})
+
+    await asyncio.gather(*(tracked(w) for w in words))
 
     out = PROCESSED / "alias-candidates.jsonl"
     with out.open("a", encoding="utf-8") as fh:

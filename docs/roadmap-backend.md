@@ -40,7 +40,7 @@
 | B-T2.5 | JobChangeSet Diff | B-T2.4 | I2 | **完成** | 新增/删除/修改带权重和证据 | 13 项变化带证据 JD + evidence_ids |
 | B-T2.6 | 岗位版本发布/回滚 | B-T2.3/5 | I2 | **完成** | 发布不可变，新版本可回退 | `jobpub.py` 审核留痕校验 + hash 不可变（12 版本：ai-agent/llm-algo/ai-pm/nlp-mm/cv/mlops/ai-trainer/data-analyst/dc-ops/bigdata/sensor/data-sec） |
 | B-T2.7 | 趋势信号与时间特征 | B-T1.8/9 | I1 | **完成** | 日/周/月聚合、时间衰减 | `features.py` 窗口统计 + 事实分级加权 |
-| B-T2.8 | ForecastEngine | B-T2.7 | I2 | **完成** | 规则基线和 Agent 解释 | `forecast.py` v1 动量规则 + 回测（诚实负结果：低于基线） |
+| B-T2.8 | ForecastEngine | B-T2.7 | I2 | **完成** | 规则基线和 Agent 解释 | `forecast.py` v1 动量规则 + 回测负结果驱动 v2（过热抑制 + down 保守化，三 horizon 一致改进 +5~14 点） |
 
 ### B-T3 图谱与诊断
 
@@ -97,7 +97,7 @@
 
 ## 剩余工作（按优先级）
 
-1. **人工标注回流**（0/100，阻塞 D3/D5/D9 退出条件——人的任务；标注管道已于 8-28 修通：`POST /tasks/{id}/decision` -> annotations.jsonl -> `evalset.py score`）
+1. **人工标注抽检覆盖**（标注管道已修通：预标注 -> `/tasks` 确认 -> `evalset.py score`；基线已产出：固定样本 74%→95%，冻结样本 v3 78%/96%/100%；待人工抽检确认独立性与 >90% 宣称）
 2. **Docker Compose + CI**（部署分拿分项）
 3. **Neo4j 图谱查询接线**（B-T3.2：投影已完成，`/skills/graph` 仍为内存构建）
 4. **五道质量门统一报告**（B-T1.7，各环节有实现但未整合）

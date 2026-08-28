@@ -67,7 +67,17 @@
 | F-T4.9 | 时间系统与岗位系统入口 | JobImpactSuggestion API | **完成** | `/temporal/suggestions` 3 条 PENDING 建议 + 接受/修改/拒绝（修改 Modal 改 suggested_level），按 design.md L108「不能与已发布岗位事实并列」独立成页。 |
 | F-T4.10 | 我的任务与领取流程 | ReviewTask API | **完成** | `/tasks` 左列表 5 条任务（3 forecast_review + 2 job_review，2 标「需双审」），领取 → 审核中 → 提交 → 完成 4 状态机。 |
 | F-T4.11 | 审核工作区 | ReviewTask/Evidence API | **完成** | `/tasks` 右侧 3 段工作区（系统结果 / 证据 / 人工决策），决策按钮复用 `ReviewActions`（onAccept/onModify/onReject）。 |
-| F-T4.12 | 质量看板与运行对比 | Quality/Evaluation API | **进行中** | `/quality` 指标从 review/eval API 获取；Run 对比和错误分布仍需完成真实 API 接线。 |
+| F-T4.12 | 质量看板与运行对比 | Quality/Evaluation API | **完成** | `/quality` 已并入 `/evaluation`（人工审核质量 + 运行对比）；指标从 review/eval API 获取。 |
+
+## 三工作区收敛（2026-08-28）
+
+在 T1-T4 之后完成的信息架构收敛，详见 `design-data.md` / `design-recruiting.md` / `design-career.md`：
+
+- 求职区补齐五页闭环：新增 `/career/jobs`（目标岗位，已发布版本卡 + 岗位族筛选，接 `GET /jobs/published`）与 `/career/path`（学习路径，学练赛证四段）；`/career` 首页双态（活跃目标驱动，接 `GET /career/home`）；诊断页求职视图（必备能力 x/n 置顶）。
+- 招聘区导航收敛为五项；简历解析并入诊断流程（`/resumes` 确认后可前往诊断）。
+- 数据区收纳为六项导航：`/datasets` 并入总览，`/data/quality` 与 `/quality` 并入评测与质量页（旧路由重定向），`/temporal` 五子页归入本区并补“时间轴”二级 tab。
+- `/tasks` 审核提交接入真实 API（`POST /tasks/{id}/decision`）；`/temporal/suggestions` 审核持久化（`POST /temporal/suggestions/{id}/review`）；预测复盘页新增规则迭代对比（v1→v2）。
+- e2e 13/13（新增求职流程 3 条）。
 
 ## 联调门
 

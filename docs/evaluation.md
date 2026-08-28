@@ -76,6 +76,23 @@ as_of_date = T
 
 每次回测必须保存错误类型：时间泄漏、技能归一化错误、热点误判、来源偏置、岗位映射错误、预测滞后和无证据幻觉。
 
+## 标注工作流
+
+冻结样本的标注闭环为：
+
+```text
+evalset.py freeze（分层抽样，manifest 哈希锁定）
+  -> prelabel.py（AI 预标注：建议判定 + 置信度 + 理由，写入 prelabels.jsonl）
+  -> /tasks 页人工确认（采纳建议或修改后提交，写入 annotations.jsonl）
+  -> evalset.py score（标注回流后确定性计算，产出 metrics.json）
+```
+
+规则：
+
+- AI 预标注只是候选，不计入指标；只有写入 `annotations.jsonl` 的判定才参与 score。
+- 标注记录 append-only，带 `reviewer_id` 与 `dataset_version`；批量 AI 采纳必须透明标记（如 `ai-prelabel-batch`），与人工判定可区分。
+- 跨版本对比必须锚定固定样本的 `jd_id`（`evalcmp.py`），因为 freeze 按方法分层抽样，系统输出变化会导致样本漂移，直接比两版分数口径不成立。
+
 ## 未来预测
 
 未来预测使用同一个 `ForecastEngine`，把 `as_of_date` 设置为当前时间，并为每项结果保存 `forecast_valid_until`。预测结果只进入当前趋势和岗位变化建议，不直接覆盖岗位图谱。

@@ -1,33 +1,37 @@
 ## 基本信息
-- 李同学 | 求职意向：AI Agent 开发工程师 | 电话：138****0000 | 邮箱：li.tongxue@example.com | 3 年工作经验
+- 姓名：沈书言
+- 常驻城市：成都
+- 邮箱：name@example.com ｜ 电话：138****0000
+- 教育背景：南洋理工大学 · 信息与计算科学（本科）
+- 证书：软考高级（系统架构设计师）
 
 ## 技能
-- 熟练使用 LangChain 0.2 搭建 Agent 工作流，熟悉 ReAct、Plan-and-Execute 等模式，做过自定义 Tool 封装和记忆管理
-- 熟悉 Python 3.10 开发，用过 asyncio 做并发调用，写过多轮对话状态机
-- 搞过 torch 做小规模模型微调 (SFT/LoRA)，也玩过 HuggingFace/transformers 做推理加速（vLLM 部署）
-- 用 sklearn 做过意图分类和实体抽取的 baseline，方便对比 prompt 效果
-- 熟悉 FastAPI 写服务接口，配合 Docker Compose 部署过完整 Agent 服务
-- 向量库用过 Qdrant，踩过 schema 不一致的坑，后来加了 embedding 版本管理
+- **LangChain 0.2** 熟练（2 年+），搞过 Agent 多工具编排、记忆持久化与回调链，踩过不少 LCEL 的坑
+- **Python 3.10** 熟练（3 年），日常写异步任务、类型注解与 Pydantic 校验
+- **HF/HuggingFace** 熟练，玩过 Transformers pipeline、微调 (SFT/LoRA) 与 vLLM 部署
+- **torch** 熟悉（2 年），主要用于 embedding 模型与 reranker 的推理调优
+- **sklearn** 熟悉（3 年），做特征工程和分类/聚类基线
+
+## 技能清单
+- 工作流：Dify 工作流 + n8n 临时搭自动化
+- 数据库：PostgreSQL + pgvector、Redis（缓存/限流）
+- 部署：Docker Compose、Nginx 反向代理、Prometheus 监控
 
 ## 项目经历
+### AI 客服 Agent（订单/售后）｜ 核心开发 ｜ 2023-2024
+- 基于 LangChain 0.2 搭 ReAct Agent，接入工具层（查单/退换/优惠券），解决多轮对话中工具参数幻觉问题
+- 自研模板匹配 + reranker 二阶段召回，准确率从 72% 提到 89%；用 HF/HuggingFace 的 bge-m3 做 embedding
+- 在 Dify 工作流里拖出人工转接分支，兜底率降至 8%
 
-**智能客服 Agent（公司内部项目）** | 2023.06 - 2024.03
-- 基于 LangChain 0.2 + Qdrant 搭 RAG 流程，处理技术文档问答，将首次解决率从 45% 提到 68%
-- 设计了 5 个自定义 Tool（查工单、查库存、转人工），并用 AgentExecutor 做工具路由
-- 用 FastAPI 封装成微服务，用 Docker Compose 编排，支持水平扩展
-
-**简历解析 Agent（核心落地项目）** | 2024.04 - 至今
-- 针对非结构化简历，构建"提取→校验→结构化"三步工作流，用 Pydantic 做输出约束
-- 搞过 torch 对低质量扫描件做 OCR 后处理，结合 HuggingFace 的 NER 模型抽取技能实体
-- 用 sklearn 训练了简历段落分类器，准确率 89%，作为 prompt 的 fallback
+### 代码评审 Agent（内部提效工具）｜ 独立开发 ｜ 2022-2023
+- 用 torch 封装本地 code-bert 模型，做 commit diff 缺陷分类；结果写入 MR 评论
+- 用 Python 3.10 写 FastAPI 服务，Docker Compose 一键部署，组内 40+ 人使用，每周节省约 6 小时
 
 ## 工作经历
-**某科技公司 | AI 开发工程师** | 2022.07 - 至今
-- 负责公司内部 Agent 平台开发，维护 10+ 个自动化流程
-- 参与模型选型和评估，写了不少 prompt 模板和 few-shot 示例
+- **华为**（2021-2023）｜ 软件开发工程师（AI 方向）：负责内部工单意图识别模块，用 sklearn 做特征与建模，迭代上线 3 个版本；参与推理服务容器化改造
+- **阿里巴巴**（2023 至今）｜ 算法工程师（Agent 应用）：主导两个内部 Agent 落地，涉及工具调用与多 Agent 协作；用 React 写了简易调试页，方便非技术同事上传工具 schema
 
 ## 教育背景
-**某理工大学 | 计算机科学与技术 本科** | 2018.09 - 2022.06
-
-## 证书
-- 阿里云 ACA 云计算认证（2023）
+南洋理工大学 · 信息与计算科学 ｜ 2017-2021
+- Google Summer of Code（GSoC）：为开源 NLP 库实现文档摘要插件
+- ACM-ICPC 亚洲区域赛：铜奖（队伍负责图论与数据结构板子）

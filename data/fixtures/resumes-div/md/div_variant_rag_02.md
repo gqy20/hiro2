@@ -1,43 +1,46 @@
 ## 基本信息
-- **姓名**：李同学
-- **电话**：138****0000
-- **邮箱**：litongxue@example.com
-- **求职意向**：RAG 应用开发 / 知识库工程师（初中级）
+- 姓名：赵清扬
+- 常驻城市：北京
+- 邮箱：zhao.qingyang@example.com
+- 电话：138****0000
+- 教育背景：重庆邮电大学 · 电子信息工程（本科）
 
 ## 技能
-- 熟悉 **LangChain 0.2** 的 Agent 与检索链，自己搭过基于多路召回的重排序流水线
-- 会用 **torch** 做 embedding 微调（主要是 sentence-transformer 的对比学习），也拿 **sklearn** 做过召回后的分类/过滤
-- 日常用 **HF/HuggingFace** 的模型库，玩过 bge-m3、gte-large 这些，踩过量化精度和上下文截断的坑
-- 熟练 **Python 3.10**，asyncio 写并发抓取和文档预处理，正则+BeautifulSoup 做 html/pdf 清洗
-- 向量库方面：**ChromaDB** 做原型，生产环境切过 **Elasticsearch 8.x**，搞过 dense+sparse 混合检索（BM25+向量）
-- 文档解析：**PaddleOCR** 处理扫描件和表格，配合 layout 模型拆版面，准确率调到 85%+ 就够用
+- **编程语言**：Python 3.10（主力）、SQL、Java（够用）
+- **LLM 与框架**：玩过 LangChain 0.2，搞过 RAG 全链路调优；熟悉 HF/HuggingFace 的 Transformers、peft 微调（SFT/LoRA 有踩坑）
+- **向量库与检索**：FAISS（日常用）、Milvus 2.3（生产部署）；了解倒排索引和 TF-IDF，混合检索（BM25+向量）有自己的封装
+- **文档解析**：用 PyMuPDF 处理 PDF 布局、表格抽取，配合正则处理脏数据；OCR 场景调过 PaddleOCR
 
 ## 技能清单
-- 检索增强：RAG 流程设计、混合检索、重排序、query 改写
-- 向量库：ChromaDB / Elasticsearch 8.x / Milvus（了解）
-- 文档处理：PDF/图片 OCR、表格抽取、Markdown 化
-- 模型：embedding 微调、prompt 工程、轻量 SFT（LoRA 试过）
-- 工程：FastAPI 服务、Docker 部署、Grafana 监控
+| 技能 | 熟悉度 | 使用年限 |
+|------|--------|----------|
+| Python 3.10 | 熟练 | 3 |
+| LangChain 0.2 | 熟练 | 2 |
+| FAISS | 熟悉 | 2 |
+| Milvus 2.3 | 熟悉 | 1 |
+| HF/HuggingFace | 熟悉 | 2 |
+| PyMuPDF | 熟悉 | 1 |
+| TF-IDF | 了解 | 2 |
 
 ## 项目经历
-**企业合同问答知识库（2023.10 - 2024.05）**
-- 手写 RAG 流程，基于 LangChain 0.2 搭建，处理 5 万份 PDF 合同，用 PaddleOCR 转文本，按条款切分并保留元数据
-- 用 Elasticsearch 8.x 做 dense+sparse 混合检索，加 cross-encoder 重排，最终 Top-5 命中率从 52% 提升到 71%
-- 踩过分数归一化的坑，最后用 RRF 融合才稳定；上线后处理日均 800+ 查询
+**智能问答知识库平台（RAG 落地）** · 核心开发
+- 基于 LangChain 0.2 + FAISS 搭建企业内部文档问答系统，支持 50 万级文档分块、embedding 入库；开发了 query 改写和 rerank 模块，检索命中率从 71% 提到 89%
+- 用 PyMuPDF 处理 PDF 扫描件和复杂表格，解决页眉页脚、跨页表格断裂问题，解析准确率提升约 30%
+- 优化 chunk 大小和 overlap 策略，同时接入 Milvus 2.3 做向量索引，搜索延迟从 1.2s 降到 300ms
 
-**问答机器人后台（2024.06 - 2024.11）**
-- 负责知识库同步管道，Python 3.10 写异步爬虫，增量更新 3 万条 FAQ，ChromaDB 存 embedding
-- 用 torch 在内部数据上微调 bge-base，对比原始模型准确率提升 6%；偶尔用 HF/HuggingFace 拉新模型测试
-- 写 FastAPI 接口给前端调用，Docker 一键部署，排查过内存泄漏（batch 没清干净）
+**电商客服知识库（京东）** · 用户意图检索优化
+- 针对客服问答场景，用 HF/HuggingFace 的 Sentence-BERT 做 sentence embedding 蒸馏，替换原生 text-embedding-ada 模型，降低 40% 推理成本
+- 搞过混合检索：用 TF-IDF 和向量召回做加权融合，解决长尾口语化问题的冷启动；在 LangChain 0.2 里自己写了一个 custom retriever 类
 
 ## 工作经历
-**某数据服务公司 | RAG 开发工程师（2022.03 - 至今）**
-- 参与 3 个知识库项目，负责文档解析、检索优化和接口开发，支持客户包括金融和制造业
-- 内部沉淀了一套文档清洗工具，减少 30% 人工标注工作量
-
-## 教育背景
-**某理工大学 | 计算机科学与技术（本科，2018 - 2022）**
+- **京东 · 搜索与推荐平台部**（至今）· NLP 算法工程师
+  - 负责商品知识图谱实体链接和问答链路优化，主导 RAG 服务从 POC 到生产
+- **微软中国 · 云与 AI 事业部**（2-3 年）· 数据工程师助理
+  - 参与 Azure 文档解析管线和数据清洗工作，处理多格式 PDF/DOCX，积累了文档解析和异步任务编排经验
 
 ## 证书
-- 软考中级（软件设计师，2021）
-- 无其他硬性证书，主要靠项目经验说话
+- AWS 解决方案架构师助理（SAA）
+
+## 其他
+- 大学期间参加“互联网+”大学生创新创业大赛，负责数据采集与预处理模块；获省赛银奖
+- 曾参与 Google Summer of Code（GSoC），为开源 OCR 项目贡献预处理代码，顺带摸了 Tesseract 和 OpenCV

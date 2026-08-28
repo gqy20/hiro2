@@ -1,4 +1,4 @@
-version: 3
+version: 5
 aliases:
 - mention: 文本生成
   capability_id: cap_01
@@ -2572,3 +2572,1181 @@ aliases:
   capability_id: cap_05
   effective_from: '2026-08-03'
   point_name: 视频生成
+- mention: NLP
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: GCP
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: Azure
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: TensorFlow
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: JavaScript
+  capability_id: cap_07
+  effective_from: '2026-08-28'
+- mention: Apache Spark
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: 数据挖掘
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: machine learning
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: LLMs
+  capability_id: cap_01
+  effective_from: '2026-08-28'
+- mention: MLOps
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: Terraform
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: APIs
+  capability_id: cap_14
+  effective_from: '2026-08-28'
+- mention: Redis
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: Machine Learning
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: big data
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: Delta Lake
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: OLTP
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: Prompt Engineering
+  capability_id: cap_02
+  effective_from: '2026-08-28'
+- mention: 召回
+  capability_id: cap_06
+  effective_from: '2026-08-28'
+  point_name: 检索评测
+- mention: data engineering
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: MLflow
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: Tensorflow
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: Big Data
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: Tableau
+  capability_id: cap_11
+  effective_from: '2026-08-28'
+- mention: prototyping
+  capability_id: cap_22
+  effective_from: '2026-08-28'
+- mention: 数据清洗
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: Ansible
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: reinforcement learning
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: GAN
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: MongoDB
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: Postgres
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: OLAP
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: algorithms
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: NoSQL
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: TensorRT
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: deep learning
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: Cursor
+  capability_id: cap_01
+  effective_from: '2026-08-28'
+  point_name: 代码生成
+- mention: monitoring
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: project management
+  capability_id: cap_23
+  effective_from: '2026-08-28'
+- mention: SRE
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: Data Engineering
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: Presto
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: PPO
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+  point_name: 强化学习
+- mention: DeepSpeed
+  capability_id: cap_03
+  effective_from: '2026-08-28'
+- mention: BERT
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 特征工程
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 图神经网络
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: large language models
+  capability_id: cap_01
+  effective_from: '2026-08-28'
+- mention: 基础架构
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: reverse ETL
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: program management
+  capability_id: cap_23
+  effective_from: '2026-08-28'
+- mention: agentic workflows
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+- mention: US GAAP
+  capability_id: cap_20
+  effective_from: '2026-08-28'
+- mention: Google Cloud
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: pandas
+  capability_id: cap_07
+  effective_from: '2026-08-28'
+- mention: A/B实验
+  capability_id: cap_22
+  effective_from: '2026-08-28'
+- mention: ClickHouse
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: post-training
+  capability_id: cap_03
+  effective_from: '2026-08-28'
+- mention: Codex
+  capability_id: cap_01
+  effective_from: '2026-08-28'
+  point_name: 代码生成
+- mention: CNN
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 架构
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: prompt engineering
+  capability_id: cap_02
+  effective_from: '2026-08-28'
+- mention: CDN
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: product management
+  capability_id: cap_22
+  effective_from: '2026-08-28'
+- mention: public cloud
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: Tool Use
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+  point_name: 工具调用
+- mention: Elasticsearch
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: ISO 27001
+  capability_id: cap_20
+  effective_from: '2026-08-28'
+- mention: GitHub Actions
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: scikit-learn
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: computer vision
+  capability_id: cap_05
+  effective_from: '2026-08-28'
+- mention: cloud infrastructure
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: Text2SQL
+  capability_id: cap_01
+  effective_from: '2026-08-28'
+  point_name: 推理
+- mention: GBDT
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: tensorflow
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: AI infrastructure
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: Embedding
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: GraphQL
+  capability_id: cap_14
+  effective_from: '2026-08-28'
+- mention: cloud-native
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: Looker
+  capability_id: cap_11
+  effective_from: '2026-08-28'
+- mention: ElasticSearch
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: DNN
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: AutoGen
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+- mention: VPC
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: databases
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: coding
+  capability_id: cap_07
+  effective_from: '2026-08-28'
+- mention: data warehousing
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: Big Data Analytics
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: TTS
+  capability_id: cap_05
+  effective_from: '2026-08-28'
+  point_name: 语音
+- mention: Agentic
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+- mention: tool use
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+  point_name: 工具调用
+- mention: 商务谈判
+  capability_id: cap_26
+  effective_from: '2026-08-28'
+- mention: TRT-LLM
+  capability_id: cap_01
+  effective_from: '2026-08-28'
+  point_name: 推理
+- mention: Deep Learning
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: Azure Blob Store
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: AI agent
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+- mention: 语音识别与合成
+  capability_id: cap_05
+  effective_from: '2026-08-28'
+  point_name: 语音
+- mention: AJAX
+  capability_id: cap_14
+  effective_from: '2026-08-28'
+- mention: PaaS
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: Pandas
+  capability_id: cap_07
+  effective_from: '2026-08-28'
+- mention: JVM
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: HDFS
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: Django
+  capability_id: cap_07
+  effective_from: '2026-08-28'
+- mention: Langchain
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+  point_name: 工具调用
+- mention: 流程优化
+  capability_id: cap_23
+  effective_from: '2026-08-28'
+- mention: agentic systems
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+- mention: 虚拟化
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: data visualization
+  capability_id: cap_11
+  effective_from: '2026-08-28'
+- mention: solution architecture
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: AWS S3
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: system design
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: Fine-tuning
+  capability_id: cap_03
+  effective_from: '2026-08-28'
+- mention: 容灾
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: Slurm
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: autoscaling
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: Web Security
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: Access Control
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: Authentication
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: NewSQL
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: Identity Management
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: SLURM
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: 产品规划
+  capability_id: cap_22
+  effective_from: '2026-08-28'
+- mention: Hudi
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: agent
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+- mention: Trino
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: 混合精度训练
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 系统架构
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: 数据生产
+  capability_id: cap_10
+  effective_from: '2026-08-28'
+- mention: product roadmap
+  capability_id: cap_22
+  effective_from: '2026-08-28'
+- mention: ML systems
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 信息检索
+  capability_id: cap_06
+  effective_from: '2026-08-28'
+- mention: RTOS
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: Wide&Deep
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: RocketMQ
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: Serverless
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: IaaS
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: threat modeling
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: distributed computing
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: BigQuery
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: AI safety
+  capability_id: cap_19
+  effective_from: '2026-08-28'
+- mention: container orchestration
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: Pulumi
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: dbt
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: backend services
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: SIEM
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: Cassandra
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: NumPy
+  capability_id: cap_07
+  effective_from: '2026-08-28'
+- mention: Scikit-learn
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 向量检索
+  capability_id: cap_06
+  effective_from: '2026-08-28'
+  point_name: 检索
+- mention: 云服务
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: 访问控制
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: c++
+  capability_id: cap_07
+  effective_from: '2026-08-28'
+- mention: 大模型推理
+  capability_id: cap_01
+  effective_from: '2026-08-28'
+  point_name: 推理
+- mention: PMP
+  capability_id: cap_23
+  effective_from: '2026-08-28'
+- mention: Electron
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: FPGA
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: VLA
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: REST APIs
+  capability_id: cap_14
+  effective_from: '2026-08-28'
+- mention: multimodal
+  capability_id: cap_05
+  effective_from: '2026-08-28'
+- mention: hardware
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: knowledge base
+  capability_id: cap_06
+  effective_from: '2026-08-28'
+- mention: 培训
+  capability_id: cap_24
+  effective_from: '2026-08-28'
+- mention: cloud cost control
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: automated testing
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: Mysql
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: ROS
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: 大数据处理工具
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: 对象存储
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: CoT
+  capability_id: cap_02
+  effective_from: '2026-08-28'
+- mention: 市场分析
+  capability_id: cap_22
+  effective_from: '2026-08-28'
+- mention: XGBoost
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: HIPAA
+  capability_id: cap_20
+  effective_from: '2026-08-28'
+- mention: SPI
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: performance optimization
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: AIOps
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: infrastructure-as-code
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: deployment pipelines
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: Solutions Architecture
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: EU AI Act
+  capability_id: cap_20
+  effective_from: '2026-08-28'
+- mention: 数据库系统
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: Dagster
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+  point_name: 工作流编排
+- mention: Compliance
+  capability_id: cap_20
+  effective_from: '2026-08-28'
+- mention: ArgoCD
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: Diffusion Models
+  capability_id: cap_05
+  effective_from: '2026-08-28'
+  point_name: 图像生成
+- mention: LSTM
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 图像分类
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 微服务架构
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: 产品管理
+  capability_id: cap_22
+  effective_from: '2026-08-28'
+- mention: MxNet
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: Deep Research
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+  point_name: 深度研究
+- mention: PySpark
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: 项目管理工具
+  capability_id: cap_23
+  effective_from: '2026-08-28'
+- mention: technical program management
+  capability_id: cap_23
+  effective_from: '2026-08-28'
+- mention: cloud platforms
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: cloud computing
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: 图算法
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: Kinesis
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: Bootstrap
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: 语言模型
+  capability_id: cap_01
+  effective_from: '2026-08-28'
+- mention: AutoGPT
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+  point_name: 工具调用
+- mention: 目标跟踪
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: linux
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: 渗透测试
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: Axure
+  capability_id: cap_22
+  effective_from: '2026-08-28'
+- mention: I2C
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: 信息安全
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: 多模态识别
+  capability_id: cap_05
+  effective_from: '2026-08-28'
+  point_name: 多模态识别
+- mention: ASIC
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: 实时计算
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: webhooks
+  capability_id: cap_14
+  effective_from: '2026-08-28'
+- mention: Program Management
+  capability_id: cap_23
+  effective_from: '2026-08-28'
+- mention: 公有云
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: data warehouses
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: Azure Synapse
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: product design
+  capability_id: cap_22
+  effective_from: '2026-08-28'
+- mention: Computer Vision
+  capability_id: cap_05
+  effective_from: '2026-08-28'
+- mention: recommender systems
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: Stable Diffusion
+  capability_id: cap_05
+  effective_from: '2026-08-28'
+  point_name: 图像生成
+- mention: SDKs
+  capability_id: cap_14
+  effective_from: '2026-08-28'
+- mention: 嵌入式系统
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: 图数据库
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: QLoRA
+  capability_id: cap_03
+  effective_from: '2026-08-28'
+- mention: CrewAI
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+- mention: 硬件
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: PEFT
+  capability_id: cap_03
+  effective_from: '2026-08-28'
+- mention: REST
+  capability_id: cap_14
+  effective_from: '2026-08-28'
+- mention: 多Agent协作
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+- mention: 运维
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: 检索增强生成
+  capability_id: cap_06
+  effective_from: '2026-08-28'
+- mention: Clickhouse
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: 语义检索
+  capability_id: cap_06
+  effective_from: '2026-08-28'
+  point_name: 检索评测
+- mention: 文生图
+  capability_id: cap_05
+  effective_from: '2026-08-28'
+  point_name: 图像生成
+- mention: 云平台
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: 分布式数据库
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: 评测集
+  capability_id: cap_06
+  effective_from: '2026-08-28'
+  point_name: 检索评测
+- mention: 数据中台
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: 数据并行
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: Containerd
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: Jenkins
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: Security Engineering
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: Large Language Models
+  capability_id: cap_01
+  effective_from: '2026-08-28'
+- mention: multi-agent orchestration
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+- mention: prompts
+  capability_id: cap_02
+  effective_from: '2026-08-28'
+- mention: Infrastructure as Code
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: cloud providers
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: Microsoft Azure
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: Data Lakes
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: 前端架构
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: Helm
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: Word2vec
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: AI for Code
+  capability_id: cap_01
+  effective_from: '2026-08-28'
+  point_name: 代码生成
+- mention: 产品迭代
+  capability_id: cap_22
+  effective_from: '2026-08-28'
+- mention: Power BI
+  capability_id: cap_11
+  effective_from: '2026-08-28'
+- mention: 提示词
+  capability_id: cap_02
+  effective_from: '2026-08-28'
+- mention: prompt
+  capability_id: cap_02
+  effective_from: '2026-08-28'
+- mention: 传感器
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: 算法研发
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 数据开发
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: 风险管理
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: 记忆机制
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+  point_name: 记忆
+- mention: GPIO
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: 数据保护
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: 数据Pipeline
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: Reinforcement Learning
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: encryption
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: agent architectures
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+- mention: service mesh
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: 数据管线
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: prompt injection
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: DynamoDB
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: API design
+  capability_id: cap_14
+  effective_from: '2026-08-28'
+- mention: 数据湖
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: SOC2
+  capability_id: cap_20
+  effective_from: '2026-08-28'
+- mention: database systems
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: 高可用架构
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: 对比学习
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 云基础设施
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: feature engineering
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: EKS
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: Scrum
+  capability_id: cap_23
+  effective_from: '2026-08-28'
+- mention: tensor parallelism
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: Robotics
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: GPU programming
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: RabbitMQ
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: 大模型微调
+  capability_id: cap_03
+  effective_from: '2026-08-28'
+- mention: PaddlePaddle
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 嵌入式
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: JAVA
+  capability_id: cap_07
+  effective_from: '2026-08-28'
+- mention: Hbase
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: 图像算法
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: RESTful API
+  capability_id: cap_14
+  effective_from: '2026-08-28'
+- mention: Agent系统
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+- mention: YARN
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: MPI
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: ResNet
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: MCU
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: 小样本学习
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 服务治理
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: RISC-V
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: visualization
+  capability_id: cap_11
+  effective_from: '2026-08-28'
+- mention: classifiers
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 安全运营
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: finetuning
+  capability_id: cap_03
+  effective_from: '2026-08-28'
+- mention: MCP servers
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+  point_name: MCP
+- mention: application security
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: access control
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: DLP
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: 零信任
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: AI governance
+  capability_id: cap_19
+  effective_from: '2026-08-28'
+- mention: Tool-Use
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+  point_name: 工具调用
+- mention: Databricks SQL
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: Apache Kafka
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: product analytics
+  capability_id: cap_22
+  effective_from: '2026-08-28'
+- mention: Large Language Models (LLMs)
+  capability_id: cap_01
+  effective_from: '2026-08-28'
+- mention: cloud ecosystem
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: agentic automation
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+- mention: statistical models
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: IoT
+  capability_id: cap_16
+  effective_from: '2026-08-28'
+- mention: Sinatra
+  capability_id: cap_14
+  effective_from: '2026-08-28'
+- mention: regulatory frameworks
+  capability_id: cap_20
+  effective_from: '2026-08-28'
+- mention: BSP
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: 混合云
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: Natural Language Processing
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: HTAP
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: systems design
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: Kubeflow
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: WAF
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: 图像增强
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: Keras
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 模仿学习
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 混合精度
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: Bert
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 混合检索
+  capability_id: cap_06
+  effective_from: '2026-08-28'
+  point_name: 检索评测
+- mention: 大数据处理
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: 神经网络
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 大语言模型（LLM）
+  capability_id: cap_01
+  effective_from: '2026-08-28'
+- mention: 负载均衡
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: 决策树
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: 视频内容理解
+  capability_id: cap_05
+  effective_from: '2026-08-28'
+- mention: IOT
+  capability_id: cap_16
+  effective_from: '2026-08-28'
+- mention: 模型SFT
+  capability_id: cap_03
+  effective_from: '2026-08-28'
+- mention: 风险识别
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: ResNet50
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: CVE
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: FaaS
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: 代码补全
+  capability_id: cap_01
+  effective_from: '2026-08-28'
+  point_name: 代码生成
+- mention: Tool-use
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+  point_name: 工具调用
+- mention: Fine-Tuning
+  capability_id: cap_03
+  effective_from: '2026-08-28'
+- mention: agent skills
+  capability_id: cap_04
+  effective_from: '2026-08-28'
+- mention: prompting
+  capability_id: cap_02
+  effective_from: '2026-08-28'
+- mention: ML engineering
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: ASC 740
+  capability_id: cap_20
+  effective_from: '2026-08-28'
+- mention: RL算法
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: API integration
+  capability_id: cap_14
+  effective_from: '2026-08-28'
+- mention: database
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: security engineering
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: API integrations
+  capability_id: cap_14
+  effective_from: '2026-08-28'
+- mention: 时序预测
+  capability_id: cap_12
+  effective_from: '2026-08-28'
+- mention: query optimization
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: validation
+  capability_id: cap_20
+  effective_from: '2026-08-28'
+- mention: Structured Streaming
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: database internals
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: Data Platform
+  capability_id: cap_09
+  effective_from: '2026-08-28'
+- mention: cloud native
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: CMMC
+  capability_id: cap_20
+  effective_from: '2026-08-28'
+- mention: k8s
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: data systems
+  capability_id: cap_08
+  effective_from: '2026-08-28'
+- mention: ELK
+  capability_id: cap_18
+  effective_from: '2026-08-28'
+- mention: Internal Audit
+  capability_id: cap_20
+  effective_from: '2026-08-28'
+- mention: cross-functional collaboration
+  capability_id: cap_26
+  effective_from: '2026-08-28'
+- mention: API设计
+  capability_id: cap_14
+  effective_from: '2026-08-28'
+- mention: AWS CDK
+  capability_id: cap_13
+  effective_from: '2026-08-28'
+- mention: security assessments
+  capability_id: cap_30
+  effective_from: '2026-08-28'
+- mention: knowledge retrieval
+  capability_id: cap_06
+  effective_from: '2026-08-28'
+  point_name: 检索评测
+- mention: prompt设计
+  capability_id: cap_02
+  effective_from: '2026-08-28'
+- mention: 视觉设计
+  capability_id: cap_01
+  effective_from: '2026-08-28'
+- mention: StableDiffusion
+  capability_id: cap_05
+  effective_from: '2026-08-28'
+  point_name: 图像生成
+- mention: 系统架构设计
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: PCBA
+  capability_id: cap_17
+  effective_from: '2026-08-28'
+- mention: ControlNet
+  capability_id: cap_05
+  effective_from: '2026-08-28'
+  point_name: 图像生成
+- mention: 高并发系统设计
+  capability_id: cap_15
+  effective_from: '2026-08-28'
+- mention: AI chatbot
+  capability_id: cap_01
+  effective_from: '2026-08-28'

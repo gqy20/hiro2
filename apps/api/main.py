@@ -8,7 +8,9 @@
 
 from __future__ import annotations
 
+import asyncio
 import os
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Response, UploadFile
@@ -23,10 +25,24 @@ from backend.application.diagnosis import build_diagnosis, list_candidates
 from backend.application.evaluation import build_evaluation_overview
 from backend.application.quality import build_quality_overview
 from backend.application.service import ApplicationService
+from backend.application.snapshot import snapshot_enabled, snapshot_loop
 from backend.application.temporal_vm import build_skill_graph, build_tasks, build_temporal
 from backend.application.training import build_training_output
 
-app = FastAPI(title="Hiro2 API", version="0.1.0")
+
+@asynccontextmanager
+async def _lifespan(_: FastAPI):
+    # JD 快照后台任务：HIRO2_SNAPSHOT_ENABLED=true 时启动即采集（周期见模块头）
+    task = None
+    if snapshot_enabled():
+        task = asyncio.create_task(snapshot_loop())
+        print("[snapshot] 后台采集任务已启动", flush=True)
+    yield
+    if task:
+        task.cancel()
+
+
+app = FastAPI(title="Hiro2 API", version="0.1.0", lifespan=_lifespan)
 
 
 def _cors_origins() -> list[str]:

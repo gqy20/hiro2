@@ -4,6 +4,8 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 RUN pip install --no-cache-dir uv
 RUN uv sync --frozen --no-dev
+# JD 快照采集的浏览器（jdcorp Playwright 站点）+ headless 所需系统依赖
+RUN ./.venv/bin/playwright install --with-deps chromium
 COPY backend ./backend
 COPY apps ./apps
 COPY scripts ./scripts

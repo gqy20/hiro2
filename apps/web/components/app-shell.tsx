@@ -32,7 +32,7 @@ const navigation = [
   { href: "/profile", label: "我的画像", icon: ClipboardText },
 ];
 
-type Workspace = "recruiting" | "career";
+type Workspace = "recruiting" | "career" | "data";
 const WORKSPACE_KEY = "hiro2.workspace";
 
 export function AppShell({
@@ -41,27 +41,36 @@ export function AppShell({
   const pathname = usePathname();
   const router = useRouter();
   const [workspace, setWorkspace] = useState<Workspace>(() => {
-    const fallback =
-      pathname.startsWith("/career") || pathname.startsWith("/profile")
+    const fallback: Workspace = pathname.startsWith("/data")
+      ? "data"
+      : pathname.startsWith("/career") || pathname.startsWith("/profile")
         ? "career"
         : "recruiting";
     if (typeof window === "undefined") return fallback;
     const stored = window.localStorage.getItem(WORKSPACE_KEY);
-    return stored === "career" || stored === "recruiting" ? stored : fallback;
+    if (stored === "recruiting" || stored === "career" || stored === "data") {
+      return stored;
+    }
+    return fallback;
   });
   const careerMode = workspace === "career";
-  const visibleNavigation = careerMode
-    ? navigation.filter((item) =>
-        ["/career", "/profile", "/diagnosis"].includes(item.href),
-      )
-    : navigation.filter((item) => !["/career", "/profile"].includes(item.href));
+  const dataMode = workspace === "data";
+  const visibleNavigation = dataMode
+    ? navigation.filter((item) => item.href === "/datasets")
+    : careerMode
+      ? navigation.filter((item) =>
+          ["/career", "/profile", "/diagnosis"].includes(item.href),
+        )
+      : navigation.filter((item) => !["/career", "/profile"].includes(item.href));
   const contentRef = useRef<HTMLElement>(null);
 
   function switchWorkspace(next: Workspace) {
     if (next === workspace) return;
     window.localStorage.setItem(WORKSPACE_KEY, next);
     setWorkspace(next);
-    router.push(next === "career" ? "/career" : "/");
+    if (next === "career") router.push("/career");
+    else if (next === "data") router.push("/data");
+    else router.push("/");
   }
 
   useGSAP(
@@ -133,6 +142,14 @@ export function AppShell({
               type="button"
             >
               成长
+            </button>
+            <button
+              aria-pressed={workspace === "data"}
+              className={workspace === "data" ? "is-active" : ""}
+              onClick={() => switchWorkspace("data")}
+              type="button"
+            >
+              数据
             </button>
           </div>
           <span className="live-dot" aria-hidden />

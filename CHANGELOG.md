@@ -34,6 +34,7 @@
 - 来源明细硬编码数字移除：`/datasets/overview` 的 DatasetItem 新增 `sources` 字段，由后端读取 `data/SOURCES.yml`（D0 来源登记）按数据集挂载来源通道（jd→5 条采集通道、temporal→wechat-mp/feeds/arxiv/pypi-pkgstats、capability→含政策/O*NET 历史），前端删除写死的 SOURCE_DETAIL（“字节 376/51job 650/Wayback 13,071”等与 KPI 对不上的旧数字）；派生（evidence）、受控（resumes）、冻结（evaluation）数据集显示派生说明而非虚构通道。
 
 ### Changed
+- CSS 按工作区/域拆分归位：`dashboard.css` 更名 `recruiting.css`（招聘区）；求职区样式（career-home/jobs/path/profile/proof 共 373 行）抽出为 `career.css`；质量看板与评测嵌入块移入 `evaluation.css`；`datasets.css` 并入 `data.css`（数据集目录已归入数据区总览）；`globals.css` 改为“基础层 -> 共享组件 -> 工作区/域”的有序导入。拆分只移动不改规则，计算样式抽查（career 卡片 saffron-soft 背景/10px 圆角、quality min-height）与 e2e 14/14、smoke 22/22 全绿验证无渲染回归。
 - 数据工作区收纳为六项导航（总览/来源/流水线/审核任务/评测与质量/时间情报）：`/datasets` 并入总览页数据集目录区块（`DatasetWorkbench` 新增 embedded 模式），`/data/quality` 与 `/quality` 并入评测与质量页（`DataQualityWorkbench`/`QualityWorkbench` embedded），旧路由全部重定向不 404；`/temporal` 五子页归入数据工作区并补“时间轴”二级 tab；招聘工作区导航收敛为五项（工作台/岗位发现/我的岗位/能力全景/候选诊断），评测中心、数据资产、简历解析撤出业务导航。
 - 简历解析并入诊断流程：`/resumes` 确认画像后可“前往诊断”，诊断页画像区新增“从简历导入”入口；我的岗位卡片审核入口带待处理计数（“审核变化（13）→”）。
 - `/data` 总览删除“时间情报”窄带（信息与流转图重复），流转图高度余量放大，主要内容获得更多纵向空间；四个数据页页内大标题移除（顶部导航已承担当前位置表达），改为 sr-only 隐藏标题保留无障碍文档大纲。

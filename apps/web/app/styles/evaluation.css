@@ -183,3 +183,51 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* 质量看板与评测嵌入块（自 dashboard.css 归位） */
+.quality-workbench {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  min-height: calc(100vh - 56px);
+}
+
+.evaluation-dataset-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 4px 10px;
+  border-color: transparent;
+  border-radius: 8px;
+  background: transparent;
+}
+.evaluation-dataset-item span {
+  display: inline;
+  margin: 0;
+  white-space: nowrap;
+}
+.evaluation-dataset-item strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.evaluation-dataset-item .evaluation-dataset-samples {
+  color: var(--muted);
+  text-align: right;
+}
+.evaluation-dataset-item .evaluation-dataset-version {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  color: var(--muted);
+  text-align: left;
+  text-overflow: ellipsis;
+}
+.evaluation-dataset-item.is-active {
+  background: var(--saffron-soft);
+  border-color: transparent;
+}
+.evaluation-metric small {
+  display: none;
+}

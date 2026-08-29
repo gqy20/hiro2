@@ -1,10 +1,11 @@
+/* 全局样式入口：基础层 -> 共享组件 -> 工作区/域。 */
 @import "./styles/foundation.css";
 @import "./styles/layout.css";
 @import "./styles/visual.css";
+@import "./styles/recruiting.css";
+@import "./styles/career.css";
 @import "./styles/skills.css";
 @import "./styles/evaluation.css";
 @import "./styles/temporal.css";
 @import "./styles/operations.css";
-@import "./styles/dashboard.css";
-@import "./styles/datasets.css";
 @import "./styles/data.css";

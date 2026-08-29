@@ -89,8 +89,8 @@ export default async function PositionsPage() {
                 <h2>系统检测到的岗位变化</h2>
                 <span className="page-meta">
                   {detected
-                    ? `快照 Diff：${detected.base} → ${detected.obs} · ${detected.changesTotal} 项待复核`
-                    : "接入真实后端后，快照 Diff 自动检出岗位技能变化草稿"}
+                    ? `快照差异：${detected.base} → ${detected.obs} · ${detected.changesTotal} 项待复核`
+                    : "接入真实后端后，快照差异引擎自动检出岗位技能变化草稿"}
                 </span>
               </div>
             </header>

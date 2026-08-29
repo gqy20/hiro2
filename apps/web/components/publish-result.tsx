@@ -34,7 +34,7 @@ export function PublishResultView({
               {`${jobTitle} · ${targetVersion} · ${publishedAt}`}
             </span>
           </div>
-          <Tag color="green">PUBLISHED</Tag>
+          <Tag color="green">已发布</Tag>
         </div>
 
         <Result

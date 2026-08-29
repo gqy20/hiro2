@@ -25,6 +25,7 @@
 - `GET /api/v1/jobs/published` 已发布岗位版本列表端点（`backend/application/joblist.py`）：每岗位取最新发布版本，经 job_id 内嵌 pos_XX 结构化关联岗位目录补充岗位族与首条职责，12 岗位。
 
 ### Fixed
+- 前端界面文案语言规范化（AGENTS.md 第 8 节，与文档侧同批）：质量看板"Run 对比/Run A·B/vs/horizon X 天"→"运行对比/运行 A·B/对比/预测期 X 天"；我的岗位页"快照 Diff"→"快照差异"；发布结果页裸枚举标签 `PUBLISHED`→"已发布"；影响建议页下拉选项"required（必备）"等中英重复表述→纯中文（从已有 LEVEL_LABEL 映射派生，顺带消除"暂不纳入/不在范围"两套译法）；技术传导页图例"各层 onset"→"各层起始月"；简历解析演示文案内部 ID 裸露"疑似 cap_06 RAG/知识库"→"疑似 RAG/知识库（cap_06）"。
 - 影响建议审核断链修复：`POST /api/v1/temporal/suggestions/{id}/review` 端点上线，`/temporal/suggestions` 页的接受/修改/拒绝从纯前端本地状态改为写入 append-only 审核日志（复用 `review-actions.jsonl` 与 PG `review_actions` 双写通道，`sug-` 前缀 target_id 区分建议审核）；VM 构建时合并最新审核状态（含 modified 的 suggested_level 变更），刷新后状态保持。已接受/已修改的建议卡显示“前往岗位更新流程”接力入口——建议仍不直接修改岗位版本，岗位变更须走 Diff 审核发布流程（边界不变）。
 - 诊断 DB 路径岗位版本查询补齐 `required_skills` 列（原 SELECT 缺列导致 `requiredTotal` 恒为 0），与文件路径键名对齐。
 - 评测标注管道断链修复：新增 `POST /api/v1/tasks/{task_id}/decision` 提交端点与 `backend/application/annotate.py`（append-only 写入 `evaluation/annotations.jsonl`，不动冻结样本 CSV 的 manifest 哈希）；`/tasks` 页提交按钮从纯本地状态改为接入真实 API（mock 模式保持本地状态机）；`evalset.py score` 计算时按 task_id 优先合并标注记录（ACCEPT=对 / MODIFY·REJECT=错 / UNKNOWN 不计入分母），CSV 手工判定列保留为兼容回退——修复前“freeze→任务→提交→指标”链路在提交处完全断开，标注结果无法回流为准确率。

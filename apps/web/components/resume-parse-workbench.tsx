@@ -128,7 +128,7 @@ const DEMO_RESULT: ParseResponse = {
         skill_id: null,
         proficiency: "中级",
         resolved_by: "llm",
-        reason: "疑似 cap_06 RAG/知识库",
+        reason: "疑似 RAG/知识库（cap_06）",
       },
       {
         mention: "团队管理",

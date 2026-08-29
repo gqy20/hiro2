@@ -126,12 +126,12 @@ export function QualityWorkbench({
           </ul>
         </section>
 
-        <section aria-label="Run 对比" className="temporal-backtest-errors">
-          <SectionHeader title="Run 对比" />
+        <section aria-label="运行对比" className="temporal-backtest-errors">
+          <SectionHeader title="运行对比" />
           <div className="temporal-filters">
             <span>A</span>
             <select
-              aria-label="Run A"
+              aria-label="运行 A"
               onChange={(e) => {
                 const next: [string, string] = [e.target.value, compareIds[1]];
                 setCompareIds(next);
@@ -144,9 +144,9 @@ export function QualityWorkbench({
                 </option>
               ))}
             </select>
-            <span>vs</span>
+            <span>对比</span>
             <select
-              aria-label="Run B"
+              aria-label="运行 B"
               onChange={(e) => {
                 const next: [string, string] = [compareIds[0], e.target.value];
                 setCompareIds(next);
@@ -164,21 +164,21 @@ export function QualityWorkbench({
             {a ? (
               <div className="temporal-stat-card">
                 <Statistic
-                  title={`Run A · ${a.run_id}`}
+                  title={`运行 A · ${a.run_id}`}
                   value={a.metrics.accuracy}
                   precision={3}
                 />
-                <small>{`horizon ${a.horizon_days} 天`}</small>
+                <small>{`预测期 ${a.horizon_days} 天`}</small>
               </div>
             ) : null}
             {b ? (
               <div className="temporal-stat-card">
                 <Statistic
-                  title={`Run B · ${b.run_id}`}
+                  title={`运行 B · ${b.run_id}`}
                   value={b.metrics.accuracy}
                   precision={3}
                 />
-                <small>{`horizon ${b.horizon_days} 天`}</small>
+                <small>{`预测期 ${b.horizon_days} 天`}</small>
               </div>
             ) : null}
             {a && b ? (

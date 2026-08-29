@@ -15,7 +15,7 @@
 | 阶段 | 目标 | 前端退出条件 |
 | --- | --- | --- |
 | T1 数据与证据 | 建立应用壳层和数据展示基础 | ✓ 设计 Token、6 项一级导航、证据抽屉、API Client 全部就绪 |
-| T2 岗位演化 | 完成新岗位和既有岗位页面 | ✓ 候选列表、5 要素编辑、3 栏 Diff、发布确认 + 成功视图 |
+| T2 岗位演化 | 完成新岗位和既有岗位页面 | ✓ 候选列表、5 要素编辑、3 栏差异、发布确认 + 成功视图 |
 | T3 图谱与诊断 | 完成人岗诊断闭环 | ✓ F-T3.1/3.2/3.3/3.4/3.5/3.6 全部完成 |
 | T4 评测与交付 | 完成稳定性和答辩验收 | ✓ 评测中心、错误状态、响应式、Playwright 10/10、prod build、6 页面截图 |
 
@@ -29,7 +29,7 @@
 | F-T1.2 | 组件库主题与设计 Token | `design.md` | **完成** | AntD 6 + AntD X 2 + 全部 token 走 `app-theme.tsx` + `:root` CSS 变量；6 个 workbench + 4 个次级页全部复用。 |
 | F-T1.3 | Evidence Drawer | `EvidenceView` | **完成** | 4 个 workbench 复用 `EvidenceDrawer`，全文/原文 modal、Source + Quality 显示。 |
 | F-T1.4 | JobVersion / Evidence Mock Adapter | `contracts.md` | **完成** | 4 个 core fixture（ready/empty/error）全部齐；后端 B-T1.1 实装后可平滑切换。 |
-| F-T1.5 | API Client 和 Query Hooks | `contracts.md` | **完成** | `lib/api/{client,queries,types}.ts` 三件套，GET/POST/mock-toggle 全套，e2e 覆盖。 |
+| F-T1.5 | API 客户端与查询钩子 | `contracts.md` | **完成** | `lib/api/{client,queries,types}.ts` 三件套，GET/POST/mock 切换全套，端到端测试覆盖。 |
 | F-T1.6 | 可信岗位版本上下文组件 | `JobVersion` / `EvidenceView` | **完成** | 4 个 workbench 共享 `JobUpdateContext` + 证据 + 置信度，模板已固化为 fixture 形状。 |
 
 ### F-T2 岗位演化
@@ -38,7 +38,7 @@
 | --- | --- | --- | --- | --- | --- |
 | F-T2.1 | 新岗位候选列表 | F-T1.4、F-T1.6 | I1 | **完成** | 5+ 条候选列表 + 4 维筛选 + 五要素编辑 + 接受/拒绝 + `?state=empty|error` 兜底。 |
 | F-T2.2 | 新岗位定义编辑器 | F-T2.1 | I1 | **完成** | 5 要素（职责/要求/技能加分/典型场景）EditDefinition 组件，aria-label 覆盖完整。 |
-| F-T2.3 | 既有岗位版本 Diff | F-T1.4、F-T1.6 | I2 | **完成** | 三栏 Diff（新增/删除/修改）+ 下游影响 section + 发布流走 `publishJobVersion()`。 |
+| F-T2.3 | 既有岗位版本差异 | F-T1.4、F-T1.6 | I2 | **完成** | 三栏差异（新增/删除/修改）+ 下游影响区块 + 发布流走 `publishJobVersion()`。 |
 | F-T2.4 | 版本发布确认 | F-T2.3 | I2 | **完成** | `publish-result.tsx` 显示 v1.5 已发布 + 审核记录摘要 + 返回按钮；旧版本不可变。 |
 
 ### F-T3 图谱与诊断
@@ -49,7 +49,7 @@
 | F-T3.2 | 图谱节点详情和证据 | F-T1.3 | I3 | **完成** | `skill-node-detail.tsx` 侧栏（信息/别名/兄弟技能点/证据摘要）+ 关联岗位版本与市场信号（扫 12 个 published 版本聚合 JobVersion 引用、JD 提及数与占比，替换原占位块）。 |
 | F-T3.3 | 手工技能画像 | `CandidateProfile` | I4 | **完成** | 技能 status 改写 + 项目 `{id,text}[]` 增删改 + `userCorrections[]` 审计数组（带 ISO 时间戳）。 |
 | F-T3.4 | PDF/DOCX 解析确认 | Resume API | I4 | **完成** | `/resumes` 上传 → `POST /candidates/resumes`（FormData，90s 超时）→ 归一结果可修正（skill_id 编辑/删行）+ 原文片段折叠；确认为会话内闭环，候选人持久化待后端。 |
-| F-T3.5 | 匹配报告和学习路径 | `MatchReport`、F-T1.6 | I4 | **完成** | `/diagnosis` 已含置信度卡 + 关键短板 + 排序学习路径 + recalculate 联动技能 status。 |
+| F-T3.5 | 匹配报告和学习路径 | `MatchReport`、F-T1.6 | I4 | **完成** | `/diagnosis` 已含置信度卡 + 关键短板 + 排序学习路径 + 重算联动技能状态。 |
 | F-T3.6 | 岗位标准输出与培养任务 | PublishedJobVersion API | I4 | **完成** | 发布成功视图拉取 `GET /jobs/{id}/training-output`，渲染 JD 模板（职责/必备/加分）、学练赛证培养任务与能力证明要求；mock 模式显示占位说明。 |
 
 ### F-T4 评测与交付
@@ -77,14 +77,14 @@
 - 招聘区导航收敛为五项；简历解析并入诊断流程（`/resumes` 确认后可前往诊断）。
 - 数据区收纳为六项导航：`/datasets` 并入总览，`/data/quality` 与 `/quality` 并入评测与质量页（旧路由重定向），`/temporal` 五子页归入本区并补“时间轴”二级 tab。
 - `/tasks` 审核提交接入真实 API（`POST /tasks/{id}/decision`）；`/temporal/suggestions` 审核持久化（`POST /temporal/suggestions/{id}/review`）；预测复盘页新增规则迭代对比（v1→v2）。
-- e2e 13/13（新增求职流程 3 条）。
+- 端到端测试 14/14（求职流程 4 条）。
 
 ## 联调门
 
 | 门 | 前端状态 | 后端提供 | 通过条件 |
 | --- | --- | --- | --- |
 | I1 新岗位 | ✓ 候选列表 + 定义编辑器就绪 | Emerging Job API | 字段、状态、证据引用一致 |
-| I2 岗位 Diff | ✓ Diff 页面 + 发布确认就绪 | Job Diff / Publish API | 新增/删除/修改和版本状态一致 |
+| I2 岗位差异 | ✓ 差异页面 + 发布确认就绪 | 岗位差异 / 发布 API | 新增/删除/修改和版本状态一致 |
 | I3 图谱证据 | ✓ 图谱 + 节点详情 + 抽屉就绪 | Graph / Evidence API | 节点和证据可通过同一 `job_version_id` 关联 |
 | I4 人岗诊断 | ✓ 画像 + 报告 + 学习路径就绪 | Resume / Match API | 修正画像后可重新计算报告 |
 
@@ -95,11 +95,11 @@
 - [x] 页面使用 `design.md` 的 Token，不自行添加颜色和字号。`app-theme.tsx` + `globals.css :root` + `app/jddiff` 复用现有 token
 - [x] 基础交互使用 Ant Design 6，AI 交互使用 Ant Design X 2.x，不重复实现等价基础组件。
 - [x] 主路径是结构化任务流程；对话只是上下文辅助入口，不承载核心结论。**当前无 AI 流程入口（设计文档留位）**
-- [x] AI 输出进入固定 View Model、证据和审核流，不直接伪装成正式岗位事实。
+- [x] AI 输出进入固定展示模型、证据和审核流，不直接伪装成正式岗位事实。
 - [x] 页面没有重复标题、无意义眉题、冗余说明或无法解释的垃圾留白。F-T4.5 截图 review 通过
 - [x] 熟悉操作使用图标，图标按钮具备 Tooltip 和 `aria-label`；业务数据保留文本。
 - [x] AI 过程只展示可审计状态、工具和结果，不展示隐藏思维链。
-- [x] 页面只消费 `contracts.md` 定义的 View Model。`lib/api/types.ts` re-export
+- [x] 页面只消费 `contracts.md` 定义的展示模型，类型由 `lib/api/types.ts` 再导出
 - [x] 所有异步任务有进度、失败和重试状态。13 个 page + 6 个 loading.tsx + 6 个 error.tsx
 - [x] 所有结论可以打开证据抽屉。`EvidenceDrawer` 4 个 workbench 复用
 - [x] 岗位结论、图谱节点和匹配报告均按"结论 -> 变化 -> 依据 -> 行动"呈现；不得只显示模型总分或长篇 AI 文本。

@@ -209,12 +209,12 @@ flowchart LR
 ```text
 Next.js 前端
   -> FastAPI API / SSE
-  -> Application Use Case
-  -> Domain Modules
-  -> PostgreSQL / Neo4j / Object Storage / LLM Provider
+  -> 应用层用例
+  -> 领域模块
+  -> PostgreSQL / Neo4j / 对象存储 / 大模型接入
 
 hiro2 CLI
-  -> 同一 Application Use Case
+  -> 同一应用层用例
   -> data/runs/<run_id>/
 ```
 
@@ -226,5 +226,5 @@ hiro2 CLI
 新岗位：信号 -> 候选 -> 证据 -> 人工定义 -> 岗位版本
 岗位更新：两个时间窗 -> 新增/删除/修改 -> 证据 -> 新版本
 人岗诊断：岗位版本 -> 简历/技能 -> 修正 -> 差距 -> 学习路径
-历史回测：as_of_date -> 当时快照 -> 未来预测 -> 后验对比 -> 复盘
+历史回测：数据截止日 -> 当时快照 -> 未来预测 -> 后验对比 -> 复盘
 ```

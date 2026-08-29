@@ -9,7 +9,7 @@
 | 阶段 | 目标 | 后端退出条件 | 实际状态 |
 | --- | --- | --- | --- |
 | T1 数据与证据 | 建立事实主库和证据链 | D1-D5 数据退出条件满足 | ✅ 9/9（B-T1.7 部分达标） |
-| T2 岗位演化 | 完成候选发现、Diff、审核和版本 | 两个主案例可发布岗位版本 | ✅ 8/8（12 个岗位版本已发布，jobver 已参数化） |
+| T2 岗位演化 | 完成候选发现、差异、审核和版本 | 两个主案例可发布岗位版本 | ✅ 8/8（12 个岗位版本已发布，jobver 已参数化） |
 | T3 图谱与诊断 | 完成图谱、简历解析和匹配 | 返回稳定的 MatchReport | △ 6/7（B-T3.2 部分：图谱查询为内存构建非 Neo4j） |
 | T4 评测与交付 | 完成指标、部署和稳定性 | 评测可重跑，Compose 可启动 | △ 5/12（部署类未做） |
 
@@ -40,7 +40,7 @@
 | B-T2.5 | JobChangeSet Diff | B-T2.4 | I2 | **完成** | 新增/删除/修改带权重和证据 | 13 项变化带证据 JD + evidence_ids |
 | B-T2.6 | 岗位版本发布/回滚 | B-T2.3/5 | I2 | **完成** | 发布不可变，新版本可回退 | `jobpub.py` 审核留痕校验 + hash 不可变（12 版本：ai-agent/llm-algo/ai-pm/nlp-mm/cv/mlops/ai-trainer/data-analyst/dc-ops/bigdata/sensor/data-sec） |
 | B-T2.7 | 趋势信号与时间特征 | B-T1.8/9 | I1 | **完成** | 日/周/月聚合、时间衰减 | `features.py` 窗口统计 + 事实分级加权 |
-| B-T2.8 | ForecastEngine | B-T2.7 | I2 | **完成** | 规则基线和 Agent 解释 | `forecast.py` v1 动量规则 + 回测负结果驱动 v2（过热抑制 + down 保守化，三 horizon 一致改进 +5~14 点） |
+| B-T2.8 | 预测引擎 | B-T2.7 | I2 | **完成** | 规则基线和 Agent 解释 | `forecast.py` v1 动量规则 + 回测负结果驱动 v2（过热抑制 + 下跌保守化，三个预测期一致改进 +5~14 点） |
 
 ### B-T3 图谱与诊断
 
@@ -61,10 +61,10 @@
 | B-T4.1 | Evaluation Case schema | B-T1.1 | **完成** | 输入、标准答案、预测、判定 | `evalset.py freeze` 三层冻结样本 |
 | B-T4.2 | 指标计算 CLI | B-T4.1 | **完成** | 指标可重跑 | `evalset.py score` 确定性计算 |
 | B-T4.3 | 100+ JD 测试集导入 | B-T4.1 | **完成** | 真实、来源、标注、synthetic 标记 | 337 条（266 AI 域），全部真实采集 |
-| B-T4.4 | 单元、契约、集成测试 | 全部 | **完成** | coverage>=60% | 38 个测试全绿，coverage 65.12%，Makefile 强制 fail-under=60 |
+| B-T4.4 | 单元、契约、集成测试 | 全部 | **完成** | 覆盖率>=60% | 38 个测试全绿，覆盖率 65.12%（当前 73 个 68.44%），Makefile 强制下限 60% |
 | B-T4.5 | Pipeline Run / Outbox | B-T2 | **完成（2026-08-29）** | 长任务可追踪，事件幂等 | 消费逻辑归位 `backend/application/outbox.consume_batch`（失败带退避回 PENDING、达上限转 FAILED，FOR UPDATE SKIP LOCKED 并发安全）；常驻 worker `outbox_worker.py`（API lifespan 挂载，HIRO2_OUTBOX_WORKER 开关默认关、compose 默认开、30s 轮询）；CLI 壳化；域单测 3 例 |
 | B-T4.6 | Docker Compose 和健康检查 | 全部 | **完成** | 干净环境可启动 | `docker-compose.yml` 含 PostgreSQL/Neo4j/API/Web 健康依赖和 migration 初始化；`/health/live` + `/health/ready` |
-| B-T4.7 | 历史滚动回测 CLI | B-T2.8 | **完成** | 只用截止时间前数据 | `backtest.py` 月度滚动 + 双 as_of 闸门 |
+| B-T4.7 | 历史滚动回测 CLI | B-T2.8 | **完成** | 只用截止时间前数据 | `backtest.py` 月度滚动，预测侧数据与词典双重时间截止闸门 |
 | B-T4.8 | 预测复盘与错误分析 | B-T4.7 | **完成** | 命中等级和改进建议 | error_types 分类（up->down 为主） |
 | B-T4.9 | ReviewTask 与任务分配 | B-T4.1 | **完成** | 自动生成、领取、提交 | 180 条任务从 evalset 自动生成 |
 | B-T4.10 | 审核标注与双人复核 | B-T4.9 | **未开始** | 20% 双人独立审核 | 无双审机制 |
@@ -76,7 +76,7 @@
 | 门 | 前端状态 | 后端提供 | 通过条件 | 实际 |
 | --- | --- | --- | --- | --- |
 | I1 新岗位 | ✓ 接真实数据 | Emerging Job API + Review POST | DTO/状态/证据一致 | ✅ `/new-jobs` 真实五路证据 |
-| I2 岗位 Diff | ✓ 接真实数据 | Job Diff / Publish / Version API | 版本不可变，三类变化可回链 | ✅ `/jobs` 13 项变化 + ai-agent-v2 已发布 |
+| I2 岗位差异 | ✓ 接真实数据 | 岗位差异 / 发布 / 版本 API | 版本不可变，三类变化可回链 | ✅ `/jobs` 13 项变化 + ai-agent-v2 已发布 |
 | I3 图谱证据 | ✓ 接真实数据 | Graph / Evidence API | 节点和证据可关联 | ✅ `/skills` 22 节点 + `/evidence/{id}` 回链 |
 | I4 人岗诊断 | ✓ 接真实数据 | Resume / Match API | 修正后返回新报告 | ✅ `/diagnosis` 21 候选人 + 学习路径 |
 
@@ -93,7 +93,7 @@
 - [ ] Docker Compose、迁移、种子和健康检查可用。
 - [x] 时间情报系统不依赖旧 hiro 或 rss2cubox，可独立运行。
 - [x] 审核和评测反馈以 ReviewTask 保存（180 条），不依赖线下数据包。
-- [x] 任何正式岗位或匹配结论都可输出"结论、变化、依据、行动"所需的稳定 View Model。
+- [x] 任何正式岗位或匹配结论都可输出"结论、变化、依据、行动"所需的稳定展示模型。
 
 ## 剩余工作（按优先级）
 

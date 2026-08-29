@@ -58,7 +58,7 @@
 | `evidence_id` | str | ev:|jd:|xlsx: 前缀 + 源标识（回链键） |
 | `source_id` | str | TODO 待人工补 |
 | `source_span` | dict | 回链定位（event_id/jd_id/position_id） |
-| `published_at` | str | 证据时间（as_of 闸门的 T 锚点） |
+| `published_at` | str | 证据发布时间（时间闸门的锚点，回测只用此前的证据） |
 | `content_hash` | str | 内容哈希 16 位（幂等重建校验） |
 | `claim_type` | str | trend_signal|job_requirement|expert_baseline |
 | `payload` | dict | 主张载荷（title/event_type/skill_mentions 等按 claim_type 变化） |

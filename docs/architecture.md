@@ -50,22 +50,22 @@ temporal      RSS 信号、历史回测和未来预测
 ## 业务域解耦
 
 ```text
-Temporal Intelligence
-  -> Job Capability Graph
-  -> Candidate Matching
+时间情报域
+  -> 岗位图谱域
+  -> 人岗诊断域
 
-Frontend / CLI
-  -> Application API
+前端 / CLI
+  -> 应用层 API
 ```
 
 | 业务域 | 负责 | 对外输出 |
 | --- | --- | --- |
-| Temporal Intelligence | RSS、日报、信号、回测、预测 | `TrendSignal`、`ForecastResult`、`JobImpactSuggestion` |
-| Job Capability Graph | Excel/标准/JD、岗位版本、审核、图谱 | `PublishedJobVersion`、图谱查询 |
-| Candidate Matching | 候选画像、匹配和学习路径 | `MatchReport` |
-| Frontend / CLI | 页面、调试和任务入口 | API 请求和展示状态 |
+| 时间情报域 | RSS、日报、信号、回测、预测 | `TrendSignal`、`ForecastResult`、`JobImpactSuggestion` |
+| 岗位图谱域 | Excel/标准/JD、岗位版本、审核、图谱 | `PublishedJobVersion`、图谱查询 |
+| 人岗诊断域 | 候选画像、匹配和学习路径 | `MatchReport` |
+| 前端 / CLI | 页面、调试和任务入口 | API 请求和展示状态 |
 
-Temporal Intelligence 不得直接写岗位表或 Neo4j。Candidate Matching 只接受 `CandidateProfile + PublishedJobVersion`，不读取日报、预测或 Excel 原文件。
+时间情报域不得直接写岗位表或 Neo4j。人岗诊断域只接受 `CandidateProfile + PublishedJobVersion`，不读取日报、预测或 Excel 原文件。
 
 依赖方向：
 
@@ -75,12 +75,12 @@ API -> Application -> Domain Interfaces -> Infrastructure Adapters
 
 领域模块禁止直接导入数据库 driver、LLM SDK、PDF 库或其他模块的内部表。
 
-前端和 CLI 共同调用 Application Use Case，不能各自实现业务逻辑：
+前端和 CLI 共同调用应用层用例，不能各自实现业务逻辑：
 
 ```text
 CLI ───────┐
-           ├── Application Use Case -> Domain -> Repository
-Frontend ──┘
+           ├── 应用层用例 -> 领域模块 -> 仓储
+前端 ──────┘
 ```
 
 ## 数据流
@@ -130,7 +130,7 @@ collected_at   本次抓取时间
 observed_at    信号被观察到的时间
 ```
 
-历史回测只使用 `available_at <= as_of_date` 的数据；后续数据只能用于 ground truth。历史补录数据必须标记 `ingestion_mode=backfill`，不能伪装成当时在线采集。
+历史回测只使用 `available_at <= as_of_date` 的数据；后续数据只能用作后验真值（评估对照）。历史补录数据必须标记 `ingestion_mode=backfill`，不能伪装成当时在线采集。
 
 ### 预测模块边界
 

@@ -109,7 +109,7 @@ evalset.py freeze（分层抽样，manifest 哈希锁定）
 | --- | --- | --- |
 | JD/技能审核 | 职责、必备/加分、岗位、等级、技能映射 | `EvaluationAnnotation` |
 | 证据审核 | 原文是否支持结论、来源质量、冲突 | Evidence 质量和复核记录 |
-| 岗位审核 | 新岗位定义、岗位 Diff、版本发布 | `ReviewAction` |
+| 岗位审核 | 新岗位定义、岗位差异、版本发布 | `ReviewAction` |
 | 预测复盘 | 命中、错判、提前量和错误类型 | `PredictionReview` |
 | 匹配审核 | 画像、关键短板、学习路径 | Match 评测标注 |
 | 体验验收 | 三条流程是否可理解、完成和信任 | UX 任务结果和缺陷记录 |

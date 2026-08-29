@@ -10,32 +10,32 @@ Hiro2 把多源数据变成**可信岗位版本**，再驱动人岗诊断和学�
 整体逻辑是一条主线：
 
 ```text
-多源数据（Excel 基线 / 招聘 JD / 日报 RSS / 简历）
+多源数据（Excel 基线 / 招聘需求（JD） / 日报 RSS / 简历）
   -> 证据层（原文片段、质量、时间）
   -> AI 结构化候选（只出建议，不出事实）
   -> 人工审核（接受 / 修改 / 拒绝）
   -> 已发布岗位版本（不可变，PostgreSQL 事实主库）
-  -> 图谱 / JD 模板 / 人岗诊断 / 学练赛证学习路径
+  -> 图谱 / 招聘模板 / 人岗诊断 / 学练赛证学习路径
 ```
 
-用一个例子贯穿理解："AI 应用工程师"岗位怎么更新——系统对比两个时间窗的 JD，发现新增、删除、修改的能力项（每条带证据和置信度），招聘负责人审核后发布新版本，求职者再用这个版本做诊断。一个例子讲完，整个系统就串起来了。
+用一个例子贯穿理解：“AI 应用工程师”岗位怎么更新——系统对比两个时间窗的招聘需求（JD），发现新增、删除、修改的能力项（每条带证据和置信度），招聘负责人审核后发布新版本，求职者再用这个版本做诊断。一个例子讲完，整个系统就串起来了。
 
 ## 三条不可违反的边界
 
 参与任何环节前，先记住这三条。代码评审和提交都会按它们检查：
 
-1. **AI 与事实的边界**：LLM 只产出结构化候选（`JobImpactSuggestion` 等），必须经人工审核才能变成岗位版本。自由文本不能当业务事实，模型输出必须过 Pydantic 校验。
-2. **数据消费的边界**：人岗匹配只接受 `CandidateProfile + PublishedJobVersion`，不读日报、预测或 Excel 原文件；预测建议通过审核流接力到岗位更新，不直接改图谱。
+1. **AI 与事实的边界**：大模型只产出结构化候选（如“岗位影响建议”），必须经人工审核才能变成岗位版本。自由文本不能当业务事实，模型输出必须过 Pydantic 校验。
+2. **数据消费的边界**：人岗匹配只接受“候选人画像 + 已发布岗位版本”，不读日报、预测或 Excel 原文件；预测建议通过审核流接力到岗位更新，不直接改图谱。
 3. **存储的边界**：PostgreSQL 是唯一事实主库；Neo4j、pgvector 都是可重建投影，挂了不影响已发布版本。岗位版本发布后不可变，修改创建新版本。
 
 ## 系统怎么运转
 
-三个业务域单向解耦，前端和 CLI 共用同一 Application Use Case：
+三个业务域单向解耦，前端和命令行工具共用同一套应用层用例：
 
 ```text
-Temporal Intelligence（时间情报：RSS、回测、预测）
-  -> Job Capability Graph（岗位图谱：版本、审核、图谱）
-  -> Candidate Matching（人岗诊断：画像、匹配、学习路径）
+时间情报域（RSS、回测、预测）
+  -> 岗位图谱域（版本、审核、图谱）
+  -> 人岗诊断域（画像、匹配、学习路径）
 ```
 
 代码位置的对应关系：
@@ -43,10 +43,10 @@ Temporal Intelligence（时间情报：RSS、回测、预测）
 | 目录 | 职责 |
 | --- | --- |
 | `backend/` | 领域模块（jobs、skills、evidence、matching、temporal 等） |
-| `backend/application/` | Application Use Case，前端和 CLI 的共同入口 |
-| `apps/api/` | FastAPI 入口，返回稳定 View Model |
+| `backend/application/` | 应用层用例，前端和命令行工具的共同入口 |
+| `apps/api/` | FastAPI 入口，返回稳定的展示模型（不暴露库表结构） |
 | `apps/web/` | Next.js 前端，三个工作区（招聘 / 求职 / 数据） |
-| `scripts/` | CLI 短脚本（ingest、jddiff、backtest、evalset 等） |
+| `scripts/` | 命令行短脚本（ingest、jddiff、backtest、evalset 等） |
 | `prompts/` | YAML 管理的 Prompt，带版本和 Schema |
 | `data/` | raw（只读）/ processed（可重建）/ runs（运行产物） |
 | `evaluation/` | 冻结评测样本与标注回流 |
@@ -59,18 +59,18 @@ Temporal Intelligence（时间情报：RSS、回测、预测）
 
 | 已达成 | 证据 |
 | --- | --- |
-| 数据全链路 D0-D9 | 五道质量门、337 条真实 JD、6645 条证据 |
-| 岗位版本发布 | 12 个岗位版本（发布不可变、审核留痕） |
-| 人岗诊断 | 21 候选人 MatchReport + 学练赛证学习路径 |
-| 覆盖率 65.12% | Makefile 强制 fail-under=60 |
-| CI 全链绿 | uv frozen + pnpm frozen + verify + e2e，约 4 分钟 |
+| 数据全链路 D0-D9 | 五道质量门、337 条真实招聘需求解析测试集、14174 条证据 |
+| 岗位版本发布 | 17 个岗位版本（12 个岗位，发布不可变、审核留痕） |
+| 人岗诊断 | 21 候选人的匹配报告 + 学练赛证学习路径 |
+| 覆盖率 68.44%（73 测试全绿） | Makefile 强制下限 60% |
+| 持续集成全链绿 | 依赖锁文件安装 + 完整校验 + 端到端测试，约 4 分钟 |
 
 | 缺口 | 阻塞什么 |
 | --- | --- |
 | 人工抽检标注（当前 540 条判定均为 AI 预标注批量采纳） | 三项准确率无法宣称正式指标 |
 | 岗位+等级双确认 0/266（`review-labels.csv`） | D3/D5/D9 退出条件 |
 | 双人复核机制未实现（B-T4.10） | 评测可信度 |
-| role_mapping eval-v3 现状 78%（低于 90% 线） | 岗位映射准确率指标 |
+| 岗位映射准确率现状 78%（评测集 eval-v3，低于 90% 线） | 岗位映射准确率指标 |
 | Neo4j 投影（图谱查询现为内存构建） | B-T3.2 完全达标 |
 
 ## 需要协助的事项
@@ -79,7 +79,7 @@ Temporal Intelligence（时间情报：RSS、回测、预测）
 
 ### 1. 评测标注人工抽检（最紧迫）
 
-把 AI 预标注基线升级为可宣称的正式指标。建议量：28 条非 ACCEPT 全部复核 + ACCEPT 抽 10%（约 22 条），共约 50 条。
+把 AI 预标注基线升级为可宣称的正式指标。建议量：28 条非“接受”判定全部复核 + “接受”判定抽 10%（约 22 条），共约 50 条。
 
 入口：启动系统后打开 `/tasks` 页，查看原文、系统结果、证据和置信度，提交接受、修改、拒绝或无法判断。完成后由 `evalset.py score` 重跑指标。
 
@@ -87,13 +87,13 @@ Temporal Intelligence（时间情报：RSS、回测、预测）
 
 `data/processed/jd-opencli/review-labels.csv` 共 266 行，人工确认列 0/266 填写，需标注 >=100 条满足 D3 退出条件。判定"这条 JD 属于哪个岗位、什么等级"，与评测任务互补不互抵。
 
-### 3. role_mapping v4 规则修复
+### 3. 岗位映射规则 v4 修复
 
-需要 Python 能力。已知三类失分点：BIZ 信号补"Engineering Manager/Manager of"（8 条空间）、"产品经理"别名优先于"大模型"（3 条）、排除规则误伤修正（3 条）。改 `scripts/rolemap.py`，用 `scripts/evalcmp.py` 做固定样本对比（锚定 jd_id，不锚定 method 分层）。
+需要 Python 能力。已知三类失分点：商务/管理信号补“Engineering Manager/Manager of”（8 条空间）、“产品经理”别名优先于“大模型”（3 条）、排除规则误伤修正（3 条）。改 `scripts/rolemap.py`，用 `scripts/evalcmp.py` 做固定样本对比（锚定 `jd_id`，不锚定方法分层）。
 
 ### 4. 双人复核机制（B-T4.10）
 
-需要后端能力。场景 E 要求 >=20% 样本双人独立审核；当前无双审机制。涉及 ReviewTask 分配与一致性统计。
+需要后端能力。场景 E 要求 >=20% 样本双人独立审核；当前无双审机制。涉及审核任务的分配与一致性统计。
 
 ### 5. Neo4j 投影收尾（B-T3.2）
 
@@ -127,7 +127,7 @@ make verify        # 完整本地校验
 docker compose up -d
 ```
 
-日常命令统一 `uv run`（Python）和 `pnpm --dir apps/web`（Web）。提交信息用 Conventional Commits：`type(scope): 摘要`，例如 `feat(temporal): 增加日报导入`。完整协作规范见根目录 [`AGENTS.md`](../AGENTS.md)。
+日常命令统一 `uv run`（Python）和 `pnpm --dir apps/web`（Web）。提交信息遵循约定式提交：`type(scope): 摘要`，例如 `feat(temporal): 增加日报导入`。完整协作规范见根目录 [`AGENTS.md`](../AGENTS.md)。
 
 ## 协作时的质量底线
 

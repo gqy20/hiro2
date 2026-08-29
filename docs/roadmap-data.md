@@ -65,7 +65,7 @@ D0 盘点结论（2026-08-24）：
 
 ### D3 岗位目录与岗位阶梯
 
-状态：待验收（核对 2026-08-29：`review-labels.csv` 岗位+等级双确认人工列 0/266 填写，退出条件未动；评测管道的 role_mapping 判定回流 540 条均为 AI 预标注采纳，不能替代本项——评测任务判定"映射对不对"，D3 要求"等级双确认"，两者互补不互抵）。
+状态：待验收（核对 2026-08-29：`review-labels.csv` 岗位+等级双确认人工列 0/266 填写，退出条件未动；评测管道的岗位映射判定回流 540 条均为 AI 预标注采纳，不能替代本项——评测任务判定"映射对不对"，D3 要求"等级双确认"，两者互补不互抵）。
 
 映射完成（2026-08-25）：`scripts/rolemap.py` + `prompts/role-map.yml` + `backend/jobs` 模块。266 条 AI 域 JD：精确/别名规则匹配 83 条 + LLM 语义候选 168 条（带置信度与理由）= 251/266（94%）映射到 Excel 46 岗位，15 条真歧义 unmatched（管培生/技术支持等）。等级 L1/L2/L3/UNKNOWN = 100/29/35/102（L4 稀缺符合市场；UNKNOWN 集中于 boss"经验不限"）。人工标注包 `review-labels.csv`（266 行，映射+等级双确认列）已生成，待同学标注 >=100 条满足退出条件。
 
@@ -148,7 +148,7 @@ lightrag-hku、cognee、ocrmypdf、whisperx、astrbot、llamafactory）与 git-c
 langflow 153k★、gpt-researcher、praisonai、qwenpaw、pocketflow、metagpt、serena），cap_04
 达 37 包（主案例域密度）；storm/superagi 等 git-clone 型不加。终态 v9 = 209 包/18 域 + npm 24，
 读数全程稳定。
-- 四侧对比读数与混杂标注（2026-08-29，`data/processed/pypi/relsignal.json`，18 域）：JD 池已历史化（bytedance 2018 起/gh-jobs 2022 起，Wayback 回溯成果），新基线下**成熟域下载份额 onset 领先 JD 中位 1886 天**（SQL/云/运维/可视化 1500~2600 天，读数可信）；但 **AI 域读数受三个混杂不可直接引用**——①历史 JD 用当前词典解析（词典 as_of 闸门未覆盖 JD 侧回溯，回望偏差）②语义漂移（"编排调度"命中 cap_04 别名"工作流编排"）③小样本阈值（2 次/月，2021 年仅 5 条字节 JD 即触发 cap_04 onset，其中 1 条为 TikTok LLM/Agent 真超前、其余为噪声）。修复（2026-08-29，`scripts/jdasof.py`）：skill_mentions 不变、按各 JD 发布日词典状态重算
+- 四侧对比读数与混杂标注（2026-08-29，`data/processed/pypi/relsignal.json`，18 域）：JD 池已历史化（bytedance 2018 起/gh-jobs 2022 起，Wayback 回溯成果），新基线下**成熟域下载份额 onset 领先 JD 中位 1886 天**（SQL/云/运维/可视化 1500~2600 天，读数可信）；但 **AI 域读数受三个混杂不可直接引用**——①历史 JD 用当前词典解析（词典时间闸门未覆盖 JD 侧回溯，回望偏差）②语义漂移（"编排调度"命中 cap_04 别名"工作流编排"）③小样本阈值（2 次/月，2021 年仅 5 条字节 JD 即触发 cap_04 onset，其中 1 条为 TikTok LLM/Agent 真超前、其余为噪声）。修复（2026-08-29，`scripts/jdasof.py`）：skill_mentions 不变、按各 JD 发布日词典状态重算
 resolved 写 jd-parsed-asof.jsonl（8656 条、1000 个 as_of 版本、零 LLM 成本）；回望偏差量化：
 总命中 17685->16034（-9.3%），**2024 前 AI 域命中 253->123（-51%）**；修复后 cap_04 JD onset
 2021-04->2023-03（与 langchain 生态爆发期吻合），成熟域读数稳定（中位 1886 天不变）。残留：
@@ -205,7 +205,7 @@ limitation 已写入产物：词典为当前全量口径（描述性对比，非
 ### D8 时间快照与历史回测数据
 
 回测基础设施完成（2026-08-25，rule_version=1）：
-- `backend/temporal/features.py`：SkillSnapshot 窗口统计（事实分级加权 fact=1.0/report=0.6/opinion=0.3）；`backend/temporal/forecast.py`：确定性方向预测与后验方向；`scripts/backtest.py run`：月度滚动回测，预测侧数据+词典双 as_of 闸门，后验侧全词典度量。
+- `backend/temporal/features.py`：SkillSnapshot 窗口统计（事实分级加权 fact=1.0/report=0.6/opinion=0.3）；`backend/temporal/forecast.py`：确定性方向预测与后验方向；`scripts/backtest.py run`：月度滚动回测，预测侧数据与词典双重时间截止闸门，后验侧全词典度量。
 - 结果（H=30/60/90，11/10/9 个封闭 as_of 点）：动量规则 v1 命中率 36.1%/33.6%/34.6%，均低于全平基线 40.3%/43.2%/45.6%。最大错误源 up->down：新闻爆发后均值回归，动量外推不适用。**诚实结论：v1 规则不可用，基础设施可用**；v2 方向（更长平滑窗口、高置信子集弃权）另行迭代并在答辩披露两版对比。
 
 为每个 `as_of_date` 构建：
@@ -216,13 +216,13 @@ SkillSnapshot(T)
 SignalSnapshot(T)
 ```
 
-只使用 `available_at <= T` 的数据。预测窗口结束后再构建实际结果，不能用当前 Excel 倒推历史 ground truth。
+只使用 `available_at <= T` 的数据。预测窗口结束后再构建实际结果，不能用当前 Excel 倒推历史真值。
 
 退出条件：至少一个主题完成多时间点滚动回测，输出预测、实际、差异和错误分类。
 
 ### D9 评测集与发布
 
-状态核对（2026-08-29）：**五要素已齐**——冻结样本（eval-v3-20260828，v1/v2 归档，synthetic 0 混入）、标准答案、系统输出（`system_output.prelabel` 挂载）、判定回流（`annotations.jsonl` 540 条 + `/tasks` decision 端点）、指标脚本（`evalset.py score` 确定性）。当前读数：role_mapping 78%（eval-v3 新冻结样本）、domain 96%、event 100%（v1 样本上 role 曾达 95%，样本升版后回落为改进输入）。**待验收而非未开始**：唯一缺口是"人工"语义——540 条判定 reviewer 均为 `ai-prelabel-batch`（AI 预标注采纳），真人抽检（建议 28 条非 ACCEPT 全复核 + ACCEPT 抽 10%≈22 条，共 ~50 条）后即可宣称正式指标。
+状态核对（2026-08-29）：**五要素已齐**——冻结样本（eval-v3-20260828，v1/v2 归档，synthetic 0 混入）、标准答案、系统输出（`system_output.prelabel` 挂载）、判定回流（`annotations.jsonl` 540 条 + `/tasks` decision 端点）、指标脚本（`evalset.py score` 确定性）。当前读数：岗位映射 78%（eval-v3 新冻结样本）、领域判定 96%、事件抽取 100%（v1 样本上岗位映射曾达 95%，样本升版后回落为改进输入）。**待验收而非未开始**：唯一缺口是"人工"语义——540 条判定标注者均为 `ai-prelabel-batch`（AI 预标注采纳），真人抽检（建议 28 条非"接受"全复核 + "接受"抽 10%≈22 条，共 ~50 条）后即可宣称正式指标。
 
 建立 JD 解析、岗位/等级、技能归一化、历史趋势和人岗匹配评测集。退出条件：输入、标准答案、实际输出、人工判定和指标脚本可复现；合成数据不能进入真实指标。
 
@@ -241,7 +241,7 @@ RAW -> STAGED -> NORMALIZED -> CURATED -> SNAPSHOT
 | --- | --- | --- |
 | D3 岗位目录/阶梯 | 岗位筛选、等级视图 | Job/Level Repository |
 | D4 技能归一化 | 技能点图谱 | Skill Resolver |
-| D5 JD 证据 | 岗位 Diff、证据抽屉 | Posting/Evidence API |
+| D5 JD 证据 | 岗位差异、证据抽屉 | Posting/Evidence API |
 | D6-D8 趋势回测 | 信号流、回测、复盘 | ForecastEngine |
 | D9 评测集 | 评测中心 | Evaluation CLI |
 

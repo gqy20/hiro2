@@ -1,23 +1,27 @@
 "use client";
 
 // 简历工作台：左侧草稿编辑 + PDF 预览，右侧确定性建议（随目标岗位切换）。
+// 表单控件走 AntD 词汇（与诊断工作台一致），面板/卡片走 career 区 surface 语言。
 
+import { FilePdf, Lightbulb, Plus } from "@phosphor-icons/react";
+import { Button, Input, Select, Tag } from "antd";
 import { useMemo, useState } from "react";
 
 import { apiFetch, isMockMode } from "@/lib/api/client";
 import {
   buildMockAdvice,
   emptyDraft,
+  type AdviceItemView,
   type AdviceView,
   type ResumeDraftInput,
 } from "@/lib/resume-studio";
 
 type JobOption = { version_id: string; title: string };
 
-const SEVERITY_LABEL: Record<string, string> = {
-  high: "高",
-  medium: "中",
-  low: "低",
+const SEVERITY_TAG: Record<string, { color: string; label: string }> = {
+  high: { color: "red", label: "优先" },
+  medium: { color: "orange", label: "建议" },
+  low: { color: "green", label: "打磨" },
 };
 const KIND_LABEL: Record<string, string> = {
   coverage: "岗位对齐",
@@ -85,20 +89,41 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
     }
   }
 
+  function updateExperience(
+    i: number,
+    patch: Partial<ResumeDraftInput["experiences"][number]>,
+  ) {
+    set(
+      "experiences",
+      draft.experiences.map((x, j) => (j === i ? { ...x, ...patch } : x)),
+    );
+  }
+  function updateProject(
+    i: number,
+    patch: Partial<ResumeDraftInput["projects"][number]>,
+  ) {
+    set(
+      "projects",
+      draft.projects.map((x, j) => (j === i ? { ...x, ...patch } : x)),
+    );
+  }
+
   return (
     <div className="resume-studio">
-      <section className="resume-editor" aria-label="简历草稿编辑">
-        <div className="resume-field-row">
-          <label>
-            姓名
-            <input
+      <section className="resume-panel" aria-label="简历草稿编辑">
+        <h2>简历草稿</h2>
+        <div className="resume-grid-2">
+          <label className="resume-field">
+            <span>姓名</span>
+            <Input
               value={draft.name}
               onChange={(e) => set("name", e.target.value)}
+              placeholder="张三"
             />
           </label>
-          <label>
-            求职意向
-            <input
+          <label className="resume-field">
+            <span>求职意向</span>
+            <Input
               value={draft.title}
               onChange={(e) => set("title", e.target.value)}
               placeholder="如：AI 应用工程师"
@@ -106,16 +131,16 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
           </label>
         </div>
         <label className="resume-field">
-          联系方式
-          <input
+          <span>联系方式</span>
+          <Input
             value={draft.contact}
             onChange={(e) => set("contact", e.target.value)}
             placeholder="电话 ｜ 邮箱 ｜ 城市"
           />
         </label>
         <label className="resume-field">
-          个人概述
-          <textarea
+          <span>个人概述</span>
+          <Input.TextArea
             rows={3}
             value={draft.summary}
             onChange={(e) => set("summary", e.target.value)}
@@ -123,8 +148,8 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
           />
         </label>
         <label className="resume-field">
-          专业技能（顿号分隔）
-          <input
+          <span>专业技能（顿号分隔）</span>
+          <Input
             value={draft.skills.join("、")}
             onChange={(e) =>
               set(
@@ -139,136 +164,105 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
           />
         </label>
 
-        <h3>工作经历</h3>
+        <div className="resume-section-head">
+          <h3>工作经历</h3>
+          <Button
+            type="text"
+            size="small"
+            icon={<Plus />}
+            onClick={() =>
+              set("experiences", [
+                ...draft.experiences,
+                { company: "", role: "", period: "", bullets: [""] },
+              ])
+            }
+          >
+            添加
+          </Button>
+        </div>
         {draft.experiences.map((exp, i) => (
           <fieldset className="resume-block" key={i}>
-            <div className="resume-field-row">
-              <input
+            <div className="resume-grid-3">
+              <Input
                 value={exp.company}
                 onChange={(e) =>
-                  set(
-                    "experiences",
-                    draft.experiences.map((x, j) =>
-                      j === i ? { ...x, company: e.target.value } : x,
-                    ),
-                  )
+                  updateExperience(i, { company: e.target.value })
                 }
                 placeholder="公司"
               />
-              <input
+              <Input
                 value={exp.role}
-                onChange={(e) =>
-                  set(
-                    "experiences",
-                    draft.experiences.map((x, j) =>
-                      j === i ? { ...x, role: e.target.value } : x,
-                    ),
-                  )
-                }
+                onChange={(e) => updateExperience(i, { role: e.target.value })}
                 placeholder="职位"
               />
-              <input
+              <Input
                 value={exp.period}
                 onChange={(e) =>
-                  set(
-                    "experiences",
-                    draft.experiences.map((x, j) =>
-                      j === i ? { ...x, period: e.target.value } : x,
-                    ),
-                  )
+                  updateExperience(i, { period: e.target.value })
                 }
-                placeholder="起止时间"
+                placeholder="2022-2024"
               />
             </div>
-            <textarea
+            <Input.TextArea
               rows={3}
               value={exp.bullets.join("\n")}
               onChange={(e) =>
-                set(
-                  "experiences",
-                  draft.experiences.map((x, j) =>
-                    j === i ? { ...x, bullets: e.target.value.split("\n") } : x,
-                  ),
-                )
+                updateExperience(i, { bullets: e.target.value.split("\n") })
               }
-              placeholder="每行一条：职责、动作与量化结果"
+              placeholder={
+                "每行一条：职责、动作与量化结果\n例：负责 RAG 问答系统，日活 10 万，检索准确率 +12%"
+              }
             />
           </fieldset>
         ))}
-        <button
-          type="button"
-          className="resume-add"
-          onClick={() =>
-            set("experiences", [
-              ...draft.experiences,
-              { company: "", role: "", period: "", bullets: [""] },
-            ])
-          }
-        >
-          + 添加经历
-        </button>
 
-        <h3>项目经历</h3>
+        <div className="resume-section-head">
+          <h3>项目经历</h3>
+          <Button
+            type="text"
+            size="small"
+            icon={<Plus />}
+            onClick={() =>
+              set("projects", [
+                ...draft.projects,
+                { name: "", desc: "", bullets: [""] },
+              ])
+            }
+          >
+            添加
+          </Button>
+        </div>
         {draft.projects.map((p, i) => (
           <fieldset className="resume-block" key={i}>
-            <div className="resume-field-row">
-              <input
+            <div className="resume-grid-2">
+              <Input
                 value={p.name}
-                onChange={(e) =>
-                  set(
-                    "projects",
-                    draft.projects.map((x, j) =>
-                      j === i ? { ...x, name: e.target.value } : x,
-                    ),
-                  )
-                }
+                onChange={(e) => updateProject(i, { name: e.target.value })}
                 placeholder="项目名"
               />
-              <input
+              <Input
                 value={p.desc}
-                onChange={(e) =>
-                  set(
-                    "projects",
-                    draft.projects.map((x, j) =>
-                      j === i ? { ...x, desc: e.target.value } : x,
-                    ),
-                  )
-                }
+                onChange={(e) => updateProject(i, { desc: e.target.value })}
                 placeholder="一句话说明"
               />
             </div>
-            <textarea
+            <Input.TextArea
               rows={2}
               value={p.bullets.join("\n")}
               onChange={(e) =>
-                set(
-                  "projects",
-                  draft.projects.map((x, j) =>
-                    j === i ? { ...x, bullets: e.target.value.split("\n") } : x,
-                  ),
-                )
+                updateProject(i, { bullets: e.target.value.split("\n") })
               }
               placeholder="每行一条"
             />
           </fieldset>
         ))}
-        <button
-          type="button"
-          className="resume-add"
-          onClick={() =>
-            set("projects", [
-              ...draft.projects,
-              { name: "", desc: "", bullets: [""] },
-            ])
-          }
-        >
-          + 添加项目
-        </button>
 
-        <h3>教育背景</h3>
+        <div className="resume-section-head">
+          <h3>教育背景</h3>
+        </div>
         {draft.education.map((ed, i) => (
-          <div className="resume-field-row" key={i}>
-            <input
+          <div className="resume-grid-4" key={i}>
+            <Input
               value={ed.school}
               onChange={(e) =>
                 set(
@@ -280,7 +274,7 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
               }
               placeholder="学校"
             />
-            <input
+            <Input
               value={ed.major}
               onChange={(e) =>
                 set(
@@ -292,7 +286,7 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
               }
               placeholder="专业"
             />
-            <input
+            <Input
               value={ed.degree}
               onChange={(e) =>
                 set(
@@ -304,7 +298,7 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
               }
               placeholder="学历"
             />
-            <input
+            <Input
               value={ed.period}
               onChange={(e) =>
                 set(
@@ -314,15 +308,21 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
                   ),
                 )
               }
-              placeholder="时间段"
+              placeholder="2018-2022"
             />
           </div>
         ))}
 
         <div className="resume-actions">
-          <button type="button" onClick={renderPdf} disabled={busy !== null}>
-            {busy === "render" ? "生成中…" : "生成 PDF 预览"}
-          </button>
+          <Button
+            type="primary"
+            icon={<FilePdf />}
+            loading={busy === "render"}
+            disabled={busy !== null}
+            onClick={renderPdf}
+          >
+            生成 PDF
+          </Button>
           {pdfUrl && (
             <a className="resume-download" href={pdfUrl} download="resume.pdf">
               下载 PDF
@@ -334,62 +334,75 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
             {error}
           </p>
         )}
-      </section>
-
-      <aside className="resume-advice" aria-label="AI 建议">
-        <div className="resume-advice-head">
-          <label>
-            目标岗位
-            <select value={jobId} onChange={(e) => setJobId(e.target.value)}>
-              {jobs.map((j) => (
-                <option key={j.version_id} value={j.version_id}>
-                  {j.title}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button
-            type="button"
-            onClick={loadAdvice}
-            disabled={busy !== null || !jobId}
-          >
-            {busy === "advice" ? "分析中…" : "获取建议"}
-          </button>
-        </div>
-        {advice && (
-          <p className="resume-coverage">
-            必备技能覆盖 {advice.required_covered}/{advice.required_total}（
-            {advice.job_title}）
-          </p>
-        )}
-        {advice?.advice.map((a, i) => (
-          <article key={i} className={`resume-advice-card sev-${a.severity}`}>
-            <header>
-              <span className="resume-advice-kind">
-                {KIND_LABEL[a.kind] ?? a.kind}
-              </span>
-              <b>{a.title}</b>
-              <span className={`resume-sev sev-${a.severity}`}>
-                {SEVERITY_LABEL[a.severity] ?? a.severity}
-              </span>
-            </header>
-            <p>{a.detail}</p>
-            <p className="resume-advice-suggestion">{a.suggestion}</p>
-            {(a.evidence.jd_count || a.evidence.weight) && (
-              <footer>
-                证据：
-                {a.evidence.jd_count ? `${a.evidence.jd_count} 条 JD` : ""}
-                {a.evidence.weight ? ` · 市场权重 ${a.evidence.weight}` : ""}
-              </footer>
-            )}
-          </article>
-        ))}
         {pdfUrl && (
           <div className="resume-preview">
-            <h3>PDF 预览</h3>
             <iframe src={pdfUrl} title="简历 PDF 预览" />
           </div>
         )}
+      </section>
+
+      <aside className="resume-panel" aria-label="AI 建议">
+        <div className="resume-advice-head">
+          <h2>岗位对齐建议</h2>
+          <Button
+            type="primary"
+            ghost
+            icon={<Lightbulb />}
+            loading={busy === "advice"}
+            disabled={busy !== null || !jobId}
+            onClick={loadAdvice}
+          >
+            获取建议
+          </Button>
+        </div>
+        <label className="resume-field">
+          <span>目标岗位（建议随岗位切换）</span>
+          <Select
+            value={jobId || undefined}
+            onChange={setJobId}
+            options={jobs.map((j) => ({ value: j.version_id, label: j.title }))}
+            style={{ width: "100%" }}
+            placeholder="选择目标岗位"
+          />
+        </label>
+        {advice && (
+          <p className="resume-coverage">
+            必备技能覆盖 <b>{advice.required_covered}</b>/
+            {advice.required_total}
+            <span className="resume-coverage-job">（{advice.job_title}）</span>
+          </p>
+        )}
+        <div className="resume-advice-list">
+          {advice?.advice.map((a: AdviceItemView, i) => (
+            <article className="resume-advice-card" key={i}>
+              <header>
+                <Tag bordered={false}>{KIND_LABEL[a.kind] ?? a.kind}</Tag>
+                <b>{a.title}</b>
+                <Tag
+                  bordered={false}
+                  color={SEVERITY_TAG[a.severity]?.color}
+                  className="resume-sev"
+                >
+                  {SEVERITY_TAG[a.severity]?.label ?? a.severity}
+                </Tag>
+              </header>
+              <p>{a.detail}</p>
+              <p className="resume-advice-suggestion">{a.suggestion}</p>
+              {(a.evidence.jd_count || a.evidence.weight) && (
+                <footer>
+                  证据：
+                  {a.evidence.jd_count ? ` ${a.evidence.jd_count} 条 JD` : ""}
+                  {a.evidence.weight ? ` · 市场权重 ${a.evidence.weight}` : ""}
+                </footer>
+              )}
+            </article>
+          ))}
+          {!advice && (
+            <p className="resume-advice-empty">
+              填写技能与经历后点击「获取建议」，系统按目标岗位的市场证据给出对齐建议。
+            </p>
+          )}
+        </div>
       </aside>
     </div>
   );

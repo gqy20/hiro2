@@ -42,7 +42,7 @@ data/runs/                               清洗、回测和评测运行产物
 | 导入 Excel 能力矩阵 | 完成 | 46 岗位、30 能力、7 分组可解析（`uv run scripts/ingest.py excel`） |
 | 导入 JD CSV/JSONL | 完成 | 搜索层和详情层分开统计（`uv run scripts/ingest.py jd`） |
 | 导入日报归档 | 完成 | 生成报告 manifest，标记 `backfill`（`uv run scripts/ingest.py wechat`） |
-| 建立数据字典 | 未开始 | 每个字段有类型、含义、来源和质量规则 |
+| 建立数据字典 | 进行中 | `scripts/datadict.py run` 自动生成 `docs/data-dictionary.md`（6 数据集 67 字段、31 核心字段已标注、36 元字段 TODO 待补，幂等重建） |
 
 D0 盘点结论（2026-08-24）：
 

@@ -2,110 +2,110 @@
   "rows": [
     {
       "capability_id": "cap_01",
-      "dl_share_onset": null,
+      "dl_share_onset": "2024-09",
       "npm_share_onset": "2024-12",
-      "rel_onset": "2023-02",
-      "jd_onset": "2025-10",
+      "rel_onset": "2023-03",
+      "jd_onset": "2019-12",
       "report_onset": "2024-01",
-      "dl_leads_jd_days": null,
-      "npm_leads_jd_days": 304,
-      "rel_leads_jd_days": 973,
-      "report_leads_jd_days": 639
+      "dl_leads_jd_days": -1736,
+      "npm_leads_jd_days": -1827,
+      "rel_leads_jd_days": -1186,
+      "report_leads_jd_days": -1492
     },
     {
       "capability_id": "cap_02",
-      "dl_share_onset": null,
+      "dl_share_onset": "2016-01",
       "npm_share_onset": null,
-      "rel_onset": "2023-07",
-      "jd_onset": "2026-03",
+      "rel_onset": "2023-06",
+      "jd_onset": "2022-09",
       "report_onset": "2025-07",
-      "dl_leads_jd_days": null,
+      "dl_leads_jd_days": 2435,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 974,
-      "report_leads_jd_days": 243
+      "rel_leads_jd_days": -273,
+      "report_leads_jd_days": -1034
     },
     {
       "capability_id": "cap_03",
       "dl_share_onset": null,
       "npm_share_onset": null,
       "rel_onset": "2020-10",
-      "jd_onset": "2025-09",
+      "jd_onset": "2019-12",
       "report_onset": "2025-03",
       "dl_leads_jd_days": null,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 1796,
-      "report_leads_jd_days": 184
+      "rel_leads_jd_days": -305,
+      "report_leads_jd_days": -1917
     },
     {
       "capability_id": "cap_04",
-      "dl_share_onset": null,
+      "dl_share_onset": "2025-11",
       "npm_share_onset": "2025-08",
-      "rel_onset": "2024-11",
-      "jd_onset": "2025-09",
+      "rel_onset": "2024-08",
+      "jd_onset": "2021-04",
       "report_onset": "2025-03",
-      "dl_leads_jd_days": null,
-      "npm_leads_jd_days": 31,
-      "rel_leads_jd_days": 304,
-      "report_leads_jd_days": 184
+      "dl_leads_jd_days": -1675,
+      "npm_leads_jd_days": -1583,
+      "rel_leads_jd_days": -1218,
+      "report_leads_jd_days": -1430
     },
     {
       "capability_id": "cap_05",
-      "dl_share_onset": null,
+      "dl_share_onset": "2017-11",
       "npm_share_onset": null,
-      "rel_onset": "2020-08",
-      "jd_onset": "2025-12",
+      "rel_onset": "2022-11",
+      "jd_onset": "2018-09",
       "report_onset": "2024-08",
-      "dl_leads_jd_days": null,
+      "dl_leads_jd_days": 304,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 1948,
-      "report_leads_jd_days": 487
+      "rel_leads_jd_days": -1522,
+      "report_leads_jd_days": -2161
     },
     {
       "capability_id": "cap_06",
-      "dl_share_onset": null,
+      "dl_share_onset": "2016-06",
       "npm_share_onset": null,
-      "rel_onset": "2021-02",
-      "jd_onset": "2025-11",
+      "rel_onset": "2021-06",
+      "jd_onset": "2023-08",
       "report_onset": "2025-03",
-      "dl_leads_jd_days": null,
+      "dl_leads_jd_days": 2617,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 1734,
-      "report_leads_jd_days": 245
+      "rel_leads_jd_days": 791,
+      "report_leads_jd_days": -578
     },
     {
       "capability_id": "cap_07",
-      "dl_share_onset": null,
+      "dl_share_onset": "2016-01",
       "npm_share_onset": null,
       "rel_onset": "2013-10",
-      "jd_onset": "2025-09",
-      "report_onset": null,
-      "dl_leads_jd_days": null,
+      "jd_onset": "2020-04",
+      "report_onset": "2026-06",
+      "dl_leads_jd_days": 1552,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 4353,
-      "report_leads_jd_days": null
+      "rel_leads_jd_days": 2374,
+      "report_leads_jd_days": -2252
     },
     {
       "capability_id": "cap_08",
-      "dl_share_onset": null,
+      "dl_share_onset": "2016-01",
       "npm_share_onset": null,
       "rel_onset": "2012-04",
-      "jd_onset": "2025-09",
+      "jd_onset": "2021-04",
       "report_onset": null,
-      "dl_leads_jd_days": null,
+      "dl_leads_jd_days": 1917,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 4901,
+      "rel_leads_jd_days": 3287,
       "report_leads_jd_days": null
     },
     {
       "capability_id": "cap_09",
-      "dl_share_onset": null,
+      "dl_share_onset": "2017-03",
       "npm_share_onset": null,
-      "rel_onset": "2017-06",
-      "jd_onset": "2025-12",
+      "rel_onset": "2017-07",
+      "jd_onset": "2018-09",
       "report_onset": null,
-      "dl_leads_jd_days": null,
+      "dl_leads_jd_days": 549,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 3105,
+      "rel_leads_jd_days": 427,
       "report_leads_jd_days": null
     },
     {
@@ -113,96 +113,96 @@
       "dl_share_onset": null,
       "npm_share_onset": null,
       "rel_onset": "2018-11",
-      "jd_onset": "2026-08",
+      "jd_onset": "2023-10",
       "report_onset": null,
       "dl_leads_jd_days": null,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 2830,
+      "rel_leads_jd_days": 1795,
       "report_leads_jd_days": null
     },
     {
       "capability_id": "cap_11",
-      "dl_share_onset": null,
+      "dl_share_onset": "2016-09",
       "npm_share_onset": "2015-02",
-      "rel_onset": "2017-06",
-      "jd_onset": null,
+      "rel_onset": "2016-07",
+      "jd_onset": "2023-10",
       "report_onset": null,
-      "dl_leads_jd_days": null,
-      "npm_leads_jd_days": null,
-      "rel_leads_jd_days": null,
+      "dl_leads_jd_days": 2586,
+      "npm_leads_jd_days": 3164,
+      "rel_leads_jd_days": 2648,
       "report_leads_jd_days": null
     },
     {
       "capability_id": "cap_12",
-      "dl_share_onset": null,
+      "dl_share_onset": "2016-01",
       "npm_share_onset": null,
-      "rel_onset": "2017-06",
-      "jd_onset": "2025-10",
+      "rel_onset": "2018-12",
+      "jd_onset": "2018-07",
       "report_onset": "2017-07",
-      "dl_leads_jd_days": null,
+      "dl_leads_jd_days": 912,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 3044,
-      "report_leads_jd_days": 3014
-    },
-    {
-      "capability_id": "cap_13",
-      "dl_share_onset": null,
-      "npm_share_onset": null,
-      "rel_onset": "2016-11",
-      "jd_onset": "2025-12",
-      "report_onset": "2025-04",
-      "dl_leads_jd_days": null,
-      "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 3317,
-      "report_leads_jd_days": 244
-    },
-    {
-      "capability_id": "cap_14",
-      "dl_share_onset": null,
-      "npm_share_onset": "2015-02",
-      "rel_onset": "2013-11",
-      "jd_onset": "2026-04",
-      "report_onset": "2025-04",
-      "dl_leads_jd_days": null,
-      "npm_leads_jd_days": 4077,
-      "rel_leads_jd_days": 4534,
+      "rel_leads_jd_days": -153,
       "report_leads_jd_days": 365
     },
     {
+      "capability_id": "cap_13",
+      "dl_share_onset": "2016-01",
+      "npm_share_onset": null,
+      "rel_onset": "2019-02",
+      "jd_onset": "2021-03",
+      "report_onset": "2025-04",
+      "dl_leads_jd_days": 1886,
+      "npm_leads_jd_days": null,
+      "rel_leads_jd_days": 759,
+      "report_leads_jd_days": -1492
+    },
+    {
+      "capability_id": "cap_14",
+      "dl_share_onset": "2016-01",
+      "npm_share_onset": "2015-02",
+      "rel_onset": "2013-11",
+      "jd_onset": "2020-11",
+      "report_onset": "2025-04",
+      "dl_leads_jd_days": 1766,
+      "npm_leads_jd_days": 2100,
+      "rel_leads_jd_days": 2557,
+      "report_leads_jd_days": -1612
+    },
+    {
       "capability_id": "cap_15",
-      "dl_share_onset": null,
+      "dl_share_onset": "2016-01",
       "npm_share_onset": null,
       "rel_onset": "2015-03",
-      "jd_onset": "2025-09",
+      "jd_onset": "2021-04",
       "report_onset": "2025-04",
-      "dl_leads_jd_days": null,
+      "dl_leads_jd_days": 1917,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 3837,
-      "report_leads_jd_days": 153
+      "rel_leads_jd_days": 2223,
+      "report_leads_jd_days": -1461
     },
     {
       "capability_id": "cap_17",
       "dl_share_onset": null,
       "npm_share_onset": null,
       "rel_onset": "2022-04",
-      "jd_onset": "2026-03",
+      "jd_onset": "2020-11",
       "report_onset": "2025-04",
       "dl_leads_jd_days": null,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 1430,
-      "report_leads_jd_days": 334
+      "rel_leads_jd_days": -516,
+      "report_leads_jd_days": -1612
     },
     {
       "capability_id": "cap_18",
-      "dl_share_onset": null,
+      "dl_share_onset": "2016-01",
       "npm_share_onset": null,
       "rel_onset": "2016-12",
-      "jd_onset": "2026-06",
+      "jd_onset": "2021-04",
       "report_onset": "2026-02",
-      "dl_leads_jd_days": null,
+      "dl_leads_jd_days": 1917,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 3469,
-      "report_leads_jd_days": 120
+      "rel_leads_jd_days": 1582,
+      "report_leads_jd_days": -1767
     },
     {
       "capability_id": "cap_19",
@@ -225,6 +225,10 @@
     "cohere": {
       "first_release": "2021-01-20T19:56:53",
       "versions": 273
+    },
+    "dashscope": {
+      "first_release": "2023-04-10T09:17:31",
+      "versions": 119
     },
     "google-cloud-aiplatform": {
       "first_release": "2020-11-09T17:51:30",
@@ -258,6 +262,10 @@
       "first_release": "2024-01-12T00:33:33",
       "versions": 35
     },
+    "open-webui": {
+      "first_release": "2024-05-20T08:24:22",
+      "versions": 163
+    },
     "openai": {
       "first_release": "2020-02-18T19:41:36",
       "versions": 416
@@ -265,6 +273,10 @@
     "outlines": {
       "first_release": "2023-03-22T12:59:33",
       "versions": 84
+    },
+    "replicate": {
+      "first_release": "2022-05-17T01:22:48",
+      "versions": 120
     },
     "sse-starlette": {
       "first_release": "2020-02-21T12:42:33",
@@ -277,6 +289,18 @@
     "tokenizers": {
       "first_release": "2019-11-01T23:35:40",
       "versions": 100
+    },
+    "zhipuai": {
+      "first_release": "2023-06-09T06:06:51",
+      "versions": 43
+    },
+    "arize-phoenix": {
+      "first_release": "2023-01-18T00:13:31",
+      "versions": 685
+    },
+    "braintrust": {
+      "first_release": "2023-05-24T03:25:50",
+      "versions": 278
     },
     "deepeval": {
       "first_release": "2023-08-15T05:15:05",
@@ -294,6 +318,14 @@
       "first_release": "2023-06-26T22:04:38",
       "versions": 523
     },
+    "lmnr": {
+      "first_release": "2024-06-14T17:33:20",
+      "versions": 211
+    },
+    "opik": {
+      "first_release": "2024-08-26T21:09:46",
+      "versions": 585
+    },
     "prompt-toolkit": {
       "first_release": "2014-08-01T20:12:17",
       "versions": 137
@@ -301,6 +333,14 @@
     "promptflow": {
       "first_release": "2023-07-20T02:31:45",
       "versions": 42
+    },
+    "ragas": {
+      "first_release": "2023-05-14T18:33:05",
+      "versions": 88
+    },
+    "trulens": {
+      "first_release": "2020-12-15T02:47:56",
+      "versions": 110
     },
     "accelerate": {
       "first_release": "2020-10-30T13:43:42",
@@ -317,6 +357,10 @@
     "liger-kernel": {
       "first_release": "2024-08-08T21:23:34",
       "versions": 32
+    },
+    "llamafactory": {
+      "first_release": "2024-05-16T10:31:58",
+      "versions": 11
     },
     "mlflow": {
       "first_release": "2018-06-04T22:03:34",
@@ -342,9 +386,17 @@
       "first_release": "2017-03-24T06:01:16",
       "versions": 334
     },
+    "agentscope": {
+      "first_release": "2024-02-26T09:53:41",
+      "versions": 51
+    },
     "agno": {
       "first_release": "2024-12-24T00:02:54",
       "versions": 254
+    },
+    "astrbot": {
+      "first_release": "2025-05-01T12:51:45",
+      "versions": 164
     },
     "autogen": {
       "first_release": "2019-10-19T17:44:11",
@@ -394,9 +446,21 @@
       "first_release": "2025-03-17T17:49:28",
       "versions": 91
     },
+    "gpt-researcher": {
+      "first_release": "2024-04-12T13:21:00",
+      "versions": 110
+    },
+    "graphiti-core": {
+      "first_release": "2024-08-27T20:33:47",
+      "versions": 192
+    },
     "langchain": {
       "first_release": "2022-10-25T04:10:02",
       "versions": 512
+    },
+    "langflow": {
+      "first_release": "2023-03-14T15:17:08",
+      "versions": 429
     },
     "langgraph": {
       "first_release": "2024-01-08T05:17:24",
@@ -418,6 +482,10 @@
       "first_release": "2024-05-18T18:50:22",
       "versions": 188
     },
+    "metagpt": {
+      "first_release": "2023-07-13T05:39:16",
+      "versions": 30
+    },
     "mini-swe-agent": {
       "first_release": "2025-07-23T17:46:44",
       "versions": 60
@@ -426,13 +494,37 @@
       "first_release": "2025-03-04T18:16:20",
       "versions": 119
     },
+    "pocketflow": {
+      "first_release": "2025-01-09T04:05:02",
+      "versions": 4
+    },
+    "praisonai": {
+      "first_release": "2024-03-23T16:39:48",
+      "versions": 824
+    },
     "pydantic-ai": {
       "first_release": "2024-05-20T00:08:05",
       "versions": 323
     },
+    "qwen-agent": {
+      "first_release": "2024-04-07T13:11:08",
+      "versions": 34
+    },
+    "qwenpaw": {
+      "first_release": "2026-04-09T13:08:51",
+      "versions": 77
+    },
+    "scrapling": {
+      "first_release": "2024-10-13T22:02:19",
+      "versions": 53
+    },
     "semantic-kernel": {
       "first_release": "2023-03-17T03:37:47",
       "versions": 137
+    },
+    "serena": {
+      "first_release": "2022-01-23T00:06:40",
+      "versions": 9
     },
     "smolagents": {
       "first_release": "2024-12-27T15:56:26",
@@ -453,6 +545,10 @@
     "faster-whisper": {
       "first_release": "2023-03-22T19:57:38",
       "versions": 21
+    },
+    "funasr": {
+      "first_release": "2023-03-24T05:28:51",
+      "versions": 134
     },
     "google-cloud-speech": {
       "first_release": "2016-11-14T22:54:00",
@@ -486,13 +582,29 @@
       "first_release": "2020-08-22T07:18:15",
       "versions": 65
     },
+    "pipecat-ai": {
+      "first_release": "2024-05-13T05:38:21",
+      "versions": 111
+    },
+    "qwen-vl-utils": {
+      "first_release": "2024-08-27T10:49:14",
+      "versions": 15
+    },
     "rembg": {
       "first_release": "2022-11-24T20:57:02",
       "versions": 53
     },
+    "whisperx": {
+      "first_release": "2024-02-06T12:26:52",
+      "versions": 44
+    },
     "chromadb": {
       "first_release": "2023-02-09T17:18:15",
       "versions": 130
+    },
+    "cognee": {
+      "first_release": "2024-03-13T17:01:46",
+      "versions": 172
     },
     "elasticsearch": {
       "first_release": "2013-09-24T16:41:07",
@@ -506,6 +618,10 @@
       "first_release": "2023-07-17T09:26:46",
       "versions": 44
     },
+    "flagembedding": {
+      "first_release": "2023-08-05T14:58:22",
+      "versions": 33
+    },
     "haystack-ai": {
       "first_release": "2023-11-24T16:43:38",
       "versions": 186
@@ -514,9 +630,21 @@
       "first_release": "2023-03-18T01:28:55",
       "versions": 100
     },
+    "lightrag-hku": {
+      "first_release": "2024-10-10T04:08:26",
+      "versions": 93
+    },
     "llama-parse": {
       "first_release": "2024-02-02T19:55:23",
       "versions": 127
+    },
+    "mineru": {
+      "first_release": "2025-06-13T12:59:53",
+      "versions": 85
+    },
+    "ocrmypdf": {
+      "first_release": "2015-08-22T08:57:08",
+      "versions": 267
     },
     "pgvector": {
       "first_release": "2021-06-12T04:48:46",
@@ -606,6 +734,10 @@
       "first_release": "2021-03-18T19:01:17",
       "versions": 780
     },
+    "sqllineage": {
+      "first_release": "2019-06-16T11:51:56",
+      "versions": 46
+    },
     "sqlparse": {
       "first_release": "2012-04-20T19:43:29",
       "versions": 39
@@ -654,6 +786,10 @@
       "first_release": "2014-03-26T15:25:56",
       "versions": 80
     },
+    "kedro": {
+      "first_release": "2019-05-16T16:43:38",
+      "versions": 71
+    },
     "polars": {
       "first_release": "2021-03-15T08:46:37",
       "versions": 430
@@ -670,6 +806,10 @@
       "first_release": "2017-06-03T03:05:01",
       "versions": 132
     },
+    "trino": {
+      "first_release": "2020-12-28T07:04:31",
+      "versions": 37
+    },
     "cleanlab": {
       "first_release": "2018-11-22T21:40:36",
       "versions": 35
@@ -682,9 +822,25 @@
       "first_release": "2020-01-10T21:55:07",
       "versions": 96
     },
+    "altair": {
+      "first_release": "2016-07-09T20:47:30",
+      "versions": 67
+    },
+    "apache-superset": {
+      "first_release": "2019-09-18T06:23:04",
+      "versions": 83
+    },
+    "bokeh": {
+      "first_release": "2013-10-25T21:00:28",
+      "versions": 273
+    },
     "dash": {
       "first_release": "2017-06-20T20:33:12",
       "versions": 217
+    },
+    "folium": {
+      "first_release": "2013-05-20T02:22:08",
+      "versions": 43
     },
     "gradio": {
       "first_release": "2019-02-19T08:25:48",
@@ -698,6 +854,10 @@
       "first_release": "2013-06-12T23:28:58",
       "versions": 319
     },
+    "plotnine": {
+      "first_release": "2017-04-25T20:37:59",
+      "versions": 65
+    },
     "seaborn": {
       "first_release": "2013-10-28T22:27:52",
       "versions": 36
@@ -705,6 +865,10 @@
     "streamlit": {
       "first_release": "2018-03-20T18:00:56",
       "versions": 271
+    },
+    "bentoml": {
+      "first_release": "2019-01-15T21:43:46",
+      "versions": 219
     },
     "catboost": {
       "first_release": "2017-07-17T19:14:31",
@@ -730,9 +894,21 @@
       "first_release": "2023-03-23T18:20:56",
       "versions": 208
     },
+    "modelscope": {
+      "first_release": "2022-12-07T03:48:16",
+      "versions": 91
+    },
     "nltk": {
       "first_release": "2009-07-15T09:32:16",
       "versions": 60
+    },
+    "paddlepaddle": {
+      "first_release": "2020-09-28T02:53:23",
+      "versions": 13
+    },
+    "paddlex": {
+      "first_release": "2020-04-28T03:24:10",
+      "versions": 92
     },
     "scikit-learn": {
       "first_release": "2011-09-22T00:03:10",
@@ -745,6 +921,10 @@
     "spacy": {
       "first_release": "2015-01-25T07:58:26",
       "versions": 214
+    },
+    "spark-nlp": {
+      "first_release": "2018-09-07T19:19:19",
+      "versions": 194
     },
     "tensorflow": {
       "first_release": "2016-12-19T19:10:10",
@@ -766,6 +946,10 @@
       "first_release": "2015-08-20T07:57:53",
       "versions": 93
     },
+    "xinference": {
+      "first_release": "2023-07-07T09:18:04",
+      "versions": 149
+    },
     "awswrangler": {
       "first_release": "2019-02-28T23:57:42",
       "versions": 167
@@ -785,6 +969,18 @@
     "kubernetes": {
       "first_release": "2016-11-23T22:13:02",
       "versions": 118
+    },
+    "modal": {
+      "first_release": "2023-06-01T17:33:29",
+      "versions": 2636
+    },
+    "runpod": {
+      "first_release": "2022-12-12T01:33:18",
+      "versions": 112
+    },
+    "sagemaker": {
+      "first_release": "2017-11-30T06:11:50",
+      "versions": 689
     },
     "django": {
       "first_release": "2010-05-17T20:04:28",

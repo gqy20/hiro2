@@ -3,7 +3,8 @@
 用法：
     uv run scripts/pypidl.py fetch   # 拉 pypistats.org 近 180 天日下载（短窗参考，不作历史源）
     uv run scripts/pypidl.py rels    # 拉 pypi.org JSON API 全版本发布时间线（萌芽锚点）
-    uv run scripts/pypidl.py hist    # BigQuery Linehaul 2018 起月度下载（正式量级信号）
+    uv run scripts/pypidl.py ch      # ClickHouse Linehaul 月度聚合 2016 起全历史（主通路）
+    uv run scripts/pypidl.py hist    # BigQuery 同口径备份通路（额度受限时用 ch）
     uv run scripts/pypidl.py npm     # npm downloads API 2015 起月度下载（独立生态对照）
     uv run scripts/pypidl.py pepy    # pepy.tech 近 90 天月度下载（滚动自建历史，key 在 .env）
     uv run scripts/pypidl.py run     # 下载份额 onset + 首发月 + 日报/JD 对比
@@ -154,6 +155,40 @@ def cmd_rels() -> dict:
             fail += 1
         time.sleep(0.4)
     metrics = {"ok": ok, "skip": skip, "fail": fail, "total": len(pkgs)}
+    run.finish(metrics)
+    return metrics
+
+
+CH_URL = "https://sql-clickhouse.clickhouse.com?user=demo&default_format=JSON"
+
+
+def cmd_ch() -> dict:
+    """ClickHouse 官方 Playground 的 pypi.pypi_downloads_per_month（Linehaul 同源
+    月度聚合，2016-01 起全覆盖；demo 免费且为聚合表轻查询）——绕开 BigQuery 额度，
+    口径已交叉验证（torch 2018-01=9502 与 BigQuery 逐位一致），写同格式 dlhist.csv。
+    """
+    run = RunContext("pypidl", {"cmd": "ch", "api": "sql-clickhouse.clickhouse.com"})
+    pkgs, _ = load_pkgs()
+    names = ", ".join(f"'{p['pkg']}'" for p in pkgs)
+    sql = (
+        "SELECT month, project, SUM(count) AS dl FROM pypi.pypi_downloads_per_month "
+        f"WHERE project IN ({names}) GROUP BY month, project ORDER BY month, project"
+    )
+    req = urllib.request.Request(
+        CH_URL,
+        data=sql.encode("utf-8"),
+        method="POST",
+        headers={"User-Agent": "hiro2-research/0.1"},
+    )
+    data = json.loads(urllib.request.urlopen(req, timeout=300).read())
+    lines = [f"{r['month'][:7]},{r['project']},{int(r['dl'])}" for r in data["data"]]
+    HIST.write_text("ym,pkg,downloads\n" + "\n".join(lines) + "\n", encoding="utf-8")
+    metrics = {
+        "rows": len(lines),
+        "months": len({ln.split(",")[0] for ln in lines}),
+        "pkgs_seen": len({ln.split(",")[1] for ln in lines}),
+        "pkgs_expected": len(pkgs),
+    }
     run.finish(metrics)
     return metrics
 
@@ -504,6 +539,7 @@ def main(argv: list[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="cmd", required=True)
     sub.add_parser("fetch")
     sub.add_parser("rels")
+    sub.add_parser("ch")
     sub.add_parser("hist")
     sub.add_parser("npm")
     sub.add_parser("pepy")
@@ -512,6 +548,7 @@ def main(argv: list[str] | None = None) -> int:
     result = {
         "fetch": cmd_fetch,
         "rels": cmd_rels,
+        "ch": cmd_ch,
         "hist": cmd_hist,
         "npm": cmd_npm,
         "pepy": cmd_pepy,

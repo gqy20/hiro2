@@ -140,7 +140,15 @@ Markdown -> ReportEvent -> Evidence -> TrendSignal -> SignalCluster
 - 通路实测三则：pypistats 全端点仅近 180 天，PyPI 下载历史无 key 通路不存在（正式版 pepy.tech key 或 BigQuery Linehaul 二选一）；GitHub stargazers 列表端点 2026-06-30 起仅限仓库管理员，star 时序不可得；现行信号 = pypi.org JSON API 全版本 `upload_time`（萌芽锚点，无刷量、as_of 干净）。
 - 三层时间轴成立（`data/processed/pypi/relsignal.json`，13 域对齐）：包首发（萌芽）→ 日报信号（传播）→ JD 落地（采用）。AI 域首发到 JD 中位 670~1796 天；老基建域（SQL/运维/云）7~20 年；日报领先 JD 中位 243 天不变。leadtime 的解释力取决于信号锚定的生命周期阶段，单一"领先天数"不可跨信号比较。
 - 口径教训归档：下载绝对量阈值被生态通胀证伪（onset 全被拖到 2026 初）；跨仓份额分母被大仓截断扭曲；萌芽锚点用"首发月中位数"。国内 pip 走镜像源，官方下载对中国使用为系统性低估，正式版结论须注明。
-- 正式版（2026-08-28）：`data/PKGS.yml` v6 定稿（PyPI 160 包/19 域 + npm 24 包/5 域，npm 份额独立分母不与 PyPI 混算）。补包三层依据：JD 高频英文技能原词反查（Databricks 250 次/Kafka 116/Lakehouse 89 等）→ hugovk top-15000 月度下载 dump 按域词根扫描（发现 ollama/browser-use/sglang/mem0ai/firecrawl 等凭知识遗漏的增长型包，+30）→ 人工剔除主包拆包与传递依赖（langchain-openai 等是传递结构、typing-extensions 等是依赖不是技能）；无词典域的前端技能不进表（limitation 注明）。BigQuery Linehaul 通路打通（项目 hiro2-pypi-research，dry-run 实测 2018 起全历史 324GB，扫描量只随月数增长与包数无关）；**额度事件**：三次真实测试查询各 324GB 将当月免费额度（1TB）烧尽，PyPI 拉数顺延至 9/1 重置后执行（教训：真实查询前只 dry-run、正式查询一次成型）。npm 侧已全量落地：24 包 2015 起月度下载（`npm` 子命令，段级 404 容忍 + 429 退避），**npm 份额 onset 领先 JD 中位 304 天**（3 域有效对齐：LLM应用 304/Agent 31/API开发为 2015 老域无意义），与日报 245 天同量级——开发者采用与媒体传播是可分层的两层信号；cap_04 Agent 域 npm 采用与 JD 几乎同步（JS 侧 Agent 框架 2025 才起量，晚于 LLM SDK），双生态对照价值显现。萌芽信号 18 域已出（v6 中位领先 3044 天，明细留 `pkg_first_releases` 复查）。
+- 正式版（2026-08-28~29）：`data/PKGS.yml` v8（PyPI 198 包/19 域 + npm 24 包/5 域，npm 份额独立分母不与 PyPI 混算）。补包三层依据：JD 高频英文技能原词反查（Databricks 250 次/Kafka 116/Lakehouse 89 等）→ hugovk top-15000 月度下载 dump 按域词根扫描（发现 ollama/browser-use/sglang/mem0ai/firecrawl 等凭知识遗漏的增长型包，+30）→ 人工剔除主包拆包与传递依赖（langchain-openai 等是传递结构、typing-extensions 等是依赖不是技能）；无词典域的前端技能不进表（limitation 注明）。**PyPI 下载历史主通路最终落地 = ClickHouse 官方 Playground**（`ch` 子命令，`pypi.pypi_downloads_per_month` 月度聚合表，2016-01 起 127 个月一条 SQL 免费拉取，口径与 BigQuery 逐位交叉验证一致 torch 2018-01=9502）——BigQuery 通路（项目 hiro2-pypi-research）因额度事件降级为备份（三次真实测试查询各 324GB 烧尽当月免费额度、切账号实测不可绕过，教训：真实查询前只 dry-run、正式查询一次成型）。npm 24 包 2015 起全历史 + pepy 90 天滚动通路均已落地。v8（gh search 14 个 AI topic x star 排序调研）：
+GitHub star 榜与下载榜差集分两类——被低估包 +10（opik 285 万/月、scrapling、open-webui、funasr、
+lightrag-hku、cognee、ocrmypdf、whisperx、astrbot、llamafactory）与 git-clone 型项目
+（GPT-SoVITS/CosyVoice/Langchain-Chatchat 月下载 <3000，pip 非主通路不加）；四侧读数 v6→v8 稳定。v9（agent 域专项，15 个 agent topic 宽检索）：+11 框架级包
+（graphiti-core 110 万/月、pipecat 语音 agent 121 万、agentscope 阿里 67 万、kedro 112 万、
+langflow 153k★、gpt-researcher、praisonai、qwenpaw、pocketflow、metagpt、serena），cap_04
+达 37 包（主案例域密度）；storm/superagi 等 git-clone 型不加。终态 v9 = 209 包/18 域 + npm 24，
+读数全程稳定。
+- 四侧对比读数与混杂标注（2026-08-29，`data/processed/pypi/relsignal.json`，18 域）：JD 池已历史化（bytedance 2018 起/gh-jobs 2022 起，Wayback 回溯成果），新基线下**成熟域下载份额 onset 领先 JD 中位 1886 天**（SQL/云/运维/可视化 1500~2600 天，读数可信）；但 **AI 域读数受三个混杂不可直接引用**——①历史 JD 用当前词典解析（词典 as_of 闸门未覆盖 JD 侧回溯，回望偏差）②语义漂移（"编排调度"命中 cap_04 别名"工作流编排"）③小样本阈值（2 次/月，2021 年仅 5 条字节 JD 即触发 cap_04 onset，其中 1 条为 TikTok LLM/Agent 真超前、其余为噪声）。修复方向：JD 历史重解析带 as_of 词典 + onset 阈值按当月池规模归一。npm 侧旧结论（领先 304 天/日报 245 天）基于 2025+ 窗口口径，与历史化基线不可直接比较，两套口径在产物中并存标注。
 
 ### D7 证据质量与融合
 

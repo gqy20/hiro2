@@ -1,30 +1,41 @@
-# PyPI 包 -> 能力域信号映射（正式版 v6，160 包 / 19 域 + npm 24 包 / 5 域，9/1 拉数前定稿）。
-# 补包依据（2026-08-28）三层：JD 语料高频英文技能原词反查（Databricks 250 次/Kafka 116 等）
-#   -> hugovk top-15000 月度下载 dump 按域词根扫描（发现 ollama/browser-use/sglang 等增长型遗漏）
-#   -> 人工判定剔除主包拆包（langchain-*/langgraph-checkpoint 等传递结构）与传递依赖
-#   （typing-extensions/botocore/opentelemetry-* 是依赖不是技能）。
-# 数据通路（2026-08-28 实测）：
-#   PyPI 下载历史 = BigQuery 公共数据集 bigquery-public-data.pypi.file_downloads（Linehaul 原始日志），
-#     2018-01 起全历史月度聚合，实测扫描 324GB / 免费额度 1TB 每月；扫描量只随月数增长、与包数无关。
-#   npm 下载历史 = api.npmjs.org /downloads/range（2015-01 起，18 个月一段，无 key 免费实测可用）；
-#     npm 份额独立分母（PyPI/npm 两生态不混算），AI SDK JS 版与 PyPI 同域对照。
-#   萌芽锚点 = pypi.org JSON API 全版本 upload_time（scripts/pypidl.py rels）。
-#   已死通路：pypistats 全端点仅 180 天；GitHub stargazers 端点 2026-06-30 起仅限仓库管理员。
-# 信号口径：域月度下载份额（当月该域 / 当月同生态受监控包总量）首次 >= share_onset 且其后累计 >= sustain。
-#   份额按月归一对消生态级下载通胀（CI/bot/传递安装逐年上涨，绝对量阈值已证伪）。
-#   份额口径绑定映射表版本：改表即全量重拉（PyPI 侧 324GB），故拉数前定稿，后续扩容递增 version 并重跑。
-# limitation：国内 pip 走镜像源使官方下载低估中国使用且包间不均匀；2018 前无 PyPI 数据（老域标左删失）；
-#   词典 30 域无前端域，React/TypeScript 等 JD 高频前端技能不做包映射（硬映射造脏数据，留词典扩展）；
-#   Scala/Go/Rust 为非 Python 生态（JVM/modules/cargo），超出本表范围。
+# PyPI 包 -> 能力域信号映射（正式版 v9，209 包 / 18 域 + npm 24 包 / 5 域）。
+# 扩容方法链（四轮，2026-08-28~29，均含取舍规则）：
+#   v6 JD 高频英文技能原词反查 + hugovk top-15000 下载 dump 域词根扫描（+62：
+#      ollama/browser-use/sglang/mem0ai/Databricks 系等；剔除主包拆包与传递依赖——
+#      langchain-openai 等是传递结构、typing-extensions 等是依赖不是技能）；
+#   v7 中文 AI 生态（+28：dashscope/modelscope/qwen-agent/flagembedding/paddlepaddle/
+#      mineru 等中文岗位市场直接信号 + 评测观测 5 包 + 可视化/数据工程/云补齐）；
+#   v8 gh search 14 个 AI topic x star（+10：opik 285 万/月、ocrmypdf、whisperx、
+#      scrapling、open-webui、funasr、lightrag-hku、cognee、astrbot、llamafactory）；
+#   v9 agent 域专项 15 topic 宽检索（+11：graphiti-core 110 万/月、pipecat 语音 agent
+#      121 万、agentscope 67 万、kedro 112 万、langflow、gpt-researcher、praisonai、
+#      qwenpaw、pocketflow、metagpt、serena；cap_04 域达 37 包——主案例域密度）。
+#   star 榜与下载榜差集分类法：被低估包（加）vs git-clone 型项目（GPT-SoVITS/
+#      CosyVoice/Langchain-Chatchat/storm/superagi 等月下载 <3000，pip 非主通路，不加）。
+# 数据通路（2026-08-28~29 实测）：
+#   下载历史主通路 = ClickHouse 官方 Playground pypi.pypi_downloads_per_month（`ch`
+#     子命令，sql-clickhouse.clickhouse.com demo 免费，2016-01 起 127 个月一条 SQL；
+#     口径与 BigQuery Linehaul 逐位交叉验证一致 torch 2018-01=9502；BigQuery `hist`
+#     为备份通路）。npm = downloads/range API（2015 起全历史）；pepy.tech 90 天滚动
+#     （key 在 .env）；萌芽锚点 = pypi.org JSON API 全版本 upload_time（`rels`）。
+#   已死通路：pypistats 全端点仅 180 天；GitHub stargazers 列表端点 2026-06-30 起
+#     仅限仓库管理员（但 gh search repos 可用于包发现）。
+# 信号口径：域月度下载份额（当月该域 / 当月同生态受监控包总量）首次 >= share_onset
+#   且其后累计 >= sustain；按月归一对消生态级下载通胀（绝对量阈值已证伪）。
+#   份额口径绑定映射表版本：改表全量重拉（ClickHouse 通路成本近零）。
+# limitation：国内 pip 走镜像源使官方下载低估中国使用且包间不均匀（xinference 纯国内
+#   流行项目官方下载近零为实证）；2016 前无数据（老域标左删失）；词典 30 域无前端域，
+#   React/TypeScript 等 JD 高频前端技能不做包映射；Scala/Go/Rust 非 Python 生态不覆盖。
 
-version: 6
+version: 9
 share_onset: 0.02
-sustain: 0.30
+sustain: 0.3
 min_monthly_downloads: 10000
 
 packages:
   - { pkg: "anthropic", cap: cap_01 }
   - { pkg: "cohere", cap: cap_01 }
+  - { pkg: "dashscope", cap: cap_01 }
   - { pkg: "google-cloud-aiplatform", cap: cap_01 }
   - { pkg: "google-genai", cap: cap_01 }
   - { pkg: "groq", cap: cap_01 }
@@ -33,28 +44,40 @@ packages:
   - { pkg: "litellm", cap: cap_01 }
   - { pkg: "mistralai", cap: cap_01 }
   - { pkg: "ollama", cap: cap_01 }
+  - { pkg: "open-webui", cap: cap_01 }
   - { pkg: "openai", cap: cap_01 }
   - { pkg: "outlines", cap: cap_01 }
+  - { pkg: "replicate", cap: cap_01 }
   - { pkg: "sse-starlette", cap: cap_01 }
   - { pkg: "tiktoken", cap: cap_01 }
   - { pkg: "tokenizers", cap: cap_01 }
+  - { pkg: "zhipuai", cap: cap_01 }
+  - { pkg: "arize-phoenix", cap: cap_02 }
+  - { pkg: "braintrust", cap: cap_02 }
   - { pkg: "deepeval", cap: cap_02 }
   - { pkg: "jinja2", cap: cap_02 }
   - { pkg: "langfuse", cap: cap_02 }
   - { pkg: "langsmith", cap: cap_02 }
+  - { pkg: "lmnr", cap: cap_02 }
+  - { pkg: "opik", cap: cap_02 }
   - { pkg: "prompt-toolkit", cap: cap_02 }
   - { pkg: "promptflow", cap: cap_02 }
+  - { pkg: "ragas", cap: cap_02 }
+  - { pkg: "trulens", cap: cap_02 }
   - { pkg: "accelerate", cap: cap_03 }
   - { pkg: "bitsandbytes", cap: cap_03 }
   - { pkg: "deepspeed", cap: cap_03 }
   - { pkg: "liger-kernel", cap: cap_03 }
+  - { pkg: "llamafactory", cap: cap_03 }
   - { pkg: "mlflow", cap: cap_03 }
   - { pkg: "peft", cap: cap_03 }
   - { pkg: "pytorch-lightning", cap: cap_03 }
   - { pkg: "trl", cap: cap_03 }
   - { pkg: "unsloth", cap: cap_03 }
   - { pkg: "wandb", cap: cap_03 }
+  - { pkg: "agentscope", cap: cap_04 }
   - { pkg: "agno", cap: cap_04 }
+  - { pkg: "astrbot", cap: cap_04 }
   - { pkg: "autogen", cap: cap_04 }
   - { pkg: "autogen-agentchat", cap: cap_04 }
   - { pkg: "azure-ai-agents", cap: cap_04 }
@@ -67,21 +90,32 @@ packages:
   - { pkg: "fastmcp", cap: cap_04 }
   - { pkg: "firecrawl-py", cap: cap_04 }
   - { pkg: "google-adk", cap: cap_04 }
+  - { pkg: "gpt-researcher", cap: cap_04 }
+  - { pkg: "graphiti-core", cap: cap_04 }
   - { pkg: "langchain", cap: cap_04 }
+  - { pkg: "langflow", cap: cap_04 }
   - { pkg: "langgraph", cap: cap_04 }
   - { pkg: "letta", cap: cap_04 }
   - { pkg: "llama-index", cap: cap_04 }
   - { pkg: "mcp", cap: cap_04 }
   - { pkg: "mem0ai", cap: cap_04 }
+  - { pkg: "metagpt", cap: cap_04 }
   - { pkg: "mini-swe-agent", cap: cap_04 }
   - { pkg: "openai-agents", cap: cap_04 }
+  - { pkg: "pocketflow", cap: cap_04 }
+  - { pkg: "praisonai", cap: cap_04 }
   - { pkg: "pydantic-ai", cap: cap_04 }
+  - { pkg: "qwen-agent", cap: cap_04 }
+  - { pkg: "qwenpaw", cap: cap_04 }
+  - { pkg: "scrapling", cap: cap_04 }
   - { pkg: "semantic-kernel", cap: cap_04 }
+  - { pkg: "serena", cap: cap_04 }
   - { pkg: "smolagents", cap: cap_04 }
   - { pkg: "strands-agents", cap: cap_04 }
   - { pkg: "diffusers", cap: cap_05 }
   - { pkg: "easyocr", cap: cap_05 }
   - { pkg: "faster-whisper", cap: cap_05 }
+  - { pkg: "funasr", cap: cap_05 }
   - { pkg: "google-cloud-speech", cap: cap_05 }
   - { pkg: "google-cloud-texttospeech", cap: cap_05 }
   - { pkg: "google-cloud-vision", cap: cap_05 }
@@ -90,14 +124,22 @@ packages:
   - { pkg: "openai-whisper", cap: cap_05 }
   - { pkg: "opencv-python", cap: cap_05 }
   - { pkg: "paddleocr", cap: cap_05 }
+  - { pkg: "pipecat-ai", cap: cap_05 }
+  - { pkg: "qwen-vl-utils", cap: cap_05 }
   - { pkg: "rembg", cap: cap_05 }
+  - { pkg: "whisperx", cap: cap_05 }
   - { pkg: "chromadb", cap: cap_06 }
+  - { pkg: "cognee", cap: cap_06 }
   - { pkg: "elasticsearch", cap: cap_06 }
   - { pkg: "faiss-cpu", cap: cap_06 }
   - { pkg: "fastembed", cap: cap_06 }
+  - { pkg: "flagembedding", cap: cap_06 }
   - { pkg: "haystack-ai", cap: cap_06 }
   - { pkg: "lancedb", cap: cap_06 }
+  - { pkg: "lightrag-hku", cap: cap_06 }
   - { pkg: "llama-parse", cap: cap_06 }
+  - { pkg: "mineru", cap: cap_06 }
+  - { pkg: "ocrmypdf", cap: cap_06 }
   - { pkg: "pgvector", cap: cap_06 }
   - { pkg: "pinecone-client", cap: cap_06 }
   - { pkg: "pymilvus", cap: cap_06 }
@@ -120,6 +162,7 @@ packages:
   - { pkg: "redis", cap: cap_08 }
   - { pkg: "sqlalchemy", cap: cap_08 }
   - { pkg: "sqlglot", cap: cap_08 }
+  - { pkg: "sqllineage", cap: cap_08 }
   - { pkg: "sqlparse", cap: cap_08 }
   - { pkg: "apache-airflow", cap: cap_09 }
   - { pkg: "apache-flink", cap: cap_09 }
@@ -132,39 +175,55 @@ packages:
   - { pkg: "google-cloud-bigquery", cap: cap_09 }
   - { pkg: "google-cloud-pubsub", cap: cap_09 }
   - { pkg: "kafka-python", cap: cap_09 }
+  - { pkg: "kedro", cap: cap_09 }
   - { pkg: "polars", cap: cap_09 }
   - { pkg: "pyarrow", cap: cap_09 }
   - { pkg: "pyspark", cap: cap_09 }
   - { pkg: "ray", cap: cap_09 }
+  - { pkg: "trino", cap: cap_09 }
   - { pkg: "cleanlab", cap: cap_10 }
   - { pkg: "great-expectations", cap: cap_10 }
   - { pkg: "label-studio", cap: cap_10 }
+  - { pkg: "altair", cap: cap_11 }
+  - { pkg: "apache-superset", cap: cap_11 }
+  - { pkg: "bokeh", cap: cap_11 }
   - { pkg: "dash", cap: cap_11 }
+  - { pkg: "folium", cap: cap_11 }
   - { pkg: "gradio", cap: cap_11 }
   - { pkg: "matplotlib", cap: cap_11 }
   - { pkg: "plotly", cap: cap_11 }
+  - { pkg: "plotnine", cap: cap_11 }
   - { pkg: "seaborn", cap: cap_11 }
   - { pkg: "streamlit", cap: cap_11 }
+  - { pkg: "bentoml", cap: cap_12 }
   - { pkg: "catboost", cap: cap_12 }
   - { pkg: "huggingface-hub", cap: cap_12 }
   - { pkg: "jax", cap: cap_12 }
   - { pkg: "keras", cap: cap_12 }
   - { pkg: "lightgbm", cap: cap_12 }
   - { pkg: "llama-cpp-python", cap: cap_12 }
+  - { pkg: "modelscope", cap: cap_12 }
   - { pkg: "nltk", cap: cap_12 }
+  - { pkg: "paddlepaddle", cap: cap_12 }
+  - { pkg: "paddlex", cap: cap_12 }
   - { pkg: "scikit-learn", cap: cap_12 }
   - { pkg: "sglang", cap: cap_12 }
   - { pkg: "spacy", cap: cap_12 }
+  - { pkg: "spark-nlp", cap: cap_12 }
   - { pkg: "tensorflow", cap: cap_12 }
   - { pkg: "torch", cap: cap_12 }
   - { pkg: "transformers", cap: cap_12 }
   - { pkg: "vllm", cap: cap_12 }
   - { pkg: "xgboost", cap: cap_12 }
+  - { pkg: "xinference", cap: cap_12 }
   - { pkg: "awswrangler", cap: cap_13 }
   - { pkg: "azure-identity", cap: cap_13 }
   - { pkg: "boto3", cap: cap_13 }
   - { pkg: "google-cloud-storage", cap: cap_13 }
   - { pkg: "kubernetes", cap: cap_13 }
+  - { pkg: "modal", cap: cap_13 }
+  - { pkg: "runpod", cap: cap_13 }
+  - { pkg: "sagemaker", cap: cap_13 }
   - { pkg: "django", cap: cap_14 }
   - { pkg: "fastapi", cap: cap_14 }
   - { pkg: "flask", cap: cap_14 }
@@ -184,7 +243,7 @@ packages:
   - { pkg: "lime", cap: cap_19 }
   - { pkg: "shap", cap: cap_19 }
 
-# npm 段：独立生态独立分母；AI SDK JS 版与 PyPI 同域对照（LangChain py/js 采用对比本身是信号）。
+# npm 段：独立生态独立分母；AI SDK JS 版与 PyPI 同域对照。
 npm_packages:
   - { pkg: "@anthropic-ai/sdk", cap: cap_01 }
   - { pkg: "@google/genai", cap: cap_01 }

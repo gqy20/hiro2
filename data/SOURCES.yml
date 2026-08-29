@@ -131,11 +131,12 @@ sources:
     license: PyPI JSON API、pypistats.org、BigQuery 公共数据集与 npm downloads API 公开数据，仅限研究使用
     time_range: [2006-02, 2026-08]
     ingestion_mode: backfill
-    notes: 映射表 data/PKGS.yml v6（PyPI 160 包/19 域 + npm 24 包/5 域，npm 份额独立
-      分母）。萌芽锚点 = pypi.org JSON API 全版本 upload_time；量级信号 = npm
-      downloads/range API（2015 起全历史已拉）+ BigQuery Linehaul 2018 起月度下载
-      （项目 hiro2-pypi-research，2026-08-28 额度被测试查询耗尽且实测切账号不可绕过
-      ——免费查询额度按高于账号的维度聚合，9/1 重置后 `scripts/pypidl.py hist` 拉取）
-      + pepy.tech 近 90 天滚动通路（`pepy` 子命令，key 在 .env 的 PEPY_API_KEY，
-      每月跑一次自建下载历史，已覆盖 2026-05~08 四个月 160 包）。已死通路：pypistats
-      全端点仅 180 天、GitHub stargazers 端点 2026-06-30 起仅限仓库管理员
+    notes: 映射表 data/PKGS.yml v9（PyPI 209 包/18 域 + npm 24 包/5 域，npm 份额独立
+      分母）。萌芽锚点 = pypi.org JSON API 全版本 upload_time；量级信号主通路 =
+      ClickHouse 官方 Playground 的 pypi.pypi_downloads_per_month（`ch` 子命令，
+      sql-clickhouse.clickhouse.com demo 免费，2016-01 起 127 个月全历史一条 SQL
+      拉取；口径与 BigQuery Linehaul 交叉验证逐位一致 torch 2018-01=9502，BigQuery
+      `hist` 降级为备份通路——2026-08-28 额度被测试查询耗尽且切账号实测不可绕过）
+      + npm downloads/range API（2015 起全历史已拉）+ pepy.tech 近 90 天滚动通路
+      （`pepy` 子命令，key 在 .env 的 PEPY_API_KEY）。已死通路：pypistats 全端点仅
+      180 天、GitHub stargazers 端点 2026-06-30 起仅限仓库管理员

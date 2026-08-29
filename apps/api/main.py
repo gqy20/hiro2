@@ -32,10 +32,10 @@ from backend.application.diagnosis import build_diagnosis, list_candidates
 from backend.application.evaluation import build_evaluation_overview
 from backend.application.insights import build_detected_changes, build_timeline
 from backend.application.joblist import build_published_jobs
+from backend.application.outbox_worker import outbox_worker_enabled, outbox_worker_loop
 from backend.application.pipeline_runs import build_pipeline_runs
 from backend.application.quality import build_quality_overview
 from backend.application.service import ApplicationService
-from backend.application.outbox_worker import outbox_worker_enabled, outbox_worker_loop
 from backend.application.snapshot import snapshot_enabled, snapshot_loop
 from backend.application.temporal_vm import build_skill_graph, build_tasks, build_temporal
 from backend.application.training import build_training_output

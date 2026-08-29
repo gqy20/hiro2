@@ -1,0 +1,24 @@
+{
+  "source_id": "standards",
+  "source_type": "occupation_standard",
+  "ingestion_mode": "backfill",
+  "file_count": 3,
+  "total_bytes": 165294507,
+  "files": [
+    {
+      "path": "data/raw/standards/china_occupation_2022_social_publicity_draft.pdf",
+      "bytes": 9450957,
+      "sha256": "4b3af986925b9abc2fe048d50c56b3fc7b0781e6de3fbb21f8a6b3feffebd3ce"
+    },
+    {
+      "path": "data/raw/standards/esco_v1.2.1_occupation_pages.jsonl",
+      "bytes": 142621001,
+      "sha256": "29c25d21c52bd8eae289a184e5554db62b7eafad5ee41b117c2104f60505c99a"
+    },
+    {
+      "path": "data/raw/standards/onet_30.3_text.zip",
+      "bytes": 13222549,
+      "sha256": "7758ec966fd91895b3d290b83c9f1f1d46730d37fdda4faac67104d1c0d2a780"
+    }
+  ]
+}

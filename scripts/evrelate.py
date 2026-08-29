@@ -78,15 +78,20 @@ def cmd_run() -> dict:
         sup_by_cap: dict[str, list[str]] = defaultdict(list)
         for jd_id in jd_ids:
             for cap in jd_skills.get(jd_id, set()) & field_caps:
-                relations.append({
-                    "relation_id": f"rel:{vid}:{jd_id}:{cap}",
-                    "evidence_id": f"jd:{jd_id}",
-                    "target": {"type": "job_version_skill", "version_id": vid,
-                               "skill_id": cap,
-                               "field": "required" if cap in req_caps else "preferred"},
-                    "direction": "supports",
-                    "rule": "jd_resolved_mentions_skill",
-                })
+                relations.append(
+                    {
+                        "relation_id": f"rel:{vid}:{jd_id}:{cap}",
+                        "evidence_id": f"jd:{jd_id}",
+                        "target": {
+                            "type": "job_version_skill",
+                            "version_id": vid,
+                            "skill_id": cap,
+                            "field": "required" if cap in req_caps else "preferred",
+                        },
+                        "direction": "supports",
+                        "rule": "jd_resolved_mentions_skill",
+                    }
+                )
                 sup_by_cap[cap].append(f"jd:{jd_id}")
 
         # contradicts：changeset add 项 = 市场证据把基线没有的技能推进版本 -> 对基线反证
@@ -97,17 +102,21 @@ def cmd_run() -> dict:
                 if c.get("change_type") == "add":
                     cap_domain = str(c.get("skill_id", "")).split(".")[0]
                     sup = sup_by_cap.get(cap_domain) or []
-                    relations.append({
-                        "relation_id": f"rel:{vid}:base:{c.get('skill_id')}",
-                        "evidence_id": sup[0] if sup else base_ev,
-                        "supporting_evidence_ids": sup[:5],
-                        "target": {"type": "expert_baseline_skill",
-                                   "evidence_id": base_ev,
-                                   "skill_id": c.get("skill_id")},
-                        "direction": "contradicts",
-                        "rule": "market_added_absent_from_baseline",
-                        "note": c.get("note"),
-                    })
+                    relations.append(
+                        {
+                            "relation_id": f"rel:{vid}:base:{c.get('skill_id')}",
+                            "evidence_id": sup[0] if sup else base_ev,
+                            "supporting_evidence_ids": sup[:5],
+                            "target": {
+                                "type": "expert_baseline_skill",
+                                "evidence_id": base_ev,
+                                "skill_id": c.get("skill_id"),
+                            },
+                            "direction": "contradicts",
+                            "rule": "market_added_absent_from_baseline",
+                            "note": c.get("note"),
+                        }
+                    )
 
         # 跨源冲突：基线技能 vs 市场证据零提及（弱反证，入队人工裁决）
         base_ev = (v.get("evidence") or {}).get("baseline_evidence_id")
@@ -115,54 +124,66 @@ def cmd_run() -> dict:
             # changeset 为列表：[{level, skill_id, change_type: add|promote|demote|keep, ...}]
             # 基线侧技能 = 非 add 项（v1/v2 已有：keep/demote），能力域级取整域
             cs = v.get("changeset_vs_v1") or v.get("changeset_vs_v2") or []
-            base_caps = {c.get("skill_id", "").split(".")[0] for c in cs
-                         if c.get("change_type") != "add"}
+            base_caps = {
+                c.get("skill_id", "").split(".")[0] for c in cs if c.get("change_type") != "add"
+            }
             mentioned = set()
             for jd_id in jd_ids:
                 mentioned |= jd_skills.get(jd_id, set())
             for cap in base_caps - mentioned:
                 if cap:
-                    queue.append({
-                        "queue_id": f"q:conflict:{vid}:{cap}",
-                        "kind": "cross_source_conflict",
-                        "severity": "medium",
-                        "subject": f"{vid} 技能 {cap}：专家基线含、市场证据零提及",
-                        "evidence_ids": [base_ev] + [f"jd:{j}" for j in jd_ids[:5]],
-                        "detail": {"version_id": vid, "skill_id": cap,
-                                   "baseline": base_ev, "market_jd_count": len(jd_ids)},
-                    })
+                    queue.append(
+                        {
+                            "queue_id": f"q:conflict:{vid}:{cap}",
+                            "kind": "cross_source_conflict",
+                            "severity": "medium",
+                            "subject": f"{vid} 技能 {cap}：专家基线含、市场证据零提及",
+                            "evidence_ids": [base_ev] + [f"jd:{j}" for j in jd_ids[:5]],
+                            "detail": {
+                                "version_id": vid,
+                                "skill_id": cap,
+                                "baseline": base_ev,
+                                "market_jd_count": len(jd_ids),
+                            },
+                        }
+                    )
 
         # 低置信：版本引用的 JD 证据 quality < 0.6（jd 固定 0.8，实际捕获兜底）
         low = [i for i in ev_ids if i in by_id and by_id[i].get("quality_score", 1) < LOW_CONF]
         if low:
-            queue.append({
-                "queue_id": f"q:lowconf:{vid}",
-                "kind": "low_confidence",
-                "severity": "low",
-                "subject": f"{vid} 引用低置信证据 {len(low)} 条",
-                "evidence_ids": low[:10],
-                "detail": {"version_id": vid, "count": len(low)},
-            })
+            queue.append(
+                {
+                    "queue_id": f"q:lowconf:{vid}",
+                    "kind": "low_confidence",
+                    "severity": "low",
+                    "subject": f"{vid} 引用低置信证据 {len(low)} 条",
+                    "evidence_ids": low[:10],
+                    "detail": {"version_id": vid, "count": len(low)},
+                }
+            )
 
     # 单源热点（全局，技能级）
     for cap, plats in skill_plat.items():
         if len(plats) == 1 and sum(plats.values()) >= SINGLE_SOURCE_MIN:
             only = next(iter(plats))
-            queue.append({
-                "queue_id": f"q:singlesrc:{cap}",
-                "kind": "single_source_hotspot",
-                "severity": "low",
-                "subject": f"技能 {cap} 的 JD 提及 {sum(plats.values())} 次全部来自 {only}",
-                "evidence_ids": [],
-                "detail": {"skill_id": cap, "platform": only,
-                           "count": sum(plats.values())},
-            })
+            queue.append(
+                {
+                    "queue_id": f"q:singlesrc:{cap}",
+                    "kind": "single_source_hotspot",
+                    "severity": "low",
+                    "subject": f"技能 {cap} 的 JD 提及 {sum(plats.values())} 次全部来自 {only}",
+                    "evidence_ids": [],
+                    "detail": {"skill_id": cap, "platform": only, "count": sum(plats.values())},
+                }
+            )
 
     # 幂等重写
     OUT_REL.write_text(
-        "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in relations), encoding="utf-8")
+        "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in relations), encoding="utf-8"
+    )
     OUT_Q.write_text(
-        "".join(json.dumps(q, ensure_ascii=False) + "\n" for q in queue), encoding="utf-8")
+        "".join(json.dumps(q, ensure_ascii=False) + "\n" for q in queue), encoding="utf-8"
+    )
 
     metrics = {
         "versions": len(versions),

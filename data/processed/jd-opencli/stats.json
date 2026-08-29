@@ -1,0 +1,25 @@
+{
+  "search_total": 1190,
+  "search_by_platform": {
+    "51job": 650,
+    "boss": 540
+  },
+  "search_by_keyword": {
+    "AI 工程师": 1190
+  },
+  "search_missing_title": 0,
+  "search_duplicate_ids": 40,
+  "search_missing_publish_date": 540,
+  "date_range": [
+    "2025-09-19",
+    "2026-07-04"
+  ],
+  "detail_total": 70,
+  "detail_status": {
+    "ok": 69,
+    "invalid_detail_page": 1
+  },
+  "detail_desc_usable_ge200": 38,
+  "detail_desc_insufficient": 32,
+  "detail_title_broken": 18
+}

@@ -57,9 +57,7 @@ def cmd_run() -> dict:
             for m in r.get("skill_mentions") or []:
                 hit = resolver.resolve(m)
                 if hit.skill_id:
-                    new.append(
-                        {"mention": m, "skill_id": hit.skill_id, "point_id": hit.point_id}
-                    )
+                    new.append({"mention": m, "skill_id": hit.skill_id, "point_id": hit.point_id})
             r["resolved"] = new
             r["asof_rule_version"] = f"skills-asof-{day[:10]}"
             out.write(json.dumps(r, ensure_ascii=False) + "\n")

@@ -22,63 +22,106 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs" / "data-dictionary.md"
 
 # 数据集 -> (产物路径, 生成脚本, 语义标注 {字段: 含义|质量规则})
-DATASETS = OrderedDict([
-    ("日报事件 events", ("data/processed/wechat-mp/events.jsonl", "extract.py (prompt v3)", {
-        "event_id": "事件唯一标识（item_id + 序号）",
-        "item_id": "来源文章标识（索引内=guid，未索引=文件哈希）",
-        "title/summary": "事件标题与摘要（LLM 抽取）",
-        "entities": "事件涉及实体（公司/产品/机构，LLM 抽取）",
-        "urls": "原文引用链接（回链用）",
-        "published_date": "原始发布日期字段（已由 published_at 统一替代）",
-        "event_type": "事件类型枚举：研究/规范发布/模型发布/开源/产品化/采用/政策/传闻",
-        "fact_grade": "事实分级 fact|report|opinion（质量规则：加权 1.0/0.6/0.3）",
-        "skill_mentions": "技能原词列表（未归一）",
-        "published_at": "发布时间（天粒度；未索引文章回退文件名日期）",
-        "is_primary/duplicate_group_id": "D2 去重标记；下游只消费 is_primary 主记录",
-    })),
-    ("JD 解析 jd-parsed",
-     ("data/processed/jd-opencli/jd-parsed.jsonl", "jdxtract.py (jd-skill v2)", {
-        "jd_id": "岗位唯一标识（平台内 id 或哈希）",
-        "is_ai_role/domain_reason": "AI 域语义判定及理由（staged 全保留，curated 按此过滤）",
-        "skill_mentions": "技能原词；resolved=归一结果（asof 版按发布日词典重算）",
-        "platform": "采集平台（51job/boss/bytedance/tencent/gh-* 等）",
-        "title": "岗位标题（51job 曾按 jobId join 修复）",
-        "city/work_year/salary": "城市/经验/薪资元数据（corp 源较完整）",
-        "requirements": "任职要求（[必备]/[加分] 标记）",
-        "publish_date": "发布日期（boss 无；corp 毫秒精度截断到天）",
-    })),
-    ("证据实体 evidence", ("data/processed/evidence/evidence.jsonl", "evidence.py build", {
-        "evidence_id": "ev:|jd:|xlsx: 前缀 + 源标识（回链键）",
-        "source_span": "回链定位（event_id/jd_id/position_id）",
-        "claim_type": "trend_signal|job_requirement|expert_baseline",
-        "content_hash": "内容哈希 16 位（幂等重建校验）",
-        "quality_score": "质量分（事实分级映射；JD 0.8 恒定）",
-        "payload": "主张载荷（title/event_type/skill_mentions 等按 claim_type 变化）",
-        "published_at": "证据时间（as_of 闸门的 T 锚点）",
-    })),
-    ("证据关系 relations", ("data/processed/evidence/relations.jsonl", "evrelate.py run", {
-        "direction": "supports|contradicts（规则化，零 LLM）",
-        "target": "job_version_skill（版本技能字段）| expert_baseline_skill",
-        "supporting_evidence_ids": "contradicts 的真实 JD 证据引用（<=5 条）",
-        "relation_id": "关系唯一标识（版本+源+技能）",
-        "rule": "关系生成规则名（可审计）",
-    })),
-    ("岗位版本 published", ("data/processed/jobversions/published/", "jobver.py + jobpub.py", {
-        "required_skill_ids/preferred_skill_ids": "必备/加分技能（skill_id+weight）",
-        "evidence.evidence_ids": "版本引用的 JD 证据（evrelate 验证 100% 字段覆盖）",
-        "version_hash": "发布后不可变哈希（幂等保护）",
-        "changeset_vs_v1": "对基线的变化（add/promote/demote；evrelate 的 contradicts 来源）",
-        "status": "PUBLISHED（发布后不可变）",
-        "valid_from": "生效日期（时间闸门消费）",
-        "review_action_ids": "审核留痕引用（review-actions.jsonl）",
-    })),
-    ("包信号 relsignal", ("data/processed/pypi/relsignal.json", "pypidl.py run", {
-        "dl_share_onset": "下载份额启动月（ClickHouse 月度聚合，域内份额抗通胀）",
-        "rel_onset": "首发月中位（萌芽锚点）",
-        "jd_onset": "JD 需求启动月（asof 版词典）",
-        "report_onset": "日报信号启动月",
-    })),
-])
+DATASETS = OrderedDict(
+    [
+        (
+            "日报事件 events",
+            (
+                "data/processed/wechat-mp/events.jsonl",
+                "extract.py (prompt v3)",
+                {
+                    "event_id": "事件唯一标识（item_id + 序号）",
+                    "item_id": "来源文章标识（索引内=guid，未索引=文件哈希）",
+                    "title/summary": "事件标题与摘要（LLM 抽取）",
+                    "entities": "事件涉及实体（公司/产品/机构，LLM 抽取）",
+                    "urls": "原文引用链接（回链用）",
+                    "published_date": "原始发布日期字段（已由 published_at 统一替代）",
+                    "event_type": "事件类型枚举：研究/规范发布/模型发布/开源/产品化/采用/政策/传闻",
+                    "fact_grade": "事实分级 fact|report|opinion（质量规则：加权 1.0/0.6/0.3）",
+                    "skill_mentions": "技能原词列表（未归一）",
+                    "published_at": "发布时间（天粒度；未索引文章回退文件名日期）",
+                    "is_primary/duplicate_group_id": "D2 去重标记；下游只消费 is_primary 主记录",
+                },
+            ),
+        ),
+        (
+            "JD 解析 jd-parsed",
+            (
+                "data/processed/jd-opencli/jd-parsed.jsonl",
+                "jdxtract.py (jd-skill v2)",
+                {
+                    "jd_id": "岗位唯一标识（平台内 id 或哈希）",
+                    "is_ai_role/domain_reason": "AI 域判定及理由（staged 全留，curated 按此过滤）",
+                    "skill_mentions": "技能原词；resolved=归一结果（asof 版按发布日词典重算）",
+                    "platform": "采集平台（51job/boss/bytedance/tencent/gh-* 等）",
+                    "title": "岗位标题（51job 曾按 jobId join 修复）",
+                    "city/work_year/salary": "城市/经验/薪资元数据（corp 源较完整）",
+                    "requirements": "任职要求（[必备]/[加分] 标记）",
+                    "publish_date": "发布日期（boss 无；corp 毫秒精度截断到天）",
+                },
+            ),
+        ),
+        (
+            "证据实体 evidence",
+            (
+                "data/processed/evidence/evidence.jsonl",
+                "evidence.py build",
+                {
+                    "evidence_id": "ev:|jd:|xlsx: 前缀 + 源标识（回链键）",
+                    "source_span": "回链定位（event_id/jd_id/position_id）",
+                    "claim_type": "trend_signal|job_requirement|expert_baseline",
+                    "content_hash": "内容哈希 16 位（幂等重建校验）",
+                    "quality_score": "质量分（事实分级映射；JD 0.8 恒定）",
+                    "payload": "主张载荷（title/event_type/skill_mentions 等按 claim_type 变化）",
+                    "published_at": "证据时间（as_of 闸门的 T 锚点）",
+                },
+            ),
+        ),
+        (
+            "证据关系 relations",
+            (
+                "data/processed/evidence/relations.jsonl",
+                "evrelate.py run",
+                {
+                    "direction": "supports|contradicts（规则化，零 LLM）",
+                    "target": "job_version_skill（版本技能字段）| expert_baseline_skill",
+                    "supporting_evidence_ids": "contradicts 的真实 JD 证据引用（<=5 条）",
+                    "relation_id": "关系唯一标识（版本+源+技能）",
+                    "rule": "关系生成规则名（可审计）",
+                },
+            ),
+        ),
+        (
+            "岗位版本 published",
+            (
+                "data/processed/jobversions/published/",
+                "jobver.py + jobpub.py",
+                {
+                    "required_skill_ids/preferred_skill_ids": "必备/加分技能（skill_id+weight）",
+                    "evidence.evidence_ids": "版本引用的 JD 证据（evrelate 验证 100% 字段覆盖）",
+                    "version_hash": "发布后不可变哈希（幂等保护）",
+                    "changeset_vs_v1": "对基线变化（add/promote/demote；contradicts 来源）",
+                    "status": "PUBLISHED（发布后不可变）",
+                    "valid_from": "生效日期（时间闸门消费）",
+                    "review_action_ids": "审核留痕引用（review-actions.jsonl）",
+                },
+            ),
+        ),
+        (
+            "包信号 relsignal",
+            (
+                "data/processed/pypi/relsignal.json",
+                "pypidl.py run",
+                {
+                    "dl_share_onset": "下载份额启动月（ClickHouse 月度聚合，域内份额抗通胀）",
+                    "rel_onset": "首发月中位（萌芽锚点）",
+                    "jd_onset": "JD 需求启动月（asof 版词典）",
+                    "report_onset": "日报信号启动月",
+                },
+            ),
+        ),
+    ]
+)
 
 TODO = "TODO 待人工补"
 
@@ -122,8 +165,14 @@ def cmd_run() -> dict:
         fields = _scan_fields(ROOT / rel)
         if not fields:
             continue
-        lines += [f"## {name}", "", f"产物：`{rel}` · 生成：`{producer}`", "",
-                  "| 字段 | 类型 | 含义 / 质量规则 |", "| --- | --- | --- |"]
+        lines += [
+            f"## {name}",
+            "",
+            f"产物：`{rel}` · 生成：`{producer}`",
+            "",
+            "| 字段 | 类型 | 含义 / 质量规则 |",
+            "| --- | --- | --- |",
+        ]
         matched = set()
         for f, t in fields.items():
             note = TODO
@@ -136,8 +185,12 @@ def cmd_run() -> dict:
             lines.append(f"| `{f}` | {t} | {note} |")
         lines.append("")
     OUT.write_text("\n".join(lines), encoding="utf-8")
-    metrics = {"datasets": len(DATASETS), "fields": n_fields,
-               "annotated": n_annotated, "todo": n_fields - n_annotated}
+    metrics = {
+        "datasets": len(DATASETS),
+        "fields": n_fields,
+        "annotated": n_annotated,
+        "todo": n_fields - n_annotated,
+    }
     run.finish(metrics)
     return metrics
 

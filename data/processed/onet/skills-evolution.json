@@ -1,0 +1,112 @@
+{
+ "2005": {
+  "Machine Learning": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Artificial Intelligence": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Deep Learning": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Natural Language Processing": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Data Analysis": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  }
+ },
+ "2010": {
+  "Machine Learning": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Artificial Intelligence": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Deep Learning": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Natural Language Processing": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Data Analysis": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  }
+ },
+ "2015": {
+  "Machine Learning": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Artificial Intelligence": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Deep Learning": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Natural Language Processing": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Data Analysis": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  }
+ },
+ "2020": {
+  "Machine Learning": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Artificial Intelligence": {
+   "skill_element_occs": 0,
+   "tech_occs": 1
+  },
+  "Deep Learning": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Natural Language Processing": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Data Analysis": {
+   "skill_element_occs": 0,
+   "tech_occs": 8
+  }
+ },
+ "2025": {
+  "Machine Learning": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Artificial Intelligence": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Deep Learning": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Natural Language Processing": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  },
+  "Data Analysis": {
+   "skill_element_occs": 0,
+   "tech_occs": 0
+  }
+ }
+}

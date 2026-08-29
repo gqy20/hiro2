@@ -34,12 +34,23 @@ PROC = ROOT / "data" / "processed" / "onet"
 UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/126"}
 
 VERSIONS = [
-    ("1_0", "1998"), ("5_1", "2001"), ("10_0", "2005"), ("15_0", "2010"),
-    ("20_0", "2015"), ("25_1", "2020"), ("30_3", "2025"),
+    ("1_0", "1998"),
+    ("5_1", "2001"),
+    ("10_0", "2005"),
+    ("15_0", "2010"),
+    ("20_0", "2015"),
+    ("25_1", "2020"),
+    ("30_3", "2025"),
 ]
 # 保留的核心表（版本间文件名略有差异，按子串匹配）
-CORE_TABLES = ("Occupation Data", "Skills", "Technology Skills",
-               "knowledge", "Abilities", "Interest")
+CORE_TABLES = (
+    "Occupation Data",
+    "Skills",
+    "Technology Skills",
+    "knowledge",
+    "Abilities",
+    "Interest",
+)
 
 
 def _download(version: str) -> Path | None:
@@ -95,8 +106,7 @@ def cmd_run() -> dict:
         occs = _read_tsv(dest, "Occupation Data")
         skills = _read_tsv(dest, "Skills")
         results[year] = {"occupations": len(occs), "skill_rows": len(skills)}
-        run.log("onetget", version, "succeeded",
-                count={"occs": len(occs), "skills": len(skills)})
+        run.log("onetget", version, "succeeded", count={"occs": len(occs), "skills": len(skills)})
         time.sleep(2)
     metrics = {"versions": {y: r for y, r in results.items()}}
     run.finish({"versions_ok": sum(1 for r in results.values() if r)})
@@ -105,8 +115,13 @@ def cmd_run() -> dict:
 
 def cmd_evolution() -> dict:
     """关键技能的职业覆盖演化（美国侧 1998-2025）。"""
-    watch = ("Machine Learning", "Artificial Intelligence", "Deep Learning",
-             "Natural Language Processing", "Data Analysis")
+    watch = (
+        "Machine Learning",
+        "Artificial Intelligence",
+        "Deep Learning",
+        "Natural Language Processing",
+        "Data Analysis",
+    )
     out = {}
     for version, year in VERSIONS:
         dest = RAW / f"db_{version}"
@@ -116,15 +131,22 @@ def cmd_evolution() -> dict:
         tech = _read_tsv(dest, "Technology Skills")
         stats = {}
         for w in watch:
-            occs = {r.get("O*NET-SOC Code", "") for r in skills
-                    if w.lower() in (r.get("Element Name") or "").lower()}
-            tech_occs = {r.get("O*NET-SOC Code", "") for r in tech
-                         if w.lower() in (r.get("Example") or "").lower()}
+            occs = {
+                r.get("O*NET-SOC Code", "")
+                for r in skills
+                if w.lower() in (r.get("Element Name") or "").lower()
+            }
+            tech_occs = {
+                r.get("O*NET-SOC Code", "")
+                for r in tech
+                if w.lower() in (r.get("Example") or "").lower()
+            }
             stats[w] = {"skill_element_occs": len(occs), "tech_occs": len(tech_occs)}
         out[year] = stats
     PROC.mkdir(parents=True, exist_ok=True)
     (PROC / "skills-evolution.json").write_text(
-        json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+        json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8"
+    )
     return out
 
 

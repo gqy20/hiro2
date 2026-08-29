@@ -65,6 +65,7 @@ def build_jd_months_asof() -> dict[str, Counter]:
             jd[x["skill_id"]][day[:7]] += 1
     return jd
 
+
 ROOT = Path(__file__).resolve().parents[1]
 PKGS = ROOT / "data" / "PKGS.yml"
 RAW_DIR = ROOT / "data" / "raw" / "pypi"

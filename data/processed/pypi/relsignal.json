@@ -17,12 +17,12 @@
       "dl_share_onset": "2016-01",
       "npm_share_onset": null,
       "rel_onset": "2023-06",
-      "jd_onset": "2022-09",
+      "jd_onset": "2023-12",
       "report_onset": "2025-07",
-      "dl_leads_jd_days": 2435,
+      "dl_leads_jd_days": 2891,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": -273,
-      "report_leads_jd_days": -1034
+      "rel_leads_jd_days": 183,
+      "report_leads_jd_days": -578
     },
     {
       "capability_id": "cap_03",
@@ -41,12 +41,12 @@
       "dl_share_onset": "2025-11",
       "npm_share_onset": "2025-08",
       "rel_onset": "2024-08",
-      "jd_onset": "2021-04",
+      "jd_onset": "2023-03",
       "report_onset": "2025-03",
-      "dl_leads_jd_days": -1675,
-      "npm_leads_jd_days": -1583,
-      "rel_leads_jd_days": -1218,
-      "report_leads_jd_days": -1430
+      "dl_leads_jd_days": -976,
+      "npm_leads_jd_days": -884,
+      "rel_leads_jd_days": -519,
+      "report_leads_jd_days": -731
     },
     {
       "capability_id": "cap_05",
@@ -65,12 +65,12 @@
       "dl_share_onset": "2016-06",
       "npm_share_onset": null,
       "rel_onset": "2021-06",
-      "jd_onset": "2023-08",
+      "jd_onset": "2024-04",
       "report_onset": "2025-03",
-      "dl_leads_jd_days": 2617,
+      "dl_leads_jd_days": 2861,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 791,
-      "report_leads_jd_days": -578
+      "rel_leads_jd_days": 1035,
+      "report_leads_jd_days": -334
     },
     {
       "capability_id": "cap_07",
@@ -173,24 +173,24 @@
       "dl_share_onset": "2016-01",
       "npm_share_onset": null,
       "rel_onset": "2015-03",
-      "jd_onset": "2021-04",
+      "jd_onset": "2021-09",
       "report_onset": "2025-04",
-      "dl_leads_jd_days": 1917,
+      "dl_leads_jd_days": 2070,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": 2223,
-      "report_leads_jd_days": -1461
+      "rel_leads_jd_days": 2376,
+      "report_leads_jd_days": -1308
     },
     {
       "capability_id": "cap_17",
       "dl_share_onset": null,
       "npm_share_onset": null,
       "rel_onset": "2022-04",
-      "jd_onset": "2020-11",
+      "jd_onset": "2023-03",
       "report_onset": "2025-04",
       "dl_leads_jd_days": null,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": -516,
-      "report_leads_jd_days": -1612
+      "rel_leads_jd_days": 334,
+      "report_leads_jd_days": -762
     },
     {
       "capability_id": "cap_18",
@@ -209,12 +209,12 @@
       "dl_share_onset": null,
       "npm_share_onset": null,
       "rel_onset": "2016-12",
-      "jd_onset": null,
+      "jd_onset": "2026-01",
       "report_onset": "2025-08",
       "dl_leads_jd_days": null,
       "npm_leads_jd_days": null,
-      "rel_leads_jd_days": null,
-      "report_leads_jd_days": null
+      "rel_leads_jd_days": 3318,
+      "report_leads_jd_days": 153
     }
   ],
   "pkg_meta": {

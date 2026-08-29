@@ -1,0 +1,52 @@
+{
+ "2005": {
+  "PyTorch": 0,
+  "TensorFlow": 0,
+  "Python": 0,
+  "Apache Spark": 0,
+  "R (Programming Language)": 0,
+  "scikit-learn": 0,
+  "Hugging Face": 0,
+  "_total_rows": 0
+ },
+ "2010": {
+  "PyTorch": 0,
+  "TensorFlow": 0,
+  "Python": 0,
+  "Apache Spark": 0,
+  "R (Programming Language)": 0,
+  "scikit-learn": 0,
+  "Hugging Face": 0,
+  "_total_rows": 0
+ },
+ "2015": {
+  "PyTorch": 0,
+  "TensorFlow": 0,
+  "Python": 0,
+  "Apache Spark": 0,
+  "R (Programming Language)": 0,
+  "scikit-learn": 0,
+  "Hugging Face": 0,
+  "_total_rows": 0
+ },
+ "2020": {
+  "PyTorch": 0,
+  "TensorFlow": 0,
+  "Python": 93,
+  "Apache Spark": 7,
+  "R (Programming Language)": 0,
+  "scikit-learn": 0,
+  "Hugging Face": 0,
+  "_total_rows": 29012
+ },
+ "2025": {
+  "PyTorch": 4,
+  "TensorFlow": 5,
+  "Python": 132,
+  "Apache Spark": 23,
+  "R (Programming Language)": 0,
+  "scikit-learn": 2,
+  "Hugging Face": 1,
+  "_total_rows": 31821
+ }
+}

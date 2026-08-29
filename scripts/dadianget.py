@@ -32,13 +32,11 @@ from runlog import RunContext  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "data" / "processed" / "policy"
 API = "https://www.osta.org.cn/api/client"
-UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/126",
-      "Accept": "application/json"}
+UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/126", "Accept": "application/json"}
 SLEEP = 0.6
 
 # 数字技术相关小类的筛选（--all 时跳过）
-RELATED_KEYS = ("信息", "数据", "软件", "智能", "计算机", "通信", "互联网",
-                "电子", "人工智能")
+RELATED_KEYS = ("信息", "数据", "软件", "智能", "计算机", "通信", "互联网", "电子", "人工智能")
 RELATED_PREFIXES = ("2-02", "4-04", "4-05")
 
 
@@ -85,11 +83,13 @@ def cmd_run(version: int, fetch_all: bool) -> dict:
     if fetch_all:
         related = small
     else:
-        related = [n for n in small
-                   if any(k in n["careerName"] for k in RELATED_KEYS)
-                   or n["careerCode"].startswith(RELATED_PREFIXES)]
-    run.log("dadianget", "tree", "progress",
-            count={"small": len(small), "related": len(related)})
+        related = [
+            n
+            for n in small
+            if any(k in n["careerName"] for k in RELATED_KEYS)
+            or n["careerCode"].startswith(RELATED_PREFIXES)
+        ]
+    run.log("dadianget", "tree", "progress", count={"small": len(small), "related": len(related)})
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     out = OUT_DIR / f"dadian-careers-{version}.jsonl"
@@ -102,18 +102,28 @@ def cmd_run(version: int, fetch_all: bool) -> dict:
                 continue
     careers: list[dict] = []
     with out.open("a", encoding="utf-8") as fh:
+
         def emit(code: str, name: str, parent: str, work_num: int) -> None:
             if code and name and code not in seen:
                 seen.add(code)
-                rec = {"career_code": code, "name": name, "parent": parent,
-                       "work_num": work_num, "version_id": version}
+                rec = {
+                    "career_code": code,
+                    "name": name,
+                    "parent": parent,
+                    "work_num": work_num,
+                    "version_id": version,
+                }
                 careers.append(rec)
                 fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
         for i, s in enumerate(related):
             try:
-                subs = _get(f"/subordinate/data?careerCode={s['careerCode']}"
-                            f"&versionId={version}").get("body") or []
+                subs = (
+                    _get(f"/subordinate/data?careerCode={s['careerCode']}&versionId={version}").get(
+                        "body"
+                    )
+                    or []
+                )
             except Exception:  # noqa: BLE001 - 单小类失败不阻塞
                 time.sleep(1)
                 continue
@@ -125,22 +135,38 @@ def cmd_run(version: int, fetch_all: bool) -> dict:
                     emit(subcode, sub["name"], s["careerName"], sub.get("workNum", 0))
                 else:  # 细类层，再下一层取职业
                     try:
-                        leaves = _get(f"/subordinate/data?careerCode={subcode}"
-                                      f"&versionId={version}").get("body") or []
+                        leaves = (
+                            _get(f"/subordinate/data?careerCode={subcode}&versionId={version}").get(
+                                "body"
+                            )
+                            or []
+                        )
                     except Exception:  # noqa: BLE001
                         time.sleep(1)
                         continue
                     for lf in leaves:
-                        emit(lf.get("careerCode", ""), lf.get("name", ""),
-                             subcode, lf.get("workNum", 0))
+                        emit(
+                            lf.get("careerCode", ""),
+                            lf.get("name", ""),
+                            subcode,
+                            lf.get("workNum", 0),
+                        )
                     time.sleep(SLEEP)
             time.sleep(SLEEP)
             if (i + 1) % 10 == 0:
-                run.log("dadianget", f"{i+1}/{len(related)}", "progress",
-                        count={"careers": len(careers)})
+                run.log(
+                    "dadianget",
+                    f"{i + 1}/{len(related)}",
+                    "progress",
+                    count={"careers": len(careers)},
+                )
 
-    metrics = {"version": version, "small_categories": len(related),
-               "careers": len(careers), "out": str(out.relative_to(ROOT))}
+    metrics = {
+        "version": version,
+        "small_categories": len(related),
+        "careers": len(careers),
+        "out": str(out.relative_to(ROOT)),
+    }
     run.finish(metrics)
     return metrics
 

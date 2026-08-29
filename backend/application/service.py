@@ -299,9 +299,7 @@ class ApplicationService:
 
     # ---------- 审核（append-only，ADR 0006） ----------
 
-    def submit_review(
-        self, target_id: str, decision: str, note: str = "", **extra: object
-    ) -> dict:
+    def submit_review(self, target_id: str, decision: str, note: str = "", **extra: object) -> dict:
         action = {
             "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
             "target_id": target_id,

@@ -1,0 +1,19 @@
+{
+  "source_id": "jd-opencli",
+  "source_type": "job_board",
+  "ingestion_mode": "backfill",
+  "file_count": 2,
+  "total_bytes": 1119192,
+  "files": [
+    {
+      "path": "data/raw/jd/opencli/jd_opencli_detail_raw.jsonl",
+      "bytes": 123515,
+      "sha256": "a2330e1ac77787f9f05f8acedc1db80281c1a72644888834709e526c39ac9492"
+    },
+    {
+      "path": "data/raw/jd/opencli/jd_opencli_raw.jsonl",
+      "bytes": 995677,
+      "sha256": "3799d316bc24771669c2bca22d814dd4bcf0ce9768ae8dda853e15f22cd3c638"
+    }
+  ]
+}

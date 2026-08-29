@@ -634,9 +634,15 @@ def cmd_run(dsn: str) -> dict:
                         """INSERT INTO policies (policy_id, title, puborg, pubdate, url, keyword, library)
                            VALUES (%s,%s,%s,%s,%s,%s,%s)
                            ON CONFLICT (policy_id) DO NOTHING""",
-                        (r.get("policy_id", ""), r.get("title", ""), r.get("puborg", ""),
-                         r.get("pubdate") or None, r.get("url", ""),
-                         r.get("keyword", ""), r.get("library", "")),
+                        (
+                            r.get("policy_id", ""),
+                            r.get("title", ""),
+                            r.get("puborg", ""),
+                            r.get("pubdate") or None,
+                            r.get("url", ""),
+                            r.get("keyword", ""),
+                            r.get("library", ""),
+                        ),
                     )
                     n += 1
             counts["policies"] = n
@@ -660,8 +666,13 @@ def cmd_run(dsn: str) -> dict:
                         """INSERT INTO dadian_careers (career_code, name, parent, work_num, version_id)
                            VALUES (%s,%s,%s,%s,%s)
                            ON CONFLICT (career_code, version_id) DO NOTHING""",
-                        (code, r.get("name", ""), r.get("parent", ""),
-                         r.get("work_num", 0) or 0, vid),
+                        (
+                            code,
+                            r.get("name", ""),
+                            r.get("parent", ""),
+                            r.get("work_num", 0) or 0,
+                            vid,
+                        ),
                     )
                     n += 1
             counts["dadian_careers"] = n
@@ -676,9 +687,14 @@ def cmd_run(dsn: str) -> dict:
                         """INSERT INTO arxiv_papers (arxiv_id, title, summary, published, categories, query)
                            VALUES (%s,%s,%s,%s,%s,%s)
                            ON CONFLICT (arxiv_id) DO NOTHING""",
-                        (r.get("arxiv_id", ""), r.get("title", ""),
-                         (r.get("summary") or "")[:2000], r.get("published") or None,
-                         r.get("categories") or [], r.get("query", "")),
+                        (
+                            r.get("arxiv_id", ""),
+                            r.get("title", ""),
+                            (r.get("summary") or "")[:2000],
+                            r.get("published") or None,
+                            r.get("categories") or [],
+                            r.get("query", ""),
+                        ),
                     )
                     n += 1
             counts["arxiv_papers"] = n
@@ -693,11 +709,15 @@ def cmd_run(dsn: str) -> dict:
                         """INSERT INTO resume_archive (resume_id, filename, size, uploaded_at, source, stats, profile)
                            VALUES (%s,%s,%s,%s,%s,%s,%s)
                            ON CONFLICT (resume_id) DO NOTHING""",
-                        (r.get("resume_id", ""), r.get("filename", ""),
-                         r.get("size", 0) or 0, r.get("uploaded_at") or None,
-                         r.get("source", ""),
-                         json.dumps(r.get("stats") or {}),
-                         json.dumps(r.get("profile") or {})),
+                        (
+                            r.get("resume_id", ""),
+                            r.get("filename", ""),
+                            r.get("size", 0) or 0,
+                            r.get("uploaded_at") or None,
+                            r.get("source", ""),
+                            json.dumps(r.get("stats") or {}),
+                            json.dumps(r.get("profile") or {}),
+                        ),
                     )
                     n += 1
             counts["resume_archive"] = n

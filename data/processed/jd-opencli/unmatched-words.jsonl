@@ -1,0 +1,422 @@
+{"word": "AI", "count": 920, "first_seen": "2026-08-28", "sample_event_id": "51job:168123980", "sample_title": "AI应用工程师-26校招(J78228)", "sample_summary": "参与财产险动态风险模型构建与优化"}
+{"word": "Java", "count": 815, "first_seen": "2026-08-28", "sample_event_id": "51job:167909131", "sample_title": "技术研发", "sample_summary": "实施技术需求对接"}
+{"word": "C++", "count": 704, "first_seen": "2026-08-28", "sample_event_id": "51job:151878727", "sample_title": "图像算法实习生", "sample_summary": "设计实现图像处理、识别、目标检测算法"}
+{"word": "SaaS", "count": 527, "first_seen": "2026-08-28", "sample_event_id": "51job:170387934", "sample_title": "销售支持岗（产品经理方向）(J10023)", "sample_summary": "第三方平台中后台产品规划与迭代"}
+{"word": "Go", "count": 504, "first_seen": "2026-08-28", "sample_event_id": "51job:167910712", "sample_title": "信息安全", "sample_summary": "实施安全风险评估"}
+{"word": "AWS", "count": 405, "first_seen": "2026-08-28", "sample_event_id": "boss:c5b94a42a90344510nBy2Ny5GVBU", "sample_title": "AI工程师机器学习工程师 算法工程师（赴日", "sample_summary": "AI系统设计开发评估"}
+{"word": "NLP", "count": 394, "first_seen": "2026-08-28", "sample_event_id": "51job:158252341", "sample_title": "大模型算法工程师", "sample_summary": "负责行业大模型研发与优化"}
+{"word": "C/C++", "count": 353, "first_seen": "2026-08-28", "sample_event_id": "51job:141452342", "sample_title": "算法工程师（视觉感知）", "sample_summary": "参与计算机视觉工程应用项目"}
+{"word": "GCP", "count": 304, "first_seen": "2026-08-28", "sample_event_id": "boss:c5b94a42a90344510nBy2Ny5GVBU", "sample_title": "AI工程师机器学习工程师 算法工程师（赴日", "sample_summary": "AI系统设计开发评估"}
+{"word": "Azure", "count": 299, "first_seen": "2026-08-28", "sample_event_id": "boss:c5b94a42a90344510nBy2Ny5GVBU", "sample_title": "AI工程师机器学习工程师 算法工程师（赴日", "sample_summary": "AI系统设计开发评估"}
+{"word": "Linux", "count": 288, "first_seen": "2026-08-28", "sample_event_id": "51job:141452342", "sample_title": "算法工程师（视觉感知）", "sample_summary": "参与计算机视觉工程应用项目"}
+{"word": "Figma", "count": 285, "first_seen": "2026-08-28", "sample_event_id": "51job:173081391", "sample_title": "AI产品助理", "sample_summary": "调研电子数据取证场景AI需求"}
+{"word": "Scala", "count": 279, "first_seen": "2026-08-28", "sample_event_id": "bd:6926394601410922759", "sample_title": "大数据开发专家-国际化", "sample_summary": "负责离线与实时数据仓库构建"}
+{"word": "Databricks", "count": 270, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:5313313002", "sample_title": "Engineering Manager - Backend", "sample_summary": "搭建并管理Databricks平台基础设施与产品"}
+{"word": "TensorFlow", "count": 248, "first_seen": "2026-08-28", "sample_event_id": "51job:151878727", "sample_title": "图像算法实习生", "sample_summary": "设计实现图像处理、识别、目标检测算法"}
+{"word": "TypeScript", "count": 228, "first_seen": "2026-08-28", "sample_event_id": "51job:172348483", "sample_title": "Agent开发实习生-中国交易与广告", "sample_summary": "使用AI Coding工具全栈开发与功能迭代"}
+{"word": "CV", "count": 219, "first_seen": "2026-08-28", "sample_event_id": "51job:168123980", "sample_title": "AI应用工程师-26校招(J78228)", "sample_summary": "参与财产险动态风险模型构建与优化"}
+{"word": "C", "count": 215, "first_seen": "2026-08-28", "sample_event_id": "51job:167910712", "sample_title": "信息安全", "sample_summary": "实施安全风险评估"}
+{"word": "distributed systems", "count": 209, "first_seen": "2026-08-28", "sample_event_id": "anth:4593216008", "sample_title": "Staff Research Engineer, Discovery Team", "sample_summary": "识别并移除通往科学AGI的瓶颈"}
+{"word": "数据结构", "count": 204, "first_seen": "2026-08-28", "sample_event_id": "51job:168554917", "sample_title": "大模型/智能体工程师", "sample_summary": "深入理解RAG、大模型、智能体概念并参与研发"}
+{"word": "JavaScript", "count": 198, "first_seen": "2026-08-28", "sample_event_id": "51job:169013852", "sample_title": "脑科学与人工智能应用工程师招聘", "sample_summary": "参与AI美育教学平台系统架构设计"}
+{"word": "RL", "count": 191, "first_seen": "2026-08-28", "sample_event_id": "boss:dd381b3c286b53bb0nJ90tS_GVJQ", "sample_title": "A186342多模态大模型算法工程师-…", "sample_summary": "探索具身智能多模态大模型及前沿技术"}
+{"word": "Apache Spark", "count": 190, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:4513122002", "sample_title": "Senior Software Engineer - Distributed Data Systems", "sample_summary": "构建下一代分布式数据存储与处理系统"}
+{"word": "数据挖掘", "count": 185, "first_seen": "2026-08-28", "sample_event_id": "51job:170223691", "sample_title": "算法工程师（人工智能）", "sample_summary": "负责机器学习、深度学习模型的设计与优化"}
+{"word": "Excel", "count": 181, "first_seen": "2026-08-28", "sample_event_id": "51job:168187377", "sample_title": "精算岗-26校招(J78208)", "sample_summary": "车险产品定价及报备"}
+{"word": "Golang", "count": 177, "first_seen": "2026-08-28", "sample_event_id": "51job:170985731", "sample_title": "AI算法工程师", "sample_summary": "研究Agent核心算法并落地"}
+{"word": "machine learning", "count": 164, "first_seen": "2026-08-28", "sample_event_id": "anth:4631822008", "sample_title": "Research Engineer / Scientist, Alignment", "sample_summary": "设计和运行机器学习实验，理解并引导AI行为"}
+{"word": "GTM", "count": 154, "first_seen": "2026-08-28", "sample_event_id": "anth:4461450008", "sample_title": "Account Executive, AI Native", "sample_summary": "赢得新业务并推动收入增长"}
+{"word": "Salesforce", "count": 151, "first_seen": "2026-08-28", "sample_event_id": "anth:5235692008", "sample_title": "Startup Partnerships Lead", "sample_summary": "制定并领导初创企业合作战略"}
+{"word": "R", "count": 149, "first_seen": "2026-08-28", "sample_event_id": "51job:171666434", "sample_title": "数据分析师", "sample_summary": "负责业务数据采集、清洗与整合，建立标准化数据分析模型"}
+{"word": "LLMs", "count": 145, "first_seen": "2026-08-28", "sample_event_id": "boss:5fc779dc1f4c77d5", "sample_title": "应用AI工程师", "sample_summary": "端到端构建和发布AI功能"}
+{"word": "Claude", "count": 144, "first_seen": "2026-08-28", "sample_event_id": "51job:171873744", "sample_title": "信息化管理（AI）", "sample_summary": "制定企业信息化及AI战略规划"}
+{"word": "NeurIPS", "count": 133, "first_seen": "2026-08-28", "sample_event_id": "51job:173145067", "sample_title": "图像处理算法工程师", "sample_summary": "研究设计计算机视觉算法"}
+{"word": "Android", "count": 130, "first_seen": "2026-08-28", "sample_event_id": "51job:171476038", "sample_title": "AI应用开发工程师（应届）", "sample_summary": "AI业务场景分析与方案设计"}
+{"word": "Hive", "count": 130, "first_seen": "2026-08-28", "sample_event_id": "51job:171582293", "sample_title": "A09.技术支持工程师（北京）", "sample_summary": "负责监管云平台需求调研与建设规划"}
+{"word": "PHP", "count": 123, "first_seen": "2026-08-28", "sample_event_id": "boss:edbd70b50733b1030nJ43N24GVtU", "sample_title": "ai应用工程师", "sample_summary": "参与AI应用系统设计与开发"}
+{"word": "推荐系统", "count": 122, "first_seen": "2026-08-28", "sample_event_id": "boss:01139080a8f5e02c", "sample_title": "AI工程师实习（大数据方向）", "sample_summary": "集成AI模型与大数据平台"}
+{"word": "data pipelines", "count": 119, "first_seen": "2026-08-28", "sample_event_id": "anth:4595463008", "sample_title": "Security Software Engineer, Detection & Response Platform", "sample_summary": "构建AI驱动的检测响应平台"}
+{"word": "MLOps", "count": 110, "first_seen": "2026-08-28", "sample_event_id": "boss:ddb609034bd406cf03x62Nq9E1FS", "sample_title": "AI agent工程师", "sample_summary": "负责AI系统的日常运维和监控，确保系统稳定运行"}
+{"word": "高并发", "count": 107, "first_seen": "2026-08-28", "sample_event_id": "51job:173313024", "sample_title": "AI安全研发工程师(J10402)", "sample_summary": "开发大模型、智能体、MCP等安全检测技术"}
+{"word": "ICML", "count": 107, "first_seen": "2026-08-28", "sample_event_id": "boss:bb02191dad38ed980nF539y4F1BQ", "sample_title": "AI rag（量化大厂，北上深都看）", "sample_summary": "负责AI应用知识库内容处理与检索架构设计开发"}
+{"word": "automation", "count": 107, "first_seen": "2026-08-28", "sample_event_id": "anth:5205735008", "sample_title": "Director, Global Order-to-Cash Transformation", "sample_summary": "制定全球O2C转型愿景与路线图"}
+{"word": "ETL", "count": 106, "first_seen": "2026-08-28", "sample_event_id": "boss:1ca2d312e6477a920nF_3tS6EFVT", "sample_title": "Agent/RAG工程师", "sample_summary": "设计企业知识库与RAG系统底层架构"}
+{"word": "generative AI", "count": 106, "first_seen": "2026-08-28", "sample_event_id": "anth:5097490008", "sample_title": "Product Manager, Safeguards (Cyber)", "sample_summary": "设计并部署前沿模型的安全防护系统"}
+{"word": "iOS", "count": 100, "first_seen": "2026-08-28", "sample_event_id": "51job:173381724", "sample_title": "AI Native 全栈工程师", "sample_summary": "将AI能力做进终端产品"}
+{"word": "操作系统", "count": 99, "first_seen": "2026-08-28", "sample_event_id": "51job:172676760", "sample_title": "计算机 / AI 技术岗", "sample_summary": "协助程序开发、代码调试与系统测试"}
+{"word": "ACL", "count": 99, "first_seen": "2026-08-28", "sample_event_id": "bd:7114938093388794119", "sample_title": "语音识别算法工程师-Seed", "sample_summary": "研发多模态模型等AI核心技术"}
+{"word": "CSS", "count": 97, "first_seen": "2026-08-28", "sample_event_id": "51job:172972397", "sample_title": "IT开发/运维工程师(J10060)", "sample_summary": "负责业务系统的运维及优化工作"}
+{"word": "observability", "count": 97, "first_seen": "2026-08-28", "sample_event_id": "anth:4778843008", "sample_title": "Staff+ Software Engineer, Safeguards ML Infrastructure", "sample_summary": "设计构建token生成路径安全后端服务"}
+{"word": "data science", "count": 97, "first_seen": "2026-08-28", "sample_event_id": "anth:5197529008", "sample_title": "Data Scientist, Developer Productivity", "sample_summary": "主导模糊高风险的效率调查"}
+{"word": "Lakehouse", "count": 94, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:5313313002", "sample_title": "Engineering Manager - Backend", "sample_summary": "搭建并管理Databricks平台基础设施与产品"}
+{"word": "ICLR", "count": 92, "first_seen": "2026-08-28", "sample_event_id": "boss:01139080a8f5e02c", "sample_title": "AI工程师实习（大数据方向）", "sample_summary": "集成AI模型与大数据平台"}
+{"word": "Terraform", "count": 92, "first_seen": "2026-08-28", "sample_event_id": "anth:4595463008", "sample_title": "Security Software Engineer, Detection & Response Platform", "sample_summary": "构建AI驱动的检测响应平台"}
+{"word": "APIs", "count": 90, "first_seen": "2026-08-28", "sample_event_id": "anth:5071132008", "sample_title": "Research Engineer, Economic Research Data Platform", "sample_summary": "构建数据管道生成隐私保护数据集"}
+{"word": "AI/ML", "count": 89, "first_seen": "2026-08-28", "sample_event_id": "ali:100009323003", "sample_title": "AI Innovation Business Unit-Solution Consultant-Singapore", "sample_summary": "驱动东南亚、港澳台新业务发展"}
+{"word": "analytics", "count": 88, "first_seen": "2026-08-28", "sample_event_id": "anth:5079133008", "sample_title": "Finance & Strategy, GTM - Korea", "sample_summary": "为GTM团队提供财务战略建议"}
+{"word": "Redis", "count": 87, "first_seen": "2026-08-28", "sample_event_id": "51job:167909131", "sample_title": "技术研发", "sample_summary": "实施技术需求对接"}
+{"word": "data", "count": 85, "first_seen": "2026-08-28", "sample_event_id": "anth:5179891008", "sample_title": "Product Operations Manager, Embedded", "sample_summary": "管理产品发布就绪与发布日历"}
+{"word": "Machine Learning", "count": 83, "first_seen": "2026-08-28", "sample_event_id": "anth:4935314008", "sample_title": "Recruiter, AI Research", "sample_summary": "制定并执行战略招聘计划，聚焦机器学习和AI研究人才"}
+{"word": "Data Science", "count": 83, "first_seen": "2026-08-28", "sample_event_id": "anth:5319702008", "sample_title": "Safeguards Enforcement Analyst, Radiological & Nuclear Harms", "sample_summary": "执行使用政策，检测减缓放射性/核风险"}
+{"word": "big data", "count": 83, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:4799387002", "sample_title": "Senior Software Engineer - Backend", "sample_summary": "构建Databricks平台的后端基础设施与产品"}
+{"word": "推荐", "count": 82, "first_seen": "2026-08-28", "sample_event_id": "51job:171958675", "sample_title": "豆包AI大模型产品实习生-Data AML", "sample_summary": "参与火山方舟平台功能规划与设计"}
+{"word": "GenAI", "count": 79, "first_seen": "2026-08-28", "sample_event_id": "boss:ef93da42a52615360nJ_3t20FVNX", "sample_title": "算法工程师（机器学习）", "sample_summary": "多传感器数据探索与预处理清洗"}
+{"word": "Delta Lake", "count": 79, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:4513122002", "sample_title": "Senior Software Engineer - Distributed Data Systems", "sample_summary": "构建下一代分布式数据存储与处理系统"}
+{"word": "go-to-market", "count": 78, "first_seen": "2026-08-28", "sample_event_id": "ali:100009323003", "sample_title": "AI Innovation Business Unit-Solution Consultant-Singapore", "sample_summary": "驱动东南亚、港澳台新业务发展"}
+{"word": "CRM", "count": 77, "first_seen": "2026-08-28", "sample_event_id": "51job:171873744", "sample_title": "信息化管理（AI）", "sample_summary": "制定企业信息化及AI战略规划"}
+{"word": "SOX", "count": 77, "first_seen": "2026-08-28", "sample_event_id": "anth:5191621008", "sample_title": "Senior Manager, Workforce Accounting", "sample_summary": "负责月结和季结的劳动力核算"}
+{"word": "infrastructure", "count": 76, "first_seen": "2026-08-28", "sample_event_id": "anth:4976328008", "sample_title": "Manager– Growth Sales (AI-Native)", "sample_summary": "领导5-10人增长客户经理团队"}
+{"word": "CVPR", "count": 75, "first_seen": "2026-08-28", "sample_event_id": "51job:173145067", "sample_title": "图像处理算法工程师", "sample_summary": "研究设计计算机视觉算法"}
+{"word": "Unity Catalog", "count": 74, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:5313313002", "sample_title": "Engineering Manager - Backend", "sample_summary": "搭建并管理Databricks平台基础设施与产品"}
+{"word": "人工智能", "count": 73, "first_seen": "2026-08-28", "sample_event_id": "51job:141069194", "sample_title": "视觉感知算法开发（实习生）", "sample_summary": "协助智能驾驶视觉识别、分类及分割追踪算法架构设计"}
+{"word": "Sales", "count": 73, "first_seen": "2026-08-28", "sample_event_id": "anth:5171950008", "sample_title": "Partner Sales Manager, Systems Integrators", "sample_summary": "将伙伴引入销售周期并明确角色责任"}
+{"word": "forecasting", "count": 70, "first_seen": "2026-08-28", "sample_event_id": "anth:4976328008", "sample_title": "Manager– Growth Sales (AI-Native)", "sample_summary": "领导5-10人增长客户经理团队"}
+{"word": "ML/AI", "count": 70, "first_seen": "2026-08-28", "sample_event_id": "anth:5111783008", "sample_title": "Technical Program Manager, Infrastructure", "sample_summary": "推动开发者环境、CI/CD和发布流程的跨职能项目"}
+{"word": "OLTP", "count": 70, "first_seen": "2026-08-28", "sample_event_id": "anth:5301750008", "sample_title": "Staff+ Software Engineer, Databases", "sample_summary": "制定产品与研究数据库技术方向"}
+{"word": "Lakebase", "count": 69, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:5313313002", "sample_title": "Engineering Manager - Backend", "sample_summary": "搭建并管理Databricks平台基础设施与产品"}
+{"word": "Prompt Engineering", "count": 68, "first_seen": "2026-08-28", "sample_event_id": "51job:169077861", "sample_title": "AI算法实习生 (谱图识别方向)", "sample_summary": "谱图数据收集与预处理"}
+{"word": "inference", "count": 68, "first_seen": "2026-08-28", "sample_event_id": "anth:4593216008", "sample_title": "Staff Research Engineer, Discovery Team", "sample_summary": "识别并移除通往科学AGI的瓶颈"}
+{"word": "metrics", "count": 68, "first_seen": "2026-08-28", "sample_event_id": "anth:5074908008", "sample_title": "Staff+ Software Engineer, Safeguards Infrastructure ", "sample_summary": "开发数据存储与管理基础设施"}
+{"word": "Cloud", "count": 68, "first_seen": "2026-08-28", "sample_event_id": "anth:5139628008", "sample_title": " Product Manager, Safeguards Rare Harms", "sample_summary": "设计上游安全防护与下游防御"}
+{"word": "搜索引擎", "count": 67, "first_seen": "2026-08-28", "sample_event_id": "boss:893f544097c163040nJ_09W-FVpY", "sample_title": "机器学习工程师实习生-国际化电商广告", "sample_summary": "跟进前沿机器学习技术研究，设计业务优化方案"}
+{"word": "EMNLP", "count": 67, "first_seen": "2026-08-28", "sample_event_id": "bd:7587375645736798469", "sample_title": "高级广告算法工程师-国际化广告", "sample_summary": "负责TikTok搜索广告全链路优化"}
+{"word": "AI工具", "count": 66, "first_seen": "2026-08-28", "sample_event_id": "51job:169166573", "sample_title": "AI产品经理", "sample_summary": "参与AI技术大会及展会活动，拓展潜在客户"}
+{"word": "Product", "count": 66, "first_seen": "2026-08-28", "sample_event_id": "anth:5096041008", "sample_title": "Enterprise Account Executive, Telecommunications", "sample_summary": "达成收入目标，赢得电信新客户"}
+{"word": "ROI", "count": 65, "first_seen": "2026-08-28", "sample_event_id": "bd:7654104671782684981", "sample_title": "增长数据分析师-番茄小说", "sample_summary": "负责增长与经营分析，量化UG手段效率"}
+{"word": "SLA", "count": 63, "first_seen": "2026-08-28", "sample_event_id": "51job:153513820", "sample_title": "网络工程师(J10736)", "sample_summary": "网络通信与安全运营管理"}
+{"word": "Generative AI", "count": 63, "first_seen": "2026-08-28", "sample_event_id": "51job:172331262", "sample_title": "实习_多智能体研发工程师", "sample_summary": "参与垂类AI智能体研发与落地"}
+{"word": "召回", "count": 63, "first_seen": "2026-08-28", "sample_event_id": "boss:bb02191dad38ed980nF539y4F1BQ", "sample_title": "AI rag（量化大厂，北上深都看）", "sample_summary": "负责AI应用知识库内容处理与检索架构设计开发"}
+{"word": "cloud", "count": 63, "first_seen": "2026-08-28", "sample_event_id": "anth:4502508008", "sample_title": "Staff+ Application Security Engineer", "sample_summary": "设计构建Claude驱动安全系统"}
+{"word": "Tensorflow", "count": 62, "first_seen": "2026-08-28", "sample_event_id": "51job:165020234", "sample_title": "AI算法工程师", "sample_summary": "研究深度学习、统计学习等机器学习算法"}
+{"word": "数据", "count": 62, "first_seen": "2026-08-28", "sample_event_id": "51job:158252341", "sample_title": "大模型算法工程师", "sample_summary": "负责行业大模型研发与优化"}
+{"word": "ERP", "count": 62, "first_seen": "2026-08-28", "sample_event_id": "51job:171873744", "sample_title": "信息化管理（AI）", "sample_summary": "制定企业信息化及AI战略规划"}
+{"word": "Stripe", "count": 62, "first_seen": "2026-08-28", "sample_event_id": "anth:5325909008", "sample_title": "Staff+ Software Engineer, Financial Fraud", "sample_summary": "构建实时风险决策系统"}
+{"word": "MLflow", "count": 62, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:5408888002", "sample_title": "Staff Software Engineer - Backend", "sample_summary": "设计、实现、测试并运维微服务"}
+{"word": "data engineering", "count": 62, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:6117719002", "sample_title": "Solutions Architect - Digital Native Business", "sample_summary": "与销售团队合作提供技术领导力"}
+{"word": "Ruby", "count": 61, "first_seen": "2026-08-28", "sample_event_id": "51job:167910712", "sample_title": "信息安全", "sample_summary": "实施安全风险评估"}
+{"word": "Tableau", "count": 61, "first_seen": "2026-08-28", "sample_event_id": "51job:171666434", "sample_title": "数据分析师", "sample_summary": "负责业务数据采集、清洗与整合，建立标准化数据分析模型"}
+{"word": "Big Data", "count": 61, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:6117719002", "sample_title": "Solutions Architect - Digital Native Business", "sample_summary": "与销售团队合作提供技术领导力"}
+{"word": "experimentation", "count": 61, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8337361002", "sample_title": "Director, Agent & AI Search", "sample_summary": "构建并规模化全球GEO产品功能"}
+{"word": "Node.js", "count": 60, "first_seen": "2026-08-28", "sample_event_id": "51job:168222397", "sample_title": "AI应用研究员", "sample_summary": "深度理解审计税务内控业务场景，识别可AI化关键节点"}
+{"word": "直播", "count": 60, "first_seen": "2026-08-28", "sample_event_id": "boss:1b89b09239eb0679", "sample_title": "AI工程师助理实习生（智能体产品运营方向）", "sample_summary": "配合AI工程师完成智能体部署测试和数据整理"}
+{"word": "Slack", "count": 60, "first_seen": "2026-08-28", "sample_event_id": "ali:100032640002", "sample_title": "集团安全部-大模型Agent上下文系统专家-北京/杭州", "sample_summary": "构建面向Agent的组织上下文创新产品"}
+{"word": "Engineering", "count": 60, "first_seen": "2026-08-28", "sample_event_id": "anth:4980335008", "sample_title": "Engineering Manager, GRC Platform", "sample_summary": "领导GRC团队，建立治理风险合规流程与架构"}
+{"word": "prototyping", "count": 60, "first_seen": "2026-08-28", "sample_event_id": "anth:5097186008", "sample_title": "Full Stack Engineer, Education Labs", "sample_summary": "交付功能帮助用户提升 AI 技能，以能力增长衡量成功"}
+{"word": "系统解耦", "count": 60, "first_seen": "2026-08-28", "sample_event_id": "bd:6899267917368543501", "sample_title": "基础架构研发实习生", "sample_summary": "参与分布式计算、存储、虚拟化、网络等基础设施构建和优化"}
+{"word": "数据仓库", "count": 59, "first_seen": "2026-08-28", "sample_event_id": "51job:170801473", "sample_title": "检测工程师（新能源部）", "sample_summary": "设计优化数据平台服务器架构"}
+{"word": "计算广告", "count": 59, "first_seen": "2026-08-28", "sample_event_id": "bd:6831795583726422285", "sample_title": "推荐算法专家 — 抖音", "sample_summary": "搭建业界领先推荐系统"}
+{"word": "dashboards", "count": 59, "first_seen": "2026-08-28", "sample_event_id": "anth:5079133008", "sample_title": "Finance & Strategy, GTM - Korea", "sample_summary": "为GTM团队提供财务战略建议"}
+{"word": "design systems", "count": 59, "first_seen": "2026-08-28", "sample_event_id": "anth:5305402008", "sample_title": "Staff Software Engineer, Web Platform", "sample_summary": "提升开发速度，减少构建部署测试摩擦"}
+{"word": "Command of the Message", "count": 59, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:7841080002", "sample_title": "Enterprise Account Executive - Media", "sample_summary": "获取媒体垂直行业战略新客户"}
+{"word": "AI APIs", "count": 59, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8341313002", "sample_title": "Sr. Forward Deployed Engineer (FDE) - Manufacturing", "sample_summary": "交付生产级数据/AI解决方案"}
+{"word": "数据清洗", "count": 58, "first_seen": "2026-08-28", "sample_event_id": "51job:169271311", "sample_title": "校招-AI应用工程师（孝感/武汉）", "sample_summary": "AI算法研发与应用：开发工业软件AI模块"}
+{"word": "pipeline", "count": 58, "first_seen": "2026-08-28", "sample_event_id": "51job:173219809", "sample_title": "大模型算法工程师", "sample_summary": "参与多模态大模型研发、微调与对齐优化"}
+{"word": "compliance", "count": 58, "first_seen": "2026-08-28", "sample_event_id": "anth:4959329008", "sample_title": "Enterprise Account Executive, State & Local Sales", "sample_summary": "开拓州和地方政府新客户并推动收入增长"}
+{"word": "因果推断", "count": 55, "first_seen": "2026-08-28", "sample_event_id": "bd:7029641156002777380", "sample_title": "机器学习算法工程师-抖音直播", "sample_summary": "直播业务机器学习模型建设"}
+{"word": "Snowflake", "count": 55, "first_seen": "2026-08-28", "sample_event_id": "anth:5240422008", "sample_title": "Data Engineer, Safeguards", "sample_summary": "设计维护可扩展数据管道支持安全监控"}
+{"word": "KPIs", "count": 54, "first_seen": "2026-08-28", "sample_event_id": "anth:5390939008", "sample_title": "Head of Sales Strategy, Global GTM", "sample_summary": "定义解决方案组合的核心销售动作及优先顺序"}
+{"word": "Kaggle", "count": 53, "first_seen": "2026-08-28", "sample_event_id": "boss:01139080a8f5e02c", "sample_title": "AI工程师实习（大数据方向）", "sample_summary": "集成AI模型与大数据平台"}
+{"word": "Data Intelligence Platform", "count": 53, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:7642125002", "sample_title": "Lead Solutions Architect  - Strategic Customers", "sample_summary": "与高管层客户协作推动Databricks采用"}
+{"word": "分布式计算", "count": 52, "first_seen": "2026-08-28", "sample_event_id": "bd:7603278630796216581", "sample_title": "机器学习研发工程师-搜索架构", "sample_summary": "开发搜索架构系统，支撑算法生产与迭代"}
+{"word": "数据治理", "count": 51, "first_seen": "2026-08-28", "sample_event_id": "51job:172789342", "sample_title": "骑行-数据开发工程师", "sample_summary": "承担骑行数仓设计与开发"}
+{"word": "Ansible", "count": 51, "first_seen": "2026-08-28", "sample_event_id": "bd:7511975131145832711", "sample_title": "HiAgent实施运维专家-火山引擎", "sample_summary": "负责大模型产品全链路交付管理"}
+{"word": "sales", "count": 51, "first_seen": "2026-08-28", "sample_event_id": "anth:4959329008", "sample_title": "Enterprise Account Executive, State & Local Sales", "sample_summary": "开拓州和地方政府新客户并推动收入增长"}
+{"word": "UX/UI", "count": 51, "first_seen": "2026-08-28", "sample_event_id": "gh-figma:5735493004", "sample_title": "Solutions Consultant (London, United Kingdom)", "sample_summary": "演示Figma平台价值"}
+{"word": "短视频", "count": 50, "first_seen": "2026-08-28", "sample_event_id": "51job:172167371", "sample_title": "AIGC导演", "sample_summary": "负责AI短剧、短视频、TVC整体创作"}
+{"word": "Diffusion", "count": 50, "first_seen": "2026-08-28", "sample_event_id": "51job:173219809", "sample_title": "大模型算法工程师", "sample_summary": "参与多模态大模型研发、微调与对齐优化"}
+{"word": "数据隔离", "count": 50, "first_seen": "2026-08-28", "sample_event_id": "bd:7263104116464126268", "sample_title": "后端开发工程师-Data", "sample_summary": "架构设计与开发，支撑亿级用户"}
+{"word": "排序", "count": 49, "first_seen": "2026-08-28", "sample_event_id": "51job:167831529", "sample_title": "软件开发岗（AI模型方向）", "sample_summary": "负责大模型、RAG、智能体等AI技术落地实施"}
+{"word": "payments", "count": 49, "first_seen": "2026-08-28", "sample_event_id": "gh-stripe:6692166", "sample_title": "Backend Engineer, Payments", "sample_summary": "设计构建维护API、服务及大规模系统"}
+{"word": "GPT", "count": 48, "first_seen": "2026-08-28", "sample_event_id": "51job:171873744", "sample_title": "信息化管理（AI）", "sample_summary": "制定企业信息化及AI战略规划"}
+{"word": "Swift", "count": 48, "first_seen": "2026-08-28", "sample_event_id": "boss:6712af6d7bd5110d", "sample_title": "全棧(AI)工程师", "sample_summary": "熟练掌握AI辅助编程工具及iOS工程化能力"}
+{"word": "reinforcement learning", "count": 48, "first_seen": "2026-08-28", "sample_event_id": "anth:4017331008", "sample_title": "Research Engineer, Knowledge Team", "sample_summary": "设计并实现全新信息架构策略"}
+{"word": "value-selling", "count": 48, "first_seen": "2026-08-28", "sample_event_id": "gh-figma:5415515004", "sample_title": "Account Executive, Mid-Market (London, United Kingdom)", "sample_summary": "管理中端市场客户管道，达成销售目标"}
+{"word": "广告", "count": 47, "first_seen": "2026-08-28", "sample_event_id": "51job:171958675", "sample_title": "豆包AI大模型产品实习生-Data AML", "sample_summary": "参与火山方舟平台功能规划与设计"}
+{"word": "AI Infra", "count": 47, "first_seen": "2026-08-28", "sample_event_id": "51job:172331243", "sample_title": "实习_Agent研发工程师", "sample_summary": "参与AI原生开发平台设计与研发"}
+{"word": "GAN", "count": 47, "first_seen": "2026-08-28", "sample_event_id": "bd:6980222354626791688", "sample_title": "AIGC技术专家-智能创作", "sample_summary": "多模态生成/GAN图像生成算法研发优化"}
+{"word": "security", "count": 47, "first_seen": "2026-08-28", "sample_event_id": "anth:4959329008", "sample_title": "Enterprise Account Executive, State & Local Sales", "sample_summary": "开拓州和地方政府新客户并推动收入增长"}
+{"word": "Workday", "count": 47, "first_seen": "2026-08-28", "sample_event_id": "anth:5194810008", "sample_title": "Workday Business Systems Analyst, People Systems", "sample_summary": "配置和维护薪酬模块"}
+{"word": "MongoDB", "count": 46, "first_seen": "2026-08-28", "sample_event_id": "51job:167909131", "sample_title": "技术研发", "sample_summary": "实施技术需求对接"}
+{"word": "Word", "count": 46, "first_seen": "2026-08-28", "sample_event_id": "51job:170387934", "sample_title": "销售支持岗（产品经理方向）(J10023)", "sample_summary": "第三方平台中后台产品规划与迭代"}
+{"word": "ICCV", "count": 46, "first_seen": "2026-08-28", "sample_event_id": "51job:173145067", "sample_title": "图像处理算法工程师", "sample_summary": "研究设计计算机视觉算法"}
+{"word": "消息队列", "count": 46, "first_seen": "2026-08-28", "sample_event_id": "boss:0ce70ff82f3b1116", "sample_title": "AI Native工程师（即梦）-剪映CapCut", "sample_summary": "负责即梦端到端核心功能开发"}
+{"word": "KPI", "count": 46, "first_seen": "2026-08-28", "sample_event_id": "anth:5017903008", "sample_title": "Technical Deployment Lead", "sample_summary": "制定技术交付计划，明确范围和里程碑"}
+{"word": "pipeline generation", "count": 46, "first_seen": "2026-08-28", "sample_event_id": "anth:5390984008", "sample_title": "BDR Enablement Lead", "sample_summary": "负责BDR入职培训课程"}
+{"word": "Vue", "count": 45, "first_seen": "2026-08-28", "sample_event_id": "51job:169013852", "sample_title": "脑科学与人工智能应用工程师招聘", "sample_summary": "参与AI美育教学平台系统架构设计"}
+{"word": "网络", "count": 45, "first_seen": "2026-08-28", "sample_event_id": "51job:173195977", "sample_title": "研发管培生（2027校招）", "sample_summary": "负责电脑、服务器及网络全流程运维"}
+{"word": "RDMA", "count": 45, "first_seen": "2026-08-28", "sample_event_id": "bd:7293138352869296411", "sample_title": "AML-机器学习系统研发工程师", "sample_summary": "负责火山引擎机器学习训练推理框架研发优化"}
+{"word": "Postgres", "count": 44, "first_seen": "2026-08-28", "sample_event_id": "boss:3811f0f834d42c500nR93dq9FlFZ", "sample_title": "ai agent工程师", "sample_summary": "打造下一代AI婚恋平台"}
+{"word": "tooling", "count": 44, "first_seen": "2026-08-28", "sample_event_id": "anth:5074908008", "sample_title": "Staff+ Software Engineer, Safeguards Infrastructure ", "sample_summary": "开发数据存储与管理基础设施"}
+{"word": "Marketing", "count": 44, "first_seen": "2026-08-28", "sample_event_id": "anth:5153377008", "sample_title": "Manager, Account Executive - Strategic Sales", "sample_summary": "招聘、辅导和保留战略客户经理"}
+{"word": "networking", "count": 44, "first_seen": "2026-08-28", "sample_event_id": "anth:5215130008", "sample_title": "Senior Data Center Capacity Delivery Manager, AUS", "sample_summary": "领导数据中心容量交付项目"}
+{"word": "B2B SaaS", "count": 43, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8583037002", "sample_title": "Sr. Field Technical Program Manager, Forward Deployed Engineering", "sample_summary": "负责约5个客户项目的交付成果"}
+{"word": "OLAP", "count": 42, "first_seen": "2026-08-28", "sample_event_id": "51job:170801473", "sample_title": "检测工程师（新能源部）", "sample_summary": "设计优化数据平台服务器架构"}
+{"word": "飞书", "count": 42, "first_seen": "2026-08-28", "sample_event_id": "51job:171870103", "sample_title": "信息化管理（AI）（校招）", "sample_summary": "制定企业信息化及AI战略规划"}
+{"word": "存储", "count": 42, "first_seen": "2026-08-28", "sample_event_id": "bd:7366504204988959013", "sample_title": "机器学习训练框架研发专家-Seed", "sample_summary": "负责机器学习训练框架研究与开发"}
+{"word": "sales methodology", "count": 42, "first_seen": "2026-08-28", "sample_event_id": "anth:5077996008", "sample_title": "Mid-Market Account Executive, Tech", "sample_summary": "管理完整销售周期，从首次触达到上线"}
+{"word": "UX", "count": 42, "first_seen": "2026-08-28", "sample_event_id": "bd:7675633635869493557", "sample_title": "游戏视觉设计师 - Bluesea Studio", "sample_summary": "参与游戏UI整体视觉风格设计"}
+{"word": "TensorRT", "count": 41, "first_seen": "2026-08-28", "sample_event_id": "51job:141452342", "sample_title": "算法工程师（视觉感知）", "sample_summary": "参与计算机视觉工程应用项目"}
+{"word": "ACM/ICPC", "count": 41, "first_seen": "2026-08-28", "sample_event_id": "boss:61217913318a6d710nJ80t-7FlNZ", "sample_title": "多模态大模型算法工程师", "sample_summary": "打造短视频/直播/搜索推荐/电商/创作者玩法多模态大模型"}
+{"word": "CPU", "count": 41, "first_seen": "2026-08-28", "sample_event_id": "bd:7436662069099612434", "sample_title": "AI多模态数据湖研发工程师-Data", "sample_summary": "打造大数据+AI云平台产品"}
+{"word": "NoSQL", "count": 41, "first_seen": "2026-08-28", "sample_event_id": "bd:7617777306904774917", "sample_title": "服务端开发工程师（AI方向）-飞书音视频会议", "sample_summary": "开发音视频会议AI基础能力"}
+{"word": "algorithms", "count": 41, "first_seen": "2026-08-28", "sample_event_id": "anth:5119713008", "sample_title": "Research Engineer, Pretraining", "sample_summary": "研究并实现模型架构、算法、数据处理与优化器方案"}
+{"word": "Typescript", "count": 41, "first_seen": "2026-08-28", "sample_event_id": "anth:5302966008", "sample_title": "Forward Deployed Engineer", "sample_summary": "在客户系统中构建Claude生产应用"}
+{"word": "Lakeflow", "count": 41, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:5313313002", "sample_title": "Engineering Manager - Backend", "sample_summary": "搭建并管理Databricks平台基础设施与产品"}
+{"word": "抖音", "count": 40, "first_seen": "2026-08-28", "sample_event_id": "51job:172615464", "sample_title": "AI图片视频师", "sample_summary": "生成服装模特图与产品场景图"}
+{"word": "PPT", "count": 39, "first_seen": "2026-08-28", "sample_event_id": "51job:169166573", "sample_title": "AI产品经理", "sample_summary": "参与AI技术大会及展会活动，拓展潜在客户"}
+{"word": "Cursor", "count": 39, "first_seen": "2026-08-28", "sample_event_id": "51job:172745905", "sample_title": "数产集团AI应用工程师(J14698)", "sample_summary": "设计AI智能体平台应用层架构"}
+{"word": "deep learning", "count": 39, "first_seen": "2026-08-28", "sample_event_id": "anth:5074217008", "sample_title": "Research Engineer, Visual Knowledge Work", "sample_summary": "管理视觉能力数据策略，构建评测与规模化RL环境"}
+{"word": "monitoring", "count": 39, "first_seen": "2026-08-28", "sample_event_id": "anth:5101169008", "sample_title": "Staff Software Engineer, AI Reliability Engineering", "sample_summary": "制定大模型服务SLO"}
+{"word": "sourcing", "count": 39, "first_seen": "2026-08-28", "sample_event_id": "anth:5249545008", "sample_title": "Contract Technical Sourcer", "sample_summary": "制定并执行战略寻源计划"}
+{"word": "Databricks Data Intelligence Platform", "count": 39, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:6117756002", "sample_title": "Solutions Architect - Communications, Media, Entertainment & Gaming ", "sample_summary": "制定客户参与策略并与客户主管合作"}
+{"word": "Javascript", "count": 39, "first_seen": "2026-08-28", "sample_event_id": "gh-discord:8214127002", "sample_title": "Staff Software Engineer, Safety Processing", "sample_summary": "设计构建可扩展后端系统处理安全信号"}
+{"word": "deal qualification", "count": 39, "first_seen": "2026-08-28", "sample_event_id": "gh-figma:5422236004", "sample_title": "Account Executive, Mid-Market", "sample_summary": "维护和拓展现有中端市场客户"}
+{"word": "PRD", "count": 38, "first_seen": "2026-08-28", "sample_event_id": "51job:125546046", "sample_title": "产品经理/产品助理", "sample_summary": "收集用户日常需求，维护需求池"}
+{"word": "Multi-Agent", "count": 38, "first_seen": "2026-08-28", "sample_event_id": "51job:171900881", "sample_title": "AI大模型研发工程师", "sample_summary": "大模型应用架构设计与模块开发"}
+{"word": "POC", "count": 38, "first_seen": "2026-08-28", "sample_event_id": "boss:df87bdf4925872a20nF539-4ElJU", "sample_title": "多模态大模型评测工程师【音视频方向】", "sample_summary": "音视频生成模型交付质量管控"}
+{"word": "Webpack", "count": 38, "first_seen": "2026-08-28", "sample_event_id": "51job:169952462", "sample_title": "研发工程师", "sample_summary": "开发端到端AI应用"}
+{"word": "architecture", "count": 38, "first_seen": "2026-08-28", "sample_event_id": "anth:5017903008", "sample_title": "Technical Deployment Lead", "sample_summary": "制定技术交付计划，明确范围和里程碑"}
+{"word": "AI tools", "count": 38, "first_seen": "2026-08-28", "sample_event_id": "anth:5232055008", "sample_title": "Data Scientist, Policy", "sample_summary": "与产品业务团队合作为政策文件提供分析"}
+{"word": "measurement", "count": 38, "first_seen": "2026-08-28", "sample_event_id": "anth:5324841008", "sample_title": "Senior Media Manager", "sample_summary": "主导企业业务付费媒体策略"}
+{"word": "运筹优化", "count": 37, "first_seen": "2026-08-28", "sample_event_id": "51job:170486111", "sample_title": "AI算法工程师（产业大数据方向）", "sample_summary": "负责产业大数据深度分析与挖掘"}
+{"word": "MXNet", "count": 37, "first_seen": "2026-08-28", "sample_event_id": "51job:171352340", "sample_title": "ai研发工程师", "sample_summary": "大模型Agent应用研发"}
+{"word": "Web", "count": 37, "first_seen": "2026-08-28", "sample_event_id": "bd:7407391902763551002", "sample_title": "AI应用开发工程师-Cross Platform", "sample_summary": "建设AI应用框架和底层能力"}
+{"word": "Triton", "count": 37, "first_seen": "2026-08-28", "sample_event_id": "bd:7424463062256093467", "sample_title": "机器学习研发工程师-搜索架构", "sample_summary": "设计实现搜索场景机器学习架构"}
+{"word": "SRE", "count": 37, "first_seen": "2026-08-28", "sample_event_id": "bd:7599540466314594565", "sample_title": "大模型训练平台工程师-Data AML", "sample_summary": "负责大模型精调平台研发与维护"}
+{"word": "project management", "count": 37, "first_seen": "2026-08-28", "sample_event_id": "anth:5223093008", "sample_title": "Engineering Manager, Research Productivity", "sample_summary": "与技术负责人和团队协作确定工作优先级"}
+{"word": "Genie", "count": 37, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:5313313002", "sample_title": "Engineering Manager - Backend", "sample_summary": "搭建并管理Databricks平台基础设施与产品"}
+{"word": "Data Engineering", "count": 37, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:6322654002", "sample_title": "Sr. Product Manager, Data Engineering", "sample_summary": "领导Lakeflow核心产品领域的产品管理"}
+{"word": "SOP", "count": 36, "first_seen": "2026-08-28", "sample_event_id": "boss:3b00814e37eb82a10nZ70tm7EFdQ", "sample_title": "SOC算法工程师", "sample_summary": "SOC/SOH/SOP/SOE高精度估算算法研发"}
+{"word": "NOI/IOI", "count": 36, "first_seen": "2026-08-28", "sample_event_id": "bd:7257007915231775033", "sample_title": "商业化技术-AIGC算法工程师", "sample_summary": "负责广告文案、图片、视频创意自动化生成研发"}
+{"word": "integrations", "count": 36, "first_seen": "2026-08-28", "sample_event_id": "anth:5226540008", "sample_title": "Strategic Partner Development, Product Partnerships - Cybersecurity", "sample_summary": "研究并建立安全生态系统关键战略合作"}
+{"word": "Product Marketing", "count": 36, "first_seen": "2026-08-28", "sample_event_id": "anth:5388667008", "sample_title": "Partner Marketing Manager, Launches", "sample_summary": "端到端负责合作伙伴发布准备"}
+{"word": "NetSuite", "count": 36, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8337425002", "sample_title": "Manager, International Statutory & Technical Accounting", "sample_summary": "建立国际实体会计政策框架"}
+{"word": "ChatGPT", "count": 35, "first_seen": "2026-08-28", "sample_event_id": "51job:158252341", "sample_title": "大模型算法工程师", "sample_summary": "负责行业大模型研发与优化"}
+{"word": "Presto", "count": 35, "first_seen": "2026-08-28", "sample_event_id": "bd:6704573243702905096", "sample_title": "高级大数据研发工程师-数据BP", "sample_summary": "建设与维护商业化数据仓库及集市"}
+{"word": "Airflow", "count": 35, "first_seen": "2026-08-28", "sample_event_id": "bd:7577400576846760245", "sample_title": "资深大数据技术运维专家-火山引擎", "sample_summary": "提供大数据架构技术咨询"}
+{"word": "KDD", "count": 35, "first_seen": "2026-08-28", "sample_event_id": "bd:7629664629001783557", "sample_title": "推荐算法工程师-国际电商", "sample_summary": "优化电商个性化推荐算法"}
+{"word": "data governance", "count": 35, "first_seen": "2026-08-28", "sample_event_id": "anth:5104753008", "sample_title": "Enterprise Account Executive, Financial Services & Insurance", "sample_summary": "超额完成日本金融机构收入目标"}
+{"word": "SEO", "count": 35, "first_seen": "2026-08-28", "sample_event_id": "anth:5287926008", "sample_title": "Manager, Web Engineering ", "sample_summary": "管理并发展web工程团队"}
+{"word": "data-driven", "count": 35, "first_seen": "2026-08-28", "sample_event_id": "anth:5390960008", "sample_title": "Sales Leader Enablement", "sample_summary": "设计销售管理者入职与发展项目"}
+{"word": "Data", "count": 35, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8206138002", "sample_title": "Enterprise Account Executive - Public Sector ", "sample_summary": "制定爱尔兰公共部门销售计划"}
+{"word": "Dify", "count": 34, "first_seen": "2026-08-28", "sample_event_id": "51job:168222397", "sample_title": "AI应用研究员", "sample_summary": "深度理解审计税务内控业务场景，识别可AI化关键节点"}
+{"word": "PPO", "count": 34, "first_seen": "2026-08-28", "sample_event_id": "boss:0defd1b6723d43440nJ-29i-FltS", "sample_title": "机器人运动控制算法工程师(强化学习方向)", "sample_summary": "开发足式机器人运动控制与强化学习策略"}
+{"word": "BI", "count": 34, "first_seen": "2026-08-28", "sample_event_id": "boss:ab6712514cce41b00nJ60tm5GVFX", "sample_title": "AI Agent 工程师", "sample_summary": "开发跨境电商AI Agent"}
+{"word": "偏好对齐", "count": 34, "first_seen": "2026-08-28", "sample_event_id": "boss:dd381b3c286b53bb0nJ90tS_GVJQ", "sample_title": "A186342多模态大模型算法工程师-…", "sample_summary": "探索具身智能多模态大模型及前沿技术"}
+{"word": "DeepSpeed", "count": 34, "first_seen": "2026-08-28", "sample_event_id": "boss:dff114f6dd6084050nJ93NW0FFJY", "sample_title": "多模态 / Omni 大模型工程师", "sample_summary": "语音识别场景化定制与字错率优化"}
+{"word": "A/B testing", "count": 34, "first_seen": "2026-08-28", "sample_event_id": "anth:5182605008", "sample_title": "Data Scientist, Product", "sample_summary": "深入分析产品和用户数据，提供洞见"}
+{"word": "design", "count": 34, "first_seen": "2026-08-28", "sample_event_id": "anth:5392335008", "sample_title": "Staff+ Software Engineer, Platform Ecosystem", "sample_summary": "推动0到1项目从构思到交付"}
+{"word": "prospect discovery", "count": 34, "first_seen": "2026-08-28", "sample_event_id": "gh-figma:5422236004", "sample_title": "Account Executive, Mid-Market", "sample_summary": "维护和拓展现有中端市场客户"}
+{"word": "数据建模", "count": 33, "first_seen": "2026-08-28", "sample_event_id": "51job:170801473", "sample_title": "检测工程师（新能源部）", "sample_summary": "设计优化数据平台服务器架构"}
+{"word": "NAACL", "count": 33, "first_seen": "2026-08-28", "sample_event_id": "bd:7587375645736798469", "sample_title": "高级广告算法工程师-国际化广告", "sample_summary": "负责TikTok搜索广告全链路优化"}
+{"word": "SIGIR", "count": 33, "first_seen": "2026-08-28", "sample_event_id": "bd:7629664629001783557", "sample_title": "推荐算法工程师-国际电商", "sample_summary": "优化电商个性化推荐算法"}
+{"word": "backend", "count": 33, "first_seen": "2026-08-28", "sample_event_id": "anth:4572744008", "sample_title": "Staff Software Engineer, iOS", "sample_summary": "架构并实现前沿iOS应用"}
+{"word": "evaluation", "count": 33, "first_seen": "2026-08-28", "sample_event_id": "anth:4593216008", "sample_title": "Staff Research Engineer, Discovery Team", "sample_summary": "识别并移除通往科学AGI的瓶颈"}
+{"word": "prototype", "count": 33, "first_seen": "2026-08-28", "sample_event_id": "anth:4981828008", "sample_title": "Software Engineer, Research Tools", "sample_summary": "构建维护全栈应用与基础设施支持研究"}
+{"word": "performance", "count": 33, "first_seen": "2026-08-28", "sample_event_id": "anth:5117296008", "sample_title": "Engineering Manager, UI Platform", "sample_summary": "领导UI平台团队，设定技术方向"}
+{"word": "Objective-C", "count": 33, "first_seen": "2026-08-28", "sample_event_id": "bd:7572502411101931829", "sample_title": "移动端开发工程师-飞书视频会议", "sample_summary": "负责飞书视频会议和日历业务移动端开发"}
+{"word": "FigJam", "count": 33, "first_seen": "2026-08-28", "sample_event_id": "gh-figma:5822583004", "sample_title": "Product Partner Manager ", "sample_summary": "制定关键产品合作策略"}
+{"word": "计算机图形", "count": 33, "first_seen": "2026-08-28", "sample_event_id": "vivo:M1920787188255133697", "sample_title": "图像算法工程师", "sample_summary": "负责图形渲染算法的设计与实现"}
+{"word": "BERT", "count": 32, "first_seen": "2026-08-28", "sample_event_id": "51job:172312058", "sample_title": "AI技术研发工程师(J13320)", "sample_summary": "核心AI算法设计开发优化"}
+{"word": "JS", "count": 32, "first_seen": "2026-08-28", "sample_event_id": "51job:172972397", "sample_title": "IT开发/运维工程师(J10060)", "sample_summary": "负责业务系统的运维及优化工作"}
+{"word": "Top Coder", "count": 32, "first_seen": "2026-08-28", "sample_event_id": "boss:61217913318a6d710nJ80t-7FlNZ", "sample_title": "多模态大模型算法工程师", "sample_summary": "打造短视频/直播/搜索推荐/电商/创作者玩法多模态大模型"}
+{"word": "数据合成", "count": 32, "first_seen": "2026-08-28", "sample_event_id": "boss:dd381b3c286b53bb0nJ90tS_GVJQ", "sample_title": "A186342多模态大模型算法工程师-…", "sample_summary": "探索具身智能多模态大模型及前沿技术"}
+{"word": "模型量化", "count": 32, "first_seen": "2026-08-28", "sample_event_id": "bd:6939351184936782087", "sample_title": "机器学习生产管理研发工程师（编排调度/推理服务方向） - Data AML", "sample_summary": "保障推理服务稳定性与可用性"}
+{"word": "Angular", "count": 32, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:5445641002", "sample_title": "Senior Software Engineer - Fullstack", "sample_summary": "构建数据智能平台全栈功能"}
+{"word": "特征工程", "count": 31, "first_seen": "2026-08-28", "sample_event_id": "51job:169271311", "sample_title": "校招-AI应用工程师（孝感/武汉）", "sample_summary": "AI算法研发与应用：开发工业软件AI模块"}
+{"word": "ECCV", "count": 31, "first_seen": "2026-08-28", "sample_event_id": "51job:173145067", "sample_title": "图像处理算法工程师", "sample_summary": "研究设计计算机视觉算法"}
+{"word": "workflows", "count": 31, "first_seen": "2026-08-28", "sample_event_id": "anth:4931772008", "sample_title": "Mid-Market Account Executive, Industries", "sample_summary": "推动中端市场GTM策略"}
+{"word": "software engineering", "count": 31, "first_seen": "2026-08-28", "sample_event_id": "anth:5025624008", "sample_title": "Research Engineer, Cybersecurity RL (Reinforcement Learning)", "sample_summary": "设计并实现RL环境用于网络安全任务"}
+{"word": "data analysis", "count": 31, "first_seen": "2026-08-28", "sample_event_id": "anth:5066977008", "sample_title": "Research Scientist/Engineer, Biological Safety", "sample_summary": "设计并运行模型能力评估"}
+{"word": "storage", "count": 31, "first_seen": "2026-08-28", "sample_event_id": "anth:5234538008", "sample_title": "Director, Compute Infrastructure Procurement Operations", "sample_summary": "负责供应商战略与成本优化"}
+{"word": "governance", "count": 31, "first_seen": "2026-08-28", "sample_event_id": "anth:5288742008", "sample_title": "Staff+ Software Engineer, Enterprise", "sample_summary": "制定多年技术战略与多云策略"}
+{"word": "discovery", "count": 31, "first_seen": "2026-08-28", "sample_event_id": "anth:5390984008", "sample_title": "BDR Enablement Lead", "sample_summary": "负责BDR入职培训课程"}
+{"word": "RFP", "count": 31, "first_seen": "2026-08-28", "sample_event_id": "anth:5398827008", "sample_title": "Transaction Manager", "sample_summary": "识别数据中心容量机会并维护关系"}
+{"word": "Zoom", "count": 31, "first_seen": "2026-08-28", "sample_event_id": "gh-duolingo:8602852002", "sample_title": "Executive Assistant to the CEO", "sample_summary": "负责CEO日程管理，按公司目标排优先级"}
+{"word": "广告系统", "count": 31, "first_seen": "2026-08-28", "sample_event_id": "bd:7054113180980889864", "sample_title": "广告投放算法工程师-巨量千川", "sample_summary": "建设千川自动化投放与诊断提效算法体系"}
+{"word": "数据采集", "count": 30, "first_seen": "2026-08-28", "sample_event_id": "51job:144684768", "sample_title": "某行招AI智能训练师", "sample_summary": "解读客户业务需求，挖掘数据需求"}
+{"word": "JAX", "count": 30, "first_seen": "2026-08-28", "sample_event_id": "51job:169551695", "sample_title": "AI大模型算法工程师", "sample_summary": "参与大模型应用场景技术方案设计"}
+{"word": "图神经网络", "count": 30, "first_seen": "2026-08-28", "sample_event_id": "51job:171527510", "sample_title": "ai工程师", "sample_summary": "智能体平台开发与集成"}
+{"word": "NCCL", "count": 30, "first_seen": "2026-08-28", "sample_event_id": "bd:7293138352869296411", "sample_title": "AML-机器学习系统研发工程师", "sample_summary": "负责火山引擎机器学习训练推理框架研发优化"}
+{"word": "large language models", "count": 30, "first_seen": "2026-08-28", "sample_event_id": "anth:4613568008", "sample_title": "Research Engineer, Machine Learning (Reinforcement Learning) ", "sample_summary": "推进大语言模型强化学习研究"}
+{"word": "product marketing", "count": 30, "first_seen": "2026-08-28", "sample_event_id": "anth:5164551008", "sample_title": "Communications Lead, Enterprise", "sample_summary": "产品发布的企业传播"}
+{"word": "Google Workspace", "count": 30, "first_seen": "2026-08-28", "sample_event_id": "anth:5385764008", "sample_title": "IT Support Engineer", "sample_summary": "处理硬件软件网络账号问题"}
+{"word": "pre-sales", "count": 30, "first_seen": "2026-08-28", "sample_event_id": "anth:5387754008", "sample_title": "Manager, Applied AI Architect, Enterprise Tech", "sample_summary": "招聘并管理售前解决方案架构师团队"}
+{"word": "Agent Bricks", "count": 30, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:5313313002", "sample_title": "Engineering Manager - Backend", "sample_summary": "搭建并管理Databricks平台基础设施与产品"}
+{"word": "data analytics", "count": 30, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:7274488002", "sample_title": "Principal Engineer - Privacy", "sample_summary": "识别并修复基础设施与服务安全缺口"}
+{"word": "基础架构", "count": 29, "first_seen": "2026-08-28", "sample_event_id": "bd:6926389422281099527", "sample_title": "大数据架构师-数据平台", "sample_summary": "负责大数据架构设计及长期规划"}
+{"word": "SSO", "count": 29, "first_seen": "2026-08-28", "sample_event_id": "anth:4979585008", "sample_title": "Product Support Specialist", "sample_summary": "为战略客户提供高触达支持"}
+{"word": "reporting", "count": 29, "first_seen": "2026-08-28", "sample_event_id": "anth:5079133008", "sample_title": "Finance & Strategy, GTM - Korea", "sample_summary": "为GTM团队提供财务战略建议"}
+{"word": "FP&A", "count": 29, "first_seen": "2026-08-28", "sample_event_id": "anth:5163060008", "sample_title": "Finance & Strategy, GTM - Post Sales ", "sample_summary": "提供售后财务策略建议"}
+{"word": "MEDDPICC", "count": 29, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:7841080002", "sample_title": "Enterprise Account Executive - Media", "sample_summary": "获取媒体垂直行业战略新客户"}
+{"word": "reverse ETL", "count": 29, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8451296002", "sample_title": " Lakebase Sales Specialist, Associate Director (Germany)", "sample_summary": "推动Lakebase新营收，识别并达成销售机会"}
+{"word": "email", "count": 29, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8590201002", "sample_title": "Business Development Representative (Italian-speaking)", "sample_summary": "发展基于价值的销售、大数据和AI技能"}
+{"word": "code", "count": 29, "first_seen": "2026-08-28", "sample_event_id": "gh-figma:5615966004", "sample_title": "Enterprise Solutions Consultant (Bengaluru, India)", "sample_summary": "产品演示与客户愿景呈现"}
+{"word": "MEDDIC", "count": 29, "first_seen": "2026-08-28", "sample_event_id": "gh-figma:5753209004", "sample_title": "Account Executive, Enterprise, Mandarin Speaking (Singapore)", "sample_summary": "发展战略客户高层关系"}
+{"word": "HTML5", "count": 29, "first_seen": "2026-08-28", "sample_event_id": "bd:6952741839221065997", "sample_title": "前端开发实习生-基础平台", "sample_summary": "负责前端技术选型和开发"}
+{"word": "CSS3", "count": 29, "first_seen": "2026-08-28", "sample_event_id": "bd:6952741839221065997", "sample_title": "前端开发实习生-基础平台", "sample_summary": "负责前端技术选型和开发"}
+{"word": "TCP/IP", "count": 28, "first_seen": "2026-08-28", "sample_event_id": "51job:160655814", "sample_title": "软件测试助理工程师(RD41)", "sample_summary": "负责云或APP产品的测试验证"}
+{"word": "市场调研", "count": 28, "first_seen": "2026-08-28", "sample_event_id": "51job:168187377", "sample_title": "精算岗-26校招(J78208)", "sample_summary": "车险产品定价及报备"}
+{"word": "Next.js", "count": 28, "first_seen": "2026-08-28", "sample_event_id": "51job:168222397", "sample_title": "AI应用研究员", "sample_summary": "深度理解审计税务内控业务场景，识别可AI化关键节点"}
+{"word": "分布式存储", "count": 28, "first_seen": "2026-08-28", "sample_event_id": "51job:170801473", "sample_title": "检测工程师（新能源部）", "sample_summary": "设计优化数据平台服务器架构"}
+{"word": "GDPR", "count": 28, "first_seen": "2026-08-28", "sample_event_id": "bd:6969410737508731172", "sample_title": "高级安全质量保障工程师-剪映", "sample_summary": "建设影像产品安全质量保障体系"}
+{"word": "ACM", "count": 28, "first_seen": "2026-08-28", "sample_event_id": "bd:7294161789163620617", "sample_title": "AIGC算法专家（图像生成）-Seed", "sample_summary": "研究开发AIGC基础模型技术"}
+{"word": "Ray", "count": 28, "first_seen": "2026-08-28", "sample_event_id": "bd:7436662069099612434", "sample_title": "AI多模态数据湖研发工程师-Data", "sample_summary": "打造大数据+AI云平台产品"}
+{"word": "incident response", "count": 28, "first_seen": "2026-08-28", "sample_event_id": "anth:5063007008", "sample_title": "Staff+ Software Engineer, Cybersecurity Products", "sample_summary": "构建Claude Security用户及后端功能"}
+{"word": "change management", "count": 28, "first_seen": "2026-08-28", "sample_event_id": "anth:5082455008", "sample_title": "Customer Success Manager, Tech", "sample_summary": "与关键决策者建立战略关系"}
+{"word": "engineering", "count": 28, "first_seen": "2026-08-28", "sample_event_id": "anth:5249545008", "sample_title": "Contract Technical Sourcer", "sample_summary": "制定并执行战略寻源计划"}
+{"word": "用户画像", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "boss:01139080a8f5e02c", "sample_title": "AI工程师实习（大数据方向）", "sample_summary": "集成AI模型与大数据平台"}
+{"word": "电商", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "bd:7223638206339090744", "sample_title": "广告基础架构工程师-国际化搜索广告", "sample_summary": "开发广告系统召回/排序/相关性模块"}
+{"word": "HTTP", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "bd:7628927461220796725", "sample_title": "算法工程专家（模型推理平台-国际支付）-Global Payment", "sample_summary": "负责模型推理平台架构设计与性能优化"}
+{"word": "full-stack", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "anth:4572744008", "sample_title": "Staff Software Engineer, iOS", "sample_summary": "架构并实现前沿iOS应用"}
+{"word": "US GAAP", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "anth:4989155008", "sample_title": "Senior Manager, Technical Accounting - M&A and Investments", "sample_summary": "执行企业合并及资产收购技术会计处理"}
+{"word": "personalization", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "anth:5104754008", "sample_title": "Enterprise Account Executive, Retail", "sample_summary": "达成零售大客户销售目标"}
+{"word": "agentic workflows", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "anth:5134895008", "sample_title": "Senior Staff Software Engineer, API", "sample_summary": "制定Claude API多年技术战略"}
+{"word": "demand generation", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "anth:5176201008", "sample_title": "Brand Marketing Lead, Enterprise", "sample_summary": "制定并执行Claude企业品牌战略与定位"}
+{"word": "billing", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "anth:5197551008", "sample_title": "Head of International Order-to-Cash", "sample_summary": "管理国际订单到现金全流程"}
+{"word": "program management", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "anth:5208193008", "sample_title": "Technical Program Manager, Launches  ", "sample_summary": "主导模型与产品发布的端到端项目管理"}
+{"word": "deployment", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "anth:5215130008", "sample_title": "Senior Data Center Capacity Delivery Manager, AUS", "sample_summary": "领导数据中心容量交付项目"}
+{"word": "prototypes", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "anth:5290838008", "sample_title": "Recruiting Solutions Engineer", "sample_summary": "作为招聘组织的技术顾问，嵌入招聘流程"}
+{"word": "optimization", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "anth:5366149008", "sample_title": "Business Systems Analyst, Security Engineering", "sample_summary": "端到端交付技术项目"}
+{"word": "Google Cloud", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "anth:5369181008", "sample_title": "Cloud Partner Enablement Lead", "sample_summary": "构建云合作伙伴赋能战略"}
+{"word": "OKR", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "anth:5385634008", "sample_title": "Manager, Forward Deployed Engineering", "sample_summary": "招聘并培养优秀的 FDE 团队"}
+{"word": "data structures", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:7630152002", "sample_title": "Sr Staff Software Engineer (Backend)", "sample_summary": "主导产品或基础设施方向并推动规模化"}
+{"word": "Outreach", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8074772002", "sample_title": "Manager, Sales Development", "sample_summary": ""}
+{"word": "SDR", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8638648002", "sample_title": "Sr. Event Marketing Manager, Field Programming", "sample_summary": "领导现场活动和销售赋能"}
+{"word": "NodeJS", "count": 27, "first_seen": "2026-08-28", "sample_event_id": "gh-scaleai:4643029005", "sample_title": "Security Engineer, Product Security", "sample_summary": "构建维护AI/ML软件安全工具链"}
+{"word": "多任务学习", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "51job:165020234", "sample_title": "AI算法工程师", "sample_summary": "研究深度学习、统计学习等机器学习算法"}
+{"word": "多模态预训练", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "51job:169551695", "sample_title": "AI大模型算法工程师", "sample_summary": "参与大模型应用场景技术方案设计"}
+{"word": "数据驱动", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "51job:170101146", "sample_title": "AI产品经理", "sample_summary": "负责人工智能产品规划设计与全流程管理"}
+{"word": "pandas", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "51job:173072667", "sample_title": "AI训练师", "sample_summary": "负责专业语料清洗、标注与质量校验"}
+{"word": "TensorRT-LLM", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "boss:03a786db43e1d9b5", "sample_title": "ai工程师", "sample_summary": ""}
+{"word": "Megatron", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "boss:dff114f6dd6084050nJ93NW0FFJY", "sample_title": "多模态 / Omni 大模型工程师", "sample_summary": "语音识别场景化定制与字错率优化"}
+{"word": "Query分析", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "bd:6704444346491472141", "sample_title": "搜索算法工程师-Data", "sample_summary": "探索前沿NLP技术并应用深度学习"}
+{"word": "A/B实验", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "bd:6795821175751575815", "sample_title": "高级数据分析师—今日头条", "sample_summary": "负责今日头条业务数据分析"}
+{"word": "ClickHouse", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "bd:6926394601410922759", "sample_title": "大数据开发专家-国际化", "sample_summary": "负责离线与实时数据仓库构建"}
+{"word": "内容理解", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "bd:7347606537898330377", "sample_title": "多模态智能算法工程师/专家-智能创作", "sample_summary": "研发多模态智能生成与编辑算法"}
+{"word": "意图识别", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "bd:7473064938787244306", "sample_title": "大语言模型AI搜索Agent算法工程师-豆包大模型", "sample_summary": "构建LLM搜索总结Agent系统"}
+{"word": "用户调研", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "ali:100031880001", "sample_title": "阿里控股-AI产品经理-HR域-CPO产品", "sample_summary": "负责HR域AI产品规划与设计"}
+{"word": "Jira", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "ali:100034480001", "sample_title": "晓天衡宇-AI数据标注项目管理-具身智能方向", "sample_summary": "负责具身智能数据采集与标注项目全流程管理"}
+{"word": "SAML", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "anth:4979585008", "sample_title": "Product Support Specialist", "sample_summary": "为战略客户提供高触达支持"}
+{"word": "post-training", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "anth:5112018008", "sample_title": "Research Engineer, Production Model Post-Training", "sample_summary": "实现并优化前沿模型的后训练技术"}
+{"word": "Prometheus", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "ali:100018660009", "sample_title": "基础设施与稳定性工程-Agent Infra 工程师-AIOps&AI可观测", "sample_summary": "主导AI基础设施核心系统设计与开发"}
+{"word": "identity", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "anth:5226540008", "sample_title": "Strategic Partner Development, Product Partnerships - Cybersecurity", "sample_summary": "研究并建立安全生态系统关键战略合作"}
+{"word": "privacy", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "anth:5286008008", "sample_title": "Life Sciences Counsel", "sample_summary": "为生命科学研究团队提供战略咨询"}
+{"word": "B2B", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "anth:5358118008", "sample_title": "International Indirect Tax, VAT/GST", "sample_summary": "提供新品发布与定价的VAT/GST税务咨询"}
+{"word": "Dev Mode", "count": 26, "first_seen": "2026-08-28", "sample_event_id": "gh-figma:5551697004", "sample_title": "Software Engineer - AI Product (London, United Kingdom)", "sample_summary": "构建Dev Mode、MCP工具与Make等协作产品"}
+{"word": "Codex", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "51job:172348483", "sample_title": "Agent开发实习生-中国交易与广告", "sample_summary": "使用AI Coding工具全栈开发与功能迭代"}
+{"word": "A/B测试", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "51job:173072667", "sample_title": "AI训练师", "sample_summary": "负责专业语料清洗、标注与质量校验"}
+{"word": "监控", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "51job:173233763", "sample_title": "研发管培生", "sample_summary": "负责公司电脑、服务器及网络全流程运维"}
+{"word": "NER", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "bd:6704444346491472141", "sample_title": "搜索算法工程师-Data", "sample_summary": "探索前沿NLP技术并应用深度学习"}
+{"word": "Iceberg", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "bd:6993206150566480141", "sample_title": "大数据研发高级工程师/专家-AI应用与创新", "sample_summary": "建设数据工程、数仓及数据平台"}
+{"word": "QA", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "ali:100024040001", "sample_title": "数据技术及产品部 AI Data-RL Data算法工程师-RL Instance构建方向", "sample_summary": "分析主流Benchmark确定RL数据范围与优先级"}
+{"word": "IAM", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "anth:4887959008", "sample_title": "Senior Software Security Engineer", "sample_summary": "构建维护身份与密钥管理系统"}
+{"word": "FedRAMP", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "anth:4980335008", "sample_title": "Engineering Manager, GRC Platform", "sample_summary": "领导GRC团队，建立治理风险合规流程与架构"}
+{"word": "Customer Success", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "anth:4986159008", "sample_title": "Customer Success Manager, GSI", "sample_summary": "与客户决策者建立战略合作关系"}
+{"word": "InfiniBand", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "anth:5101169008", "sample_title": "Staff Software Engineer, AI Reliability Engineering", "sample_summary": "制定大模型服务SLO"}
+{"word": "HPC", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "anth:4926242008", "sample_title": "Software Engineer, ML Networking", "sample_summary": "编写维护加速器与高速网络间接口软件"}
+{"word": "reference architectures", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "anth:5222908008", "sample_title": "Partner Solutions Architect, Applied AI", "sample_summary": "与GSI及云伙伴建立技术合作关系"}
+{"word": "CMS", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "anth:5287926008", "sample_title": "Manager, Web Engineering ", "sample_summary": "管理并发展web工程团队"}
+{"word": "Greenhouse", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "anth:5350448008", "sample_title": "Technical Recruiter, Security ", "sample_summary": "负责安全部门职位全周期招聘"}
+{"word": "marketing", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "anth:5391184008", "sample_title": "AWS GTM Partnership Lead, Global System Integrators", "sample_summary": "制定系统集成商AWS合作GTM战略"}
+{"word": "Grafana", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "gh-duolingo:8584012002", "sample_title": "Senior Software Engineer, Backend", "sample_summary": "与产品设计协作开发软件项目"}
+{"word": "Enterprise", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "gh-figma:5620034004", "sample_title": "Manager, Strategic Sales", "sample_summary": "领导北美战略客户团队"}
+{"word": "cold outreach", "count": 25, "first_seen": "2026-08-28", "sample_event_id": "gh-figma:5832782004", "sample_title": "Business Recruiter (São Paulo, Brazil)", "sample_summary": "管理业务组织（销售为主）的全周期招聘流程"}
+{"word": "CNN", "count": 24, "first_seen": "2026-08-28", "sample_event_id": "51job:151878727", "sample_title": "图像算法实习生", "sample_summary": "设计实现图像处理、识别、目标检测算法"}
+{"word": "Office", "count": 24, "first_seen": "2026-08-28", "sample_event_id": "51job:170387934", "sample_title": "销售支持岗（产品经理方向）(J10023)", "sample_summary": "第三方平台中后台产品规划与迭代"}
+{"word": "异常检测", "count": 24, "first_seen": "2026-08-28", "sample_event_id": "51job:170486111", "sample_title": "AI算法工程师（产业大数据方向）", "sample_summary": "负责产业大数据深度分析与挖掘"}
+{"word": "Qwen", "count": 24, "first_seen": "2026-08-28", "sample_event_id": "51job:171425075", "sample_title": "AI应用官", "sample_summary": "构建企业级智能体应用"}
+{"word": "粗排", "count": 24, "first_seen": "2026-08-28", "sample_event_id": "bd:7306445008994634034", "sample_title": "搜索算法专家-国际化Ranking方向", "sample_summary": "优化国际化短视频搜索算法，覆盖召回至混排全链路"}
+{"word": "架构", "count": 24, "first_seen": "2026-08-28", "sample_event_id": "anth:4938436008", "sample_title": "Research Engineer, Pretraining Scaling - London", "sample_summary": "负责生产预训练管道关键环节"}
+{"word": "SOC 2", "count": 24, "first_seen": "2026-08-28", "sample_event_id": "anth:4980335008", "sample_title": "Engineering Manager, GRC Platform", "sample_summary": "领导GRC团队，建立治理风险合规流程与架构"}
+{"word": "financial modeling", "count": 24, "first_seen": "2026-08-28", "sample_event_id": "anth:5079133008", "sample_title": "Finance & Strategy, GTM - Korea", "sample_summary": "为GTM团队提供财务战略建议"}
+{"word": "ARR", "count": 24, "first_seen": "2026-08-28", "sample_event_id": "anth:5082402008", "sample_title": "Senior Partner Account Manager –Global Systems Integrator Alliances", "sample_summary": "制定并执行GSI多年联合业务计划"}
+{"word": "reliability", "count": 24, "first_seen": "2026-08-28", "sample_event_id": "anth:5101169008", "sample_title": "Staff Software Engineer, AI Reliability Engineering", "sample_summary": "制定大模型服务SLO"}
+{"word": "Legal", "count": 24, "first_seen": "2026-08-28", "sample_event_id": "anth:5153377008", "sample_title": "Manager, Account Executive - Strategic Sales", "sample_summary": "招聘、辅导和保留战略客户经理"}
+{"word": "high-fidelity visuals", "count": 24, "first_seen": "2026-08-28", "sample_event_id": "gh-figma:5711595004", "sample_title": "Product Designer, Growth & Monetization", "sample_summary": "制定产品方向战略与决策"}
+{"word": "targeting", "count": 24, "first_seen": "2026-08-28", "sample_event_id": "gh-pinterest:6121551", "sample_title": "Sr. Machine Learning Engineer, Monetization Engineering", "sample_summary": "构建深度学习个性化技术"}
+{"word": "PR", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "51job:172977486", "sample_title": "资深全栈工程师（AI 原生 B2B 平台 / 工程 Owner）", "sample_summary": "转化架构为执行计划，打通全栈"}
+{"word": "prompt engineering", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "51job:173143106", "sample_title": "AI Engineer", "sample_summary": "研究前沿AI与机器学习技术"}
+{"word": "GitHub", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "51job:173381724", "sample_title": "AI Native 全栈工程师", "sample_summary": "将AI能力做进终端产品"}
+{"word": "搜索算法", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "boss:08f44d875c2470c703B53di8FFJQ", "sample_title": "算法工程师（接受无经验 双休 15薪 大厂）", "sample_summary": "设计数据算法建模解决方案"}
+{"word": "索引压缩", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "bd:6704444346491472141", "sample_title": "搜索算法工程师-Data", "sample_summary": "探索前沿NLP技术并应用深度学习"}
+{"word": "AAAI", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "ali:100004083014", "sample_title": "AI创新事业部-AI Agent研发工程师-AI Coding方向", "sample_summary": "设计开发AI Agent自主编程代理系统"}
+{"word": "Node", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "ali:100031300008", "sample_title": "企业智能事业部-AI研发工程师-杭州", "sample_summary": "参与Qwen模型反馈与运营产品研发及架构设计"}
+{"word": "training", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "anth:4741102008", "sample_title": "Engineering Manager, Inference", "sample_summary": "领导推理与训练系统性能提升"}
+{"word": "debugging", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "anth:5065894008", "sample_title": "Staff+ Software Engineer, Claude App Infrastructure", "sample_summary": "设计构建沙箱计算环境，安全执行代码与访问外部服务"}
+{"word": "research", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "anth:5324349008", "sample_title": "Product Manager, Research (Code) ", "sample_summary": "领导前沿技术产品愿景与路线图"}
+{"word": "product management", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "anth:5324349008", "sample_title": "Product Manager, Research (Code) ", "sample_summary": "领导前沿技术产品愿景与路线图"}
+{"word": "macOS", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "anth:5370555008", "sample_title": "IT Support Engineer, Executive Support", "sample_summary": "建立并运营高管支持服务通道"}
+{"word": "testing", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "anth:5370615008", "sample_title": "Technical Documentation and Content Engineer, Claude Docs", "sample_summary": "统一管理Claude Docs信息架构与编辑标准"}
+{"word": "sales enablement", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "anth:5385651008", "sample_title": "Product Marketing Manager, Knowledge Work - Core Products", "sample_summary": "定义并更新知识工作产品定位与信息架构"}
+{"word": "AI models", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "anth:5387083008", "sample_title": "Staff Software Engineer, Infrastructure (Distributed Systems)", "sample_summary": "独立主导复杂跨月基础设施项目"}
+{"word": "streaming", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "anth:5395767008", "sample_title": "Staff+ Software Engineer, Claude Managed Agents", "sample_summary": "设计和运营持久会话存储、沙箱编排、流式处理、调度和多租户隔离等基础设施"}
+{"word": "SCIM", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "anth:5398227008", "sample_title": "Staff+ Software Engineer, Auth & Identity", "sample_summary": "设计并维护认证、授权和身份平台"}
+{"word": "public cloud", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:6117756002", "sample_title": "Solutions Architect - Communications, Media, Entertainment & Gaming ", "sample_summary": "制定客户参与策略并与客户主管合作"}
+{"word": "product demonstrations", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8431931002", "sample_title": "Sr. Manager, Field Engineering - Public Sector (Intel, Navy, Air Force)", "sample_summary": "领导公有部门解决方案架构师团队"}
+{"word": "creative", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "gh-pinterest:7678040", "sample_title": "Sr Client Account Manager, Amazon", "sample_summary": "管理并增长客户账户，优化广告活动"}
+{"word": "CDN", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "gh-pinterest:7990090", "sample_title": "Staff Software Engineer, Edge", "sample_summary": "构建边缘系统，结合自研与开源"}
+{"word": "招聘", "count": 23, "first_seen": "2026-08-28", "sample_event_id": "mt:4451174575", "sample_title": "HRBP（外派巴西）", "sample_summary": "制定组织与人力规划"}
+{"word": "指标体系", "count": 22, "first_seen": "2026-08-28", "sample_event_id": "51job:170686318", "sample_title": "数据分析-26校招(J78210)", "sample_summary": "优化投诉指标体系与行业对标分析"}
+{"word": "分类", "count": 22, "first_seen": "2026-08-28", "sample_event_id": "51job:172428511", "sample_title": "ai工程师", "sample_summary": "参与需求拆解与算法选型"}
+{"word": "vector databases", "count": 22, "first_seen": "2026-08-28", "sample_event_id": "51job:173143106", "sample_title": "AI Engineer", "sample_summary": "研究前沿AI与机器学习技术"}
+{"word": "NIPS", "count": 22, "first_seen": "2026-08-28", "sample_event_id": "boss:bb02191dad38ed980nF539y4F1BQ", "sample_title": "AI rag（量化大厂，北上深都看）", "sample_summary": "负责AI应用知识库内容处理与检索架构设计开发"}
+{"word": "音视频", "count": 22, "first_seen": "2026-08-28", "sample_event_id": "boss:df87bdf4925872a20nF539-4ElJU", "sample_title": "多模态大模型评测工程师【音视频方向】", "sample_summary": "音视频生成模型交付质量管控"}
+{"word": "ranking", "count": 22, "first_seen": "2026-08-28", "sample_event_id": "anth:4017331008", "sample_title": "Research Engineer, Knowledge Team", "sample_summary": "设计并实现全新信息架构策略"}
+{"word": "evaluation frameworks", "count": 22, "first_seen": "2026-08-28", "sample_event_id": "anth:4593216008", "sample_title": "Staff Research Engineer, Discovery Team", "sample_summary": "识别并移除通往科学AGI的瓶颈"}
+{"word": "ASC 606", "count": 22, "first_seen": "2026-08-28", "sample_event_id": "anth:5076754008", "sample_title": "Director, Revenue Accounting", "sample_summary": "管理每日收入会计运营及交易处理"}
+{"word": "data modeling", "count": 22, "first_seen": "2026-08-28", "sample_event_id": "anth:5125387008", "sample_title": "Data Engineering Manager, Product", "sample_summary": "搭建并扩展产品分析工程团队"}
+{"word": "scalability", "count": 22, "first_seen": "2026-08-28", "sample_event_id": "anth:5153924008", "sample_title": "Product Manager, Multi-Cloud Growth - Google", "sample_summary": "深入理解企业开发者需求"}
+{"word": "QBR", "count": 22, "first_seen": "2026-08-28", "sample_event_id": "anth:5383204008", "sample_title": "Manager, Customer Success - Beneficial Deployments", "sample_summary": "管理4-8名客户成功经理团队"}
+{"word": "Service-Oriented Architectures", "count": 22, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:4799387002", "sample_title": "Senior Software Engineer - Backend", "sample_summary": "构建Databricks平台的后端基础设施与产品"}
+{"word": "scripting", "count": 22, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8589172002", "sample_title": "Sr Technical Solutions Engineering", "sample_summary": "保障多云数据围栏与生成式AI软件可靠性"}
+{"word": "MEDDICC", "count": 22, "first_seen": "2026-08-28", "sample_event_id": "gh-figma:5364702004", "sample_title": "Account Executive, Emerging Enterprise (Berlin, Germany)", "sample_summary": "建立强大销售管道并超额完成销售目标"}
+{"word": "Unity", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "51job:169013852", "sample_title": "脑科学与人工智能应用工程师招聘", "sample_summary": "参与AI美育教学平台系统架构设计"}
+{"word": "Caffe", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "51job:169817361", "sample_title": "AI工程师", "sample_summary": "AI需求分析与架构设计"}
+{"word": "DSP", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "51job:170838151", "sample_title": "图像算法工程师", "sample_summary": "图像视频算法研发与代码编写"}
+{"word": "Tool Use", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "51job:170985731", "sample_title": "AI算法工程师", "sample_summary": "研究Agent核心算法并落地"}
+{"word": "Elasticsearch", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "51job:171527510", "sample_title": "ai工程师", "sample_summary": "智能体平台开发与集成"}
+{"word": "销售", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "51job:172267735", "sample_title": "产品经理", "sample_summary": "分析行业政策、市场趋势及竞品动态"}
+{"word": "音频", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "51job:172514227", "sample_title": "AI训练师（接受小白）双休", "sample_summary": "AI视觉生成视频美感质检"}
+{"word": "对话问答", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "51job:172791400", "sample_title": "AI大模型算法工程师", "sample_summary": "开发优化工业大模型"}
+{"word": "AutoML", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "51job:173069855", "sample_title": "AI应用工程师 实习生", "sample_summary": "AI场景挖掘与规划"}
+{"word": "ES6", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "boss:8702051d95d4a9c80nR93N60GVJT", "sample_title": "算法工程师", "sample_summary": "XRT软件研发"}
+{"word": "TVM", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "bd:7293138352869296411", "sample_title": "AML-机器学习系统研发工程师", "sample_summary": "负责火山引擎机器学习训练推理框架研发优化"}
+{"word": "数据平台", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "bd:7594826319935588661", "sample_title": "AI大模型应用开发专家-飞书多维表格", "sample_summary": "设计大模型应用架构"}
+{"word": "transformers", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "anth:4741102008", "sample_title": "Engineering Manager, Inference", "sample_summary": "领导推理与训练系统性能提升"}
+{"word": "procurement", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "anth:4959329008", "sample_title": "Enterprise Account Executive, State & Local Sales", "sample_summary": "开拓州和地方政府新客户并推动收入增长"}
+{"word": "playbooks", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "anth:5013743008", "sample_title": "Technical Program Manager, Data Center Infrastructure", "sample_summary": "管理并发展DC基础设施TPM团队"}
+{"word": "causal inference", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "anth:5018472008", "sample_title": "Research Economist, Economic Research", "sample_summary": "开发与扩展Anthropic经济指数"}
+{"word": "interaction design", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "anth:5097186008", "sample_title": "Full Stack Engineer, Education Labs", "sample_summary": "交付功能帮助用户提升 AI 技能，以能力增长衡量成功"}
+{"word": "retrieval", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "anth:5134895008", "sample_title": "Senior Staff Software Engineer, API", "sample_summary": "制定Claude API多年技术战略"}
+{"word": "Finance", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "anth:5138044008", "sample_title": "Technical Program Manager, Compute ", "sample_summary": "主导算力生命周期关键项目并协调多团队执行"}
+{"word": "telemetry", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "anth:5224564008", "sample_title": "Performance Engineer, Inference Systems", "sample_summary": "跨层性能调查分析吞吐、延迟与可靠性差距"}
+{"word": "M&A", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "anth:5358146008", "sample_title": "Corporate Development Integration Lead", "sample_summary": "主导签署后整合全流程"}
+{"word": "field marketing", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "anth:5391995008", "sample_title": "Enterprise Integrated Campaign Manager", "sample_summary": "设计并领导跨客户细分整合营销活动"}
+{"word": "内容运营", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "bd:7620352265728248117", "sample_title": "大客户销售（丽人）-抖音生活服务", "sample_summary": "负责丽人行业类目运营，整合资源推动GMV增长"}
+{"word": "整合营销", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "bd:7620352265728248117", "sample_title": "大客户销售（丽人）-抖音生活服务", "sample_summary": "负责丽人行业类目运营，整合资源推动GMV增长"}
+{"word": "ML/AI models", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8362737002", "sample_title": "Sr Forward Deployed Engineer", "sample_summary": "构建并投产客户数据与AI解决方案"}
+{"word": "Okta", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8519350002", "sample_title": "Staff Production Engineer- Public Sector", "sample_summary": "设计自动化IAM及账户生命周期"}
+{"word": "Ironclad", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8564394002", "sample_title": "Legal Counsel, EMEA Commercial", "sample_summary": "与销售团队合作支持客户采用数据AI平台"}
+{"word": "VueJS", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "bd:7126831754384771342", "sample_title": "前端开发工程师-Data", "sample_summary": "前端技术选型与开发"}
+{"word": "AngularJS", "count": 21, "first_seen": "2026-08-28", "sample_event_id": "bd:7126831754384771342", "sample_title": "前端开发工程师-Data", "sample_summary": "前端技术选型与开发"}
+{"word": "视频", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "51job:170838151", "sample_title": "图像算法工程师", "sample_summary": "图像视频算法研发与代码编写"}
+{"word": "Oracle", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "51job:171666434", "sample_title": "数据分析师", "sample_summary": "负责业务数据采集、清洗与整合，建立标准化数据分析模型"}
+{"word": "模型", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "boss:27f6ed6899f1cd97", "sample_title": "应用 AI 工程师", "sample_summary": "将大模型能力转化为可落地产品行为"}
+{"word": "策略", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "bd:6776431203663743243", "sample_title": "资深风控算法工程师", "sample_summary": "负责风控反作弊算法工作"}
+{"word": "ISO 27001", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "bd:7292986521149163802", "sample_title": "安全合规工程师-安全与风控", "sample_summary": "跟进安全法律法规及标准动态"}
+{"word": "图形学", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "bd:7347606537898330377", "sample_title": "多模态智能算法工程师/专家-智能创作", "sample_summary": "研发多模态智能生成与编辑算法"}
+{"word": "数据飞轮", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "bd:7434092652188829990", "sample_title": "大模型数据采标资源BP - AI数据与安全", "sample_summary": "为标注业务匹配供给优质众包人力或供应商"}
+{"word": "仪表盘", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "bd:7537895749070407954", "sample_title": "数据分析师（LATAM）-TikTok直播", "sample_summary": "主导直播运营团队数据分析，提供增长洞察"}
+{"word": "HRBP", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "bd:7628246295920314677", "sample_title": "HRBP-大模型安全群组（北京）", "sample_summary": "支持大模型安全群组，促进人力资源战略实施"}
+{"word": "数据看板", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "bd:7661941684184205621", "sample_title": "音乐模型交付专家-CQC", "sample_summary": "管理AIGC音乐模型标注/评测项目全流程"}
+{"word": "cloud infrastructure", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "anth:4595463008", "sample_title": "Security Software Engineer, Detection & Response Platform", "sample_summary": "构建AI驱动的检测响应平台"}
+{"word": "multi-cloud", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "anth:4887959008", "sample_title": "Senior Software Security Engineer", "sample_summary": "构建维护身份与密钥管理系统"}
+{"word": "Infrastructure", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "anth:4989788008", "sample_title": "Technical Program Manager, Security", "sample_summary": "负责RSP安全就绪端到端项目执行"}
+{"word": "GitHub Actions", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "anth:5073998008", "sample_title": " Staff Software Engineer, Continuous Integration", "sample_summary": "设计高可靠可扩展CI基础设施"}
+{"word": "orchestration", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "anth:5097742008", "sample_title": "Staff Software Engineer, Inference", "sample_summary": "设计构建分布式推理系统"}
+{"word": "events", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "anth:5391995008", "sample_title": "Enterprise Integrated Campaign Manager", "sample_summary": "设计并领导跨客户细分整合营销活动"}
+{"word": "scikit-learn", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:5898477002", "sample_title": "Solutions Architect", "sample_summary": "制定账户策略，推动平台使用增长"}
+{"word": "ISV", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "gh-databricks:8477547002", "sample_title": "Sales Specialist - Lakebase", "sample_summary": "在指定区域内推动Lakebase新收入，识别并达成商机"}
+{"word": "computer vision", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "gh-duolingo:8610345002", "sample_title": "Staff AI Research Engineer ", "sample_summary": "开发训练bandit模型与大规模神经网络模型"}
+{"word": "Gulp", "count": 20, "first_seen": "2026-08-28", "sample_event_id": "bd:7126831754384771342", "sample_title": "前端开发工程师-Data", "sample_summary": "前端技术选型与开发"}

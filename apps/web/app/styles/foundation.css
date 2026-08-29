@@ -433,18 +433,6 @@ input:focus-visible {
   font-size: 11px;
 }
 
-.pending-page {
-  display: grid;
-  min-height: calc(100dvh - 58px);
-  align-content: center;
-  justify-items: center;
-  gap: 24px;
-  padding: 32px;
-}
-.pending-page > div:first-child {
-  text-align: center;
-}
-
 .context-panel,
 .diff-panel,
 .evidence-panel {
@@ -472,7 +460,6 @@ input:focus-visible {
 .diff-toolbar,
 .change-row-topline,
 .change-metrics,
-.diff-footer,
 .evidence-heading {
   display: flex;
   align-items: center;
@@ -486,7 +473,6 @@ input:focus-visible {
   gap: 6px;
 }
 
-.route-label,
 .page-meta,
 .section-heading span,
 .diff-toolbar > div > span,
@@ -497,10 +483,6 @@ input:focus-visible {
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 11px;
-}
-
-.route-label {
-  margin: 0 0 5px;
 }
 
 .title-with-meta,
@@ -717,11 +699,6 @@ h3 {
   gap: 4px;
 }
 
-.filter-tabs {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
 .filter-tab {
   position: relative;
   padding: 5px 8px 7px;
@@ -733,20 +710,6 @@ h3 {
 }
 .filter-tab:hover {
   color: var(--ink);
-}
-.filter-tab-active {
-  color: var(--ink);
-  font-weight: 650;
-}
-.filter-tab-active::after {
-  position: absolute;
-  right: 8px;
-  bottom: 2px;
-  left: 8px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--ink);
-  content: "";
 }
 
 .change-grid {
@@ -919,16 +882,6 @@ h3 {
 .review-action-reject:hover,
 .review-action-reject:focus-visible {
   color: var(--red) !important;
-}
-.diff-footer {
-  min-height: 54px;
-  margin-top: 8px;
-  padding: 10px 20px;
-  border-top: 0;
-  background: var(--paper-soft);
-  color: var(--muted);
-  font-size: 12px;
-  justify-content: flex-end;
 }
 
 .downstream-impact {

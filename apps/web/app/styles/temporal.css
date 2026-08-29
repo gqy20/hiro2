@@ -91,26 +91,6 @@
   }
 }
 
-/* ---------- 时间情报四件套（F-T4.7/4.6/4.8/4.9） ---------- */
-
-.dashboard-temporal-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 20px;
-  margin-top: 12px;
-  background: var(--paper-soft);
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  color: var(--ink);
-  text-decoration: none;
-  transition: border-color 0.15s ease;
-}
-
-.dashboard-temporal-card:hover {
-  border-color: var(--blue);
-}
-
 .dashboard-temporal-card .dashboard-card-label {
   font-size: 13px;
   font-weight: 650;

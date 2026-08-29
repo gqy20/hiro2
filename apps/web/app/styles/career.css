@@ -120,9 +120,7 @@
   margin: 0;
 }
 .career-home-profile-link,
-.career-target-card b,
-.career-progress-card a,
-.career-focus-card a {
+.career-progress-card a {
   display: inline-flex;
   align-items: center;
   gap: 6px;

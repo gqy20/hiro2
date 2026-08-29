@@ -29,8 +29,7 @@
 .diff-toolbar,
 .tasks-workspace-actions,
 .candidate-review-bar,
-.dashboard-jobs,
-.dashboard-activity {
+.dashboard-jobs {
   border-color: var(--line-subtle);
 }
 
@@ -46,7 +45,6 @@
   box-shadow: none;
 }
 
-.dashboard-queue-item,
 .dashboard-job-row,
 .queue-item,
 .candidate-item,
@@ -57,7 +55,6 @@
     border-color 160ms ease;
 }
 
-.dashboard-queue-item:hover,
 .dashboard-job-row:hover,
 .queue-item:hover,
 .candidate-item:hover,
@@ -67,7 +64,6 @@
   border-color: var(--line-strong);
 }
 
-.dashboard-queue-item b,
 .dashboard-job-row b,
 .position-card-actions a:first-child {
   font-weight: 600;

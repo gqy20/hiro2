@@ -111,7 +111,6 @@
 .new-jobs-heading,
 .candidate-item-title,
 .candidate-title-row,
-.candidate-proof,
 .candidate-review-bar {
   display: flex;
   align-items: center;
@@ -126,8 +125,7 @@
   font-size: 22px;
 }
 .new-jobs-heading span,
-.candidate-item > span,
-.candidate-proof span {
+.candidate-item > span {
   color: var(--muted);
   font-size: var(--fs-aux);
   line-height: 1.2;
@@ -272,21 +270,6 @@
 .profile-location {
   margin: 18px 0;
 }
-.profile-counts {
-  display: flex;
-  gap: 14px;
-  margin-bottom: 28px;
-}
-.profile-counts span {
-  display: grid;
-  gap: 4px;
-  color: var(--muted);
-  font-size: 11px;
-}
-.profile-counts b {
-  color: var(--ink);
-  font: 20px/1 var(--font-display);
-}
 .diagnosis-profile h2 {
   margin: 24px 0 10px;
   font-size: 15px;
@@ -330,15 +313,6 @@
 .profile-skill .ant-select {
   width: 100%;
 }
-.recalculate-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 12px;
-  color: var(--muted);
-  font-size: 12px;
-}
 .diagnosis-title-actions {
   display: inline-flex;
   align-items: center;
@@ -352,9 +326,6 @@
 .profile-skill small {
   color: var(--muted);
   font-size: 11px;
-}
-.profile-skill-missing {
-  background: rgba(228, 184, 16, 0.14);
 }
 .project-list {
   display: grid;

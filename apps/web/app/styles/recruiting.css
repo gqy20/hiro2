@@ -72,9 +72,7 @@
   align-items: stretch;
 }
 .dashboard-focus,
-.dashboard-status,
-.dashboard-queue,
-.dashboard-secondary-link {
+.dashboard-status {
   border: 1px solid var(--line);
   background: var(--panel);
   border-radius: 4px;
@@ -98,13 +96,6 @@
   margin: 2px 0 0;
   font-size: 18px;
   line-height: 1.25;
-}
-.dashboard-kicker {
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 .dashboard-focus p {
   max-width: 560px;
@@ -164,87 +155,12 @@
   margin: 0;
   font-family: var(--font-mono);
 }
-.dashboard-queue {
-  margin-top: 0;
-  padding: 18px 20px;
-  border-left: 0;
-  border-right: 0;
-  background: transparent;
-}
 .dashboard-queue .dashboard-section-heading {
   align-items: center;
 }
 .dashboard-section-link {
   color: var(--blue);
   font-size: 12px;
-}
-.dashboard-queue-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin: 18px 0 0;
-  padding: 0;
-  list-style: none;
-}
-.dashboard-queue-item {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 10px;
-  min-height: 72px;
-  padding: 14px;
-  border: 1px solid var(--dashboard-line);
-  color: var(--ink);
-  text-decoration: none;
-}
-.dashboard-queue-item:hover {
-  border-color: var(--blue);
-}
-.dashboard-queue-item span {
-  min-width: 0;
-}
-.dashboard-queue-item strong,
-.dashboard-queue-item small {
-  display: block;
-}
-.dashboard-queue-item strong {
-  font-size: 13px;
-}
-.dashboard-queue-item small {
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: 11px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.dashboard-queue-item b {
-  color: var(--blue);
-  font-size: 20px;
-}
-.dashboard-secondary-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 16px;
-  padding: 16px 24px;
-  color: var(--ink);
-  text-decoration: none;
-}
-.dashboard-secondary-link span strong,
-.dashboard-secondary-link span small {
-  display: block;
-}
-.dashboard-secondary-link span small {
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: 11px;
-}
-.dashboard-secondary-link b {
-  color: var(--blue);
-  font-size: 12px;
-  white-space: nowrap;
 }
 .dashboard-jobs {
   margin-top: 0;
@@ -386,63 +302,6 @@
     padding-inline: 0;
   }
 }
-.dashboard-activity {
-  margin-top: 0;
-  padding: 18px 20px;
-  border-top: 1px solid var(--line);
-  min-height: 0;
-}
-.dashboard-activity ul {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin: 16px 0 0;
-  padding: 0;
-  list-style: none;
-}
-.dashboard-activity li {
-  padding-left: 12px;
-  border-left: 2px solid var(--line);
-}
-.dashboard-activity li span,
-.dashboard-activity li small {
-  display: block;
-}
-.dashboard-activity li span {
-  font-size: 12px;
-  font-weight: 650;
-}
-.dashboard-activity li small {
-  margin-top: 5px;
-  color: var(--muted);
-  font-size: 11px;
-}
-.dashboard-overview-strip {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border: 0;
-  background: var(--dashboard-soft);
-}
-.dashboard-overview-strip div {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 16px 20px;
-  border-right: 1px solid var(--dashboard-line);
-}
-.dashboard-overview-strip div:last-child {
-  border-right: 0;
-}
-.dashboard-overview-strip strong {
-  color: var(--ink);
-  font: 500 32px/1 var(--font-display);
-  font-variant-numeric: tabular-nums;
-}
-.dashboard-overview-strip span {
-  color: var(--muted);
-  font-size: 11px;
-}
 .dashboard-insights-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.8fr) minmax(260px, 0.7fr);
@@ -572,13 +431,11 @@
 
 /* 业务辅助文字的最低可读字号；技术标识仍保持轻量但不低于 11px。 */
 .page-meta,
-.route-label,
 .section-heading span,
 .change-column-heading span,
 .change-metrics,
 .context-summary span,
 .version-summary dt,
-.dashboard-queue-item small,
 .dashboard-job-row span small,
 .dashboard-attention span,
 .position-card-main p,
@@ -598,11 +455,7 @@
   font-size: 14px;
 }
 
-.dashboard-kicker {
-  font-size: 14px;
-}
 .graph-node-meta,
-.skill-node-detail-id,
 .review-progress-step > span:last-child {
   font-size: 13px;
 }
@@ -773,25 +626,19 @@
 .dashboard-status,
 .dashboard-trend,
 .dashboard-attention,
-.dashboard-jobs,
-.dashboard-activity,
-.dashboard-temporal-card {
+.dashboard-jobs {
   border-color: transparent;
   border-radius: 10px;
   background: var(--surface-raised);
   box-shadow: 0 1px 0 rgba(80, 70, 55, 0.04);
 }
-.dashboard-queue-item,
 .dashboard-job-row,
-.dashboard-attention,
-.dashboard-temporal-card {
+.dashboard-attention {
   transition:
     background-color 0.18s ease,
     transform 0.18s ease;
 }
-.dashboard-queue-item:hover,
-.dashboard-job-row:hover,
-.dashboard-temporal-card:hover {
+.dashboard-job-row:hover {
   transform: translateY(-1px);
 }
 

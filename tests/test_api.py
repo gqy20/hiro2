@@ -75,3 +75,38 @@ def test_publish_job_idempotent_and_unknown_404() -> None:
     # 未知草稿 404
     missing = client.post("/api/v1/jobs/unknown/versions/v9/publish", json={})
     assert missing.status_code == 404
+
+
+def test_temporal_dataset_contract_camel_top_level() -> None:
+    """前端契约：/temporal/dataset 顶层键 camelCase，内层对象 snake_case。"""
+    response = TestClient(app).get("/api/v1/temporal/dataset")
+    assert response.status_code == 200
+    body = response.json()
+    assert "backtestRecords" in body
+    assert "backtest_records" not in body
+    for key in ("forecasts", "signals", "suggestions", "backtests"):
+        assert key in body, f"缺少顶层键 {key}"
+    if body["suggestions"]:
+        first = body["suggestions"][0]
+        # 前端渲染硬依赖：缺 evidence_ids 会导致建议页崩溃
+        assert "evidence_ids" in first
+        assert "suggestion_id" in first
+        assert "review_status" in first
+    if body["backtestRecords"]:
+        assert "skill_id" in body["backtestRecords"][0]
+
+
+def test_temporal_suggestion_review_unknown_id_404() -> None:
+    response = TestClient(app).post(
+        "/api/v1/temporal/suggestions/sug-nonexistent/review",
+        json={"decision": "accepted"},
+    )
+    assert response.status_code == 404
+
+
+def test_task_decision_unknown_id_404() -> None:
+    response = TestClient(app).post(
+        "/api/v1/tasks/task-nonexistent/decision",
+        json={"decision": "ACCEPT"},
+    )
+    assert response.status_code == 404

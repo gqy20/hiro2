@@ -47,7 +47,8 @@ export function CareerHome({ fixture }: { fixture: DiagnosisFixture }) {
       <header className="career-home-heading">
         <div>
           <h1 id="career-home-title">
-            {fixture.job.title} <span>{fixture.job.version}</span>
+            {fixture.job.title}{" "}
+            <span>{fixture.job.version.split("-").pop()}</span>
           </h1>
           <p>已发布岗位标准 · 基于你的画像生成成长计划。</p>
         </div>

@@ -45,7 +45,7 @@ export default async function DashboardPage() {
         <header className="page-heading">
           <div className="dashboard-title-row">
             <div>
-              <h1 id="dashboard-title">招聘总览</h1>
+              <h1 id="dashboard-title">工作台</h1>
             </div>
             <div className="dashboard-title-meta">
               <span className="dashboard-space-label">招聘工作区</span>

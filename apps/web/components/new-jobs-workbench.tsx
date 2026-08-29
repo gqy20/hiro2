@@ -147,7 +147,7 @@ export function NewJobsWorkbench({
           <aside className="candidate-panel" aria-label="新岗位候选">
             <div className="new-jobs-heading">
               <div>
-                <h1>新岗位</h1>
+                <h1>岗位发现</h1>
                 <span>{`${filtered.length} 个候选`}</span>
               </div>
             </div>

@@ -117,6 +117,9 @@ build:
 
 check: lint type test
 
+smoke:
+	$(UV) run scripts/smoke.py
+
 verify: fmt-check check
 
 ci: verify precommit

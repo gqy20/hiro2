@@ -170,7 +170,7 @@ export function SkillsWorkbench({
         <section className="skill-workbench" aria-labelledby="skills-title">
           <header className="page-heading">
             <div className="title-with-meta">
-              <h1 id="skills-title">技能图谱</h1>
+              <h1 id="skills-title">能力全景</h1>
               <span className="page-meta">
                 {`${fixture.context.jobTitle} · ${fixture.context.baselineVersion} → ${fixture.context.targetVersion}`}
               </span>

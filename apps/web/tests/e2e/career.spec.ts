@@ -55,3 +55,25 @@ test("career path page renders gaps with learn-practice-evaluate-certify steps",
     page.locator(".career-path-steps li").first(),
   ).toBeVisible();
 });
+
+test("career jobs and path render empty and error variants", async ({
+  page,
+}) => {
+  await page.goto("/career/jobs?state=empty");
+  await expect(page.getByText("暂无已发布岗位版本。")).toBeVisible();
+
+  await page.goto("/career/jobs?state=error");
+  await expect(
+    page.getByText("岗位数据暂时不可用，请稍后重试。"),
+  ).toBeVisible();
+
+  await page.goto("/career/path?state=empty");
+  await expect(
+    page.getByText("选择目标岗位并完成诊断后生成学习路径。"),
+  ).toBeVisible();
+
+  await page.goto("/career/path?state=error");
+  await expect(
+    page.getByText("学习路径数据暂时不可用，请稍后重试。"),
+  ).toBeVisible();
+});

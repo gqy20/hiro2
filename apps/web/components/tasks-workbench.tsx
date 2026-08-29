@@ -142,7 +142,7 @@ export function TasksWorkbench({
       <div className="workflow-page">
         <WorkflowContext
           eyebrow="审核工作区"
-          title="我的任务"
+          title="审核任务"
           stage="处理待审核事项"
           next="领取一项任务"
           href="#task-workspace"
@@ -153,7 +153,7 @@ export function TasksWorkbench({
           aria-labelledby="tasks-title"
         >
           <header className="page-heading">
-            <h1 id="tasks-title">我的任务</h1>
+            <h1 id="tasks-title">审核任务</h1>
             <p>
               {`${tasks.length} 条任务 · F-T4.10 任务列表 + F-T4.11 审核工作区`}
             </p>

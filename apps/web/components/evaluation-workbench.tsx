@@ -40,7 +40,7 @@ export function EvaluationWorkbench({
       <div className="workflow-page">
         <WorkflowContext
           eyebrow="审核工作区"
-          title="评测中心"
+          title="评测与质量"
           stage="复盘系统判断"
           next="打开错误案例"
         />
@@ -50,7 +50,7 @@ export function EvaluationWorkbench({
         >
           <header className="page-heading">
             <div className="title-with-meta">
-              <h1 id="evaluation-title">评测中心</h1>
+              <h1 id="evaluation-title">评测与质量</h1>
               <span className="page-meta">
                 {`${currentRun.id} · ${currentRun.algorithmVersion} · ${currentRun.datasetVersion}`}
               </span>

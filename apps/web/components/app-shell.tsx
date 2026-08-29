@@ -41,6 +41,7 @@ const CAREER_ONLY_HREFS = new Set([
   "/career",
   "/career/jobs",
   "/career/path",
+  "/career/resume",
   "/profile",
 ]);
 const CAREER_NAV_HREFS = new Set([...CAREER_ONLY_HREFS, "/diagnosis"]);

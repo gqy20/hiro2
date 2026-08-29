@@ -32,12 +32,12 @@ test("career home renders ready state and empty state", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: "开始你的成长诊断", level: 1 }),
   ).toBeVisible();
-  await expect(
-    page.locator(".career-next-action strong"),
-  ).toContainText("选择目标岗位");
-  await expect(
-    page.locator(".career-progress-card strong"),
-  ).toContainText("上传简历开始诊断");
+  await expect(page.locator(".career-next-action strong")).toContainText(
+    "选择目标岗位",
+  );
+  await expect(page.locator(".career-progress-card strong")).toContainText(
+    "上传简历开始诊断",
+  );
 });
 
 test("career path page renders gaps with learn-practice-evaluate-certify steps", async ({
@@ -51,9 +51,7 @@ test("career path page renders gaps with learn-practice-evaluate-certify steps",
   const items = page.locator(".career-path-item");
   await expect(items.first()).toBeVisible();
   // 学练赛证：每项缺口至少渲染「学」段
-  await expect(
-    page.locator(".career-path-steps li").first(),
-  ).toBeVisible();
+  await expect(page.locator(".career-path-steps li").first()).toBeVisible();
 });
 
 test("career jobs and path render empty and error variants", async ({

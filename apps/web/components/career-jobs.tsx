@@ -45,7 +45,9 @@ export function CareerJobs({ view }: { view: PublishedJobsView }) {
                 <h2>{job.title}</h2>
                 <Tag>{job.version_id}</Tag>
               </header>
-              <p className="career-job-duty">{job.duty || "职责说明整理中。"}</p>
+              <p className="career-job-duty">
+                {job.duty || "职责说明整理中。"}
+              </p>
               <dl className="career-job-meta">
                 <div>
                   <dt>必备能力</dt>

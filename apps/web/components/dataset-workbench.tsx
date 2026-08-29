@@ -56,88 +56,88 @@ export function DatasetWorkbench({
 
       {embedded ? null : (
         <div className="dataset-summary" aria-label="数据资产总览">
-        <div>
-          <span>数据集</span>
-          <strong>{overview.total_datasets}</strong>
-          <small>个数据集</small>
-        </div>
-        <div>
-          <span>记录总量</span>
-          <strong>{formatNumber(overview.total_records)}</strong>
-          <small>条记录</small>
-        </div>
-        <div>
-          <span>可用数据集</span>
-          <strong>{overview.ready_datasets}</strong>
-          <small>个已就绪</small>
-        </div>
-        <div>
-          <span>待处理</span>
-          <strong>{formatNumber(overview.pending_records)}</strong>
-          <small>条待处理记录</small>
-        </div>
+          <div>
+            <span>数据集</span>
+            <strong>{overview.total_datasets}</strong>
+            <small>个数据集</small>
+          </div>
+          <div>
+            <span>记录总量</span>
+            <strong>{formatNumber(overview.total_records)}</strong>
+            <small>条记录</small>
+          </div>
+          <div>
+            <span>可用数据集</span>
+            <strong>{overview.ready_datasets}</strong>
+            <small>个已就绪</small>
+          </div>
+          <div>
+            <span>待处理</span>
+            <strong>{formatNumber(overview.pending_records)}</strong>
+            <small>条待处理记录</small>
+          </div>
         </div>
       )}
 
       {embedded ? null : (
-      <div className="dataset-main-grid">
-        <section
-          className="dataset-panel dataset-chart-panel"
-          aria-labelledby="dataset-chart-title"
-        >
-          <div className="dataset-panel-heading">
-            <h2 id="dataset-chart-title">数据规模</h2>
-            <span>按数据集</span>
-          </div>
-          <div className="dataset-bars">
-            {overview.datasets.map((item) => (
-              <button
-                className="dataset-bar-row"
-                key={item.id}
-                onClick={() => setSelected(item)}
-                type="button"
-              >
-                <span className="dataset-bar-label">{item.name}</span>
-                <span className="dataset-bar-track">
-                  <i
-                    style={{
-                      width: `${Math.max((item.records / maxRecords) * 100, 2)}%`,
-                    }}
-                  />
-                </span>
-                <strong>{formatNumber(item.records)}</strong>
-              </button>
-            ))}
-          </div>
-        </section>
+        <div className="dataset-main-grid">
+          <section
+            className="dataset-panel dataset-chart-panel"
+            aria-labelledby="dataset-chart-title"
+          >
+            <div className="dataset-panel-heading">
+              <h2 id="dataset-chart-title">数据规模</h2>
+              <span>按数据集</span>
+            </div>
+            <div className="dataset-bars">
+              {overview.datasets.map((item) => (
+                <button
+                  className="dataset-bar-row"
+                  key={item.id}
+                  onClick={() => setSelected(item)}
+                  type="button"
+                >
+                  <span className="dataset-bar-label">{item.name}</span>
+                  <span className="dataset-bar-track">
+                    <i
+                      style={{
+                        width: `${Math.max((item.records / maxRecords) * 100, 2)}%`,
+                      }}
+                    />
+                  </span>
+                  <strong>{formatNumber(item.records)}</strong>
+                </button>
+              ))}
+            </div>
+          </section>
 
-        <section
-          className="dataset-panel dataset-flow-panel"
-          aria-labelledby="dataset-flow-title"
-        >
-          <div className="dataset-panel-heading">
-            <h2 id="dataset-flow-title">数据流转</h2>
-            <span>可重建链路</span>
-          </div>
-          <div className="dataset-flow" aria-label="原始数据到评测的处理链路">
-            {[
-              ["来源", "采集与导入", "source"],
-              ["标准化", "清洗与归一", "normalize"],
-              ["证据", "时间与质量", "evidence"],
-              ["应用", "岗位与评测", "publish"],
-            ].map(([title, detail, key], index) => (
-              <div className="dataset-flow-step" key={key}>
-                <span>{index + 1}</span>
-                <strong>{title}</strong>
-                <small>{detail}</small>
-              </div>
-            ))}
-          </div>
-          <p className="dataset-flow-note">
-            <Database size={15} /> 每条正式结论都关联数据集版本与运行记录
-          </p>
-        </section>
-      </div>
+          <section
+            className="dataset-panel dataset-flow-panel"
+            aria-labelledby="dataset-flow-title"
+          >
+            <div className="dataset-panel-heading">
+              <h2 id="dataset-flow-title">数据流转</h2>
+              <span>可重建链路</span>
+            </div>
+            <div className="dataset-flow" aria-label="原始数据到评测的处理链路">
+              {[
+                ["来源", "采集与导入", "source"],
+                ["标准化", "清洗与归一", "normalize"],
+                ["证据", "时间与质量", "evidence"],
+                ["应用", "岗位与评测", "publish"],
+              ].map(([title, detail, key], index) => (
+                <div className="dataset-flow-step" key={key}>
+                  <span>{index + 1}</span>
+                  <strong>{title}</strong>
+                  <small>{detail}</small>
+                </div>
+              ))}
+            </div>
+            <p className="dataset-flow-note">
+              <Database size={15} /> 每条正式结论都关联数据集版本与运行记录
+            </p>
+          </section>
+        </div>
       )}
 
       <section

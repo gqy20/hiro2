@@ -450,14 +450,15 @@ export function DiagnosisWorkbench({
                       {fixture.report.requiredMet ?? 0} /{" "}
                       {fixture.report.requiredTotal}
                     </b>
-                    <small>
-                      投递基础 {Math.round(reportScore * 100)}%
-                    </small>
+                    <small>投递基础 {Math.round(reportScore * 100)}%</small>
                   </>
                 ) : (
                   <>
                     <span>投递基础</span>
-                    <ConfidenceMeter confidence={reportScore} variant="prominent" />
+                    <ConfidenceMeter
+                      confidence={reportScore}
+                      variant="prominent"
+                    />
                   </>
                 )}
               </div>

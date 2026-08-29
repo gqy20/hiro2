@@ -87,14 +87,16 @@ export function TemporalRetrospectWorkbench({
                       {(delta * 100).toFixed(1)}
                     </Tag>
                     <small>
-                      平基线 {`${(v.v2!.metrics.flat_baseline_accuracy * 100).toFixed(1)}%`}
+                      平基线{" "}
+                      {`${(v.v2!.metrics.flat_baseline_accuracy * 100).toFixed(1)}%`}
                     </small>
                   </li>
                 );
               })}
             </ul>
             <p className="temporal-rule-note">
-              v2 由 v1 回测错误分析推导（过热抑制 + down 保守化）；仍逊平基线如实呈现。
+              v2 由 v1 回测错误分析推导（过热抑制 + down
+              保守化）；仍逊平基线如实呈现。
             </p>
           </section>
         ) : null}

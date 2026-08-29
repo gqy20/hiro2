@@ -169,10 +169,10 @@ export function TemporalSignalsWorkbench({
             title="信号流"
           />
           <ol className="temporal-event-timeline">
-            {filteredSignals.slice(0, visibleCount).map((s) => {
+            {filteredSignals.slice(0, visibleCount).map((s, index) => {
               const observed = signalTime(s.observed_at);
               return (
-                <li key={s.signal_id}>
+                <li key={`${s.signal_id}-${s.observed_at}-${index}`}>
                   <time dateTime={s.observed_at}>
                     <strong>{observed.date}</strong>
                     <span>{observed.time}</span>

@@ -4,6 +4,8 @@ import { apiFetch, isMockMode } from "@/lib/api/client";
 import { loadTemporalFixture } from "@/lib/temporal-fixture";
 import type { TemporalDataset } from "@/lib/temporal";
 
+export const metadata = { title: "市场信号" };
+
 export default async function TemporalSignalsPage({
   searchParams,
 }: Readonly<{ searchParams: Promise<{ state?: string }> }>) {

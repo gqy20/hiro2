@@ -17,13 +17,13 @@ colors:
 typography:
   display:
     fontFamily: "Arial Narrow, Inter, Noto Sans SC, sans-serif"
-    fontSize: "48px"
+    fontSize: "30px"
     fontWeight: 400
     lineHeight: 1
     letterSpacing: "-0.04em"
   title:
     fontFamily: "Inter, Noto Sans SC, PingFang SC, Microsoft YaHei, sans-serif"
-    fontSize: "22px"
+    fontSize: "24px"
     fontWeight: 650
     lineHeight: 1.25
     letterSpacing: "0"
@@ -35,7 +35,7 @@ typography:
     letterSpacing: "0"
   label:
     fontFamily: "IBM Plex Mono, SFMono-Regular, Consolas, monospace"
-    fontSize: "11px"
+    fontSize: "14px"
     fontWeight: 500
     lineHeight: 1.2
     letterSpacing: "0.02em"
@@ -191,22 +191,25 @@ Hiro2 是结构化 AI 工作台，不是聊天机器人。主交互是任务流�
 
 ### 层级
 
-- **Display**（400，48px，行高 1）：只用于工作台中的一个主指标，不用于普通页面标题。
-- **Page title**（650，22px，行高 1.25）：每个页面只出现一个。
-- **Section title**（650，16px，行高 1.3）：面板标题、岗位名称和技能组标题。
-- **Body**（400，14px，行高 1.5）：正文、表格、表单和证据内容，连续文本不超过 75 字符宽度。
-- **Small**（400/500，12px，行高 1.4）：次级说明、来源名称和辅助数值。
-- **Label**（500，11px，行高 1.2）：来源类型、状态代码、时间、版本和置信度。
+- **Display**（400，30px，行高 1）：KPI 和最高优先级数字，不用于普通页面标题。
+- **Page title**（650，24px，行高 1.25）：页面语义 H1 或重要对象标题。
+- **Section title**（650，18px，行高 1.3）：面板标题、岗位名称和技能组标题。
+- **Table body**（400/500，16px，行高 1.4）：数据表正文和高密度可比较信息。
+- **Body**（400，14px，行高 1.5）：正文、表单、说明和证据内容，连续文本不超过 75 字符宽度。
+- **Auxiliary / Label**（400/500，14px，行高 1.4）：来源、状态、时间、版本和辅助数值，通过颜色、字重和等宽字体区分层级，不再缩小字号。
 
 分数、数量和时间使用 `font-variant-numeric: tabular-nums`。不使用整句大写。页面不得引入新的字体或 Token 之外的临时字号。
 
-**证据可读性规则：**来源片段可以是次级内容，但不得小于 12px，也不得使用低对比度灰色。
+**可读性规则：**任何文字不得小于 14px；来源片段和辅助说明可以降低颜色或字重，但不得通过缩小字号制造层级。
 
 ## Information Density Rules
 
 ### 去冗余
 
-- 每个页面只允许一个 Page title；每个面板默认只保留一个 Section title。
+- 每个路由必须保留一个语义 H1；H1 与当前导航完全相同时使用 `sr-only`，不在首屏重复显示。
+- 对象页和结果页可以显示具体对象标题，例如候选人姓名或发布结果；页面内部区块从 H2 开始。
+- 浏览器标题、导航标签和语义 H1 使用同一词表，浏览器标题统一为“页面名 | Hiro2”。
+- 每个面板默认只保留一个 Section title。
 - 禁止无业务价值的眉题、营销式副标题、重复说明和“标题 + 同义小字”组合。
 - 不使用全局“当前阶段 / 下一步”横条重复导航和页面操作；状态与动作在对应内容区域就地呈现。
 - 辅助说明只有在解释状态、来源、时间窗口、操作后果或下一步时才保留。

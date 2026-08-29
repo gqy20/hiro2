@@ -4,7 +4,7 @@
   margin-top: 20px;
   padding-top: 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 .review-note svg {
@@ -44,7 +44,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 650;
 }
 .stance-support {
@@ -66,19 +66,19 @@
   margin-bottom: 3px;
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
 }
 .evidence-item dd {
   overflow: hidden;
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .evidence-id {
   margin-top: 8px;
   color: var(--muted);
-  font: 11px/1 var(--font-mono);
+  font: 14px/1 var(--font-mono);
 }
 .evidence-actions {
   justify-content: flex-end;
@@ -154,12 +154,12 @@
   background: rgba(255, 245, 200, 0.54);
 }
 .candidate-item strong {
-  font-size: 13px;
+  font-size: 14px;
 }
 .candidate-item p {
   margin: 8px 0;
   color: #47443e;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 .candidate-definition {
@@ -192,7 +192,7 @@
   gap: 12px;
   margin-top: 18px;
   color: var(--muted);
-  font: 11px/1.2 var(--font-mono);
+  font: 14px/1.2 var(--font-mono);
 }
 .candidate-decision > span:not(.status-mark) {
   padding-left: 12px;
@@ -209,7 +209,7 @@
 }
 .decision-heading h3 {
   margin: 0;
-  font-size: 17px;
+  font-size: 18px;
 }
 .definition-editor {
   display: grid;
@@ -223,7 +223,7 @@
   display: grid;
   gap: 6px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 650;
 }
 .definition-editor .ant-input,
@@ -258,21 +258,22 @@
   justify-content: space-between;
   gap: 16px;
 }
-.diagnosis-heading h1 {
+.diagnosis-heading h1,
+.diagnosis-heading .diagnosis-profile-title {
   margin: 0 0 4px;
   font-size: 22px;
 }
 .diagnosis-heading span,
 .profile-location {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .profile-location {
   margin: 18px 0;
 }
 .diagnosis-profile h2 {
   margin: 24px 0 10px;
-  font-size: 15px;
+  font-size: 18px;
 }
 .skill-list {
   display: grid;
@@ -290,7 +291,7 @@
   gap: 8px;
 }
 .profile-skill strong {
-  font-size: 13px;
+  font-size: 14px;
 }
 .profile-skill button {
   width: max-content;
@@ -299,7 +300,7 @@
   background: transparent;
   color: var(--blue);
   cursor: pointer;
-  font-size: 11px;
+  font-size: 14px;
 }
 .profile-skill .profile-skill-meta {
   justify-content: flex-start;
@@ -307,7 +308,7 @@
   color: var(--muted);
 }
 .profile-skill .profile-skill-meta > span {
-  font-size: 12px;
+  font-size: 14px;
 }
 .profile-skill .profile-skill-meta small::before {
   content: "·";
@@ -324,11 +325,11 @@
 .recalculate-hint {
   margin: 12px 0 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .profile-skill small {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .project-list {
   display: grid;
@@ -337,7 +338,7 @@
   padding-left: 0;
   list-style: none;
   color: #47443e;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .project-row,
@@ -369,7 +370,7 @@
 
 .project-audit-meta {
   margin: 12px 0 0;
-  font-size: 11px;
+  font-size: 14px;
   color: var(--muted);
   border-top: 1px dashed var(--line);
   padding-top: 8px;
@@ -381,12 +382,12 @@
 }
 .diagnosis-title h2 span {
   color: var(--muted);
-  font: 11px/1 var(--font-mono);
+  font: 14px/1 var(--font-mono);
 }
 .diagnosis-title p:last-child {
   margin: 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .match-summary {
   display: flex;
@@ -402,7 +403,7 @@
 }
 .match-summary span {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .match-summary strong {
   font: 26px/1 var(--font-display);
@@ -434,12 +435,12 @@
 .gap-item p {
   margin: 8px 0;
   color: #47443e;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 .gap-item > span {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .gap-high {
   background: rgba(220, 60, 52, 0.08);
@@ -464,12 +465,12 @@
 .match-evidence p {
   margin: 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 .learning-panel h2 {
   margin: 0;
-  font-size: 16px;
+  font-size: 18px;
 }
 .learning-panel ol {
   display: grid;
@@ -489,15 +490,15 @@
   padding-top: 2px;
   text-align: right;
   color: var(--muted);
-  font: 11px/1 var(--font-mono);
+  font: 14px/1 var(--font-mono);
 }
 .learning-panel li strong {
-  font-size: 13px;
+  font-size: 14px;
 }
 .learning-panel li p {
   margin: 6px 0 0;
   color: #47443e;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 .recruiting-diagnosis-points {
@@ -514,11 +515,11 @@
   border-bottom: 1px solid var(--line-subtle);
 }
 .recruiting-diagnosis-points strong {
-  font-size: 13px;
+  font-size: 14px;
 }
 .recruiting-diagnosis-points span {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -563,7 +564,7 @@
   max-width: 72ch;
   margin: 12px 0 0;
   color: var(--ink);
-  font-size: 15px;
+  font-size: 18px;
   line-height: 1.65;
 }
 .definition-grid {
@@ -579,7 +580,7 @@
   margin: 12px 0 0;
   padding-left: 17px;
   color: #47443e;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.5;
 }
 .definition-block-primary h3 {
@@ -598,7 +599,7 @@
   padding-top: 16px;
   border-top: 1px solid var(--line-soft);
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .candidate-review-bar > div {
   display: flex;
@@ -710,6 +711,17 @@
   }
   .nav-link {
     padding: 0 8px;
+  }
+  .topbar-meta {
+    padding-right: 6px;
+  }
+  .workspace-switch {
+    margin-right: 4px;
+  }
+  .workspace-switch button {
+    min-width: 40px;
+    padding: 4px 6px;
+    white-space: nowrap;
   }
   .workbench {
     display: block;

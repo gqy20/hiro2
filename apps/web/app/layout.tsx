@@ -22,7 +22,10 @@ const archivoNarrow = Archivo_Narrow({
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Hiro2 | 岗位更新",
+  title: {
+    default: "Hiro2",
+    template: "%s | Hiro2",
+  },
   description: "证据驱动的岗位能力演化工作台",
 };
 

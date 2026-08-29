@@ -5,6 +5,8 @@ import { loadSkillFixture, loadSkillFixtureForJob } from "@/lib/skill-fixture";
 import type { PublishedJobsView, PublishedJob } from "@/lib/career-jobs";
 import type { SkillGraphView } from "@/lib/api/types";
 
+export const metadata = { title: "能力全景" };
+
 type SkillGraphVariant = "ready" | "empty" | "error";
 
 const DEFAULT_JOB = "ai-agent-v2";

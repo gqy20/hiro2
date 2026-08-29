@@ -100,7 +100,7 @@ export function DataSourcesWorkbench({ overview }: Props) {
     <section className="data-sources" aria-labelledby="data-sources-title">
       <div className="data-sources-head">
         <h1 id="data-sources-title" className="sr-only">
-          数据来源
+          来源
         </h1>
         <input
           aria-label="搜索来源"

@@ -144,12 +144,9 @@ export function TasksWorkbench({
           id="task-workspace"
           aria-labelledby="tasks-title"
         >
-          <header className="page-heading">
-            <h1 id="tasks-title">审核任务</h1>
-            <p>
-              {`${tasks.length} 条任务 · F-T4.10 任务列表 + F-T4.11 审核工作区`}
-            </p>
-          </header>
+          <h1 id="tasks-title" className="sr-only">
+            审核任务
+          </h1>
 
           <div className="tasks-layout">
             <aside aria-label="任务列表" className="tasks-list">

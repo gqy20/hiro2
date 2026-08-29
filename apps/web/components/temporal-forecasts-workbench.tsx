@@ -166,44 +166,75 @@ export function TemporalForecastsWorkbench({
         />
       </section>
 
-      <section className="temporal-forecast-table" aria-label="能力域预测列表">
+      <section
+        className="temporal-forecast-table"
+        aria-labelledby="forecast-table-title"
+      >
         <div className="temporal-forecast-table-title">
-          <h2>能力域预测</h2>
+          <h2 id="forecast-table-title">能力域预测</h2>
           <span>{`${forecasts.length} 条`}</span>
         </div>
-        <div className="temporal-forecast-table-head" aria-hidden="true">
-          <span>能力域</span>
-          <span>方向</span>
-          <span>阶段</span>
-          <span>置信度</span>
-          <span>截止日期</span>
+        <div className="temporal-forecast-table-wrap">
+          <table className="t-table">
+            <colgroup>
+              <col className="col-skill" />
+              <col className="col-direction" />
+              <col className="col-phase" />
+              <col className="col-confidence" />
+              <col className="col-date" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">能力域</th>
+                <th scope="col">方向</th>
+                <th scope="col">阶段</th>
+                <th className="num" scope="col">
+                  置信度
+                </th>
+                <th className="num" scope="col">
+                  截止日期
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {forecasts.map((forecast) => (
+                <tr
+                  aria-selected={forecast.skill_id === skillId}
+                  className={
+                    forecast.skill_id === skillId ? "is-active" : undefined
+                  }
+                  key={forecast.forecast_id}
+                  onClick={() => setSkillId(forecast.skill_id)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setSkillId(forecast.skill_id);
+                    }
+                  }}
+                  tabIndex={0}
+                >
+                  <th scope="row">{skillDisplay(forecast.skill_id)}</th>
+                  <td>
+                    <Tag color={directionColor(forecast.predicted_direction)}>
+                      {directionLabel(forecast.predicted_direction)}
+                    </Tag>
+                  </td>
+                  <td className="forecast-phase">
+                    {phaseLabel(forecast.current_phase)}
+                  </td>
+                  <td className="num forecast-confidence">
+                    {`${(forecast.confidence * 100).toFixed(0)}%`}
+                  </td>
+                  <td className="num">
+                    <time dateTime={forecast.as_of_date}>
+                      {forecast.as_of_date}
+                    </time>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        <ul>
-          {forecasts.map((forecast) => (
-            <li key={forecast.forecast_id}>
-              <button
-                aria-pressed={forecast.skill_id === skillId}
-                className={forecast.skill_id === skillId ? "is-active" : ""}
-                onClick={() => setSkillId(forecast.skill_id)}
-                type="button"
-              >
-                <strong>{skillDisplay(forecast.skill_id)}</strong>
-                <Tag color={directionColor(forecast.predicted_direction)}>
-                  {directionLabel(forecast.predicted_direction)}
-                </Tag>
-                <span className="forecast-phase">
-                  {phaseLabel(forecast.current_phase)}
-                </span>
-                <span className="forecast-confidence">
-                  {`${(forecast.confidence * 100).toFixed(0)}%`}
-                </span>
-                <time dateTime={forecast.as_of_date}>
-                  {forecast.as_of_date}
-                </time>
-              </button>
-            </li>
-          ))}
-        </ul>
       </section>
     </section>
   );

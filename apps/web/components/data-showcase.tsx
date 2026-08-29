@@ -83,7 +83,7 @@ export function DataShowcase({ overview, pipeline }: Props) {
     <section className="data-showcase" aria-labelledby="data-showcase-title">
       {/* 视觉标题由顶部导航承担，此处仅保留无障碍大纲 */}
       <h1 id="data-showcase-title" className="sr-only">
-        数据总览
+        总览
       </h1>
 
       <div className="data-kpis" role="group" aria-label="数据规模">

@@ -39,6 +39,9 @@ test("career workspace redirects to focused navigation and explicit diagnosis", 
     page.waitForURL(/\/career\/diagnosis$/, { timeout: 20_000 }),
     nav.getByRole("link", { name: "人岗诊断" }).click(),
   ]);
+  await expect(
+    page.getByRole("heading", { name: "人岗诊断", level: 1 }),
+  ).toHaveCount(1);
   await expect(page.getByRole("heading", { name: "我的画像" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "后续行动" })).toBeVisible();
   await expect(page.getByRole("link", { name: "查看学习路径" })).toBeVisible();

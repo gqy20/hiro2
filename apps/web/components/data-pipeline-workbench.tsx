@@ -106,7 +106,7 @@ export function DataPipelineWorkbench({ runs, total }: Props) {
     <section className="data-pipeline" aria-labelledby="data-pipeline-title">
       <div className="data-pipeline-head">
         <h1 id="data-pipeline-title" className="sr-only">
-          处理流水线
+          流水线
         </h1>
         <span className="data-pipeline-count">
           {runs.length < total

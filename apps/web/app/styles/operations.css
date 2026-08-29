@@ -64,11 +64,11 @@
 }
 
 .tasks-list-button strong {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .tasks-list-button small {
-  font-size: 11px;
+  font-size: 14px;
   color: var(--muted);
   font-family: var(--font-mono);
 }
@@ -98,14 +98,14 @@
 
 .tasks-workspace-header span {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   font-family: var(--font-mono);
 }
 
 .tasks-workspace-meta {
   display: flex;
   gap: 12px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
   font-family: var(--font-mono);
   flex-wrap: wrap;
@@ -132,7 +132,7 @@
 .tasks-system-output div {
   display: flex;
   gap: 8px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .tasks-system-output dt {
@@ -159,7 +159,7 @@
   background: var(--paper-soft);
   padding: 2px 8px;
   border-radius: 3px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .tasks-decision {
@@ -183,7 +183,7 @@
 
 .tasks-workspace-state-meta {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   margin-left: auto;
 }
 
@@ -192,7 +192,7 @@
 }
 
 .training-block h3 {
-  font-size: 13px;
+  font-size: 14px;
   margin: 0 0 4px;
 }
 
@@ -312,12 +312,12 @@
 }
 .resume-selection-header strong {
   flex: none;
-  font-size: 15px;
+  font-size: 18px;
 }
 .resume-selection-header span {
   overflow: hidden;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -372,7 +372,7 @@
 }
 .resume-parse-result h3 {
   margin: 24px 0 10px;
-  font-size: 16px;
+  font-size: 18px;
 }
 .resume-parse-result h3:first-of-type {
   margin-top: 8px;
@@ -416,7 +416,7 @@
 .resume-experience > div span,
 .resume-experience small {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .resume-experience p {
   margin: 8px 0;
@@ -426,7 +426,7 @@
   margin: 0;
   padding-left: 18px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.6;
 }
 .resume-project-grid {
@@ -443,7 +443,7 @@
 .resume-project-grid p {
   margin: 7px 0 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 .resume-background {
@@ -453,7 +453,7 @@
 .resume-background p {
   margin: 8px 0;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px;
 }
 .resume-background strong {
   color: var(--ink);
@@ -481,7 +481,7 @@
 .resume-queue-item small,
 .resume-preview > div span {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .resume-queue-item {
   width: 100%;
@@ -515,7 +515,7 @@
 }
 .resume-queue-item em {
   flex: none;
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
 }
 .resume-status-已完成 {
@@ -543,14 +543,14 @@
   border-radius: 8px;
   background: var(--paper);
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.6;
   white-space: pre-wrap;
 }
 .resume-preview p {
   margin: 12px 0 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .resume-parse-actions {
@@ -574,7 +574,7 @@
 }
 .resume-skill-level {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .resume-skill-list .publish-hint {
@@ -587,7 +587,7 @@
 
 .resume-raw pre {
   white-space: pre-wrap;
-  font-size: 12px;
+  font-size: 14px;
   background: var(--paper);
   border: 0;
   border-radius: 8px;
@@ -676,13 +676,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .resume-archive-card small {
   grid-column: 1;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .resume-archive-card em {
   grid-column: 2;
@@ -696,7 +696,7 @@
 .resume-format {
   border: 0;
   background: transparent;
-  font: 11px var(--font-mono);
+  font: 14px var(--font-mono);
 }
 .resume-format-pdf {
   color: #c43d35;
@@ -860,11 +860,11 @@
 .detected-item small {
   display: block;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .detected-tag {
-  font-size: 11px;
+  font-size: 14px;
   padding: 2px 8px;
   border-radius: 3px;
   border: 1px solid var(--line);
@@ -878,25 +878,6 @@
 .detected-remove,
 .detected-shrink {
   color: var(--muted);
-}
-
-.timeline-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-
-.timeline-table th,
-.timeline-table td {
-  text-align: left;
-  padding: 8px 10px;
-  border-bottom: 1px solid var(--line);
-}
-
-.timeline-table th {
-  color: var(--muted);
-  font-weight: 500;
-  font-size: 12px;
 }
 
 .resume-parse-actions {
@@ -914,14 +895,14 @@
 }
 .diagnosis-import-link {
   color: var(--blue);
-  font-size: 13px;
+  font-size: 14px;
   text-decoration: none;
   white-space: nowrap;
 }
 
 .tasks-prelabel p {
   margin: 8px 0;
-  font-size: 13px;
+  font-size: 14px;
 }
 .tasks-prelabel-fix {
   color: var(--muted);

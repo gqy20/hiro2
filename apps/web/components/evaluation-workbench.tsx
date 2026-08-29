@@ -43,7 +43,9 @@ export function EvaluationWorkbench({
         >
           <header className="page-heading">
             <div className="title-with-meta">
-              <h1 id="evaluation-title">评测与质量</h1>
+              <h1 id="evaluation-title" className="sr-only">
+                评测与质量
+              </h1>
               <span className="page-meta">
                 {`${currentRun.id} · ${currentRun.algorithmVersion} · ${currentRun.datasetVersion}`}
               </span>

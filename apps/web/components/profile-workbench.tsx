@@ -24,7 +24,9 @@ export function ProfileWorkbench({ fixture }: { fixture: DiagnosisFixture }) {
     <section className="profile-workspace" aria-labelledby="profile-title">
       <header className="page-heading">
         <div>
-          <h1 id="profile-title">我的画像</h1>
+          <h1 id="profile-title" className="sr-only">
+            我的画像
+          </h1>
           <p>{`用于 ${fixture.job.title} ${fixture.job.version} 的诊断，你可以随时修正。`}</p>
         </div>
         <span className="profile-save-actions">

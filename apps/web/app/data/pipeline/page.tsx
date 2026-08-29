@@ -4,6 +4,8 @@ import { apiFetch, isMockMode } from "@/lib/api/client";
 import type { PipelineRunList } from "@/lib/pipeline-runs";
 import { loadPipelineRunsFixture } from "@/lib/pipeline-runs-fixture";
 
+export const metadata = { title: "流水线" };
+
 export const dynamic = "force-dynamic";
 
 const EMPTY: PipelineRunList = { runs: [], total: 0 };

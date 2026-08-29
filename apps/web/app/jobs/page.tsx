@@ -3,6 +3,8 @@ import { apiFetch, isMockMode } from "@/lib/api/client";
 import { loadJobUpdateFixture } from "@/lib/job-fixture";
 import type { JobUpdateView } from "@/lib/api/types";
 
+export const metadata = { title: "岗位更新" };
+
 type JobUpdateVariant = "ready" | "empty" | "error";
 
 // ponytail: RSC 页面直接处理 mock/real 切换；client 不需要这段代码，

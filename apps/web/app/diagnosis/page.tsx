@@ -1,5 +1,7 @@
 import { DiagnosisPageView } from "@/components/diagnosis-page";
 
+export const metadata = { title: "候选诊断" };
+
 export default async function DiagnosisPage({
   searchParams,
 }: Readonly<{

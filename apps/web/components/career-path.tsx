@@ -22,7 +22,9 @@ export function CareerPath({ fixture }: { fixture: DiagnosisFixture }) {
     <section aria-labelledby="career-path-title" className="career-path">
       <header className="page-heading">
         <div>
-          <h1 id="career-path-title">学习路径</h1>
+          <h1 id="career-path-title" className="sr-only">
+            学习路径
+          </h1>
           <p>
             {`${fixture.job.title} · ${fixture.job.version} · ${
               gaps.length > 0

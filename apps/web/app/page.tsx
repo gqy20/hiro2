@@ -5,6 +5,8 @@ import { apiFetch, isMockMode } from "@/lib/api/client";
 import type { DashboardOverview } from "@/lib/dashboard";
 import { DashboardTrend } from "@/components/dashboard-trend";
 
+export const metadata = { title: { absolute: "工作台 | Hiro2" } };
+
 export default async function DashboardPage() {
   const dashboard = isMockMode()
     ? null
@@ -45,7 +47,9 @@ export default async function DashboardPage() {
         <header className="page-heading">
           <div className="dashboard-title-row">
             <div>
-              <h1 id="dashboard-title">工作台</h1>
+              <h1 id="dashboard-title" className="sr-only">
+                工作台
+              </h1>
             </div>
             <div className="dashboard-title-meta">
               <span className="dashboard-space-label">招聘工作区</span>

@@ -25,7 +25,9 @@ export function CareerJobs({ view }: { view: PublishedJobsView }) {
     <section aria-labelledby="career-jobs-title" className="career-jobs">
       <header className="page-heading">
         <div>
-          <h1 id="career-jobs-title">目标岗位</h1>
+          <h1 id="career-jobs-title" className="sr-only">
+            目标岗位
+          </h1>
           <p>全部岗位均为已发布岗位版本，诊断可回溯到具体版本与证据。</p>
         </div>
         <Segmented

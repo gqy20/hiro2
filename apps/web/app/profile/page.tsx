@@ -4,6 +4,8 @@ import { apiFetch, isMockMode } from "@/lib/api/client";
 import { loadDiagnosisFixture } from "@/lib/diagnosis-fixture";
 import type { DiagnosisFixture } from "@/lib/diagnosis";
 
+export const metadata = { title: "我的画像" };
+
 export default async function ProfilePage() {
   const fixture = isMockMode()
     ? await loadDiagnosisFixture()

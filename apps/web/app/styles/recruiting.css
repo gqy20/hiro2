@@ -63,7 +63,7 @@
   border: 1px solid var(--line);
   border-radius: 3px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .dashboard-focus-layout {
   display: grid;
@@ -106,7 +106,7 @@
 .dashboard-focus-status,
 .dashboard-status-live {
   color: var(--red);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -135,7 +135,7 @@
   align-items: center;
   gap: 7px;
   color: var(--blue);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 650;
 }
 .dashboard-status dl {
@@ -146,7 +146,7 @@
   justify-content: space-between;
   padding: 10px 0;
   border-top: 1px solid var(--line);
-  font-size: 12px;
+  font-size: 14px;
 }
 .dashboard-status dt {
   color: var(--muted);
@@ -160,7 +160,7 @@
 }
 .dashboard-section-link {
   color: var(--blue);
-  font-size: 12px;
+  font-size: 14px;
 }
 .dashboard-jobs {
   margin-top: 0;
@@ -172,7 +172,7 @@
 }
 .dashboard-jobs .dashboard-section-heading > a {
   color: var(--blue);
-  font-size: 12px;
+  font-size: 14px;
 }
 .dashboard-job-row {
   display: grid;
@@ -192,16 +192,16 @@
 .dashboard-job-row span small {
   margin-top: 4px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .dashboard-job-row em {
   color: var(--red);
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
 }
 .dashboard-job-row b {
   color: var(--blue);
-  font-size: 12px;
+  font-size: 14px;
   white-space: nowrap;
 }
 .dashboard-job-row:hover {
@@ -236,7 +236,7 @@
 .position-card-main p {
   margin: 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .position-card-meta {
   display: flex;
@@ -245,7 +245,7 @@
 }
 .position-card-meta dt {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .position-card-meta dd {
   margin: 4px 0 0;
@@ -257,7 +257,7 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 8px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .position-card-actions a:first-child {
   color: var(--blue);
@@ -277,12 +277,12 @@
 }
 .positions-create h2 {
   margin: 5px 0 4px;
-  font-size: 16px;
+  font-size: 18px;
 }
 .positions-create p {
   margin: 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 @media (max-width: 720px) {
   .positions-page {
@@ -319,7 +319,7 @@
 }
 .dashboard-trend .dashboard-section-heading > a {
   color: var(--blue);
-  font-size: 12px;
+  font-size: 14px;
 }
 .dashboard-heading-inline {
   display: flex;
@@ -329,7 +329,7 @@
 }
 .dashboard-heading-inline span {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .dashboard-trend-chart {
   position: relative;
@@ -342,7 +342,7 @@
   margin-top: 14px;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .dashboard-trend-chart svg {
   display: block;
@@ -362,7 +362,7 @@
   stroke-width: 1;
 }
 .dashboard-chart-end-label {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 650;
 }
 .dashboard-trend-legend {
@@ -372,7 +372,7 @@
   display: flex;
   gap: 14px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .dashboard-trend-legend span {
   display: inline-flex;
@@ -385,11 +385,11 @@
 }
 .dashboard-chart-label {
   fill: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .dashboard-trend-range {
   color: var(--muted);
-  font: 11px/1.4 var(--font-mono);
+  font: 14px/1.4 var(--font-mono);
   white-space: nowrap;
 }
 .dashboard-attention ul {
@@ -412,19 +412,19 @@
   color: var(--blue);
 }
 .dashboard-attention strong {
-  font-size: 13px;
+  font-size: 14px;
 }
 .dashboard-attention span {
   grid-column: 1;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .dashboard-attention b {
   grid-column: 2;
   grid-row: 1 / span 2;
   align-self: center;
   color: var(--blue);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -457,7 +457,7 @@
 
 .graph-node-meta,
 .review-progress-step > span:last-child {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 /* 柔和工作台：用层次、留白和低对比表面替代密集矩形边界。 */

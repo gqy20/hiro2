@@ -29,6 +29,7 @@
 - `GET /api/v1/jobs/published` 已发布岗位版本列表端点（`backend/application/joblist.py`）：每岗位取最新发布版本，经 job_id 内嵌 pos_XX 结构化关联岗位目录补充岗位族与首条职责，12 岗位。
 
 ### Fixed
+- 市场信号列表为重复 `signal_id` 增加稳定复合 key，消除筛选和渐进加载时 React 复用错误节点的警告。
 - 前端界面文案语言规范化（AGENTS.md 第 8 节，与文档侧同批）：质量看板"Run 对比/Run A·B/vs/horizon X 天"→"运行对比/运行 A·B/对比/预测期 X 天"；我的岗位页"快照 Diff"→"快照差异"；发布结果页裸枚举标签 `PUBLISHED`→"已发布"；影响建议页下拉选项"required（必备）"等中英重复表述→纯中文（从已有 LEVEL_LABEL 映射派生，顺带消除"暂不纳入/不在范围"两套译法）；技术传导页图例"各层 onset"→"各层起始月"；简历解析演示文案内部 ID 裸露"疑似 cap_06 RAG/知识库"→"疑似 RAG/知识库（cap_06）"。
 - 影响建议审核断链修复：`POST /api/v1/temporal/suggestions/{id}/review` 端点上线，`/temporal/suggestions` 页的接受/修改/拒绝从纯前端本地状态改为写入 append-only 审核日志（复用 `review-actions.jsonl` 与 PG `review_actions` 双写通道，`sug-` 前缀 target_id 区分建议审核）；VM 构建时合并最新审核状态（含 modified 的 suggested_level 变更），刷新后状态保持。已接受/已修改的建议卡显示“前往岗位更新流程”接力入口——建议仍不直接修改岗位版本，岗位变更须走 Diff 审核发布流程（边界不变）。
 - 诊断 DB 路径岗位版本查询补齐 `required_skills` 列（原 SELECT 缺列导致 `requiredTotal` 恒为 0），与文件路径键名对齐。
@@ -45,6 +46,9 @@
 - 来源明细硬编码数字移除：`/datasets/overview` 的 DatasetItem 新增 `sources` 字段，由后端读取 `data/SOURCES.yml`（D0 来源登记）按数据集挂载来源通道（jd→5 条采集通道、temporal→wechat-mp/feeds/arxiv/pypi-pkgstats、capability→含政策/O*NET 历史），前端删除写死的 SOURCE_DETAIL（“字节 376/51job 650/Wayback 13,071”等与 KPI 对不上的旧数字）；派生（evidence）、受控（resumes）、冻结（evaluation）数据集显示派生说明而非虚构通道。
 
 ### Changed
+- 全站字号整体提升：保留 30px 展示数字与 24px 页面标题，区块标题升至 18px、表格正文升至 16px，其余正文、标签、状态、版本和辅助信息统一不低于 14px；清除全部 10/11/12/13px CSS 文字声明，并同步设计文档字号口径。
+- 全站标题层级统一：与顶栏或时间情报二级导航同名的 H1 改为 `sr-only`，保留无障碍大纲但不重复占据首屏；求职诊断补齐语义 H1“人岗诊断”，画像降为区块标题；数据页 H1 与导航统一为“总览/来源/流水线”；浏览器标题改用“页面名 | Hiro2”模板并覆盖主要路由。
+- 表格体系统一：趋势预测改为语义化 `.t-table`，补齐表头、行标题、键盘选择、焦点轮廓和窄屏横向滚动；数据集目录的规模列统一右对齐；删除未使用的时间轴表格样式，并在数据工作区文档固化字号、线条、列宽和交互规范。
 - 求职工作区信息架构收敛：顶层“成长”改为“求职”，移除“求职成长”首页导航并将 `/career` 兼容跳转到目标岗位；新增显式 `/career/diagnosis`，与招聘侧 `/diagnosis` 分离；求职诊断只保留只读画像摘要、匹配结果和缺口，画像编辑归入“我的画像”，完整学练赛证归入“学习路径”。
 - 移除招聘、求职和数据工作区共用的 `WorkflowContext` 横条及专用样式；页面位置继续由工作区、导航和标题表达，阶段状态与下一步动作改由对应内容区和按钮就地承载，减少首屏重复信息。
 - Railway 生产部署文档拆分首次初始化与日常发布，固定 `web`、`api`、单 PostgreSQL 拓扑；日常命令强制显式指定服务和环境，新增数据库/Volume 数量守卫、CORS、健康检查、构建期 API 地址和快照分析配置要求，避免代码发布重复创建数据库。

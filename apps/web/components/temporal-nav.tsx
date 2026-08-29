@@ -13,22 +13,30 @@ const tabs: Array<{ href: string; label: string }> = [
 
 export function TemporalNav() {
   const pathname = usePathname();
+  const current = tabs.find(
+    (tab) => pathname === tab.href || pathname?.startsWith(`${tab.href}/`),
+  );
   return (
-    <nav aria-label="时间情报" className="temporal-nav">
-      {tabs.map((tab) => {
-        const active =
-          pathname === tab.href || pathname?.startsWith(`${tab.href}/`);
-        return (
-          <Link
-            aria-current={active ? "page" : undefined}
-            className={`temporal-nav-tab ${active ? "is-active" : ""}`}
-            href={tab.href}
-            key={tab.href}
-          >
-            {tab.label}
-          </Link>
-        );
-      })}
-    </nav>
+    <>
+      <nav aria-label="时间情报" className="temporal-nav">
+        {tabs.map((tab) => {
+          const active =
+            pathname === tab.href || pathname?.startsWith(`${tab.href}/`);
+          return (
+            <Link
+              aria-current={active ? "page" : undefined}
+              className={`temporal-nav-tab ${active ? "is-active" : ""}`}
+              href={tab.href}
+              key={tab.href}
+            >
+              {tab.label}
+            </Link>
+          );
+        })}
+      </nav>
+      <h1 className="sr-only">
+        {current?.label.replace(/^\d+\.\s*/, "") ?? "时间情报"}
+      </h1>
+    </>
   );
 }

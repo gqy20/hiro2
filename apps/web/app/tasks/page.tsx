@@ -4,6 +4,8 @@ import { FixtureState } from "@/components/workflow-ui";
 import { apiFetch, isMockMode } from "@/lib/api/client";
 import type { ReviewTask } from "@/lib/tasks-fixture";
 
+export const metadata = { title: "审核任务" };
+
 export default async function TasksPage({
   searchParams,
 }: Readonly<{ searchParams: Promise<{ state?: string }> }>) {

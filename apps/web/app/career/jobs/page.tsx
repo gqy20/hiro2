@@ -4,6 +4,8 @@ import { FixtureState } from "@/components/workflow-ui";
 import { apiFetch, isMockMode } from "@/lib/api/client";
 import { buildMockJobs, type PublishedJobsView } from "@/lib/career-jobs";
 
+export const metadata = { title: "目标岗位" };
+
 export const dynamic = "force-dynamic";
 
 export default async function CareerJobsPage({

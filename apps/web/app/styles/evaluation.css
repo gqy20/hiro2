@@ -46,7 +46,7 @@
   padding: 8px 10px;
   border-radius: 4px;
   border: 1px solid var(--line);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .evaluation-dataset-item.is-active {
@@ -61,7 +61,7 @@
 
 .evaluation-dataset-item span {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
   font-family: var(--font-mono);
 }
 
@@ -95,12 +95,12 @@
 }
 
 .evaluation-metric > span {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
 }
 
 .evaluation-metric small {
-  font-size: 11px;
+  font-size: 14px;
   color: var(--muted);
 }
 
@@ -128,13 +128,13 @@
 .evaluation-error-item strong {
   display: block;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 14px;
   margin-bottom: 2px;
 }
 
 .evaluation-error-item p {
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
 }
 
@@ -154,12 +154,12 @@
 }
 
 .evaluation-pending strong {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .evaluation-pending p {
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
 }
 

@@ -47,7 +47,7 @@
 .career-diagnosis-next p {
   margin: 0;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.5;
 }
 .career-diagnosis-next a {
@@ -93,7 +93,7 @@
 }
 .profile-workspace-grid h2 {
   margin: 0 0 18px;
-  font-size: 17px;
+  font-size: 18px;
 }
 .profile-edit-row,
 .profile-project-row {
@@ -107,7 +107,7 @@
 .profile-edit-row span,
 .profile-project-row small {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .profile-project-row {
   grid-template-columns: 1fr;
@@ -125,6 +125,17 @@
   }
   .profile-workspace-grid {
     grid-template-columns: 1fr;
+  }
+  .career-jobs .page-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .career-jobs .page-heading > div {
+    width: 100%;
+  }
+  .career-jobs .ant-segmented {
+    max-width: 100%;
+    overflow-x: auto;
   }
 }
 
@@ -151,12 +162,12 @@
 }
 .career-job-card h2 {
   margin: 0;
-  font-size: 17px;
+  font-size: 18px;
 }
 .career-job-duty {
   margin: 0;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.6;
 }
 .career-job-meta {
@@ -170,7 +181,7 @@
 }
 .career-job-meta dt {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .career-job-meta dd {
   margin: 0;
@@ -210,12 +221,12 @@
 }
 .career-path-item h2 {
   margin: 0;
-  font-size: 17px;
+  font-size: 18px;
 }
 .career-path-reason {
   margin: 10px 0 0;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px;
 }
 .career-path-steps {
   display: grid;
@@ -233,10 +244,10 @@
 }
 .career-path-steps b {
   color: var(--blue);
-  font-size: 13px;
+  font-size: 14px;
 }
 .career-path-steps span {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 /* 简历工作台：左编辑 + 右建议双栏，面板走 surface 语言、控件走 AntD */

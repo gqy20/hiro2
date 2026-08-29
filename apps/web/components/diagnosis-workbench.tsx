@@ -228,11 +228,16 @@ export function DiagnosisWorkbench({
   return (
     <AppShell>
       <div className="workflow-page">
+        {careerMode ? <h1 className="sr-only">人岗诊断</h1> : null}
         <div className="diagnosis-workbench">
           <aside className="diagnosis-profile" aria-label="候选人画像">
             <div className="diagnosis-heading">
               <div>
-                <h1>{careerMode ? "我的画像" : fixture.candidate.name}</h1>
+                {careerMode ? (
+                  <h2 className="diagnosis-profile-title">我的画像</h2>
+                ) : (
+                  <h1>{fixture.candidate.name}</h1>
+                )}
                 <span>
                   {careerMode
                     ? `${fixture.candidate.name} · ${fixture.candidate.headline}`
@@ -390,6 +395,9 @@ export function DiagnosisWorkbench({
             ) : null}
           </aside>
           <main className="diagnosis-report" aria-labelledby="diagnosis-title">
+            <h2 id="diagnosis-title" className="sr-only">
+              匹配结果
+            </h2>
             <div className="diagnosis-title">
               <div>
                 <span className="career-kicker">目标岗位</span>

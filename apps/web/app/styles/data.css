@@ -153,20 +153,20 @@
 /* 文本 */
 .fm-name {
   fill: var(--ink);
-  font-size: 13px;
+  font-size: 14px;
 }
 .fm-name-strong {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
 }
 .fm-meta {
   fill: var(--muted);
-  font: 500 12px/1 var(--font-mono);
+  font: 500 14px/1 var(--font-mono);
   letter-spacing: 0.02em;
 }
 .fm-value {
   fill: var(--ink);
-  font: 400 17px/1 var(--font-display);
+  font: 400 18px/1 var(--font-display);
   font-variant-numeric: tabular-nums;
 }
 
@@ -201,12 +201,12 @@
 }
 .fm-stage-label {
   fill: var(--ink);
-  font-size: 13px;
+  font-size: 14px;
   pointer-events: none;
 }
 .fm-stage-status {
   fill: var(--muted);
-  font: 500 12px/1 var(--font-mono);
+  font: 500 14px/1 var(--font-mono);
   letter-spacing: 0.04em;
   pointer-events: none;
 }
@@ -221,7 +221,7 @@
 }
 .fm-stage-time {
   fill: var(--muted);
-  font: 500 11px/1 var(--font-mono);
+  font: 500 14px/1 var(--font-mono);
   pointer-events: none;
 }
 
@@ -411,7 +411,7 @@
 }
 .data-sources-count {
   margin-left: auto;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
   white-space: nowrap;
 }
@@ -517,7 +517,7 @@
 }
 .data-pipeline-count {
   margin-left: auto;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
 }
 /* 组件/状态列头内联筛选（控制即列头，样式见 .t-table .col-filter） */
@@ -661,7 +661,7 @@
 }
 .data-quality-panel-title {
   margin: 0;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.25;
 }
 .data-quality-errors {
@@ -677,7 +677,7 @@
   grid-template-columns: 220px 1fr 48px;
   align-items: center;
   gap: 12px;
-  font-size: 13px;
+  font-size: 14px;
 }
 .data-quality-error-info {
   display: flex;
@@ -787,7 +787,7 @@
 .dataset-heading p {
   margin: 6px 0 0;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px;
 }
 .dataset-heading-meta {
   font-size: var(--fs-aux);
@@ -815,7 +815,7 @@
 .dataset-summary span,
 .dataset-summary small {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .dataset-summary strong {
   font: 400 var(--fs-display) / 1 var(--font-display);
@@ -845,12 +845,12 @@
   margin-bottom: 16px;
 }
 .dataset-panel-heading h2 {
-  font-size: 16px;
+  font-size: 18px;
   margin: 0;
   font-weight: 650;
 }
 .dataset-panel-heading span {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
 }
 .dataset-bars {
@@ -874,7 +874,7 @@
   color: var(--blue);
 }
 .dataset-bar-label {
-  font-size: 13px;
+  font-size: 14px;
 }
 .dataset-bar-track {
   height: 10px;
@@ -889,7 +889,7 @@
   border-radius: inherit;
 }
 .dataset-bar-row strong {
-  font: 500 12px var(--font-mono);
+  font: 500 14px var(--font-mono);
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
@@ -923,11 +923,11 @@
   color: var(--panel);
   display: grid;
   place-items: center;
-  font: 500 12px var(--font-mono);
+  font: 500 14px var(--font-mono);
   z-index: 1;
 }
 .dataset-flow-step strong {
-  font-size: 13px;
+  font-size: 14px;
 }
 .dataset-flow-step small {
   font-size: var(--fs-aux);
@@ -941,7 +941,7 @@
   padding-top: 14px;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 .dataset-table-panel {
   padding-bottom: 8px;
@@ -1120,7 +1120,7 @@
 }
 .dataset-drawer dd {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -1133,7 +1133,7 @@
   margin: 0 0 8px;
 }
 .dataset-detail-section p {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.65;
   color: var(--muted);
   margin: 0;

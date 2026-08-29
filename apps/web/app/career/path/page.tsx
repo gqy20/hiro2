@@ -5,6 +5,8 @@ import { apiFetch, isMockMode } from "@/lib/api/client";
 import { loadDiagnosisFixture } from "@/lib/diagnosis-fixture";
 import type { DiagnosisFixture } from "@/lib/diagnosis";
 
+export const metadata = { title: "学习路径" };
+
 export const dynamic = "force-dynamic";
 
 export default async function CareerPathPage({

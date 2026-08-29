@@ -4,6 +4,8 @@ import { AppShell } from "@/components/app-shell";
 import { apiFetch, isMockMode } from "@/lib/api/client";
 import type { DashboardOverview } from "@/lib/dashboard";
 
+export const metadata = { title: "我的岗位" };
+
 type DetectedChange = {
   skillId: string;
   name: string;
@@ -47,7 +49,9 @@ export default async function PositionsPage() {
       <div className="workflow-page">
         <main className="positions-page" aria-labelledby="positions-title">
           <header className="page-heading">
-            <h1 id="positions-title">我的岗位</h1>
+            <h1 id="positions-title" className="sr-only">
+              我的岗位
+            </h1>
             <p>查看岗位当前版本、变化状态和候选人诊断入口。</p>
           </header>
           <section className="positions-list" aria-label="岗位列表">

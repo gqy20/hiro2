@@ -178,15 +178,18 @@ export function DatasetWorkbench({
                   onClick={() => setSelected(item)}
                   tabIndex={0}
                   onKeyDown={(event) => {
-                    if (event.key === "Enter") setSelected(item);
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setSelected(item);
+                    }
                   }}
                 >
-                  <td>
+                  <th scope="row">
                     <strong>{item.name}</strong>
                     <small>{item.source}</small>
-                  </td>
+                  </th>
                   <td>{item.category}</td>
-                  <td className="dataset-number">
+                  <td className="dataset-number num">
                     {formatNumber(item.records)}
                   </td>
                   <td>

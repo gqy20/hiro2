@@ -3,6 +3,8 @@ import { FixtureState } from "@/components/workflow-ui";
 import { apiFetch, isMockMode } from "@/lib/api/client";
 import type { TemporalTimeline } from "@/lib/temporal";
 
+export const metadata = { title: "技术传导" };
+
 const MOCK: TemporalTimeline = {
   rows: [
     {

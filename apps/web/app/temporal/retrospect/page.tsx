@@ -4,6 +4,8 @@ import { apiFetch, isMockMode } from "@/lib/api/client";
 import { loadTemporalFixture } from "@/lib/temporal-fixture";
 import type { TemporalDataset } from "@/lib/temporal";
 
+export const metadata = { title: "预测复盘" };
+
 async function fetchTemporalServer(): Promise<TemporalDataset> {
   if (isMockMode()) return loadTemporalFixture();
   return apiFetch<TemporalDataset>("/temporal/dataset");

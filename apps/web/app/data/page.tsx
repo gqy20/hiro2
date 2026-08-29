@@ -6,6 +6,8 @@ import type { DatasetOverview } from "@/lib/datasets";
 import type { PipelineRunList } from "@/lib/pipeline-runs";
 import { loadPipelineRunsFixture } from "@/lib/pipeline-runs-fixture";
 
+export const metadata = { title: "总览" };
+
 export const dynamic = "force-dynamic";
 
 const EMPTY_DATASETS: DatasetOverview = {

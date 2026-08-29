@@ -21,14 +21,14 @@
   --font-display:
     var(--font-archivo-narrow), "Arial Narrow", var(--font-inter),
     "Noto Sans SC", sans-serif;
-  /* 字号尺度：全站只用这几级；12px 是中文下限，亚 12px 只允许纯数字/ID 场景 */
+  /* 字号尺度：全站文字不小于 14px，展示数字和页面标题保持稳定。 */
   --fs-display: 30px; /* KPI 大数字 */
   --fs-title: 24px; /* 页面 H1 */
-  --fs-section: 16px; /* 区块标题 */
-  --fs-table: 15px; /* 数据表正文（表格密度高，比正文大提高可读性） */
-  --fs-table-aux: 13px; /* 表头与表内辅助（版本号、状态徽章、筛选器） */
-  --fs-body: 13px; /* 正文/表格 */
-  --fs-aux: 12px; /* 辅助说明、徽章、表头 */
+  --fs-section: 18px; /* 区块标题 */
+  --fs-table: 16px; /* 数据表正文 */
+  --fs-table-aux: 14px; /* 表头与表内辅助（版本号、状态徽章、筛选器） */
+  --fs-body: 14px; /* 紧凑正文 */
+  --fs-aux: 14px; /* 辅助说明、徽章、表头 */
 }
 
 * {
@@ -106,9 +106,17 @@
 }
 .t-table tbody tr {
   transition: background 150ms ease;
+  outline: none;
 }
 .t-table tbody tr:hover {
   background: var(--paper-soft);
+}
+.t-table tbody tr:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: -2px;
+}
+.t-table tbody tr.is-active {
+  background: var(--saffron-soft);
 }
 .t-table .num {
   text-align: right;
@@ -286,7 +294,7 @@ input:focus-visible {
 .brand {
   gap: 8px;
   padding-left: 22px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 750;
   letter-spacing: 0.08em;
 }
@@ -314,7 +322,7 @@ input:focus-visible {
   position: relative;
   gap: 7px;
   padding: 0 14px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -341,7 +349,7 @@ input:focus-visible {
   padding-right: 22px;
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .workspace-switch {
@@ -360,7 +368,7 @@ input:focus-visible {
   background: transparent;
   color: var(--muted);
   cursor: pointer;
-  font: 12px/1.3 inherit;
+  font: 14px/1.3 inherit;
 }
 .workspace-switch button.is-active {
   background: var(--panel);
@@ -389,7 +397,7 @@ input:focus-visible {
 .diff-toolbar-status {
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .context-panel,
@@ -449,7 +457,7 @@ input:focus-visible {
 .version-summary dt {
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .title-with-meta,
@@ -488,7 +496,7 @@ h1 {
 
 h2 {
   margin: 0;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.3;
 }
 
@@ -507,7 +515,7 @@ h3 {
   display: grid;
   gap: 6px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 650;
 }
 
@@ -537,7 +545,7 @@ h3 {
   align-items: center;
   gap: 5px;
   min-width: 0;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .context-window-row + .context-window-row {
@@ -616,7 +624,7 @@ h3 {
 }
 .version-summary dt {
   overflow: hidden;
-  font-size: 11px;
+  font-size: 14px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -626,11 +634,11 @@ h3 {
   gap: 5px;
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   font-variant-numeric: tabular-nums;
 }
 .delta {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
 }
 .delta-added {
@@ -673,7 +681,7 @@ h3 {
   background: transparent;
   color: var(--muted);
   cursor: pointer;
-  font-size: 12px;
+  font-size: 14px;
 }
 .filter-tab:hover {
   color: var(--ink);
@@ -744,7 +752,7 @@ h3 {
   min-height: 42px;
   margin: 10px 0;
   color: #47443e;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 .change-metrics {
@@ -759,7 +767,7 @@ h3 {
 }
 .confidence-meter b {
   color: var(--ink);
-  font: 600 11px/1 var(--font-mono);
+  font: 600 14px/1 var(--font-mono);
 }
 .confidence-meter i {
   display: block;
@@ -779,7 +787,7 @@ h3 {
   background: #b18b00;
 }
 .confidence-meter-prominent {
-  font-size: 12px;
+  font-size: 14px;
 }
 .confidence-meter-prominent i {
   width: 72px;
@@ -806,7 +814,7 @@ h3 {
 .review-edit {
   padding-inline: 4px;
   color: var(--muted) !important;
-  font-size: 11px;
+  font-size: 14px;
 }
 .inline-edit {
   display: grid;
@@ -823,7 +831,7 @@ h3 {
   background: var(--panel);
   color: var(--ink);
   font: inherit;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 .inline-edit > span {
@@ -860,11 +868,11 @@ h3 {
   padding: 8px 12px;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .downstream-impact h3 {
   color: var(--ink);
-  font-size: 12px;
+  font-size: 14px;
   white-space: nowrap;
 }
 .downstream-impact-copy {
@@ -919,7 +927,7 @@ h3 {
   align-items: center;
   gap: 5px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
   white-space: nowrap;
 }
 .status-mark > i {
@@ -960,10 +968,10 @@ h3 {
   align-items: center;
   gap: 7px;
   min-width: 0;
-  font-size: 11px;
+  font-size: 14px;
 }
 .review-progress-step strong {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 650;
 }
 .review-progress-step > span:last-child {
@@ -1009,7 +1017,7 @@ h3 {
   align-items: center;
   gap: 4px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .review-distribution i {
   width: 18px;
@@ -1018,10 +1026,10 @@ h3 {
 }
 .review-distribution b {
   color: var(--ink);
-  font: 600 11px/1 var(--font-mono);
+  font: 600 14px/1 var(--font-mono);
 }
 .review-distribution small {
-  font-size: 11px;
+  font-size: 14px;
 }
 .distribution-accepted i {
   background: var(--green);
@@ -1060,7 +1068,7 @@ h3 {
 }
 .queue-item > span:first-child {
   overflow: hidden;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 650;
   text-overflow: ellipsis;
   white-space: nowrap;

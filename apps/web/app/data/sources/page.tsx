@@ -3,6 +3,8 @@ import { DataSourcesWorkbench } from "@/components/data-sources-workbench";
 import { apiFetch, isMockMode } from "@/lib/api/client";
 import type { DatasetOverview } from "@/lib/datasets";
 
+export const metadata = { title: "来源" };
+
 export const dynamic = "force-dynamic";
 
 const EMPTY: DatasetOverview = {

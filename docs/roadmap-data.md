@@ -157,8 +157,8 @@ SKILLS.yml 人工先验别名无时间闸门（cap_01 的 2019-12 混杂）与�
 
 ### D7 证据质量与融合
 
-状态：部分完成（2026-08-25）。`scripts/evidence.py build` 落地 Evidence 实体层（`data/processed/evidence/evidence.jsonl`，6645 条）：trend_signal 6333（日报主记录，质量=事实分级映射）/ job_requirement 266（AI 域 JD）/ expert_baseline 46（Excel 画像），每条含 source_span 回链与 content_hash；JobVersion 草稿与 JobChangeSet 引用已升级为 evidence_id。
-未完成：支持/反证关系标记（claim 与岗位字段的正反关系）、跨源冲突与单一来源热点的统一审核队列。
+状态：部分完成（2026-08-25 实体层，2026-08-29 关系层）。`scripts/evidence.py build` 落地 Evidence 实体层（`data/processed/evidence/evidence.jsonl`，当前 14174 条：trend_signal / job_requirement / expert_baseline 三型，每条含 source_span 回链与 content_hash）；`scripts/evrelate.py run` 落地关系层与统一审核队列（规则化零 LLM）：**supports 2053**（JD 证据 resolved 含技能 -> 版本必备/加分字段，全部真实 evidence_id 回链）+ **contradicts 76**（changeset add 项 = 市场把基线没有的技能推进版本，对专家基线反证，带 supporting_evidence_ids）+ `review-queue.jsonl` 三规则（跨源冲突/单源热点>=5 次单一 platform/低置信<0.6）——2026-08-29 实测三者为 0 为数据实情（JD 池多平台化后 28 技能 27 个多源、JD 质量 0.8 恒定、changeset 全 add 型），规则持续生效。**退出条件量化达成：17 个 published 版本 151/151 技能字段 100% 有 supports 证据**。
+未完成：人岗匹配结论（gap/短板）的 evidence_id 回链——匹配引擎消费 PublishedJobVersion，其字段已可回链，但匹配结论层的显式引用待接。
 
 ```text
 完整性 -> 时间 -> 去重 -> 交叉验证 -> 幻觉/异常拦截
@@ -255,5 +255,5 @@ RAW -> STAGED -> NORMALIZED -> CURATED -> SNAPSHOT
 - [x] 技能映射保留原始提及、规范技能、技能点和证据。（mention/skill_id/point_id/event 或 jd 引用）
 - [x] JD 和日报都能按时间重建状态。
 - [~] 失败、冲突和低置信记录进入审核队列。（各环节有隔离文件，无统一队列）
-- [ ] 正式岗位字段、岗位变化和关键匹配结论均能回链具体证据片段；证据区分支持与反证。（D7 未落地）
+- [~] 正式岗位字段、岗位变化和关键匹配结论均能回链具体证据片段；证据区分支持与反证。（岗位字段侧完成 2026-08-29：151/151 字段 supports 覆盖 + 76 条 contradicts，`scripts/evrelate.py`；匹配结论回链待接）
 - [~] 评测集与调优数据隔离。（D9 核对 2026-08-29：隔离已实现——冻结样本三版本归档、synthetic 0 混入、指标脚本可复现；待真人抽检 ~50 条后方可宣称正式指标，详 D9 段）

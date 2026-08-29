@@ -59,8 +59,7 @@ export default async function EvaluationPage({
       ]
     : [
         await apiFetch<EvaluationOverview>("/evaluation/overview"),
-        (await apiFetch<QualityOverview>("/quality/overview")) ??
-          EMPTY_QUALITY,
+        (await apiFetch<QualityOverview>("/quality/overview")) ?? EMPTY_QUALITY,
         await apiFetch<TemporalDataset>("/temporal/dataset"),
       ];
 

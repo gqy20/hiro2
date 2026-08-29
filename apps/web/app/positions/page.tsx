@@ -71,7 +71,9 @@ export default async function PositionsPage() {
                 </dl>
                 <div className="position-card-actions">
                   <Link href={job.href}>
-                    {job.pending > 0 ? `审核变化（${job.pending}）→` : "查看版本 →"}
+                    {job.pending > 0
+                      ? `审核变化（${job.pending}）→`
+                      : "查看版本 →"}
                   </Link>
                   <Link href="/diagnosis">候选人诊断</Link>
                 </div>

@@ -1,35 +1,35 @@
-李同学  
+李同学
 138****0000 | lics@example.com | 湖南长沙 | 求职意向：大数据开发工程师（实习）
 
-教育背景  
-中南大学 计算机科学与技术 本科（2021.09 - 2025.06）  
+教育背景
+中南大学 计算机科学与技术 本科（2021.09 - 2025.06）
 主修课程：数据结构、操作系统、计算机网络、数据库原理、分布式系统；GPA 3.6/4.0
 
-专业技能  
-- 熟悉 Java（8/11）与 Scala 2.12，具备多线程与 JVM 基础调优经验，使用年限 2 年  
-- 熟悉 Flink 1.17 流处理框架，掌握 Watermark、状态后端（RocksDB）、Checkpoint 配置，能实现精确一次语义  
-- 熟悉 Spark 3.5（Core/SQL/Streaming），能编写 ETL 任务并优化 Shuffle 与数据倾斜，使用年限 1 年  
-- 熟悉 Hive 数仓建模，掌握星型/雪花模型设计与分层（ODS/DWD/ADS），写过 UDF 解析复杂 JSON  
-- 熟悉 HDFS、YARN、Kafka 2.8 基础原理与日常运维命令，了解数据落盘与消费 offset 管理  
-- 了解 ClickHouse 与 Doris，熟悉基本建表与物化视图，了解 Zookeeper 协调机制  
+专业技能
+- 熟悉 Java（8/11）与 Scala 2.12，具备多线程与 JVM 基础调优经验，使用年限 2 年
+- 熟悉 Flink 1.17 流处理框架，掌握 Watermark、状态后端（RocksDB）、Checkpoint 配置，能实现精确一次语义
+- 熟悉 Spark 3.5（Core/SQL/Streaming），能编写 ETL 任务并优化 Shuffle 与数据倾斜，使用年限 1 年
+- 熟悉 Hive 数仓建模，掌握星型/雪花模型设计与分层（ODS/DWD/ADS），写过 UDF 解析复杂 JSON
+- 熟悉 HDFS、YARN、Kafka 2.8 基础原理与日常运维命令，了解数据落盘与消费 offset 管理
+- 了解 ClickHouse 与 Doris，熟悉基本建表与物化视图，了解 Zookeeper 协调机制
 - 熟悉 Maven、Git、Linux Shell，能独立部署单机 Hadoop 集群
 
-项目经历  
-电商用户行为实时分析平台（Flink + Kafka + Redis） 2024.03 - 2024.06  
-- 负责从 Kafka topic 消费用户点击、下单日志，使用 Flink 1.17 进行清洗与去重（基于状态编程实现布隆过滤器）  
-- 结合 Event Time 与 Watermark 处理乱序数据，按 1 分钟窗口统计各品类 PV/UV，结果写入 Redis 供大屏查询  
-- 设置 Checkpoint 间隔 30s，开启增量检查点，恢复时间从 120s 降至 45s；背压率控制在 15% 以下  
+项目经历
+电商用户行为实时分析平台（Flink + Kafka + Redis） 2024.03 - 2024.06
+- 负责从 Kafka topic 消费用户点击、下单日志，使用 Flink 1.17 进行清洗与去重（基于状态编程实现布隆过滤器）
+- 结合 Event Time 与 Watermark 处理乱序数据，按 1 分钟窗口统计各品类 PV/UV，结果写入 Redis 供大屏查询
+- 设置 Checkpoint 间隔 30s，开启增量检查点，恢复时间从 120s 降至 45s；背压率控制在 15% 以下
 - 项目模拟日均 200 万条数据，峰值吞吐 1.2 万条/秒，延迟 < 5 秒
 
-电商离线数仓分层建设（Spark + Hive） 2023.09 - 2023.12  
-- 基于 2 周历史订单数据（约 300GB），搭建 ODS-DWD-ADS 三层 Hive 数仓，使用 Spark SQL 完成清洗与维度关联  
-- 在 DWD 层处理用户地址变更拉链表，利用 Spark 的 AQE 与动态合并分区解决小文件问题，任务耗时减少 380%  
+电商离线数仓分层建设（Spark + Hive） 2023.09 - 2023.12
+- 基于 2 周历史订单数据（约 300GB），搭建 ODS-DWD-ADS 三层 Hive 数仓，使用 Spark SQL 完成清洗与维度关联
+- 在 DWD 层处理用户地址变更拉链表，利用 Spark 的 AQE 与动态合并分区解决小文件问题，任务耗时减少 380%
 - 开发常用指标（GMV、复购率、品类偏好），最终结果以 Parquet 格式存储，并同步至 MySQL 供报表展示
 
-日志采集与基础监控系统（Flume + Kafka） 2023.06 - 2023.08  
-- 使用 Flume 1.9 采集 Nginx 日志到 Kafka 2.8，实现多目录监控与断点续传，避免日志丢失  
-- 编写简单 Flink 程序实时统计错误日志比例，触发阈值时通过邮件告警，并可视化到 Grafana  
+日志采集与基础监控系统（Flume + Kafka） 2023.06 - 2023.08
+- 使用 Flume 1.9 采集 Nginx 日志到 Kafka 2.8，实现多目录监控与断点续传，避免日志丢失
+- 编写简单 Flink 程序实时统计错误日志比例，触发阈值时通过邮件告警，并可视化到 Grafana
 - 完成 YARN 资源队列配置与 HDFS 数据目录规划，学习处理磁盘不平衡问题
 
-个人优势  
+个人优势
 具备快速排查问题能力（如数据倾斜、Kafka 消费积压），习惯阅读官方文档；对代码质量有要求，能主动进行代码 review 与注释整理。

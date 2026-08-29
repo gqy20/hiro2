@@ -1,41 +1,41 @@
-李同学  
-电话：138****0000 | 邮箱：li.tongxue@example.com | 3年大数据开发经验  
+李同学
+电话：138****0000 | 邮箱：li.tongxue@example.com | 3年大数据开发经验
 
-教育背景  
-2018.09 - 2022.06  某某大学  计算机科学与技术  本科  
+教育背景
+2018.09 - 2022.06  某某大学  计算机科学与技术  本科
 
-技能清单  
-- 精通 Spark（2.4/3.x）与 Flink（1.13/1.15），熟悉流批一体处理流程，掌握状态后端与Checkpoint调优  
-- 熟悉 Hive（3.1）数仓建模，熟练搭建分层ODS/DWD/DWS/ADS，有星型和雪花模型设计实践  
-- 熟悉 Kafka（2.x）消息队列，掌握Exactly-Once语义及背压处理，能配合Flink实现实时ETL  
-- 了解 HBase（2.x）、Doris（1.0）、Redis，具备数据落盘与查询加速经验  
-- 熟悉调度工具 Airflow 与 DolphinScheduler，掌握Shell及Python脚本，能独立完成定时任务配置  
-- 了解 Hadoop（HDFS/YARN）底层原理，会处理小文件合并与数据倾斜问题  
+技能清单
+- 精通 Spark（2.4/3.x）与 Flink（1.13/1.15），熟悉流批一体处理流程，掌握状态后端与Checkpoint调优
+- 熟悉 Hive（3.1）数仓建模，熟练搭建分层ODS/DWD/DWS/ADS，有星型和雪花模型设计实践
+- 熟悉 Kafka（2.x）消息队列，掌握Exactly-Once语义及背压处理，能配合Flink实现实时ETL
+- 了解 HBase（2.x）、Doris（1.0）、Redis，具备数据落盘与查询加速经验
+- 熟悉调度工具 Airflow 与 DolphinScheduler，掌握Shell及Python脚本，能独立完成定时任务配置
+- 了解 Hadoop（HDFS/YARN）底层原理，会处理小文件合并与数据倾斜问题
 
-项目经历  
+项目经历
 
-项目一：用户行为实时分析平台（2023.03 - 至今）  
-职责：负责实时链路搭建与数仓分层设计。  
-- 使用 Flink 1.15 消费 Kafka 用户点击/浏览日志，经解析、清洗、去重后写入 DWS 层 ClickHouse（版本21.8），实现分钟级UV、PV、停留时长统计  
-- 解决水位线乱序问题，采用事件时间+allowedLateness，侧输出迟到数据到重试Topic，数据迟到率降低至2%以内  
-- 参与优化Flink算子并行度与Kafka分区数匹配，背压率从35%降至8%  
-- 技术栈：Flink、Kafka、ClickHouse、HBase、Redis  
+项目一：用户行为实时分析平台（2023.03 - 至今）
+职责：负责实时链路搭建与数仓分层设计。
+- 使用 Flink 1.15 消费 Kafka 用户点击/浏览日志，经解析、清洗、去重后写入 DWS 层 ClickHouse（版本21.8），实现分钟级UV、PV、停留时长统计
+- 解决水位线乱序问题，采用事件时间+allowedLateness，侧输出迟到数据到重试Topic，数据迟到率降低至2%以内
+- 参与优化Flink算子并行度与Kafka分区数匹配，背压率从35%降至8%
+- 技术栈：Flink、Kafka、ClickHouse、HBase、Redis
 
-项目二：零售业务离线数仓建设（2022.07 - 2023.02）  
-职责：承接ODS到DWD层开发与数据质量监控。  
-- 基于 Spark 3.0 与 Hive，编写SQL和Scala作业处理订单、库存等业务库数据，日处理量约1.2亿条，使用动态分区插入规避数据倾斜  
-- 设计DWS层用户购买力宽表，关联7张明细表，任务耗时由50分钟压缩至35分钟（优化join顺序与预聚合）  
-- 使用 DolphinScheduler 编排周期性任务，并配置数据完整性校验脚本，数据回补流程自动化  
-- 技术栈：Spark、Hive、HDFS、DolphinScheduler、Sqoop  
+项目二：零售业务离线数仓建设（2022.07 - 2023.02）
+职责：承接ODS到DWD层开发与数据质量监控。
+- 基于 Spark 3.0 与 Hive，编写SQL和Scala作业处理订单、库存等业务库数据，日处理量约1.2亿条，使用动态分区插入规避数据倾斜
+- 设计DWS层用户购买力宽表，关联7张明细表，任务耗时由50分钟压缩至35分钟（优化join顺序与预聚合）
+- 使用 DolphinScheduler 编排周期性任务，并配置数据完整性校验脚本，数据回补流程自动化
+- 技术栈：Spark、Hive、HDFS、DolphinScheduler、Sqoop
 
-项目三：实时广告投放流量监控（2024.01 - 至今）  
-职责：独立负责Flink作业开发与落地。  
-- 解析广告曝光/点击流，Flink SQL 与DataStream API结合，实现5分钟窗口漏斗转化计算，产出指标对应数据写入Doris供BI看板  
-- 引入Flink CDC（postgres-cdc）监控用户维度表变化，实现维表动态更新，替代原有每日全量加载，维度滞后降低至秒级  
-- 编写checkpoint配置与恢复演练文档，应对Kafka连接抖动，任务端到端延迟保持在90%以下  
-- 技术栈：Flink、Kafka、Doris、Flink CDC、Grafana  
+项目三：实时广告投放流量监控（2024.01 - 至今）
+职责：独立负责Flink作业开发与落地。
+- 解析广告曝光/点击流，Flink SQL 与DataStream API结合，实现5分钟窗口漏斗转化计算，产出指标对应数据写入Doris供BI看板
+- 引入Flink CDC（postgres-cdc）监控用户维度表变化，实现维表动态更新，替代原有每日全量加载，维度滞后降低至秒级
+- 编写checkpoint配置与恢复演练文档，应对Kafka连接抖动，任务端到端延迟保持在90%以下
+- 技术栈：Flink、Kafka、Doris、Flink CDC、Grafana
 
-个人总结  
-- 有完整参与2个实时项目及1个离线项目经验，习惯先理清业务口径再动手开发，重视数据准确性与可追溯性  
-- 对常见实时链路痛点（乱序、重复、流量洪峰）有实际排查与解决案例，能快速定位日志与指标异常  
+个人总结
+- 有完整参与2个实时项目及1个离线项目经验，习惯先理清业务口径再动手开发，重视数据准确性与可追溯性
+- 对常见实时链路痛点（乱序、重复、流量洪峰）有实际排查与解决案例，能快速定位日志与指标异常
 - 具备基础Linux运维能力，熟悉常用面试题与性能优化场景，近期准备在SQL优化与Iceberg方向深入

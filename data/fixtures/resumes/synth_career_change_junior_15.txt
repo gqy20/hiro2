@@ -1,45 +1,45 @@
-李同学  
-138****0000 | li.tong@example.com | 广东深圳 | 求职意向：AI应用开发实习生（可转正）  
+李同学
+138****0000 | li.tong@example.com | 广东深圳 | 求职意向：AI应用开发实习生（可转正）
 
-教育背景  
-- 某某大学（双一流） | 软件工程（原方向：Java后端） | 本科在读（2024届）  
-- 主修课程：数据结构、操作系统、数据库原理、机器学习、深度学习（自学）  
-- GPA 3.6/4.0，校级算法竞赛三等奖  
+教育背景
+- 某某大学（双一流） | 软件工程（原方向：Java后端） | 本科在读（2024届）
+- 主修课程：数据结构、操作系统、数据库原理、机器学习、深度学习（自学）
+- GPA 3.6/4.0，校级算法竞赛三等奖
 
-技能清单  
-- 编程语言：精通 Python（2年）、熟悉 Java（3年）、了解 C++（1年）  
-- 框架/库：熟悉 PyTorch（1年）、TensorFlow Lite（6个月）、HuggingFace Transformers（6个月）  
-- 数据处理：熟悉 Pandas、NumPy、SQL（MySQL/PostgreSQL），了解 Spark（批处理场景）  
-- 模型部署：熟悉 FastAPI + Docker + ONNX Runtime（部署YOLOv5）、了解 TensorRT（Jetson板端优化）  
-- 工具链：熟练使用 Git、Jupyter、VS Code、Postman，熟悉 Linux 环境（Ubuntu 20.04）  
+技能清单
+- 编程语言：精通 Python（2年）、熟悉 Java（3年）、了解 C++（1年）
+- 框架/库：熟悉 PyTorch（1年）、TensorFlow Lite（6个月）、HuggingFace Transformers（6个月）
+- 数据处理：熟悉 Pandas、NumPy、SQL（MySQL/PostgreSQL），了解 Spark（批处理场景）
+- 模型部署：熟悉 FastAPI + Docker + ONNX Runtime（部署YOLOv5）、了解 TensorRT（Jetson板端优化）
+- 工具链：熟练使用 Git、Jupyter、VS Code、Postman，熟悉 Linux 环境（Ubuntu 20.04）
 
-项目经历  
-- 智能客服意图识别（个人项目，2025.1-2025.4）  
-  职责：基于 BERT（Chinese-roberta-wwm）微调意图分类模型，覆盖8类常见咨询（退货/换货/物流等），准确率91.5%。  
-  技术栈：PyTorch、HuggingFace、FastAPI、SQLite  
-  成果：上线至测试环境，API响应平均150ms，用Docker打包部署  
+项目经历
+- 智能客服意图识别（个人项目，2025.1-2025.4）
+  职责：基于 BERT（Chinese-roberta-wwm）微调意图分类模型，覆盖8类常见咨询（退货/换货/物流等），准确率91.5%。
+  技术栈：PyTorch、HuggingFace、FastAPI、SQLite
+  成果：上线至测试环境，API响应平均150ms，用Docker打包部署
 
-- 边缘端实时垃圾分拣模拟（课程设计，2024.9-2025.1）  
-  职责：使用YOLOv5s + OpenCV在树莓派上实现图片/视频流中的可回收物识别（纸板/塑料瓶/金属三类），均值平均精度（mAP）69.6%，帧率12FPS。  
-  技术栈：YOLOv5、OpenCV、TensorRT Lite  
-  备注：首次接触模型轻量化知识，完成了NCNN转换与INT8量化实验  
+- 边缘端实时垃圾分拣模拟（课程设计，2024.9-2025.1）
+  职责：使用YOLOv5s + OpenCV在树莓派上实现图片/视频流中的可回收物识别（纸板/塑料瓶/金属三类），均值平均精度（mAP）69.6%，帧率12FPS。
+  技术栈：YOLOv5、OpenCV、TensorRT Lite
+  备注：首次接触模型轻量化知识，完成了NCNN转换与INT8量化实验
 
-- 后端迁移到AI日志异常检测（实习项目，2024.7-2024.9）  
-  职责：将原有Java后端日志模块迁移为基于LSTM（Keras）的异常模式检测服务，通过滑动窗口预测后续日志事件，异常召回率85%，误报率每千条2.3次。  
-  技术栈：Keras（TensorFlow 2）、ELK（日志采集）、Flask  
-  成果：减少人工巡检频率约40%，并在内部测试中保持稳定运行30天无宕机  
+- 后端迁移到AI日志异常检测（实习项目，2024.7-2024.9）
+  职责：将原有Java后端日志模块迁移为基于LSTM（Keras）的异常模式检测服务，通过滑动窗口预测后续日志事件，异常召回率85%，误报率每千条2.3次。
+  技术栈：Keras（TensorFlow 2）、ELK（日志采集）、Flask
+  成果：减少人工巡检频率约40%，并在内部测试中保持稳定运行30天无宕机
 
-- 科研辅助：大模型文本改写（2025.3-至今）  
-  职责：微调LLaMA-7B（LoRA低秩适配）用于学术论文标题润色，BLEU提升0.12，与指导老师合作撰写应用笔记。  
-  技术栈：LLaMA、HuggingFace PEFT、Weights & Biases  
-  状态：论文投稿中（附录含模型评估与案例展示）  
+- 科研辅助：大模型文本改写（2025.3-至今）
+  职责：微调LLaMA-7B（LoRA低秩适配）用于学术论文标题润色，BLEU提升0.12，与指导老师合作撰写应用笔记。
+  技术栈：LLaMA、HuggingFace PEFT、Weights & Biases
+  状态：论文投稿中（附录含模型评估与案例展示）
 
-证书与活动  
-- 阿里云Apsara Clouder：机器学习应用基础（2024.8）  
-- JetBrains AI助手插件：通过“AI Developer Pack”实操认证（2024.12）  
+证书与活动
+- 阿里云Apsara Clouder：机器学习应用基础（2024.8）
+- JetBrains AI助手插件：通过“AI Developer Pack”实操认证（2024.12）
 
-个人总结  
-- 从Java/测试背景转到AI应用方向，有实际项目暴露过模型调优与部署问题  
+个人总结
+- 从Java/测试背景转到AI应用方向，有实际项目暴露过模型调优与部署问题
 
 - 对技术有好奇心，关注MCP/Agent等前沿方向，愿在正式环境中快速成长
 

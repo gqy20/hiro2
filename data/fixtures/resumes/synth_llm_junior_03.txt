@@ -1,26 +1,26 @@
-李同学  
-138****0000 | lixx@example.com | 北京市海淀区  
-求职意向：大模型应用开发工程师（实习/校招）  
+李同学
+138****0000 | lixx@example.com | 北京市海淀区
+求职意向：大模型应用开发工程师（实习/校招）
 
-教育背景  
-北京理工大学，计算机科学与技术，本科（2024届）  
-主修课程：机器学习、深度学习、自然语言处理、数据库原理。GPA 3.6/4.0。  
+教育背景
+北京理工大学，计算机科学与技术，本科（2024届）
+主修课程：机器学习、深度学习、自然语言处理、数据库原理。GPA 3.6/4.0。
 
-技能清单  
-- 精通 Python，熟练使用 PyTorch、Transformers 库（4.0±），熟悉 HuggingFace 生态（datasets、peft、accelerate）  
-- 熟悉 LLM 微调全流程：LoRA/QLoRA、指令微调、DPO（trl 库），具备数据清洗与构造经验  
-- 熟悉推理部署：vLLM、FastAPI、ONNX Runtime、TensorRT，了解量化（GPTQ/AWQ）与 KV Cache 优化  
-- 熟悉向量检索：FAISS、Milvus，掌握 RAG 流程（Chunking、Embedding、重排）  
-- 熟悉常用开发工具：Git、Docker、Linux，了解 Flask/Streamlit（1年使用经验）  
-- 了解主流开源模型：Qwen2、Llama3、ChatGLM3，能针对场景进行 prompt 工程与评测  
+技能清单
+- 精通 Python，熟练使用 PyTorch、Transformers 库（4.0±），熟悉 HuggingFace 生态（datasets、peft、accelerate）
+- 熟悉 LLM 微调全流程：LoRA/QLoRA、指令微调、DPO（trl 库），具备数据清洗与构造经验
+- 熟悉推理部署：vLLM、FastAPI、ONNX Runtime、TensorRT，了解量化（GPTQ/AWQ）与 KV Cache 优化
+- 熟悉向量检索：FAISS、Milvus，掌握 RAG 流程（Chunking、Embedding、重排）
+- 熟悉常用开发工具：Git、Docker、Linux，了解 Flask/Streamlit（1年使用经验）
+- 了解主流开源模型：Qwen2、Llama3、ChatGLM3，能针对场景进行 prompt 工程与评测
 
-项目经历  
-1. 法律条文问答助手（基于 RAG 的智能客服）  
-   职责：独立负责整体 pipeline。使用 PyMuPDF 抽取法律文本，按段落切分（256 token 重叠）后通过 bge-large-zh-v1.5 生成 embedding，存入 Milvus。检索端采用混合检索（BM25+向量）并接入 Qwen2-7B，使用 FastAPI 包装服务。  
-   技术栈：Python、Milvus、vLLM、Qwen2、Streamlit  
-   指标：QA 准确率达 82%（基于人工标注的 200 条测试集），首 token 延迟 < 300ms（V100 环境）。  
+项目经历
+1. 法律条文问答助手（基于 RAG 的智能客服）
+   职责：独立负责整体 pipeline。使用 PyMuPDF 抽取法律文本，按段落切分（256 token 重叠）后通过 bge-large-zh-v1.5 生成 embedding，存入 Milvus。检索端采用混合检索（BM25+向量）并接入 Qwen2-7B，使用 FastAPI 包装服务。
+   技术栈：Python、Milvus、vLLM、Qwen2、Streamlit
+   指标：QA 准确率达 82%（基于人工标注的 200 条测试集），首 token 延迟 < 300ms（V100 环境）。
 
-2. 电商商品评论情感微调（LoRA）  
-   职责：负责数据清洗与微调脚本编写。基于 5万条评论数据进行过滤、替换敏感词、构造 instruction 模板（输入/输出/解释三段式）。采用 Qwen2-7B 进行 LoRA 微调（r=8, lr=2e-4, batch_size=16, 3 epochs），使用评估集对比基座模型。  
-   技术栈：PyTorch、trl、peft、deepspeed  
+2. 电商商品评论情感微调（LoRA）
+   职责：负责数据清洗与微调脚本编写。基于 5万条评论数据进行过滤、替换敏感词、构造 instruction 模板（输入/输出/解释三段式）。采用 Qwen2-7B 进行 LoRA 微调（r=8, lr=2e-4, batch_size=16, 3 epochs），使用评估集对比基座模型。
+   技术栈：PyTorch、trl、peft、deepspeed
    成果：情感分类 F1 值从 0.76 提升至 0.91，且幻觉率降低 30%，后导

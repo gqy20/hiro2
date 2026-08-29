@@ -110,3 +110,59 @@ def test_task_decision_unknown_id_404() -> None:
         json={"decision": "ACCEPT"},
     )
     assert response.status_code == 404
+
+
+def test_career_resume_advice() -> None:
+    draft = {
+        "name": "张三",
+        "title": "AI 应用工程师",
+        "summary": "3 年 LLM 应用开发",
+        "skills": ["Python", "LangChain"],
+        "experiences": [
+            {
+                "company": "某公司",
+                "role": "后端",
+                "period": "2022-2024",
+                "bullets": ["做 RAG 问答 10w 日活"],
+            }
+        ],
+        "projects": [],
+        "education": [],
+    }
+    response = TestClient(app).post(
+        "/api/v1/career/resume/advice?job_version_id=ai-agent-v2", json=draft
+    )
+    assert response.status_code == 200
+    body = response.json()
+    assert body["required_total"] >= 4 and 0 <= body["required_covered"] <= body["required_total"]
+    kinds = {a["kind"] for a in body["advice"]}
+    assert "coverage" in kinds  # 必备未全覆盖 -> 覆盖差建议存在
+    assert body["advice"][0]["evidence"]  # 建议必须带证据
+
+
+def test_career_resume_advice_unknown_job_404() -> None:
+    response = TestClient(app).post(
+        "/api/v1/career/resume/advice?job_version_id=nonexistent", json={}
+    )
+    assert response.status_code == 404
+
+
+def test_career_resume_render_pdf() -> None:
+    import shutil
+
+    if not shutil.which("pandoc"):
+        import pytest
+
+        pytest.skip("CI 无 pandoc，渲染链路本地/容器验证")
+    draft = {
+        "name": "张三",
+        "title": "AI 应用工程师",
+        "skills": ["Python"],
+        "experiences": [],
+        "projects": [],
+        "education": [],
+    }
+    response = TestClient(app).post("/api/v1/career/resume/render", json=draft)
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("application/pdf")
+    assert response.content[:5] == b"%PDF-"

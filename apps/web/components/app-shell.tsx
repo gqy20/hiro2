@@ -33,6 +33,7 @@ const navigation = [
   { href: "/career/jobs", label: "目标岗位", icon: Graph },
   { href: "/profile", label: "我的画像", icon: ClipboardText },
   { href: "/career/path", label: "学习路径", icon: FlowArrow },
+  { href: "/career/resume", label: "简历工作台", icon: ClipboardText },
 ];
 
 // 求职成长工作区导航项（/diagnosis 为两区共享，不在排除列）

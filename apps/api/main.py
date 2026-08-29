@@ -39,6 +39,7 @@ from backend.application.service import ApplicationService
 from backend.application.snapshot import snapshot_enabled, snapshot_loop
 from backend.application.temporal_vm import build_skill_graph, build_tasks, build_temporal
 from backend.application.training import build_training_output
+from backend.candidates.resume_build import ResumeDraft, build_advice, render_pdf
 
 
 @asynccontextmanager
@@ -251,6 +252,30 @@ def evidence(evidence_id: str) -> dict:
 @app.get("/api/v1/career/home")
 def career_home() -> dict:
     return get_career_home()
+
+
+@app.post("/api/v1/career/resume/advice")
+def career_resume_advice(draft: ResumeDraft, job_version_id: str) -> dict:
+    """确定性建议（V1 零 LLM）：覆盖差/技能点具体化/结构检查，每条带证据。"""
+    try:
+        return build_advice(draft, job_version_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(404, str(exc)) from exc
+
+
+@app.post("/api/v1/career/resume/render")
+def career_resume_render(draft: ResumeDraft) -> Response:
+    """草稿 -> A4 PDF（pandoc + PyMuPDF Story，与合成测试集同链路）。"""
+    import tempfile
+    from pathlib import Path
+
+    with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as f:
+        out = Path(f.name)
+    try:
+        render_pdf(draft, out)
+        return Response(out.read_bytes(), media_type="application/pdf")
+    finally:
+        out.unlink(missing_ok=True)
 
 
 @app.get("/api/v1/candidates")

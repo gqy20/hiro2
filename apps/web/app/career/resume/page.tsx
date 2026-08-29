@@ -1,0 +1,43 @@
+import { AppShell } from "@/components/app-shell";
+import { ResumeStudio } from "@/components/resume-studio";
+import { WorkflowContext } from "@/components/workflow-context";
+import { apiFetch, isMockMode } from "@/lib/api/client";
+import { buildMockJobs, type PublishedJobsView } from "@/lib/career-jobs";
+
+export const dynamic = "force-dynamic";
+
+export default async function CareerResumePage() {
+  let view: PublishedJobsView = buildMockJobs();
+  if (!isMockMode()) {
+    try {
+      view = await apiFetch<PublishedJobsView>("/jobs/published", {
+        timeoutMs: 10000,
+      });
+    } catch {
+      // 岗位列表加载失败时仍可用 mock 列表进入工作台
+    }
+  }
+  const jobs = view.jobs.map((j) => ({
+    version_id: j.version_id,
+    title: j.title,
+  }));
+
+  return (
+    <AppShell>
+      <WorkflowContext
+        eyebrow="求职成长"
+        title="简历工作台"
+        stage="投递材料"
+        next="下载简历并投递"
+      />
+      <div className="page-heading">
+        <h1>简历工作台</h1>
+        <p>
+          填写结构化经历生成 PDF；右侧建议基于目标岗位的市场证据（JD
+          数与技能权重）， 随目标岗位切换而变化。
+        </p>
+      </div>
+      <ResumeStudio jobs={jobs} />
+    </AppShell>
+  );
+}

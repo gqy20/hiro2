@@ -81,6 +81,18 @@ projects[]
 user_corrections[]
 ```
 
+### ResumeDraft（简历生成 V1）
+
+```text
+name / contact / title / summary
+skills[]                    显式技能词（建议引擎归一对象；正文 bullet 不抽取）
+experiences[]{company, role, period, bullets[]}
+projects[]{name, desc, bullets[]}
+education[]{school, major, degree, period}
+advice[]{kind: coverage|specificity|structure, severity, title,
+         detail, suggestion, skill_id?, evidence{job_version_id, weight?, jd_count?}}
+```
+
 ### MatchReport
 
 ```text
@@ -354,6 +366,8 @@ GET  /api/v1/jobs/{id}/diff?base=v1&target=v2
 GET  /api/v1/jobs/{id}/training-output
 POST /api/v1/jobs/{id}/versions/{version}/publish
 GET  /api/v1/career/home
+POST /api/v1/career/resume/advice?job_version_id=   # 确定性建议（V1 零 LLM）
+POST /api/v1/career/resume/render                   # 草稿 -> A4 PDF
 POST /api/v1/candidates/profiles
 POST /api/v1/candidates/resumes
 POST /api/v1/matches

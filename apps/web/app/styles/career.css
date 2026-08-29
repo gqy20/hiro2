@@ -371,3 +371,137 @@
 .career-path-steps span {
   font-size: 13px;
 }
+
+/* 简历工作台：左编辑 + 右建议双栏 */
+.resume-studio {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.resume-editor h3,
+.resume-advice h3 {
+  margin: 18px 0 8px;
+  font-size: 14px;
+}
+.resume-field,
+.resume-field-row label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.resume-field-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+.resume-block {
+  border: 1px solid var(--border, #ddd);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.resume-add,
+.resume-actions button {
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border, #ccc);
+  background: var(--bg-elevated, #fff);
+  cursor: pointer;
+}
+.resume-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+  align-items: center;
+}
+.resume-download {
+  font-size: 13px;
+}
+.resume-error {
+  color: #c0392b;
+  font-size: 13px;
+}
+.resume-advice-head {
+  display: flex;
+  gap: 10px;
+  align-items: end;
+  margin-bottom: 10px;
+}
+.resume-advice-head label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  flex: 1;
+}
+.resume-advice-head button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent, #333);
+  color: #fff;
+  cursor: pointer;
+}
+.resume-coverage {
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.resume-advice-card {
+  border: 1px solid var(--border, #ddd);
+  border-left-width: 3px;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+.resume-advice-card.sev-high {
+  border-left-color: #c0392b;
+}
+.resume-advice-card.sev-medium {
+  border-left-color: #e67e22;
+}
+.resume-advice-card.sev-low {
+  border-left-color: #27ae60;
+}
+.resume-advice-card header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.resume-advice-kind {
+  font-size: 12px;
+  padding: 1px 8px;
+  border-radius: 10px;
+  background: var(--bg-muted, #f2f2f2);
+}
+.resume-sev {
+  margin-left: auto;
+  font-size: 12px;
+}
+.resume-advice-suggestion {
+  color: var(--fg-muted, #666);
+}
+.resume-advice-card footer {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--fg-muted, #888);
+}
+.resume-preview iframe {
+  width: 100%;
+  height: 520px;
+  border: 1px solid var(--border, #ddd);
+  border-radius: 8px;
+}
+@media (max-width: 960px) {
+  .resume-studio {
+    grid-template-columns: 1fr;
+  }
+}

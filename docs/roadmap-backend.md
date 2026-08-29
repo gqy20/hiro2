@@ -62,7 +62,7 @@
 | B-T4.2 | 指标计算 CLI | B-T4.1 | **完成** | 指标可重跑 | `evalset.py score` 确定性计算 |
 | B-T4.3 | 100+ JD 测试集导入 | B-T4.1 | **完成** | 真实、来源、标注、synthetic 标记 | 337 条（266 AI 域），全部真实采集 |
 | B-T4.4 | 单元、契约、集成测试 | 全部 | **完成** | coverage>=60% | 38 个测试全绿，coverage 65.12%，Makefile 强制 fail-under=60 |
-| B-T4.5 | Pipeline Run / Outbox | B-T2 | **进行中** | 长任务可追踪，事件幂等 | `outbox_events` migration + `scripts/outbox.py enqueue/consume` 已完成；worker 常驻调度待补 |
+| B-T4.5 | Pipeline Run / Outbox | B-T2 | **完成（2026-08-29）** | 长任务可追踪，事件幂等 | 消费逻辑归位 `backend/application/outbox.consume_batch`（失败带退避回 PENDING、达上限转 FAILED，FOR UPDATE SKIP LOCKED 并发安全）；常驻 worker `outbox_worker.py`（API lifespan 挂载，HIRO2_OUTBOX_WORKER 开关默认关、compose 默认开、30s 轮询）；CLI 壳化；域单测 3 例 |
 | B-T4.6 | Docker Compose 和健康检查 | 全部 | **完成** | 干净环境可启动 | `docker-compose.yml` 含 PostgreSQL/Neo4j/API/Web 健康依赖和 migration 初始化；`/health/live` + `/health/ready` |
 | B-T4.7 | 历史滚动回测 CLI | B-T2.8 | **完成** | 只用截止时间前数据 | `backtest.py` 月度滚动 + 双 as_of 闸门 |
 | B-T4.8 | 预测复盘与错误分析 | B-T4.7 | **完成** | 命中等级和改进建议 | error_types 分类（up->down 为主） |

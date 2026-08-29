@@ -303,7 +303,10 @@ def update_profile(candidate_id: str, req: ProfileRequest) -> dict:
 
 @app.get("/api/v1/temporal/dataset")
 def temporal_dataset() -> dict:
-    return build_temporal().model_dump()
+    data = build_temporal().model_dump()
+    # 前端契约：顶层 camelCase，内层字段保持 snake_case
+    data["backtestRecords"] = data.pop("backtest_records")
+    return data
 
 
 class SuggestionReviewRequest(BaseModel):

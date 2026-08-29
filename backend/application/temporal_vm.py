@@ -80,6 +80,7 @@ class SuggestionVM(_VM):
     suggested_level: str = ""
     reason: str
     review_status: str = "PENDING"
+    evidence_ids: list[str] = Field(default_factory=list)
 
 
 class TemporalVM(_VM):
@@ -209,8 +210,11 @@ def _build_temporal_db(dsn: str) -> TemporalVM:
         )
         signals = list(cur.fetchall())
         cur.execute(
-            """SELECT suggestion_id, job_id, skill_id, change_type, reason, review_status
-               FROM job_impact_suggestions ORDER BY suggestion_id"""
+            """SELECT s.suggestion_id, s.job_id, s.skill_id, s.change_type, s.reason,
+                      s.review_status, COALESCE(f.evidence_ids, '{}') AS evidence_ids
+               FROM job_impact_suggestions s
+               LEFT JOIN forecasts f ON f.forecast_id = s.forecast_id
+               ORDER BY s.suggestion_id"""
         )
         suggestions = list(cur.fetchall())
     return TemporalVM(
@@ -219,9 +223,7 @@ def _build_temporal_db(dsn: str) -> TemporalVM:
                 run_id=row["run_id"],
                 as_of_date=(row["metrics"].get("as_of_points") or [""])[0],
                 # run_id 形如 bt-h30 / bt-h30-r2，horizon 取数字段
-                horizon_days=int(
-                    row["run_id"].removeprefix("bt-h").split("-")[0]
-                ),
+                horizon_days=int(row["run_id"].removeprefix("bt-h").split("-")[0]),
                 status=row["status"],
                 metrics=row["metrics"],
             )
@@ -277,6 +279,7 @@ def _build_temporal_db(dsn: str) -> TemporalVM:
                 change_type=row["change_type"],
                 reason=row["reason"],
                 review_status=row["review_status"],
+                evidence_ids=list(row.get("evidence_ids") or []),
             )
             for row in suggestions
         ],

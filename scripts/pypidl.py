@@ -45,6 +45,26 @@ from leadtime import (  # noqa: E402
 )
 from runlog import RunContext  # noqa: E402
 
+
+def build_jd_months_asof() -> dict[str, Counter]:
+    """jd-parsed-asof.jsonl（jdasof 按发布日词典重算）-> 域月度命中。
+
+    消除历史 JD 的词典回望偏差（实测 2024 前 AI 域命中 253->123，51% 为未来词典）。
+    """
+    jd: dict[str, Counter] = defaultdict(Counter)
+    if not JD_ASOF.exists():
+        return jd
+    for line in JD_ASOF.open(encoding="utf-8"):
+        r = json.loads(line)
+        if not r.get("is_ai_role"):
+            continue
+        day = r.get("publish_date") or ""
+        if not day:
+            continue
+        for x in r.get("resolved") or []:
+            jd[x["skill_id"]][day[:7]] += 1
+    return jd
+
 ROOT = Path(__file__).resolve().parents[1]
 PKGS = ROOT / "data" / "PKGS.yml"
 RAW_DIR = ROOT / "data" / "raw" / "pypi"
@@ -52,6 +72,7 @@ HIST = RAW_DIR / "dlhist.csv"
 NPMHIST = RAW_DIR / "npmhist.csv"
 PEPYHIST = RAW_DIR / "pepyhist.csv"
 OUT = ROOT / "data" / "processed" / "pypi" / "relsignal.json"
+JD_ASOF = ROOT / "data" / "processed" / "jd-opencli" / "jd-parsed-asof.jsonl"
 
 API = "https://pypistats.org/api/packages/{pkg}/overall"
 PYPI_JSON = "https://pypi.org/pypi/{pkg}/json"
@@ -425,7 +446,8 @@ def cmd_run() -> dict:
     dl = build_dl_hist()
     npm = build_npm_hist()
     cap_series, pkg_meta = build_rel_months()
-    jds = build_jd_months()
+    # JD 侧优先用 as_of 重算版（jdasof），消除历史词典回望偏差
+    jds = build_jd_months_asof() or build_jd_months()
     sig = build_signal_months()
     cap_of = {item["pkg"]: item["cap"] for item in pkgs}
     share_onset, sustain = cfg.get("share_onset", 0.02), cfg.get("sustain", 0.30)

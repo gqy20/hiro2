@@ -35,6 +35,7 @@ from backend.application.joblist import build_published_jobs
 from backend.application.pipeline_runs import build_pipeline_runs
 from backend.application.quality import build_quality_overview
 from backend.application.service import ApplicationService
+from backend.application.outbox_worker import outbox_worker_enabled, outbox_worker_loop
 from backend.application.snapshot import snapshot_enabled, snapshot_loop
 from backend.application.temporal_vm import build_skill_graph, build_tasks, build_temporal
 from backend.application.training import build_training_output
@@ -53,6 +54,10 @@ async def _lifespan(_: FastAPI):
     if snapshot_enabled():
         tasks.append(asyncio.create_task(snapshot_loop()))
         print("[snapshot] 后台采集任务已启动", flush=True)
+    # Outbox worker：发布事件 -> Neo4j 投影自动消费（带退避重试）
+    if os.getenv("DATABASE_URL") and outbox_worker_enabled():
+        tasks.append(asyncio.create_task(outbox_worker_loop()))
+        print("[outbox] 后台消费 worker 已启动", flush=True)
     yield
     for t in tasks:
         t.cancel()

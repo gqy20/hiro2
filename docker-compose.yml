@@ -47,6 +47,8 @@ services:
       NEO4J_PASSWORD: hiro2password
       # JD 快照：容器内 chromium 可用即启动周期采集（jdcorp Playwright headless）
       HIRO2_SNAPSHOT_ENABLED: "true"
+      # Outbox worker：岗位发布事件自动投影 Neo4j（30s 轮询，失败退避重试）
+      HIRO2_OUTBOX_WORKER: "true"
     ports:
       - "8000:8000"
     depends_on:

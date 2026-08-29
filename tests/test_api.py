@@ -104,6 +104,26 @@ def test_temporal_suggestion_review_unknown_id_404() -> None:
     assert response.status_code == 404
 
 
+def test_skills_graph_switches_job_and_unknown_404() -> None:
+    """能力全景岗位切换契约：?job= 指定岗位版本，未知版本 404。"""
+    client = TestClient(app)
+
+    body = client.get("/api/v1/skills/graph?job=llm-algo-v2").json()
+    assert body["context"]["jobTitle"] == "大模型算法工程师"
+    assert body["context"]["targetVersion"] == "llm-algo-v2"
+    # 根节点是岗位本身，label 与岗位标题一致
+    root = next(n for n in body["nodes"] if n["id"] == "root")
+    assert root["label"] == "大模型算法工程师"
+
+    # 默认岗位仍为 ai-agent-v2，不受新参数影响
+    default = client.get("/api/v1/skills/graph").json()
+    assert default["context"]["targetVersion"] == "ai-agent-v2"
+
+    response = client.get("/api/v1/skills/graph?job=nonexistent-v9")
+    assert response.status_code == 404
+    assert "nonexistent-v9" in response.json()["detail"]
+
+
 def test_task_decision_unknown_id_404() -> None:
     response = TestClient(app).post(
         "/api/v1/tasks/task-nonexistent/decision",

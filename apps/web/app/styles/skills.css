@@ -18,6 +18,17 @@
   gap: 4px;
   border-bottom: 1px solid var(--line);
 }
+
+.skill-job-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skill-job-picker > span {
+  color: var(--muted);
+  font-size: 12px;
+}
 .skill-view-tabs button {
   padding: 8px 12px;
   border: 0;

@@ -362,7 +362,10 @@ def temporal_suggestion_review(suggestion_id: str, req: SuggestionReviewRequest)
 
 @app.get("/api/v1/skills/graph")
 def skills_graph(job: str = "ai-agent-v2") -> dict:
-    graph = build_skill_graph(job)
+    try:
+        graph = build_skill_graph(job)
+    except FileNotFoundError as exc:
+        raise HTTPException(404, str(exc)) from exc
     if os.getenv("NEO4J_URI"):
         try:
             from backend.infra.neo4j import read_job_graph

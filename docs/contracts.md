@@ -7,7 +7,7 @@
 3. 所有岗位、技能、变更和匹配结论引用 `evidence_id`。
 4. LLM 不能直接写正式岗位版本或 Neo4j。
 5. 发布版本不可变。
-6. Temporal Intelligence 只能提交岗位影响建议，不能直接发布岗位版本。
+6. 时间情报域只能提交岗位影响建议，不能直接发布岗位版本。
 7. PostgreSQL 是事实主库，Neo4j 和向量索引是可重建投影。
 
 ## 可信岗位版本语义
@@ -233,11 +233,11 @@ YAML 可以维护字段描述、枚举提示、必填标记和模型限制，但
 ```text
 Prompt YAML
   -> 任务说明、字段描述、模型限制
-Pydantic Agent Model
+Pydantic 模型（Agent 输出校验）
   -> 类型、枚举、范围、嵌套结构和输出校验
-Domain Model
+领域模型
   -> 证据、技能、版本和状态业务规则
-API View Model
+API 展示模型
   -> 前端可消费的聚合结果
 ```
 
@@ -364,6 +364,7 @@ GET  /api/v1/jobs/published
 GET  /api/v1/jobs/detected-changes
 GET  /api/v1/jobs/{id}/diff?base=v1&target=v2
 GET  /api/v1/jobs/{id}/training-output
+GET  /api/v1/skills/graph?job=<version_id>   # 能力全景；job 缺省 ai-agent-v2，未知岗位版本 404
 POST /api/v1/jobs/{id}/versions/{version}/publish
 GET  /api/v1/career/home
 POST /api/v1/career/resume/advice?job_version_id=   # 确定性建议（V1 零 LLM）
@@ -444,14 +445,14 @@ BacktestCompleted
 
 ## CLI 与 API
 
-CLI 和前端 API 使用同一 Application Use Case。例如 `run_backtest(request)` 同时服务：
+命令行和前端 API 使用同一应用层用例。例如 `run_backtest(request)` 同时服务：
 
 ```text
 hiro2 temporal backtest
 POST /api/v1/temporal/backtests
 ```
 
-前端只消费 API View Model；CLI 负责调试、回测、Trace 和 JSON/Markdown 导出。
+前端只消费 API 展示模型；CLI 负责调试、回测、Trace 和 JSON/Markdown 导出。
 
 CLI、API 和 worker 使用同一 `RunContext` 写入 `data/runs/<run_id>/events.jsonl`，终端文本只是人类摘要，不作为机器审计来源。
 

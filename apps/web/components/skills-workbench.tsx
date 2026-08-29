@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { X } from "@phosphor-icons/react";
 import { Button, Select } from "antd";
@@ -17,11 +18,14 @@ import type {
   SkillNode,
   TechStack,
 } from "@/lib/skill";
+import type { PublishedJob } from "@/lib/career-jobs";
 import type { ChangeItem, JobUpdateContext } from "@/lib/job-update";
 import type { Evidence } from "@/lib/job-update";
 
 type SkillsWorkbenchProps = {
   fixture: SkillGraphFixture;
+  jobs: PublishedJob[];
+  jobVersionId: string;
   state?: "ready" | "empty" | "error";
 };
 
@@ -66,8 +70,11 @@ function toChangeItem(node: SkillNode, context: JobUpdateContext): ChangeItem {
 
 export function SkillsWorkbench({
   fixture,
+  jobs,
+  jobVersionId,
   state = "ready",
 }: SkillsWorkbenchProps) {
+  const router = useRouter();
   const [techStack, setTechStack] = useState<TechStack | "all">("all");
   const [roleFilter, setRoleFilter] = useState<SkillNode["role"] | "all">(
     "all",
@@ -134,6 +141,11 @@ export function SkillsWorkbench({
     setCapabilityType("all");
   }
 
+  function switchJob(nextVersionId: string) {
+    if (nextVersionId === jobVersionId) return;
+    router.push(`/skills?job=${encodeURIComponent(nextVersionId)}`);
+  }
+
   if (state === "error")
     return (
       <AppShell>
@@ -175,6 +187,27 @@ export function SkillsWorkbench({
                 {`${fixture.context.jobTitle} · ${fixture.context.baselineVersion} → ${fixture.context.targetVersion}`}
               </span>
             </div>
+            {jobs.length > 0 ? (
+              <label className="skill-job-picker">
+                <span>岗位</span>
+                <Select
+                  aria-label="切换岗位"
+                  onChange={switchJob}
+                  options={jobs.map((job) => ({
+                    label: job.title,
+                    value: job.version_id,
+                  }))}
+                  value={
+                    jobs.some((job) => job.version_id === jobVersionId)
+                      ? jobVersionId
+                      : undefined
+                  }
+                  placeholder="当前岗位"
+                  size="small"
+                  style={{ minWidth: 180 }}
+                />
+              </label>
+            ) : null}
           </header>
 
           <div className="skill-view-tabs" role="tablist" aria-label="能力视图">

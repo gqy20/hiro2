@@ -1,0 +1,1238 @@
+{
+  "fixtureVersion": "v2",
+  "mode": "synthetic",
+  "run": {
+    "id": "skill-graph-v1",
+    "datasetVersion": "v6",
+    "status": "REVIEWING"
+  },
+  "context": {
+    "jobTitle": "大模型算法工程师",
+    "baselineVersion": "v1",
+    "targetVersion": "llm-algo-v2",
+    "timeWindow": "2026-08-26"
+  },
+  "nodes": [
+    {
+      "id": "root",
+      "label": "大模型算法工程师",
+      "capabilityId": "root",
+      "pointName": null,
+      "role": "required",
+      "status": "added",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 400,
+        "y": 40
+      },
+      "techStack": "LLM",
+      "jobVersions": [],
+      "signal": null
+    },
+    {
+      "id": "cap_01",
+      "label": "LLM应用",
+      "capabilityId": "cap_01",
+      "pointName": null,
+      "role": "required",
+      "status": "added",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 120,
+        "y": 140
+      },
+      "techStack": "LLM",
+      "jobVersions": [
+        {
+          "versionId": "data-sec-v2",
+          "title": "数据安全工程师",
+          "role": "required",
+          "weight": 0.2
+        },
+        {
+          "versionId": "dc-ops-v2",
+          "title": "数据中心运维工程师",
+          "role": "required",
+          "weight": 0.182
+        },
+        {
+          "versionId": "ai-pm-v2",
+          "title": "AI产品经理",
+          "role": "required",
+          "weight": 0.154
+        },
+        {
+          "versionId": "ai-trainer-v3",
+          "title": "AI训练师/数据标注主管",
+          "role": "required",
+          "weight": 0.139
+        },
+        {
+          "versionId": "ai-trainer-v2",
+          "title": "AI训练师/数据标注主管",
+          "role": "required",
+          "weight": 0.125
+        },
+        {
+          "versionId": "mlops-v2",
+          "title": "AI模型部署工程师(MLOps)",
+          "role": "required",
+          "weight": 0.123
+        },
+        {
+          "versionId": "llm-algo-v2",
+          "title": "大模型算法工程师",
+          "role": "required",
+          "weight": 0.12
+        },
+        {
+          "versionId": "ai-agent-v2",
+          "title": "AI Agent 工程师",
+          "role": "required",
+          "weight": 0.119
+        },
+        {
+          "versionId": "data-sec-v3",
+          "title": "数据安全工程师",
+          "role": "required",
+          "weight": 0.102
+        },
+        {
+          "versionId": "nlp-mm-v2",
+          "title": "NLP/多模态研究员",
+          "role": "required",
+          "weight": 0.076
+        },
+        {
+          "versionId": "cv-v2",
+          "title": "计算机视觉工程师",
+          "role": "required",
+          "weight": 0.065
+        },
+        {
+          "versionId": "dc-ops-v3",
+          "title": "数据中心运维工程师",
+          "role": "required",
+          "weight": 0.063
+        },
+        {
+          "versionId": "data-analyst-v2",
+          "title": "数据分析师(AI增强)",
+          "role": "preferred",
+          "weight": 0.062
+        },
+        {
+          "versionId": "data-analyst-v3",
+          "title": "数据分析师(AI增强)",
+          "role": "preferred",
+          "weight": 0.051
+        },
+        {
+          "versionId": "bigdata-v3",
+          "title": "大数据工程师",
+          "role": "preferred",
+          "weight": 0.043
+        },
+        {
+          "versionId": "bigdata-v2",
+          "title": "大数据工程师",
+          "role": "preferred",
+          "weight": 0.042
+        }
+      ],
+      "signal": {
+        "jdMentions": 2286,
+        "mentionShare": 0.129
+      }
+    },
+    {
+      "id": "cap_02",
+      "label": "Prompt工程",
+      "capabilityId": "cap_02",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 680,
+        "y": 140
+      },
+      "techStack": "LLM",
+      "jobVersions": [
+        {
+          "versionId": "ai-pm-v2",
+          "title": "AI产品经理",
+          "role": "required",
+          "weight": 0.09
+        },
+        {
+          "versionId": "ai-agent-v2",
+          "title": "AI Agent 工程师",
+          "role": "preferred",
+          "weight": 0.051
+        },
+        {
+          "versionId": "bigdata-v2",
+          "title": "大数据工程师",
+          "role": "preferred",
+          "weight": 0.042
+        },
+        {
+          "versionId": "mlops-v2",
+          "title": "AI模型部署工程师(MLOps)",
+          "role": "preferred",
+          "weight": 0.035
+        },
+        {
+          "versionId": "llm-algo-v2",
+          "title": "大模型算法工程师",
+          "role": "preferred",
+          "weight": 0.03
+        }
+      ],
+      "signal": {
+        "jdMentions": 140,
+        "mentionShare": 0.008
+      }
+    },
+    {
+      "id": "cap_03",
+      "label": "模型微调",
+      "capabilityId": "cap_03",
+      "pointName": null,
+      "role": "required",
+      "status": "added",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 120,
+        "y": 230
+      },
+      "techStack": "LLM",
+      "jobVersions": [
+        {
+          "versionId": "llm-algo-v2",
+          "title": "大模型算法工程师",
+          "role": "required",
+          "weight": 0.127
+        },
+        {
+          "versionId": "ai-trainer-v3",
+          "title": "AI训练师/数据标注主管",
+          "role": "required",
+          "weight": 0.093
+        },
+        {
+          "versionId": "bigdata-v2",
+          "title": "大数据工程师",
+          "role": "required",
+          "weight": 0.083
+        },
+        {
+          "versionId": "data-analyst-v2",
+          "title": "数据分析师(AI增强)",
+          "role": "preferred",
+          "weight": 0.062
+        },
+        {
+          "versionId": "nlp-mm-v2",
+          "title": "NLP/多模态研究员",
+          "role": "preferred",
+          "weight": 0.043
+        },
+        {
+          "versionId": "mlops-v2",
+          "title": "AI模型部署工程师(MLOps)",
+          "role": "preferred",
+          "weight": 0.035
+        },
+        {
+          "versionId": "ai-agent-v2",
+          "title": "AI Agent 工程师",
+          "role": "preferred",
+          "weight": 0.03
+        },
+        {
+          "versionId": "cv-v2",
+          "title": "计算机视觉工程师",
+          "role": "preferred",
+          "weight": 0.026
+        },
+        {
+          "versionId": "data-analyst-v3",
+          "title": "数据分析师(AI增强)",
+          "role": "preferred",
+          "weight": 0.014
+        }
+      ],
+      "signal": {
+        "jdMentions": 875,
+        "mentionShare": 0.049
+      }
+    },
+    {
+      "id": "cap_04",
+      "label": "AI Agent",
+      "capabilityId": "cap_04",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 680,
+        "y": 230
+      },
+      "techStack": "Agent",
+      "jobVersions": [
+        {
+          "versionId": "ai-agent-v2",
+          "title": "AI Agent 工程师",
+          "role": "required",
+          "weight": 0.311
+        },
+        {
+          "versionId": "data-sec-v3",
+          "title": "数据安全工程师",
+          "role": "required",
+          "weight": 0.132
+        },
+        {
+          "versionId": "sensor-v2",
+          "title": "智能传感器工程师",
+          "role": "required",
+          "weight": 0.125
+        },
+        {
+          "versionId": "mlops-v2",
+          "title": "AI模型部署工程师(MLOps)",
+          "role": "required",
+          "weight": 0.123
+        },
+        {
+          "versionId": "ai-trainer-v3",
+          "title": "AI训练师/数据标注主管",
+          "role": "required",
+          "weight": 0.111
+        },
+        {
+          "versionId": "dc-ops-v3",
+          "title": "数据中心运维工程师",
+          "role": "required",
+          "weight": 0.111
+        },
+        {
+          "versionId": "ai-pm-v2",
+          "title": "AI产品经理",
+          "role": "required",
+          "weight": 0.103
+        },
+        {
+          "versionId": "llm-algo-v2",
+          "title": "大模型算法工程师",
+          "role": "preferred",
+          "weight": 0.095
+        },
+        {
+          "versionId": "dc-ops-v2",
+          "title": "数据中心运维工程师",
+          "role": "preferred",
+          "weight": 0.091
+        },
+        {
+          "versionId": "ai-trainer-v2",
+          "title": "AI训练师/数据标注主管",
+          "role": "preferred",
+          "weight": 0.083
+        },
+        {
+          "versionId": "data-analyst-v3",
+          "title": "数据分析师(AI增强)",
+          "role": "required",
+          "weight": 0.076
+        },
+        {
+          "versionId": "nlp-mm-v2",
+          "title": "NLP/多模态研究员",
+          "role": "preferred",
+          "weight": 0.054
+        },
+        {
+          "versionId": "bigdata-v3",
+          "title": "大数据工程师",
+          "role": "preferred",
+          "weight": 0.046
+        },
+        {
+          "versionId": "bigdata-v2",
+          "title": "大数据工程师",
+          "role": "preferred",
+          "weight": 0.042
+        },
+        {
+          "versionId": "cv-v2",
+          "title": "计算机视觉工程师",
+          "role": "preferred",
+          "weight": 0.026
+        }
+      ],
+      "signal": {
+        "jdMentions": 1927,
+        "mentionShare": 0.109
+      }
+    },
+    {
+      "id": "cap_05",
+      "label": "多模态AI",
+      "capabilityId": "cap_05",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 120,
+        "y": 320
+      },
+      "techStack": "多模态",
+      "jobVersions": [
+        {
+          "versionId": "cv-v2",
+          "title": "计算机视觉工程师",
+          "role": "required",
+          "weight": 0.234
+        },
+        {
+          "versionId": "ai-trainer-v3",
+          "title": "AI训练师/数据标注主管",
+          "role": "required",
+          "weight": 0.204
+        },
+        {
+          "versionId": "ai-trainer-v2",
+          "title": "AI训练师/数据标注主管",
+          "role": "required",
+          "weight": 0.167
+        },
+        {
+          "versionId": "mlops-v2",
+          "title": "AI模型部署工程师(MLOps)",
+          "role": "required",
+          "weight": 0.123
+        },
+        {
+          "versionId": "llm-algo-v2",
+          "title": "大模型算法工程师",
+          "role": "preferred",
+          "weight": 0.072
+        },
+        {
+          "versionId": "nlp-mm-v2",
+          "title": "NLP/多模态研究员",
+          "role": "required",
+          "weight": 0.054
+        },
+        {
+          "versionId": "ai-agent-v2",
+          "title": "AI Agent 工程师",
+          "role": "preferred",
+          "weight": 0.03
+        }
+      ],
+      "signal": {
+        "jdMentions": 1423,
+        "mentionShare": 0.08
+      }
+    },
+    {
+      "id": "cap_06",
+      "label": "RAG/知识库",
+      "capabilityId": "cap_06",
+      "pointName": null,
+      "role": "required",
+      "status": "added",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 680,
+        "y": 320
+      },
+      "techStack": "RAG",
+      "jobVersions": [
+        {
+          "versionId": "ai-pm-v2",
+          "title": "AI产品经理",
+          "role": "required",
+          "weight": 0.154
+        },
+        {
+          "versionId": "ai-trainer-v2",
+          "title": "AI训练师/数据标注主管",
+          "role": "required",
+          "weight": 0.125
+        },
+        {
+          "versionId": "ai-agent-v2",
+          "title": "AI Agent 工程师",
+          "role": "required",
+          "weight": 0.106
+        },
+        {
+          "versionId": "llm-algo-v2",
+          "title": "大模型算法工程师",
+          "role": "required",
+          "weight": 0.101
+        },
+        {
+          "versionId": "mlops-v2",
+          "title": "AI模型部署工程师(MLOps)",
+          "role": "preferred",
+          "weight": 0.088
+        },
+        {
+          "versionId": "bigdata-v2",
+          "title": "大数据工程师",
+          "role": "preferred",
+          "weight": 0.083
+        },
+        {
+          "versionId": "ai-trainer-v3",
+          "title": "AI训练师/数据标注主管",
+          "role": "preferred",
+          "weight": 0.065
+        },
+        {
+          "versionId": "cv-v2",
+          "title": "计算机视觉工程师",
+          "role": "required",
+          "weight": 0.039
+        }
+      ],
+      "signal": {
+        "jdMentions": 590,
+        "mentionShare": 0.033
+      }
+    },
+    {
+      "id": "cap_07",
+      "label": "Python",
+      "capabilityId": "cap_07",
+      "pointName": null,
+      "role": "required",
+      "status": "added",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 120,
+        "y": 410
+      },
+      "techStack": "数据",
+      "jobVersions": [
+        {
+          "versionId": "cv-v2",
+          "title": "计算机视觉工程师",
+          "role": "required",
+          "weight": 0.247
+        },
+        {
+          "versionId": "nlp-mm-v2",
+          "title": "NLP/多模态研究员",
+          "role": "required",
+          "weight": 0.239
+        },
+        {
+          "versionId": "data-analyst-v3",
+          "title": "数据分析师(AI增强)",
+          "role": "required",
+          "weight": 0.208
+        },
+        {
+          "versionId": "data-sec-v2",
+          "title": "数据安全工程师",
+          "role": "required",
+          "weight": 0.2
+        },
+        {
+          "versionId": "data-sec-v3",
+          "title": "数据安全工程师",
+          "role": "required",
+          "weight": 0.192
+        },
+        {
+          "versionId": "bigdata-v3",
+          "title": "大数据工程师",
+          "role": "required",
+          "weight": 0.178
+        },
+        {
+          "versionId": "dc-ops-v3",
+          "title": "数据中心运维工程师",
+          "role": "required",
+          "weight": 0.175
+        },
+        {
+          "versionId": "mlops-v2",
+          "title": "AI模型部署工程师(MLOps)",
+          "role": "required",
+          "weight": 0.175
+        },
+        {
+          "versionId": "bigdata-v2",
+          "title": "大数据工程师",
+          "role": "required",
+          "weight": 0.167
+        },
+        {
+          "versionId": "llm-algo-v2",
+          "title": "大模型算法工程师",
+          "role": "required",
+          "weight": 0.143
+        },
+        {
+          "versionId": "ai-agent-v2",
+          "title": "AI Agent 工程师",
+          "role": "required",
+          "weight": 0.114
+        },
+        {
+          "versionId": "ai-trainer-v3",
+          "title": "AI训练师/数据标注主管",
+          "role": "preferred",
+          "weight": 0.083
+        },
+        {
+          "versionId": "data-analyst-v2",
+          "title": "数据分析师(AI增强)",
+          "role": "required",
+          "weight": 0.062
+        },
+        {
+          "versionId": "ai-trainer-v2",
+          "title": "AI训练师/数据标注主管",
+          "role": "preferred",
+          "weight": 0.042
+        },
+        {
+          "versionId": "ai-pm-v2",
+          "title": "AI产品经理",
+          "role": "preferred",
+          "weight": 0.038
+        }
+      ],
+      "signal": {
+        "jdMentions": 2618,
+        "mentionShare": 0.148
+      }
+    },
+    {
+      "id": "cap_09",
+      "label": "大数据处理",
+      "capabilityId": "cap_09",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 120,
+        "y": 500
+      },
+      "techStack": "数据",
+      "jobVersions": [
+        {
+          "versionId": "bigdata-v3",
+          "title": "大数据工程师",
+          "role": "required",
+          "weight": 0.322
+        },
+        {
+          "versionId": "data-analyst-v2",
+          "title": "数据分析师(AI增强)",
+          "role": "required",
+          "weight": 0.312
+        },
+        {
+          "versionId": "data-analyst-v3",
+          "title": "数据分析师(AI增强)",
+          "role": "required",
+          "weight": 0.195
+        },
+        {
+          "versionId": "bigdata-v2",
+          "title": "大数据工程师",
+          "role": "required",
+          "weight": 0.167
+        },
+        {
+          "versionId": "ai-pm-v2",
+          "title": "AI产品经理",
+          "role": "required",
+          "weight": 0.077
+        },
+        {
+          "versionId": "nlp-mm-v2",
+          "title": "NLP/多模态研究员",
+          "role": "required",
+          "weight": 0.065
+        },
+        {
+          "versionId": "data-sec-v3",
+          "title": "数据安全工程师",
+          "role": "preferred",
+          "weight": 0.054
+        },
+        {
+          "versionId": "ai-trainer-v2",
+          "title": "AI训练师/数据标注主管",
+          "role": "preferred",
+          "weight": 0.042
+        },
+        {
+          "versionId": "ai-trainer-v3",
+          "title": "AI训练师/数据标注主管",
+          "role": "preferred",
+          "weight": 0.028
+        },
+        {
+          "versionId": "llm-algo-v2",
+          "title": "大模型算法工程师",
+          "role": "preferred",
+          "weight": 0.023
+        },
+        {
+          "versionId": "cv-v2",
+          "title": "计算机视觉工程师",
+          "role": "preferred",
+          "weight": 0.013
+        }
+      ],
+      "signal": {
+        "jdMentions": 1405,
+        "mentionShare": 0.079
+      }
+    },
+    {
+      "id": "cap_12",
+      "label": "ML/DL算法",
+      "capabilityId": "cap_12",
+      "pointName": null,
+      "role": "required",
+      "status": "added",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 680,
+        "y": 590
+      },
+      "techStack": "工程",
+      "jobVersions": [
+        {
+          "versionId": "sensor-v2",
+          "title": "智能传感器工程师",
+          "role": "required",
+          "weight": 0.5
+        },
+        {
+          "versionId": "nlp-mm-v2",
+          "title": "NLP/多模态研究员",
+          "role": "required",
+          "weight": 0.424
+        },
+        {
+          "versionId": "cv-v2",
+          "title": "计算机视觉工程师",
+          "role": "required",
+          "weight": 0.247
+        },
+        {
+          "versionId": "llm-algo-v2",
+          "title": "大模型算法工程师",
+          "role": "required",
+          "weight": 0.209
+        },
+        {
+          "versionId": "data-sec-v2",
+          "title": "数据安全工程师",
+          "role": "required",
+          "weight": 0.2
+        },
+        {
+          "versionId": "data-analyst-v2",
+          "title": "数据分析师(AI增强)",
+          "role": "required",
+          "weight": 0.188
+        },
+        {
+          "versionId": "data-analyst-v3",
+          "title": "数据分析师(AI增强)",
+          "role": "required",
+          "weight": 0.143
+        },
+        {
+          "versionId": "ai-trainer-v2",
+          "title": "AI训练师/数据标注主管",
+          "role": "required",
+          "weight": 0.125
+        },
+        {
+          "versionId": "mlops-v2",
+          "title": "AI模型部署工程师(MLOps)",
+          "role": "required",
+          "weight": 0.105
+        },
+        {
+          "versionId": "ai-trainer-v3",
+          "title": "AI训练师/数据标注主管",
+          "role": "required",
+          "weight": 0.093
+        },
+        {
+          "versionId": "bigdata-v2",
+          "title": "大数据工程师",
+          "role": "required",
+          "weight": 0.083
+        },
+        {
+          "versionId": "bigdata-v3",
+          "title": "大数据工程师",
+          "role": "preferred",
+          "weight": 0.055
+        },
+        {
+          "versionId": "ai-pm-v2",
+          "title": "AI产品经理",
+          "role": "preferred",
+          "weight": 0.051
+        },
+        {
+          "versionId": "ai-agent-v2",
+          "title": "AI Agent 工程师",
+          "role": "preferred",
+          "weight": 0.028
+        },
+        {
+          "versionId": "dc-ops-v3",
+          "title": "数据中心运维工程师",
+          "role": "preferred",
+          "weight": 0.016
+        }
+      ],
+      "signal": {
+        "jdMentions": 2455,
+        "mentionShare": 0.139
+      }
+    },
+    {
+      "id": "cap_13",
+      "label": "云计算",
+      "capabilityId": "cap_13",
+      "pointName": null,
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 120,
+        "y": 680
+      },
+      "techStack": "工程",
+      "jobVersions": [
+        {
+          "versionId": "dc-ops-v3",
+          "title": "数据中心运维工程师",
+          "role": "required",
+          "weight": 0.222
+        },
+        {
+          "versionId": "dc-ops-v2",
+          "title": "数据中心运维工程师",
+          "role": "required",
+          "weight": 0.182
+        },
+        {
+          "versionId": "data-sec-v3",
+          "title": "数据安全工程师",
+          "role": "preferred",
+          "weight": 0.066
+        },
+        {
+          "versionId": "mlops-v2",
+          "title": "AI模型部署工程师(MLOps)",
+          "role": "preferred",
+          "weight": 0.053
+        },
+        {
+          "versionId": "bigdata-v3",
+          "title": "大数据工程师",
+          "role": "preferred",
+          "weight": 0.043
+        },
+        {
+          "versionId": "cv-v2",
+          "title": "计算机视觉工程师",
+          "role": "preferred",
+          "weight": 0.039
+        },
+        {
+          "versionId": "llm-algo-v2",
+          "title": "大模型算法工程师",
+          "role": "preferred",
+          "weight": 0.023
+        }
+      ],
+      "signal": {
+        "jdMentions": 750,
+        "mentionShare": 0.042
+      }
+    },
+    {
+      "id": "cap_01.推理",
+      "label": "推理",
+      "capabilityId": "cap_01",
+      "pointName": "推理",
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 560,
+        "y": 400
+      },
+      "techStack": "LLM",
+      "jobVersions": [],
+      "signal": {
+        "jdMentions": 293,
+        "mentionShare": 0.017
+      }
+    },
+    {
+      "id": "cap_01.代码生成",
+      "label": "代码生成",
+      "capabilityId": "cap_01",
+      "pointName": "代码生成",
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 680,
+        "y": 460
+      },
+      "techStack": "LLM",
+      "jobVersions": [],
+      "signal": {
+        "jdMentions": 425,
+        "mentionShare": 0.024
+      }
+    },
+    {
+      "id": "cap_04.MCP",
+      "label": "MCP",
+      "capabilityId": "cap_04",
+      "pointName": "MCP",
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 0,
+        "y": 400
+      },
+      "techStack": "Agent",
+      "jobVersions": [],
+      "signal": {
+        "jdMentions": 134,
+        "mentionShare": 0.008
+      }
+    },
+    {
+      "id": "cap_04.工具调用",
+      "label": "工具调用",
+      "capabilityId": "cap_04",
+      "pointName": "工具调用",
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 120,
+        "y": 460
+      },
+      "techStack": "Agent",
+      "jobVersions": [],
+      "signal": {
+        "jdMentions": 216,
+        "mentionShare": 0.012
+      }
+    },
+    {
+      "id": "cap_04.联网搜索",
+      "label": "联网搜索",
+      "capabilityId": "cap_04",
+      "pointName": "联网搜索",
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 240,
+        "y": 520
+      },
+      "techStack": "Agent",
+      "jobVersions": [],
+      "signal": {
+        "jdMentions": 84,
+        "mentionShare": 0.005
+      }
+    },
+    {
+      "id": "cap_04.深度研究",
+      "label": "深度研究",
+      "capabilityId": "cap_04",
+      "pointName": "深度研究",
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 0,
+        "y": 580
+      },
+      "techStack": "Agent",
+      "jobVersions": [],
+      "signal": {
+        "jdMentions": 12,
+        "mentionShare": 0.001
+      }
+    },
+    {
+      "id": "cap_04.记忆",
+      "label": "记忆",
+      "capabilityId": "cap_04",
+      "pointName": "记忆",
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 120,
+        "y": 640
+      },
+      "techStack": "Agent",
+      "jobVersions": [],
+      "signal": {
+        "jdMentions": 59,
+        "mentionShare": 0.003
+      }
+    },
+    {
+      "id": "cap_05.图像生成",
+      "label": "图像生成",
+      "capabilityId": "cap_05",
+      "pointName": "图像生成",
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 0,
+        "y": 400
+      },
+      "techStack": "多模态",
+      "jobVersions": [],
+      "signal": {
+        "jdMentions": 121,
+        "mentionShare": 0.007
+      }
+    },
+    {
+      "id": "cap_05.视频生成",
+      "label": "视频生成",
+      "capabilityId": "cap_05",
+      "pointName": "视频生成",
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 120,
+        "y": 460
+      },
+      "techStack": "多模态",
+      "jobVersions": [],
+      "signal": {
+        "jdMentions": 61,
+        "mentionShare": 0.003
+      }
+    },
+    {
+      "id": "cap_05.语音",
+      "label": "语音",
+      "capabilityId": "cap_05",
+      "pointName": "语音",
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 240,
+        "y": 520
+      },
+      "techStack": "多模态",
+      "jobVersions": [],
+      "signal": {
+        "jdMentions": 276,
+        "mentionShare": 0.016
+      }
+    },
+    {
+      "id": "cap_06.检索评测",
+      "label": "检索评测",
+      "capabilityId": "cap_06",
+      "pointName": "检索评测",
+      "role": "preferred",
+      "status": "stable",
+      "aliases": [],
+      "evidenceIds": [],
+      "position": {
+        "x": 560,
+        "y": 400
+      },
+      "techStack": "RAG",
+      "jobVersions": [],
+      "signal": {
+        "jdMentions": 40,
+        "mentionShare": 0.002
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-root-cap_01",
+      "source": "root",
+      "target": "cap_01"
+    },
+    {
+      "id": "e-root-cap_02",
+      "source": "root",
+      "target": "cap_02"
+    },
+    {
+      "id": "e-root-cap_03",
+      "source": "root",
+      "target": "cap_03"
+    },
+    {
+      "id": "e-root-cap_04",
+      "source": "root",
+      "target": "cap_04"
+    },
+    {
+      "id": "e-root-cap_05",
+      "source": "root",
+      "target": "cap_05"
+    },
+    {
+      "id": "e-root-cap_06",
+      "source": "root",
+      "target": "cap_06"
+    },
+    {
+      "id": "e-root-cap_07",
+      "source": "root",
+      "target": "cap_07"
+    },
+    {
+      "id": "e-root-cap_09",
+      "source": "root",
+      "target": "cap_09"
+    },
+    {
+      "id": "e-root-cap_12",
+      "source": "root",
+      "target": "cap_12"
+    },
+    {
+      "id": "e-root-cap_13",
+      "source": "root",
+      "target": "cap_13"
+    },
+    {
+      "id": "e-cap_01-cap_01.推理",
+      "source": "cap_01",
+      "target": "cap_01.推理"
+    },
+    {
+      "id": "e-cap_01-cap_01.代码生成",
+      "source": "cap_01",
+      "target": "cap_01.代码生成"
+    },
+    {
+      "id": "e-cap_04-cap_04.MCP",
+      "source": "cap_04",
+      "target": "cap_04.MCP"
+    },
+    {
+      "id": "e-cap_04-cap_04.工具调用",
+      "source": "cap_04",
+      "target": "cap_04.工具调用"
+    },
+    {
+      "id": "e-cap_04-cap_04.联网搜索",
+      "source": "cap_04",
+      "target": "cap_04.联网搜索"
+    },
+    {
+      "id": "e-cap_04-cap_04.深度研究",
+      "source": "cap_04",
+      "target": "cap_04.深度研究"
+    },
+    {
+      "id": "e-cap_04-cap_04.记忆",
+      "source": "cap_04",
+      "target": "cap_04.记忆"
+    },
+    {
+      "id": "e-cap_05-cap_05.图像生成",
+      "source": "cap_05",
+      "target": "cap_05.图像生成"
+    },
+    {
+      "id": "e-cap_05-cap_05.视频生成",
+      "source": "cap_05",
+      "target": "cap_05.视频生成"
+    },
+    {
+      "id": "e-cap_05-cap_05.语音",
+      "source": "cap_05",
+      "target": "cap_05.语音"
+    },
+    {
+      "id": "e-cap_06-cap_06.检索评测",
+      "source": "cap_06",
+      "target": "cap_06.检索评测"
+    }
+  ],
+  "filterOptions": {
+    "techStacks": [
+      "工程",
+      "治理",
+      "多模态",
+      "LLM",
+      "Agent",
+      "RAG",
+      "数据"
+    ],
+    "roles": [
+      "required",
+      "preferred"
+    ],
+    "capabilityTypes": [
+      "capability",
+      "point"
+    ]
+  }
+}

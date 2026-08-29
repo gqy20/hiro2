@@ -473,6 +473,14 @@ input:focus-visible {
   gap: 6px;
 }
 
+/* 能力全景页标题区：左侧标题 + 右侧岗位选择器同排 */
+.page-heading:has(.skill-job-picker) {
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 .page-meta,
 .section-heading span,
 .diff-toolbar > div > span,

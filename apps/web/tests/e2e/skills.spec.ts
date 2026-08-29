@@ -46,3 +46,45 @@ test("renders empty and error variants", async ({ page }) => {
   await page.goto("/skills?state=error");
   await expect(page.getByText("技能图谱数据暂时不可用")).toBeVisible();
 });
+
+test("switches job via picker and resets selection state", async ({ page }) => {
+  await page.goto("/skills");
+  // 默认岗位：mock 宇宙首个（AI Agent 工程师）
+  await expect(page.locator(".page-meta")).toContainText(
+    "AI Agent 工程师",
+  );
+
+  // 在图谱中选中一个能力，验证切换岗位后选中态被重置
+  await page.getByRole("tab", { name: "能力图谱" }).click();
+  await page
+    .locator("[data-capability-id='cap_04'][data-point-name='']")
+    .dispatchEvent("click");
+  await expect(
+    page.getByRole("heading", { name: "AI Agent", level: 3 }),
+  ).toBeVisible();
+
+  // 切换到大模型算法工程师（antd 虚拟列表 option 坐标受入场动画影响：键盘交互绕过命中检测）
+  await page.locator(".skill-job-picker .ant-select").click();
+  await page.keyboard.press("ArrowDown");
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/job=llm-algo-v2/);
+  await expect(page.locator(".page-meta")).toContainText("大模型算法工程师");
+
+  // 选中态已重置：详情面板回到岗位摘要（非 AI Agent 节点详情）
+  await expect(
+    page.getByRole("heading", { name: "AI Agent", level: 3 }),
+  ).toBeHidden();
+
+  // 大模型算法工程师快照的节点计数生效（22 节点，来自 skillfx.py）
+  await expect(page.locator(".skill-graph-counts dd")).toContainText(
+    "22 / 22",
+  );
+});
+
+test("unknown job falls back to default fixture", async ({ page }) => {
+  await page.goto("/skills?job=not-exist-v9");
+  // mock 模式：无快照岗位回退主样本，页面仍可用
+  await expect(page.locator(".page-meta")).toContainText("AI Agent 工程师");
+  await page.getByRole("tab", { name: "能力图谱" }).click();
+  await expect(page.locator(".graph-node").first()).toBeVisible();
+});

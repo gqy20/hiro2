@@ -473,10 +473,10 @@ def build_skill_graph(job_version_id: str = "ai-agent-v2") -> SkillGraphVM:
             "mention_share": round(n / mention_total, 3) if mention_total else 0,
         }
 
-    job = {}
     p = P / "jobversions" / "published" / f"{job_version_id}.json"
-    if p.is_file():
-        job = json.loads(p.read_text(encoding="utf-8"))
+    if not p.is_file():
+        raise FileNotFoundError(f"岗位版本不存在: {job_version_id}")
+    job = json.loads(p.read_text(encoding="utf-8"))
     required = {s["skill_id"] for s in job.get("required_skill_ids", [])}
     preferred = {s["skill_id"] for s in job.get("preferred_skill_ids", [])}
 

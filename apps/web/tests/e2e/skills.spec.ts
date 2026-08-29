@@ -50,9 +50,7 @@ test("renders empty and error variants", async ({ page }) => {
 test("switches job via picker and resets selection state", async ({ page }) => {
   await page.goto("/skills");
   // 默认岗位：mock 宇宙首个（AI Agent 工程师）
-  await expect(page.locator(".page-meta")).toContainText(
-    "AI Agent 工程师",
-  );
+  await expect(page.locator(".page-meta")).toContainText("AI Agent 工程师");
 
   // 在图谱中选中一个能力，验证切换岗位后选中态被重置
   await page.getByRole("tab", { name: "能力图谱" }).click();
@@ -76,9 +74,7 @@ test("switches job via picker and resets selection state", async ({ page }) => {
   ).toBeHidden();
 
   // 大模型算法工程师快照的节点计数生效（22 节点，来自 skillfx.py）
-  await expect(page.locator(".skill-graph-counts dd")).toContainText(
-    "22 / 22",
-  );
+  await expect(page.locator(".skill-graph-counts dd")).toContainText("22 / 22");
 });
 
 test("unknown job falls back to default fixture", async ({ page }) => {

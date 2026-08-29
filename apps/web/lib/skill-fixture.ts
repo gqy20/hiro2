@@ -31,9 +31,7 @@ export async function loadSkillFixtureForJob(
     `../../data/fixtures/skill_${jobVersionId}.json`,
   );
   try {
-    return JSON.parse(
-      await readFile(fixturePath, "utf8"),
-    ) as SkillGraphFixture;
+    return JSON.parse(await readFile(fixturePath, "utf8")) as SkillGraphFixture;
   } catch {
     return null; // 无快照的岗位回退主样本
   }

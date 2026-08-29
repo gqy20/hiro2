@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
-  CheckCircle,
   ArrowClockwise,
   PencilSimple,
   Plus,
@@ -13,9 +12,7 @@ import {
 import { Button, Input, Select, Tag } from "antd";
 
 import { AppShell } from "@/components/app-shell";
-import { WorkflowContext } from "@/components/workflow-context";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
-import { GapSteps } from "@/components/gap-steps";
 import { ConfidenceMeter, StatusMark } from "@/components/review-ui";
 import { FixtureState, skillStatusToReview } from "@/components/workflow-ui";
 import { SectionHeader } from "@/components/workflow-ui";
@@ -26,11 +23,7 @@ import type {
   UserCorrection,
 } from "@/lib/diagnosis";
 import type { ChangeItem, JobUpdateContext } from "@/lib/job-update";
-import {
-  createCandidateProof,
-  saveCandidateTarget,
-  updateGrowthTask,
-} from "@/lib/api/queries";
+import { saveCandidateTarget } from "@/lib/api/queries";
 
 const SKILL_STATUSES: Array<SkillMatch["status"]> = [
   "ready",
@@ -52,12 +45,15 @@ function nowDate(): string {
 
 export function DiagnosisWorkbench({
   fixture,
+  mode = "recruiting",
   state = "ready",
 }: {
   fixture: DiagnosisFixture;
+  mode?: "recruiting" | "career";
   state?: "ready" | "empty" | "error";
 }) {
   const router = useRouter();
+  const careerMode = mode === "career";
   const [skills, setSkills] = useState(fixture.candidate.skills);
   const [projects, setProjects] = useState<ProjectEntry[]>(
     fixture.candidate.projects,
@@ -74,19 +70,6 @@ export function DiagnosisWorkbench({
   const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
   const [projectDraft, setProjectDraft] = useState("");
   const [editingProjectText, setEditingProjectText] = useState("");
-  const [completedSteps, setCompletedSteps] = useState<string[]>(
-    fixture.report.career?.completedSkills ?? [],
-  );
-  const [proofSkill, setProofSkill] = useState<string | null>(null);
-  const [proofTitle, setProofTitle] = useState("");
-  const [proofDescription, setProofDescription] = useState("");
-  const [proofSaved, setProofSaved] = useState(false);
-  const [careerMode] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      window.localStorage.getItem("hiro2.workspace") === "career",
-  );
-
   if (state === "error")
     return (
       <AppShell>
@@ -101,11 +84,17 @@ export function DiagnosisWorkbench({
       <AppShell>
         <FixtureState
           action={
-            <Link href="/jobs">
-              <Button type="primary">查看岗位</Button>
+            <Link href={careerMode ? "/career/jobs" : "/jobs"}>
+              <Button type="primary">
+                {careerMode ? "选择目标岗位" : "查看岗位"}
+              </Button>
             </Link>
           }
-          emptyText="上传简历或录入技能后开始诊断。"
+          emptyText={
+            careerMode
+              ? "选择目标岗位并完善画像后开始诊断。"
+              : "上传简历或录入技能后开始诊断。"
+          }
           state="empty"
         />
       </AppShell>
@@ -180,18 +169,6 @@ export function DiagnosisWorkbench({
     }, 500);
   }
 
-  async function saveProof() {
-    if (!proofSkill || !proofTitle.trim()) return;
-    await createCandidateProof(fixture.candidate.id, {
-      skill_id: proofSkill,
-      title: proofTitle.trim(),
-      description: proofDescription.trim(),
-    });
-    setProofSaved(true);
-    setProofTitle("");
-    setProofDescription("");
-  }
-
   function addProject() {
     const text = projectDraft.trim();
     if (!text) return;
@@ -251,21 +228,22 @@ export function DiagnosisWorkbench({
   return (
     <AppShell>
       <div className="workflow-page">
-        <WorkflowContext
-          eyebrow={careerMode ? "求职成长" : "候选诊断"}
-          title={careerMode ? "我的成长计划" : fixture.candidate.name}
-          stage={careerMode ? "确认能力画像" : "复核候选人画像"}
-          next={careerMode ? "补齐关键能力后重新诊断" : "修正画像后重新计算"}
-        />
         <div className="diagnosis-workbench">
           <aside className="diagnosis-profile" aria-label="候选人画像">
             <div className="diagnosis-heading">
               <div>
-                <h1>{fixture.candidate.name}</h1>
-                <span>{fixture.candidate.headline}</span>
+                <h1>{careerMode ? "我的画像" : fixture.candidate.name}</h1>
+                <span>
+                  {careerMode
+                    ? `${fixture.candidate.name} · ${fixture.candidate.headline}`
+                    : fixture.candidate.headline}
+                </span>
               </div>
-              <Link className="diagnosis-import-link" href="/resumes">
-                从简历导入
+              <Link
+                className="diagnosis-import-link"
+                href={careerMode ? "/profile" : "/resumes"}
+              >
+                {careerMode ? "编辑画像" : "从简历导入"}
               </Link>
             </div>
             <p className="profile-location">{fixture.candidate.location}</p>
@@ -280,7 +258,7 @@ export function DiagnosisWorkbench({
                     <strong>{skill.name}</strong>
                     <StatusMark status={skillStatusToReview(skill.status)} />
                   </div>
-                  {editing === skill.name ? (
+                  {!careerMode && editing === skill.name ? (
                     <>
                       <Select
                         aria-label={`编辑 ${skill.name}`}
@@ -304,17 +282,28 @@ export function DiagnosisWorkbench({
                     </>
                   ) : (
                     <div className="profile-skill-meta">
-                      <button
-                        onClick={() => setEditing(skill.name)}
-                        type="button"
-                      >
-                        {[
-                          skill.level,
-                          skill.years == null ? "" : `${skill.years} 年`,
-                        ]
-                          .filter(Boolean)
-                          .join(" · ")}
-                      </button>
+                      {careerMode ? (
+                        <span>
+                          {[
+                            skill.level,
+                            skill.years == null ? "" : `${skill.years} 年`,
+                          ]
+                            .filter(Boolean)
+                            .join(" · ")}
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => setEditing(skill.name)}
+                          type="button"
+                        >
+                          {[
+                            skill.level,
+                            skill.years == null ? "" : `${skill.years} 年`,
+                          ]
+                            .filter(Boolean)
+                            .join(" · ")}
+                        </button>
+                      )}
                       <small>{skill.evidence}</small>
                     </div>
                   )}
@@ -324,7 +313,7 @@ export function DiagnosisWorkbench({
             <h2>项目证据</h2>
             <ul className="project-list">
               {projects.map((project) =>
-                editingProjectId === project.id ? (
+                !careerMode && editingProjectId === project.id ? (
                   <li className="project-row-editing" key={project.id}>
                     <Input
                       aria-label={`编辑项目 ${project.id}`}
@@ -348,49 +337,53 @@ export function DiagnosisWorkbench({
                 ) : (
                   <li className="project-row" key={project.id}>
                     <span>{project.text}</span>
-                    <span className="project-actions">
-                      <Button
-                        aria-label={`编辑项目 ${project.id}`}
-                        icon={<PencilSimple size={14} />}
-                        onClick={() => {
-                          setEditingProjectId(project.id);
-                          setEditingProjectText(project.text);
-                        }}
-                        size="small"
-                        type="text"
-                      />
-                      <Button
-                        aria-label={`删除项目 ${project.id}`}
-                        danger
-                        icon={<Trash size={14} />}
-                        onClick={() => removeProject(project.id)}
-                        size="small"
-                        type="text"
-                      />
-                    </span>
+                    {!careerMode ? (
+                      <span className="project-actions">
+                        <Button
+                          aria-label={`编辑项目 ${project.id}`}
+                          icon={<PencilSimple size={14} />}
+                          onClick={() => {
+                            setEditingProjectId(project.id);
+                            setEditingProjectText(project.text);
+                          }}
+                          size="small"
+                          type="text"
+                        />
+                        <Button
+                          aria-label={`删除项目 ${project.id}`}
+                          danger
+                          icon={<Trash size={14} />}
+                          onClick={() => removeProject(project.id)}
+                          size="small"
+                          type="text"
+                        />
+                      </span>
+                    ) : null}
                   </li>
                 ),
               )}
-              <li className="project-row-new">
-                <Input
-                  aria-label="新增项目"
-                  onChange={(event) => setProjectDraft(event.target.value)}
-                  onPressEnter={addProject}
-                  placeholder="新增项目证据 · 回车保存"
-                  value={projectDraft}
-                />
-                <Button
-                  disabled={!projectDraft.trim()}
-                  icon={<Plus aria-hidden size={14} />}
-                  onClick={addProject}
-                  size="small"
-                  type="primary"
-                >
-                  新增
-                </Button>
-              </li>
+              {!careerMode ? (
+                <li className="project-row-new">
+                  <Input
+                    aria-label="新增项目"
+                    onChange={(event) => setProjectDraft(event.target.value)}
+                    onPressEnter={addProject}
+                    placeholder="新增项目证据 · 回车保存"
+                    value={projectDraft}
+                  />
+                  <Button
+                    disabled={!projectDraft.trim()}
+                    icon={<Plus aria-hidden size={14} />}
+                    onClick={addProject}
+                    size="small"
+                    type="primary"
+                  >
+                    新增
+                  </Button>
+                </li>
+              ) : null}
             </ul>
-            {userCorrections.length > 0 ? (
+            {!careerMode && userCorrections.length > 0 ? (
               <p className="project-audit-meta">
                 {`本次会话已记录 ${userCorrections.length} 条修改（仅本地）`}
               </p>
@@ -405,8 +398,11 @@ export function DiagnosisWorkbench({
                   className="career-target-select"
                   onChange={async (version) => {
                     await saveCandidateTarget(fixture.candidate.id, version);
+                    const route = careerMode
+                      ? "/career/diagnosis"
+                      : "/diagnosis";
                     router.push(
-                      `/diagnosis?candidate=${encodeURIComponent(fixture.candidate.id)}&job=${encodeURIComponent(version)}`,
+                      `${route}?candidate=${encodeURIComponent(fixture.candidate.id)}&job=${encodeURIComponent(version)}`,
                     );
                   }}
                   options={(
@@ -425,11 +421,11 @@ export function DiagnosisWorkbench({
                 <p>{`${fixture.job.version} · 已发布岗位标准`}</p>
               </div>
               <span className="diagnosis-title-actions">
-                <Button
-                  aria-label="编辑画像"
-                  icon={<PencilSimple />}
-                  type="text"
-                />
+                {careerMode ? (
+                  <Button href="/profile" icon={<PencilSimple />} type="text">
+                    编辑画像
+                  </Button>
+                ) : null}
                 <Button
                   icon={<ArrowClockwise />}
                   loading={recalculating}
@@ -535,56 +531,24 @@ export function DiagnosisWorkbench({
           </main>
           <aside
             className="learning-panel"
-            aria-label={careerMode ? "成长计划" : "诊断要点"}
+            aria-label={careerMode ? "后续行动" : "诊断要点"}
           >
             <div className="section-heading">
               <div className="inline-heading">
-                <h2>{careerMode ? "成长计划" : "诊断要点"}</h2>
-                <span>
-                  {careerMode
-                    ? `${completedSteps.length} / ${priorityGaps.length} 已完成`
-                    : `${priorityGaps.length} 项待关注`}
-                </span>
+                <h2>{careerMode ? "后续行动" : "诊断要点"}</h2>
+                <span>{`${priorityGaps.length} 项待关注`}</span>
               </div>
             </div>
             {careerMode ? (
-              <ol>
-                {priorityGaps.map((gap, index) => (
-                  <li key={gap.skill}>
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <div>
-                      <strong>{gap.skill}</strong>
-                      <GapSteps gap={gap} className="career-path-steps" />
-                      <Button
-                        onClick={async () => {
-                          const completed = !completedSteps.includes(gap.skill);
-                          setCompletedSteps((current) =>
-                            completed
-                              ? [...current, gap.skill]
-                              : current.filter((skill) => skill !== gap.skill),
-                          );
-                          await updateGrowthTask(
-                            fixture.candidate.id,
-                            fixture.job.version,
-                            gap.skill,
-                            completed,
-                          );
-                        }}
-                        size="small"
-                        type={
-                          completedSteps.includes(gap.skill)
-                            ? "default"
-                            : "primary"
-                        }
-                      >
-                        {completedSteps.includes(gap.skill)
-                          ? "已完成"
-                          : "标记完成"}
-                      </Button>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <div className="career-diagnosis-next">
+                <strong>按优先级补齐能力缺口</strong>
+                <p>学习路径集中展示知识、练习、评测和能力证明。</p>
+                <Link href="/career/path">
+                  <Button block type="primary">
+                    查看学习路径
+                  </Button>
+                </Link>
+              </div>
             ) : (
               <ul className="recruiting-diagnosis-points">
                 {priorityGaps.map((gap) => (
@@ -595,52 +559,6 @@ export function DiagnosisWorkbench({
                 ))}
               </ul>
             )}
-            {careerMode ? (
-              <section className="proof-capture" aria-labelledby="proof-title">
-                <SectionHeader
-                  title="添加能力证明"
-                  meta="项目、作品或评测结果"
-                />
-                <Select
-                  aria-label="选择要证明的能力"
-                  onChange={setProofSkill}
-                  options={priorityGaps.map((gap) => ({
-                    label: gap.skill,
-                    value: gap.skill,
-                  }))}
-                  placeholder="选择一项缺口"
-                  value={proofSkill ?? undefined}
-                />
-                <Input
-                  aria-label="证明标题"
-                  onChange={(event) => setProofTitle(event.target.value)}
-                  placeholder="证明标题"
-                  value={proofTitle}
-                />
-                <Input.TextArea
-                  aria-label="证明说明"
-                  onChange={(event) => setProofDescription(event.target.value)}
-                  placeholder="说明你完成了什么，以及结果如何"
-                  value={proofDescription}
-                />
-                <Button
-                  disabled={!proofSkill || !proofTitle.trim()}
-                  onClick={saveProof}
-                  type="primary"
-                >
-                  保存证明
-                </Button>
-                {proofSaved ? (
-                  <span className="proof-saved">已保存到个人画像</span>
-                ) : null}
-              </section>
-            ) : null}
-            {careerMode ? (
-              <div className="learning-note">
-                <CheckCircle aria-hidden weight="fill" />
-                完成后补充证明，再重新诊断
-              </div>
-            ) : null}
           </aside>
           <EvidenceDrawer
             context={context}

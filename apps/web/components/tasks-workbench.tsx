@@ -10,7 +10,6 @@ import {
 import { Button, Empty, Input, message, Select, Tag } from "antd";
 
 import { AppShell } from "@/components/app-shell";
-import { WorkflowContext } from "@/components/workflow-context";
 import { SectionHeader } from "@/components/workflow-ui";
 import { apiFetch, isMockMode } from "@/lib/api/client";
 import {
@@ -140,13 +139,6 @@ export function TasksWorkbench({
   return (
     <AppShell>
       <div className="workflow-page">
-        <WorkflowContext
-          eyebrow="审核工作区"
-          title="审核任务"
-          stage="处理待审核事项"
-          next="领取一项任务"
-          href="#task-workspace"
-        />
         <section
           className="tasks-workbench"
           id="task-workspace"

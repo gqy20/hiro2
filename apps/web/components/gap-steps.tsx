@@ -1,7 +1,7 @@
 "use client";
 
 // 学练赛证四段共享渲染：学习知识点 -> 项目练习 -> 实践评测 -> 能力证明。
-// 供学习路径页（career-path）与诊断页成长计划（diagnosis-workbench）复用。
+// 学习路径页统一渲染学、练、赛、证四段行动。
 
 export type GapStepsGap = {
   action: string;

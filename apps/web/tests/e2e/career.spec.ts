@@ -21,23 +21,28 @@ test("career jobs page renders published job cards and group filter", async ({
   ).toBeVisible();
 });
 
-test("career home renders ready state and empty state", async ({ page }) => {
+test("career workspace redirects to focused navigation and explicit diagnosis", async ({
+  page,
+}) => {
   await page.goto("/career");
+  await expect(page).toHaveURL(/\/career\/jobs$/);
   await expect(
-    page.getByRole("heading", { name: /AI 应用工程师/, level: 1 }),
+    page.getByRole("button", { name: "求职", pressed: true }),
   ).toBeVisible();
-  await expect(page.getByText("必备能力")).toBeVisible();
+  const nav = page.getByRole("navigation", { name: "主导航" });
+  await expect(nav.getByRole("link")).toHaveCount(5);
+  await expect(nav.getByRole("link", { name: "人岗诊断" })).toBeVisible();
+  await expect(nav.getByText("求职成长", { exact: true })).toHaveCount(0);
+  await expect(nav.getByText("候选诊断", { exact: true })).toHaveCount(0);
 
-  await page.goto("/career?state=empty");
-  await expect(
-    page.getByRole("heading", { name: "开始你的成长诊断", level: 1 }),
-  ).toBeVisible();
-  await expect(page.locator(".career-next-action strong")).toContainText(
-    "选择目标岗位",
-  );
-  await expect(page.locator(".career-progress-card strong")).toContainText(
-    "上传简历开始诊断",
-  );
+  await Promise.all([
+    page.waitForURL(/\/career\/diagnosis$/, { timeout: 20_000 }),
+    nav.getByRole("link", { name: "人岗诊断" }).click(),
+  ]);
+  await expect(page.getByRole("heading", { name: "我的画像" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "后续行动" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "查看学习路径" })).toBeVisible();
+  await expect(page.getByText("成长计划", { exact: true })).toHaveCount(0);
 });
 
 test("career path page renders gaps with learn-practice-evaluate-certify steps", async ({

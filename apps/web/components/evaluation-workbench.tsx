@@ -6,7 +6,6 @@ import { Button, Progress, Tag } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { SectionHeader } from "@/components/workflow-ui";
-import { WorkflowContext } from "@/components/workflow-context";
 import type { EvaluationOverview } from "@/lib/evaluation";
 
 // ponytail: 后端 B-T4 未开始；契约里也没有 EvaluationMetrics；
@@ -38,12 +37,6 @@ export function EvaluationWorkbench({
   return (
     <AppShell>
       <div className="workflow-page">
-        <WorkflowContext
-          eyebrow="审核工作区"
-          title="评测与质量"
-          stage="复盘系统判断"
-          next="打开错误案例"
-        />
         <section
           className="evaluation-workbench"
           aria-labelledby="evaluation-title"

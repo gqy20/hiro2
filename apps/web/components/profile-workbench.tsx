@@ -31,7 +31,7 @@ export function ProfileWorkbench({ fixture }: { fixture: DiagnosisFixture }) {
           <Button loading={saving} onClick={save} type="primary">
             保存并重新诊断
           </Button>
-          {saved ? <Link href="/diagnosis">查看新结果</Link> : null}
+          {saved ? <Link href="/career/diagnosis">查看新结果</Link> : null}
         </span>
       </header>
       <div className="profile-workspace-grid">

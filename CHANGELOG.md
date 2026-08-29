@@ -45,6 +45,9 @@
 - 来源明细硬编码数字移除：`/datasets/overview` 的 DatasetItem 新增 `sources` 字段，由后端读取 `data/SOURCES.yml`（D0 来源登记）按数据集挂载来源通道（jd→5 条采集通道、temporal→wechat-mp/feeds/arxiv/pypi-pkgstats、capability→含政策/O*NET 历史），前端删除写死的 SOURCE_DETAIL（“字节 376/51job 650/Wayback 13,071”等与 KPI 对不上的旧数字）；派生（evidence）、受控（resumes）、冻结（evaluation）数据集显示派生说明而非虚构通道。
 
 ### Changed
+- 求职工作区信息架构收敛：顶层“成长”改为“求职”，移除“求职成长”首页导航并将 `/career` 兼容跳转到目标岗位；新增显式 `/career/diagnosis`，与招聘侧 `/diagnosis` 分离；求职诊断只保留只读画像摘要、匹配结果和缺口，画像编辑归入“我的画像”，完整学练赛证归入“学习路径”。
+- 移除招聘、求职和数据工作区共用的 `WorkflowContext` 横条及专用样式；页面位置继续由工作区、导航和标题表达，阶段状态与下一步动作改由对应内容区和按钮就地承载，减少首屏重复信息。
+- Railway 生产部署文档拆分首次初始化与日常发布，固定 `web`、`api`、单 PostgreSQL 拓扑；日常命令强制显式指定服务和环境，新增数据库/Volume 数量守卫、CORS、健康检查、构建期 API 地址和快照分析配置要求，避免代码发布重复创建数据库。
 - 文档语言规范化（AGENTS.md 第 8 节，全项目 17 份主文档）："双 as_of 闸门"改写为"预测侧双重时间截止闸门"并写明机制（信号数据与技能词典各自只使用截止日当时已可用的版本）；其余同类修正：MatchReport→匹配报告、三 horizon→三个预测期、ACCEPT→"接受"判定、BIZ 信号→商务/管理信号、reviewer→标注者、role_mapping→岗位映射、fail-under=60→下限 60%、Diff→对比/差异、Temporal Intelligence/Job Capability Graph/Candidate Matching→时间情报域/岗位图谱域/人岗诊断域、Application Use Case→应用层用例、View Model→展示模型、ground truth→后验真值。命令、数据字段、DTO 名与产品名保留英文并用反引号标记；`adr/` 为不可变历史决策记录不动，`archive/`/`research/` 不在主文档范围。
 - CSS 按工作区/域拆分归位：`dashboard.css` 更名 `recruiting.css`（招聘区）；求职区样式（career-home/jobs/path/profile/proof 共 373 行）抽出为 `career.css`；质量看板与评测嵌入块移入 `evaluation.css`；`datasets.css` 并入 `data.css`（数据集目录已归入数据区总览）；`globals.css` 改为“基础层 -> 共享组件 -> 工作区/域”的有序导入。拆分只移动不改规则，计算样式抽查（career 卡片 saffron-soft 背景/10px 圆角、quality min-height）与 e2e 14/14、smoke 22/22 全绿验证无渲染回归。
 - 数据工作区收纳为六项导航（总览/来源/流水线/审核任务/评测与质量/时间情报）：`/datasets` 并入总览页数据集目录区块（`DatasetWorkbench` 新增 embedded 模式），`/data/quality` 与 `/quality` 并入评测与质量页（`DataQualityWorkbench`/`QualityWorkbench` embedded），旧路由全部重定向不 404；`/temporal` 五子页归入数据工作区并补“时间轴”二级 tab；招聘工作区导航收敛为五项（工作台/岗位发现/我的岗位/能力全景/候选诊断），评测中心、数据资产、简历解析撤出业务导航。

@@ -1,6 +1,4 @@
-/* 求职成长工作区：首页 / 目标岗位 / 我的画像 / 人岗诊断 / 学习路径。 */
-
-/* 求职成长工作区：把岗位标准翻译为个人下一步，而非审核报告。 */
+/* 求职工作区：目标岗位 / 我的画像 / 人岗诊断 / 学习路径 / 简历工作台。 */
 .career-kicker {
   display: block;
   margin-bottom: 6px;
@@ -41,52 +39,26 @@
   margin-top: 10px;
   color: var(--ink);
 }
-.learning-panel ol {
-  gap: 14px;
-  margin: 20px 0;
-}
-.learning-panel li {
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--line-subtle);
-}
-.learning-panel li:last-child {
-  padding-bottom: 0;
-  border-bottom: 0;
-}
-.learning-panel li p {
-  margin-top: 5px;
-}
-.learning-panel li p b {
-  display: inline-block;
-  width: 18px;
-  color: var(--blue);
-  font-size: 12px;
-}
-.learning-panel li .ant-btn {
-  margin-top: 10px;
-}
-.proof-capture {
+.career-diagnosis-next {
   display: grid;
-  gap: 8px;
-  margin-top: 22px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line-subtle);
+  gap: 12px;
+  margin-top: 20px;
 }
-.proof-capture .section-heading {
-  margin-bottom: 2px;
+.career-diagnosis-next p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
 }
-.proof-saved {
-  color: var(--green);
-  font-size: 12px;
+.career-diagnosis-next a {
+  text-decoration: none;
 }
 
-.career-home,
 .profile-workspace {
   min-height: 100%;
   padding: 32px;
   background: var(--paper);
 }
-.career-home-heading,
 .profile-workspace .page-heading {
   display: flex;
   align-items: end;
@@ -101,119 +73,18 @@
 .profile-workspace > .page-heading > div {
   margin-right: auto;
 }
-.career-home-heading h1,
 .profile-workspace h1 {
   margin: 0 0 6px;
   font-size: 30px;
 }
-.career-home-heading h1 span {
-  color: var(--muted);
-  font: 14px var(--font-mono);
-  vertical-align: middle;
-}
-.career-home-heading span,
-.career-home-heading p,
 .profile-workspace .page-heading p {
   color: var(--muted);
 }
-.career-home-heading p {
-  margin: 0;
-}
-.career-home-profile-link,
-.career-progress-card a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--blue);
-  text-decoration: none;
-}
-.career-home-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.65fr) minmax(260px, 0.7fr);
-  gap: 16px;
-}
-.career-next-action,
-.career-progress-card,
-.career-home-steps,
 .profile-workspace-grid > section {
   padding: 24px;
   border-radius: 10px;
   background: var(--surface-raised);
   text-decoration: none;
-}
-.career-next-action {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  color: var(--ink);
-  background: var(--saffron-soft);
-}
-.career-next-action > span,
-.career-progress-card > span {
-  color: var(--muted);
-  font-size: 13px;
-}
-.career-next-action strong {
-  font-size: 28px;
-}
-.career-next-action p,
-.career-progress-card p {
-  max-width: 56ch;
-  margin: 0;
-  color: var(--muted);
-}
-.career-next-action b {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: auto;
-  color: var(--blue);
-}
-.career-progress-card {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.career-progress-card strong {
-  font: 500 48px/1 var(--font-display);
-}
-.career-progress-card b {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: auto;
-  color: var(--blue);
-}
-.career-home-steps {
-  margin-top: 16px;
-}
-.career-home-steps ol {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin: 18px 0 0;
-  padding: 0;
-  list-style: none;
-}
-.career-home-steps li {
-  display: grid;
-  grid-template-columns: 20px 1fr;
-  gap: 10px;
-  align-items: center;
-  padding-top: 14px;
-  border-top: 1px solid var(--line-subtle);
-}
-.career-home-steps li svg {
-  color: var(--blue);
-}
-.career-home-steps li div {
-  display: grid;
-  gap: 4px;
-}
-.career-home-steps li span {
-  color: var(--muted);
-  font-size: 12px;
 }
 .profile-workspace-grid {
   display: grid;
@@ -245,18 +116,14 @@
   margin-top: 18px;
 }
 @media (max-width: 800px) {
-  .career-home,
   .profile-workspace {
     padding: 18px 16px;
   }
-  .career-home-heading,
   .profile-workspace .page-heading {
     align-items: flex-start;
     flex-direction: column;
   }
-  .career-home-grid,
-  .profile-workspace-grid,
-  .career-home-steps ol {
+  .profile-workspace-grid {
     grid-template-columns: 1fr;
   }
 }

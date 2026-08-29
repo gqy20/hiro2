@@ -100,7 +100,7 @@ export function DataFlowMap({ sources, stageRuns }: Props) {
         <svg
           className="data-flow-map"
           role="img"
-          aria-label="数据流转全景：数据源经清洗、标准化、证据化、信号化四步，汇入招聘工作台与求职成长两个界面"
+          aria-label="数据流转全景：数据源经清洗、标准化、证据化、信号化四步，汇入招聘与求职两个工作区"
           viewBox={`0 0 ${VB_W} ${VB_H}`}
         >
           {/* 连线：底线 + 流动虚线 */}
@@ -234,7 +234,7 @@ export function DataFlowMap({ sources, stageRuns }: Props) {
               岗位决策与审核
             </text>
           </a>
-          <a className="fm-node" href="/career">
+          <a className="fm-node" href="/career/jobs">
             <rect
               className="fm-rect fm-rect-end"
               height={56}
@@ -248,7 +248,7 @@ export function DataFlowMap({ sources, stageRuns }: Props) {
               x={DST_X + 16}
               y={DST_Y[1] + 23}
             >
-              求职成长
+              求职工作区
             </text>
             <text className="fm-meta" x={DST_X + 16} y={DST_Y[1] + 41}>
               能力诊断与学习路径

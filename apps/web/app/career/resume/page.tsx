@@ -1,6 +1,5 @@
 import { AppShell } from "@/components/app-shell";
 import { ResumeStudio } from "@/components/resume-studio";
-import { WorkflowContext } from "@/components/workflow-context";
 import { apiFetch, isMockMode } from "@/lib/api/client";
 import { buildMockJobs, type PublishedJobsView } from "@/lib/career-jobs";
 
@@ -24,12 +23,6 @@ export default async function CareerResumePage() {
 
   return (
     <AppShell>
-      <WorkflowContext
-        eyebrow="求职成长"
-        title="简历工作台"
-        stage="投递材料"
-        next="下载简历并投递"
-      />
       <div className="page-heading">
         <h1>简历工作台</h1>
         <p>

@@ -306,6 +306,9 @@
   gap: 6px;
   color: var(--muted);
 }
+.profile-skill .profile-skill-meta > span {
+  font-size: 12px;
+}
 .profile-skill .profile-skill-meta small::before {
   content: "·";
   margin-right: 6px;
@@ -496,16 +499,6 @@
   color: #47443e;
   font-size: 12px;
   line-height: 1.5;
-}
-.learning-note {
-  display: flex;
-  gap: 7px;
-  color: var(--green);
-  font-size: 12px;
-  line-height: 1.5;
-}
-.learning-note svg {
-  flex: 0 0 auto;
 }
 .recruiting-diagnosis-points {
   display: grid;

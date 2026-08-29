@@ -21,7 +21,6 @@ import {
   StatusMark,
 } from "@/components/review-ui";
 import { FixtureState } from "@/components/workflow-ui";
-import { WorkflowContext } from "@/components/workflow-context";
 import { publishJobVersion, type PublishResult } from "@/lib/api/queries";
 import {
   type ChangeItem,
@@ -170,12 +169,6 @@ export function JobUpdateWorkbench({
   return (
     <AppShell>
       <div className="workflow-page">
-        <WorkflowContext
-          eyebrow="岗位版本"
-          title={fixture.context.jobTitle}
-          stage="审核能力变化"
-          next="完成审核后发布新版本"
-        />
         <div className="workbench">
           <section className="context-panel" aria-labelledby="page-title">
             <div className="page-heading">

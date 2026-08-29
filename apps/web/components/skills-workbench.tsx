@@ -11,7 +11,6 @@ import { EvidenceDrawer } from "@/components/evidence-drawer";
 import { SkillGraph } from "@/components/skill-graph";
 import { SkillNodeDetail } from "@/components/skill-node-detail";
 import { FixtureState } from "@/components/workflow-ui";
-import { WorkflowContext } from "@/components/workflow-context";
 import type {
   CapabilityType,
   SkillGraphFixture,
@@ -173,12 +172,6 @@ export function SkillsWorkbench({
   return (
     <AppShell>
       <div className="workflow-page">
-        <WorkflowContext
-          eyebrow="能力全景"
-          title={fixture.context.jobTitle}
-          stage="查看岗位能力边界"
-          next="选择一个能力节点查看证据"
-        />
         <section className="skill-workbench" aria-labelledby="skills-title">
           <header className="page-heading">
             <div className="title-with-meta">

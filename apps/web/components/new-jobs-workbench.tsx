@@ -14,7 +14,6 @@ import { AppShell } from "@/components/app-shell";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
 import { StatusMark } from "@/components/review-ui";
 import { FixtureState } from "@/components/workflow-ui";
-import { WorkflowContext } from "@/components/workflow-context";
 import { reviewEmergingJob } from "@/lib/api/queries";
 import type { NewJobsFixture } from "@/lib/new-jobs";
 import type {
@@ -137,12 +136,6 @@ export function NewJobsWorkbench({
   return (
     <AppShell>
       <div className="workflow-page">
-        <WorkflowContext
-          eyebrow="岗位发现"
-          title={selected.title}
-          stage="确认新岗位定义"
-          next="编辑定义并提交审核"
-        />
         <div className="new-jobs-workbench">
           <aside className="candidate-panel" aria-label="新岗位候选">
             <div className="new-jobs-heading">

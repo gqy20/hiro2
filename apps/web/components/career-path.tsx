@@ -5,7 +5,6 @@ import { ArrowRight } from "@phosphor-icons/react";
 import { Empty, Tag } from "antd";
 
 import { GapSteps } from "@/components/gap-steps";
-import { WorkflowContext } from "@/components/workflow-context";
 import type { DiagnosisFixture } from "@/lib/diagnosis";
 
 type Gap = DiagnosisFixture["report"]["gaps"][number];
@@ -21,23 +20,18 @@ export function CareerPath({ fixture }: { fixture: DiagnosisFixture }) {
   );
   return (
     <section aria-labelledby="career-path-title" className="career-path">
-      <WorkflowContext
-        eyebrow="学习路径"
-        title={fixture.job.title}
-        stage={`目标版本 ${fixture.job.version}`}
-        next="按顺序补齐缺口后重新诊断"
-        href="/diagnosis"
-      />
       <header className="page-heading">
         <div>
           <h1 id="career-path-title">学习路径</h1>
           <p>
-            {gaps.length > 0
-              ? `${gaps.length} 项能力缺口，按优先级排序。`
-              : "当前没有待补齐的能力缺口。"}
+            {`${fixture.job.title} · ${fixture.job.version} · ${
+              gaps.length > 0
+                ? `${gaps.length} 项能力缺口，按优先级排序。`
+                : "当前没有待补齐的能力缺口。"
+            }`}
           </p>
         </div>
-        <Link className="career-job-cta" href="/diagnosis">
+        <Link className="career-job-cta" href="/career/diagnosis">
           更新画像后重新诊断 <ArrowRight aria-hidden size={15} />
         </Link>
       </header>

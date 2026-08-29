@@ -23,28 +23,21 @@ import { Tooltip } from "antd";
 
 gsap.registerPlugin(useGSAP);
 
-const navigation = [
+const recruitingNavigation = [
   { href: "/", label: "工作台", icon: ChartScatter },
   { href: "/new-jobs", label: "岗位发现", icon: MagnifyingGlass },
   { href: "/positions", label: "我的岗位", icon: GitDiff },
   { href: "/skills", label: "能力全景", icon: Graph },
   { href: "/diagnosis", label: "候选诊断", icon: ClipboardText },
-  { href: "/career", label: "求职成长", icon: ChartScatter },
+];
+
+const careerNavigation = [
   { href: "/career/jobs", label: "目标岗位", icon: Graph },
   { href: "/profile", label: "我的画像", icon: ClipboardText },
+  { href: "/career/diagnosis", label: "人岗诊断", icon: ClipboardText },
   { href: "/career/path", label: "学习路径", icon: FlowArrow },
   { href: "/career/resume", label: "简历工作台", icon: ClipboardText },
 ];
-
-// 求职成长工作区导航项（/diagnosis 为两区共享，不在排除列）
-const CAREER_ONLY_HREFS = new Set([
-  "/career",
-  "/career/jobs",
-  "/career/path",
-  "/career/resume",
-  "/profile",
-]);
-const CAREER_NAV_HREFS = new Set([...CAREER_ONLY_HREFS, "/diagnosis"]);
 
 const dataNavigation = [
   { href: "/data", label: "总览", icon: Database },
@@ -56,7 +49,6 @@ const dataNavigation = [
 ];
 
 type Workspace = "recruiting" | "career" | "data";
-const WORKSPACE_KEY = "hiro2.workspace";
 
 function workspaceForPath(pathname: string): Workspace {
   if (
@@ -66,8 +58,10 @@ function workspaceForPath(pathname: string): Workspace {
     pathname.startsWith("/evaluation") ||
     pathname.startsWith("/quality") ||
     pathname.startsWith("/datasets")
-  ) return "data";
-  if (pathname.startsWith("/career") || pathname.startsWith("/profile")) return "career";
+  )
+    return "data";
+  if (pathname.startsWith("/career") || pathname.startsWith("/profile"))
+    return "career";
   return "recruiting";
 }
 
@@ -75,6 +69,7 @@ export function AppShell({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
+  const workspace = workspaceForPath(pathname);
   // 顶栏“数据截至”取数据集最近更新时间，mock 模式或请求失败时不显示
   const [dataAsOf, setDataAsOf] = useState<string | null>(null);
   useEffect(() => {
@@ -96,23 +91,13 @@ export function AppShell({
     };
   }, []);
   const router = useRouter();
-  const [workspace, setWorkspace] = useState<Workspace>(() => {
-    const routeWorkspace = workspaceForPath(pathname);
-    if (routeWorkspace !== "recruiting") return routeWorkspace;
-    if (typeof window === "undefined") return routeWorkspace;
-    const stored = window.localStorage.getItem(WORKSPACE_KEY);
-    if (stored === "recruiting" || stored === "career" || stored === "data") {
-      return stored;
-    }
-    return routeWorkspace;
-  });
   const careerMode = workspace === "career";
   const dataMode = workspace === "data";
   const visibleNavigation = dataMode
     ? dataNavigation
     : careerMode
-      ? navigation.filter((item) => CAREER_NAV_HREFS.has(item.href))
-      : navigation.filter((item) => !CAREER_ONLY_HREFS.has(item.href));
+      ? careerNavigation
+      : recruitingNavigation;
 
   function isActive(href: string): boolean {
     // 精确匹配：避免 /data 在 /data/sources 等子页下误亮（总览不再一直亮）
@@ -122,9 +107,7 @@ export function AppShell({
 
   function switchWorkspace(next: Workspace) {
     if (next === workspace) return;
-    window.localStorage.setItem(WORKSPACE_KEY, next);
-    setWorkspace(next);
-    if (next === "career") router.push("/career");
+    if (next === "career") router.push("/career/jobs");
     else if (next === "data") router.push("/data");
     else router.push("/");
   }
@@ -197,7 +180,7 @@ export function AppShell({
               onClick={() => switchWorkspace("career")}
               type="button"
             >
-              成长
+              求职
             </button>
             <button
               aria-pressed={workspace === "data"}

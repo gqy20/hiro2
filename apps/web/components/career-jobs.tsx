@@ -65,7 +65,7 @@ export function CareerJobs({ view }: { view: PublishedJobsView }) {
               <Link
                 aria-label={`开始诊断 ${job.title}`}
                 className="career-job-cta"
-                href="/diagnosis"
+                href={`/career/diagnosis?job=${encodeURIComponent(job.version_id)}`}
               >
                 开始诊断 <ArrowRight aria-hidden size={15} />
               </Link>

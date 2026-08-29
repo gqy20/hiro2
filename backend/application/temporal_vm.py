@@ -206,7 +206,7 @@ def _build_temporal_db(dsn: str) -> TemporalVM:
         cur.execute(
             """SELECT signal_id, item_id, skill_id, signal_type, observed_at, confidence,
                       evidence_ids, payload FROM trend_signals
-               ORDER BY observed_at DESC LIMIT 500"""
+               ORDER BY observed_at DESC LIMIT 2000"""
         )
         signals = list(cur.fetchall())
         cur.execute(
@@ -330,7 +330,7 @@ def _apply_suggestion_reviews(suggestions: list[SuggestionVM]) -> list[Suggestio
     return merged
 
 
-def _load_signals(limit: int = 500) -> list[TrendSignalVM]:
+def _load_signals(limit: int = 2000) -> list[TrendSignalVM]:
     """读 sigbuild 产物：近 90 天提及级 TrendSignal（最新优先，截断防 VM 过大）。"""
     from datetime import UTC, datetime, timedelta
 

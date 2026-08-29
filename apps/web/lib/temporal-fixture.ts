@@ -82,7 +82,7 @@ async function loadSignals(): Promise<TrendSignal[]> {
       .filter((line) => line.trim().length > 0)
       .map((line) => JSON.parse(line) as TrendSignal)
       .filter((s) => new Date(s.observed_at).getTime() >= cutoff)
-      .slice(0, 500);
+      .slice(0, 2000);
   } catch {
     return [];
   }

@@ -94,3 +94,19 @@ export type TemporalDataset = {
 };
 
 export type TemporalVariant = "ready" | "empty" | "error";
+
+export type TemporalTimelineRow = {
+  capability_id: string;
+  name: string;
+  arxiv_onset: string | null;
+  pypi_onset: string | null;
+  npm_onset: string | null;
+  report_onset: string | null;
+  jd_onset: string | null;
+  paper_to_jd_months: number | null;
+};
+
+export type TemporalTimeline = {
+  rows: TemporalTimelineRow[];
+  note: string;
+};

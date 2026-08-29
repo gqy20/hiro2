@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 128" role="img" aria-labelledby="title desc">
+  <title id="title">Hiro 横向组合标志</title>
+  <desc id="desc">Hiro 几何 H 标与小写字标组合</desc>
+  <g transform="translate(0 0)">
+    <path fill="#20201d" d="M16 14h30v34h12v32H46v34H16V14Zm96 0H82v34H70v32h12v34h30V14Z"/>
+    <path fill="#e4b810" d="M56 46h16v36H56z"/>
+  </g>
+  <text x="154" y="94" fill="#20201d" font-family="Inter, Arial, sans-serif" font-size="92" font-weight="600" letter-spacing="0">hiro</text>
+</svg>

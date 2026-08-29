@@ -5,15 +5,14 @@ import Link from "next/link";
 import { ArrowSquareOut, PencilSimple } from "@phosphor-icons/react";
 import { Button, Input, Modal, Select, Tag, message } from "antd";
 
-import { AppShell } from "@/components/app-shell";
 import { SectionHeader } from "@/components/workflow-ui";
-import { TemporalNav } from "@/components/temporal-nav";
 import { apiFetch, isMockMode } from "@/lib/api/client";
 import type {
   JobImpactChangeType,
   JobImpactReviewStatus,
   JobImpactSuggestion,
 } from "@/lib/temporal";
+import { skillDisplay } from "@/lib/skill-labels";
 
 const CHANGE_LABEL: Record<JobImpactChangeType, string> = {
   add: "新增",
@@ -38,11 +37,33 @@ const STATUS_TONE: Record<JobImpactReviewStatus, string> = {
   REJECTED: "red",
 };
 
-const LEVEL_OPTIONS = [
-  { label: "required（必备）", value: "required" },
-  { label: "preferred（加分）", value: "preferred" },
-  { label: "out_of_scope（不在范围）", value: "out_of_scope" },
-];
+const STATUS_LABEL: Record<JobImpactReviewStatus, string> = {
+  PENDING: "待审核",
+  ACCEPTED: "已接受",
+  MODIFIED: "已修改",
+  REJECTED: "已拒绝",
+};
+
+const LEVEL_LABEL: Record<string, string> = {
+  required: "必备能力",
+  preferred: "加分能力",
+  out_of_scope: "暂不纳入",
+};
+
+function suggestionReason(reason: string, skillId: string): string {
+  return reason
+    .replace(skillId, skillDisplay(skillId))
+    .replace(/\s*\(jd_preceded\)/g, "，岗位需求先于日报信号出现")
+    .replace(/\s*\(signal_preceded\)/g, "，市场信号先于岗位需求出现")
+    .replace(/\bup于\b/, "在该日期前呈上升趋势")
+    .replace(/\bdown于\b/, "在该日期前呈下降趋势")
+    .replace(/\bflat于\b/, "在该日期前保持平稳");
+}
+
+const LEVEL_OPTIONS = Object.entries(LEVEL_LABEL).map(([value, label]) => ({
+  label,
+  value,
+}));
 
 export function TemporalSuggestionsWorkbench({
   initial,
@@ -127,19 +148,8 @@ export function TemporalSuggestionsWorkbench({
   const pending = items.filter((s) => s.review_status === "PENDING");
 
   return (
-    <AppShell>
-      <section
-        className="temporal-workbench"
-        aria-labelledby="suggestions-title"
-      >
-        <header className="page-heading">
-          <h1 id="suggestions-title">影响建议（JobImpactSuggestion）</h1>
-          <p>
-            {`${pending.length} 条待审 · 来自 ForecastEngine，可进入岗位审核`}
-          </p>
-        </header>
-        <TemporalNav />
-
+    <>
+      <section className="temporal-workbench" aria-label="岗位影响建议">
         <SectionHeader
           action={
             <Button
@@ -150,8 +160,8 @@ export function TemporalSuggestionsWorkbench({
               跳转岗位审核
             </Button>
           }
-          meta={`${items.length} 条`}
-          title="建议列表"
+          meta={`${pending.length} 条待审核 · 共 ${items.length} 条`}
+          title="待审核建议"
         />
         <ul className="temporal-suggestion-list">
           {items.map((s) => (
@@ -163,17 +173,21 @@ export function TemporalSuggestionsWorkbench({
                 <Tag color={CHANGE_TONE[s.change_type]}>
                   {CHANGE_LABEL[s.change_type]}
                 </Tag>
-                <strong>{s.skill_id}</strong>
+                <strong>{skillDisplay(s.skill_id)}</strong>
                 <Tag color={STATUS_TONE[s.review_status]}>
-                  {s.review_status}
+                  {STATUS_LABEL[s.review_status]}
                 </Tag>
               </div>
-              <p className="temporal-suggestion-reason">{s.reason}</p>
-              <div className="temporal-suggestion-detail">
-                <span>
-                  {`job_id ${s.job_id} · 建议层级 ${s.suggested_level}`}
-                </span>
-                <span>{`${s.evidence_ids.length} 条证据`}</span>
+              <div className="temporal-suggestion-body">
+                <p className="temporal-suggestion-reason">
+                  {suggestionReason(s.reason, s.skill_id)}
+                </p>
+                <div className="temporal-suggestion-detail">
+                  <span>
+                    {`目标岗位：AI 应用工程师 · ${LEVEL_LABEL[s.suggested_level] ?? s.suggested_level}`}
+                  </span>
+                  <span>{`${s.evidence_ids.length} 条证据`}</span>
+                </div>
               </div>
               {s.review_status === "PENDING" ? (
                 <div className="temporal-suggestion-actions">
@@ -209,7 +223,7 @@ export function TemporalSuggestionsWorkbench({
                   <Link
                     className="temporal-suggestion-goto"
                     href="/jobs"
-                    aria-label={`前往岗位更新流程处理 ${s.skill_id}`}
+                    aria-label={`前往岗位更新流程处理 ${skillDisplay(s.skill_id)}`}
                   >
                     前往岗位更新流程 <ArrowSquareOut aria-hidden size={14} />
                   </Link>
@@ -226,7 +240,7 @@ export function TemporalSuggestionsWorkbench({
         onCancel={() => setEditing(null)}
         onOk={saveModify}
         open={editing !== null}
-        title={`修改 ${editing?.skill_id ?? ""} 的建议层级`}
+        title={`修改 ${editing ? skillDisplay(editing.skill_id) : ""} 的建议层级`}
       >
         <Input
           aria-label="建议层级文本"
@@ -241,6 +255,6 @@ export function TemporalSuggestionsWorkbench({
           value={newLevel}
         />
       </Modal>
-    </AppShell>
+    </>
   );
 }

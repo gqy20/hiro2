@@ -1,23 +1,28 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Card, Progress, Select, Tag } from "antd";
+import { Select, Tag } from "antd";
 
-import { AppShell } from "@/components/app-shell";
-import { SectionHeader } from "@/components/workflow-ui";
-import { TemporalNav } from "@/components/temporal-nav";
 import type { BacktestRecord, ForecastResult } from "@/lib/temporal";
+import { skillDisplay } from "@/lib/skill-labels";
 
-function directionColor(d: string): string {
-  if (d === "up") return "green";
-  if (d === "down") return "red";
+function directionColor(direction: string): string {
+  if (direction === "up") return "green";
+  if (direction === "down") return "red";
   return "blue";
 }
 
-function directionLabel(d: string): string {
-  if (d === "up") return "上升";
-  if (d === "down") return "下降";
+function directionLabel(direction: string): string {
+  if (direction === "up") return "上升";
+  if (direction === "down") return "下降";
   return "平稳";
+}
+
+function phaseLabel(phase: string): string {
+  if (phase === "rising" || phase === "up") return "上升期";
+  if (phase === "falling" || phase === "down") return "下降期";
+  if (phase === "stable" || phase === "flat") return "平稳期";
+  return phase || "未判定";
 }
 
 function Sparkline({
@@ -30,26 +35,27 @@ function Sparkline({
   if (points.length < 2) return null;
   const minX = points[0].x;
   const maxX = points[points.length - 1].x;
-  const ys = points.map((p) => p.y);
+  const ys = points.map((point) => point.y);
   const minY = Math.min(...ys);
   const maxY = Math.max(...ys);
-  const w = 480;
-  const h = 80;
-  const sx = (x: number) => ((x - minX) / (maxX - minX || 1)) * w;
-  const sy = (y: number) => h - ((y - minY) / (maxY - minY || 1)) * h;
-  const d = points
+  const width = 480;
+  const height = 80;
+  const scaleX = (x: number) => ((x - minX) / (maxX - minX || 1)) * width;
+  const scaleY = (y: number) =>
+    height - ((y - minY) / (maxY - minY || 1)) * height;
+  const path = points
     .map(
-      (p, i) =>
-        `${i === 0 ? "M" : "L"} ${sx(p.x).toFixed(1)} ${sy(p.y).toFixed(1)}`,
+      (point, index) =>
+        `${index === 0 ? "M" : "L"} ${scaleX(point.x).toFixed(1)} ${scaleY(point.y).toFixed(1)}`,
     )
     .join(" ");
   return (
     <svg
       aria-label={`历史趋势：${directionLabel(currentDirection)}`}
       className={`temporal-sparkline graph-line-${currentDirection}`}
-      viewBox={`0 0 ${w} ${h}`}
+      viewBox={`0 0 ${width} ${height}`}
     >
-      <path d={d} fill="none" strokeWidth="2" />
+      <path d={path} fill="none" strokeWidth="2" />
     </svg>
   );
 }
@@ -62,102 +68,143 @@ export function TemporalForecastsWorkbench({
   backtestRecords: BacktestRecord[];
 }) {
   const [skillId, setSkillId] = useState(forecasts[0]?.skill_id ?? "");
-
-  const skillOptions = useMemo(
-    () => forecasts.map((f) => ({ label: f.skill_id, value: f.skill_id })),
-    [forecasts],
+  const current = forecasts.find((forecast) => forecast.skill_id === skillId);
+  const currentRecord = useMemo(
+    () =>
+      backtestRecords
+        .filter((record) => record.skill_id === skillId)
+        .sort((a, b) => b.rule_version - a.rule_version)[0],
+    [backtestRecords, skillId],
   );
-  const current = forecasts.find((f) => f.skill_id === skillId);
+  const changeRate =
+    currentRecord && currentRecord.prior !== 0
+      ? (currentRecord.recent - currentRecord.prior) / currentRecord.prior
+      : null;
 
   const series = useMemo(() => {
-    const filtered = backtestRecords.filter((r) => r.skill_id === skillId);
+    const filtered = backtestRecords.filter(
+      (record) => record.skill_id === skillId,
+    );
     const byAsOf = new Map<string, BacktestRecord[]>();
-    for (const r of filtered) {
-      const arr = byAsOf.get(r.as_of) ?? [];
-      arr.push(r);
-      byAsOf.set(r.as_of, arr);
+    for (const record of filtered) {
+      const values = byAsOf.get(record.as_of) ?? [];
+      values.push(record);
+      byAsOf.set(record.as_of, values);
     }
-    const sorted = [...byAsOf.entries()].sort(([a], [b]) => a.localeCompare(b));
-    return sorted.map(([asOf, recs]) => ({
-      x: new Date(asOf).getTime(),
-      y: recs.reduce((sum, r) => sum + r.recent, 0) / recs.length,
-      label: asOf,
-    }));
+    return [...byAsOf.entries()]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([asOf, records]) => ({
+        x: new Date(asOf).getTime(),
+        y:
+          records.reduce((sum, record) => sum + record.recent, 0) /
+          records.length,
+      }));
   }, [backtestRecords, skillId]);
 
   return (
-    <AppShell>
-      <section className="temporal-workbench" aria-labelledby="forecasts-title">
-        <header className="page-heading">
-          <h1 id="forecasts-title">趋势回测与当前趋势</h1>
-          <p>{`${forecasts.length} 条当前预测（h30 训练数据）`}</p>
-        </header>
-        <TemporalNav />
-
-        <div className="temporal-filters">
-          <Select
-            onChange={(v) => setSkillId(String(v))}
-            options={skillOptions}
-            style={{ minWidth: 180 }}
-            value={skillId}
-          />
+    <section className="temporal-workbench" aria-label="趋势预测">
+      <div className="temporal-forecast-toolbar">
+        <div>
+          <strong>{`${forecasts.length} 个能力域`}</strong>
+          <span>预测未来 30 天</span>
         </div>
+        <Select
+          aria-label="选择能力域"
+          onChange={(value) => setSkillId(String(value))}
+          options={forecasts.map((forecast) => ({
+            label: skillDisplay(forecast.skill_id),
+            value: forecast.skill_id,
+          }))}
+          value={skillId}
+        />
+      </div>
 
-        <Card
-          className="temporal-forecast-card"
-          title={current?.skill_id ?? "无数据"}
-        >
-          <div className="temporal-forecast-meta">
+      <section
+        className="temporal-forecast-summary"
+        aria-label="当前能力域预测"
+      >
+        <header>
+          <div>
+            <strong>
+              {current ? skillDisplay(current.skill_id) : "无数据"}
+            </strong>
             <Tag color={directionColor(current?.predicted_direction ?? "flat")}>
               {directionLabel(current?.predicted_direction ?? "flat")}
             </Tag>
-            <span>
-              {`as_of ${current?.as_of_date ?? "–"} · 置信度 ${(
-                (current?.confidence ?? 0) * 100
-              ).toFixed(0)}%`}
-            </span>
-            <Progress
-              percent={Math.round((current?.predicted_heat ?? 0) * 10)}
-              showInfo={false}
-              size="small"
-              status={
-                current?.predicted_direction === "down"
-                  ? "exception"
-                  : current?.predicted_direction === "up"
-                    ? "success"
-                    : "normal"
-              }
-            />
           </div>
-          <Sparkline
-            currentDirection={current?.predicted_direction ?? "flat"}
-            points={series}
-          />
-        </Card>
-
-        <section aria-label="当前预测列表" className="temporal-forecast-list">
-          <SectionHeader meta={`${forecasts.length} 条`} title="当前预测" />
-          <ul>
-            {forecasts.map((f) => (
-              <li
-                className={`temporal-forecast-list-item ${
-                  f.skill_id === skillId ? "is-active" : ""
-                }`}
-                key={f.forecast_id}
-              >
-                <strong>{f.skill_id}</strong>
-                <Tag color={directionColor(f.predicted_direction)}>
-                  {directionLabel(f.predicted_direction)}
-                </Tag>
-                <span>{f.current_phase}</span>
-                <small>
-                  {`置信 ${(f.confidence * 100).toFixed(0)}% · ${f.as_of_date}`}
-                </small>
-              </li>
-            ))}
-          </ul>
-        </section>
+          <span>{`截至 ${current?.as_of_date ?? "未记录"}`}</span>
+        </header>
+        <dl>
+          <div>
+            <dt>当前热度</dt>
+            <dd>{current?.predicted_heat?.toFixed(1) ?? "-"}</dd>
+          </div>
+          <div>
+            <dt>较前期</dt>
+            <dd
+              className={
+                changeRate !== null && changeRate < 0 ? "is-down" : "is-up"
+              }
+            >
+              {changeRate === null
+                ? "暂无"
+                : `${changeRate > 0 ? "+" : ""}${(changeRate * 100).toFixed(1)}%`}
+            </dd>
+          </div>
+          <div>
+            <dt>置信度</dt>
+            <dd>{`${((current?.confidence ?? 0) * 100).toFixed(0)}%`}</dd>
+          </div>
+          <div>
+            <dt>阶段</dt>
+            <dd>{phaseLabel(current?.current_phase ?? "")}</dd>
+          </div>
+        </dl>
+        <Sparkline
+          currentDirection={current?.predicted_direction ?? "flat"}
+          points={series}
+        />
       </section>
-    </AppShell>
+
+      <section className="temporal-forecast-table" aria-label="能力域预测列表">
+        <div className="temporal-forecast-table-title">
+          <h2>能力域预测</h2>
+          <span>{`${forecasts.length} 条`}</span>
+        </div>
+        <div className="temporal-forecast-table-head" aria-hidden="true">
+          <span>能力域</span>
+          <span>方向</span>
+          <span>阶段</span>
+          <span>置信度</span>
+          <span>截止日期</span>
+        </div>
+        <ul>
+          {forecasts.map((forecast) => (
+            <li key={forecast.forecast_id}>
+              <button
+                aria-pressed={forecast.skill_id === skillId}
+                className={forecast.skill_id === skillId ? "is-active" : ""}
+                onClick={() => setSkillId(forecast.skill_id)}
+                type="button"
+              >
+                <strong>{skillDisplay(forecast.skill_id)}</strong>
+                <Tag color={directionColor(forecast.predicted_direction)}>
+                  {directionLabel(forecast.predicted_direction)}
+                </Tag>
+                <span className="forecast-phase">
+                  {phaseLabel(forecast.current_phase)}
+                </span>
+                <span className="forecast-confidence">
+                  {`${(forecast.confidence * 100).toFixed(0)}%`}
+                </span>
+                <time dateTime={forecast.as_of_date}>
+                  {forecast.as_of_date}
+                </time>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </section>
   );
 }

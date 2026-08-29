@@ -58,6 +58,19 @@ const dataNavigation = [
 type Workspace = "recruiting" | "career" | "data";
 const WORKSPACE_KEY = "hiro2.workspace";
 
+function workspaceForPath(pathname: string): Workspace {
+  if (
+    pathname.startsWith("/data") ||
+    pathname.startsWith("/temporal") ||
+    pathname.startsWith("/tasks") ||
+    pathname.startsWith("/evaluation") ||
+    pathname.startsWith("/quality") ||
+    pathname.startsWith("/datasets")
+  ) return "data";
+  if (pathname.startsWith("/career") || pathname.startsWith("/profile")) return "career";
+  return "recruiting";
+}
+
 export function AppShell({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -84,23 +97,14 @@ export function AppShell({
   }, []);
   const router = useRouter();
   const [workspace, setWorkspace] = useState<Workspace>(() => {
-    const fallback: Workspace =
-      pathname.startsWith("/data") ||
-      pathname.startsWith("/temporal") ||
-      pathname.startsWith("/tasks") ||
-      pathname.startsWith("/evaluation") ||
-      pathname.startsWith("/quality") ||
-      pathname.startsWith("/datasets")
-        ? "data"
-        : pathname.startsWith("/career") || pathname.startsWith("/profile")
-          ? "career"
-          : "recruiting";
-    if (typeof window === "undefined") return fallback;
+    const routeWorkspace = workspaceForPath(pathname);
+    if (routeWorkspace !== "recruiting") return routeWorkspace;
+    if (typeof window === "undefined") return routeWorkspace;
     const stored = window.localStorage.getItem(WORKSPACE_KEY);
     if (stored === "recruiting" || stored === "career" || stored === "data") {
       return stored;
     }
-    return fallback;
+    return routeWorkspace;
   });
   const careerMode = workspace === "career";
   const dataMode = workspace === "data";

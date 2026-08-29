@@ -4,11 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const tabs: Array<{ href: string; label: string }> = [
-  { href: "/temporal/signals", label: "信号流" },
-  { href: "/temporal/forecasts", label: "趋势回测" },
-  { href: "/temporal/retrospect", label: "预测复盘" },
-  { href: "/temporal/suggestions", label: "影响建议" },
-  { href: "/temporal/timeline", label: "时间轴" },
+  { href: "/temporal/signals", label: "1. 市场信号" },
+  { href: "/temporal/timeline", label: "2. 技术传导" },
+  { href: "/temporal/forecasts", label: "3. 趋势预测" },
+  { href: "/temporal/suggestions", label: "4. 岗位影响" },
+  { href: "/temporal/retrospect", label: "5. 预测复盘" },
 ];
 
 export function TemporalNav() {

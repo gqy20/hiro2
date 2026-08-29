@@ -1,59 +1,43 @@
-// 四层时间轴：论文 arXiv -> PyPI/npm 包 -> 日报 -> JD 的技术传导（只读）。
-
-import { AppShell } from "@/components/app-shell";
+import { TemporalTimelineWorkbench } from "@/components/temporal-timeline-workbench";
 import { FixtureState } from "@/components/workflow-ui";
 import { apiFetch, isMockMode } from "@/lib/api/client";
+import type { TemporalTimeline } from "@/lib/temporal";
 
-type TimelineRow = {
-  capabilityId: string;
-  name: string;
-  arxivOnset: string | null;
-  pypiOnset: string | null;
-  npmOnset: string | null;
-  reportOnset: string | null;
-  jdOnset: string | null;
-  paperToJdMonths: number | null;
-};
-
-type Timeline = { rows: TimelineRow[]; note: string };
-
-const MOCK: Timeline = {
+const MOCK: TemporalTimeline = {
   rows: [
     {
-      capabilityId: "cap_01",
-      name: "LLM应用",
-      arxivOnset: "2020-01",
-      pypiOnset: "2023-02",
-      npmOnset: "2024-12",
-      reportOnset: "2024-01",
-      jdOnset: "2025-10",
-      paperToJdMonths: 70,
+      capability_id: "cap_01",
+      name: "LLM 应用",
+      arxiv_onset: "2020-01",
+      pypi_onset: "2023-02",
+      npm_onset: "2024-12",
+      report_onset: "2024-01",
+      jd_onset: "2025-10",
+      paper_to_jd_months: 70,
     },
     {
-      capabilityId: "cap_04",
+      capability_id: "cap_04",
       name: "AI Agent",
-      arxivOnset: "2019-01",
-      pypiOnset: "2024-11",
-      npmOnset: "2025-08",
-      reportOnset: "2025-03",
-      jdOnset: "2025-09",
-      paperToJdMonths: 81,
+      arxiv_onset: "2019-01",
+      pypi_onset: "2024-11",
+      npm_onset: "2025-08",
+      report_onset: "2025-03",
+      jd_onset: "2025-09",
+      paper_to_jd_months: 81,
     },
     {
-      capabilityId: "cap_06",
-      name: "RAG/知识库",
-      arxivOnset: "2019-05",
-      pypiOnset: "2021-02",
-      npmOnset: null,
-      reportOnset: "2025-03",
-      jdOnset: "2025-11",
-      paperToJdMonths: 79,
+      capability_id: "cap_06",
+      name: "RAG / 知识库",
+      arxiv_onset: "2019-05",
+      pypi_onset: "2021-02",
+      npm_onset: null,
+      report_onset: "2025-03",
+      jd_onset: "2025-11",
+      paper_to_jd_months: 79,
     },
   ],
-  note: "各层 onset = 首次达阈值月（论文 3 篇/包份额/日报 3 次/JD 2 次）",
+  note: "各层起始月 = 首次达到阈值的月份（论文 3 篇 / 包份额 / 日报 3 次 / JD 2 次）",
 };
-
-const fmt = (v: string | null) => v ?? "—";
 
 export default async function TimelinePage({
   searchParams,
@@ -61,63 +45,18 @@ export default async function TimelinePage({
   const { state } = await searchParams;
   if (state === "error") {
     return (
-      <AppShell>
-        <FixtureState
-          errorText="时间轴数据暂时不可用，请稍后重试。"
-          state="error"
-        />
-      </AppShell>
+      <FixtureState
+        errorText="时间轴数据暂时不可用，请稍后重试。"
+        state="error"
+      />
     );
   }
   const data = isMockMode()
     ? MOCK
-    : await apiFetch<Timeline>("/temporal/timeline");
+    : await apiFetch<TemporalTimeline>("/temporal/timeline");
 
-  return (
-    <AppShell>
-      <section className="workflow-page" aria-labelledby="timeline-title">
-        <header className="page-heading">
-          <div className="title-with-meta">
-            <h1 id="timeline-title">四层时间轴</h1>
-            <span className="page-meta">
-              论文 arXiv → 生态包 → 媒体传播 → 岗位需求 的技术传导
-            </span>
-          </div>
-        </header>
-        <p className="publish-hint">{data.note}</p>
-        <div className="training-block">
-          <table className="timeline-table">
-            <thead>
-              <tr>
-                <th>能力域</th>
-                <th>论文 arXiv</th>
-                <th>PyPI 包</th>
-                <th>npm 包</th>
-                <th>日报传播</th>
-                <th>JD 需求</th>
-                <th>论文→JD</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.rows.map((r) => (
-                <tr key={r.capabilityId}>
-                  <td>{r.name}</td>
-                  <td>{fmt(r.arxivOnset)}</td>
-                  <td>{fmt(r.pypiOnset)}</td>
-                  <td>{fmt(r.npmOnset)}</td>
-                  <td>{fmt(r.reportOnset)}</td>
-                  <td>{fmt(r.jdOnset)}</td>
-                  <td>
-                    {r.paperToJdMonths !== null
-                      ? `${r.paperToJdMonths} 个月`
-                      : "—"}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </AppShell>
-  );
+  if (state === "empty" || data.rows.length === 0) {
+    return <FixtureState emptyText="暂无可用的技术传导数据。" state="empty" />;
+  }
+  return <TemporalTimelineWorkbench data={data} />;
 }

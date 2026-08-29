@@ -69,7 +69,7 @@
 | B-T4.9 | ReviewTask 与任务分配 | B-T4.1 | **完成** | 自动生成、领取、提交 | 180 条任务从 evalset 自动生成 |
 | B-T4.10 | 审核标注与双人复核 | B-T4.9 | **未开始** | 20% 双人独立审核 | 无双审机制 |
 | B-T4.11 | 质量指标与运行对比 API | B-T4.2/10 | **完成** | 完成率、复核率、错误分布 | `/api/v1/quality/overview` 从评测 CSV 与 append-only 审核动作计算，前端移除 mock 指标 |
-| B-T4.12 | CI 与迁移验证 | Makefile | **未开始** | CI 使用锁文件 | 无 GitHub Actions |
+| B-T4.12 | CI 与迁移验证 | Makefile | **完成（2026-08-29）** | CI 使用锁文件 | 私有仓库 gqy20/hiro2 已建并全量推送；CI 全链绿（uv frozen sync + pnpm frozen + make verify + Playwright e2e + pre-commit，约 4 分钟）；首跑暴露的三层格式债已清（11 py 文件 ruff、10 web 文件 prettier、184 文件钩子修复，test-results 入 prettier ignore） |
 
 ## 联调门
 

@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- CI 上线 GitHub Actions（B-T4.12）：私有仓库 gqy20/hiro2（gh 创建 + 全量推送），workflow 全链绿——uv `--frozen` + pnpm `--frozen-lockfile` 锁文件同步、`make verify`（格式/lint/mypy/67 测试）、Playwright e2e、pre-commit 全文件钩子，约 4 分钟；CI 首跑即抓出三层存量格式债并清零（11 个 Python 文件 ruff format、10 个 web 文件 prettier、184 个文件末尾换行/尾随空格钩子修复、test-results 测试产物目录入 prettier ignore）。
 - Outbox 常驻消费 worker（B-T4.5 收口）：消费逻辑从 CLI 归位 `backend/application/outbox.consume_batch`——失败不再终态而是退避回 PENDING（60s 起步指数退避封顶 1h，attempts>=5 转 FAILED），`FOR UPDATE SKIP LOCKED` 多消费者安全；常驻 worker 挂 API lifespan（`HIRO2_OUTBOX_WORKER` 开关默认关、compose 默认开、30s 轮询、单轮异常不退出），岗位发布 -> Neo4j 投影全自动一致；`scripts/outbox.py` 变壳；域单测 3 例（开关/退避封顶/重试-终态语义，假连接不依赖 PG）。
 - 预测规则回测反哺闭环（rule_version=2）：v1 回测错误结构分析（up 预测 84% 误判于过热追涨、down 48% 误于反弹、高量 flat 稳定）推导 v2——过热抑制（ratio>=3.0 不追涨）+ down 阈值收紧（0.7->0.5）；三 horizon 一致改进（h30 +5.0 / h60 +14.0 / h90 +12.8 点），仍逊平基线如实保留。`forecast.py` 双规则可切换，`backtest.py --rule` 参数化，产物版本化（backtest-h{H}-r2.json），dbimport 双版本导入（backtest_records/forecasts，当前预测统一取最新规则）。复盘页新增“规则迭代对比”区块（v1->v2 三 horizon 命中率 + 平基线对照）——“事件->预测->回测->规则修正->再回测”闭环至此打通。方法论纪律：阈值来自错误分布的结构特征（命中条 ratio 上限 2.94 vs 错误条最大 16.67），非逐点调参。
 - 岗位映射 v3 迭代与固定样本对比工具（`scripts/evalcmp.py`）：商务/管理信号排除（销售/TPM/FDE/测试工程师等 23 词）、“无技术信号则降级”规则、族覆写机制（部署/视觉/安全优先于泛别名）与域专门岗保护、别名顺序修正（具体词先于泛词）。**固定 v1 样本严格对比：74% → 95%（修复 21 条、回归 0）**；新冻结样本（eval-v3，llm 桶混入更多英文管理岗）现状 78%，剩余失分定位：BIZ 信号未覆盖“Engineering Manager/Manager of”等管理岗（8 条）、产品岗别名优先级（3 条）、排除规则的 3 条误伤。方法论教训已固化：评测集锚定 method 分层会导致样本漂移，跨版本对比必须锚定 jd_id（evalcmp.py 即此用途）。

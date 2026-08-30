@@ -1,0 +1,121 @@
+{
+  "match_id": "match-synth_cert_holder-ai-agent-v2",
+  "candidate_id": "synth_cert_holder",
+  "job_version_id": "ai-agent-v2",
+  "algorithm_version": "match-v1",
+  "overall_score": 0.48,
+  "required_coverage": 0.6,
+  "preferred_coverage": 0.2,
+  "dimensions": [
+    {
+      "name": "必备能力覆盖",
+      "value": 0.6
+    },
+    {
+      "name": "加分能力覆盖",
+      "value": 0.2
+    }
+  ],
+  "gaps": [
+    {
+      "skill_id": "cap_04",
+      "name": "AI Agent",
+      "verdict": "已具备",
+      "is_required": true,
+      "job_evidence_ids": [
+        ""
+      ],
+      "candidate_evidence": "持权威证书：智能体工程师认证（讯飞AI大学堂）"
+    },
+    {
+      "skill_id": "cap_01",
+      "name": "LLM应用",
+      "verdict": "已具备",
+      "is_required": true,
+      "job_evidence_ids": [
+        ""
+      ],
+      "candidate_evidence": "持权威证书：HCIA-AI（华为）"
+    },
+    {
+      "skill_id": "cap_07",
+      "name": "Python",
+      "verdict": "已具备",
+      "is_required": true,
+      "job_evidence_ids": [
+        ""
+      ],
+      "candidate_evidence": "简历技能：Python（3.0 年，高级）"
+    },
+    {
+      "skill_id": "cap_06",
+      "name": "RAG/知识库",
+      "verdict": "缺失",
+      "is_required": true,
+      "job_evidence_ids": [
+        ""
+      ],
+      "candidate_evidence": "简历中无该能力域任何证据"
+    },
+    {
+      "skill_id": "cap_08",
+      "name": "SQL/数据库",
+      "verdict": "缺失",
+      "is_required": true,
+      "job_evidence_ids": [
+        ""
+      ],
+      "candidate_evidence": "简历中无该能力域任何证据"
+    },
+    {
+      "skill_id": "cap_02",
+      "name": "Prompt工程",
+      "verdict": "部分具备",
+      "is_required": false,
+      "job_evidence_ids": [],
+      "candidate_evidence": "简历技能：Prompt 工程——初级水平，未达岗位要求深度"
+    },
+    {
+      "skill_id": "cap_18",
+      "name": "自动化运维",
+      "verdict": "缺失",
+      "is_required": false,
+      "job_evidence_ids": [],
+      "candidate_evidence": "简历中无该能力域任何证据"
+    },
+    {
+      "skill_id": "cap_03",
+      "name": "模型微调",
+      "verdict": "已具备",
+      "is_required": false,
+      "job_evidence_ids": [],
+      "candidate_evidence": "持权威证书：HCIA-AI（华为）"
+    },
+    {
+      "skill_id": "cap_05",
+      "name": "多模态AI",
+      "verdict": "缺失",
+      "is_required": false,
+      "job_evidence_ids": [],
+      "candidate_evidence": "简历中无该能力域任何证据"
+    },
+    {
+      "skill_id": "cap_12",
+      "name": "ML/DL算法",
+      "verdict": "缺失",
+      "is_required": false,
+      "job_evidence_ids": [],
+      "candidate_evidence": "简历中无该能力域任何证据"
+    }
+  ],
+  "key_shortboards": [
+    "RAG/知识库",
+    "SQL/数据库"
+  ],
+  "evidence_ids": [
+    "",
+    "",
+    ""
+  ],
+  "status": "FINAL"
+}

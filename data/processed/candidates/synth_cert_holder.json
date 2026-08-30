@@ -1,0 +1,100 @@
+{
+  "candidate_id": "synth_cert_holder",
+  "raw_extraction_id": "synth_cert_holder:raw",
+  "name": "",
+  "skills": [
+    {
+      "mention": "Python",
+      "skill_id": "cap_07",
+      "point_id": null,
+      "proficiency": "高级",
+      "years": 3.0,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "FastAPI",
+      "skill_id": "cap_14",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "LangChain",
+      "skill_id": "cap_04",
+      "point_id": null,
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "工具调用",
+      "skill_id": "cap_04",
+      "point_id": "cap_04.工具调用",
+      "proficiency": "中级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    },
+    {
+      "mention": "Prompt 工程",
+      "skill_id": "cap_02",
+      "point_id": null,
+      "proficiency": "初级",
+      "years": null,
+      "source": "raw",
+      "resolved_by": "dict",
+      "reason": ""
+    }
+  ],
+  "experience_years": 1.0,
+  "education": "本科 · 数据科学",
+  "location": "",
+  "work_experiences": [],
+  "education_history": [
+    {
+      "school": "XX大学",
+      "major": "数据科学与大数据技术",
+      "degree": "本科",
+      "start_date": "",
+      "end_date": ""
+    }
+  ],
+  "certificates": [
+    {
+      "name": "智能体工程师认证",
+      "issuer": "讯飞AI大学堂",
+      "issued_date": "2026-03"
+    },
+    {
+      "name": "HCIA-AI",
+      "issuer": "华为",
+      "issued_date": "2025-11"
+    }
+  ],
+  "portfolio_urls": [],
+  "languages": [],
+  "projects": [
+    {
+      "name": "校园助手机器人",
+      "description": "基于LangChain的工具调用机器人，实现闹钟和查询技能，独立完成。",
+      "skill_mentions": [
+        "LangChain",
+        "工具调用"
+      ]
+    },
+    {
+      "name": "蓝桥杯大赛",
+      "description": "参加蓝桥杯全国软件和信息技术专业人才大赛，获省一等奖。",
+      "skill_mentions": []
+    }
+  ],
+  "correction_log": []
+}

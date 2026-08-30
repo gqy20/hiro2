@@ -1,6 +1,6 @@
 {
   "synthetic": true,
-  "count": 20,
+  "count": 21,
   "items": [
     {
       "file": "synth_agent_junior_00.pdf",
@@ -120,6 +120,12 @@
       "file": "synth_agent_mid_19.docx",
       "track": "agent",
       "level": "mid",
+      "synthetic": true
+    },
+    {
+      "file": "synth_cert_holder.txt",
+      "track": "cert-holder",
+      "level": "junior",
       "synthetic": true
     }
   ]

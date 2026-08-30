@@ -191,9 +191,7 @@ def contests_for_skill(skill_id: str, limit: int = 3) -> list[dict]:
 def _load_race_catalog() -> tuple[dict, ...]:
     if not RACE_CATALOG.is_file():
         return ()
-    return tuple(
-        json.loads(line) for line in RACE_CATALOG.open(encoding="utf-8") if line.strip()
-    )
+    return tuple(json.loads(line) for line in RACE_CATALOG.open(encoding="utf-8") if line.strip())
 
 
 def _parse_date(s) -> date | None:
@@ -264,7 +262,7 @@ def open_contests_for_skill(skill_id: str, as_of: date, limit: int = 3) -> list[
                 "days_left": days_left,
             }
         )
-    out.sort(key=lambda x: (x["days_left"] if x["days_left"] is not None else 9999))
+    out.sort(key=lambda x: x["days_left"] if x["days_left"] is not None else 9999)
     return out[:limit]
 
 

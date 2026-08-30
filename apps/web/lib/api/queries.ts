@@ -25,7 +25,12 @@ export async function saveCandidateTarget(
 
 export async function saveCandidateProfile(
   candidateId: string,
-  skills: Array<{ name: string; status: string }>,
+  skills: Array<{
+    name: string;
+    status: string;
+    level: string;
+    years: number | null;
+  }>,
   projects: string[],
 ) {
   if (isMockMode())
@@ -37,6 +42,29 @@ export async function saveCandidateProfile(
   return apiFetch(`/candidates/${encodeURIComponent(candidateId)}/profile`, {
     method: "PATCH",
     body: { skills, projects },
+  });
+}
+
+export async function addCandidateProof(
+  candidateId: string,
+  proof: {
+    skillId: string;
+    title: string;
+    description: string;
+    proofUrl?: string;
+  },
+) {
+  if (isMockMode()) {
+    return { proofId: Date.now(), createdAt: new Date().toISOString() };
+  }
+  return apiFetch(`/candidates/${encodeURIComponent(candidateId)}/proofs`, {
+    method: "POST",
+    body: {
+      skill_id: proof.skillId,
+      title: proof.title,
+      description: proof.description,
+      proof_url: proof.proofUrl || null,
+    },
   });
 }
 

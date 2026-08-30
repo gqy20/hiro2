@@ -6,8 +6,9 @@ import json
 import os
 from datetime import UTC, datetime
 
-from ..candidates.models import CandidateProfile
+from ..candidates.models import CandidateProfile, ProjectEntry
 from ..matching.engine import match
+from ..skills.resolver import load_resolver
 
 
 def _connect():
@@ -149,30 +150,65 @@ def save_profile(candidate_id: str, updates: list[dict], projects: list[str]) ->
             raise LookupError("候选人不存在")
         profile = CandidateProfile.model_validate(row[0])
         corrections = list(row[1] or [])
-        update_by_name = {item["name"]: item["status"] for item in updates}
+        update_by_name = {item["name"]: item for item in updates}
+        resolver = load_resolver()
         for skill in profile.skills:
-            status = update_by_name.get(skill.mention)
-            if not status:
+            update = update_by_name.get(skill.mention)
+            if not update:
                 continue
-            before = skill.proficiency
+            status = update["status"]
+            current_status = (
+                "missing"
+                if not skill.skill_id
+                else (
+                    "partial" if skill.proficiency == "初级" and (skill.years or 0) < 2 else "ready"
+                )
+            )
+            before = {
+                "status": current_status,
+                "level": skill.proficiency,
+                "years": skill.years,
+            }
             if status == "missing":
                 skill.skill_id = None
                 skill.point_id = None
-            elif status == "partial":
-                skill.proficiency = "初级"
-            else:
-                skill.proficiency = "中级" if skill.proficiency == "初级" else skill.proficiency
-            corrections.append(
-                {
-                    "ts": datetime.now(UTC).isoformat(),
-                    "field": "skill_status",
-                    "target": skill.mention,
-                    "before": before,
-                    "after": status,
-                }
+            elif skill.skill_id is None:
+                resolved = resolver.resolve(skill.mention)
+                skill.skill_id = resolved.skill_id
+                skill.point_id = resolved.point_id
+                skill.resolved_by = "dict" if resolved.skill_id else "unmatched"
+            skill.proficiency = (
+                "初级" if status == "partial" else update.get("level") or skill.proficiency
             )
-        if projects:
-            profile.projects = [item for item in profile.projects if item.name in projects]
+            skill.years = update.get("years")
+            after = {
+                "status": (
+                    "missing"
+                    if not skill.skill_id
+                    else (
+                        "partial"
+                        if skill.proficiency == "初级" and (skill.years or 0) < 2
+                        else "ready"
+                    )
+                ),
+                "level": skill.proficiency,
+                "years": skill.years,
+            }
+            if before != after:
+                skill.source = "correction"
+                corrections.append(
+                    {
+                        "ts": datetime.now(UTC).isoformat(),
+                        "field": "skill_profile",
+                        "target": skill.mention,
+                        "before": before,
+                        "after": after,
+                    }
+                )
+        existing_projects = {item.name: item for item in profile.projects}
+        profile.projects = [
+            existing_projects.get(name, ProjectEntry(name=name)) for name in projects
+        ]
         profile.correction_log = corrections
         snapshot = profile.model_dump(mode="json")
         cur.execute(

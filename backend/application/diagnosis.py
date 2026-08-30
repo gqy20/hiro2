@@ -25,6 +25,8 @@ class _VM(BaseModel):
 
 class SkillMatchVM(_VM):
     name: str
+    skill_id: str | None = None
+    point_id: str | None = None
     level: str = ""
     years: float | None = None
     status: Literal["ready", "partial", "missing"] = "missing"
@@ -149,6 +151,14 @@ def _skill_evidence(skill: dict) -> str:
     return "人工修正" if skill.get("source") == "correction" else "简历提及"
 
 
+def _skill_status(skill: dict) -> Literal["ready", "partial", "missing"]:
+    if not skill.get("skill_id"):
+        return "missing"
+    if skill.get("proficiency") == "初级" and (skill.get("years") or 0) < 2:
+        return "partial"
+    return "ready"
+
+
 def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> DiagnosisVM:
     """从 processed 产物聚合 diagnosis 视图（确定性组装，无 LLM）。"""
     database = _load_db_diagnosis(candidate_id, job_version_id)
@@ -170,9 +180,11 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
     skills = [
         SkillMatchVM(
             name=s["mention"],
+            skill_id=s.get("skill_id"),
+            point_id=s.get("point_id"),
             level=s.get("proficiency", ""),
             years=s.get("years"),
-            status="ready" if s.get("skill_id") else "missing",
+            status=_skill_status(s),
             evidence=_skill_evidence(s),
         )
         for s in cand.get("skills", [])

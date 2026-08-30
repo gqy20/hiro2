@@ -124,6 +124,8 @@ class TargetRequest(BaseModel):
 class ProfileSkillRequest(BaseModel):
     name: str = Field(min_length=1, max_length=80)
     status: str = Field(pattern="^(ready|partial|missing)$")
+    level: str = Field(default="初级", pattern="^(初级|中级|高级)$")
+    years: float | None = Field(default=None, ge=0, le=60)
 
 
 class ProfileRequest(BaseModel):

@@ -1,5 +1,7 @@
 export type SkillMatch = {
   name: string;
+  skillId?: string | null;
+  pointId?: string | null;
   level: string;
   years: number | null;
   status: "ready" | "partial" | "missing";
@@ -12,7 +14,11 @@ export type ProjectEntry = {
 };
 
 export type UserCorrectionField =
-  "skill_status" | "project_text" | "project_added" | "project_removed";
+  | "skill_status"
+  | "skill_profile"
+  | "project_text"
+  | "project_added"
+  | "project_removed";
 
 export type UserCorrection = {
   id: string;

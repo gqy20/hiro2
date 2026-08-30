@@ -55,41 +55,50 @@
 }
 
 .profile-workspace {
-  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  height: 100%;
+  min-height: 0;
   padding: 32px;
   background: var(--paper);
 }
-.profile-workspace .page-heading {
+.profile-header {
   display: flex;
-  align-items: end;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 28px;
-}
-.profile-workspace > .page-heading {
-  align-items: flex-start;
+  margin-bottom: 18px;
   text-align: left;
 }
-.profile-workspace > .page-heading > div {
-  margin-right: auto;
-}
-.profile-workspace h1 {
-  margin: 0 0 6px;
-  font-size: 30px;
-}
-.profile-workspace .page-heading p {
+.profile-header p {
+  margin: 0;
   color: var(--muted);
 }
+.profile-save-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+.profile-save-actions > span {
+  color: var(--muted);
+  font-size: 13px;
+}
 .profile-workspace-grid > section {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
   padding: 24px;
   border-radius: 10px;
   background: var(--surface-raised);
   text-decoration: none;
+  overflow: hidden;
 }
 .profile-workspace-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+  min-height: 0;
 }
 .profile-summary {
   display: flex;
@@ -118,20 +127,20 @@
   justify-content: space-between;
   gap: 12px;
 }
+.profile-section-heading > div {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
 .profile-workspace-grid h2 {
-  margin: 0 0 18px;
+  margin: 0;
   font-size: 18px;
 }
-.profile-edit-row,
 .profile-project-row {
   display: grid;
-  grid-template-columns: 1fr 130px auto;
-  gap: 12px;
-  align-items: center;
   padding: 12px 0;
   border-bottom: 1px solid var(--line-subtle);
 }
-.profile-edit-row span,
 .profile-project-row small {
   color: var(--muted);
   font-size: 14px;
@@ -139,18 +148,167 @@
 .profile-project-row {
   grid-template-columns: 1fr;
 }
-.profile-workspace-grid .ant-input {
-  margin-top: 18px;
+.profile-skill-panel > .ant-input-affix-wrapper {
+  margin: 14px 0 8px;
+}
+.profile-skill-scroll,
+.profile-project-scroll {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.profile-skill-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 130px auto 16px;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 2px;
+  border: 0;
+  border-bottom: 1px solid var(--line-subtle);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+.profile-skill-row:hover,
+.profile-skill-row:focus-visible {
+  color: var(--blue);
+  outline: none;
+}
+.profile-skill-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+.profile-skill-copy strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.profile-skill-copy > span,
+.profile-skill-level {
+  color: var(--muted);
+  font-size: 13px;
+}
+.profile-proof-compose {
+  padding-top: 14px;
+  border-top: 1px solid var(--line-subtle);
+}
+.profile-proof-compose .ant-btn {
+  padding-inline: 0;
+}
+.profile-error {
+  margin: 10px 0 0;
+  color: var(--red);
+  font-size: 13px;
+}
+.profile-skill-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.profile-skill-detail > section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.profile-skill-detail h3,
+.profile-skill-detail p {
+  margin: 0;
+}
+.profile-skill-detail > section > p,
+.profile-skill-detail details {
+  color: var(--muted);
+  font-size: 13px;
+}
+.profile-skill-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.profile-skill-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.profile-skill-form label > span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.profile-skill-form .ant-select,
+.profile-skill-form .ant-input-number {
+  width: 100%;
+}
+.profile-years-input {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+.profile-years-input > span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.profile-skill-facts {
+  display: flex;
+  gap: 32px;
+  margin: 0;
+}
+.profile-skill-facts > div {
+  display: flex;
+  gap: 6px;
+  font-size: 13px;
+}
+.profile-skill-facts dt {
+  color: var(--muted);
+}
+.profile-skill-facts dd {
+  margin: 0;
+}
+.profile-skill-detail details p {
+  margin-top: 5px;
+  font-family: var(--font-mono);
+}
+.profile-skill-detail > footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 @media (max-width: 800px) {
   .profile-workspace {
+    display: block;
     padding: 18px 16px;
+    overflow-y: auto;
   }
-  .profile-workspace .page-heading {
+  .profile-header {
     align-items: flex-start;
     flex-direction: column;
   }
+  .profile-save-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .profile-summary {
+    gap: 18px;
+    overflow-x: auto;
+  }
   .profile-workspace-grid {
+    grid-template-columns: 1fr;
+  }
+  .profile-workspace-grid > section {
+    max-height: 620px;
+  }
+  .profile-skill-row {
+    grid-template-columns: minmax(0, 1fr) auto 16px;
+  }
+  .profile-skill-level {
+    display: none;
+  }
+  .profile-skill-form {
     grid-template-columns: 1fr;
   }
   .career-jobs .page-heading {

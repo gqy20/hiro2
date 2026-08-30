@@ -54,6 +54,37 @@ def test_dashboard_overview_contract() -> None:
     assert len(body["queue"]) == 3
 
 
+def test_profile_update_preserves_skill_details(monkeypatch) -> None:
+    captured: dict = {}
+
+    def fake_save(candidate_id: str, skills: list[dict], projects: list[str]) -> dict:
+        captured.update(candidate_id=candidate_id, skills=skills, projects=projects)
+        return {"profileVersion": "saved", "matchId": "match-1", "overallScore": 0.8}
+
+    monkeypatch.setattr(api_main, "save_profile", fake_save)
+    response = TestClient(app).patch(
+        "/api/v1/candidates/candidate-1/profile",
+        json={
+            "skills": [
+                {
+                    "name": "Python",
+                    "status": "ready",
+                    "level": "高级",
+                    "years": 8,
+                }
+            ],
+            "projects": ["Agent 平台"],
+        },
+    )
+    assert response.status_code == 200
+    assert captured["skills"][0] == {
+        "name": "Python",
+        "status": "ready",
+        "level": "高级",
+        "years": 8.0,
+    }
+
+
 def test_evaluation_overview_contract() -> None:
     response = TestClient(app).get("/api/v1/evaluation/overview")
     assert response.status_code == 200

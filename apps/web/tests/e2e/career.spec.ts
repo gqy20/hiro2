@@ -60,7 +60,14 @@ test("career flow carries target and profile data into diagnosis and resume", as
   await expect(page).toHaveURL(/career\/diagnosis\?job=ai-agent-v2/);
 
   await page.goto("/profile");
-  await expect(page.locator(".profile-edit-row")).toHaveCount(4);
+  await expect(page.locator(".profile-skill-row")).toHaveCount(4);
+  await page.locator(".profile-skill-row").first().click();
+  await expect(page.getByRole("dialog")).toContainText("技能判断");
+  await expect(page.getByLabel("当前状态")).toBeVisible();
+  await page.getByRole("button", { name: "应用技能修改" }).click();
+  await expect(
+    page.getByRole("button", { name: "保存更改并重新诊断" }),
+  ).toBeEnabled();
   await page.getByLabel("新增能力证明").fill("Agent 评测基准项目");
   await page.getByRole("button", { name: "添加能力证明" }).click();
   await expect(page.getByText("Agent 评测基准项目")).toBeVisible();

@@ -55,7 +55,7 @@
     }
   ],
   "experience_years": 1.0,
-  "education": "本科 · 数据科学",
+  "education": "本科 数据科学与大数据技术",
   "location": "",
   "work_experiences": [],
   "education_history": [
@@ -84,16 +84,18 @@
   "projects": [
     {
       "name": "校园助手机器人",
-      "description": "基于LangChain的工具调用机器人，实现闹钟和查询技能，独立完成。",
+      "description": "基于LangChain工具调用实现闹钟/查询技能，独立完成。",
       "skill_mentions": [
         "LangChain",
         "工具调用"
-      ]
+      ],
+      "award": ""
     },
     {
-      "name": "蓝桥杯大赛",
-      "description": "参加蓝桥杯全国软件和信息技术专业人才大赛，获省一等奖。",
-      "skill_mentions": []
+      "name": "蓝桥杯全国软件和信息技术专业人才大赛",
+      "description": "参加蓝桥杯大赛，获省一等奖。",
+      "skill_mentions": [],
+      "award": "省一等奖"
     }
   ],
   "correction_log": []

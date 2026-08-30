@@ -105,6 +105,16 @@ def test_award_to_level():
     assert xlzsz.award_to_level("cahe", "未列出奖项") == "L1"  # 默认
 
 
+def test_award_normalization():
+    """简历获奖措辞多变，归一后再查表，避免同义措辞落回默认 L1。"""
+    assert xlzsz.award_to_level("cahe", "省一等奖") == "L2"  # 缺"级"
+    assert xlzsz.award_to_level("cahe", "国家一等奖") == "L3"  # 缺"级"
+    assert xlzsz.award_to_level("cahe", "国二") == "L2"  # 极简写法 -> 国家级二等奖 -> L2？
+    assert xlzsz.award_to_level("cahe", "省一") == "L2"
+    assert xlzsz._normalize_award("全国三等奖") == "国家级三等奖"
+    assert xlzsz._normalize_award("冠军") == "冠军"  # 企业奖无作用域前缀，原样返回
+
+
 def test_cert_level():
     assert xlzsz.cert_level("huawei", "hcip") == "L2"
     assert xlzsz.cert_level("osta_engineer", "高级") == "L3"
@@ -133,6 +143,13 @@ def test_knowledge_no_false_positive_short_word():
     ks = xlzsz.knowledge_for_skill("cap_04", limit=5)
     for k in ks:
         assert "记忆网络" not in k["knowledge"]
+
+
+def test_skill_points_for_skill():
+    """国标不覆盖的能力域，用自身技能点作为学段第二层回退。"""
+    pts = xlzsz.skill_points_for_skill("cap_04")
+    assert "MCP" in pts and "工具调用" in pts
+    assert xlzsz.skill_points_for_skill("cap_08") == []  # 无技能点的能力域返空
 
 
 # ---------------------------------------------------------------- 匹配引擎证据分支

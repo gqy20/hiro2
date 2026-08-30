@@ -102,10 +102,10 @@
     {
       "skill_id": "cap_12",
       "name": "ML/DL算法",
-      "verdict": "缺失",
+      "verdict": "部分具备",
       "is_required": false,
       "job_evidence_ids": [],
-      "candidate_evidence": "简历中无该能力域任何证据"
+      "candidate_evidence": "竞赛获奖证据：蓝桥杯全国软件和信息技术专业人才大赛 省一等奖（换算 L2），但未见持续工作/技能深度证据"
     }
   ],
   "key_shortboards": [

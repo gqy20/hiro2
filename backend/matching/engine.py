@@ -190,14 +190,18 @@ def learning_path(report: MatchReport) -> LearningPath:
             evaluate = f"参加实践评测或赛事检验：{race_names}"
         else:
             evaluate = f"在项目复盘中自评 {g.name} 的独立完成度"
-        # 学段：优先引用国家职业标准官方知识点，无标准映射时回退模板文案。
+        # 学段三层回退：国家职业标准官方知识点 -> 能力域自身技能点 -> 泛泛模板。
         know = xlzsz.knowledge_for_skill(g.skill_id, limit=2)
         if know:
             std = know[0]["std_name"]
             points = "；".join(k["knowledge"] for k in know)
             learn = f"对照《{std}》国家职业标准学习：{points}"
         else:
-            learn = f"学习 {g.name} 领域核心知识点与主流方法"
+            skill_points = xlzsz.skill_points_for_skill(g.skill_id, limit=4)
+            if skill_points:
+                learn = f"学习 {g.name} 的核心技能点：{'、'.join(skill_points)}"
+            else:
+                learn = f"学习 {g.name} 领域核心知识点与主流方法"
 
         steps.append(
             LearnStep(

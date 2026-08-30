@@ -144,6 +144,24 @@ def knowledge_for_skill(skill_id: str, limit: int = 3) -> list[dict]:
     return [item for _, item in scored[:limit]]
 
 
+def skill_points_for_skill(skill_id: str, limit: int = 5) -> list[str]:
+    """能力域 -> 自身技能点列表（SKILLS.yml points）。
+
+    供"学"段第二层回退：国家职业标准不覆盖新概念（LLM/RAG/Agent 等 2021 年后）时，
+    用能力域自身的技能点给出具体学习方向，避免泛泛模板。确定性，零 LLM。
+    """
+    for e in _load_skills()["entries"]:
+        if e.get("capability_id") != skill_id:
+            continue
+        points = [
+            str(p["name"])
+            for p in e.get("points", []) or []
+            if isinstance(p, dict) and p.get("name")
+        ]
+        return points[:limit]
+    return []
+
+
 def contests_for_skill(skill_id: str, limit: int = 3) -> list[dict]:
     """能力域 -> 推荐竞赛（供"赛"段引用真实赛事名）。"""
     out = [
@@ -190,10 +208,26 @@ def match_contest_mention(text: str) -> list[dict]:
     return hits
 
 
+def _normalize_award(award: str) -> str:
+    """归一获奖措辞到换算表口径："省一等奖"->"省级一等奖"、"国一"->"国家级一等奖"。
+
+    LLM 从简历抽取的获奖措辞多变（省一/省级一等/全国一等/国二），先归一再查表，
+    避免同义措辞落回默认 L1。无作用域前缀的企业奖（如"冠军"）原样返回。
+    """
+    a = award.strip()
+    m = re.match(r"^(全国|国家|国|省)(级)?([一二三])(等奖|等)?(奖)?$", a)
+    if not m:
+        return a
+    scope, _, rank, _, _ = m.groups()
+    canon_scope = "省级" if scope == "省" else "国家级"
+    return f"{canon_scope}{rank}等奖"
+
+
 def award_to_level(scale: str, award: str) -> str:
     """获奖等级 -> 岗位等级（L1/L2/L2.5/L3），未配置的组合默认 L1。"""
     table = _load_contests().get("award_to_level", {})
-    return str(table.get(scale, {}).get(award, "L1"))
+    normalized = _normalize_award(award)
+    return str(table.get(scale, {}).get(normalized, "L1"))
 
 
 def cert_level(level_type: str, grade: str) -> str:

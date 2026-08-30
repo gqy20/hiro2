@@ -8,7 +8,7 @@
       "name": "RAG/知识库",
       "priority": "P0 必备补齐",
       "reason": "岗位必备能力缺失，优先补齐",
-      "learn": "学习 RAG/知识库 领域核心知识点与主流方法",
+      "learn": "学习 RAG/知识库 的核心技能点：检索评测",
       "practice": "完成一个包含 RAG/知识库 的实战小项目并沉淀到简历",
       "evaluate": "在项目复盘中自评 RAG/知识库 的独立完成度",
       "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）、AI大模型应用工程师职业技术认证（工信部教考中心 × 科大讯飞）；并整理项目证据形成能力证明材料",
@@ -66,7 +66,7 @@
       "name": "多模态AI",
       "priority": "P2 加分拓展",
       "reason": "非必备，作为差异化加分项拓展",
-      "learn": "学习 多模态AI 领域核心知识点与主流方法",
+      "learn": "学习 多模态AI 的核心技能点：图像生成、视频生成、语音",
       "practice": "完成一个包含 多模态AI 的实战小项目并沉淀到简历",
       "evaluate": "参加实践评测或赛事检验：讯飞AI开发者大赛·计算机视觉类赛事（历年合辑）、讯飞AI开发者大赛·语音技术类赛事（历年合辑）",
       "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）；并整理项目证据形成能力证明材料",
@@ -85,6 +85,30 @@
         },
         {
           "name": "讯飞AI开发者大赛·语音技术类赛事（历年合辑）",
+          "organizer": "科大讯飞",
+          "url": "https://challenge.xfyun.cn/"
+        }
+      ]
+    },
+    {
+      "skill_id": "cap_02",
+      "name": "Prompt工程",
+      "priority": "P2 加分拓展",
+      "reason": "非必备，作为差异化加分项拓展",
+      "learn": "学习 Prompt工程 领域核心知识点与主流方法",
+      "practice": "完成一个包含 Prompt工程 的实战小项目并沉淀到简历",
+      "evaluate": "参加实践评测或赛事检验：智能办公协同助理Skill开发挑战赛",
+      "certify": "考取或对照权威认证：Prompt工程师认证（讯飞AI大学堂）；并整理项目证据形成能力证明材料",
+      "certificates": [
+        {
+          "name": "Prompt工程师认证",
+          "issuer": "讯飞AI大学堂",
+          "url": "https://www.aidaxue.com/certification"
+        }
+      ],
+      "contests": [
+        {
+          "name": "智能办公协同助理Skill开发挑战赛",
           "organizer": "科大讯飞",
           "url": "https://challenge.xfyun.cn/"
         }
@@ -110,30 +134,6 @@
           "name": "全国大学生数学建模竞赛",
           "organizer": "中国工业与应用数学学会",
           "url": "https://www.mcm.edu.cn/"
-        }
-      ]
-    },
-    {
-      "skill_id": "cap_02",
-      "name": "Prompt工程",
-      "priority": "P2 加分拓展",
-      "reason": "非必备，作为差异化加分项拓展",
-      "learn": "学习 Prompt工程 领域核心知识点与主流方法",
-      "practice": "完成一个包含 Prompt工程 的实战小项目并沉淀到简历",
-      "evaluate": "参加实践评测或赛事检验：智能办公协同助理Skill开发挑战赛",
-      "certify": "考取或对照权威认证：Prompt工程师认证（讯飞AI大学堂）；并整理项目证据形成能力证明材料",
-      "certificates": [
-        {
-          "name": "Prompt工程师认证",
-          "issuer": "讯飞AI大学堂",
-          "url": "https://www.aidaxue.com/certification"
-        }
-      ],
-      "contests": [
-        {
-          "name": "智能办公协同助理Skill开发挑战赛",
-          "organizer": "科大讯飞",
-          "url": "https://challenge.xfyun.cn/"
         }
       ]
     }

@@ -193,6 +193,18 @@ def cmd_run(dsn: str) -> dict:
                     P / "candidates" / "resume-archive.jsonl",
                     P / "candidates" / "resume-archive.jsonl",
                 ),
+                (
+                    "certs",
+                    "cert-v1",
+                    P / "certs" / "cert-catalog.jsonl",
+                    P / "certs" / "cert-catalog.jsonl",
+                ),
+                (
+                    "races",
+                    "race-v1",
+                    P / "races" / "race-catalog.jsonl",
+                    P / "races" / "race-catalog.jsonl",
+                ),
             )
             for dataset_id, version, record_path, manifest_path in dataset_specs:
                 records = (

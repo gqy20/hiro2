@@ -15,7 +15,7 @@
 核心产物规模（data/processed/，2026-08-30 审计）：
   8,656 条 JD 解析记录 | 10,379 个日报事件 | 14,174 条证据实体
   17 个已发布岗位版本 | 7,474 条历史信号 | 839 条回测记录
-  2,050 张证书目录 | 1,199 场竞赛目录 | 569 项标准工作要求（含 3,131 能力 + 3,404 知识条目）
+  916 张证书目录 | 1,269 场竞赛目录 | 431 项标准工作要求（含 1,679 能力 + 1,643 知识条目）
   23 个候选人画像 | 22 份匹配报告 | 164 份简历档案
 ```
 
@@ -71,11 +71,11 @@ JD 解析最终语料：**8,656 条入库记录**（`jdxtract` 三源合并，33
 | 来源 | 通道 | 规模 | 采集方式 |
 | --- | --- | --- | --- |
 | 人社部国家职业标准 | osta.org.cn 标准库 | **702 条标准**（含 10 份核心标准 PDF 原文） | 公开 JSON API（`certget.py osta/pdf`） |
-| 教育部 1+X 证书 | vslc.ncb.edu.cn | **1,240 张证书 + 450 项等级标准** | 公开 POST API（`certget.py onex`） |
+| 教育部 1+X 证书 | vslc.ncb.edu.cn | **106 张证书 + 74 项等级标准**（数字技术域子集） | 公开 POST API + 关键词遍历（`certget.py onex`） |
 | 华为职业认证 | apigw.huawei.com | **108 个认证**（HCIA/HCIP/HCIE，AI 方向 9 个） | 公开 JSON（`certget.py huawei`） |
 | 讯飞 AI 开发者大赛 | challenge.xfyun.cn | **629 场赛事**（含往届全届次，算法+应用双轨） | 公开 JSON（`raceget.py xfyun`） |
 | 阿里天池 | tianchi.aliyun.com | **270 场赛事** | 公开 JSON（`raceget.py tianchi`） |
-| DataFountain | datafountain.cn | **300 场赛事**（tags 即技能标签） | 公开 JSON（`raceget.py datafountain`） |
+| DataFountain | datafountain.cn | **370 场赛事**（tags 即技能标签） | 公开 JSON（`raceget.py datafountain`） |
 
 讯飞 AI 大学堂认证（7 张认证卡）与高教学会竞赛目录（56 项）无 API，
 以人工审定映射层形式登记在 `data/CERTS.yml` / `data/CONTESTS.yml`。
@@ -121,11 +121,11 @@ PDF/DOCX/TXT → parse（PyMuPDF/python-docx 薄适配器）
 
 ```text
 certget 三源目录采集（osta/onex/huawei，公开 JSON）
-  → cert-catalog.jsonl 归一（2,050 条：cert_id/issuer/level/effective_from）
+  → cert-catalog.jsonl 归一（916 条：cert_id/issuer/level/effective_from）
 raceget 三源赛事采集（xfyun/tianchi/df）
-  → race-catalog.jsonl 归一（1,199 场：organizer/bonus/team_count/tags）
+  → race-catalog.jsonl 归一（1,269 场：organizer/bonus/team_count/tags）
 certparse 标准 PDF 结构化（零 LLM：列优先 X 簇间隙分界 + 编号深度切分 + 等级分离）
-  → std-requirements/（10 份 → 569 工作内容 / 3,131 能力 / 3,404 知识）
+  → std-requirements/（10 份 → 431 工作内容 / 1,679 能力 / 1,643 知识）
 人工审定映射（业务事实，version 管理）
   → CERTS.yml（15 张证书 ↔ 能力域）+ CONTESTS.yml（13 项赛事 ↔ 能力域 + 获奖换算）
   → xlzszdb 入 PostgreSQL（migration 0009 三表）
@@ -155,8 +155,8 @@ job_impact_suggestions / dataset_versions / evidence / sources`
 
 域扩展表（0008）：`policies / dadian_careers / arxiv_papers / resume_archive`
 
-学练赛证表（0009）：`cert_catalog（2,050）/ race_catalog（1,199）/
-std_requirements（569）`——已导入本地 PG。
+学练赛证表（0009）：`cert_catalog（916）/ race_catalog（1,269）/
+std_requirements（431）`——已导入本地 PG。
 
 ## 已知局限（诚实标注）
 
@@ -165,6 +165,9 @@ std_requirements（569）`——已导入本地 PG。
 - **boss JD 无发布日期**：仅作标注素材，不进时间分析。
 - **讯飞认证与高教学会目录无 API**：映射层为人工整理（调研结论存
   `research/xlzsz-channels.md`），更新依赖人工周期。
+- **1+X 证书 API 分页参数实测失效**：服务端忽略 pageNum（任何页返回同一首页），
+  无法拉全量 1237 条；采集口径为数字技术域关键词遍历 + 去重聚合（106 张），
+  局限与排查过程见 `research/xlzsz-known-limits.md`。
 - **certparse 覆盖 10 份标准**：osta 标准库共 702 份，当前只解析了数字技术域核心
   10 份；扩量仅需下载 + 重跑（脚本幂等）。
 - **评测指标待真人抽检**：540 条 AI 预标注采纳需 ~50 条真人复核后方可宣称正式指标

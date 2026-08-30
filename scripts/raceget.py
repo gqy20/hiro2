@@ -128,20 +128,29 @@ def cmd_tianchi(run: RunContext) -> dict:
 
 
 def cmd_datafountain(run: RunContext) -> dict:
-    """DF 竞赛分页（pageSize 参数生效，实测每页 10 条）。"""
-    records: list[dict] = []
+    """DF 竞赛分页。
+
+    实测（2026-08-30）：分页参数名是 page（不是 pageNum，pageNum 被忽略会重复）；
+    pageSize 固定 10 生效不了，每页 10 条。用 race_id 去重幂等。
+    """
+    records: dict[str, dict] = {}
     page = 1
     while True:
-        url = f"{DF_API}?pageNum={page}&pageSize=10"
+        url = f"{DF_API}?page={page}&pageSize=10"
         data = _get(url, referer="https://www.datafountain.cn/competitions").get("cmpt") or {}
         batch = data.get("competitions") or []
-        records.extend(batch)
-        run.log("datafountain", f"p{page}", "progress", count={"records": len(records)})
-        if not batch or page >= 30:
+        if not batch:
+            break
+        for c in batch:
+            rid = str(c.get("id", ""))
+            if rid and rid not in records:
+                records[rid] = c
+        run.log("datafountain", f"p{page}", "progress", count={"unique": len(records)})
+        if len(batch) < 10 or page >= 40:
             break
         page += 1
         time.sleep(SLEEP)
-    _write_jsonl(RAW / "datafountain.jsonl", records)
+    _write_jsonl(RAW / "datafountain.jsonl", list(records.values()))
     return {"source": "datafountain", "total": len(records)}
 
 

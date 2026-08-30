@@ -146,13 +146,17 @@ def cmd_run(dsn: str, table: str | None) -> dict:
 
     run = RunContext("xlzszdb", {"cmd": "run", "table": table})
     counts: dict[str, int] = {}
+    # 目录类数据全量刷新（TRUNCATE 后重导，避免旧脏数据残留）
     with psycopg.connect(dsn) as conn:
         with conn.cursor() as cur:
             if table in (None, "certs"):
+                cur.execute("TRUNCATE cert_catalog")
                 counts["cert_catalog"] = import_certs(cur)
             if table in (None, "races"):
+                cur.execute("TRUNCATE race_catalog")
                 counts["race_catalog"] = import_races(cur)
             if table in (None, "std"):
+                cur.execute("TRUNCATE std_requirements")
                 counts["std_requirements"] = import_std_requirements(cur)
         conn.commit()
 

@@ -148,40 +148,102 @@ def cmd_pdf(run: RunContext, code: str) -> dict:
 # ---------------------------------------------------------------- 1+X
 
 
+# 1+X API 的 pageNum/pageSize 实测被服务端忽略（任何页返回同一首页，2026-08-30），
+# 无法翻页拉全量 1237 条；改为数字技术域关键词词典遍历 + 唯一 id 去重聚合。
+ONEX_KEYS = (
+    "人工智能",
+    "智能",
+    "数据",
+    "信息",
+    "软件",
+    "网络",
+    "大模型",
+    "机器学习",
+    "云计算",
+    "机器人",
+    "互联网",
+    "数字",
+    "物联网",
+    "区块链",
+)
+
+
 def _onex_pages(run: RunContext, api: str, key: str, label: str, kw: str | None) -> list[dict]:
-    """分页拉 1+X 证书/标准（服务端忽略 pageSize，每页固定 10 条，靠 total 判停）。"""
-    records: list[dict] = []
-    page, total = 1, None
-    while True:
-        payload: dict = {"pageNum": page, "pageSize": 10}
-        if kw:
-            payload[key] = kw
+    """1+X 采集：关键词遍历 + 唯一 id 去重。
+
+    服务端固定每查询返回 10 条且忽略分页参数，逐关键词请求后按唯一 id 聚合。
+    口径：数字技术域相关子集（非全量 1237 条），局限已记录于 SOURCES.yml。
+    """
+    seen: dict[str, dict] = {}
+    for k in [kw] if kw else ONEX_KEYS:
+        payload: dict = {"pageNum": 1, "pageSize": 10, key: k}
         data = _post_json(api, payload).get("data") or {}
         batch = data.get("records") or []
-        total = data.get("total") or total
-        records.extend(batch)
-        if page % 20 == 0:
-            run.log(
-                label,
-                f"page{page}",
-                "progress",
-                count={"records": len(records), "total": total},
-            )
-        if not batch or (total and len(records) >= total) or page >= 200:
-            break
-        page += 1
+        for r in batch:
+            rid = str(r.get("certificateId") or r.get("standardId") or "")
+            if rid and rid not in seen:
+                seen[rid] = r
+        run.log(
+            label,
+            f"kw:{k}",
+            "progress",
+            count={"unique": len(seen), "server_total": data.get("total")},
+        )
         time.sleep(SLEEP)
-    return records
+    return list(seen.values())
 
 
 def cmd_onex(run: RunContext, kw: str | None) -> dict:
-    certs = _onex_pages(run, ONEX_CERT, "certificateName", "onex-cert", kw)
-    stds = _onex_pages(run, ONEX_STD, "standardName", "onex-std", kw)
+    # 口径修正：API 的 pageNum/pageSize 实测被忽略（任何页返回同一首页），无法翻页拉全量；
+    # 改为数字技术域关键词遍历 + 唯一 id 去重聚合（局限记录于 xlzsz-known-limits.md）。
+    keys = (
+        [kw]
+        if kw
+        else [
+            "人工智能",
+            "智能",
+            "数据",
+            "信息",
+            "软件",
+            "网络",
+            "大模型",
+            "机器学习",
+            "云计算",
+            "机器人",
+            "互联网",
+            "数字",
+            "编程",
+            "算法",
+        ]
+    )
+    cert_map: dict[str, dict] = {}
+    std_map: dict[str, dict] = {}
+    endpoints = (
+        (ONEX_CERT, cert_map, "certificateName", "certificateId"),
+        (ONEX_STD, std_map, "standardName", "standardId"),
+    )
+    for k in keys:
+        for api, m, fld, idkey in endpoints:
+            payload = {"pageNum": 1, "pageSize": 10, fld: k}
+            data = _post_json(api, payload).get("data") or {}
+            for r in data.get("records") or []:
+                rid = str(r.get(idkey) or "")
+                if rid and rid not in m:
+                    m[rid] = r
+            run.log(
+                "onex",
+                f"kw:{k}",
+                "progress",
+                count={"certs": len(cert_map), "stds": len(std_map)},
+            )
+        time.sleep(SLEEP)
+    certs = list(cert_map.values())
+    stds = list(std_map.values())
     _write_jsonl(RAW / "onex-certificates.jsonl", certs)
     _write_jsonl(RAW / "onex-standards.jsonl", stds)
     return {
         "source": "onex",
-        "keyword": kw or "全量",
+        "keywords": len(keys),
         "certificates": len(certs),
         "standards": len(stds),
         "out": [
@@ -244,7 +306,7 @@ def cmd_normalize(run: RunContext) -> dict:
             r = json.loads(line)
             records.append(
                 {
-                    "cert_id": f"osta-std-{r['code']}",
+                    "cert_id": f"osta-std-{r.get('id', r['code'])}",
                     "name": r["name"],
                     "type": "national_standard",
                     "issuer": "人力资源和社会保障部",

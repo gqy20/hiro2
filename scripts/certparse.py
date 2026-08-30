@@ -203,26 +203,33 @@ def parse_standard(pdf_path: Path) -> list[dict]:
         know_items = _split_numbered("".join(streams.get((lvl, 3), [])), 3)
 
         func_map = {no: t for no, t in func_items if re.fullmatch(r"\d+", no)}
+        # 同 work_no 多条归并（多页表格重复切分）：取首条文本，skills/knowledge 并集去重
+        merged: dict[str, dict] = {}
         for no, wtext in work_items:
             if not re.fullmatch(r"\d+\.\d+", no):
                 continue  # 功能列一级编号混入内容流时不作工作内容
             func_no = no.split(".")[0]
-            record: dict = {
-                "level": lvl,
-                "func": func_map.get(func_no, ""),
-                "work_no": no,
-                "work": wtext,
-                "skills": list[str](),
-                "knowledge": list[str](),
-            }
+            if no not in merged:
+                merged[no] = {
+                    "level": lvl,
+                    "func": func_map.get(func_no, ""),
+                    "work_no": no,
+                    "work": wtext,
+                    "skills": list[str](),
+                    "knowledge": list[str](),
+                }
             prefix = no + "."
             for sno, stext in skill_items:
                 if sno == no or sno.startswith(prefix):
-                    record["skills"].append(f"{sno} {stext}")
+                    item = f"{sno} {stext}"
+                    if item not in merged[no]["skills"]:
+                        merged[no]["skills"].append(item)
             for kno, ktext in know_items:
                 if kno == no or kno.startswith(prefix):
-                    record["knowledge"].append(f"{kno} {ktext}")
-            records.append(record)
+                    item = f"{kno} {ktext}"
+                    if item not in merged[no]["knowledge"]:
+                        merged[no]["knowledge"].append(item)
+        records.extend(merged.values())
     return records
 
 

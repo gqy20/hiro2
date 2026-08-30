@@ -132,12 +132,12 @@ sources:
     time_range: [2006, 2026]
     ingestion_mode: backfill
     notes: certget.py 三源——人社部国家职业标准库 702 条（含标准 PDF 直链，已下载
-      10 份数字技术域核心标准原文）；教育部 1+X 证书目录 1240 条 + 等级标准 450 条
+      10 份数字技术域核心标准原文）；教育部 1+X 证书 106 张 + 等级标准 74 项（数字技术域关键词子集——API 分页参数实测失效，无法拉全量，局限见 docs/research/xlzsz-known-limits.md）
       （vslc.ncb.edu.cn 公开 POST API，服务端固定每页 10 条）；华为职业认证 108 条
       （apigw-04.huawei.com 树形 JSON，AI 方向 9 条）。归一产物 data/processed/certs/
-      cert-catalog.jsonl（2050 条，cert_id/name/issuer/level/effective_from）；
-      certparse.py 解析标准 PDF 工作要求表（10 份 → 569 工作内容 / 3131 能力 /
-      3404 知识条目，含等级分离，列优先+编号深度切分，零 LLM 确定性解析）
+      cert-catalog.jsonl（916 条，cert_id/name/issuer/level/effective_from）；
+      certparse.py 解析标准 PDF 工作要求表（10 份 → 431 工作内容 / 1679 能力 /
+      1643 知识条目，含等级分离与同键合并，列优先+编号深度切分，零 LLM 确定性解析）
 
   - id: race-catalog
     type: competition_platform   # 学练赛证"赛"段：AI 竞赛三平台全量赛事
@@ -149,7 +149,7 @@ sources:
       JSON，算法赛+应用赛含往届全届次，行业分类与大模型/CV/NLP 赛道对齐能力域）；
       阿里天池 270 条（/v3/proxy/competition/api/race/page，tags 技能标签+亮点
       字段标证书奖励）；DataFountain 300 条（tags 即技能标签体系）。归一产物
-      data/processed/races/race-catalog.jsonl（1199 条，race_id/name/organizer/
+      data/processed/races/race-catalog.jsonl（1269 条，race_id/name/organizer/
       bonus/team_count/register_end/tags）
 
   - id: pypi-pkgstats

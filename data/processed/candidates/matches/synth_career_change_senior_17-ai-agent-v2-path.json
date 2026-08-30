@@ -8,12 +8,26 @@
       "name": "自动化运维",
       "priority": "P2 加分拓展",
       "reason": "非必备，作为差异化加分项拓展",
-      "learn": "学习 自动化运维 领域核心知识点与主流方法",
+      "learn": "学习 自动化运维 领域核心知识点与主流方法【前瞻：市场信号预测上升（置信 0.5），建议优先投入】",
       "practice": "完成一个包含 自动化运维 的实战小项目并沉淀到简历",
       "evaluate": "在项目复盘中自评 自动化运维 的独立完成度",
       "certify": "整理项目证据形成 自动化运维 能力证明材料",
       "certificates": [],
-      "contests": []
+      "contests": [],
+      "trend": {
+        "name": "自动化运维",
+        "direction": "up",
+        "confidence": 0.5,
+        "recent": 2.0,
+        "prior": 1.0,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -1767,
+          "reliability": "jd_preceded"
+        },
+        "note": "市场信号预测上升（置信 0.5），建议优先投入"
+      }
     }
   ],
   "generated_by": "match-v1 实体映射规则"

@@ -84,7 +84,13 @@
             "organizer": "科大讯飞",
             "url": "https://challenge.xfyun.cn/"
           }
-        ]
+        ],
+        "trend": {
+          "direction": "up",
+          "confidence": 0.35,
+          "emerging": true,
+          "note": "新涌现方向（近期信号从无到有），值得关注"
+        }
       },
       {
         "skill": "智能体编排",
@@ -107,7 +113,13 @@
             "organizer": "科大讯飞",
             "url": "https://challenge.xfyun.cn/"
           }
-        ]
+        ],
+        "trend": {
+          "direction": "up",
+          "confidence": 0.9,
+          "emerging": false,
+          "note": "市场信号预测上升（置信 0.9），建议优先投入"
+        }
       },
       {
         "skill": "检索增强生成",
@@ -124,7 +136,13 @@
             "url": "https://www.aidaxue.com/certification"
           }
         ],
-        "contests": []
+        "contests": [],
+        "trend": {
+          "direction": "flat",
+          "confidence": 0.4,
+          "emerging": false,
+          "note": ""
+        }
       }
     ],
     "evidence": [

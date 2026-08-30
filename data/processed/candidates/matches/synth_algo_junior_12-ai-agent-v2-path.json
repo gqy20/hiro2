@@ -49,7 +49,21 @@
           "register_end": "",
           "days_left": null
         }
-      ]
+      ],
+      "trend": {
+        "name": "AI Agent",
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 185.8,
+        "prior": 159.9,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -1430,
+          "reliability": "jd_preceded"
+        },
+        "note": ""
+      }
     },
     {
       "skill_id": "cap_01",
@@ -97,7 +111,21 @@
           "register_end": "",
           "days_left": null
         }
-      ]
+      ],
+      "trend": {
+        "name": "LLM应用",
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 52.1,
+        "prior": 65.6,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -1492,
+          "reliability": "jd_preceded"
+        },
+        "note": ""
+      }
     },
     {
       "skill_id": "cap_06",
@@ -120,7 +148,21 @@
           "url": "https://www.aidaxue.com/certification"
         }
       ],
-      "contests": []
+      "contests": [],
+      "trend": {
+        "name": "RAG/知识库",
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 6.2,
+        "prior": 6.6,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -578,
+          "reliability": "jd_preceded"
+        },
+        "note": ""
+      }
     },
     {
       "skill_id": "cap_08",
@@ -143,14 +185,15 @@
           "url": "https://www.osta.org.cn/skillStandard"
         }
       ],
-      "contests": []
+      "contests": [],
+      "trend": null
     },
     {
       "skill_id": "cap_02",
       "name": "Prompt工程",
       "priority": "P2 加分拓展",
       "reason": "非必备，作为差异化加分项拓展",
-      "learn": "学习 Prompt工程 领域核心知识点与主流方法",
+      "learn": "学习 Prompt工程 领域核心知识点与主流方法【前瞻：新涌现方向（近期信号从无到有），值得关注】",
       "practice": "完成一个包含 Prompt工程 的实战小项目并沉淀到简历",
       "evaluate": "参加实践评测或赛事检验：智能办公协同助理Skill开发挑战赛",
       "certify": "考取或对照权威认证：Prompt工程师认证（讯飞AI大学堂）；并整理项目证据形成能力证明材料",
@@ -170,14 +213,28 @@
           "register_end": "",
           "days_left": null
         }
-      ]
+      ],
+      "trend": {
+        "name": "Prompt工程",
+        "direction": "up",
+        "confidence": 0.35,
+        "recent": 3.2,
+        "prior": 0.0,
+        "emerging": true,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -1034,
+          "reliability": "jd_preceded"
+        },
+        "note": "新涌现方向（近期信号从无到有），值得关注"
+      }
     },
     {
       "skill_id": "cap_03",
       "name": "模型微调",
       "priority": "P2 加分拓展",
       "reason": "非必备，作为差异化加分项拓展",
-      "learn": "学习 模型微调 领域核心知识点与主流方法",
+      "learn": "学习 模型微调 领域核心知识点与主流方法【前瞻：市场信号预测上升（置信 0.9），建议优先投入】",
       "practice": "完成一个包含 模型微调 的实战小项目并沉淀到简历",
       "evaluate": "正在报名的赛事，以赛促学：从自然语言到可执行工作流的Agent算法挑战赛（截止 2026-09-04，剩 4 天）、基于多份材料的信息整合冲突判断与可靠问答挑战赛（截止 2026-09-13，剩 13 天）",
       "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）、微调工程师认证（讯飞AI大学堂）；并整理项目证据形成能力证明材料",
@@ -210,7 +267,21 @@
           "register_end": "2026-09-13",
           "days_left": 13
         }
-      ]
+      ],
+      "trend": {
+        "name": "模型微调",
+        "direction": "up",
+        "confidence": 0.9,
+        "recent": 16.3,
+        "prior": 9.6,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -1917,
+          "reliability": "jd_preceded"
+        },
+        "note": "市场信号预测上升（置信 0.9），建议优先投入"
+      }
     },
     {
       "skill_id": "cap_05",
@@ -253,7 +324,21 @@
           "register_end": "",
           "days_left": null
         }
-      ]
+      ],
+      "trend": {
+        "name": "多模态AI",
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 85.4,
+        "prior": 86.0,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -2161,
+          "reliability": "jd_preceded"
+        },
+        "note": ""
+      }
     },
     {
       "skill_id": "cap_12",
@@ -290,7 +375,21 @@
           "register_end": "",
           "days_left": null
         }
-      ]
+      ],
+      "trend": {
+        "name": "ML/DL算法",
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 47.7,
+        "prior": 41.8,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "promote",
+          "lead_days": 365,
+          "reliability": "lower_bound"
+        },
+        "note": ""
+      }
     }
   ],
   "generated_by": "match-v1 实体映射规则"

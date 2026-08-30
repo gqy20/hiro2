@@ -65,6 +65,7 @@ class GapVM(_VM):
     certify: str = ""
     certificates: list[dict] = Field(default_factory=list)
     contests: list[dict] = Field(default_factory=list)
+    trend: dict | None = None
 
 
 class DiagnosisVM(_VM):
@@ -209,6 +210,7 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
             certify=_step(g["skill_id"]).get("certify", ""),
             certificates=_step(g["skill_id"]).get("certificates", []),
             contests=_step(g["skill_id"]).get("contests", []),
+            trend=_step(g["skill_id"]).get("trend"),
         )
         for g in report.get("gaps", [])
         if g.get("verdict") != "已具备"

@@ -49,7 +49,21 @@
           "register_end": "",
           "days_left": null
         }
-      ]
+      ],
+      "trend": {
+        "name": "AI Agent",
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 185.8,
+        "prior": 159.9,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -1430,
+          "reliability": "jd_preceded"
+        },
+        "note": ""
+      }
     },
     {
       "skill_id": "cap_06",
@@ -72,14 +86,28 @@
           "url": "https://www.aidaxue.com/certification"
         }
       ],
-      "contests": []
+      "contests": [],
+      "trend": {
+        "name": "RAG/知识库",
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 6.2,
+        "prior": 6.6,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -578,
+          "reliability": "jd_preceded"
+        },
+        "note": ""
+      }
     },
     {
       "skill_id": "cap_02",
       "name": "Prompt工程",
       "priority": "P2 加分拓展",
       "reason": "非必备，作为差异化加分项拓展",
-      "learn": "学习 Prompt工程 领域核心知识点与主流方法",
+      "learn": "学习 Prompt工程 领域核心知识点与主流方法【前瞻：新涌现方向（近期信号从无到有），值得关注】",
       "practice": "完成一个包含 Prompt工程 的实战小项目并沉淀到简历",
       "evaluate": "参加实践评测或赛事检验：智能办公协同助理Skill开发挑战赛",
       "certify": "考取或对照权威认证：Prompt工程师认证（讯飞AI大学堂）；并整理项目证据形成能力证明材料",
@@ -99,7 +127,21 @@
           "register_end": "",
           "days_left": null
         }
-      ]
+      ],
+      "trend": {
+        "name": "Prompt工程",
+        "direction": "up",
+        "confidence": 0.35,
+        "recent": 3.2,
+        "prior": 0.0,
+        "emerging": true,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -1034,
+          "reliability": "jd_preceded"
+        },
+        "note": "新涌现方向（近期信号从无到有），值得关注"
+      }
     },
     {
       "skill_id": "cap_05",
@@ -142,7 +184,21 @@
           "register_end": "",
           "days_left": null
         }
-      ]
+      ],
+      "trend": {
+        "name": "多模态AI",
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 85.4,
+        "prior": 86.0,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -2161,
+          "reliability": "jd_preceded"
+        },
+        "note": ""
+      }
     }
   ],
   "generated_by": "match-v1 实体映射规则"

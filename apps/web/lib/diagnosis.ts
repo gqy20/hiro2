@@ -72,6 +72,12 @@ export type DiagnosisFixture = {
         register_end?: string;
         days_left?: number | null;
       }>;
+      trend?: {
+        direction: string;
+        confidence: number;
+        emerging: boolean;
+        note: string;
+      } | null;
     }>;
     career?: {
       completedSkills: string[];

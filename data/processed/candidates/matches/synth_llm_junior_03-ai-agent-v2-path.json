@@ -49,7 +49,21 @@
           "register_end": "",
           "days_left": null
         }
-      ]
+      ],
+      "trend": {
+        "name": "AI Agent",
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 185.8,
+        "prior": 159.9,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -1430,
+          "reliability": "jd_preceded"
+        },
+        "note": ""
+      }
     },
     {
       "skill_id": "cap_08",
@@ -72,7 +86,8 @@
           "url": "https://www.osta.org.cn/skillStandard"
         }
       ],
-      "contests": []
+      "contests": [],
+      "trend": null
     },
     {
       "skill_id": "cap_05",
@@ -115,7 +130,21 @@
           "register_end": "",
           "days_left": null
         }
-      ]
+      ],
+      "trend": {
+        "name": "多模态AI",
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 85.4,
+        "prior": 86.0,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -2161,
+          "reliability": "jd_preceded"
+        },
+        "note": ""
+      }
     },
     {
       "skill_id": "cap_12",
@@ -152,7 +181,21 @@
           "register_end": "",
           "days_left": null
         }
-      ]
+      ],
+      "trend": {
+        "name": "ML/DL算法",
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 47.7,
+        "prior": 41.8,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "promote",
+          "lead_days": 365,
+          "reliability": "lower_bound"
+        },
+        "note": ""
+      }
     }
   ],
   "generated_by": "match-v1 实体映射规则"

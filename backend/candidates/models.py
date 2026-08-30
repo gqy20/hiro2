@@ -155,6 +155,8 @@ class LearnStep(BaseModel):
     # 结构化实体（供前端渲染可点击卡片）：证书 {name, issuer, url}、竞赛 {name, organizer, url}
     certificates: list[dict] = Field(default_factory=list)
     contests: list[dict] = Field(default_factory=list)
+    # 预测信号（时间情报域 -> 学练段）：{direction, confidence, emerging, note}
+    trend: dict | None = None
 
 
 class LearningPath(BaseModel):

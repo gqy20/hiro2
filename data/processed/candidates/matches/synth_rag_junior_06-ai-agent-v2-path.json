@@ -24,7 +24,8 @@
           "url": "https://www.osta.org.cn/skillStandard"
         }
       ],
-      "contests": []
+      "contests": [],
+      "trend": null
     },
     {
       "skill_id": "cap_05",
@@ -67,7 +68,21 @@
           "register_end": "",
           "days_left": null
         }
-      ]
+      ],
+      "trend": {
+        "name": "多模态AI",
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 85.4,
+        "prior": 86.0,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -2161,
+          "reliability": "jd_preceded"
+        },
+        "note": ""
+      }
     },
     {
       "skill_id": "cap_12",
@@ -104,14 +119,28 @@
           "register_end": "",
           "days_left": null
         }
-      ]
+      ],
+      "trend": {
+        "name": "ML/DL算法",
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 47.7,
+        "prior": 41.8,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "promote",
+          "lead_days": 365,
+          "reliability": "lower_bound"
+        },
+        "note": ""
+      }
     },
     {
       "skill_id": "cap_03",
       "name": "模型微调",
       "priority": "P2 加分拓展",
       "reason": "非必备，作为差异化加分项拓展",
-      "learn": "学习 模型微调 领域核心知识点与主流方法",
+      "learn": "学习 模型微调 领域核心知识点与主流方法【前瞻：市场信号预测上升（置信 0.9），建议优先投入】",
       "practice": "完成一个包含 模型微调 的实战小项目并沉淀到简历",
       "evaluate": "正在报名的赛事，以赛促学：从自然语言到可执行工作流的Agent算法挑战赛（截止 2026-09-04，剩 4 天）、基于多份材料的信息整合冲突判断与可靠问答挑战赛（截止 2026-09-13，剩 13 天）",
       "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）、微调工程师认证（讯飞AI大学堂）；并整理项目证据形成能力证明材料",
@@ -144,7 +173,21 @@
           "register_end": "2026-09-13",
           "days_left": 13
         }
-      ]
+      ],
+      "trend": {
+        "name": "模型微调",
+        "direction": "up",
+        "confidence": 0.9,
+        "recent": 16.3,
+        "prior": 9.6,
+        "emerging": false,
+        "suggestion": {
+          "change_type": "add",
+          "lead_days": -1917,
+          "reliability": "jd_preceded"
+        },
+        "note": "市场信号预测上升（置信 0.9），建议优先投入"
+      }
     }
   ],
   "generated_by": "match-v1 实体映射规则"

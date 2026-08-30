@@ -213,15 +213,30 @@ def test_learning_path_cites_real_contests(published):
 
 # ---------------------------------------------------------------- 竞赛时间维度
 
+
 def test_race_status_classification():
     """赛事时间状态分类：正在报名/即将截止/进行中/已结束/时间未知。"""
     from datetime import date
 
     as_of = date(2026, 8, 31)
-    assert xlzsz.race_status({"register_end": "2026-09-30", "final_end": "2026-11-01"}, as_of) == "正在报名"
-    assert xlzsz.race_status({"register_end": "2026-09-10", "final_end": "2026-10-01"}, as_of) == "即将截止"  # 10天内
-    assert xlzsz.race_status({"register_end": "2026-08-01", "final_end": "2026-09-15"}, as_of) == "进行中"  # 报名截止但未完赛
-    assert xlzsz.race_status({"register_end": "2026-07-01", "final_end": "2026-08-01"}, as_of) == "已结束"
+    assert (
+        xlzsz.race_status({"register_end": "2026-09-30", "final_end": "2026-11-01"}, as_of)
+        == "正在报名"
+    )
+    # 10 天内 -> 即将截止
+    assert (
+        xlzsz.race_status({"register_end": "2026-09-10", "final_end": "2026-10-01"}, as_of)
+        == "即将截止"
+    )
+    # 报名截止但未完赛 -> 进行中
+    assert (
+        xlzsz.race_status({"register_end": "2026-08-01", "final_end": "2026-09-15"}, as_of)
+        == "进行中"
+    )
+    assert (
+        xlzsz.race_status({"register_end": "2026-07-01", "final_end": "2026-08-01"}, as_of)
+        == "已结束"
+    )
     assert xlzsz.race_status({"register_end": None}, as_of) == "时间未知"
     assert xlzsz.race_status({}, as_of) == "时间未知"
 
@@ -250,3 +265,46 @@ def test_open_contests_filters_placeholder_dates():
     for cap in ("cap_01", "cap_06", "cap_09"):
         for c in xlzsz.open_contests_for_skill(cap, as_of, limit=5):
             assert c["days_left"] <= 365, f"{c['name']} 截止日过远，疑似占位数据"
+
+
+# ---------------------------------------------------------------- 预测信号挂钩
+
+
+def test_prediction_for_skill_rising():
+    """预测上升（高置信）的能力域返回前瞻提示。"""
+    p = xlzsz.prediction_for_skill("cap_03")  # 模型微调，快照中 up conf0.9
+    assert p is not None
+    assert p["direction"] == "up"
+    assert p["confidence"] >= 0.5
+    assert "预测上升" in p["note"]
+
+
+def test_prediction_for_skill_emerging():
+    """新涌现方向（近期信号从无到有）返回涌现提示。"""
+    p = xlzsz.prediction_for_skill("cap_02")  # Prompt 工程，快照中新涌现
+    assert p is not None
+    assert p["emerging"] is True
+    assert "新涌现" in p["note"]
+
+
+def test_prediction_for_skill_flat_no_note():
+    """平稳/低置信能力域不带前瞻提示（避免噪声），但返回数据。"""
+    p = xlzsz.prediction_for_skill("cap_04")  # AI Agent，快照中 flat conf0.4
+    assert p is not None
+    assert p["note"] == ""
+
+
+def test_learning_path_attaches_trend(published):
+    """学习路径每个缺口携带预测信号；预测上升的能力域学段含前瞻文案。"""
+    from datetime import date
+
+    p = _profile([EffectiveSkill(mention="Python", skill_id="cap_07", proficiency="高级")])
+    report = engine.match(p, "test-v1")
+    path = engine.learning_path(report, as_of=date(2026, 8, 31))
+    # 至少一个缺口的学段携带前瞻提示（快照有 up/emerging 能力域）
+    notes = [s.learn for s in path.steps if "前瞻" in s.learn]
+    assert notes, "预测上升/新涌现的能力域学段应有前瞻提示"
+    # 携带前瞻提示的 step 必有结构化 trend 且 note 非空
+    for s in path.steps:
+        if "前瞻" in s.learn:
+            assert s.trend and s.trend["note"]

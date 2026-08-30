@@ -52,6 +52,16 @@ export function CareerPath({ fixture }: { fixture: DiagnosisFixture }) {
                 <Tag color={gap.priority === "high" ? "red" : "blue"}>
                   {PRIORITY_LABEL[gap.priority]}
                 </Tag>
+                {gap.trend?.note ? (
+                  <Tag
+                    color={
+                      gap.trend.direction === "up" ? "green" : "orange"
+                    }
+                    className="career-path-trend"
+                  >
+                    前瞻 · {gap.trend.note}
+                  </Tag>
+                ) : null}
               </header>
               {gap.reason ? (
                 <p className="career-path-reason">{gap.reason}</p>

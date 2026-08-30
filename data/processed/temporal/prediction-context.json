@@ -1,0 +1,213 @@
+{
+  "as_of": "2026-07-01",
+  "horizon_days": 30,
+  "rule_version": 2,
+  "generated_by": "predsnap.py（forecast backtest + leadtime 合并）",
+  "skills": {
+    "cap_01": {
+      "name": "LLM应用",
+      "direction": "flat",
+      "confidence": 0.4,
+      "recent": 52.1,
+      "prior": 65.6,
+      "emerging": false,
+      "suggestion": {
+        "change_type": "add",
+        "lead_days": -1492,
+        "reliability": "jd_preceded"
+      }
+    },
+    "cap_02": {
+      "name": "Prompt工程",
+      "direction": "up",
+      "confidence": 0.35,
+      "recent": 3.2,
+      "prior": 0.0,
+      "emerging": true,
+      "suggestion": {
+        "change_type": "add",
+        "lead_days": -1034,
+        "reliability": "jd_preceded"
+      }
+    },
+    "cap_03": {
+      "name": "模型微调",
+      "direction": "up",
+      "confidence": 0.9,
+      "recent": 16.3,
+      "prior": 9.6,
+      "emerging": false,
+      "suggestion": {
+        "change_type": "add",
+        "lead_days": -1917,
+        "reliability": "jd_preceded"
+      }
+    },
+    "cap_04": {
+      "name": "AI Agent",
+      "direction": "flat",
+      "confidence": 0.4,
+      "recent": 185.8,
+      "prior": 159.9,
+      "emerging": false,
+      "suggestion": {
+        "change_type": "add",
+        "lead_days": -1430,
+        "reliability": "jd_preceded"
+      }
+    },
+    "cap_05": {
+      "name": "多模态AI",
+      "direction": "flat",
+      "confidence": 0.4,
+      "recent": 85.4,
+      "prior": 86.0,
+      "emerging": false,
+      "suggestion": {
+        "change_type": "add",
+        "lead_days": -2161,
+        "reliability": "jd_preceded"
+      }
+    },
+    "cap_06": {
+      "name": "RAG/知识库",
+      "direction": "flat",
+      "confidence": 0.4,
+      "recent": 6.2,
+      "prior": 6.6,
+      "emerging": false,
+      "suggestion": {
+        "change_type": "add",
+        "lead_days": -578,
+        "reliability": "jd_preceded"
+      }
+    },
+    "cap_07": {
+      "name": "Python",
+      "direction": "flat",
+      "confidence": 0.4,
+      "recent": 6.0,
+      "prior": 0.3,
+      "emerging": false,
+      "suggestion": null
+    },
+    "cap_12": {
+      "name": "ML/DL算法",
+      "direction": "flat",
+      "confidence": 0.4,
+      "recent": 47.7,
+      "prior": 41.8,
+      "emerging": false,
+      "suggestion": {
+        "change_type": "promote",
+        "lead_days": 365,
+        "reliability": "lower_bound"
+      }
+    },
+    "cap_13": {
+      "name": "云计算",
+      "direction": "up",
+      "confidence": 0.82,
+      "recent": 6.2,
+      "prior": 2.6,
+      "emerging": false,
+      "suggestion": {
+        "change_type": "add",
+        "lead_days": -1492,
+        "reliability": "jd_preceded"
+      }
+    },
+    "cap_14": {
+      "name": "API开发",
+      "direction": "flat",
+      "confidence": 0.4,
+      "recent": 8.0,
+      "prior": 11.2,
+      "emerging": false,
+      "suggestion": {
+        "change_type": "add",
+        "lead_days": -1612,
+        "reliability": "jd_preceded"
+      }
+    },
+    "cap_15": {
+      "name": "系统架构",
+      "direction": "down",
+      "confidence": 0.9,
+      "recent": 3.0,
+      "prior": 6.0,
+      "emerging": false,
+      "suggestion": {
+        "change_type": "add",
+        "lead_days": -1461,
+        "reliability": "jd_preceded"
+      }
+    },
+    "cap_17": {
+      "name": "嵌入式/硬件",
+      "direction": "up",
+      "confidence": 0.82,
+      "recent": 5.4,
+      "prior": 2.6,
+      "emerging": false,
+      "suggestion": {
+        "change_type": "add",
+        "lead_days": -1612,
+        "reliability": "jd_preceded"
+      }
+    },
+    "cap_18": {
+      "name": "自动化运维",
+      "direction": "up",
+      "confidence": 0.5,
+      "recent": 2.0,
+      "prior": 1.0,
+      "emerging": false,
+      "suggestion": {
+        "change_type": "add",
+        "lead_days": -1767,
+        "reliability": "jd_preceded"
+      }
+    },
+    "cap_19": {
+      "name": "AI伦理合规",
+      "direction": "up",
+      "confidence": 0.7,
+      "recent": 3.6,
+      "prior": 2.0,
+      "emerging": false,
+      "suggestion": null
+    },
+    "cap_21": {
+      "name": "领域知识",
+      "direction": "up",
+      "confidence": 0.5,
+      "recent": 2.6,
+      "prior": 1.0,
+      "emerging": false,
+      "suggestion": null
+    },
+    "cap_22": {
+      "name": "产品思维",
+      "direction": "up",
+      "confidence": 0.35,
+      "recent": 2.0,
+      "prior": 0.0,
+      "emerging": true,
+      "suggestion": null
+    },
+    "cap_30": {
+      "name": "安全/风控意识",
+      "direction": "flat",
+      "confidence": 0.4,
+      "recent": 10.2,
+      "prior": 14.9,
+      "emerging": false,
+      "suggestion": {
+        "change_type": "add",
+        "lead_days": -1400,
+        "reliability": "jd_preceded"
+      }
+    }
+  }
+}

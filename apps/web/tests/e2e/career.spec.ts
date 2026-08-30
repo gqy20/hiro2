@@ -107,6 +107,16 @@ test("career path renders clickable cert/contest cards", async ({ page }) => {
   }
 });
 
+test("career path shows forward-looking trend badge from prediction system", async ({
+  page,
+}) => {
+  await page.goto("/career/path");
+  // 预测上升/新涌现的能力域，学习路径应展示前瞻徽标（时间情报域 -> 学练段）
+  const trend = page.locator(".career-path-trend").first();
+  await expect(trend).toBeVisible();
+  await expect(trend).toContainText("前瞻");
+});
+
 test("career jobs and path render empty and error variants", async ({
   page,
 }) => {

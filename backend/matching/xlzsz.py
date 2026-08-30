@@ -26,6 +26,7 @@ CONTESTS_YML = ROOT / "data" / "CONTESTS.yml"
 SKILLS_YML = ROOT / "data" / "SKILLS.yml"
 STD_REQ_DIR = ROOT / "data" / "processed" / "certs" / "std-requirements"
 RACE_CATALOG = ROOT / "data" / "processed" / "races" / "race-catalog.jsonl"
+PRED_CONTEXT = ROOT / "data" / "processed" / "temporal" / "prediction-context.json"
 
 
 @lru_cache(maxsize=1)
@@ -190,7 +191,9 @@ def contests_for_skill(skill_id: str, limit: int = 3) -> list[dict]:
 def _load_race_catalog() -> tuple[dict, ...]:
     if not RACE_CATALOG.is_file():
         return ()
-    return tuple(json.loads(l) for l in RACE_CATALOG.open(encoding="utf-8") if l.strip())
+    return tuple(
+        json.loads(line) for line in RACE_CATALOG.open(encoding="utf-8") if line.strip()
+    )
 
 
 def _parse_date(s) -> date | None:
@@ -263,6 +266,43 @@ def open_contests_for_skill(skill_id: str, as_of: date, limit: int = 3) -> list[
         )
     out.sort(key=lambda x: (x["days_left"] if x["days_left"] is not None else 9999))
     return out[:limit]
+
+
+# ---------------------------------------------------------------- 预测信号（时间情报域 -> 学练段）
+# 快照由 scripts/predsnap.py 合并 ForecastEngine 预测 + leadtime 建议生成，
+# 使匹配引擎（文件驱动）能消费预测信号而不直连 DB。边界：仅作信息性前瞻提示，
+# 不改岗位版本、不绕过审核（docs/temporal-system.md）。
+
+
+@lru_cache(maxsize=1)
+def _load_prediction() -> dict:
+    if not PRED_CONTEXT.is_file():
+        return {}
+    return json.loads(PRED_CONTEXT.read_text(encoding="utf-8"))
+
+
+def prediction_for_skill(skill_id: str) -> dict | None:
+    """能力域 -> 预测上下文（方向/置信/新涌现/建议）；无快照或无该域返 None。
+
+    返回包含 note 的字典：把预测信号转为人话（如"预测上升，建议优先投入"），
+    供学练段前瞻提示。低置信/平稳/回落不生成提示（避免噪声）。
+    """
+    ctx = _load_prediction().get("skills", {}).get(skill_id)
+    if not ctx:
+        return None
+    direction = ctx.get("direction", "flat")
+    conf = ctx.get("confidence", 0)
+    emerging = ctx.get("emerging", False)
+    note = ""
+    if emerging:
+        note = "新涌现方向（近期信号从无到有），值得关注"
+    elif direction == "up" and conf >= 0.5:
+        note = f"市场信号预测上升（置信 {conf}），建议优先投入"
+    elif direction == "down" and conf >= 0.5:
+        note = f"市场信号回落（置信 {conf}），投入前可再观察"
+    if not note:
+        return {**ctx, "note": ""}
+    return {**ctx, "note": note}
 
 
 def match_cert_mention(text: str) -> list[dict]:

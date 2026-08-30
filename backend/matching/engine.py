@@ -61,9 +61,7 @@ def match(candidate: CandidateProfile, job_version_id: str) -> MatchReport:
         domain_points = [p for p in have_points if p.split(".")[0] == sid]
         cand_ev = ""
         verdict: Verdict
-        cert_hit = next(
-            (c for c in cert_hits if sid in c.get("capability_ids", [])), None
-        )
+        cert_hit = next((c for c in cert_hits if sid in c.get("capability_ids", [])), None)
         if cert_hit:
             verdict = "已具备"
             cand_ev = f"持权威证书：{cert_hit['name']}（{cert_hit.get('issuer', '')}）"

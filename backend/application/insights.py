@@ -13,6 +13,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 P = Path(__file__).resolve().parents[2] / "data" / "processed"
 SNAP_CS = P / "jd-opencli" / "snapshot-changesets.json"
+ROLEMAP_V2 = P / "jd-opencli" / "jd-role-map-v2.jsonl"
 RELSIG = P / "pypi" / "relsignal.json"
 ARX = P / "arxiv" / "monthly-skills.json"
 CAPS = P / "capability-matrix" / "capabilities.json"
@@ -75,12 +76,43 @@ def _cap_names() -> dict[str, str]:
     }
 
 
+_POSITION_TITLES: dict[str, str] | None = None
+
+
+def _position_titles() -> dict[str, str]:
+    """position_id -> 该岗位聚类下出现次数最多的 JD 标题（确定性众数，无 LLM）。"""
+    global _POSITION_TITLES
+    if _POSITION_TITLES is not None:
+        return _POSITION_TITLES
+    from collections import Counter, defaultdict
+
+    counts: dict[str, Counter] = defaultdict(Counter)
+    if ROLEMAP_V2.is_file():
+        for line in ROLEMAP_V2.open(encoding="utf-8"):
+            try:
+                r = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            pid, title = r.get("position_id"), (r.get("title") or "").strip()
+            if pid and title:
+                counts[pid][title] += 1
+    _POSITION_TITLES = {pid: counter.most_common(1)[0][0] for pid, counter in counts.items()}
+    return _POSITION_TITLES
+
+
+def _display_title(pid: str, titles: dict[str, str], fallback: str) -> str:
+    """展示用岗位名：众数标题截断到 24 字，解析失败回退原始字段。"""
+    title = titles.get(pid, fallback)
+    return title[:24] + "…" if len(title) > 24 else title
+
+
 def build_detected_changes() -> DetectedChangesVM:
     data = json.loads(SNAP_CS.read_text(encoding="utf-8"))
+    titles = _position_titles()
     jobs = [
         DetectedJobVM(
             position_id=c["position_id"],
-            job=c["job"],
+            job=_display_title(c["position_id"], titles, c["job"]),
             base=c["base"],
             obs=c["obs"],
             base_jds=c["base_jds"],

@@ -54,6 +54,23 @@ def test_dashboard_overview_contract() -> None:
     assert len(body["queue"]) == 3
 
 
+def test_detected_changes_contract() -> None:
+    """DetectedChanges 使用 snake_case VM 字段与合法 change_type。"""
+    response = TestClient(app).get("/api/v1/jobs/detected-changes")
+    assert response.status_code == 200
+    body = response.json()
+    assert body["changes_total"] == sum(len(job["changes"]) for job in body["jobs"])
+    valid_types = {"add", "grow", "shrink", "remove"}
+    for job in body["jobs"]:
+        assert "position_id" in job and "base_jds" in job
+        # job 是可读岗位名，解析失败才回退 position_id
+        assert job["job"]
+        for change in job["changes"]:
+            assert change["change_type"] in valid_types
+            assert 0 <= change["base_share"] <= 1
+            assert 0 <= change["obs_share"] <= 1
+
+
 def test_profile_update_preserves_skill_details(monkeypatch) -> None:
     captured: dict = {}
 

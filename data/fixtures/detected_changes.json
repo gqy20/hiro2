@@ -1,0 +1,121 @@
+{
+  "base": "archive",
+  "obs": "corp",
+  "changes_total": 9,
+  "jobs": [
+    {
+      "position_id": "pos_01",
+      "job": "算法工程师",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 319,
+      "obs_jds": 387,
+      "review_status": "PENDING",
+      "changes": [
+        {
+          "skill_id": "cap_04",
+          "name": "AI Agent",
+          "change_type": "grow",
+          "base_share": 0.069,
+          "obs_share": 0.122,
+          "base_mentions": 128,
+          "obs_mentions": 255
+        },
+        {
+          "skill_id": "cap_12",
+          "name": "ML/DL算法",
+          "change_type": "shrink",
+          "base_share": 0.204,
+          "obs_share": 0.145,
+          "base_mentions": 377,
+          "obs_mentions": 303
+        },
+        {
+          "skill_id": "cap_10",
+          "name": "数据标注",
+          "change_type": "add",
+          "base_share": 0.002,
+          "obs_share": 0.017,
+          "base_mentions": 4,
+          "obs_mentions": 35
+        }
+      ]
+    },
+    {
+      "position_id": "pos_02",
+      "job": "AI应用工程师",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 39,
+      "obs_jds": 274,
+      "review_status": "PENDING",
+      "changes": [
+        {
+          "skill_id": "cap_01",
+          "name": "LLM应用",
+          "change_type": "grow",
+          "base_share": 0.211,
+          "obs_share": 0.263,
+          "base_mentions": 41,
+          "obs_mentions": 312
+        },
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "change_type": "shrink",
+          "base_share": 0.146,
+          "obs_share": 0.109,
+          "base_mentions": 28,
+          "obs_mentions": 129
+        },
+        {
+          "skill_id": "cap_14",
+          "name": "API开发",
+          "change_type": "add",
+          "base_share": 0.001,
+          "obs_share": 0.008,
+          "base_mentions": 2,
+          "obs_mentions": 17
+        }
+      ]
+    },
+    {
+      "position_id": "pos_05",
+      "job": "Sr. Forward Deployed Eng…",
+      "base": "archive",
+      "obs": "corp",
+      "base_jds": 62,
+      "obs_jds": 90,
+      "review_status": "PENDING",
+      "changes": [
+        {
+          "skill_id": "cap_07",
+          "name": "Python",
+          "change_type": "grow",
+          "base_share": 0.12,
+          "obs_share": 0.18,
+          "base_mentions": 15,
+          "obs_mentions": 32
+        },
+        {
+          "skill_id": "cap_15",
+          "name": "系统架构",
+          "change_type": "grow",
+          "base_share": 0.05,
+          "obs_share": 0.09,
+          "base_mentions": 6,
+          "obs_mentions": 16
+        },
+        {
+          "skill_id": "cap_17",
+          "name": "嵌入式/硬件",
+          "change_type": "remove",
+          "base_share": 0.03,
+          "obs_share": 0.0,
+          "base_mentions": 4,
+          "obs_mentions": 0
+        }
+      ]
+    }
+  ]
+}

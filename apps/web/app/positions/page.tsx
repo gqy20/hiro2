@@ -2,38 +2,27 @@ import Link from "next/link";
 
 import { AppShell } from "@/components/app-shell";
 import { apiFetch, isMockMode } from "@/lib/api/client";
+import type { DetectedChangesView } from "@/lib/api/types";
 import type { DashboardOverview } from "@/lib/dashboard";
+import { loadDetectedChangesFixture } from "@/lib/job-fixture";
 
 export const metadata = { title: "我的岗位" };
 
-type DetectedChange = {
-  skillId: string;
-  name: string;
-  changeType: string;
-  baseShare: number;
-  obsShare: number;
-};
-
-type Detected = {
-  base: string;
-  obs: string;
-  changesTotal: number;
-  jobs: {
-    positionId: string;
-    job: string;
-    baseJds: number;
-    obsJds: number;
-    changes: DetectedChange[];
-  }[];
-};
+// ponytail: 字段名沿用后端 DetectedChangesVM 的 snake_case，不另造驼峰别名。
+async function fetchDetectedServer(): Promise<DetectedChangesView | null> {
+  if (isMockMode()) return loadDetectedChangesFixture();
+  try {
+    return await apiFetch<DetectedChangesView>("/jobs/detected-changes");
+  } catch {
+    return null; // 检测草稿不可用时保留岗位卡与提示，不阻断整页
+  }
+}
 
 export default async function PositionsPage() {
   const dashboard = isMockMode()
     ? null
     : await apiFetch<DashboardOverview>("/dashboard/overview");
-  const detected = isMockMode()
-    ? null
-    : await apiFetch<Detected>("/jobs/detected-changes");
+  const detected = await fetchDetectedServer();
   const jobs = dashboard?.jobs ?? [
     {
       title: "AI 应用工程师（综合）",
@@ -93,7 +82,7 @@ export default async function PositionsPage() {
                 <h2>系统检测到的岗位变化</h2>
                 <span className="page-meta">
                   {detected
-                    ? `快照差异：${detected.base} → ${detected.obs} · ${detected.changesTotal} 项待复核`
+                    ? `快照差异：${detected.base} → ${detected.obs} · ${detected.changes_total} 项待复核`
                     : "接入真实后端后，快照差异引擎自动检出岗位技能变化草稿"}
                 </span>
               </div>
@@ -101,22 +90,22 @@ export default async function PositionsPage() {
             {detected ? (
               <ul className="detected-list">
                 {detected.jobs.slice(0, 6).map((job) => (
-                  <li className="detected-item" key={job.positionId}>
+                  <li className="detected-item" key={job.position_id}>
                     <div>
                       <strong>{job.job}</strong>
                       <small>
-                        {job.baseJds} → {job.obsJds} 条 JD ·{" "}
+                        {job.base_jds} → {job.obs_jds} 条 JD ·{" "}
                         {job.changes.length} 项变化
                       </small>
                     </div>
                     <div className="training-tags">
                       {job.changes.slice(0, 3).map((ch) => (
                         <span
-                          className={`detected-tag detected-${ch.changeType}`}
-                          key={ch.skillId}
+                          className={`detected-tag detected-${ch.change_type}`}
+                          key={ch.skill_id}
                         >
-                          {`${ch.name} ${Math.round(ch.baseShare * 100)}%→${Math.round(
-                            ch.obsShare * 100,
+                          {`${ch.name} ${Math.round(ch.base_share * 100)}%→${Math.round(
+                            ch.obs_share * 100,
                           )}%`}
                         </span>
                       ))}

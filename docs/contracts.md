@@ -326,6 +326,32 @@ evidence_ids[]
 submitted_at
 ```
 
+### DetectedChanges（快照差异检测草稿）
+
+```text
+base
+obs
+changes_total
+jobs[]:
+  position_id
+  job                 # 展示名：众数 JD 标题（截断）；解析失败回退 position_id
+  base
+  obs
+  base_jds
+  obs_jds
+  review_status       # PENDING
+  changes[]:
+    skill_id
+    name
+    change_type       # add | grow | shrink | remove
+    base_share        # 岗位内提及份额 0-1（基准窗）
+    obs_share         # 岗位内提及份额 0-1（观察窗）
+    base_mentions
+    obs_mentions
+```
+
+草稿仅供复核展示，不进入已发布岗位版本；发布仍走 `POST /jobs/{id}/versions/{version}/publish`。字段名使用 snake_case，前端不得另造驼峰别名。
+
 同一 `case_id` 的至少 20% 样本必须分配给两位独立审核者；分歧自动创建复核任务，不能静默覆盖。
 
 ## 状态机
@@ -410,6 +436,7 @@ GET  /health/ready
 评测概览的 `datasets` 包含岗位映射、领域判定、事件抽取和趋势回测四个可切换评测对象；`sampleEvaluations` 返回前三类的已评数量、准确率、需复盘数量及逐条冻结样本结论。`summary`、`errors` 与 `cases` 返回趋势回测汇总、业务化偏差分类和具体记录；`up/flat/down` 等机器枚举只用于接口字段，不直接作为界面文案。
 `PATCH /candidates/{candidate_id}/profile` 的技能项包含 `name`、`status`、`level` 与 `years`；保存时追加画像版本和修正记录，并重新计算当前目标岗位。技能证明通过 `POST /candidates/{candidate_id}/proofs` 关联标准能力域；未完成标准映射的技能不能写入结构化证明。
 `scripts/outbox.py enqueue <version_id>` 写入 `JobVersionPublished`，`scripts/outbox.py consume` 领取并幂等投影到 Neo4j。
+`GET /jobs/detected-changes` 返回快照差异检测草稿（`DetectedChanges`）：顶层 `base`、`obs`、`changes_total`、`jobs[]`；每个岗位含 `position_id`、`job`（展示名，取该岗位聚类众数 JD 标题并截断，解析失败回退 `position_id`）、`base_jds`/`obs_jds`、`review_status` 与 `changes[]`；每条变化含 `skill_id`、`name`、`change_type: add | grow | shrink | remove`、`base_share`/`obs_share`（岗位内提及份额 0–1）、`base_mentions`/`obs_mentions`。字段名使用 snake_case，与后端 `DetectedChangesVM` 一致，前端不得另造驼峰别名；草稿仅供复核展示，发布仍走 `POST /jobs/{id}/versions/{version}/publish`。
 ```
 
 ### JD 导入请求

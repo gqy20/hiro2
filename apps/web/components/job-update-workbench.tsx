@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import {
   CheckCircle,
   FileText,
@@ -49,19 +49,101 @@ type JobUpdateWorkbenchProps = {
   state?: "ready" | "empty" | "error";
 };
 
+type SavedReviewEntry = { status: ReviewStatus; detail: string };
+type SavedReview = Record<string, SavedReviewEntry>;
+
+// ponytail: 审核进度只存浏览器会话，不落后端；发布成功即清除。
+// sessionStorage 是同文档外部存储，用 useSyncExternalStore 订阅，
+// 避免在 effect 里 setState，也避免 SSR 水合不一致（服务端快照为空）。
+function reviewStorageKey(jobTitle: string, targetVersion: string): string {
+  return `hiro2:job-review:${jobTitle}:${targetVersion}`;
+}
+
+const EMPTY_SAVED: SavedReview = {};
+const reviewListeners = new Set<() => void>();
+let savedCache: { key: string; raw: string; parsed: SavedReview } | null = null;
+
+function notifyReviewListeners(): void {
+  reviewListeners.forEach((listener) => listener());
+}
+
+function subscribeSavedReview(listener: () => void): () => void {
+  reviewListeners.add(listener);
+  return () => {
+    reviewListeners.delete(listener);
+  };
+}
+
+function savedSnapshot(key: string): SavedReview {
+  const raw = window.sessionStorage.getItem(key) ?? "";
+  if (savedCache && savedCache.key === key && savedCache.raw === raw) {
+    return savedCache.parsed;
+  }
+  let parsed: SavedReview = EMPTY_SAVED;
+  if (raw) {
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      parsed = EMPTY_SAVED;
+    }
+  }
+  savedCache = { key, raw, parsed };
+  return parsed;
+}
+
+function writeSavedReview(key: string, items: ChangeItem[]): void {
+  const saved: SavedReview = {};
+  for (const item of items) {
+    saved[item.id] = { status: item.status, detail: item.detail };
+  }
+  try {
+    window.sessionStorage.setItem(key, JSON.stringify(saved));
+  } catch {
+    // 存储不可用时静默降级，审核动作仍在页面内生效
+  }
+  savedCache = null;
+  notifyReviewListeners();
+}
+
+function clearSavedReview(key: string): void {
+  window.sessionStorage.removeItem(key);
+  savedCache = null;
+  notifyReviewListeners();
+}
+
 export function JobUpdateWorkbench({
   fixture,
   state = "ready",
 }: JobUpdateWorkbenchProps) {
   const windows = splitWindow(fixture.context.timeWindow);
-  const [items, setItems] = useState(fixture.changes);
+  const storageKey = reviewStorageKey(
+    fixture.context.jobTitle,
+    fixture.context.targetVersion,
+  );
+  const savedReview = useSyncExternalStore(
+    subscribeSavedReview,
+    () => savedSnapshot(storageKey),
+    () => EMPTY_SAVED,
+  );
+  // 审核状态 = 服务端变化清单 × 会话内已保存的审核进度；刷新不丢。
+  const items = useMemo(
+    () =>
+      fixture.changes.map((item) => {
+        const entry = savedReview[item.id];
+        return entry
+          ? { ...item, status: entry.status, detail: entry.detail }
+          : item;
+      }),
+    [fixture.changes, savedReview],
+  );
   const [selected, setSelected] = useState<ChangeItem | null>(null);
   const [running, setRunning] = useState(false);
   const [publishModalOpen, setPublishModalOpen] = useState(false);
   const [publishing, setPublishing] = useState(false);
-  const [publishedResult, setPublishedResult] = useState<PublishResult | null>(
-    null,
-  );
+  const [published, setPublished] = useState<{
+    result: PublishResult;
+    counts: { accepted: number; rejected: number; pending: number };
+  } | null>(null);
   const [publishError, setPublishError] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draftDetail, setDraftDetail] = useState("");
@@ -77,10 +159,16 @@ export function JobUpdateWorkbench({
     reviewing: items.filter((item) => item.status === "reviewing").length,
   };
   const visibleItems = items;
+  const kindCounts = {
+    added: items.filter((item) => item.kind === "added").length,
+    modified: items.filter((item) => item.kind === "modified").length,
+    removed: items.filter((item) => item.kind === "removed").length,
+  };
 
   function updateStatus(id: string, status: ReviewStatus) {
-    setItems((current) =>
-      current.map((item) => (item.id === id ? { ...item, status } : item)),
+    writeSavedReview(
+      storageKey,
+      items.map((item) => (item.id === id ? { ...item, status } : item)),
     );
   }
 
@@ -90,8 +178,9 @@ export function JobUpdateWorkbench({
   }
 
   function saveDetail(id: string) {
-    setItems((current) =>
-      current.map((item) =>
+    writeSavedReview(
+      storageKey,
+      items.map((item) =>
         item.id === id ? { ...item, detail: draftDetail } : item,
       ),
     );
@@ -101,10 +190,8 @@ export function JobUpdateWorkbench({
   function runAnalysis() {
     if (running) return;
     setRunning(true);
-    window.setTimeout(() => {
-      setItems(fixture.changes);
-      setRunning(false);
-    }, 1400);
+    // 重新分析只重放加载过程：审核进度由会话存储承载，不会被清空。
+    window.setTimeout(() => setRunning(false), 1400);
   }
 
   async function publish() {
@@ -115,7 +202,16 @@ export function JobUpdateWorkbench({
         "default",
         fixture.context.targetVersion,
       );
-      setPublishedResult(result);
+      // 先快照本次审核统计，再清会话存储（清除后 items 会回到初始状态）。
+      setPublished({
+        result,
+        counts: {
+          accepted: reviewCounts.accepted,
+          rejected: reviewCounts.rejected,
+          pending: reviewCounts.reviewing + reviewCounts.needsEvidence,
+        },
+      });
+      clearSavedReview(storageKey);
       setPublishModalOpen(false);
       setPublishing(false);
     } catch (err) {
@@ -150,18 +246,14 @@ export function JobUpdateWorkbench({
         />
       </AppShell>
     );
-  if (publishedResult)
+  if (published)
     return (
       <PublishResultView
         jobTitle={fixture.context.jobTitle}
-        onBack={() => setPublishedResult(null)}
-        publishedAt={publishedResult.publishedAt}
-        versionId={publishedResult.versionId}
-        reviewCounts={{
-          accepted: reviewCounts.accepted,
-          rejected: reviewCounts.rejected,
-          pending: reviewCounts.reviewing + reviewCounts.needsEvidence,
-        }}
+        onBack={() => setPublished(null)}
+        publishedAt={published.result.publishedAt}
+        versionId={published.result.versionId}
+        reviewCounts={published.counts}
         targetVersion={fixture.context.targetVersion}
       />
     );
@@ -258,17 +350,25 @@ export function JobUpdateWorkbench({
               </div>
               <dl>
                 <div>
-                  <dt>必备技能</dt>
+                  <dt>新增</dt>
                   <dd>
-                    <span>7 → 8</span>
-                    <strong className="delta delta-added">+1</strong>
+                    <strong className="delta delta-added">
+                      {`+${kindCounts.added}`}
+                    </strong>
                   </dd>
                 </div>
                 <div>
-                  <dt>加分技能</dt>
+                  <dt>修改</dt>
                   <dd>
-                    <span>5 → 4</span>
-                    <strong className="delta delta-removed">-1</strong>
+                    <span>{`${kindCounts.modified} 项`}</span>
+                  </dd>
+                </div>
+                <div>
+                  <dt>删除</dt>
+                  <dd>
+                    <strong className="delta delta-removed">
+                      {`-${kindCounts.removed}`}
+                    </strong>
                   </dd>
                 </div>
               </dl>
@@ -415,6 +515,9 @@ export function JobUpdateWorkbench({
               <CheckCircle aria-hidden size={18} weight="fill" />
               <span>{`已接受的变化将进入 ${fixture.context.targetVersion} 草稿，发布后不可覆盖历史版本。`}</span>
             </div>
+            <p className="review-note-hint">
+              审核进度保存在当前浏览器会话，刷新不丢失；发布成功后自动清除。
+            </p>
           </aside>
         </div>
       </div>

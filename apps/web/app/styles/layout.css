@@ -11,6 +11,12 @@
   flex: 0 0 auto;
   color: var(--green);
 }
+.review-note-hint {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
 
 .drawer-content {
   display: grid;

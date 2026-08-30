@@ -6,6 +6,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 
+from ..matching import xlzsz
 from .repos import P
 
 
@@ -45,6 +46,7 @@ class CertRequirementVM(_VM):
     skill_name: str
     evidence_types: list[str]
     min_quality: float
+    recommended_certs: list[str] = []  # CERTS.yml 反查的权威证书名
 
 
 class TrainingOutputVM(_VM):
@@ -141,16 +143,25 @@ def build_training_output(job_version_id: str = "ai-agent-v2") -> TrainingOutput
             )
         )
 
-    # 能力证明要求
-    certs = [
-        CertRequirementVM(
-            skill_id=s.name,
-            skill_name=s.name,
-            evidence_types=["项目代码/文档", "复盘报告", "技能自评"],
-            min_quality=0.8,
+    # 能力证明要求：权威证书优先（CERTS.yml 按 cap id 反查），无映射时回退通用证据类型
+    # req 只有能力名，先从 capabilities.json 建 name -> cap_id 索引
+    name_to_id: dict[str, str] = {}
+    caps_path = P / "capability-matrix" / "capabilities.json"
+    if caps_path.is_file():
+        for c in json.loads(caps_path.read_text(encoding="utf-8")).get("capabilities", []):
+            name_to_id[c["name"]] = c["capability_id"]
+    certs = []
+    for s in req[:5]:
+        mapped = xlzsz.certs_for_skill(name_to_id.get(s.name, ""), limit=3)
+        certs.append(
+            CertRequirementVM(
+                skill_id=s.name,
+                skill_name=s.name,
+                evidence_types=["项目代码/文档", "复盘报告", "技能自评"],
+                min_quality=0.8,
+                recommended_certs=[c["name"] for c in mapped],
+            )
         )
-        for s in req[:5]
-    ]
 
     return TrainingOutputVM(
         job_version_id=job_version_id,
@@ -159,3 +170,62 @@ def build_training_output(job_version_id: str = "ai-agent-v2") -> TrainingOutput
         training_tasks=tasks,
         cert_requirements=certs,
     )
+
+
+class CertItemVM(_VM):
+    cert_id: str
+    name: str
+    issuer: str
+    level_type: str
+    url: str
+
+
+class ContestItemVM(_VM):
+    race_id: str
+    name: str
+    organizer: str
+    scale: str
+    url: str
+
+
+class XlzszVM(_VM):
+    """能力域 -> 学练赛证实体推荐（确定性，CERTS/CONTESTS.yml 映射）。"""
+
+    skill_id: str
+    skill_name: str
+    certs: list[CertItemVM]
+    contests: list[ContestItemVM]
+
+
+def build_xlzsz(skill_id: str, *, segment: str = "all") -> XlzszVM:
+    """按能力域查询可考证书与可参加赛事（segment=certs/contests/all，零 LLM）。"""
+    caps_path = P / "capability-matrix" / "capabilities.json"
+    name = skill_id
+    if caps_path.is_file():
+        for c in json.loads(caps_path.read_text(encoding="utf-8")).get("capabilities", []):
+            if c["capability_id"] == skill_id:
+                name = c["name"]
+                break
+    certs = [
+        CertItemVM(
+            cert_id=c["cert_id"],
+            name=c["name"],
+            issuer=c["issuer"],
+            level_type=c["level_type"],
+            url=c["url"],
+        )
+        for c in (xlzsz.certs_for_skill(skill_id, limit=5) if segment in ("certs", "all") else [])
+    ]
+    contests = [
+        ContestItemVM(
+            race_id=c["race_id"],
+            name=c["name"],
+            organizer=c["organizer"],
+            scale=c["scale"],
+            url=c["url"],
+        )
+        for c in (
+            xlzsz.contests_for_skill(skill_id, limit=5) if segment in ("contests", "all") else []
+        )
+    ]
+    return XlzszVM(skill_id=skill_id, skill_name=name, certs=certs, contests=contests)

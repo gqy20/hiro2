@@ -323,3 +323,42 @@ def test_career_resume_render_pdf() -> None:
     assert response.status_code == 200
     assert response.headers["content-type"].startswith("application/pdf")
     assert response.content[:5] == b"%PDF-"
+
+
+def test_xlzsz_certs_contract() -> None:
+    response = TestClient(app).get("/api/v1/xlzsz/certs", params={"skill_id": "cap_04"})
+    assert response.status_code == 200
+    body = response.json()
+    assert body["skill_id"] == "cap_04"
+    assert body["skill_name"] == "AI Agent"
+    names = [c["name"] for c in body["certs"]]
+    assert "智能体工程师认证" in names
+    first = body["certs"][0]
+    assert first["issuer"]  # 每条可回链颁发机构
+    assert first["url"]
+
+
+def test_xlzsz_contests_contract() -> None:
+    response = TestClient(app).get("/api/v1/xlzsz/contests", params={"skill_id": "cap_04"})
+    assert response.status_code == 200
+    body = response.json()
+    assert len(body["contests"]) >= 1
+    assert any("挑战杯" in c["name"] or "讯飞" in c["name"] for c in body["contests"])
+
+
+def test_xlzsz_unknown_skill_returns_empty() -> None:
+    response = TestClient(app).get("/api/v1/xlzsz/certs", params={"skill_id": "cap_99"})
+    assert response.status_code == 200
+    assert response.json()["certs"] == []
+    response = TestClient(app).get("/api/v1/xlzsz/contests", params={"skill_id": "cap_99"})
+    assert response.status_code == 200
+    assert response.json()["contests"] == []
+
+
+def test_training_output_recommends_certs() -> None:
+    body = TestClient(app).get("/api/v1/jobs/ai-agent-v2/training-output").json()
+    reqs = body["cert_requirements"]
+    assert reqs, "岗位必须有证书要求条目"
+    with_cert = [r for r in reqs if r.get("recommended_certs")]
+    assert with_cert, "至少一项能力要求推荐真实证书"
+    assert any("认证" in c for r in with_cert for c in r["recommended_certs"])

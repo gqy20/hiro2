@@ -48,7 +48,7 @@ from backend.application.temporal_vm import (
     build_temporal,
     build_temporal_signals,
 )
-from backend.application.training import build_training_output
+from backend.application.training import build_training_output, build_xlzsz
 from backend.candidates.resume_build import ResumeDraft, build_advice, render_pdf
 
 
@@ -553,6 +553,18 @@ def training_output(job_version_id: str) -> dict:
         return build_training_output(job_version_id).model_dump()
     except FileNotFoundError as exc:
         raise HTTPException(404, str(exc)) from exc
+
+
+@app.get("/api/v1/xlzsz/certs")
+def xlzsz_certs(skill_id: str = Query(description="能力域 id，如 cap_04")) -> dict:
+    """学练赛证"证"段：能力域 -> 权威证书推荐（CERTS.yml 映射，零 LLM）。"""
+    return build_xlzsz(skill_id, segment="certs").model_dump()
+
+
+@app.get("/api/v1/xlzsz/contests")
+def xlzsz_contests(skill_id: str = Query(description="能力域 id，如 cap_04")) -> dict:
+    """学练赛证"赛"段：能力域 -> 推荐竞赛（CONTESTS.yml 映射，零 LLM）。"""
+    return build_xlzsz(skill_id, segment="contests").model_dump()
 
 
 @app.post("/api/v1/jobs/{job_version_id}/versions/{version}/publish")

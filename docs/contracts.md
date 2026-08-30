@@ -364,6 +364,8 @@ GET  /api/v1/jobs/published
 GET  /api/v1/jobs/detected-changes
 GET  /api/v1/jobs/{id}/diff?base=v1&target=v2
 GET  /api/v1/jobs/{id}/training-output
+GET  /api/v1/xlzsz/certs?skill_id=cap_04        # 学练赛证"证"段：能力域->权威证书（CERTS.yml）
+GET  /api/v1/xlzsz/contests?skill_id=cap_04     # 学练赛证"赛"段：能力域->推荐竞赛（CONTESTS.yml）
 GET  /api/v1/skills/graph?job=<version_id>   # 能力全景；job 缺省 ai-agent-v2，未知岗位版本 404
 POST /api/v1/jobs/{id}/versions/{version}/publish
 GET  /api/v1/career/home

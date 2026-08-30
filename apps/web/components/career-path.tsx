@@ -5,6 +5,7 @@ import { ArrowRight } from "@phosphor-icons/react";
 import { Empty, Tag } from "antd";
 
 import { GapSteps } from "@/components/gap-steps";
+import { XlzszCards } from "@/components/xlzsz-cards";
 import type { DiagnosisFixture } from "@/lib/diagnosis";
 
 type Gap = DiagnosisFixture["report"]["gaps"][number];
@@ -56,6 +57,10 @@ export function CareerPath({ fixture }: { fixture: DiagnosisFixture }) {
                 <p className="career-path-reason">{gap.reason}</p>
               ) : null}
               <GapSteps gap={gap} />
+              <XlzszCards
+                certificates={gap.certificates}
+                contests={gap.contests}
+              />
             </li>
           ))}
         </ol>

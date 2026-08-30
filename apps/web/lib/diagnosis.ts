@@ -63,6 +63,8 @@ export type DiagnosisFixture = {
       practice?: string;
       evaluate?: string;
       certify?: string;
+      certificates?: Array<{ name: string; issuer?: string; url?: string }>;
+      contests?: Array<{ name: string; organizer?: string; url?: string }>;
     }>;
     career?: {
       completedSkills: string[];

@@ -94,6 +94,19 @@ test("career path page renders gaps with learn-practice-evaluate-certify steps",
   await expect(page.locator(".career-path-steps li").first()).toBeVisible();
 });
 
+test("career path renders clickable cert/contest cards", async ({ page }) => {
+  await page.goto("/career/path");
+  // 证/赛段结构化卡片：至少一张，带实体名与可点击链接（或纯文本卡）
+  const cards = page.locator(".xlzsz-card");
+  await expect(cards.first()).toBeVisible();
+  await expect(page.locator(".xlzsz-card-name").first()).toBeVisible();
+  // 至少一张卡是可点击的官方链接（target=_blank）
+  const linkCard = page.locator("a.xlzsz-card-link").first();
+  if (await linkCard.count()) {
+    await expect(linkCard).toHaveAttribute("target", "_blank");
+  }
+});
+
 test("career jobs and path render empty and error variants", async ({
   page,
 }) => {

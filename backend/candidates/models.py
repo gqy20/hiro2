@@ -32,6 +32,7 @@ class ProjectEntry(BaseModel):
     name: str
     description: str = ""
     skill_mentions: list[str] = Field(default_factory=list, max_length=15)
+    award: str = ""  # 竞赛获奖等级（如"国家级一等奖""省级二等奖"），无则空
 
 
 class WorkExperience(BaseModel):
@@ -151,6 +152,9 @@ class LearnStep(BaseModel):
     practice: str
     evaluate: str
     certify: str
+    # 结构化实体（供前端渲染可点击卡片）：证书 {name, issuer, url}、竞赛 {name, organizer, url}
+    certificates: list[dict] = Field(default_factory=list)
+    contests: list[dict] = Field(default_factory=list)
 
 
 class LearningPath(BaseModel):

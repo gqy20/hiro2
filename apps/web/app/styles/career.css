@@ -471,6 +471,51 @@
 .career-path-steps span {
   font-size: 14px;
 }
+.xlzsz-cards-wrap {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.xlzsz-cards-title {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+.xlzsz-cards ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.xlzsz-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 12px;
+  border: 1px solid var(--line-subtle);
+  border-radius: 6px;
+  background: var(--paper);
+  text-decoration: none;
+}
+.xlzsz-card-link:hover {
+  border-color: var(--blue);
+  background: var(--surface-raised);
+}
+.xlzsz-card-name {
+  color: var(--ink);
+  font-size: 14px;
+}
+.xlzsz-card-link .xlzsz-card-name {
+  color: var(--blue);
+}
+.xlzsz-card-org {
+  color: var(--muted);
+  font-size: 12px;
+}
 .career-path-footer {
   display: flex;
   align-items: center;
@@ -683,7 +728,8 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .career-path-list,
-  .career-path-steps {
+  .career-path-steps,
+  .xlzsz-cards-wrap {
     grid-template-columns: 1fr;
   }
   .career-path-item:last-child:nth-child(odd) {

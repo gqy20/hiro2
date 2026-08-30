@@ -111,6 +111,30 @@ def test_cert_level():
     assert xlzsz.cert_level("unknown", "初级") == "L1"
 
 
+# ---------------------------------------------------------------- 学段知识点（国家职业标准）
+
+
+def test_knowledge_for_skill_relevant():
+    """cap_09 大数据有国标相关知识点，应返回带标准名与上下文的条目。"""
+    ks = xlzsz.knowledge_for_skill("cap_09", limit=2)
+    assert len(ks) >= 1
+    assert ks[0]["std_name"] == "大数据工程技术人员"
+    assert "大数据" in ks[0]["knowledge"]
+    assert ks[0]["career_code"]  # 可回链官方标准文件
+
+
+def test_knowledge_for_skill_honest_fallback():
+    """cap_02 Prompt 工程在 2021 国标中无对应知识点，应诚实返空而非硬套。"""
+    assert xlzsz.knowledge_for_skill("cap_02") == []
+
+
+def test_knowledge_no_false_positive_short_word():
+    """短词"记忆"不应误命中"长短期记忆网络"（LSTM）——关键词最小长度过滤。"""
+    ks = xlzsz.knowledge_for_skill("cap_04", limit=5)
+    for k in ks:
+        assert "记忆网络" not in k["knowledge"]
+
+
 # ---------------------------------------------------------------- 匹配引擎证据分支
 
 
@@ -132,6 +156,18 @@ def test_match_contest_evidence_partial(published):
     # 蓝桥杯映射 cap_07（Python），不映射 cap_04
     assert verdicts["Python"] == "部分具备"
     assert verdicts["AI Agent"] == "缺失"
+
+
+def test_match_contest_award_evidence(published):
+    """竞赛获奖 -> 部分具备，证据携带获奖等级与 award_to_level 换算。"""
+    p = _profile(
+        projects=[ProjectEntry(name="参加蓝桥杯全国软件和信息技术专业人才大赛", award="省级一等奖")]
+    )
+    report = engine.match(p, "test-v1")
+    gap = next(g for g in report.gaps if g.name == "Python")
+    assert gap.verdict == "部分具备"
+    assert "省级一等奖" in gap.candidate_evidence
+    assert "L2" in gap.candidate_evidence  # award_to_level(cahe, 省级一等奖)=L2
 
 
 def test_learning_path_cites_real_certs(published):

@@ -25,6 +25,13 @@ PUBLISHED_DIR = ROOT / "data" / "processed" / "jobversions" / "published"
 ALGORITHM_VERSION = "match-v1"
 
 
+def _award_level(contest: dict, award: str) -> str:
+    """竞赛获奖 -> 岗位等级（CONTESTS.yml award_to_level）；无获奖返空。"""
+    if not award:
+        return ""
+    return xlzsz.award_to_level(contest.get("scale", ""), award)
+
+
 def load_published(job_version_id: str) -> dict:
     path = PUBLISHED_DIR / f"{job_version_id}.json"
     if not path.is_file():
@@ -47,9 +54,12 @@ def match(candidate: CandidateProfile, job_version_id: str) -> MatchReport:
     cert_hits: list[dict] = []
     for cert in candidate.certificates:
         cert_hits.extend(xlzsz.match_cert_mention(cert.name))
+    # 竞赛证据：项目名命中 CONTESTS.yml + 携带获奖等级（award_to_level 换算）
     contest_hits: list[dict] = []
     for proj in candidate.projects:
-        contest_hits.extend(xlzsz.match_contest_mention(proj.name or ""))
+        for c in xlzsz.match_contest_mention(proj.name or ""):
+            award = getattr(proj, "award", "") or ""
+            contest_hits.append({**c, "award": award, "award_level": _award_level(c, award)})
 
     def judge(skill: dict, is_required: bool) -> GapItem:
         """四档判定（确定性）：达标具备 / 初级部分 / 点级部分 / 缺失。
@@ -83,8 +93,17 @@ def match(candidate: CandidateProfile, job_version_id: str) -> MatchReport:
                 (c for c in contest_hits if sid in c.get("capability_ids", [])), None
             )
             if contest_hit:
-                verdict = "部分具备"
-                cand_ev = f"有相关竞赛经历（{contest_hit['name']}），但未见技能/证书直接证据"
+                award = contest_hit.get("award", "")
+                lvl = contest_hit.get("award_level", "")
+                if award and lvl:
+                    verdict = "部分具备"
+                    cand_ev = (
+                        f"竞赛获奖证据：{contest_hit['name']} {award}"
+                        f"（换算 {lvl}），但未见持续工作/技能深度证据"
+                    )
+                else:
+                    verdict = "部分具备"
+                    cand_ev = f"有相关竞赛经历（{contest_hit['name']}），但未见技能/证书直接证据"
             else:
                 verdict = "缺失"
                 cand_ev = "简历中无该能力域任何证据"
@@ -150,9 +169,17 @@ def learning_path(report: MatchReport) -> LearningPath:
         else:
             pri, reason = "P2 加分拓展", "非必备，作为差异化加分项拓展"
 
-        # 赛/证段：真实实体优先，无匹配时回退模板
+        # 赛/证段：真实实体优先，无匹配时回退模板；同时保留结构化对象供前端渲染可点击卡片。
         certs = xlzsz.certs_for_skill(g.skill_id, limit=2)
         contests = xlzsz.contests_for_skill(g.skill_id, limit=2)
+        cert_cards = [
+            {"name": c["name"], "issuer": c.get("issuer", ""), "url": c.get("url", "")}
+            for c in certs
+        ]
+        contest_cards = [
+            {"name": c["name"], "organizer": c.get("organizer", ""), "url": c.get("url", "")}
+            for c in contests
+        ]
         if certs:
             cert_names = "、".join(f"{c['name']}（{c['issuer']}）" for c in certs)
             certify = f"考取或对照权威认证：{cert_names}；并整理项目证据形成能力证明材料"
@@ -163,6 +190,14 @@ def learning_path(report: MatchReport) -> LearningPath:
             evaluate = f"参加实践评测或赛事检验：{race_names}"
         else:
             evaluate = f"在项目复盘中自评 {g.name} 的独立完成度"
+        # 学段：优先引用国家职业标准官方知识点，无标准映射时回退模板文案。
+        know = xlzsz.knowledge_for_skill(g.skill_id, limit=2)
+        if know:
+            std = know[0]["std_name"]
+            points = "；".join(k["knowledge"] for k in know)
+            learn = f"对照《{std}》国家职业标准学习：{points}"
+        else:
+            learn = f"学习 {g.name} 领域核心知识点与主流方法"
 
         steps.append(
             LearnStep(
@@ -170,10 +205,12 @@ def learning_path(report: MatchReport) -> LearningPath:
                 name=g.name,
                 priority=pri,
                 reason=reason,
-                learn=f"学习 {g.name} 领域核心知识点与主流方法",
+                learn=learn,
                 practice=f"完成一个包含 {g.name} 的实战小项目并沉淀到简历",
                 evaluate=evaluate,
                 certify=certify,
+                certificates=cert_cards,
+                contests=contest_cards,
             )
         )
     return LearningPath(

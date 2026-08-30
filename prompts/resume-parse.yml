@@ -21,6 +21,8 @@ system: |
   5. work_experiences：工作经历（公司、岗位、起止时间、职责摘要、成果、技能原词），最多 10 条。
   6. education_history：教育经历（学校、专业、学历、起止时间），最多 8 条；education 保留最高学历摘要以兼容旧档案。
   7. projects：项目条目（名称、一句话描述、涉及技能原词，每项目最多 15 个），最多 8 个项目。
+     若项目实为竞赛/大赛经历，在 award 字段给出获奖等级（如"国家级一等奖""省级二等奖"
+     "入围决赛"）；仅参赛未获奖则 award 留空。非竞赛项目 award 一律留空。
   8. certificates、portfolio_urls、languages：简历明确出现才输出；作品链接仅保留公开职业链接。
   9. 只依据输入文本，不得编造；简历中没有的字段留空。
   10. 忽略姓名、电话、邮箱、身份证和精确住址，不输出它们。
@@ -29,7 +31,7 @@ system: |
       "experience_years": 4, "location": "...", "education": "...",
       "work_experiences": [{"company":"...","title":"...","start_date":"...","end_date":"...","summary":"...","achievements":[],"skill_mentions":[]}],
       "education_history": [{"school":"...","major":"...","degree":"...","start_date":"...","end_date":"..."}],
-      "projects": [{"name": "...", "description": "...", "skill_mentions":[]}],
+      "projects": [{"name": "...", "description": "...", "skill_mentions":[], "award":""}],
       "certificates": [{"name":"...","issuer":"...","issued_date":"..."}],
       "portfolio_urls": [], "languages": []}
 

@@ -11,7 +11,31 @@
       "learn": "学习 AI Agent 领域核心知识点与主流方法",
       "practice": "完成一个包含 AI Agent 的实战小项目并沉淀到简历",
       "evaluate": "参加实践评测或赛事检验：挑战杯全国大学生课外学术科技作品竞赛、智能办公协同助理Skill开发挑战赛",
-      "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）、AI大模型应用工程师职业技术认证（工信部教考中心 × 科大讯飞）；并整理项目证据形成能力证明材料"
+      "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）、AI大模型应用工程师职业技术认证（工信部教考中心 × 科大讯飞）；并整理项目证据形成能力证明材料",
+      "certificates": [
+        {
+          "name": "人工智能工程技术人员",
+          "issuer": "人社部+工信部",
+          "url": "https://www.osta.org.cn/skillStandard"
+        },
+        {
+          "name": "AI大模型应用工程师职业技术认证",
+          "issuer": "工信部教考中心 × 科大讯飞",
+          "url": "https://www.aidaxue.com/certification"
+        }
+      ],
+      "contests": [
+        {
+          "name": "挑战杯全国大学生课外学术科技作品竞赛",
+          "organizer": "共青团中央/中国科协/教育部",
+          "url": "https://www.tiaozhanbei.net/"
+        },
+        {
+          "name": "智能办公协同助理Skill开发挑战赛",
+          "organizer": "科大讯飞",
+          "url": "https://challenge.xfyun.cn/"
+        }
+      ]
     },
     {
       "skill_id": "cap_01",
@@ -21,7 +45,31 @@
       "learn": "学习 LLM应用 领域核心知识点与主流方法",
       "practice": "完成一个包含 LLM应用 的实战小项目并沉淀到简历",
       "evaluate": "参加实践评测或赛事检验：讯飞AI开发者大赛·大模型技术类赛事（历年合辑）、讯飞AI开发者大赛·自然语言处理类赛事（历年合辑）",
-      "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）、人工智能训练师（人社部）；并整理项目证据形成能力证明材料"
+      "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）、人工智能训练师（人社部）；并整理项目证据形成能力证明材料",
+      "certificates": [
+        {
+          "name": "人工智能工程技术人员",
+          "issuer": "人社部+工信部",
+          "url": "https://www.osta.org.cn/skillStandard"
+        },
+        {
+          "name": "人工智能训练师",
+          "issuer": "人社部",
+          "url": "https://www.osta.org.cn/skillStandard"
+        }
+      ],
+      "contests": [
+        {
+          "name": "讯飞AI开发者大赛·大模型技术类赛事（历年合辑）",
+          "organizer": "科大讯飞",
+          "url": "https://challenge.xfyun.cn/"
+        },
+        {
+          "name": "讯飞AI开发者大赛·自然语言处理类赛事（历年合辑）",
+          "organizer": "科大讯飞",
+          "url": "https://challenge.xfyun.cn/"
+        }
+      ]
     },
     {
       "skill_id": "cap_06",
@@ -31,7 +79,20 @@
       "learn": "学习 RAG/知识库 领域核心知识点与主流方法",
       "practice": "完成一个包含 RAG/知识库 的实战小项目并沉淀到简历",
       "evaluate": "在项目复盘中自评 RAG/知识库 的独立完成度",
-      "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）、AI大模型应用工程师职业技术认证（工信部教考中心 × 科大讯飞）；并整理项目证据形成能力证明材料"
+      "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）、AI大模型应用工程师职业技术认证（工信部教考中心 × 科大讯飞）；并整理项目证据形成能力证明材料",
+      "certificates": [
+        {
+          "name": "人工智能工程技术人员",
+          "issuer": "人社部+工信部",
+          "url": "https://www.osta.org.cn/skillStandard"
+        },
+        {
+          "name": "AI大模型应用工程师职业技术认证",
+          "issuer": "工信部教考中心 × 科大讯飞",
+          "url": "https://www.aidaxue.com/certification"
+        }
+      ],
+      "contests": []
     },
     {
       "skill_id": "cap_02",
@@ -41,7 +102,21 @@
       "learn": "学习 Prompt工程 领域核心知识点与主流方法",
       "practice": "完成一个包含 Prompt工程 的实战小项目并沉淀到简历",
       "evaluate": "参加实践评测或赛事检验：智能办公协同助理Skill开发挑战赛",
-      "certify": "考取或对照权威认证：Prompt工程师认证（讯飞AI大学堂）；并整理项目证据形成能力证明材料"
+      "certify": "考取或对照权威认证：Prompt工程师认证（讯飞AI大学堂）；并整理项目证据形成能力证明材料",
+      "certificates": [
+        {
+          "name": "Prompt工程师认证",
+          "issuer": "讯飞AI大学堂",
+          "url": "https://www.aidaxue.com/certification"
+        }
+      ],
+      "contests": [
+        {
+          "name": "智能办公协同助理Skill开发挑战赛",
+          "organizer": "科大讯飞",
+          "url": "https://challenge.xfyun.cn/"
+        }
+      ]
     },
     {
       "skill_id": "cap_05",
@@ -51,7 +126,26 @@
       "learn": "学习 多模态AI 领域核心知识点与主流方法",
       "practice": "完成一个包含 多模态AI 的实战小项目并沉淀到简历",
       "evaluate": "参加实践评测或赛事检验：讯飞AI开发者大赛·计算机视觉类赛事（历年合辑）、讯飞AI开发者大赛·语音技术类赛事（历年合辑）",
-      "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）；并整理项目证据形成能力证明材料"
+      "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）；并整理项目证据形成能力证明材料",
+      "certificates": [
+        {
+          "name": "人工智能工程技术人员",
+          "issuer": "人社部+工信部",
+          "url": "https://www.osta.org.cn/skillStandard"
+        }
+      ],
+      "contests": [
+        {
+          "name": "讯飞AI开发者大赛·计算机视觉类赛事（历年合辑）",
+          "organizer": "科大讯飞",
+          "url": "https://challenge.xfyun.cn/"
+        },
+        {
+          "name": "讯飞AI开发者大赛·语音技术类赛事（历年合辑）",
+          "organizer": "科大讯飞",
+          "url": "https://challenge.xfyun.cn/"
+        }
+      ]
     },
     {
       "skill_id": "cap_12",
@@ -61,7 +155,20 @@
       "learn": "学习 ML/DL算法 领域核心知识点与主流方法",
       "practice": "完成一个包含 ML/DL算法 的实战小项目并沉淀到简历",
       "evaluate": "参加实践评测或赛事检验：蓝桥杯全国软件和信息技术专业人才大赛、全国大学生数学建模竞赛",
-      "certify": "整理项目证据形成 ML/DL算法 能力证明材料"
+      "certify": "整理项目证据形成 ML/DL算法 能力证明材料",
+      "certificates": [],
+      "contests": [
+        {
+          "name": "蓝桥杯全国软件和信息技术专业人才大赛",
+          "organizer": "工信部人才交流中心",
+          "url": "https://dasai.lanqiao.cn/"
+        },
+        {
+          "name": "全国大学生数学建模竞赛",
+          "organizer": "中国工业与应用数学学会",
+          "url": "https://www.mcm.edu.cn/"
+        }
+      ]
     }
   ],
   "generated_by": "match-v1 实体映射规则"

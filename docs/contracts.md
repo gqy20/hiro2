@@ -109,6 +109,11 @@ candidate_evidence_ids[]
 status
 ```
 
+学习路径（`learning_path`，诊断响应 `gaps[].action/practice/evaluate/certify`）的
+"证/赛"段除文本外另携带结构化实体，供前端渲染可点击卡片：
+`certificates[]`（name/issuer/url）与 `contests[]`（name/organizer/url），
+来源分别为 CERTS.yml / CONTESTS.yml 映射；无映射时数组为空并回退模板文案。
+
 ### FeedSource
 
 ```text

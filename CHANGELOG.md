@@ -5,6 +5,11 @@
 ## [Unreleased]
 
 ### Added
+- 学练赛证三项工作流缺口补齐（学段知识点 + 竞赛获奖证据 + 前端实体卡片）：
+  - **学段接入国家职业标准知识点**：`xlzsz.knowledge_for_skill()` 建立 能力域->CERTS.yml(osta标准)->std_requirements->knowledge 链路，用能力域名+aliases 做关键词相关性打分（正文命中权重 2 / 工作内容 1），只返回命中的，国标不覆盖的新概念（Prompt/RAG/Agent）诚实回退模板；`learning_path()` 学段从模板改为“对照《XX》国家职业标准学习：知识点”。
+  - **竞赛获奖等级入匹配**：`ProjectEntry` 新增 award 字段，resume-parse 提取竞赛获奖；匹配引擎竞赛证据分支携带获奖等级并经 `award_to_level`（CONTESTS.yml）换算（如蓝桥杯省一等奖->L2）。
+  - **前端证书/赛事可点击卡片**：`LearnStep`/`GapVM` 新增 certificates[]/contests[] 结构化实体（name/issuer|organizer/url），学习路径页新增 `xlzsz-cards` 组件，证/赛分组渲染可点击官方链接卡片，窄屏适配。
+  - 测试 +5（后端 4：知识点相关性/诚实回退/短词防误匹配/竞赛获奖证据；e2e 1：卡片渲染）；全量后端 102 + e2e 24 通过。
 - “我的画像”升级为技能证据管理界面：保存并重新诊断固定在右上，技能与能力证明各自独立滚动；技能列表支持搜索和状态筛选，点击后在详情抽屉统一维护状态、熟练度、使用年限、标准映射与结构化能力证明。画像保存契约同步持久化熟练度和年限，并允许新增项目证明，不再只保存三态选择。
 - 学练赛证"证/赛"段贯通到匹配与 API：data/CERTS.yml（15 张权威证书：osta 标准 6 +
   讯飞 AI 大学堂 5 + 华为 AI 4，含等级换算声明）与 data/CONTESTS.yml（13 项赛事：

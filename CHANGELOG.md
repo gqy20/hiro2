@@ -5,6 +5,10 @@
 ## [Unreleased]
 
 ### Added
+- 学练赛证深度打磨（获奖术语归一 + 学段三层回退 + 数据质量标注）：
+  - **获奖术语归一**：真实 LLM 端到端暴露措辞不匹配（抽"省一等奖"但换算表是"省级一等"落回 L1），`_normalize_award()` 归一（省一/国二/全国三等 -> 标准形）；端到端验证蓝桥杯省一等奖 -> L2。
+  - **学段三层回退**：国标官方知识点（命中才用）-> 能力域自身技能点（新增 `skill_points_for_skill`，AI Agent 从泛泛模板变"MCP、工具调用、联网搜索"）-> 模板兑底。
+  - **数据质量标注**：std_requirements 的 work 字段列边界尽力解析（宽表跨页或混入相邻列），学段只消费干净 knowledge；datadict 标注。后端 104 + e2e 24 通过。
 - 学练赛证三项工作流缺口补齐（学段知识点 + 竞赛获奖证据 + 前端实体卡片）：
   - **学段接入国家职业标准知识点**：`xlzsz.knowledge_for_skill()` 建立 能力域->CERTS.yml(osta标准)->std_requirements->knowledge 链路，用能力域名+aliases 做关键词相关性打分（正文命中权重 2 / 工作内容 1），只返回命中的，国标不覆盖的新概念（Prompt/RAG/Agent）诚实回退模板；`learning_path()` 学段从模板改为“对照《XX》国家职业标准学习：知识点”。
   - **竞赛获奖等级入匹配**：`ProjectEntry` 新增 award 字段，resume-parse 提取竞赛获奖；匹配引擎竞赛证据分支携带获奖等级并经 `award_to_level`（CONTESTS.yml）换算（如蓝桥杯省一等奖->L2）。

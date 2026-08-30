@@ -295,22 +295,22 @@ input:focus-visible {
   gap: 8px;
   padding-left: 22px;
   font-size: 14px;
-  font-weight: 750;
-  letter-spacing: 0.08em;
+  font-weight: 650;
+  letter-spacing: 0;
 }
 
 .brand-mark {
-  display: grid;
+  display: block;
   width: 28px;
   height: 28px;
-  place-items: center;
-  border: 1px solid var(--ink);
-  background: var(--ink);
-  color: var(--panel);
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0;
+  flex: 0 0 28px;
+}
+
+.brand-wordmark {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1;
 }
 
 .main-nav {

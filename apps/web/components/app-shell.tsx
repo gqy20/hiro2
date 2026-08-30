@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import gsap from "gsap";
@@ -140,9 +141,17 @@ export function AppShell({
         跳到主内容
       </a>
       <header className="topbar">
-        <Link className="brand" href="/" aria-label="Hiro2 工作台">
-          <span className="brand-mark">H</span>
-          <span>HIRO2</span>
+        <Link className="brand" href="/" aria-label="hiro 工作台">
+          <Image
+            className="brand-mark"
+            src="/hiro-mark.svg"
+            alt=""
+            aria-hidden="true"
+            width={28}
+            height={28}
+            priority
+          />
+          <span className="brand-wordmark">hiro</span>
         </Link>
         <nav aria-label="主导航" className="main-nav">
           {visibleNavigation.map(({ href, label, icon: Icon }) => (

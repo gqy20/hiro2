@@ -129,3 +129,42 @@ export async function apiFetch<T>(
     clearTimeout(timer);
   }
 }
+
+export async function apiFetchBlob(
+  path: string,
+  opts: ApiOptions = {},
+): Promise<Blob> {
+  if (isMockMode()) {
+    throw new ApiError("PDF preview requires the API service");
+  }
+  const controller = new AbortController();
+  const timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const headers: Record<string, string> = { ...(opts.headers ?? {}) };
+    const init: RequestInit = {
+      method: opts.method ?? "GET",
+      headers,
+      signal: controller.signal,
+    };
+    if (opts.body !== undefined) {
+      headers["Content-Type"] = "application/json";
+      init.body = JSON.stringify(opts.body);
+    }
+    const response = await fetch(`${getApiBaseUrl()}${path}`, init);
+    if (!response.ok) {
+      throw new ApiError(`API ${response.status} ${response.statusText}`, {
+        status: response.status,
+      });
+    }
+    return await response.blob();
+  } catch (error) {
+    if (error instanceof ApiError) throw error;
+    throw new ApiError(
+      error instanceof Error ? error.message : "Unable to download file",
+      { cause: error },
+    );
+  } finally {
+    clearTimeout(timer);
+  }
+}

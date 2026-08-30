@@ -400,7 +400,7 @@ GET  /health/ready
 数据集详情返回版本历史与 manifest 摘要，不返回可能包含数百个原始文件路径的完整 manifest；来源详情只在证据 `source_id` 与来源通道一致时返回精确统计，历史招聘通道无法可靠归因时显式返回 `attribution=unavailable`。运行详情返回配置、指标、结构化事件和产物文件名/大小，不返回原始文件内容。
 数据集列表的 `records` 必须配套 `count_scope`；同一数据集不同处理阶段通过 `stage_counts[]{stage,label,count}` 返回。招聘岗位的主口径是 `jd_records` 已解析入库总量，当前标准化样本作为阶段数量单独展示。
 简历档案列表返回 `sample_type: synthetic | anonymized | uploaded | controlled`；历史记录缺失该字段时根据受控来源和文件命名规则派生。完整数据集档案通过 `/data/assets/{dataset_id}` 展示，简历记录位于 `resumes` 数据集的“记录”视图。
-评测概览返回 `summary`（回测总数、命中数、偏差数、命中率与平稳基线）、业务化的 `errors` 偏差分类，以及可按预测/实际方向下钻的 `cases` 具体回测记录；`up/flat/down` 等机器枚举只用于接口字段，不直接作为界面文案。
+评测概览的 `datasets` 包含岗位映射、领域判定、事件抽取和趋势回测四个可切换评测对象；`sampleEvaluations` 返回前三类的已评数量、准确率、需复盘数量及逐条冻结样本结论。`summary`、`errors` 与 `cases` 返回趋势回测汇总、业务化偏差分类和具体记录；`up/flat/down` 等机器枚举只用于接口字段，不直接作为界面文案。
 `scripts/outbox.py enqueue <version_id>` 写入 `JobVersionPublished`，`scripts/outbox.py consume` 领取并幂等投影到 Neo4j。
 ```
 

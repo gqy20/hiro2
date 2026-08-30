@@ -72,6 +72,17 @@ def test_evaluation_overview_contract() -> None:
     assert body["errors"][0]["count"] == 25
     assert len(body["cases"]) == 136
     assert body["cases"][0]["skillLabel"] != body["cases"][0]["skillId"]
+    assert [item["id"] for item in body["datasets"]] == [
+        "role",
+        "domain",
+        "event",
+        "trend",
+    ]
+    sample_evaluations = {item["id"]: item for item in body["sampleEvaluations"]}
+    assert sample_evaluations["role"]["summary"]["errors"] == 22
+    assert sample_evaluations["domain"]["summary"]["errors"] == 2
+    assert sample_evaluations["event"]["summary"]["errors"] == 0
+    assert len(sample_evaluations["role"]["cases"]) == 100
 
 
 def test_dataset_overview_contract() -> None:

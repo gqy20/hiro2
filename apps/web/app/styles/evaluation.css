@@ -43,15 +43,34 @@
 }
 
 .evaluation-dataset-item {
-  padding: 8px 10px;
-  border-radius: 4px;
-  border: 1px solid var(--line);
   font-size: 14px;
 }
 
-.evaluation-dataset-item.is-active {
+.evaluation-dataset-item > button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 4px 10px;
+  width: 100%;
+  padding: 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.evaluation-dataset-item > button:hover,
+.evaluation-dataset-item > button:focus-visible {
+  background: var(--paper-soft);
+  outline: 1px solid var(--line-strong);
+}
+
+.evaluation-dataset-item.is-active > button {
   background: var(--saffron-soft);
-  border-color: var(--blue);
+  outline: none;
 }
 
 .evaluation-dataset-item strong {
@@ -74,11 +93,165 @@
 
 .evaluation-metrics-card,
 .evaluation-error-list,
-.evaluation-pending {
+.evaluation-sample-overview,
+.evaluation-sample-cases {
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 4px;
   padding: 20px;
+}
+
+.evaluation-sample-overview > p {
+  margin: 6px 0 18px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.evaluation-sample-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(100px, 160px)) minmax(180px, 1fr);
+  align-items: end;
+  gap: 24px;
+}
+
+.evaluation-sample-summary > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.evaluation-sample-summary span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.evaluation-sample-summary strong {
+  font-size: 22px;
+  font-weight: 650;
+}
+
+.evaluation-sample-summary .ant-progress {
+  align-self: center;
+}
+
+.evaluation-sample-cases {
+  min-height: 0;
+}
+
+.evaluation-case-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.evaluation-case-filter {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.evaluation-case-filter button {
+  padding: 5px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+
+.evaluation-case-filter button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--panel);
+}
+
+.evaluation-sample-list {
+  max-height: 460px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.evaluation-sample-list li {
+  border-top: 1px solid var(--line-soft);
+}
+
+.evaluation-sample-list li:first-child {
+  border-top: 0;
+}
+
+.evaluation-sample-list li > button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 16px;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 2px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.evaluation-sample-list li > button:hover,
+.evaluation-sample-list li > button:focus-visible {
+  color: var(--blue);
+  outline: none;
+}
+
+.evaluation-sample-title {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.evaluation-sample-title strong {
+  overflow: hidden;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.evaluation-sample-title > span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.evaluation-sample-drawer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.evaluation-sample-drawer section {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.evaluation-sample-drawer h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.evaluation-sample-drawer p {
+  margin: 5px 0;
+  color: var(--muted);
+}
+
+.evaluation-sample-drawer details {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.evaluation-sample-drawer details p {
+  font-family: var(--font-mono);
 }
 
 .evaluation-metric-grid {
@@ -364,6 +537,13 @@
   .evaluation-metric-grid {
     grid-template-columns: 1fr;
   }
+  .evaluation-sample-summary {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .evaluation-sample-summary .ant-progress {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
 }
 
 /* 质量看板与评测嵌入块（自 dashboard.css 归位） */
@@ -376,13 +556,7 @@
 }
 
 .evaluation-dataset-item {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: 4px 10px;
-  border-color: transparent;
-  border-radius: 8px;
-  background: transparent;
+  border: 0;
 }
 .evaluation-dataset-item span {
   display: inline;
@@ -404,10 +578,6 @@
   color: var(--muted);
   text-align: left;
   text-overflow: ellipsis;
-}
-.evaluation-dataset-item.is-active {
-  background: var(--saffron-soft);
-  border-color: transparent;
 }
 .evaluation-metric small {
   display: none;

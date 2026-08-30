@@ -91,6 +91,33 @@
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
+.profile-summary {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 16px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--line-subtle);
+  border-bottom: 1px solid var(--line-subtle);
+}
+.profile-summary > div {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.profile-summary span,
+.profile-section-heading > span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.profile-summary strong {
+  font-size: 20px;
+}
+.profile-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
 .profile-workspace-grid h2 {
   margin: 0 0 18px;
   font-size: 18px;
@@ -154,6 +181,9 @@
   border-radius: 10px;
   background: var(--surface-raised);
 }
+.career-job-card.is-current {
+  background: var(--saffron-soft);
+}
 .career-job-card > header {
   display: flex;
   align-items: center;
@@ -196,14 +226,47 @@
   font-size: 14px;
   text-decoration: none;
 }
+.career-job-card button.career-job-cta {
+  width: fit-content;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.career-job-card button.career-job-cta:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.diagnosis-profile-section-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.diagnosis-profile-section-title > span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.diagnosis-view-all {
+  display: inline-block;
+  margin: 10px 0 18px;
+  color: var(--blue);
+  font-size: 13px;
+  text-decoration: none;
+}
 
 /* 求职区：学习路径 */
 .career-path-list {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   margin: 16px 0 0;
   padding: 0;
   list-style: none;
+}
+.career-path-item:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
 }
 .career-path-item {
   padding: 24px;
@@ -230,6 +293,7 @@
 }
 .career-path-steps {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin: 14px 0 0;
   padding: 14px 0 0;
@@ -247,6 +311,24 @@
   font-size: 14px;
 }
 .career-path-steps span {
+  font-size: 14px;
+}
+.career-path-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 16px;
+  padding: 18px 24px;
+  border-top: 1px solid var(--line);
+}
+.career-path-footer > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.career-path-footer span {
+  color: var(--muted);
   font-size: 14px;
 }
 
@@ -269,6 +351,27 @@
 .resume-panel > h2 {
   margin: 0;
   font-size: var(--fs-section);
+}
+.resume-draft-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.resume-draft-heading h2,
+.resume-draft-heading p {
+  margin: 0;
+}
+.resume-draft-heading p {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.resume-draft-heading > a {
+  flex: 0 0 auto;
+  color: var(--blue);
+  font-size: 13px;
+  text-decoration: none;
 }
 .resume-grid-2,
 .resume-grid-3,
@@ -293,6 +396,23 @@
 .resume-field > span {
   font-size: var(--fs-aux);
   color: var(--muted);
+}
+.resume-skill-preview {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  flex-wrap: wrap;
+}
+.resume-skill-preview > span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.resume-skill-preview > a {
+  margin-left: auto;
+  color: var(--blue);
+  font-size: 13px;
+  text-decoration: none;
 }
 .resume-section-head {
   display: flex;
@@ -403,5 +523,12 @@
   }
   .resume-grid-4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .career-path-list,
+  .career-path-steps {
+    grid-template-columns: 1fr;
+  }
+  .career-path-item:last-child:nth-child(odd) {
+    grid-column: auto;
   }
 }

@@ -34,7 +34,7 @@ export function CareerPath({ fixture }: { fixture: DiagnosisFixture }) {
           </p>
         </div>
         <Link className="career-job-cta" href="/career/diagnosis">
-          更新画像后重新诊断 <ArrowRight aria-hidden size={15} />
+          返回诊断 <ArrowRight aria-hidden size={15} />
         </Link>
       </header>
       {gaps.length === 0 ? (
@@ -60,6 +60,20 @@ export function CareerPath({ fixture }: { fixture: DiagnosisFixture }) {
           ))}
         </ol>
       )}
+      {gaps.length > 0 ? (
+        <footer className="career-path-footer">
+          <div>
+            <strong>完成项目后，把成果写进简历</strong>
+            <span>简历工作台会按当前目标岗位重新检查能力覆盖。</span>
+          </div>
+          <Link
+            className="career-job-cta"
+            href={`/career/resume?job=${encodeURIComponent(fixture.job.version)}`}
+          >
+            打磨投递简历 <ArrowRight aria-hidden size={15} />
+          </Link>
+        </footer>
+      ) : null}
     </section>
   );
 }

@@ -6,10 +6,34 @@ export type EvaluationOverview = {
     status: "REVIEWING";
   };
   datasets: Array<{
-    id: string;
+    id: "role" | "domain" | "event" | "trend" | string;
     name: string;
     samples: number;
     jobVersion: string;
+  }>;
+  sampleEvaluations: Array<{
+    id: "role" | "domain" | "event" | string;
+    name: string;
+    description: string;
+    summary: {
+      total: number;
+      reviewed: number;
+      correct: number;
+      errors: number;
+      accuracy: number;
+    };
+    cases: Array<{
+      id: string;
+      sourceId: string;
+      title: string;
+      date: string;
+      decision: "ACCEPT" | "MODIFY" | "REJECT" | "UNKNOWN";
+      systemResult: string;
+      expectedResult: string;
+      detail: string;
+      rationale: string;
+      reviewer: string;
+    }>;
   }>;
   metrics: Array<{ key: string; label: string; value: number; hint?: string }>;
   errors: Array<{

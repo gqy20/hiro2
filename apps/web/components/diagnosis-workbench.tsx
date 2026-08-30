@@ -125,6 +125,7 @@ export function DiagnosisWorkbench({
   );
   const priorityGaps =
     requiredGaps.length > 0 ? requiredGaps : fixture.report.gaps;
+  const profileSkills = careerMode ? skills.slice(0, 6) : skills;
 
   function pushCorrection(correction: UserCorrection) {
     setUserCorrections((current) => [...current, correction]);
@@ -252,9 +253,12 @@ export function DiagnosisWorkbench({
               </Link>
             </div>
             <p className="profile-location">{fixture.candidate.location}</p>
-            <h2>技能画像</h2>
+            <div className="diagnosis-profile-section-title">
+              <h2>已验证技能</h2>
+              {careerMode ? <span>{`${skills.length} 项`}</span> : null}
+            </div>
             <div className="skill-list">
-              {skills.map((skill, index) => (
+              {profileSkills.map((skill, index) => (
                 <article
                   className={`profile-skill profile-skill-${skill.status}`}
                   key={skill.name}
@@ -315,6 +319,11 @@ export function DiagnosisWorkbench({
                 </article>
               ))}
             </div>
+            {careerMode && skills.length > profileSkills.length ? (
+              <Link className="diagnosis-view-all" href="/profile">
+                {`查看全部 ${skills.length} 项技能`}
+              </Link>
+            ) : null}
             <h2>项目证据</h2>
             <ul className="project-list">
               {projects.map((project) =>
@@ -446,46 +455,47 @@ export function DiagnosisWorkbench({
               </span>
             </div>
             <section className="match-summary">
-              <div>
-                {careerMode && fixture.report.requiredTotal ? (
-                  <>
+              {careerMode ? (
+                <>
+                  <div>
                     <span>必备能力</span>
                     <b>
                       {fixture.report.requiredMet ?? 0} /{" "}
-                      {fixture.report.requiredTotal}
+                      {fixture.report.requiredTotal ?? 0}
                     </b>
-                    <small>投递基础 {Math.round(reportScore * 100)}%</small>
-                  </>
-                ) : (
-                  <>
+                  </div>
+                  <div>
+                    <span>投递基础</span>
+                    <b>{`${Math.round(reportScore * 100)}%`}</b>
+                  </div>
+                  <div>
+                    <span>能力证明</span>
+                    <b>{projects.length}</b>
+                  </div>
+                  <div>
+                    <span>优先补齐</span>
+                    <b>{priorityGaps.length}</b>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
                     <span>投递基础</span>
                     <ConfidenceMeter
                       confidence={reportScore}
                       variant="prominent"
                     />
-                  </>
-                )}
-              </div>
-              <div>
-                <span>已具备</span>
-                <b>{counts.ready}</b>
-              </div>
-              {careerMode ? (
-                <>
-                  <div>
-                    <span>部分具备</span>
-                    <b>{counts.partial}</b>
                   </div>
                   <div>
-                    <span>缺失</span>
-                    <b>{counts.missing}</b>
+                    <span>已具备</span>
+                    <b>{counts.ready}</b>
+                  </div>
+                  <div>
+                    <span>优先补齐</span>
+                    <b>{priorityGaps.length}</b>
                   </div>
                 </>
-              ) : null}
-              <div>
-                <span>优先补齐</span>
-                <b>{priorityGaps.length}</b>
-              </div>
+              )}
             </section>
             <p className="recalculate-hint">画像更新后，重新判断你的投递基础</p>
             <section className="gap-section">

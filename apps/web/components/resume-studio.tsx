@@ -6,8 +6,9 @@
 import { FilePdf, Lightbulb, Plus } from "@phosphor-icons/react";
 import { Button, Input, Select, Tag } from "antd";
 import { useMemo, useState } from "react";
+import Link from "next/link";
 
-import { apiFetch, isMockMode } from "@/lib/api/client";
+import { apiFetch, apiFetchBlob, isMockMode } from "@/lib/api/client";
 import {
   buildMockAdvice,
   emptyDraft,
@@ -29,10 +30,24 @@ const KIND_LABEL: Record<string, string> = {
   structure: "结构",
 };
 
-export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
-  const [draft, setDraft] = useState<ResumeDraftInput>(emptyDraft());
-  const [jobId, setJobId] = useState<string>(jobs[0]?.version_id ?? "");
-  const [advice, setAdvice] = useState<AdviceView | null>(null);
+export function ResumeStudio({
+  jobs,
+  initialAdvice = null,
+  initialDraft,
+  initialJobId,
+}: {
+  jobs: JobOption[];
+  initialAdvice?: AdviceView | null;
+  initialDraft?: ResumeDraftInput;
+  initialJobId?: string;
+}) {
+  const [draft, setDraft] = useState<ResumeDraftInput>(
+    initialDraft ?? emptyDraft(),
+  );
+  const [jobId, setJobId] = useState<string>(
+    initialJobId ?? jobs[0]?.version_id ?? "",
+  );
+  const [advice, setAdvice] = useState<AdviceView | null>(initialAdvice);
   const [pdfUrl, setPdfUrl] = useState<string>("");
   const [busy, setBusy] = useState<"advice" | "render" | null>(null);
   const [error, setError] = useState("");
@@ -72,12 +87,11 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
     setBusy("render");
     setError("");
     try {
-      const res = await apiFetch<Response>("/career/resume/render", {
+      const blob = await apiFetchBlob("/career/resume/render", {
         method: "POST",
         body: draft,
         timeoutMs: 30000,
       });
-      const blob = await res.blob();
       setPdfUrl((old) => {
         if (old) URL.revokeObjectURL(old);
         return URL.createObjectURL(blob);
@@ -111,7 +125,13 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
   return (
     <div className="resume-studio">
       <section className="resume-panel" aria-label="简历草稿编辑">
-        <h2>简历草稿</h2>
+        <div className="resume-draft-heading">
+          <div>
+            <h2>投递简历</h2>
+            <p>{`已从我的画像带入 ${draft.skills.length} 项技能、${draft.projects.length} 项能力证明`}</p>
+          </div>
+          <Link href="/profile">更新画像</Link>
+        </div>
         <div className="resume-grid-2">
           <label className="resume-field">
             <span>姓名</span>
@@ -147,22 +167,18 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
             placeholder="方向 + 年限 + 最相关的一项成果"
           />
         </label>
-        <label className="resume-field">
-          <span>专业技能（顿号分隔）</span>
-          <Input
-            value={draft.skills.join("、")}
-            onChange={(e) =>
-              set(
-                "skills",
-                e.target.value
-                  .split(/、|,/)
-                  .map((s) => s.trim())
-                  .filter(Boolean),
-              )
-            }
-            placeholder="Python、LangChain、RAG"
-          />
-        </label>
+        <div className="resume-field">
+          <span>专业技能（来自我的画像）</span>
+          <div className="resume-skill-preview">
+            {draft.skills.slice(0, 6).map((skill) => (
+              <Tag key={skill}>{skill}</Tag>
+            ))}
+            {draft.skills.length > 6 ? (
+              <span>{`另有 ${draft.skills.length - 6} 项`}</span>
+            ) : null}
+            <Link href="/profile">管理技能</Link>
+          </div>
+        </div>
 
         <div className="resume-section-head">
           <h3>工作经历</h3>
@@ -343,7 +359,7 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
 
       <aside className="resume-panel" aria-label="AI 建议">
         <div className="resume-advice-head">
-          <h2>岗位对齐建议</h2>
+          <h2>投递建议</h2>
           <Button
             type="primary"
             ghost
@@ -352,14 +368,17 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
             disabled={busy !== null || !jobId}
             onClick={loadAdvice}
           >
-            获取建议
+            {advice ? "重新分析" : "分析岗位匹配"}
           </Button>
         </div>
         <label className="resume-field">
           <span>目标岗位（建议随岗位切换）</span>
           <Select
             value={jobId || undefined}
-            onChange={setJobId}
+            onChange={(value) => {
+              setJobId(value);
+              setAdvice(null);
+            }}
             options={jobs.map((j) => ({ value: j.version_id, label: j.title }))}
             style={{ width: "100%" }}
             placeholder="选择目标岗位"
@@ -376,12 +395,12 @@ export function ResumeStudio({ jobs }: { jobs: JobOption[] }) {
           {advice?.advice.map((a: AdviceItemView, i) => (
             <article className="resume-advice-card" key={i}>
               <header>
-                <Tag bordered={false}>{KIND_LABEL[a.kind] ?? a.kind}</Tag>
+                <Tag variant="filled">{KIND_LABEL[a.kind] ?? a.kind}</Tag>
                 <b>{a.title}</b>
                 <Tag
-                  bordered={false}
                   color={SEVERITY_TAG[a.severity]?.color}
                   className="resume-sev"
+                  variant="filled"
                 >
                   {SEVERITY_TAG[a.severity]?.label ?? a.severity}
                 </Tag>

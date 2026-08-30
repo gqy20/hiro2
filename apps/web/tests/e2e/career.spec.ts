@@ -14,7 +14,7 @@ test("career jobs page renders published job cards and group filter", async ({
   ).toBeVisible();
 
   // 岗位族筛选：选中「大数据」后只保留一张卡
-  await page.getByText("大数据", { exact: true }).click();
+  await page.getByTitle("大数据").click();
   await expect(page.locator(".career-job-card")).toHaveCount(1);
   await expect(
     page.getByRole("heading", { name: "大数据工程师", level: 2 }),
@@ -45,6 +45,32 @@ test("career workspace uses focused navigation and explicit diagnosis", async ({
   await expect(page.getByRole("heading", { name: "后续行动" })).toBeVisible();
   await expect(page.getByRole("link", { name: "查看学习路径" })).toBeVisible();
   await expect(page.getByText("成长计划", { exact: true })).toHaveCount(0);
+});
+
+test("career flow carries target and profile data into diagnosis and resume", async ({
+  page,
+}) => {
+  await page.goto("/career/jobs");
+  await expect(page.getByText("当前目标")).toBeVisible();
+  await page
+    .getByRole("article")
+    .filter({ hasText: "AI Agent 工程师" })
+    .getByRole("button", { name: /开始诊断/ })
+    .click();
+  await expect(page).toHaveURL(/career\/diagnosis\?job=ai-agent-v2/);
+
+  await page.goto("/profile");
+  await expect(page.locator(".profile-edit-row")).toHaveCount(4);
+  await page.getByLabel("新增能力证明").fill("Agent 评测基准项目");
+  await page.getByRole("button", { name: "添加能力证明" }).click();
+  await expect(page.getByText("Agent 评测基准项目")).toBeVisible();
+
+  await page.goto("/career/resume?job=ai-agent-v2");
+  await expect(page.getByLabel("求职意向")).toHaveValue("AI Agent 工程师");
+  await expect(
+    page.getByText(/已从我的画像带入 \d+ 项技能、\d+ 项能力证明/),
+  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "投递建议" })).toBeVisible();
 });
 
 test("career path page renders gaps with learn-practice-evaluate-certify steps", async ({

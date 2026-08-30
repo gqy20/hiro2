@@ -199,10 +199,54 @@ def test_learning_path_cites_real_certs(published):
 
 
 def test_learning_path_cites_real_contests(published):
-    """学练赛证"赛"段引用 CONTESTS.yml 真实赛事名。"""
+    """学练赛证"赛"段引用真实赛事；注入固定 as_of 保证确定性。"""
+    from datetime import date
+
     p = _profile([EffectiveSkill(mention="Python", skill_id="cap_07", proficiency="高级")])
     report = engine.match(p, "test-v1")
-    path = engine.learning_path(report)
+    path = engine.learning_path(report, as_of=date(2026, 8, 31))
     agent_step = next(s for s in path.steps if s.name == "AI Agent")
-    # cap_04 有竞赛映射（挑战杯/讯飞 Skill 赛），赛段应引用真实赛事
-    assert "挑战杯" in agent_step.evaluate or "讯飞" in agent_step.evaluate
+    # cap_04 有竞赛映射（可报名赛事或常设精选），赛段应引用真实赛事而非纯模板
+    assert agent_step.evaluate != "在项目复盘中自评 AI Agent 的独立完成度"
+    assert agent_step.contests  # 有结构化赛事卡片
+
+
+# ---------------------------------------------------------------- 竞赛时间维度
+
+def test_race_status_classification():
+    """赛事时间状态分类：正在报名/即将截止/进行中/已结束/时间未知。"""
+    from datetime import date
+
+    as_of = date(2026, 8, 31)
+    assert xlzsz.race_status({"register_end": "2026-09-30", "final_end": "2026-11-01"}, as_of) == "正在报名"
+    assert xlzsz.race_status({"register_end": "2026-09-10", "final_end": "2026-10-01"}, as_of) == "即将截止"  # 10天内
+    assert xlzsz.race_status({"register_end": "2026-08-01", "final_end": "2026-09-15"}, as_of) == "进行中"  # 报名截止但未完赛
+    assert xlzsz.race_status({"register_end": "2026-07-01", "final_end": "2026-08-01"}, as_of) == "已结束"
+    assert xlzsz.race_status({"register_end": None}, as_of) == "时间未知"
+    assert xlzsz.race_status({}, as_of) == "时间未知"
+
+
+def test_open_contests_for_skill_actionable():
+    """可报名赛事带截止日与剩余天数，按紧急度升序。"""
+    from datetime import date
+
+    as_of = date(2026, 8, 31)
+    oc = xlzsz.open_contests_for_skill("cap_01", as_of, limit=3)
+    assert oc, "cap_01 应有正在报名的赛事"
+    for c in oc:
+        assert c["status"] in ("正在报名", "即将截止")
+        assert c["register_end"]
+        assert isinstance(c["days_left"], int) and c["days_left"] >= 0
+    # 按剩余天数升序（最紧急在前）
+    days = [c["days_left"] for c in oc]
+    assert days == sorted(days)
+
+
+def test_open_contests_filters_placeholder_dates():
+    """截止日超 365 天的占位/长期挂载赛事（如 2099-12-31）不进可报名推荐。"""
+    from datetime import date
+
+    as_of = date(2026, 8, 31)
+    for cap in ("cap_01", "cap_06", "cap_09"):
+        for c in xlzsz.open_contests_for_skill(cap, as_of, limit=5):
+            assert c["days_left"] <= 365, f"{c['name']} 截止日过远，疑似占位数据"

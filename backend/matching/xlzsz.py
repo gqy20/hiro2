@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import json
 import re
+from datetime import date
 from functools import lru_cache
 from pathlib import Path
 
@@ -24,6 +25,7 @@ CERTS_YML = ROOT / "data" / "CERTS.yml"
 CONTESTS_YML = ROOT / "data" / "CONTESTS.yml"
 SKILLS_YML = ROOT / "data" / "SKILLS.yml"
 STD_REQ_DIR = ROOT / "data" / "processed" / "certs" / "std-requirements"
+RACE_CATALOG = ROOT / "data" / "processed" / "races" / "race-catalog.jsonl"
 
 
 @lru_cache(maxsize=1)
@@ -175,6 +177,91 @@ def contests_for_skill(skill_id: str, limit: int = 3) -> list[dict]:
         for c in _load_contests()["contests"]
         if skill_id in c.get("capability_ids", [])
     ]
+    return out[:limit]
+
+
+# ---------------------------------------------------------------- 竞赛时间维度
+# race-catalog 全量赛事带 register_end / final_end；此前推荐只按能力域匹配精选名录，
+# 不感知时间，可能推荐早已截止的赛事。以下函数打通时间维度：按能力域筛出"正在报名/即将截止"
+# 的赛事，供"赛"段给出可操作推荐。
+
+
+@lru_cache(maxsize=1)
+def _load_race_catalog() -> tuple[dict, ...]:
+    if not RACE_CATALOG.is_file():
+        return ()
+    return tuple(json.loads(l) for l in RACE_CATALOG.open(encoding="utf-8") if l.strip())
+
+
+def _parse_date(s) -> date | None:
+    if not s or not isinstance(s, str):
+        return None
+    try:
+        return date.fromisoformat(s[:10])
+    except ValueError:
+        return None
+
+
+def _race_caps(race: dict) -> set[str]:
+    """从 industry（讯飞）/tags（天池、DF）推导能力域（CONTESTS.yml 规则）。未命中返空。"""
+    rules = _load_contests()
+    ind_rules = rules.get("industry_rules") or {}
+    tag_rules = rules.get("tag_rules") or {}
+    caps: set[str] = set()
+    ind = race.get("industry") or ""
+    if ind in ind_rules:
+        caps.update(ind_rules[ind])
+    for t in race.get("tags") or []:
+        if t in tag_rules:
+            caps.update(tag_rules[t])
+    return caps
+
+
+def race_status(race: dict, as_of: date) -> str:
+    """赛事时间状态：正在报名 / 即将截止（截止日 <=14 天）/ 进行中 / 已结束 / 时间未知。"""
+    reg_end = _parse_date(race.get("register_end"))
+    final_end = _parse_date(race.get("final_end"))
+    if reg_end is None:
+        return "时间未知"
+    if reg_end < as_of:
+        if final_end is not None and final_end >= as_of:
+            return "进行中"
+        return "已结束"
+    if (reg_end - as_of).days <= 14:
+        return "即将截止"
+    return "正在报名"
+
+
+def open_contests_for_skill(skill_id: str, as_of: date, limit: int = 3) -> list[dict]:
+    """能力域 -> 正在报名/即将截止的赛事（按截止日升序，最紧急在前）。
+
+    从 race-catalog 全量赛事按 industry/tag 规则推导能力域，筛出可报名的，
+    返回带截止日与剩余天数的结构化条目，供"赛"段可操作推荐。确定性，零 LLM。
+    """
+    out: list[dict] = []
+    for race in _load_race_catalog():
+        if skill_id not in _race_caps(race):
+            continue
+        status = race_status(race, as_of)
+        if status not in ("正在报名", "即将截止"):
+            continue
+        reg_end = _parse_date(race.get("register_end"))
+        days_left = (reg_end - as_of).days if reg_end else None
+        # 截止日超 1 年视为占位/长期挂载（如 2099-12-31），不当作真实可报名窗口。
+        if days_left is not None and days_left > 365:
+            continue
+        out.append(
+            {
+                "race_id": race.get("race_id", ""),
+                "name": race.get("name") or "",
+                "organizer": race.get("organizer") or "",
+                "url": race.get("source_url") or "",
+                "status": status,
+                "register_end": (race.get("register_end") or "")[:10],
+                "days_left": days_left,
+            }
+        )
+    out.sort(key=lambda x: (x["days_left"] if x["days_left"] is not None else 9999))
     return out[:limit]
 
 

@@ -33,7 +33,7 @@
       "reason": "非必备，作为差异化加分项拓展",
       "learn": "学习 多模态AI 的核心技能点：图像生成、视频生成、语音",
       "practice": "完成一个包含 多模态AI 的实战小项目并沉淀到简历",
-      "evaluate": "参加实践评测或赛事检验：讯飞AI开发者大赛·计算机视觉类赛事（历年合辑）、讯飞AI开发者大赛·语音技术类赛事（历年合辑）",
+      "evaluate": "正在报名的赛事，以赛促学：AI新睿人才“星探计划”（截止 2026-08-31，剩 0 天）、具有多模态能力的客服智能体设计（截止 2026-08-31，剩 0 天）",
       "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）；并整理项目证据形成能力证明材料",
       "certificates": [
         {
@@ -44,14 +44,28 @@
       ],
       "contests": [
         {
-          "name": "讯飞AI开发者大赛·计算机视觉类赛事（历年合辑）",
-          "organizer": "科大讯飞",
-          "url": "https://challenge.xfyun.cn/"
+          "name": "AI新睿人才“星探计划”",
+          "organizer": " 烟台睿创微纳技术股份有限公司",
+          "url": "https://www.datafountain.cn/competitions/1169",
+          "status": "即将截止",
+          "register_end": "2026-08-31",
+          "days_left": 0
         },
         {
-          "name": "讯飞AI开发者大赛·语音技术类赛事（历年合辑）",
+          "name": "具有多模态能力的客服智能体设计",
+          "organizer": "中国电子学会&睿创微纳",
+          "url": "https://www.datafountain.cn/competitions/1165",
+          "status": "即将截止",
+          "register_end": "2026-08-31",
+          "days_left": 0
+        },
+        {
+          "name": "讯飞AI开发者大赛·计算机视觉类赛事（历年合辑）",
           "organizer": "科大讯飞",
-          "url": "https://challenge.xfyun.cn/"
+          "url": "https://challenge.xfyun.cn/",
+          "status": "常设",
+          "register_end": "",
+          "days_left": null
         }
       ]
     },
@@ -62,19 +76,33 @@
       "reason": "非必备，作为差异化加分项拓展",
       "learn": "学习 ML/DL算法 领域核心知识点与主流方法",
       "practice": "完成一个包含 ML/DL算法 的实战小项目并沉淀到简历",
-      "evaluate": "参加实践评测或赛事检验：蓝桥杯全国软件和信息技术专业人才大赛、全国大学生数学建模竞赛",
+      "evaluate": "正在报名的赛事，以赛促学：AI新睿人才“星探计划”（截止 2026-08-31，剩 0 天）、“猎鹰·微波智探”—雷达多目标智能探测与识别挑战（截止 2026-08-31，剩 0 天）",
       "certify": "整理项目证据形成 ML/DL算法 能力证明材料",
       "certificates": [],
       "contests": [
         {
-          "name": "蓝桥杯全国软件和信息技术专业人才大赛",
-          "organizer": "工信部人才交流中心",
-          "url": "https://dasai.lanqiao.cn/"
+          "name": "AI新睿人才“星探计划”",
+          "organizer": " 烟台睿创微纳技术股份有限公司",
+          "url": "https://www.datafountain.cn/competitions/1169",
+          "status": "即将截止",
+          "register_end": "2026-08-31",
+          "days_left": 0
         },
         {
-          "name": "全国大学生数学建模竞赛",
-          "organizer": "中国工业与应用数学学会",
-          "url": "https://www.mcm.edu.cn/"
+          "name": "“猎鹰·微波智探”—雷达多目标智能探测与识别挑战",
+          "organizer": "中国电子学会&睿创微纳",
+          "url": "https://www.datafountain.cn/competitions/1166",
+          "status": "即将截止",
+          "register_end": "2026-08-31",
+          "days_left": 0
+        },
+        {
+          "name": "蓝桥杯全国软件和信息技术专业人才大赛",
+          "organizer": "工信部人才交流中心",
+          "url": "https://dasai.lanqiao.cn/",
+          "status": "常设",
+          "register_end": "",
+          "days_left": null
         }
       ]
     },
@@ -85,7 +113,7 @@
       "reason": "非必备，作为差异化加分项拓展",
       "learn": "学习 模型微调 领域核心知识点与主流方法",
       "practice": "完成一个包含 模型微调 的实战小项目并沉淀到简历",
-      "evaluate": "在项目复盘中自评 模型微调 的独立完成度",
+      "evaluate": "正在报名的赛事，以赛促学：从自然语言到可执行工作流的Agent算法挑战赛（截止 2026-09-04，剩 4 天）、基于多份材料的信息整合冲突判断与可靠问答挑战赛（截止 2026-09-13，剩 13 天）",
       "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）、微调工程师认证（讯飞AI大学堂）；并整理项目证据形成能力证明材料",
       "certificates": [
         {
@@ -99,7 +127,24 @@
           "url": "https://www.aidaxue.com/certification"
         }
       ],
-      "contests": []
+      "contests": [
+        {
+          "name": "从自然语言到可执行工作流的Agent算法挑战赛",
+          "organizer": "科大讯飞股份有限公司",
+          "url": "https://challenge.xfyun.cn/topic/info?type=NL2Wf",
+          "status": "即将截止",
+          "register_end": "2026-09-04",
+          "days_left": 4
+        },
+        {
+          "name": "基于多份材料的信息整合冲突判断与可靠问答挑战赛",
+          "organizer": "科大讯飞股份有限公司",
+          "url": "https://challenge.xfyun.cn/topic/info?type=FACT-Challenge",
+          "status": "即将截止",
+          "register_end": "2026-09-13",
+          "days_left": 13
+        }
+      ]
     }
   ],
   "generated_by": "match-v1 实体映射规则"

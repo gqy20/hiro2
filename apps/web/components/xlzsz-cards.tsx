@@ -9,6 +9,9 @@ export type XlzszCard = {
   issuer?: string;
   organizer?: string;
   url?: string;
+  status?: string;
+  register_end?: string;
+  days_left?: number | null;
 };
 
 function CardList({
@@ -27,11 +30,20 @@ function CardList({
       <ul>
         {items.map((c) => {
           const subtitle = c[subtitleKey];
+          const open = c.status === "正在报名" || c.status === "即将截止";
           const body = (
             <>
               <span className="xlzsz-card-name">{c.name}</span>
               {subtitle ? (
                 <span className="xlzsz-card-org">{subtitle}</span>
+              ) : null}
+              {open && c.register_end ? (
+                <span className="xlzsz-card-deadline">
+                  {c.status} · 截止 {c.register_end}
+                  {typeof c.days_left === "number"
+                    ? `（剩 ${c.days_left} 天）`
+                    : ""}
+                </span>
               ) : null}
             </>
           );

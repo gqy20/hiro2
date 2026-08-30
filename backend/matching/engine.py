@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import json
+from datetime import date
 from pathlib import Path
 
 from ..candidates.models import (
@@ -148,13 +149,17 @@ def match(candidate: CandidateProfile, job_version_id: str) -> MatchReport:
     )
 
 
-def learning_path(report: MatchReport) -> LearningPath:
+def learning_path(report: MatchReport, as_of: date | None = None) -> LearningPath:
     """学练赛证路径：必备缺失 P0 > 部分具备 P1 > 加分缺失 P2。
 
-    学/练段保持确定性模板；赛/证段引用真实实体（CERTS.yml 证书与
-    CONTESTS.yml 竞赛按 capability_ids 反查，无匹配时回退模板文案）。
+    学/练段确定性模板；赛/证段引用真实实体：
+    - 证段：CERTS.yml 证书按 capability_ids 反查；
+    - 赛段：优先推 race-catalog 中"正在报名/即将截止"的赛事（时间维度，带截止日），
+      无则回退 CONTESTS.yml 常设精选赛事，再无则模板文案。
+    as_of 为赛事时间窗口的基准日，缺省为今天；测试可注入固定日期保证确定性。
     """
     steps = []
+    today = as_of or date.today()
     order = {"缺失": 0, "部分具备": 1, "已具备": 2}
     for g in sorted(
         report.gaps, key=lambda g: (0 if g.is_required else 1, order.get(g.verdict, 3))
@@ -171,22 +176,49 @@ def learning_path(report: MatchReport) -> LearningPath:
 
         # 赛/证段：真实实体优先，无匹配时回退模板；同时保留结构化对象供前端渲染可点击卡片。
         certs = xlzsz.certs_for_skill(g.skill_id, limit=2)
-        contests = xlzsz.contests_for_skill(g.skill_id, limit=2)
+        open_contests = xlzsz.open_contests_for_skill(g.skill_id, today, limit=2)
+        curated_contests = xlzsz.contests_for_skill(g.skill_id, limit=2)
         cert_cards = [
             {"name": c["name"], "issuer": c.get("issuer", ""), "url": c.get("url", "")}
             for c in certs
         ]
+        # 赛事卡片：正在报名的赛事（带截止日）优先，再补常设精选赛事作参考。
         contest_cards = [
-            {"name": c["name"], "organizer": c.get("organizer", ""), "url": c.get("url", "")}
-            for c in contests
+            {
+                "name": c["name"],
+                "organizer": c.get("organizer", ""),
+                "url": c.get("url", ""),
+                "status": c["status"],
+                "register_end": c["register_end"],
+                "days_left": c["days_left"],
+            }
+            for c in open_contests
         ]
+        if len(contest_cards) < 3:
+            contest_cards += [
+                {
+                    "name": c["name"],
+                    "organizer": c.get("organizer", ""),
+                    "url": c.get("url", ""),
+                    "status": "常设",
+                    "register_end": "",
+                    "days_left": None,
+                }
+                for c in curated_contests
+            ][: 3 - len(contest_cards)]
         if certs:
             cert_names = "、".join(f"{c['name']}（{c['issuer']}）" for c in certs)
             certify = f"考取或对照权威认证：{cert_names}；并整理项目证据形成能力证明材料"
         else:
             certify = f"整理项目证据形成 {g.name} 能力证明材料"
-        if contests:
-            race_names = "、".join(c["name"] for c in contests)
+        if open_contests:
+            race_desc = "、".join(
+                f"{c['name']}（截止 {c['register_end']}，剩 {c['days_left']} 天）"
+                for c in open_contests
+            )
+            evaluate = f"正在报名的赛事，以赛促学：{race_desc}"
+        elif curated_contests:
+            race_names = "、".join(c["name"] for c in curated_contests)
             evaluate = f"参加实践评测或赛事检验：{race_names}"
         else:
             evaluate = f"在项目复盘中自评 {g.name} 的独立完成度"

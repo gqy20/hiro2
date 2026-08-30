@@ -64,7 +64,14 @@ export type DiagnosisFixture = {
       evaluate?: string;
       certify?: string;
       certificates?: Array<{ name: string; issuer?: string; url?: string }>;
-      contests?: Array<{ name: string; organizer?: string; url?: string }>;
+      contests?: Array<{
+        name: string;
+        organizer?: string;
+        url?: string;
+        status?: string;
+        register_end?: string;
+        days_left?: number | null;
+      }>;
     }>;
     career?: {
       completedSkills: string[];

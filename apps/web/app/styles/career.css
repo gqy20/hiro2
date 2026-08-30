@@ -516,6 +516,11 @@
   color: var(--muted);
   font-size: 12px;
 }
+.xlzsz-card-deadline {
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 500;
+}
 .career-path-footer {
   display: flex;
   align-items: center;

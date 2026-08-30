@@ -23,7 +23,10 @@
         {
           "name": "智能办公协同助理Skill开发挑战赛",
           "organizer": "科大讯飞",
-          "url": "https://challenge.xfyun.cn/"
+          "url": "https://challenge.xfyun.cn/",
+          "status": "常设",
+          "register_end": "",
+          "days_left": null
         }
       ]
     },

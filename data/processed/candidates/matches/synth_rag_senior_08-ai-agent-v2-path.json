@@ -10,8 +10,8 @@
       "reason": "非必备，作为差异化加分项拓展",
       "learn": "学习 Prompt工程 领域核心知识点与主流方法",
       "practice": "完成一个包含 Prompt工程 的实战小项目并沉淀到简历",
-      "evaluate": "在项目复盘中自评 Prompt工程 的独立完成度",
-      "certify": "整理项目证据形成 Prompt工程 能力证明材料"
+      "evaluate": "参加实践评测或赛事检验：智能办公协同助理Skill开发挑战赛",
+      "certify": "考取或对照权威认证：Prompt工程师认证（讯飞AI大学堂）；并整理项目证据形成能力证明材料"
     },
     {
       "skill_id": "cap_18",
@@ -24,5 +24,5 @@
       "certify": "整理项目证据形成 自动化运维 能力证明材料"
     }
   ],
-  "generated_by": "match-v1 模板化规则"
+  "generated_by": "match-v1 实体映射规则"
 }

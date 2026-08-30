@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- 事件采集与预测刷新对齐（完整链同一任务、正确顺序）：预测刷新从"只重算预测"升级为完整链 `rssget 抓RSS -> extract feeds 增量抽取 -> livcast 实时预测 -> predsnap 快照`。修复失配：此前预测每日重算但读的事件只有手动抓取才更新，预测基于陈旧事件。现事件采集尽力而为、预测必执行（抓取失败不阻塞）；extract 用 --days 增量窗口限 LLM 成本且幂等（实测抽 2 篇新文章、跳过 1738 已抽，77s 全链完成）。新增 HIRO2_FORECAST_REFRESH_EXTRACT_DAYS（默认 2）。端到端验证：新事件把预测 as_of 推进到当日。
 - 实时预测定时刷新（项目启动后自动周期刷新，默认每天）：
   - 架构修正：趋势从"匹配时烤死进 path.json"改为"诊断时实时读预测快照"——否则定时刷新是白刷。实测篡改快照后诊断不重新匹配即反映新趋势。
   - 新增 forecast_refresh 模块（对齐 snapshot_loop 模式）：启动 60s 后首轮，此后按 HIRO2_FORECAST_REFRESH_INTERVAL_HOURS（默认 24h 每天）重跑 livcast+predsnap；开关 HIRO2_FORECAST_REFRESH_ENABLED（本地默认关，容器置 true）。确定性计算无 LLM 成本，日刷无负担。

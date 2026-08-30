@@ -21,11 +21,17 @@ def test_forecast_refresh_enabled_flag(monkeypatch):
 
 
 def test_refresh_commands_pipeline():
-    """刷新编排 = livcast（实时预测）-> predsnap（合并快照，--source live）。"""
-    assert len(fr._REFRESH_CMDS) == 2
-    assert "livcast.py" in fr._REFRESH_CMDS[0][1]
-    assert "predsnap.py" in fr._REFRESH_CMDS[1][1]
-    assert fr._REFRESH_CMDS[1][-2:] == ["--source", "live"]
+    """刷新链 = 事件采集（rssget + extract）-> livcast（实时预测）-> predsnap（快照）。"""
+    assert _ingest_has("rssget.py")
+    assert _ingest_has("extract.py")
+    assert len(fr._FORECAST_CMDS) == 2
+    assert "livcast.py" in fr._FORECAST_CMDS[0][1]
+    assert "predsnap.py" in fr._FORECAST_CMDS[1][1]
+    assert fr._FORECAST_CMDS[1][-2:] == ["--source", "live"]
+
+
+def _ingest_has(script: str) -> bool:
+    return any(script in c[1] for c in fr._INGEST_CMDS)
 
 
 def test_refresh_interval_env_documented():

@@ -55,9 +55,7 @@ function workspaceForPath(pathname: string): Workspace {
     pathname.startsWith("/data") ||
     pathname.startsWith("/temporal") ||
     pathname.startsWith("/tasks") ||
-    pathname.startsWith("/evaluation") ||
-    pathname.startsWith("/quality") ||
-    pathname.startsWith("/datasets")
+    pathname.startsWith("/evaluation")
   )
     return "data";
   if (pathname.startsWith("/career") || pathname.startsWith("/profile"))

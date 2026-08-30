@@ -7,6 +7,7 @@ API 层与数据层互不感知。
 
 from __future__ import annotations
 
+import json
 import time
 from typing import Literal
 
@@ -40,6 +41,18 @@ class EvidenceVM(_VM):
     full_text: str
     source_url: str | None = None
     stance: EvidenceStance = "支持"
+
+
+class EvidenceSearchItemVM(EvidenceVM):
+    claim_type: str
+    review_status: str
+
+
+class EvidenceSearchResultVM(_VM):
+    items: list[EvidenceSearchItemVM]
+    total: int
+    offset: int
+    limit: int
 
 
 class ChangeItemVM(_VM):
@@ -140,7 +153,7 @@ class ApplicationService:
             source=ev.get("source_id", ""),
             source_type=_SOURCE_TYPE.get(prefix, _DEFAULT_SOURCE_TYPE),
             published_at=ev.get("published_at"),
-            collected_at=ev.get("published_at"),
+            collected_at=ev.get("collected_at"),
             quality=ev.get("quality_score", 0.6),
             excerpt=excerpt,
             full_text=full or excerpt,
@@ -152,6 +165,62 @@ class ApplicationService:
             if ev["evidence_id"] == evidence_id:
                 return self._evidence_vm(ev)
         return None
+
+    def search_evidence(
+        self,
+        *,
+        source_id: str = "",
+        claim_type: str = "",
+        review_status: str = "",
+        query: str = "",
+        offset: int = 0,
+        limit: int = 50,
+    ) -> EvidenceSearchResultVM:
+        needle = query.strip().casefold()
+        matches: list[dict] = []
+        for evidence in self.repo.evidence():
+            if source_id and evidence.get("source_id") != source_id:
+                continue
+            if claim_type and evidence.get("claim_type") != claim_type:
+                continue
+            status = str(evidence.get("review_status") or "PENDING")
+            if review_status and status != review_status:
+                continue
+            if needle:
+                searchable = " ".join(
+                    (
+                        str(evidence.get("evidence_id", "")),
+                        str(evidence.get("source_id", "")),
+                        json.dumps(evidence.get("payload") or {}, ensure_ascii=False),
+                    )
+                ).casefold()
+                if needle not in searchable:
+                    continue
+            matches.append(evidence)
+
+        matches.sort(
+            key=lambda evidence: (
+                str(evidence.get("published_at") or ""),
+                str(evidence.get("evidence_id") or ""),
+            ),
+            reverse=True,
+        )
+        items = []
+        for evidence in matches[offset : offset + limit]:
+            vm = self._evidence_vm(evidence)
+            items.append(
+                EvidenceSearchItemVM(
+                    **vm.model_dump(),
+                    claim_type=str(evidence.get("claim_type") or ""),
+                    review_status=str(evidence.get("review_status") or "PENDING"),
+                )
+            )
+        return EvidenceSearchResultVM(
+            items=items,
+            total=len(matches),
+            offset=offset,
+            limit=limit,
+        )
 
     # ---------- 岗位更新（主案例 2） ----------
 

@@ -14,6 +14,7 @@ def test_registry_reads_sources_yml():
     corp = registry["jd-corp"]
     assert corp.type == "employer_site"
     assert corp.time_range == ["2026-01", "2026-08"]
+    assert corp.license == "企业招聘官网公开页面，仅限研究使用，不分发原文"
     assert "字节" in corp.notes  # 真实登记数字在 notes 中，不由前端编造
 
 

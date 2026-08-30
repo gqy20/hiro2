@@ -3,6 +3,7 @@ export type DatasetSource = {
   type: string;
   time_range: string[];
   ingestion_mode: string;
+  license: string;
   notes: string;
 };
 

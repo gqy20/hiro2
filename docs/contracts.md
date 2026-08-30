@@ -376,8 +376,10 @@ GET  /api/v1/matches/{id}
 GET  /api/v1/diagnosis/{candidate_id}
 GET  /api/v1/pipeline-runs?limit=50&since_days=7
 GET  /api/v1/pipeline-runs/{id}
+GET  /api/v1/evidence?source_id=&claim_type=&review_status=&q=&offset=0&limit=50
 POST /api/v1/temporal/suggestions/{id}/review
 GET  /api/v1/temporal/dataset
+GET  /api/v1/temporal/signals                     # 完整历史信号；返回 total 与最早/最新观察时间
 GET  /api/v1/temporal/timeline
 GET  /api/v1/tasks/my
 POST /api/v1/tasks/{id}/decision
@@ -385,12 +387,16 @@ GET  /api/v1/quality/overview
 GET  /api/v1/dashboard/overview
 GET  /api/v1/evaluation/overview
 GET  /api/v1/datasets/overview
+GET  /api/v1/datasets/{dataset_id}
+GET  /api/v1/datasets/{dataset_id}/sources/{source_id}
 GET  /api/v1/evaluation/runs/{id}/compare
 GET  /health/live
 GET  /health/ready
 
 质量看板在配置 `DATABASE_URL` 时从 PostgreSQL `review_tasks` 与 `review_actions` 聚合；数据库不可用时回退离线评测产物。
 数据资产在配置 `DATABASE_URL` 时从 PostgreSQL `dataset_versions` 读取每个数据域的最新导入快照；离线开发时回退扫描本地处理产物。
+完整信号接口不设置记录数硬上限，按 `observed_at` 倒序返回；前端负责时间范围筛选和渐进渲染。聚合 `/temporal/dataset` 仍只携带近 90 天、最多 2000 条信号，避免非信号页面重复加载完整历史。
+数据集详情返回版本历史与 manifest 摘要，不返回可能包含数百个原始文件路径的完整 manifest；来源详情只在证据 `source_id` 与来源通道一致时返回精确统计，历史招聘通道无法可靠归因时显式返回 `attribution=unavailable`。运行详情返回配置、指标、结构化事件和产物文件名/大小，不返回原始文件内容。
 `scripts/outbox.py enqueue <version_id>` 写入 `JobVersionPublished`，`scripts/outbox.py consume` 领取并幂等投影到 Neo4j。
 ```
 

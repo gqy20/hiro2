@@ -91,6 +91,13 @@ class TemporalVM(_VM):
     suggestions: list[SuggestionVM]
 
 
+class TemporalSignalListVM(_VM):
+    signals: list[TrendSignalVM]
+    total: int
+    earliest_observed_at: str = ""
+    latest_observed_at: str = ""
+
+
 def build_temporal() -> TemporalVM:
     """从 backtest / leadtime / changeset 产物聚合 temporal 视图。"""
     if os.getenv("DATABASE_URL"):
@@ -179,6 +186,44 @@ def build_temporal() -> TemporalVM:
         signals=_load_signals(),
         suggestions=_apply_suggestion_reviews(suggestions),
     )
+
+
+def build_temporal_signals() -> TemporalSignalListVM:
+    """返回完整信号流，由前端按时间范围筛选并渐进渲染。"""
+    dsn = os.getenv("DATABASE_URL")
+    signals = _load_all_signals_db(dsn) if dsn else _load_signals(None, None)
+    observed = [signal.observed_at for signal in signals if signal.observed_at]
+    return TemporalSignalListVM(
+        signals=signals,
+        total=len(signals),
+        earliest_observed_at=min(observed, default=""),
+        latest_observed_at=max(observed, default=""),
+    )
+
+
+def _load_all_signals_db(dsn: str) -> list[TrendSignalVM]:
+    import psycopg
+
+    with psycopg.connect(dsn) as conn, conn.cursor(row_factory=psycopg.rows.dict_row) as cur:
+        cur.execute(
+            """SELECT signal_id, item_id, skill_id, signal_type, observed_at, confidence,
+                      evidence_ids, payload FROM trend_signals
+               ORDER BY observed_at DESC"""
+        )
+        rows = list(cur.fetchall())
+    return [
+        TrendSignalVM(
+            signal_id=row["signal_id"],
+            item_id=row["item_id"],
+            canonical_skill_id=row["skill_id"],
+            signal_type=row["signal_type"],
+            observed_at=row["observed_at"].isoformat(),
+            evidence_span=row["payload"].get("evidence_span", ""),
+            confidence=row["confidence"],
+            evidence_ids=row["evidence_ids"],
+        )
+        for row in rows
+    ]
 
 
 def _build_temporal_db(dsn: str) -> TemporalVM:
@@ -330,20 +375,25 @@ def _apply_suggestion_reviews(suggestions: list[SuggestionVM]) -> list[Suggestio
     return merged
 
 
-def _load_signals(limit: int = 2000) -> list[TrendSignalVM]:
-    """读 sigbuild 产物：近 90 天提及级 TrendSignal（最新优先，截断防 VM 过大）。"""
+def _load_signals(limit: int | None = 2000, since_days: int | None = 90) -> list[TrendSignalVM]:
+    """读 sigbuild 产物；聚合接口保留近 90 天上限，信号流可读取完整历史。"""
     from datetime import UTC, datetime, timedelta
 
     p = P / "temporal" / "signals.jsonl"
     if not p.is_file():
         return []
-    cutoff = (datetime.now(UTC) - timedelta(days=90)).isoformat()
+    cutoff = (
+        (datetime.now(UTC) - timedelta(days=since_days)).isoformat()
+        if since_days is not None
+        else None
+    )
     rows = []
     for line in p.open(encoding="utf-8"):
         s = json.loads(line)
-        if s.get("observed_at", "") >= cutoff:
+        if cutoff is None or s.get("observed_at", "") >= cutoff:
             rows.append(TrendSignalVM(**s))
-    return rows[:limit]
+    rows.sort(key=lambda signal: signal.observed_at, reverse=True)
+    return rows if limit is None else rows[:limit]
 
 
 # ============================================================ skills graph

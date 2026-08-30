@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, X } from "@phosphor-icons/react";
 import type { DatasetItem } from "@/lib/datasets";
 import type { PipelineRun } from "@/lib/pipeline-runs";
 import { formatTime } from "@/lib/time";
@@ -302,8 +303,83 @@ function SourceDetail({
   dataset: DatasetItem | undefined;
   onClose: () => void;
 }) {
+  const [selectedSourceId, setSelectedSourceId] = useState<string | null>(null);
   if (!dataset) return null;
   const sources = dataset.sources ?? [];
+  const selectedSource = sources.find(
+    (source) => source.id === selectedSourceId,
+  );
+
+  if (selectedSource) {
+    const typeLabel = TYPE_LABELS[selectedSource.type] ?? selectedSource.type;
+    const modeLabel =
+      MODE_LABELS[selectedSource.ingestion_mode] ??
+      selectedSource.ingestion_mode;
+    const timeRange =
+      selectedSource.time_range.length === 2
+        ? `${selectedSource.time_range[0]} ~ ${selectedSource.time_range[1]}`
+        : "未登记";
+
+    return (
+      <div className="data-flow-source-detail">
+        <div className="data-flow-source-detail-head">
+          <div>
+            <button
+              aria-label={`返回${dataset.name}来源通道`}
+              autoFocus
+              className="data-flow-source-back"
+              onClick={() => setSelectedSourceId(null)}
+              type="button"
+            >
+              <ArrowLeft aria-hidden size={16} />
+              返回{dataset.name}
+            </button>
+            <strong className="data-flow-source-detail-title">
+              {selectedSource.id}
+            </strong>
+            <span className="data-flow-source-detail-meta">
+              {typeLabel} · {modeLabel}
+            </span>
+          </div>
+          <button aria-label="关闭明细" onClick={onClose} type="button">
+            <X aria-hidden size={16} />
+          </button>
+        </div>
+
+        <dl className="data-flow-channel-facts">
+          <div>
+            <dt>所属数据集</dt>
+            <dd>{dataset.name}</dd>
+          </div>
+          <div>
+            <dt>来源类型</dt>
+            <dd>{typeLabel}</dd>
+          </div>
+          <div>
+            <dt>覆盖时间</dt>
+            <dd>{timeRange}</dd>
+          </div>
+          <div>
+            <dt>采集模式</dt>
+            <dd>{modeLabel}</dd>
+          </div>
+        </dl>
+
+        <section className="data-flow-channel-section">
+          <h3>来源说明</h3>
+          <p>{selectedSource.notes || "该来源尚未登记补充说明。"}</p>
+        </section>
+        <section className="data-flow-channel-section">
+          <h3>使用许可</h3>
+          <p>{selectedSource.license || "尚未登记许可信息。"}</p>
+        </section>
+        <p className="data-flow-channel-boundary">
+          统计口径：本页展示来源登记，记录数、质量与运行状态暂按数据集汇总。
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="data-flow-source-detail">
       <div className="data-flow-source-detail-head">
@@ -316,7 +392,7 @@ function SourceDetail({
           </span>
         </div>
         <button aria-label="关闭明细" autoFocus onClick={onClose} type="button">
-          ✕
+          <X aria-hidden size={16} />
         </button>
       </div>
       <dl className="data-flow-source-detail-stats">
@@ -345,23 +421,35 @@ function SourceDetail({
           <ul className="data-flow-source-channels-list">
             {sources.map((s) => (
               <li key={s.id}>
-                <div className="data-flow-source-channel-head">
-                  <strong>{s.id}</strong>
-                  <span className="data-flow-source-channel-type">
-                    {TYPE_LABELS[s.type] ?? s.type}
+                <button
+                  aria-label={`查看来源通道 ${s.id}`}
+                  className="data-flow-source-channel"
+                  onClick={() => setSelectedSourceId(s.id)}
+                  type="button"
+                >
+                  <span className="data-flow-source-channel-head">
+                    <strong>{s.id}</strong>
+                    <span className="data-flow-source-channel-type">
+                      {TYPE_LABELS[s.type] ?? s.type}
+                    </span>
                   </span>
-                </div>
-                <div className="data-flow-source-channel-meta">
-                  {s.time_range.length === 2
-                    ? `${s.time_range[0]} ~ ${s.time_range[1]}`
-                    : ""}
-                  {s.ingestion_mode
-                    ? ` · ${MODE_LABELS[s.ingestion_mode] ?? s.ingestion_mode}`
-                    : ""}
-                </div>
-                {s.notes ? (
-                  <p className="data-flow-source-channel-notes">{s.notes}</p>
-                ) : null}
+                  <span className="data-flow-source-channel-meta">
+                    {s.time_range.length === 2
+                      ? `${s.time_range[0]} ~ ${s.time_range[1]}`
+                      : ""}
+                    {s.ingestion_mode
+                      ? ` · ${MODE_LABELS[s.ingestion_mode] ?? s.ingestion_mode}`
+                      : ""}
+                  </span>
+                  {s.notes ? (
+                    <span className="data-flow-source-channel-notes">
+                      {s.notes}
+                    </span>
+                  ) : null}
+                  <span className="data-flow-source-channel-action">
+                    查看通道详情 <ArrowRight aria-hidden size={15} />
+                  </span>
+                </button>
               </li>
             ))}
           </ul>
@@ -384,12 +472,46 @@ export function SourceDrawer({
   dataset: DatasetItem | undefined;
   onClose: () => void;
 }) {
+  const drawerRef = useRef<HTMLElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(
+    typeof document === "undefined"
+      ? null
+      : (document.activeElement as HTMLElement | null),
+  );
+
   useEffect(() => {
+    const previousFocus = previousFocusRef.current;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab") return;
+
+      const focusable = Array.from(
+        drawerRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      );
+      if (focusable.length === 0) {
+        e.preventDefault();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable.at(-1)!;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      previousFocus?.focus();
+    };
   }, [onClose]);
 
   if (!dataset) return null;
@@ -404,9 +526,10 @@ export function SourceDrawer({
         aria-modal="true"
         className="dataset-drawer"
         onClick={(e) => e.stopPropagation()}
+        ref={drawerRef}
         role="dialog"
       >
-        <SourceDetail dataset={dataset} onClose={onClose} />
+        <SourceDetail key={dataset.id} dataset={dataset} onClose={onClose} />
       </aside>
     </div>
   );

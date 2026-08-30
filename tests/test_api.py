@@ -56,6 +56,28 @@ def test_dataset_overview_contract() -> None:
     assert {item["id"] for item in body["datasets"]} >= {"jd", "evaluation", "capability"}
 
 
+def test_dataset_detail_and_source_stats(monkeypatch) -> None:
+    monkeypatch.delenv("DATABASE_URL", raising=False)
+    client = TestClient(app)
+    detail = client.get("/api/v1/datasets/temporal")
+    assert detail.status_code == 200
+    body = detail.json()
+    assert body["dataset"]["version"]
+    assert body["versions"][0]["manifest_hash"]
+    assert "files" not in body["versions"][0]["manifest"]
+
+    source = client.get("/api/v1/datasets/temporal/sources/wechat-mp")
+    assert source.status_code == 200
+    assert source.json()["stats"]["evidence_count"] > 500
+    assert source.json()["stats"]["attribution"] == "exact"
+
+    unavailable = client.get("/api/v1/datasets/jd/sources/jd-corp")
+    assert unavailable.status_code == 200
+    assert unavailable.json()["stats"]["attribution"] == "unavailable"
+
+    assert client.get("/api/v1/datasets/unknown").status_code == 404
+
+
 def test_publish_job_idempotent_and_unknown_404() -> None:
     client = TestClient(app)
     # 已发布过的默认草稿：幂等返回既有 PUBLISHED 版本而非 409
@@ -94,6 +116,38 @@ def test_temporal_dataset_contract_camel_top_level() -> None:
         assert "review_status" in first
     if body["backtestRecords"]:
         assert "skill_id" in body["backtestRecords"][0]
+
+
+def test_temporal_signals_returns_complete_history(monkeypatch) -> None:
+    monkeypatch.delenv("DATABASE_URL", raising=False)
+    response = TestClient(app).get("/api/v1/temporal/signals")
+    assert response.status_code == 200
+    body = response.json()
+    assert body["total"] == len(body["signals"])
+    assert body["total"] > 500
+    assert body["earliest_observed_at"] < body["latest_observed_at"]
+
+
+def test_evidence_search_and_pipeline_run_detail() -> None:
+    client = TestClient(app)
+    evidence = client.get("/api/v1/evidence?source_id=wechat-mp&limit=2")
+    assert evidence.status_code == 200
+    evidence_body = evidence.json()
+    assert evidence_body["total"] > 500
+    assert len(evidence_body["items"]) == 2
+    assert all(item["source"] == "wechat-mp" for item in evidence_body["items"])
+    assert all("claimType" in item for item in evidence_body["items"])
+
+    runs = client.get("/api/v1/pipeline-runs?limit=1&since_days=3650").json()["runs"]
+    assert runs
+    run_id = runs[0]["run_id"]
+    detail = client.get(f"/api/v1/pipeline-runs/{run_id}")
+    assert detail.status_code == 200
+    run_body = detail.json()
+    assert run_body["run"]["run_id"] == run_id
+    assert run_body["event_count"] == len(run_body["events"])
+    assert {item["name"] for item in run_body["artifacts"]} >= {"events.jsonl"}
+    assert client.get("/api/v1/pipeline-runs/../bad").status_code == 404
 
 
 def test_temporal_suggestion_review_unknown_id_404() -> None:

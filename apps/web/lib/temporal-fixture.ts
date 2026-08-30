@@ -65,8 +65,8 @@ async function readEvents(): Promise<RawEvent[]> {
     .map((line) => JSON.parse(line) as RawEvent);
 }
 
-/** 信号流：读 sigbuild 真实产物（近 90 天，最多 500 条）；缺文件时为空。 */
-async function loadSignals(): Promise<TrendSignal[]> {
+/** 读取 sigbuild 信号；通用聚合只带近 90 天，信号页显式请求完整历史。 */
+async function loadSignals(completeHistory = false): Promise<TrendSignal[]> {
   const signalsDir = path.resolve(
     process.cwd(),
     "../../data/processed/temporal",
@@ -76,16 +76,23 @@ async function loadSignals(): Promise<TrendSignal[]> {
       path.join(signalsDir, "signals.jsonl"),
       "utf8",
     );
-    const cutoff = Date.now() - 90 * 24 * 3600 * 1000;
-    return content
+    const signals = content
       .split("\n")
       .filter((line) => line.trim().length > 0)
       .map((line) => JSON.parse(line) as TrendSignal)
-      .filter((s) => new Date(s.observed_at).getTime() >= cutoff)
+      .sort((a, b) => b.observed_at.localeCompare(a.observed_at));
+    if (completeHistory) return signals;
+    const cutoff = Date.now() - 90 * 24 * 3600 * 1000;
+    return signals
+      .filter((signal) => Date.parse(signal.observed_at) >= cutoff)
       .slice(0, 2000);
   } catch {
     return [];
   }
+}
+
+export function loadTemporalSignalsFixture(): Promise<TrendSignal[]> {
+  return loadSignals(true);
 }
 
 export async function loadTemporalFixture(): Promise<TemporalDataset> {
@@ -143,7 +150,7 @@ export async function loadTemporalFixture(): Promise<TemporalDataset> {
       .map((e) => e.event_id),
   }));
 
-  // 信号：读 sigbuild 真实产物（近 90 天，最多 500 条，最新优先）
+  // 聚合 fixture 只携带近 90 天信号；完整历史由信号页专用入口读取
   const signals: TrendSignal[] = await loadSignals();
 
   // 建议：从前 3 个 forecast 各派生一个

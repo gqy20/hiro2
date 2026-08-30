@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import functools
+import hashlib
 import json
+from datetime import UTC, datetime
 from pathlib import Path
 
 import yaml
@@ -19,6 +21,7 @@ class DatasetSource(BaseModel):
     type: str = ""
     time_range: list[str] = Field(default_factory=list)
     ingestion_mode: str = ""
+    license: str = ""
     notes: str = ""
 
 
@@ -45,12 +48,56 @@ class DatasetOverview(BaseModel):
     datasets: list[DatasetItem] = Field(default_factory=list)
 
 
+class DatasetVersion(BaseModel):
+    dataset_id: str
+    version: str
+    status: str
+    records: int
+    valid_records: int
+    pending_records: int
+    quality: int
+    manifest_hash: str = ""
+    manifest: dict = Field(default_factory=dict)
+    run_id: str = ""
+    imported_at: str = ""
+
+
+class DatasetDetail(BaseModel):
+    dataset: DatasetItem
+    versions: list[DatasetVersion] = Field(default_factory=list)
+
+
+class DatasetSourceStats(BaseModel):
+    evidence_count: int = 0
+    reviewed_evidence_count: int | None = None
+    average_quality: float | None = None
+    latest_evidence_at: str = ""
+    claim_types: dict[str, int] = Field(default_factory=dict)
+    attribution: str = "exact"
+    attribution_note: str = ""
+
+
+class DatasetSourceDetail(BaseModel):
+    dataset_id: str
+    dataset_version: str
+    source: DatasetSource
+    stats: DatasetSourceStats
+
+
 # 数据集 -> SOURCES.yml 登记的来源通道。派生（evidence）、受控（resumes）、
 # 冻结评测集（evaluation）无外部来源登记，留空由前端展示派生说明。
 DATASET_SOURCES: dict[str, list[str]] = {
     "jd": ["jd-corp", "jd-opencli", "jd-51job-har", "jd-boss", "jd-archive"],
     "temporal": ["wechat-mp", "feeds", "arxiv", "pypi-pkgstats"],
     "capability": ["capability-matrix", "standards", "onet-history", "policy"],
+}
+
+DATASET_MANIFESTS: dict[str, Path] = {
+    "jd": ROOT / "data" / "processed" / "jd-opencli" / "manifest.json",
+    "temporal": ROOT / "data" / "processed" / "wechat-mp" / "manifest.json",
+    "capability": ROOT / "data" / "processed" / "capability-matrix" / "manifest.json",
+    "evidence": ROOT / "data" / "processed" / "evidence" / "manifest.json",
+    "evaluation": ROOT / "evaluation" / "samples" / "manifest.json",
 }
 
 
@@ -74,6 +121,7 @@ def _source_registry() -> dict[str, DatasetSource]:
             type=str(raw.get("type", "")),
             time_range=time_range,
             ingestion_mode=str(raw.get("ingestion_mode", "")),
+            license=str(raw.get("license", "")).strip(),
             notes=str(raw.get("notes", "")).strip(),
         )
     return registry
@@ -103,6 +151,34 @@ def _manifest_version(path: Path) -> str:
     return str(
         payload.get("dataset_version") or payload.get("version") or payload.get("batch") or ""
     )
+
+
+def _manifest_summary(path: Path) -> tuple[dict, str, str]:
+    if not path.is_file():
+        return {}, "", ""
+    raw = path.read_bytes()
+    try:
+        payload = json.loads(raw)
+    except json.JSONDecodeError:
+        return {}, hashlib.sha256(raw).hexdigest(), ""
+    summary = {
+        key: payload[key]
+        for key in (
+            "source_id",
+            "source_type",
+            "ingestion_mode",
+            "file_count",
+            "total_bytes",
+            "dataset_version",
+            "version",
+            "seed",
+        )
+        if key in payload
+    }
+    if "files" in payload:
+        summary["file_count"] = len(payload["files"])
+    imported_at = datetime.fromtimestamp(path.stat().st_mtime, UTC).isoformat()
+    return summary, hashlib.sha256(raw).hexdigest(), imported_at
 
 
 def _item(
@@ -281,4 +357,140 @@ def build_dataset_overview_db(dsn: str) -> DatasetOverview:
         ready_datasets=sum(item.status in {"可用", "已审核", "已冻结"} for item in datasets),
         pending_records=sum(item.records - item.valid_records for item in datasets),
         datasets=datasets,
+    )
+
+
+def build_dataset_detail(dataset_id: str, dsn: str | None = None) -> DatasetDetail | None:
+    overview = build_dataset_overview_db(dsn) if dsn else build_dataset_overview()
+    dataset = next((item for item in overview.datasets if item.id == dataset_id), None)
+    if dataset is None:
+        return None
+
+    if dsn:
+        import psycopg
+
+        with psycopg.connect(dsn) as conn:
+            rows = conn.execute(
+                """SELECT dataset_id, dataset_version, status, record_count,
+                          valid_record_count, pending_record_count, quality_score,
+                          manifest_hash, manifest, run_id, imported_at
+                   FROM dataset_versions WHERE dataset_id = %s
+                   ORDER BY imported_at DESC""",
+                (dataset_id,),
+            ).fetchall()
+        versions = [
+            DatasetVersion(
+                dataset_id=row[0],
+                version=row[1],
+                status=row[2],
+                records=row[3],
+                valid_records=row[4],
+                pending_records=row[5],
+                quality=round(float(row[6]) * 100),
+                manifest={
+                    key: row[8][key]
+                    for key in (
+                        "source_id",
+                        "source_type",
+                        "ingestion_mode",
+                        "file_count",
+                        "total_bytes",
+                        "dataset_version",
+                        "version",
+                        "seed",
+                    )
+                    if key in (row[8] or {})
+                },
+                manifest_hash=row[7],
+                run_id=row[9],
+                imported_at=row[10].isoformat() if row[10] else "",
+            )
+            for row in rows
+        ]
+    else:
+        manifest, manifest_hash, imported_at = _manifest_summary(
+            DATASET_MANIFESTS.get(dataset_id, Path())
+        )
+        versions = [
+            DatasetVersion(
+                dataset_id=dataset.id,
+                version=dataset.version,
+                status=dataset.status,
+                records=dataset.records,
+                valid_records=dataset.valid_records,
+                pending_records=max(dataset.records - dataset.valid_records, 0),
+                quality=dataset.quality,
+                manifest=manifest,
+                manifest_hash=manifest_hash,
+                imported_at=imported_at or dataset.updated_at,
+            )
+        ]
+    return DatasetDetail(dataset=dataset, versions=versions)
+
+
+def _source_evidence_stats(source_id: str, dsn: str | None) -> DatasetSourceStats:
+    if dsn:
+        import psycopg
+
+        with psycopg.connect(dsn) as conn:
+            rows = conn.execute(
+                """SELECT claim_type, quality_score, published_at, review_status
+                   FROM evidence WHERE source_id = %s""",
+                (source_id,),
+            ).fetchall()
+        reviewed = sum(row[3] in {"ACCEPTED", "MODIFIED", "REJECTED"} for row in rows)
+    else:
+        path = ROOT / "data" / "processed" / "evidence" / "evidence.jsonl"
+        rows = []
+        if path.is_file():
+            for line in path.open(encoding="utf-8"):
+                if not line.strip():
+                    continue
+                row = json.loads(line)
+                if row.get("source_id") == source_id:
+                    rows.append(
+                        (
+                            row.get("claim_type", ""),
+                            row.get("quality_score", 0),
+                            row.get("published_at"),
+                            row.get("review_status"),
+                        )
+                    )
+        reviewed = None
+
+    claim_types: dict[str, int] = {}
+    for row in rows:
+        claim_types[str(row[0])] = claim_types.get(str(row[0]), 0) + 1
+    qualities = [float(row[1]) for row in rows if row[1] is not None]
+    published = [str(row[2]) for row in rows if row[2]]
+    return DatasetSourceStats(
+        evidence_count=len(rows),
+        reviewed_evidence_count=reviewed,
+        average_quality=round(sum(qualities) / len(qualities), 3) if qualities else None,
+        latest_evidence_at=max(published, default=""),
+        claim_types=claim_types,
+    )
+
+
+def build_dataset_source_detail(
+    dataset_id: str, source_id: str, dsn: str | None = None
+) -> DatasetSourceDetail | None:
+    detail = build_dataset_detail(dataset_id, dsn)
+    if detail is None:
+        return None
+    source = next((item for item in detail.dataset.sources if item.id == source_id), None)
+    if source is None:
+        return None
+    stats = _source_evidence_stats(source_id, dsn)
+    if stats.evidence_count == 0 and dataset_id == "jd":
+        stats.attribution = "unavailable"
+        stats.attribution_note = (
+            "历史招聘证据记录的是发布平台 source_id，尚未保存采集通道 ID，"
+            "无法把证据可靠归因到该通道。"
+        )
+    return DatasetSourceDetail(
+        dataset_id=dataset_id,
+        dataset_version=detail.dataset.version,
+        source=source,
+        stats=stats,
     )

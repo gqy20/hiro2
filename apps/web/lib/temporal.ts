@@ -93,6 +93,13 @@ export type TemporalDataset = {
   suggestions: JobImpactSuggestion[];
 };
 
+export type TemporalSignalList = {
+  signals: TrendSignal[];
+  total: number;
+  earliest_observed_at: string;
+  latest_observed_at: string;
+};
+
 export type TemporalVariant = "ready" | "empty" | "error";
 
 export type TemporalTimelineRow = {

@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
@@ -71,6 +72,20 @@ class PipelineRunVM(_VM):
 class PipelineRunListVM(_VM):
     runs: list[PipelineRunVM] = Field(default_factory=list)
     total: int = 0
+
+
+class PipelineArtifactVM(_VM):
+    name: str
+    size: int
+
+
+class PipelineRunDetailVM(_VM):
+    run: PipelineRunVM
+    config: dict = Field(default_factory=dict)
+    metrics: dict = Field(default_factory=dict)
+    events: list[dict] = Field(default_factory=list)
+    event_count: int = 0
+    artifacts: list[PipelineArtifactVM] = Field(default_factory=list)
 
 
 def _parse_ts(ts: str | None) -> datetime | None:
@@ -189,3 +204,51 @@ def build_pipeline_runs(limit: int = 50, since_days: int = 7) -> PipelineRunList
 
     # total 必须是窗口内的真实总数，不能等于当前页条数
     return PipelineRunListVM(runs=runs[:limit], total=len(runs))
+
+
+def _read_json(path: Path) -> dict:
+    if not path.is_file():
+        return {}
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return value if isinstance(value, dict) else {}
+
+
+def build_pipeline_run_detail(run_id: str) -> PipelineRunDetailVM | None:
+    """读取单次运行的审计事件、配置、指标和产物清单。"""
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}", run_id):
+        return None
+    run_dir = RUNS_DIR / run_id
+    if not run_dir.is_dir():
+        return None
+    run = _aggregate_run(run_dir)
+    if run is None:
+        return None
+
+    events: list[dict] = []
+    events_path = run_dir / "events.jsonl"
+    for line in events_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        try:
+            event = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(event, dict):
+            events.append(event)
+
+    artifacts = [
+        PipelineArtifactVM(name=path.name, size=path.stat().st_size)
+        for path in sorted(run_dir.iterdir())
+        if path.is_file()
+    ]
+    return PipelineRunDetailVM(
+        run=run,
+        config=_read_json(run_dir / "config.json"),
+        metrics=_read_json(run_dir / "metrics.json"),
+        events=events,
+        event_count=len(events),
+        artifacts=artifacts,
+    )

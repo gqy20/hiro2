@@ -1,8 +1,8 @@
 import { TemporalSignalsWorkbench } from "@/components/temporal-signals-workbench";
 import { FixtureState } from "@/components/workflow-ui";
 import { apiFetch, isMockMode } from "@/lib/api/client";
-import { loadTemporalFixture } from "@/lib/temporal-fixture";
-import type { TemporalDataset } from "@/lib/temporal";
+import { loadTemporalSignalsFixture } from "@/lib/temporal-fixture";
+import type { TemporalSignalList } from "@/lib/temporal";
 
 export const metadata = { title: "市场信号" };
 
@@ -10,9 +10,16 @@ export default async function TemporalSignalsPage({
   searchParams,
 }: Readonly<{ searchParams: Promise<{ state?: string }> }>) {
   const { state } = await searchParams;
-  const fixture = isMockMode()
-    ? await loadTemporalFixture()
-    : await apiFetch<TemporalDataset>("/temporal/dataset");
+  const signalList: TemporalSignalList = isMockMode()
+    ? await loadTemporalSignalsFixture().then((signals) => ({
+        signals,
+        total: signals.length,
+        earliest_observed_at: signals.at(-1)?.observed_at ?? "",
+        latest_observed_at: signals[0]?.observed_at ?? "",
+      }))
+    : await apiFetch<TemporalSignalList>("/temporal/signals", {
+        timeoutMs: 30_000,
+      });
   const variant = state === "empty" || state === "error" ? state : "ready";
   if (variant === "error") {
     return (
@@ -31,5 +38,5 @@ export default async function TemporalSignalsPage({
       </>
     );
   }
-  return <TemporalSignalsWorkbench signals={fixture.signals} />;
+  return <TemporalSignalsWorkbench signals={signalList.signals} />;
 }

@@ -164,6 +164,7 @@ class PostgresRepository(FileRepository):
                 "source_id": row["source_id"],
                 "claim_type": row["claim_type"],
                 "published_at": row["published_at"].isoformat() if row["published_at"] else None,
+                "collected_at": row["collected_at"].isoformat() if row["collected_at"] else None,
                 "quality_score": row["quality_score"],
                 "payload": row["payload"],
                 "urls": row["urls"],

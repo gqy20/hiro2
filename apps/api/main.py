@@ -13,7 +13,7 @@ import os
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Response, UploadFile
+from fastapi import FastAPI, HTTPException, Query, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse
 from pydantic import BaseModel, Field
@@ -27,17 +27,27 @@ from backend.application.career import (
     set_active_target,
 )
 from backend.application.dashboard import build_dashboard
-from backend.application.datasets import build_dataset_overview, build_dataset_overview_db
+from backend.application.datasets import (
+    build_dataset_detail,
+    build_dataset_overview,
+    build_dataset_overview_db,
+    build_dataset_source_detail,
+)
 from backend.application.diagnosis import build_diagnosis, list_candidates
 from backend.application.evaluation import build_evaluation_overview
 from backend.application.insights import build_detected_changes, build_timeline
 from backend.application.joblist import build_published_jobs
 from backend.application.outbox_worker import outbox_worker_enabled, outbox_worker_loop
-from backend.application.pipeline_runs import build_pipeline_runs
+from backend.application.pipeline_runs import build_pipeline_run_detail, build_pipeline_runs
 from backend.application.quality import build_quality_overview
 from backend.application.service import ApplicationService
 from backend.application.snapshot import snapshot_enabled, snapshot_loop
-from backend.application.temporal_vm import build_skill_graph, build_tasks, build_temporal
+from backend.application.temporal_vm import (
+    build_skill_graph,
+    build_tasks,
+    build_temporal,
+    build_temporal_signals,
+)
 from backend.application.training import build_training_output
 from backend.candidates.resume_build import ResumeDraft, build_advice, render_pdf
 
@@ -216,10 +226,34 @@ def datasets_overview() -> dict:
     return build_dataset_overview().model_dump()
 
 
+@app.get("/api/v1/datasets/{dataset_id}")
+def dataset_detail(dataset_id: str) -> dict:
+    detail = build_dataset_detail(dataset_id, os.getenv("DATABASE_URL"))
+    if detail is None:
+        raise HTTPException(404, f"数据集不存在: {dataset_id}")
+    return detail.model_dump()
+
+
+@app.get("/api/v1/datasets/{dataset_id}/sources/{source_id}")
+def dataset_source_detail(dataset_id: str, source_id: str) -> dict:
+    detail = build_dataset_source_detail(dataset_id, source_id, os.getenv("DATABASE_URL"))
+    if detail is None:
+        raise HTTPException(404, f"来源通道不存在: {dataset_id}/{source_id}")
+    return detail.model_dump()
+
+
 @app.get("/api/v1/pipeline-runs")
 def pipeline_runs(limit: int = 50, since_days: int = 7) -> dict:
     """最近 pipeline run 列表（默认 7 天 / 50 条）。只读，扫描 data/runs/。"""
     return build_pipeline_runs(limit=limit, since_days=since_days).model_dump()
+
+
+@app.get("/api/v1/pipeline-runs/{run_id}")
+def pipeline_run_detail(run_id: str) -> dict:
+    detail = build_pipeline_run_detail(run_id)
+    if detail is None:
+        raise HTTPException(404, f"运行不存在: {run_id}")
+    return detail.model_dump()
 
 
 @app.get("/api/v1/evaluation/overview")
@@ -239,6 +273,25 @@ def emerging_review_get(candidate_id: str) -> dict:
 @app.post("/api/v1/emerging-jobs/{candidate_id}/review")
 def emerging_review(candidate_id: str, req: ReviewRequest) -> dict:
     return svc.submit_review(candidate_id, req.decision, req.note)
+
+
+@app.get("/api/v1/evidence")
+def evidence_search(
+    source_id: str = Query(default="", max_length=120),
+    claim_type: str = Query(default="", max_length=40),
+    review_status: str = Query(default="", max_length=40),
+    query: str = Query(default="", alias="q", max_length=200),
+    offset: int = Query(default=0, ge=0),
+    limit: int = Query(default=50, ge=1, le=200),
+) -> dict:
+    return svc.search_evidence(
+        source_id=source_id,
+        claim_type=claim_type,
+        review_status=review_status,
+        query=query,
+        offset=offset,
+        limit=limit,
+    ).model_dump(by_alias=True)
 
 
 @app.get("/api/v1/evidence/{evidence_id}")
@@ -337,6 +390,12 @@ def temporal_dataset() -> dict:
     # 前端契约：顶层 camelCase，内层字段保持 snake_case
     data["backtestRecords"] = data.pop("backtest_records")
     return data
+
+
+@app.get("/api/v1/temporal/signals")
+def temporal_signals() -> dict:
+    """完整市场信号列表；前端按时间范围筛选并渐进渲染。"""
+    return build_temporal_signals().model_dump()
 
 
 class SuggestionReviewRequest(BaseModel):

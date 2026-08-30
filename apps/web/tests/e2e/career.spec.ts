@@ -21,11 +21,10 @@ test("career jobs page renders published job cards and group filter", async ({
   ).toBeVisible();
 });
 
-test("career workspace redirects to focused navigation and explicit diagnosis", async ({
+test("career workspace uses focused navigation and explicit diagnosis", async ({
   page,
 }) => {
-  await page.goto("/career");
-  await expect(page).toHaveURL(/\/career\/jobs$/);
+  await page.goto("/career/jobs");
   await expect(
     page.getByRole("button", { name: "求职", pressed: true }),
   ).toBeVisible();

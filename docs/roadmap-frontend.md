@@ -75,7 +75,7 @@
 
 - 求职区补齐五页闭环：新增 `/career/jobs`（目标岗位，已发布版本卡 + 岗位族筛选，接 `GET /jobs/published`）与 `/career/path`（学习路径，学练赛证四段）；`/career` 首页双态（活跃目标驱动，接 `GET /career/home`）；诊断页求职视图（必备能力 x/n 置顶）。
 - 招聘区导航收敛为五项；简历解析并入诊断流程（`/resumes` 确认后可前往诊断）。
-- 数据区收纳为六项导航：`/datasets` 并入总览，`/data/quality` 与 `/quality` 并入评测与质量页（旧路由重定向），`/temporal` 五子页归入本区并补“时间轴”二级 tab。
+- 数据区收纳为六项导航：数据资产目录并入总览，标注质量并入评测与质量页，旧兼容路由已删除；`/temporal` 五子页归入本区并补“时间轴”二级导航。
 - `/tasks` 审核提交接入真实 API（`POST /tasks/{id}/decision`）；`/temporal/suggestions` 审核持久化（`POST /temporal/suggestions/{id}/review`）；预测复盘页新增规则迭代对比（v1→v2）。
 - 端到端测试 14/14（求职流程 4 条）。
 

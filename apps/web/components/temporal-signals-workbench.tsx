@@ -27,6 +27,16 @@ const TYPE_LABEL: Record<TrendSignal["signal_type"], string> = {
   policy: "政策",
 };
 
+const TIME_RANGE_OPTIONS = [
+  { label: "全部时间", value: "all" },
+  { label: "近 7 天", value: "7" },
+  { label: "近 30 天", value: "30" },
+  { label: "近 90 天", value: "90" },
+  { label: "近 1 年", value: "365" },
+] as const;
+
+type TimeRange = (typeof TIME_RANGE_OPTIONS)[number]["value"];
+
 function signalTime(value: string): { date: string; time: string } {
   const date = new Date(value);
   return {
@@ -56,6 +66,7 @@ export function TemporalSignalsWorkbench({
     "all" | TrendSignal["signal_type"]
   >("all");
   const [skillId, setSkillId] = useState("all");
+  const [timeRange, setTimeRange] = useState<TimeRange>("all");
   const [selected, setSelected] = useState<TrendSignal | null>(null);
   const [evidence, setEvidence] = useState<Evidence[]>([]);
   const [evidenceLoading, setEvidenceLoading] = useState(false);
@@ -65,9 +76,15 @@ export function TemporalSignalsWorkbench({
     () => signals.reduce((m, s) => (s.observed_at > m ? s.observed_at : m), ""),
     [signals],
   );
+  const timeFilteredSignals = useMemo(() => {
+    if (timeRange === "all" || !latest) return signals;
+    const latestTime = Date.parse(latest);
+    const cutoff = latestTime - Number(timeRange) * 24 * 60 * 60 * 1000;
+    return signals.filter((signal) => Date.parse(signal.observed_at) >= cutoff);
+  }, [latest, signals, timeRange]);
   const clusters = useMemo(() => {
     const groups = new Map<string, number>();
-    for (const s of signals) {
+    for (const s of timeFilteredSignals) {
       groups.set(
         s.canonical_skill_id,
         (groups.get(s.canonical_skill_id) ?? 0) + 1,
@@ -77,10 +94,10 @@ export function TemporalSignalsWorkbench({
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5)
       .map(([skill, count]) => ({ skill, count }));
-  }, [signals]);
+  }, [timeFilteredSignals]);
   const filteredSignals = useMemo(() => {
     const needle = query.trim().toLocaleLowerCase("zh-CN");
-    return signals.filter((signal) => {
+    return timeFilteredSignals.filter((signal) => {
       if (signalType !== "all" && signal.signal_type !== signalType)
         return false;
       if (skillId !== "all" && signal.canonical_skill_id !== skillId)
@@ -90,7 +107,7 @@ export function TemporalSignalsWorkbench({
         .toLocaleLowerCase("zh-CN")
         .includes(needle);
     });
-  }, [query, signalType, signals, skillId]);
+  }, [query, signalType, skillId, timeFilteredSignals]);
 
   useEffect(() => {
     const target = loadMoreRef.current;
@@ -133,7 +150,11 @@ export function TemporalSignalsWorkbench({
     <section className="temporal-workbench" aria-label="市场信号">
       <div className="temporal-signal-toolbar">
         <div>
-          <strong>{`${filteredSignals.length} 条信号`}</strong>
+          <strong>
+            {filteredSignals.length === signals.length
+              ? `${signals.length} 条信号`
+              : `${filteredSignals.length} / ${signals.length} 条信号`}
+          </strong>
           <span>{latest ? `最近更新 ${latest.slice(0, 10)}` : "暂无更新"}</span>
         </div>
         <Input
@@ -145,6 +166,16 @@ export function TemporalSignalsWorkbench({
           }}
           placeholder="搜索能力域或信号内容"
           value={query}
+        />
+        <Select
+          aria-label="筛选信号时间范围"
+          onChange={(value: TimeRange) => {
+            setTimeRange(value);
+            setSkillId("all");
+            setVisibleCount(50);
+          }}
+          options={[...TIME_RANGE_OPTIONS]}
+          value={timeRange}
         />
         <Select
           aria-label="筛选信号类型"
@@ -231,7 +262,7 @@ export function TemporalSignalsWorkbench({
                 type="button"
               >
                 <span>全部能力域</span>
-                <span>{signals.length} 条</span>
+                <span>{timeFilteredSignals.length} 条</span>
               </button>
             </li>
             {clusters.map((c) => (

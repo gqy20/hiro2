@@ -58,7 +58,7 @@
 | `evidence_id` | str | ev:|jd:|xlsx: 前缀 + 源标识（回链键） |
 | `source_id` | str | TODO 待人工补 |
 | `source_span` | dict | 回链定位（event_id/jd_id/position_id） |
-| `published_at` | str | 证据发布时间（时间闸门的锚点，回测只用此前的证据） |
+| `published_at` | str | 证据时间（as_of 闸门的 T 锚点） |
 | `content_hash` | str | 内容哈希 16 位（幂等重建校验） |
 | `claim_type` | str | trend_signal|job_requirement|expert_baseline |
 | `payload` | dict | 主张载荷（title/event_type/skill_mentions 等按 claim_type 变化） |
@@ -92,7 +92,7 @@
 | `preferred_skill_ids` | list[dict] | TODO 待人工补 |
 | `valid_from` | str | 生效日期（时间闸门消费） |
 | `evidence` | dict | TODO 待人工补 |
-| `changeset_vs_v1` | list[dict] | 对基线的变化（add/promote/demote；evrelate 的 contradicts 来源） |
+| `changeset_vs_v1` | list[dict] | 对基线变化（add/promote/demote；contradicts 来源） |
 | `review_status` | str | PUBLISHED（发布后不可变） |
 | `generated_by` | str | TODO 待人工补 |
 | `generated_at` | str | TODO 待人工补 |
@@ -111,3 +111,41 @@
 | `rows` | list[dict] | TODO 待人工补 |
 | `pkg_meta` | dict | TODO 待人工补 |
 | `params` | dict | TODO 待人工补 |
+
+## 证书目录 cert-catalog
+
+产物：`data/processed/certs/cert-catalog.jsonl` · 生成：`certget.py norm`
+
+| 字段 | 类型 | 含义 / 质量规则 |
+| --- | --- | --- |
+| `cert_id` | str | 证书唯一标识（osta-std-<编码>|onex-<id>|hw-<name>） |
+| `name` | str | TODO 待人工补 |
+| `type` | str | national_standard|onex_certificate|vendor_cert |
+| `issuer` | str | 颁发机构（匹配引擎证书证据的回链目标） |
+| `level` | str | 证书等级（初/中/高级；华为 hcia/hcip/hcie） |
+| `career_code` | str | osta 职业编码（标准库编码体系，与大典编码并存） |
+| `effective_from` | str | 颁发/发布日期（时间闸门锚点） |
+| `doc_number` | str | TODO 待人工补 |
+| `pdf` | bool | TODO 待人工补 |
+| `source` | str | osta|onex|huawei（三源公开 JSON 采集） |
+| `source_url` | str | osta|onex|huawei（三源公开 JSON 采集） |
+
+## 竞赛目录 race-catalog
+
+产物：`data/processed/races/race-catalog.jsonl` · 生成：`raceget.py norm`
+
+| 字段 | 类型 | 含义 / 质量规则 |
+| --- | --- | --- |
+| `race_id` | str | 赛事唯一标识（xfyun-<flag>|tianchi-<id>|df-<id>） |
+| `name` | str | TODO 待人工补 |
+| `type` | str | TODO 待人工补 |
+| `industry` | str | 平台行业分类（讯飞：大模型/CV/NLP/Skill 开发等，与能力域对齐） |
+| `organizer` | str | TODO 待人工补 |
+| `bonus` | str | TODO 待人工补 |
+| `team_count` | str | TODO 待人工补 |
+| `register_begin` | str | TODO 待人工补 |
+| `register_end` | str | 报名截止（进行中判定） |
+| `final_end` | str | TODO 待人工补 |
+| `description` | str | TODO 待人工补 |
+| `source` | str | xfyun|tianchi|datafountain |
+| `source_url` | str | xfyun|tianchi|datafountain |

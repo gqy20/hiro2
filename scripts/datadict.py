@@ -120,6 +120,51 @@ DATASETS = OrderedDict(
                 },
             ),
         ),
+        (
+            "证书目录 cert-catalog",
+            (
+                "data/processed/certs/cert-catalog.jsonl",
+                "certget.py norm",
+                {
+                    "cert_id": "证书唯一标识（osta-std-<编码>|onex-<id>|hw-<name>）",
+                    "type": "national_standard|onex_certificate|vendor_cert",
+                    "issuer": "颁发机构（匹配引擎证书证据的回链目标）",
+                    "effective_from": "颁发/发布日期（时间闸门锚点）",
+                    "level": "证书等级（初/中/高级；华为 hcia/hcip/hcie）",
+                    "career_code": "osta 职业编码（标准库编码体系，与大典编码并存）",
+                    "source": "osta|onex|huawei（三源公开 JSON 采集）",
+                },
+            ),
+        ),
+        (
+            "竞赛目录 race-catalog",
+            (
+                "data/processed/races/race-catalog.jsonl",
+                "raceget.py norm",
+                {
+                    "race_id": "赛事唯一标识（xfyun-<flag>|tianchi-<id>|df-<id>）",
+                    "industry": "平台行业分类（讯飞：大模型/CV/NLP/Skill 开发等，与能力域对齐）",
+                    "bonus/team_count": "奖金与参赛队数（热度信号）",
+                    "register_end": "报名截止（进行中判定）",
+                    "tags": "平台技能标签（天池/DF；零宽字符已清洗）",
+                    "source": "xfyun|tianchi|datafountain",
+                },
+            ),
+        ),
+        (
+            "标准工作要求 std-requirements",
+            (
+                "data/processed/certs/std-requirements/",
+                "certparse.py parse-all",
+                {
+                    "level": "等级分离（工程师类：初/中/高；技能类：五级-初级工等）",
+                    "func": "职业功能（如：人工智能共性技术应用）",
+                    "work_no/work": "工作内容编号与名称（如 1.1 算法选型及调优）",
+                    "skills": "专业能力要求条目（编号前缀对齐，官方鉴定粒度）",
+                    "knowledge": "相关知识要求条目（知识点树来源，零 LLM 确定性解析）",
+                },
+            ),
+        ),
     ]
 )
 

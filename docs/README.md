@@ -13,14 +13,16 @@
 5. [系统总览](overview.md)：完整数据处理、预测、岗位和匹配链路。
 6. [技术架构](architecture.md)：模块边界、数据流和存储。
 7. [数据与接口契约](contracts.md)：核心对象、状态、API 和事件。
-8. [时间情报系统](temporal-system.md)：RSS、历史回测、未来预测和岗位影响建议。
-9. [数据 Roadmap](roadmap-data.md)：数据清洗、岗位阶梯、技能和证据进度。
-10. [前端 Roadmap](roadmap-frontend.md)：页面、交互和联调进度。
-11. [后端 Roadmap](roadmap-backend.md)：数据、API、管道和部署进度。
-12. [评测与交付](evaluation.md)：指标、测试、部署和答辩证据。
-13. [前端设计参考](design-references.md)：外部平台调研、AI 交互模式和可迁移设计规则。
-14. [架构决策记录](adr/README.md)：不可逆技术和数据决策。
-15. [研究资料](research/README.md)：发榜方契合度、竞品和产品取舍。
+8. [数据资产总览](data-assets.md)：来源、处理流程、规模与质量的全面介绍。
+9. [数据字典](data-dictionary.md)：核心产物的字段级定义（脚本生成，幂等重建）。
+10. [时间情报系统](temporal-system.md)：RSS、历史回测、未来预测和岗位影响建议。
+11. [数据 Roadmap](roadmap-data.md)：数据清洗、岗位阶梯、技能和证据进度。
+12. [前端 Roadmap](roadmap-frontend.md)：页面、交互和联调进度。
+13. [后端 Roadmap](roadmap-backend.md)：数据、API、管道和部署进度。
+14. [评测与交付](evaluation.md)：指标、测试、部署和答辩证据。
+15. [前端设计参考](design-references.md)：外部平台调研、AI 交互模式和可迁移设计规则。
+16. [架构决策记录](adr/README.md)：不可逆技术和数据决策。
+17. [研究资料](research/README.md)：发榜方契合度、竞品和产品取舍。
 
 完整历史版本保存在 [`archive/`](archive/)。历史文档只用于查阅，不作为当前实现依据。
 

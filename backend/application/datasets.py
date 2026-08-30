@@ -25,6 +25,12 @@ class DatasetSource(BaseModel):
     notes: str = ""
 
 
+class DatasetStageCount(BaseModel):
+    stage: str
+    label: str
+    count: int
+
+
 class DatasetItem(BaseModel):
     id: str
     name: str
@@ -38,6 +44,8 @@ class DatasetItem(BaseModel):
     updated_at: str = ""
     quality: int = 0
     sources: list[DatasetSource] = Field(default_factory=list)
+    count_scope: str = ""
+    stage_counts: list[DatasetStageCount] = Field(default_factory=list)
 
 
 class DatasetOverview(BaseModel):
@@ -141,6 +149,19 @@ def _line_count(path: Path) -> int:
     return sum(1 for line in path.open(encoding="utf-8", errors="ignore") if line.strip())
 
 
+def _unique_jsonl_count(path: Path, key: str) -> int:
+    if not path.is_file():
+        return 0
+    values: set[str] = set()
+    for line in path.open(encoding="utf-8"):
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        if row.get(key):
+            values.add(str(row[key]))
+    return len(values)
+
+
 def _manifest_version(path: Path) -> str:
     if not path.is_file():
         return ""
@@ -209,12 +230,16 @@ def _item(
 def build_dataset_overview() -> DatasetOverview:
     processed = ROOT / "data" / "processed"
     evaluation = ROOT / "evaluation" / "samples"
+    jd_parsed = _line_count(processed / "jd-opencli" / "jd-parsed.jsonl")
+    jd_current = _line_count(processed / "jd-opencli" / "norm-jd.jsonl")
+    temporal_events = _line_count(processed / "wechat-mp" / "events.jsonl")
+    temporal_signals = _unique_jsonl_count(processed / "temporal" / "signals.jsonl", "signal_id")
     items = [
         _item(
             "jd",
             "招聘岗位",
             "业务数据",
-            _line_count(processed / "jd-opencli" / "norm-jd.jsonl"),
+            jd_parsed,
             _manifest_version(processed / "jd-opencli" / "manifest.json") or "jd-v3",
             ["JSONL", "CSV"],
             "企业招聘站、招聘平台",
@@ -224,7 +249,7 @@ def build_dataset_overview() -> DatasetOverview:
             "temporal",
             "时间情报",
             "事件数据",
-            _line_count(processed / "wechat-mp" / "events.jsonl"),
+            temporal_events,
             _manifest_version(processed / "wechat-mp" / "manifest.json") or "temporal-v2",
             ["JSONL"],
             "日报与 RSS 来源",
@@ -277,6 +302,25 @@ def build_dataset_overview() -> DatasetOverview:
             "已冻结",
         ),
     ]
+    jd_item = next(item for item in items if item.id == "jd")
+    jd_item.count_scope = "已解析入库岗位"
+    jd_item.stage_counts = [
+        DatasetStageCount(stage="parsed", label="已解析入库", count=jd_parsed),
+        DatasetStageCount(stage="current", label="当前标准化样本", count=jd_current),
+    ]
+    temporal_item = next(item for item in items if item.id == "temporal")
+    temporal_item.count_scope = "已抽取行业事件"
+    temporal_item.stage_counts = [
+        DatasetStageCount(stage="events", label="行业事件", count=temporal_events),
+        DatasetStageCount(stage="signals", label="趋势信号", count=temporal_signals),
+    ]
+    for item in items:
+        if not item.count_scope:
+            item.count_scope = "当前登记版本"
+        if not item.stage_counts:
+            item.stage_counts = [
+                DatasetStageCount(stage="current", label="当前登记版本", count=item.records)
+            ]
     resume_item = next((item for item in items if item.id == "resumes"), None)
     if resume_item:
         archive_rows = []
@@ -320,6 +364,15 @@ def build_dataset_overview_db(dsn: str) -> DatasetOverview:
             ORDER BY dataset_id, imported_at DESC
             """
         ).fetchall()
+        fact_counts = conn.execute(
+            """SELECT
+                 (SELECT count(*) FROM jd_records),
+                 (SELECT count(*) FROM report_events),
+                 (SELECT count(*) FROM trend_signals),
+                 (SELECT count(*) FROM evidence),
+                 (SELECT count(*) FROM resume_archive),
+                 (SELECT count(*) FROM review_tasks)"""
+        ).fetchone()
     labels = {
         "jd": ("招聘岗位", "业务数据", ["JSONL", "CSV"], "企业招聘站、招聘平台"),
         "temporal": ("时间情报", "事件数据", ["JSONL"], "日报与 RSS 来源"),
@@ -351,6 +404,44 @@ def build_dataset_overview_db(dsn: str) -> DatasetOverview:
             )
         )
     _attach_sources(datasets)
+    if fact_counts:
+        facts = {
+            "jd": int(fact_counts[0]),
+            "temporal": int(fact_counts[1]),
+            "signals": int(fact_counts[2]),
+            "evidence": int(fact_counts[3]),
+            "resumes": int(fact_counts[4]),
+            "evaluation": int(fact_counts[5]),
+        }
+        for item in datasets:
+            registered_count = item.records
+            if item.id in facts:
+                item.records = facts[item.id]
+                item.valid_records = (
+                    min(item.valid_records, item.records) if item.id == "resumes" else item.records
+                )
+            item.count_scope = {
+                "jd": "已解析入库岗位",
+                "temporal": "已抽取行业事件",
+                "evidence": "证据记录",
+                "resumes": "简历档案",
+                "evaluation": "冻结评测任务",
+            }.get(item.id, "当前登记版本")
+            item.stage_counts = [
+                DatasetStageCount(stage="facts", label=item.count_scope, count=item.records)
+            ]
+            if item.id == "jd" and registered_count != item.records:
+                item.stage_counts.append(
+                    DatasetStageCount(
+                        stage="registered",
+                        label="最近登记快照",
+                        count=registered_count,
+                    )
+                )
+            if item.id == "temporal":
+                item.stage_counts.append(
+                    DatasetStageCount(stage="signals", label="趋势信号", count=facts["signals"])
+                )
     return DatasetOverview(
         total_datasets=len(datasets),
         total_records=sum(item.records for item in datasets),

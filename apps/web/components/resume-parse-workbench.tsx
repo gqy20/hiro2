@@ -11,6 +11,7 @@ import { Button, Tag, Upload, message } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { apiFetch, getApiBaseUrl, isMockMode } from "@/lib/api/client";
+import type { ResumeArchiveItem, ResumeParseStats } from "@/lib/resume-archive";
 
 type ParsedSkill = {
   mention: string;
@@ -20,13 +21,7 @@ type ParsedSkill = {
   reason: string;
 };
 
-type ParseStats = {
-  totalSkills: number;
-  resolved: number;
-  byDict: number;
-  byLlm: number;
-  unresolved: number;
-};
+type ParseStats = ResumeParseStats;
 
 type ParseResponse = {
   rawText: string;
@@ -58,17 +53,6 @@ type ParseResponse = {
   };
   stats: ParseStats;
   resumeId?: string;
-};
-
-// 档案列表项（后端 list_archive 为 snake_case 轻字段）
-export type ResumeArchiveItem = {
-  resume_id: string;
-  filename: string;
-  size: number;
-  suffix: string;
-  uploaded_at: string;
-  source: string;
-  stats: ParseStats | null;
 };
 
 type ResumeItem = {
@@ -217,6 +201,7 @@ export function ResumeParseWorkbench({
             suffix: "",
             uploaded_at: new Date().toISOString().slice(0, 19),
             source: "upload",
+            sample_type: "uploaded",
             stats: data.stats,
           },
           ...current,

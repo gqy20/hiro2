@@ -5,6 +5,7 @@ from backend.application.datasets import (
     DatasetItem,
     _attach_sources,
     _source_registry,
+    build_dataset_overview,
 )
 
 
@@ -28,3 +29,12 @@ def test_attach_sources_by_dataset():
     assert [s.id for s in jd.sources] == DATASET_SOURCES["jd"]
     # 受控候选人数据无外部来源登记，留空交给前端展示派生说明
     assert resumes.sources == []
+
+
+def test_job_dataset_uses_full_parsed_count_and_exposes_stages():
+    overview = build_dataset_overview()
+    jobs = next(item for item in overview.datasets if item.id == "jd")
+    assert jobs.records > 500
+    assert jobs.count_scope == "已解析入库岗位"
+    assert {item.stage for item in jobs.stage_counts} == {"parsed", "current"}
+    assert next(item.count for item in jobs.stage_counts if item.stage == "current") == 70

@@ -280,6 +280,8 @@ def evidence_search(
     source_id: str = Query(default="", max_length=120),
     claim_type: str = Query(default="", max_length=40),
     review_status: str = Query(default="", max_length=40),
+    date_from: str = Query(default="", pattern=r"^$|^\d{4}-\d{2}-\d{2}$"),
+    date_to: str = Query(default="", pattern=r"^$|^\d{4}-\d{2}-\d{2}$"),
     query: str = Query(default="", alias="q", max_length=200),
     offset: int = Query(default=0, ge=0),
     limit: int = Query(default=50, ge=1, le=200),
@@ -288,10 +290,17 @@ def evidence_search(
         source_id=source_id,
         claim_type=claim_type,
         review_status=review_status,
+        date_from=date_from,
+        date_to=date_to,
         query=query,
         offset=offset,
         limit=limit,
     ).model_dump(by_alias=True)
+
+
+@app.get("/api/v1/evidence/facets")
+def evidence_facets() -> dict:
+    return svc.evidence_facets().model_dump(by_alias=True)
 
 
 @app.get("/api/v1/evidence/{evidence_id}")
@@ -676,8 +685,20 @@ def get_resume_archive(resume_id: str) -> dict:
         "resumeId": record["resume_id"],
         "filename": record["filename"],
         "size": record["size"],
+        "suffix": record.get("suffix", ""),
         "uploadedAt": record["uploaded_at"],
         "source": record["source"],
+        "sampleType": (
+            record.get("sample_type")
+            or (
+                "synthetic"
+                if str(record.get("filename", "")).lower().startswith("div_")
+                else "controlled"
+            )
+        ),
+        "parseMode": record.get("parse_mode", ""),
+        "parseError": record.get("parse_error", ""),
+        "profileSourceResumeId": record.get("profile_source_resume_id", ""),
         "rawText": record.get("raw_text", ""),
         "profile": record.get("profile") or {},
         "stats": record.get("stats"),

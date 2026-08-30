@@ -387,11 +387,12 @@ def _load_signals(limit: int | None = 2000, since_days: int | None = 90) -> list
         if since_days is not None
         else None
     )
-    rows = []
+    rows_by_id: dict[str, TrendSignalVM] = {}
     for line in p.open(encoding="utf-8"):
         s = json.loads(line)
         if cutoff is None or s.get("observed_at", "") >= cutoff:
-            rows.append(TrendSignalVM(**s))
+            rows_by_id[str(s["signal_id"])] = TrendSignalVM(**s)
+    rows = list(rows_by_id.values())
     rows.sort(key=lambda signal: signal.observed_at, reverse=True)
     return rows if limit is None else rows[:limit]
 
@@ -649,6 +650,14 @@ def build_tasks() -> TaskListVM:
     prelabels = load_prelabels()
     tasks: list[ReviewTaskVM] = []
     samples_dir = ROOT / "evaluation" / "samples"
+    position_names: dict[str, str] = {}
+    position_path = P / "capability-matrix" / "positions.jsonl"
+    if position_path.is_file():
+        for line in position_path.open(encoding="utf-8"):
+            if not line.strip():
+                continue
+            position = json.loads(line)
+            position_names[str(position.get("position_id", ""))] = str(position.get("name", ""))
     for csv_name, task_type in [
         ("role-mapping.csv", "role_level"),
         ("domain-judgment.csv", "evidence_audit"),
@@ -663,10 +672,31 @@ def build_tasks() -> TaskListVM:
             task_id = f"task-{task_type}-{i:03d}"
             ann = annotations.get(task_id)
             resolved = bool(r.get(done_col, "").strip()) or ann is not None
-            output = {
-                "title": r.get("职位名", r.get("标题", "")),
-                "verdict_col": done_col,
-            }
+            title = r.get("职位名", r.get("标题", ""))
+            if task_type == "role_level":
+                predicted_id = r.get("系统岗位id", "")
+                output = {
+                    "title": title,
+                    "question": "系统岗位映射是否准确？",
+                    "predicted_position": position_names.get(predicted_id, predicted_id),
+                    "mapping_method": r.get("method", ""),
+                }
+            elif task_type == "evidence_audit":
+                output = {
+                    "title": title,
+                    "question": "系统的岗位领域判断是否准确？",
+                    "domain_judgment": r.get("系统判定", ""),
+                    "judgment_reason": r.get("判定理由", ""),
+                }
+            else:
+                output = {
+                    "title": title,
+                    "question": "事件类型、事实等级和技能提及是否准确？",
+                    "event_date": r.get("日期", ""),
+                    "event_type": r.get("事件类型", ""),
+                    "fact_grade": r.get("事实分级", ""),
+                    "skill_mentions": r.get("技能提及", ""),
+                }
             if ann:
                 output["last_decision"] = ann["decision"]
                 output["last_rationale"] = ann.get("rationale", "")

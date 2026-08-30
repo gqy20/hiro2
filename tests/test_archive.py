@@ -28,8 +28,12 @@ def test_save_list_get_roundtrip(isolated: None) -> None:
         "suffix",
         "uploaded_at",
         "source",
+        "sample_type",
+        "parse_mode",
+        "parse_error",
         "stats",
     }
+    assert rows[0]["sample_type"] == "uploaded"
     detail = archive.get_archive(record["resume_id"])
     assert detail is not None
     assert detail["profile"] == {"skills": []}
@@ -43,6 +47,7 @@ def test_import_rejects_duplicate_filename(isolated: None, tmp_path: Path) -> No
     first = archive.import_file(src)
     assert first["source"] == "imported"
     assert first["stats"] is None
+    assert archive.list_archive()[0]["sample_type"] == "controlled"
 
     with pytest.raises(ValueError, match="已入档"):
         archive.import_file(src)

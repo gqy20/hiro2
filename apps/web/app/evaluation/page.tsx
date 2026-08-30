@@ -10,7 +10,7 @@ import { loadTemporalFixture } from "@/lib/temporal-fixture";
 import type { EvaluationOverview } from "@/lib/evaluation";
 import type { TemporalDataset } from "@/lib/temporal";
 
-export const metadata = { title: "评测与质量" };
+export const metadata = { title: "评测质量" };
 
 export const dynamic = "force-dynamic";
 

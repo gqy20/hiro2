@@ -55,6 +55,19 @@ class EvidenceSearchResultVM(_VM):
     limit: int
 
 
+class EvidenceFacetItemVM(_VM):
+    value: str
+    count: int
+
+
+class EvidenceFacetsVM(_VM):
+    sources: list[EvidenceFacetItemVM]
+    claim_types: list[EvidenceFacetItemVM]
+    review_statuses: list[EvidenceFacetItemVM]
+    earliest_published_at: str = ""
+    latest_published_at: str = ""
+
+
 class ChangeItemVM(_VM):
     id: str
     kind: ChangeKind
@@ -172,6 +185,8 @@ class ApplicationService:
         source_id: str = "",
         claim_type: str = "",
         review_status: str = "",
+        date_from: str = "",
+        date_to: str = "",
         query: str = "",
         offset: int = 0,
         limit: int = 50,
@@ -185,6 +200,11 @@ class ApplicationService:
                 continue
             status = str(evidence.get("review_status") or "PENDING")
             if review_status and status != review_status:
+                continue
+            published_date = str(evidence.get("published_at") or "")[:10]
+            if date_from and (not published_date or published_date < date_from):
+                continue
+            if date_to and (not published_date or published_date > date_to):
                 continue
             if needle:
                 searchable = " ".join(
@@ -220,6 +240,38 @@ class ApplicationService:
             total=len(matches),
             offset=offset,
             limit=limit,
+        )
+
+    def evidence_facets(self) -> EvidenceFacetsVM:
+        source_counts: dict[str, int] = {}
+        claim_counts: dict[str, int] = {}
+        status_counts: dict[str, int] = {}
+        published_dates: list[str] = []
+        for evidence in self.repo.evidence():
+            source = str(evidence.get("source_id") or "")
+            claim = str(evidence.get("claim_type") or "")
+            status = str(evidence.get("review_status") or "PENDING")
+            if source:
+                source_counts[source] = source_counts.get(source, 0) + 1
+            if claim:
+                claim_counts[claim] = claim_counts.get(claim, 0) + 1
+            status_counts[status] = status_counts.get(status, 0) + 1
+            published = str(evidence.get("published_at") or "")[:10]
+            if published:
+                published_dates.append(published)
+
+        def facets(counts: dict[str, int]) -> list[EvidenceFacetItemVM]:
+            return [
+                EvidenceFacetItemVM(value=value, count=count)
+                for value, count in sorted(counts.items(), key=lambda item: (-item[1], item[0]))
+            ]
+
+        return EvidenceFacetsVM(
+            sources=facets(source_counts),
+            claim_types=facets(claim_counts),
+            review_statuses=facets(status_counts),
+            earliest_published_at=min(published_dates, default=""),
+            latest_published_at=max(published_dates, default=""),
         )
 
     # ---------- 岗位更新（主案例 2） ----------

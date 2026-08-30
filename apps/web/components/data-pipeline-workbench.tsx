@@ -1,13 +1,20 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { PipelineRun } from "@/lib/pipeline-runs";
+import { Descriptions, Drawer, Empty, Table } from "antd";
+import { apiFetch } from "@/lib/api/client";
+import type { PipelineRun, PipelineRunDetail } from "@/lib/pipeline-runs";
 import { formatTime } from "@/lib/time";
 
 // RUNNING 超过该时长没有任何事件，视为僵死（worker 未写终态）
 const STALE_MS = 30 * 60 * 1000;
 
-type Props = Readonly<{ runs: PipelineRun[]; total: number }>;
+type Props = Readonly<{
+  runs: PipelineRun[];
+  total: number;
+  initialDetail: PipelineRunDetail | null;
+  mockMode: boolean;
+}>;
 
 type SortKey = "run_id" | "component" | "status" | "duration_ms" | "started_at";
 
@@ -60,11 +67,32 @@ function statusText(run: PipelineRun): string {
   return run.status;
 }
 
-export function DataPipelineWorkbench({ runs, total }: Props) {
+export function DataPipelineWorkbench({
+  runs,
+  total,
+  initialDetail,
+  mockMode,
+}: Props) {
   const [stage, setStage] = useState<string>("all");
   const [status, setStatus] = useState<string>("all");
   const [sortKey, setSortKey] = useState<SortKey>("started_at");
   const [sortDesc, setSortDesc] = useState(true);
+  const [detail, setDetail] = useState<PipelineRunDetail | null>(initialDetail);
+  const [detailLoading, setDetailLoading] = useState(false);
+
+  async function openRun(run: PipelineRun) {
+    if (mockMode) return;
+    setDetailLoading(true);
+    try {
+      setDetail(
+        await apiFetch<PipelineRunDetail>(
+          `/pipeline-runs/${encodeURIComponent(run.run_id)}`,
+        ),
+      );
+    } finally {
+      setDetailLoading(false);
+    }
+  }
 
   const filtered = useMemo(() => {
     const rows = runs.filter((r) => {
@@ -192,7 +220,17 @@ export function DataPipelineWorkbench({ runs, total }: Props) {
               </tr>
             ) : (
               filtered.map((r) => (
-                <tr key={r.run_id}>
+                <tr
+                  key={r.run_id}
+                  onClick={() => void openRun(r)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      void openRun(r);
+                    }
+                  }}
+                  tabIndex={0}
+                >
                   <td className="data-pipeline-runid">{r.run_id}</td>
                   <td>{r.component}</td>
                   <td>
@@ -211,6 +249,95 @@ export function DataPipelineWorkbench({ runs, total }: Props) {
           </tbody>
         </table>
       </div>
+      <Drawer
+        loading={detailLoading}
+        onClose={() => setDetail(null)}
+        open={detail !== null || detailLoading}
+        size="large"
+        title={detail?.run.run_id ?? "运行详情"}
+      >
+        {detail ? <RunDetail detail={detail} /> : null}
+      </Drawer>
     </section>
+  );
+}
+
+function RunDetail({ detail }: { detail: PipelineRunDetail }) {
+  return (
+    <div className="data-run-detail">
+      <Descriptions bordered column={2} size="small">
+        <Descriptions.Item label="组件">
+          {detail.run.component}
+        </Descriptions.Item>
+        <Descriptions.Item label="阶段">{detail.run.stage}</Descriptions.Item>
+        <Descriptions.Item label="状态">{detail.run.status}</Descriptions.Item>
+        <Descriptions.Item label="耗时">
+          {formatDuration(detail.run.duration_ms)}
+        </Descriptions.Item>
+        <Descriptions.Item label="开始">
+          {formatTime(detail.run.started_at)}
+        </Descriptions.Item>
+        <Descriptions.Item label="结束">
+          {detail.run.finished_at ? formatTime(detail.run.finished_at) : "—"}
+        </Descriptions.Item>
+      </Descriptions>
+      <section>
+        <h3>运行配置</h3>
+        <KeyValueTable value={detail.config} />
+      </section>
+      <section>
+        <h3>指标与计数</h3>
+        <KeyValueTable value={detail.metrics} />
+      </section>
+      <section>
+        <h3>{`事件时间线 · ${detail.event_count}`}</h3>
+        <Table<Record<string, unknown>>
+          columns={[
+            { title: "时间", dataIndex: "ts", width: 180 },
+            { title: "阶段", dataIndex: "stage", width: 120 },
+            { title: "事件", dataIndex: "event", width: 120 },
+            { title: "状态", dataIndex: "status", width: 120 },
+            {
+              title: "摘要",
+              render: (_, item) =>
+                String(item.error_message ?? item.component ?? "—"),
+            },
+          ]}
+          dataSource={detail.events}
+          pagination={false}
+          rowKey={(_, index) => String(index)}
+          scroll={{ x: 760 }}
+          size="small"
+        />
+      </section>
+      <section>
+        <h3>产物清单</h3>
+        <ul>
+          {detail.artifacts.map((artifact) => (
+            <li key={artifact.name}>
+              <code>{artifact.name}</code>
+              <span>{`${artifact.size.toLocaleString("zh-CN")} bytes`}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  );
+}
+
+function KeyValueTable({ value }: { value: Record<string, unknown> }) {
+  const entries = Object.entries(value);
+  if (!entries.length) return <Empty description="未记录" />;
+  return (
+    <dl className="data-run-key-values">
+      {entries.map(([key, item]) => (
+        <div key={key}>
+          <dt>{key}</dt>
+          <dd>
+            {typeof item === "object" ? JSON.stringify(item) : String(item)}
+          </dd>
+        </div>
+      ))}
+    </dl>
   );
 }

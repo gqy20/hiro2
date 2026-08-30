@@ -19,7 +19,7 @@ export default function Error({
   return (
     <Result
       status="warning"
-      title="时间情报加载失败"
+      title="趋势洞察加载失败"
       subTitle={
         error.digest
           ? `错误编号：${error.digest}，可稍后重试或联系管理员。`

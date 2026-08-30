@@ -76,11 +76,13 @@ async function loadSignals(completeHistory = false): Promise<TrendSignal[]> {
       path.join(signalsDir, "signals.jsonl"),
       "utf8",
     );
-    const signals = content
+    const rows = content
       .split("\n")
       .filter((line) => line.trim().length > 0)
-      .map((line) => JSON.parse(line) as TrendSignal)
-      .sort((a, b) => b.observed_at.localeCompare(a.observed_at));
+      .map((line) => JSON.parse(line) as TrendSignal);
+    const signals = [
+      ...new Map(rows.map((signal) => [signal.signal_id, signal])).values(),
+    ].sort((a, b) => b.observed_at.localeCompare(a.observed_at));
     if (completeHistory) return signals;
     const cutoff = Date.now() - 90 * 24 * 3600 * 1000;
     return signals

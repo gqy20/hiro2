@@ -63,7 +63,9 @@ class TimelineRowVM(_VM):
 
 class TimelineVM(_VM):
     rows: list[TimelineRowVM]
-    note: str = "各层 onset = 首次达阈值月（论文 3 篇/包份额/日报 3 次/JD 2 次）"
+    note: str = (
+        "各层起始月表示首次达到规模阈值的月份（论文 3 篇、生态包份额达标、日报 3 次、JD 2 次）"
+    )
 
 
 def _cap_names() -> dict[str, str]:

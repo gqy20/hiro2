@@ -24,12 +24,37 @@ ARCHIVE = Path(
     )
 )
 
-_LIST_FIELDS = ("resume_id", "filename", "size", "suffix", "uploaded_at", "source", "stats")
+_LIST_FIELDS = (
+    "resume_id",
+    "filename",
+    "size",
+    "suffix",
+    "uploaded_at",
+    "source",
+    "sample_type",
+    "parse_mode",
+    "parse_error",
+    "stats",
+)
 _WRITE_LOCK = Lock()
 
 
 def _now() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%S")
+
+
+def _sample_type(record: dict) -> str:
+    if record.get("sample_type"):
+        return str(record["sample_type"])
+    filename = str(record.get("filename", "")).lower()
+    source = str(record.get("source", ""))
+    if filename.startswith("div_") or source in {"synthetic", "generated"}:
+        return "synthetic"
+    if source == "upload":
+        return "uploaded"
+    if source in {"anonymized", "authorized"}:
+        return "anonymized"
+    return "controlled"
 
 
 def _append(record: dict) -> None:
@@ -53,6 +78,7 @@ def save_to_archive(content: bytes, filename: str, parse_result: dict) -> dict:
         "suffix": suffix,
         "uploaded_at": _now(),
         "source": "upload",
+        "sample_type": "uploaded",
         "stats": parse_result.get("stats", {}),
         "profile": parse_result.get("profile", {}),
         "raw_text": parse_result.get("rawText", ""),
@@ -78,6 +104,7 @@ def import_file(src: Path, source_label: str = "imported") -> dict:
         "suffix": src.suffix.lower(),
         "uploaded_at": _now(),
         "source": source_label,
+        "sample_type": "synthetic" if src.name.lower().startswith("div_") else "controlled",
         "stats": None,
         "profile": None,
         "raw_text": "",
@@ -101,7 +128,10 @@ def list_archive() -> list[dict]:
     latest: dict[str, dict] = {}
     for row in _load_all():
         latest[row["resume_id"]] = row
-    rows = [{k: r.get(k) for k in _LIST_FIELDS} for r in latest.values()]
+    rows = [
+        {**{k: r.get(k) for k in _LIST_FIELDS}, "sample_type": _sample_type(r)}
+        for r in latest.values()
+    ]
     rows.reverse()
     return rows
 

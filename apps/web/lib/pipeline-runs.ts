@@ -17,3 +17,12 @@ export type PipelineRunList = {
   runs: PipelineRun[];
   total: number;
 };
+
+export type PipelineRunDetail = {
+  run: PipelineRun;
+  config: Record<string, unknown>;
+  metrics: Record<string, unknown>;
+  events: Array<Record<string, unknown>>;
+  event_count: number;
+  artifacts: Array<{ name: string; size: number }>;
+};

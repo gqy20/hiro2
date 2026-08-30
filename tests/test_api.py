@@ -34,6 +34,18 @@ def test_quality_overview_contract() -> None:
     assert "error_distribution" in body
 
 
+def test_review_tasks_expose_human_readable_decision_context() -> None:
+    body = TestClient(app).get("/api/v1/tasks/my").json()
+    role_task = next(task for task in body["tasks"] if task["task_type"] == "role_level")
+    assert role_task["system_output"]["question"] == "系统岗位映射是否准确？"
+    assert role_task["system_output"]["predicted_position"]
+    assert role_task["system_output"]["mapping_method"]
+
+    domain_task = next(task for task in body["tasks"] if task["task_type"] == "evidence_audit")
+    assert "domain_judgment" in domain_task["system_output"]
+    assert domain_task["system_output"]["judgment_reason"]
+
+
 def test_dashboard_overview_contract() -> None:
     response = TestClient(app).get("/api/v1/dashboard/overview")
     assert response.status_code == 200
@@ -45,7 +57,21 @@ def test_dashboard_overview_contract() -> None:
 def test_evaluation_overview_contract() -> None:
     response = TestClient(app).get("/api/v1/evaluation/overview")
     assert response.status_code == 200
-    assert response.json()["datasets"]
+    body = response.json()
+    assert body["datasets"]
+    assert body["summary"] == {
+        "total": 136,
+        "hits": 50,
+        "errors": 86,
+        "accuracy": 0.368,
+        "baselineAccuracy": 0.449,
+    }
+    assert len(body["errors"]) == 6
+    assert body["errors"][0]["label"] == "预测上升，实际下降"
+    assert body["errors"][0]["categoryLabel"] == "方向判断相反"
+    assert body["errors"][0]["count"] == 25
+    assert len(body["cases"]) == 136
+    assert body["cases"][0]["skillLabel"] != body["cases"][0]["skillId"]
 
 
 def test_dataset_overview_contract() -> None:
@@ -124,12 +150,18 @@ def test_temporal_signals_returns_complete_history(monkeypatch) -> None:
     assert response.status_code == 200
     body = response.json()
     assert body["total"] == len(body["signals"])
+    assert body["total"] == len({signal["signal_id"] for signal in body["signals"]})
     assert body["total"] > 500
     assert body["earliest_observed_at"] < body["latest_observed_at"]
 
 
 def test_evidence_search_and_pipeline_run_detail() -> None:
     client = TestClient(app)
+    facets = client.get("/api/v1/evidence/facets")
+    assert facets.status_code == 200
+    assert any(item["value"] == "wechat-mp" for item in facets.json()["sources"])
+    assert facets.json()["earliestPublishedAt"] < facets.json()["latestPublishedAt"]
+
     evidence = client.get("/api/v1/evidence?source_id=wechat-mp&limit=2")
     assert evidence.status_code == 200
     evidence_body = evidence.json()
@@ -137,6 +169,15 @@ def test_evidence_search_and_pipeline_run_detail() -> None:
     assert len(evidence_body["items"]) == 2
     assert all(item["source"] == "wechat-mp" for item in evidence_body["items"])
     assert all("claimType" in item for item in evidence_body["items"])
+
+    dated = client.get(
+        "/api/v1/evidence?source_id=wechat-mp&date_from=2026-08-01&date_to=2026-08-31&limit=20"
+    )
+    assert dated.status_code == 200
+    assert dated.json()["items"]
+    assert all(
+        "2026-08-01" <= item["publishedAt"][:10] <= "2026-08-31" for item in dated.json()["items"]
+    )
 
     runs = client.get("/api/v1/pipeline-runs?limit=1&since_days=3650").json()["runs"]
     assert runs

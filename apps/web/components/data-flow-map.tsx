@@ -126,6 +126,8 @@ export function DataFlowMap({ sources, stageRuns }: Props) {
           {sourceNodes.map((s, i) => {
             const y = SRC_Y0 + SRC_GAP * i;
             return (
+              // SVG 内必须使用原生链接，Next Link 不能替代 SVG <a>。
+              // eslint-disable-next-line @next/next/no-html-link-for-pages
               <a
                 aria-expanded={selected === s.id}
                 className={
@@ -133,7 +135,7 @@ export function DataFlowMap({ sources, stageRuns }: Props) {
                     ? "fm-node data-flow-source is-active"
                     : "fm-node data-flow-source"
                 }
-                href="/data/sources"
+                href="/data/assets"
                 key={s.id}
                 onClick={(e) => {
                   e.preventDefault();

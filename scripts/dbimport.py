@@ -160,7 +160,7 @@ def cmd_run(dsn: str) -> dict:
                 (
                     "jd",
                     _manifest_version(P / "jd-opencli" / "manifest.json") or "jd-v3",
-                    P / "jd-opencli" / "norm-jd.jsonl",
+                    P / "jd-opencli" / "jd-parsed.jsonl",
                     P / "jd-opencli" / "manifest.json",
                 ),
                 (
@@ -453,7 +453,12 @@ def cmd_run(dsn: str) -> dict:
             counts["match_reports"] = n_reports
 
             # ---- temporal：信号 / 回测 / 预测 / 岗位影响建议 ----
-            signals = _load_jsonl(P / "temporal" / "signals.jsonl")
+            signals = list(
+                {
+                    str(signal["signal_id"]): signal
+                    for signal in _load_jsonl(P / "temporal" / "signals.jsonl")
+                }.values()
+            )
             for signal in signals:
                 cur.execute(
                     """
@@ -703,12 +708,19 @@ def cmd_run(dsn: str) -> dict:
             n = 0
             res_path = ROOT / "data/processed/candidates/resume-archive.jsonl"
             if res_path.is_file():
+                latest_resumes: dict[str, dict] = {}
                 for line in res_path.open(encoding="utf-8"):
                     r = json.loads(line)
+                    if r.get("resume_id"):
+                        latest_resumes[str(r["resume_id"])] = r
+                for r in latest_resumes.values():
                     cur.execute(
                         """INSERT INTO resume_archive (resume_id, filename, size, uploaded_at, source, stats, profile)
                            VALUES (%s,%s,%s,%s,%s,%s,%s)
-                           ON CONFLICT (resume_id) DO NOTHING""",
+                           ON CONFLICT (resume_id) DO UPDATE SET
+                             filename=EXCLUDED.filename, size=EXCLUDED.size,
+                             source=EXCLUDED.source, stats=EXCLUDED.stats,
+                             profile=EXCLUDED.profile""",
                         (
                             r.get("resume_id", ""),
                             r.get("filename", ""),

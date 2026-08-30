@@ -10,7 +10,7 @@
 
 .evaluation-layout {
   display: grid;
-  grid-template-columns: 240px minmax(0, 1fr) 320px;
+  grid-template-columns: 240px minmax(0, 1fr);
   gap: 16px;
   flex: 1;
   min-height: 0;
@@ -106,36 +106,221 @@
 
 .evaluation-error-list ul {
   list-style: none;
-  margin: 12px 0 0;
+  margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
 }
 
-.evaluation-error-item {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 10px 0;
-  border-top: 1px solid var(--line);
+.evaluation-error-summary {
+  margin: 6px 0 20px;
+  color: var(--muted);
+  font-size: 14px;
 }
 
-.evaluation-error-item:first-child {
+.evaluation-error-content {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.8fr) minmax(420px, 1.2fr);
+  gap: 28px;
+}
+
+.evaluation-error-content h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.evaluation-matrix-help {
+  margin: 4px 0 12px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.evaluation-matrix-wrap {
+  overflow-x: auto;
+}
+
+.evaluation-matrix {
+  width: 100%;
+  min-width: 360px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 14px;
+}
+
+.evaluation-matrix th,
+.evaluation-matrix td {
+  height: 48px;
+  border-bottom: 1px solid var(--line-soft);
+  text-align: center;
+}
+
+.evaluation-matrix th {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.evaluation-matrix th:first-child {
+  width: 96px;
+  text-align: left;
+}
+
+.evaluation-matrix td.is-hit {
+  color: var(--green);
+  background: color-mix(in srgb, var(--green) 7%, transparent);
+  font-weight: 650;
+}
+
+.evaluation-matrix td.is-error button {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--red);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 650;
+}
+
+.evaluation-matrix td.is-error button:hover,
+.evaluation-matrix td.is-error button:focus-visible {
+  background: color-mix(in srgb, var(--red) 9%, transparent);
+  outline: none;
+}
+
+.evaluation-review-list > h3 {
+  margin-bottom: 8px;
+}
+
+.evaluation-review-list li {
+  border-top: 1px solid var(--line-soft);
+}
+
+.evaluation-review-list li:first-child {
   border-top: 0;
 }
 
-.evaluation-error-item strong {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 14px;
-  margin-bottom: 2px;
+.evaluation-review-list button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 16px;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 2px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
 }
 
-.evaluation-error-item p {
-  margin: 0;
+.evaluation-review-list button:hover,
+.evaluation-review-list button:focus-visible {
+  color: var(--blue);
+  outline: none;
+}
+
+.evaluation-review-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.evaluation-review-copy strong {
+  overflow: hidden;
   font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.evaluation-review-copy > span {
   color: var(--muted);
+  font-size: 13px;
+}
+
+.evaluation-case-drawer {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.evaluation-case-intro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.evaluation-case-intro > span:last-child {
+  color: var(--muted);
+}
+
+.evaluation-case-list article {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.evaluation-case-list article:first-child {
+  padding-top: 0;
+}
+
+.evaluation-case-list header,
+.evaluation-case-direction,
+.evaluation-case-list dl {
+  display: flex;
+  align-items: center;
+}
+
+.evaluation-case-list header {
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.evaluation-case-list time {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.evaluation-case-direction {
+  gap: 8px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.evaluation-case-direction span {
+  color: var(--muted);
+}
+
+.evaluation-case-list dl {
+  gap: 28px;
+  margin: 0;
+}
+
+.evaluation-case-list dl div {
+  display: flex;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.evaluation-case-list dt {
+  color: var(--muted);
+}
+
+.evaluation-case-list dd {
+  margin: 0;
+  font-family: var(--font-mono);
+}
+
+.evaluation-case-list details {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.evaluation-case-list details p {
+  margin: 6px 0 0;
+  font-family: var(--font-mono);
 }
 
 .evaluation-pending h2 {
@@ -164,11 +349,8 @@
 }
 
 @media (max-width: 1180px) {
-  .evaluation-layout {
-    grid-template-columns: 240px minmax(0, 1fr);
-  }
-  .evaluation-pending {
-    grid-column: 1 / -1;
+  .evaluation-error-content {
+    grid-template-columns: 1fr;
   }
 }
 

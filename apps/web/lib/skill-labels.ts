@@ -39,3 +39,7 @@ export function skillDisplay(id: string): string {
   const label = skillLabel(id);
   return label === id ? id : `${label}（${id}）`;
 }
+
+export function allSkillOptions(): Array<{ id: string; label: string }> {
+  return Object.entries(SKILL_LABELS).map(([id, label]) => ({ id, label }));
+}

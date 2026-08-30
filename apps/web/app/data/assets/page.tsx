@@ -1,10 +1,9 @@
 import { AppShell } from "@/components/app-shell";
-import { DataSourcesWorkbench } from "@/components/data-sources-workbench";
+import { DataAssetsWorkbench } from "@/components/data-assets-workbench";
 import { apiFetch, isMockMode } from "@/lib/api/client";
 import type { DatasetOverview } from "@/lib/datasets";
 
-export const metadata = { title: "来源" };
-
+export const metadata = { title: "数据资产" };
 export const dynamic = "force-dynamic";
 
 const EMPTY: DatasetOverview = {
@@ -15,14 +14,13 @@ const EMPTY: DatasetOverview = {
   datasets: [],
 };
 
-export default async function DataSourcesPage() {
-  const overview: DatasetOverview = isMockMode()
+export default async function DataAssetsPage() {
+  const overview = isMockMode()
     ? EMPTY
     : ((await apiFetch<DatasetOverview>("/datasets/overview")) ?? EMPTY);
-
   return (
     <AppShell>
-      <DataSourcesWorkbench overview={overview} />
+      <DataAssetsWorkbench mockMode={isMockMode()} overview={overview} />
     </AppShell>
   );
 }

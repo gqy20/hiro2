@@ -13,7 +13,6 @@ import {
   ClipboardText,
   Database,
   FlowArrow,
-  Funnel,
   GitDiff,
   Graph,
   MagnifyingGlass,
@@ -41,11 +40,10 @@ const careerNavigation = [
 
 const dataNavigation = [
   { href: "/data", label: "总览", icon: Database },
-  { href: "/data/sources", label: "来源", icon: FlowArrow },
-  { href: "/data/pipeline", label: "流水线", icon: Funnel },
-  { href: "/tasks", label: "审核任务", icon: ClipboardText },
-  { href: "/evaluation", label: "评测与质量", icon: ShieldCheck },
-  { href: "/temporal", label: "时间情报", icon: ChartScatter },
+  { href: "/data/assets", label: "数据资产", icon: FlowArrow },
+  { href: "/tasks", label: "证据审核", icon: ClipboardText },
+  { href: "/evaluation", label: "评测质量", icon: ShieldCheck },
+  { href: "/temporal", label: "趋势洞察", icon: ChartScatter },
 ];
 
 type Workspace = "recruiting" | "career" | "data";
@@ -98,7 +96,10 @@ export function AppShell({
       : recruitingNavigation;
 
   function isActive(href: string): boolean {
-    // 精确匹配：避免 /data 在 /data/sources 等子页下误亮（总览不再一直亮）
+    // 精确匹配：避免 /data 在 /data/assets 等子页下误亮。
+    if (href === "/data/assets") {
+      return pathname === href || pathname.startsWith(`${href}/`);
+    }
     return pathname === href;
   }
   const contentRef = useRef<HTMLElement>(null);

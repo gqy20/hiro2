@@ -31,21 +31,19 @@ const GROUPS: Array<{ name: string; routes: RouteTitle[] }> = [
     name: "数据",
     routes: [
       { path: "/data", title: "总览" },
-      { path: "/data/sources", title: "来源" },
-      { path: "/data/pipeline", title: "流水线" },
-      { path: "/tasks", title: "审核任务" },
-      { path: "/evaluation", title: "评测与质量" },
+      { path: "/data/assets", title: "数据资产" },
+      {
+        path: "/data/assets/resumes?tab=records",
+        title: "数据集档案",
+        heading: "简历档案",
+      },
+      { path: "/tasks", title: "证据审核" },
+      { path: "/evaluation", title: "评测质量" },
     ],
   },
   {
-    name: "时间情报",
-    routes: [
-      { path: "/temporal/signals", title: "市场信号" },
-      { path: "/temporal/timeline", title: "技术传导" },
-      { path: "/temporal/forecasts", title: "趋势预测" },
-      { path: "/temporal/suggestions", title: "岗位影响" },
-      { path: "/temporal/retrospect", title: "预测复盘" },
-    ],
+    name: "趋势洞察",
+    routes: [{ path: "/temporal", title: "趋势洞察" }],
   },
 ];
 

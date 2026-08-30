@@ -234,10 +234,9 @@ def learning_path(report: MatchReport, as_of: date | None = None) -> LearningPat
                 learn = f"学习 {g.name} 的核心技能点：{'、'.join(skill_points)}"
             else:
                 learn = f"学习 {g.name} 领域核心知识点与主流方法"
-        # 预测信号（时间情报域 -> 学练段）：把预测上升/新涌现提示拼进学段，并存结构化 trend。
+        # 预测信号（时间情报域 -> 学练段）：只存结构化 trend（由诊断实时读取快照），
+        # 不拼进学段文案——避免匹配时固化的前瞻过时，与实时徽标矛盾。
         trend = xlzsz.prediction_for_skill(g.skill_id)
-        if trend and trend.get("note"):
-            learn = f"{learn}【前瞻：{trend['note']}】"
 
         steps.append(
             LearnStep(

@@ -326,16 +326,13 @@ def test_prediction_for_skill_flat_no_note():
 
 
 def test_learning_path_attaches_trend(published):
-    """学习路径每个缺口携带预测信号；预测上升的能力域学段含前瞻文案。"""
+    """学习路径每个缺口携带结构化预测信号（趋势实时读快照，不固化进学段文案）。"""
     from datetime import date
 
     p = _profile([EffectiveSkill(mention="Python", skill_id="cap_07", proficiency="高级")])
     report = engine.match(p, "test-v1")
     path = engine.learning_path(report, as_of=date(2026, 8, 31))
-    # 至少一个缺口的学段携带前瞻提示（快照有 up/emerging 能力域）
-    notes = [s.learn for s in path.steps if "前瞻" in s.learn]
-    assert notes, "预测上升/新涌现的能力域学段应有前瞻提示"
-    # 携带前瞻提示的 step 必有结构化 trend 且 note 非空
+    # 快照有 up 能力域，至少一个缺口的 trend 带前瞻 note；学段文案不固化前瞻（避免过时）
+    assert any(s.trend and s.trend.get("note") for s in path.steps)
     for s in path.steps:
-        if "前瞻" in s.learn:
-            assert s.trend and s.trend["note"]
+        assert "前瞻" not in s.learn

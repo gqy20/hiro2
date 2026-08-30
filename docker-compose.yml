@@ -49,6 +49,9 @@ services:
       HIRO2_SNAPSHOT_ENABLED: "true"
       # Outbox worker：岗位发布事件自动投影 Neo4j（30s 轮询，失败退避重试）
       HIRO2_OUTBOX_WORKER: "true"
+      # 实时预测定时刷新：启动 60s 后首轮，此后每 24h 重跑（刷新预测快照，趋势保持新鲜）
+      HIRO2_FORECAST_REFRESH_ENABLED: "true"
+      HIRO2_FORECAST_REFRESH_INTERVAL_HOURS: "24"
     ports:
       - "8000:8000"
     depends_on:

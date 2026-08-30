@@ -5,6 +5,11 @@
 ## [Unreleased]
 
 ### Added
+- 实时预测定时刷新（项目启动后自动周期刷新，默认每天）：
+  - 架构修正：趋势从"匹配时烤死进 path.json"改为"诊断时实时读预测快照"——否则定时刷新是白刷。实测篡改快照后诊断不重新匹配即反映新趋势。
+  - 新增 forecast_refresh 模块（对齐 snapshot_loop 模式）：启动 60s 后首轮，此后按 HIRO2_FORECAST_REFRESH_INTERVAL_HOURS（默认 24h 每天）重跑 livcast+predsnap；开关 HIRO2_FORECAST_REFRESH_ENABLED（本地默认关，容器置 true）。确定性计算无 LLM 成本，日刷无负担。
+  - 学段文案不再烤入前瞻（避免与实时徽标矛盾），前瞻信号只走实时趋势字段。
+  - 测试：后端 114 + e2e 25。
 - 预测系统挂钩学练段（路线 A + B）：打通"检测新事件 -> 预测新方向 -> 反馈用户"闭环。
   - **路线 A**：predsnap.py 合并 ForecastEngine 预测 + leadtime 建议为文件快照；学练段每缺口挂 trend，预测上升/新涌现拼进学段文案；前端学习路径页加"前瞻"徽标（上升=绿 / 新涌现=橙）。
   - **路线 B**：livcast.py 实时预测（最新事件 + 全词典 + as_of=数据末日，无时间闸门），补齐回测快照的滞后；实测新事件改变预测：cap_01/04/06（LLM/Agent/RAG）backtest 里 flat -> live 里 up(0.9)；cap_03（微调）backtest up -> live flat(近期过热 3.35>3.0 被 v2 抑制)。

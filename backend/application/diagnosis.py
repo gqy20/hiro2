@@ -10,6 +10,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from ..matching import xlzsz
 from .repos import P
 
 
@@ -79,6 +80,11 @@ class DiagnosisVM(_VM):
 
 def _load(p: Path) -> dict:
     return json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}
+
+
+def _live_trend(skill_id: str) -> dict | None:
+    """实时读预测快照的趋势（不固化到 path.json），定时刷新后立即生效。"""
+    return xlzsz.prediction_for_skill(skill_id)
 
 
 def _load_db_diagnosis(candidate_id: str, job_version_id: str) -> tuple[dict, dict, dict] | None:
@@ -210,7 +216,8 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
             certify=_step(g["skill_id"]).get("certify", ""),
             certificates=_step(g["skill_id"]).get("certificates", []),
             contests=_step(g["skill_id"]).get("contests", []),
-            trend=_step(g["skill_id"]).get("trend"),
+            # 趋势实时读预测快照（而非固化的 path.json），定时刷新后立即生效。
+            trend=_live_trend(g["skill_id"]),
         )
         for g in report.get("gaps", [])
         if g.get("verdict") != "已具备"

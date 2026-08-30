@@ -35,6 +35,10 @@ from backend.application.datasets import (
 )
 from backend.application.diagnosis import build_diagnosis, list_candidates
 from backend.application.evaluation import build_evaluation_overview
+from backend.application.forecast_refresh import (
+    forecast_refresh_enabled,
+    forecast_refresh_loop,
+)
 from backend.application.insights import build_detected_changes, build_timeline
 from backend.application.joblist import build_published_jobs
 from backend.application.outbox_worker import outbox_worker_enabled, outbox_worker_loop
@@ -69,6 +73,10 @@ async def _lifespan(_: FastAPI):
     if os.getenv("DATABASE_URL") and outbox_worker_enabled():
         tasks.append(asyncio.create_task(outbox_worker_loop()))
         print("[outbox] 后台消费 worker 已启动", flush=True)
+    # 实时预测定时刷新：刷新预测快照，诊断实时读取后趋势保持新鲜（周期见模块头）
+    if forecast_refresh_enabled():
+        tasks.append(asyncio.create_task(forecast_refresh_loop()))
+        print("[forecast-refresh] 实时预测定时刷新已启动", flush=True)
     yield
     for t in tasks:
         t.cancel()

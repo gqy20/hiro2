@@ -1,0 +1,155 @@
+# 学练赛证"证"段映射词典（证书 <-> 能力域，仿 SKILLS.yml 模式）。
+# 来源三通道 + 讯飞认证卡（调研结论 docs/research/xlzsz-channels.md）：
+#   osta    人社部国家职业标准（cert_id=osta-std-<职业编码>，raw 数据 certget.py 可复现）
+#   onex    教育部 1+X 职业技能等级证书（cert_id=onex-<certificateId>；实测 API 数据中
+#           无讯飞 AI 证书，讯飞认证另列 aidaxue 源）
+#   huawei  华为职业认证（cert_id=hw-<name小写>）
+#   aidaxue 讯飞 AI 大学堂认证（SPA DOM 提取，官方页 https://www.aidaxue.com/certification）
+# 映射规则（capability_ids 可多值；level_scale 为证书等级 -> 岗位等级的换算声明）：
+#   每条证书登记 capability_ids + evidence_url + effective_from（颁发/发布时间，
+#   天然适配时间闸门）。简历解析命中证书 mention 时，经本表反查 capability_ids，
+#   匹配引擎按"已具备（证书证据）"判定，证据 = 证书名。
+# 人工审定规则：厂商认证映射参考官方 introduction 文本；osta 标准映射参考
+#   certparse 产物的工作要求表（data/processed/certs/std-requirements/）。
+
+version: 1
+
+level_scale:
+  # 证书等级 -> 岗位等级（L1 初级 / L2 中级 / L3 高级）换算声明
+  osta_engineer: {初级: L1, 中级: L2, 高级: L3}
+  osta_skilled: {五级/初级工: L1, 四级/中级工: L1, 三级/高级工: L2, 二级/技师: L3, 一级/高级技师: L3}
+  onex: {初级: L1, 中级: L2, 高级: L3}
+  huawei: {hcia: L1, hcip: L2, hcie: L3}
+  aidaxue: {专项: L1}
+
+certs:
+  # ---- 官方国家职业标准（osta，鉴定即证明）----
+  - cert_id: osta-std-2-02-10-09
+    name: 人工智能工程技术人员
+    issuer: 人社部+工信部
+    capability_ids: [cap_01, cap_03, cap_04, cap_05, cap_06, cap_10]
+    level_type: osta_engineer
+    effective_from: '2021-09-29'
+    evidence_url: https://www.osta.org.cn/skillStandard
+    notes: 国家职业技术技能标准；工作要求覆盖初/中/高三级（std-requirements 已结构化 124 工作内容）
+
+  - cert_id: osta-std-4-04-05-05
+    name: 人工智能训练师
+    issuer: 人社部
+    capability_ids: [cap_10, cap_01, cap_08]
+    level_type: osta_skilled
+    effective_from: '2021-10-21'
+    evidence_url: https://www.osta.org.cn/skillStandard
+    notes: 数据标注员/算法测试员工种；五级技能等级体系
+
+  - cert_id: osta-std-2-02-10-11
+    name: 大数据工程技术人员
+    issuer: 人社部+工信部
+    capability_ids: [cap_09, cap_08, cap_07]
+    level_type: osta_engineer
+    effective_from: '2021-02-03'
+    evidence_url: https://www.osta.org.cn/skillStandard
+
+  - cert_id: osta-std-2-02-10-12
+    name: 云计算工程技术人员
+    issuer: 人社部+工信部
+    capability_ids: [cap_13]
+    level_type: osta_engineer
+    effective_from: '2021-09-29'
+    evidence_url: https://www.osta.org.cn/skillStandard
+
+  - cert_id: osta-std-4-04-04-02
+    name: 网络与信息安全管理员（数据安全管理员）
+    issuer: 人社部
+    capability_ids: [cap_20, cap_19]
+    level_type: osta_skilled
+    effective_from: '2024-02-07'
+    evidence_url: https://www.osta.org.cn/skillStandard
+
+  - cert_id: osta-std-4-07-02-05
+    name: 商务数据分析师
+    issuer: 人社部
+    capability_ids: [cap_11, cap_09]
+    level_type: osta_skilled
+    effective_from: '2024-02-06'
+    evidence_url: https://www.osta.org.cn/skillStandard
+
+  # ---- 讯飞 AI 大学堂（发榜方叙事核心，工信部教考中心联合认证）----
+  - cert_id: aidaxue-llm-app-engineer
+    name: AI大模型应用工程师职业技术认证
+    issuer: 工信部教考中心 × 科大讯飞
+    capability_ids: [cap_01, cap_06, cap_04]
+    level_type: onex
+    effective_from: '2025-06-01'
+    evidence_url: https://www.aidaxue.com/certification
+    notes: 覆盖内容创作/RAG系统/智能体开发，初/中/高三级；发榜方年报直接提及的证书
+
+  - cert_id: aidaxue-prompt
+    name: Prompt工程师认证
+    issuer: 讯飞AI大学堂
+    capability_ids: [cap_02]
+    level_type: aidaxue
+    effective_from: '2025-03-01'
+    evidence_url: https://www.aidaxue.com/certification
+    notes: 免费线上考电子证；指令入口/大模型对话/结构化提示词
+
+  - cert_id: aidaxue-agent
+    name: 智能体工程师认证
+    issuer: 讯飞AI大学堂
+    capability_ids: [cap_04]
+    level_type: aidaxue
+    effective_from: '2025-03-01'
+    evidence_url: https://www.aidaxue.com/certification
+    notes: Multi-Agent 协同与 Workflow 开发范式
+
+  - cert_id: aidaxue-rag
+    name: RAG工程师认证
+    issuer: 讯飞AI大学堂
+    capability_ids: [cap_06]
+    level_type: aidaxue
+    effective_from: '2025-03-01'
+    evidence_url: https://www.aidaxue.com/certification
+    notes: 私域知识库/向量数据库检索/重排序
+
+  - cert_id: aidaxue-finetune
+    name: 微调工程师认证
+    issuer: 讯飞AI大学堂
+    capability_ids: [cap_03]
+    level_type: aidaxue
+    effective_from: '2025-03-01'
+    evidence_url: https://www.aidaxue.com/certification
+    notes: 零代码/低代码定制、LoRA/QLoRA 参数高效微调
+
+  # ---- 华为职业认证（AI 方向，映射依据 introduction 文本）----
+  - cert_id: hw-hcia-ai
+    name: HCIA-AI
+    issuer: 华为
+    capability_ids: [cap_01, cap_03]
+    level_type: huawei
+    effective_from: '2021-01-01'
+    evidence_url: https://e.huawei.com/cn/talent/cert/
+
+  - cert_id: hw-hcip-ai-model-developer
+    name: HCIP-AI-Model Developer
+    issuer: 华为
+    capability_ids: [cap_03]
+    level_type: huawei
+    effective_from: '2021-01-01'
+    evidence_url: https://e.huawei.com/cn/talent/cert/
+
+  - cert_id: hw-hcip-ai-application-developer
+    name: HCIP-AI-Application Developer
+    issuer: 华为
+    capability_ids: [cap_01, cap_04, cap_06]
+    level_type: huawei
+    effective_from: '2021-01-01'
+    evidence_url: https://e.huawei.com/cn/talent/cert/
+
+  - cert_id: hw-hcie-ai-developer
+    name: HCIE-AI Developer
+    issuer: 华为
+    capability_ids: [cap_01, cap_03, cap_04, cap_06]
+    level_type: huawei
+    effective_from: '2022-01-01'
+    evidence_url: https://e.huawei.com/cn/talent/cert/
+    notes: RAG与Agent应用开发与性能优化、AI模型与应用安全治理

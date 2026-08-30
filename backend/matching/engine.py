@@ -18,6 +18,7 @@ from ..candidates.models import (
     Priority,
     Verdict,
 )
+from . import xlzsz
 
 ROOT = Path(__file__).resolve().parents[2]
 PUBLISHED_DIR = ROOT / "data" / "processed" / "jobversions" / "published"
@@ -42,14 +43,31 @@ def match(candidate: CandidateProfile, job_version_id: str) -> MatchReport:
     preferred = job.get("preferred_skill_ids") or []
     have = {s.skill_id for s in candidate.skills if s.skill_id}
     have_points = {s.point_id for s in candidate.skills if s.point_id}
+    # 证书/竞赛证据：简历证书名经 CERTS.yml 映射反查能力域（确定性，零 LLM）
+    cert_hits: list[dict] = []
+    for cert in candidate.certificates:
+        cert_hits.extend(xlzsz.match_cert_mention(cert.name))
+    contest_hits: list[dict] = []
+    for proj in candidate.projects:
+        contest_hits.extend(xlzsz.match_contest_mention(proj.name or ""))
 
     def judge(skill: dict, is_required: bool) -> GapItem:
-        """四档判定（确定性）：达标具备 / 初级部分 / 点级部分 / 缺失。"""
+        """四档判定（确定性）：达标具备 / 初级部分 / 点级部分 / 缺失。
+
+        证书证据优先：简历 certificates 命中 CERTS.yml 映射（覆盖该能力域）
+        时直接判"已具备"，证据 = 证书名（可回链颁发机构）。竞赛经历同理。
+        """
         sid = skill["skill_id"]
         domain_points = [p for p in have_points if p.split(".")[0] == sid]
         cand_ev = ""
         verdict: Verdict
-        if sid in have:
+        cert_hit = next(
+            (c for c in cert_hits if sid in c.get("capability_ids", [])), None
+        )
+        if cert_hit:
+            verdict = "已具备"
+            cand_ev = f"持权威证书：{cert_hit['name']}（{cert_hit.get('issuer', '')}）"
+        elif sid in have:
             ev = next(s for s in candidate.skills if s.skill_id == sid)
             cand_ev = f"简历技能：{ev.mention}"
             if ev.years:
@@ -63,8 +81,15 @@ def match(candidate: CandidateProfile, job_version_id: str) -> MatchReport:
             verdict = "部分具备"
             cand_ev = f"仅有技能点级证据：{', '.join(domain_points[:3])}，能力域整体未覆盖"
         else:
-            verdict = "缺失"
-            cand_ev = "简历中无该能力域任何证据"
+            contest_hit = next(
+                (c for c in contest_hits if sid in c.get("capability_ids", [])), None
+            )
+            if contest_hit:
+                verdict = "部分具备"
+                cand_ev = f"有相关竞赛经历（{contest_hit['name']}），但未见技能/证书直接证据"
+            else:
+                verdict = "缺失"
+                cand_ev = "简历中无该能力域任何证据"
         return GapItem(
             skill_id=sid,
             name=skill.get("name", sid),
@@ -107,7 +132,11 @@ def match(candidate: CandidateProfile, job_version_id: str) -> MatchReport:
 
 
 def learning_path(report: MatchReport) -> LearningPath:
-    """学练赛证路径：必备缺失 P0 > 部分具备 P1 > 加分缺失 P2，模板化生成。"""
+    """学练赛证路径：必备缺失 P0 > 部分具备 P1 > 加分缺失 P2。
+
+    学/练段保持确定性模板；赛/证段引用真实实体（CERTS.yml 证书与
+    CONTESTS.yml 竞赛按 capability_ids 反查，无匹配时回退模板文案）。
+    """
     steps = []
     order = {"缺失": 0, "部分具备": 1, "已具备": 2}
     for g in sorted(
@@ -122,6 +151,21 @@ def learning_path(report: MatchReport) -> LearningPath:
             pri, reason = "P1 巩固提升", "已有相邻基础，向目标技能点深化"
         else:
             pri, reason = "P2 加分拓展", "非必备，作为差异化加分项拓展"
+
+        # 赛/证段：真实实体优先，无匹配时回退模板
+        certs = xlzsz.certs_for_skill(g.skill_id, limit=2)
+        contests = xlzsz.contests_for_skill(g.skill_id, limit=2)
+        if certs:
+            cert_names = "、".join(f"{c['name']}（{c['issuer']}）" for c in certs)
+            certify = f"考取或对照权威认证：{cert_names}；并整理项目证据形成能力证明材料"
+        else:
+            certify = f"整理项目证据形成 {g.name} 能力证明材料"
+        if contests:
+            race_names = "、".join(c["name"] for c in contests)
+            evaluate = f"参加实践评测或赛事检验：{race_names}"
+        else:
+            evaluate = f"在项目复盘中自评 {g.name} 的独立完成度"
+
         steps.append(
             LearnStep(
                 skill_id=g.skill_id,
@@ -130,8 +174,8 @@ def learning_path(report: MatchReport) -> LearningPath:
                 reason=reason,
                 learn=f"学习 {g.name} 领域核心知识点与主流方法",
                 practice=f"完成一个包含 {g.name} 的实战小项目并沉淀到简历",
-                evaluate=f"在项目复盘中自评 {g.name} 的独立完成度",
-                certify=f"整理项目证据形成 {g.name} 能力证明材料",
+                evaluate=evaluate,
+                certify=certify,
             )
         )
     return LearningPath(
@@ -139,5 +183,5 @@ def learning_path(report: MatchReport) -> LearningPath:
         job_version_id=report.job_version_id,
         match_id=report.match_id,
         steps=steps,
-        generated_by=f"{ALGORITHM_VERSION} 模板化规则",
+        generated_by=f"{ALGORITHM_VERSION} 实体映射规则",
     )

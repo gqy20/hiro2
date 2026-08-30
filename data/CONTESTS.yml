@@ -1,0 +1,132 @@
+# 学练赛证"赛"段映射词典（竞赛 <-> 能力域 + 获奖等级换算，仿 SKILLS.yml 模式）。
+# 来源：
+#   cahe      中国高等教育学会全国普通高校大学生竞赛目录（无 API，官方新闻稿人工整理）
+#   xfyun     讯飞AI开发者大赛（challenge.xfyun.cn 公开 API，raceget.py 全量 629 场可复现）
+#   tianchi   阿里天池（270 场全量入库，tags 技能标签）
+#   datafountain DataFountain（300 场全量入库，tags 技能标签）
+# 精选原则：每能力域 2~4 场代表性赛事；全量赛事在 data/processed/races/race-catalog.jsonl，
+#   本表只登记映射与等级换算声明（映射人工审定，竞赛元数据以目录为准）。
+# award_to_level：获奖等级 -> 岗位等级换算（用于竞赛经历的能力判定证据）。
+
+version: 1
+
+award_to_level:
+  # scale x award -> L 档；同 scale 未列出的奖项默认 L1
+  cahe: {国家级一等奖: L3, 国家级二等奖: L2, 国家级三等奖: L2, 省级一等奖: L2, 省级二等奖: L1}
+  enterprise: {冠军: L3, 亚军: L2, 季军: L2, 一等奖: L2, 二等奖: L1, 入围决赛: L1}
+
+contests:
+  # ---- 高教学会竞赛目录（权威名单精选，AI 域强相关）----
+  - race_id: cahe-challenge-cup
+    name: 挑战杯全国大学生课外学术科技作品竞赛
+    organizer: 共青团中央/中国科协/教育部
+    scale: cahe
+    capability_ids: [cap_04]
+    effective_from: '1989-01-01'
+    evidence_url: https://www.tiaozhanbei.net/
+    notes: 本项目（挑战杯 XH-202621）参赛赛道；作为综合竞赛锚点仅映射智能体域
+
+  - race_id: cahe-internet-plus
+    name: 中国国际大学生创新大赛（互联网+）
+    organizer: 教育部
+    scale: cahe
+    capability_ids: [cap_22]
+    effective_from: '2015-01-01'
+    evidence_url: https://cy.ncss.cn/
+
+  - race_id: cahe-bluebridge
+    name: 蓝桥杯全国软件和信息技术专业人才大赛
+    organizer: 工信部人才交流中心
+    scale: cahe
+    capability_ids: [cap_07, cap_12]
+    effective_from: '2010-01-01'
+    evidence_url: https://dasai.lanqiao.cn/
+
+  - race_id: cahe-cmm
+    name: 全国大学生数学建模竞赛
+    organizer: 中国工业与应用数学学会
+    scale: cahe
+    capability_ids: [cap_12, cap_09, cap_07]
+    effective_from: '1992-01-01'
+    evidence_url: https://www.mcm.edu.cn/
+
+  - race_id: cahe-icpc
+    name: 国际大学生程序设计竞赛（ICPC）
+    organizer: ICPC 基金会
+    scale: cahe
+    capability_ids: [cap_07, cap_12]
+    effective_from: '1970-01-01'
+    evidence_url: https://icpc.global/
+
+  # ---- 讯飞 AI 开发者大赛（发榜方叙事，行业分类映射）----
+  - race_id: xfyun-2026-skill-dev
+    name: 智能办公协同助理Skill开发挑战赛
+    organizer: 科大讯飞
+    scale: enterprise
+    capability_ids: [cap_04, cap_02]
+    effective_from: '2026-05-01'
+    evidence_url: https://challenge.xfyun.cn/
+    notes: 2026 届 8312 队报名，Skill 技能开发赛道
+
+  - race_id: xfyun-llm-algo
+    name: 讯飞AI开发者大赛·大模型技术类赛事（历年合辑）
+    organizer: 科大讯飞
+    scale: enterprise
+    capability_ids: [cap_01]
+    effective_from: '2020-01-01'
+    evidence_url: https://challenge.xfyun.cn/
+    notes: 29 场（race-catalog 按 industry=大模型技术 过滤）
+
+  - race_id: xfyun-cv
+    name: 讯飞AI开发者大赛·计算机视觉类赛事（历年合辑）
+    organizer: 科大讯飞
+    scale: enterprise
+    capability_ids: [cap_05]
+    effective_from: '2020-01-01'
+    evidence_url: https://challenge.xfyun.cn/
+    notes: 124 场，讯飞大赛最大赛道
+
+  - race_id: xfyun-nlp
+    name: 讯飞AI开发者大赛·自然语言处理类赛事（历年合辑）
+    organizer: 科大讯飞
+    scale: enterprise
+    capability_ids: [cap_01, cap_12]
+    effective_from: '2020-01-01'
+    evidence_url: https://challenge.xfyun.cn/
+    notes: 60 场
+
+  - race_id: xfyun-voice
+    name: 讯飞AI开发者大赛·语音技术类赛事（历年合辑）
+    organizer: 科大讯飞
+    scale: enterprise
+    capability_ids: [cap_05]
+    effective_from: '2020-01-01'
+    evidence_url: https://challenge.xfyun.cn/
+    notes: 48 场
+
+  # ---- 天池（tags 映射精选）----
+  - race_id: tianchi-llm-series
+    name: 天池大模型系列赛事（LLM/NLP tag 合辑）
+    organizer: 阿里云
+    scale: enterprise
+    capability_ids: [cap_01, cap_12]
+    effective_from: '2019-01-01'
+    evidence_url: https://tianchi.aliyun.com/competition
+    notes: tags 含 LLM/NLP 的赛事，多数获奖亮点含证书+评测论文
+
+  - race_id: tianchi-data-mining
+    name: 天池数据挖掘系列赛事
+    organizer: 阿里云
+    scale: enterprise
+    capability_ids: [cap_09, cap_12]
+    effective_from: '2014-01-01'
+    evidence_url: https://tianchi.aliyun.com/competition
+
+  # ---- DataFountain ----
+  - race_id: df-ai-series
+    name: DataFountain AI/大数据系列赛事
+    organizer: 中国计算机学会等
+    scale: enterprise
+    capability_ids: [cap_12, cap_09, cap_01]
+    effective_from: '2017-01-01'
+    evidence_url: https://www.datafountain.cn/competitions

@@ -87,9 +87,9 @@
         ],
         "trend": {
           "direction": "up",
-          "confidence": 0.35,
-          "emerging": true,
-          "note": "新涌现方向（近期信号从无到有），值得关注"
+          "confidence": 0.9,
+          "emerging": false,
+          "note": "市场信号预测上升（置信 0.9），建议优先投入"
         }
       },
       {

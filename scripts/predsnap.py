@@ -29,12 +29,15 @@ from runlog import RunContext  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 TEMPORAL_DIR = ROOT / "data" / "processed" / "wechat-mp"
-OUT = ROOT / "data" / "processed" / "temporal" / "prediction-context.json"
+TEMPORAL_OUT = ROOT / "data" / "processed" / "temporal"
+OUT = TEMPORAL_OUT / "prediction-context.json"
+LIVE_FORECAST = TEMPORAL_OUT / "live-forecast.json"
 CAPS = ROOT / "data" / "processed" / "capability-matrix" / "capabilities.json"
 
 # 新涌现判定：基准窗信号量低于此值且近期有量（对齐 forecast.py 的 ratio=None 分支）
 EMERGING_PRIOR = 1.0
 RECENT_FLOOR = 2.0  # 对齐 forecast.py MIN_RECENT_WEIGHTED
+RULE_VER_FALLBACK = 2  # live 快照无 rule 字段时的兑底
 
 
 def _cap_names() -> dict[str, str]:
@@ -44,8 +47,11 @@ def _cap_names() -> dict[str, str]:
     return {c["capability_id"]: c["name"] for c in d.get("capabilities", [])}
 
 
-def _latest_forecasts(horizon: int) -> tuple[list[dict], str, int]:
-    """取最新规则版本、最新 as_of 的预测记录。"""
+def _latest_forecasts(horizon: int, source: str) -> tuple[list[dict], str, int]:
+    """取预测记录。source=live 用 livcast 实时预测，否则回测最新 as_of。"""
+    if source == "live" and LIVE_FORECAST.is_file():
+        d = json.loads(LIVE_FORECAST.read_text(encoding="utf-8"))
+        return d.get("records", []), d.get("as_of", ""), d.get("rule_version", RULE_VER_FALLBACK)
     best_records, best_rule = [], 0
     for rule in (2, 1):
         path = TEMPORAL_DIR / f"backtest-h{horizon}-r{rule}.json"
@@ -73,10 +79,10 @@ def _suggestions() -> dict[str, dict]:
     return out
 
 
-def cmd_run(horizon: int) -> dict:
-    run = RunContext("predsnap", {"cmd": "run", "horizon": horizon})
+def cmd_run(horizon: int, source: str) -> dict:
+    run = RunContext("predsnap", {"cmd": "run", "horizon": horizon, "source": source})
     names = _cap_names()
-    forecasts, as_of, rule = _latest_forecasts(horizon)
+    forecasts, as_of, rule = _latest_forecasts(horizon, source)
     suggestions = _suggestions()
 
     skills: dict[str, dict] = {}
@@ -100,7 +106,8 @@ def cmd_run(horizon: int) -> dict:
         "as_of": as_of,
         "horizon_days": horizon,
         "rule_version": rule,
-        "generated_by": "predsnap.py（forecast backtest + leadtime 合并）",
+        "source": source,
+        "generated_by": f"predsnap.py（{source} forecast + leadtime 合并）",
         "skills": skills,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
@@ -108,8 +115,15 @@ def cmd_run(horizon: int) -> dict:
 
     up = sum(1 for s in skills.values() if s["direction"] == "up")
     em = sum(1 for s in skills.values() if s["emerging"])
-    run.finish({"as_of": as_of, "skills": len(skills), "up": up, "emerging": em})
-    return {"as_of": as_of, "rule": rule, "skills": len(skills), "up": up, "emerging": em}
+    run.finish({"as_of": as_of, "source": source, "skills": len(skills), "up": up, "emerging": em})
+    return {
+        "as_of": as_of,
+        "source": source,
+        "rule": rule,
+        "skills": len(skills),
+        "up": up,
+        "emerging": em,
+    }
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -117,8 +131,14 @@ def main(argv: list[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="cmd", required=True)
     p_run = sub.add_parser("run")
     p_run.add_argument("--horizon", type=int, default=30)
+    p_run.add_argument(
+        "--source",
+        choices=["backtest", "live"],
+        default="live",
+        help="live=实时预测（需先跑 livcast），backtest=回测快照",
+    )
     args = parser.parse_args(argv)
-    result = cmd_run(args.horizon)
+    result = cmd_run(args.horizon, args.source)
     print(json.dumps(result, ensure_ascii=False, indent=1))
     return 0
 

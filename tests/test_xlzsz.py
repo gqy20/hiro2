@@ -272,16 +272,40 @@ def test_open_contests_filters_placeholder_dates():
 
 def test_prediction_for_skill_rising():
     """预测上升（高置信）的能力域返回前瞻提示。"""
-    p = xlzsz.prediction_for_skill("cap_03")  # 模型微调，快照中 up conf0.9
+    ctx = xlzsz._load_prediction()
+    # 从快照里找一个预测 up 且置信 >=0.5 的能力域（不硬编码，适配 live/backtest）
+    up = [
+        sid
+        for sid, s in ctx.get("skills", {}).items()
+        if s["direction"] == "up" and s["confidence"] >= 0.5 and not s["emerging"]
+    ]
+    assert up, "快照应含预测上升的能力域"
+    p = xlzsz.prediction_for_skill(up[0])
     assert p is not None
     assert p["direction"] == "up"
-    assert p["confidence"] >= 0.5
     assert "预测上升" in p["note"]
 
 
-def test_prediction_for_skill_emerging():
-    """新涌现方向（近期信号从无到有）返回涌现提示。"""
-    p = xlzsz.prediction_for_skill("cap_02")  # Prompt 工程，快照中新涌现
+def test_prediction_for_skill_emerging(monkeypatch):
+    """新涌现方向（近期信号从无到有）返回涌现提示——注入受控快照验证逻辑。"""
+    monkeypatch.setattr(
+        xlzsz,
+        "_load_prediction",
+        lambda: {
+            "skills": {
+                "cap_xx": {
+                    "name": "测试能力",
+                    "direction": "up",
+                    "confidence": 0.35,
+                    "recent": 5.0,
+                    "prior": 0.0,
+                    "emerging": True,
+                    "suggestion": None,
+                }
+            }
+        },
+    )
+    p = xlzsz.prediction_for_skill("cap_xx")
     assert p is not None
     assert p["emerging"] is True
     assert "新涌现" in p["note"]
@@ -289,7 +313,14 @@ def test_prediction_for_skill_emerging():
 
 def test_prediction_for_skill_flat_no_note():
     """平稳/低置信能力域不带前瞻提示（避免噪声），但返回数据。"""
-    p = xlzsz.prediction_for_skill("cap_04")  # AI Agent，快照中 flat conf0.4
+    ctx = xlzsz._load_prediction()
+    flat = [
+        sid
+        for sid, s in ctx.get("skills", {}).items()
+        if s["direction"] == "flat" or s["confidence"] < 0.5
+    ]
+    assert flat, "快照应含平稳/低置信能力域"
+    p = xlzsz.prediction_for_skill(flat[0])
     assert p is not None
     assert p["note"] == ""
 

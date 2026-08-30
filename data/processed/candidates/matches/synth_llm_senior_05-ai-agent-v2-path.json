@@ -8,7 +8,7 @@
       "name": "多模态AI",
       "priority": "P2 加分拓展",
       "reason": "非必备，作为差异化加分项拓展",
-      "learn": "学习 多模态AI 的核心技能点：图像生成、视频生成、语音",
+      "learn": "学习 多模态AI 的核心技能点：图像生成、视频生成、语音【前瞻：市场信号预测上升（置信 0.9），建议优先投入】",
       "practice": "完成一个包含 多模态AI 的实战小项目并沉淀到简历",
       "evaluate": "正在报名的赛事，以赛促学：AI新睿人才“星探计划”（截止 2026-08-31，剩 0 天）、具有多模态能力的客服智能体设计（截止 2026-08-31，剩 0 天）",
       "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）；并整理项目证据形成能力证明材料",
@@ -47,17 +47,17 @@
       ],
       "trend": {
         "name": "多模态AI",
-        "direction": "flat",
-        "confidence": 0.4,
-        "recent": 85.4,
-        "prior": 86.0,
+        "direction": "up",
+        "confidence": 0.9,
+        "recent": 126.3,
+        "prior": 69.7,
         "emerging": false,
         "suggestion": {
           "change_type": "add",
           "lead_days": -2161,
           "reliability": "jd_preceded"
         },
-        "note": ""
+        "note": "市场信号预测上升（置信 0.9），建议优先投入"
       }
     },
     {
@@ -65,7 +65,7 @@
       "name": "ML/DL算法",
       "priority": "P2 加分拓展",
       "reason": "非必备，作为差异化加分项拓展",
-      "learn": "学习 ML/DL算法 领域核心知识点与主流方法",
+      "learn": "学习 ML/DL算法 领域核心知识点与主流方法【前瞻：市场信号预测上升（置信 0.9），建议优先投入】",
       "practice": "完成一个包含 ML/DL算法 的实战小项目并沉淀到简历",
       "evaluate": "正在报名的赛事，以赛促学：AI新睿人才“星探计划”（截止 2026-08-31，剩 0 天）、“猎鹰·微波智探”—雷达多目标智能探测与识别挑战（截止 2026-08-31，剩 0 天）",
       "certify": "整理项目证据形成 ML/DL算法 能力证明材料",
@@ -98,17 +98,17 @@
       ],
       "trend": {
         "name": "ML/DL算法",
-        "direction": "flat",
-        "confidence": 0.4,
-        "recent": 47.7,
-        "prior": 41.8,
+        "direction": "up",
+        "confidence": 0.9,
+        "recent": 83.9,
+        "prior": 59.6,
         "emerging": false,
         "suggestion": {
           "change_type": "promote",
           "lead_days": 365,
           "reliability": "lower_bound"
         },
-        "note": ""
+        "note": "市场信号预测上升（置信 0.9），建议优先投入"
       }
     }
   ],

@@ -8,7 +8,7 @@
       "name": "LLM应用",
       "priority": "P1 巩固提升",
       "reason": "已有相邻基础，向目标技能点深化",
-      "learn": "学习 LLM应用 的核心技能点：推理、代码生成",
+      "learn": "学习 LLM应用 的核心技能点：推理、代码生成【前瞻：市场信号预测上升（置信 0.9），建议优先投入】",
       "practice": "完成一个包含 LLM应用 的实战小项目并沉淀到简历",
       "evaluate": "正在报名的赛事，以赛促学：从自然语言到可执行工作流的Agent算法挑战赛（截止 2026-09-04，剩 4 天）、基于多份材料的信息整合冲突判断与可靠问答挑战赛（截止 2026-09-13，剩 13 天）",
       "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）、人工智能训练师（人社部）；并整理项目证据形成能力证明材料",
@@ -52,17 +52,17 @@
       ],
       "trend": {
         "name": "LLM应用",
-        "direction": "flat",
-        "confidence": 0.4,
-        "recent": 52.1,
-        "prior": 65.6,
+        "direction": "up",
+        "confidence": 0.9,
+        "recent": 111.5,
+        "prior": 83.5,
         "emerging": false,
         "suggestion": {
           "change_type": "add",
           "lead_days": -1492,
           "reliability": "jd_preceded"
         },
-        "note": ""
+        "note": "市场信号预测上升（置信 0.9），建议优先投入"
       }
     },
     {
@@ -70,7 +70,7 @@
       "name": "Prompt工程",
       "priority": "P2 加分拓展",
       "reason": "非必备，作为差异化加分项拓展",
-      "learn": "学习 Prompt工程 领域核心知识点与主流方法【前瞻：新涌现方向（近期信号从无到有），值得关注】",
+      "learn": "学习 Prompt工程 领域核心知识点与主流方法【前瞻：市场信号预测上升（置信 0.9），建议优先投入】",
       "practice": "完成一个包含 Prompt工程 的实战小项目并沉淀到简历",
       "evaluate": "参加实践评测或赛事检验：智能办公协同助理Skill开发挑战赛",
       "certify": "考取或对照权威认证：Prompt工程师认证（讯飞AI大学堂）；并整理项目证据形成能力证明材料",
@@ -94,16 +94,16 @@
       "trend": {
         "name": "Prompt工程",
         "direction": "up",
-        "confidence": 0.35,
-        "recent": 3.2,
-        "prior": 0.0,
-        "emerging": true,
+        "confidence": 0.9,
+        "recent": 5.6,
+        "prior": 3.7,
+        "emerging": false,
         "suggestion": {
           "change_type": "add",
           "lead_days": -1034,
           "reliability": "jd_preceded"
         },
-        "note": "新涌现方向（近期信号从无到有），值得关注"
+        "note": "市场信号预测上升（置信 0.9），建议优先投入"
       }
     },
     {
@@ -111,7 +111,7 @@
       "name": "多模态AI",
       "priority": "P2 加分拓展",
       "reason": "非必备，作为差异化加分项拓展",
-      "learn": "学习 多模态AI 的核心技能点：图像生成、视频生成、语音",
+      "learn": "学习 多模态AI 的核心技能点：图像生成、视频生成、语音【前瞻：市场信号预测上升（置信 0.9），建议优先投入】",
       "practice": "完成一个包含 多模态AI 的实战小项目并沉淀到简历",
       "evaluate": "正在报名的赛事，以赛促学：AI新睿人才“星探计划”（截止 2026-08-31，剩 0 天）、具有多模态能力的客服智能体设计（截止 2026-08-31，剩 0 天）",
       "certify": "考取或对照权威认证：人工智能工程技术人员（人社部+工信部）；并整理项目证据形成能力证明材料",
@@ -150,17 +150,17 @@
       ],
       "trend": {
         "name": "多模态AI",
-        "direction": "flat",
-        "confidence": 0.4,
-        "recent": 85.4,
-        "prior": 86.0,
+        "direction": "up",
+        "confidence": 0.9,
+        "recent": 126.3,
+        "prior": 69.7,
         "emerging": false,
         "suggestion": {
           "change_type": "add",
           "lead_days": -2161,
           "reliability": "jd_preceded"
         },
-        "note": ""
+        "note": "市场信号预测上升（置信 0.9），建议优先投入"
       }
     },
     {
@@ -168,7 +168,7 @@
       "name": "自动化运维",
       "priority": "P2 加分拓展",
       "reason": "非必备，作为差异化加分项拓展",
-      "learn": "学习 自动化运维 领域核心知识点与主流方法【前瞻：市场信号预测上升（置信 0.5），建议优先投入】",
+      "learn": "学习 自动化运维 领域核心知识点与主流方法【前瞻：市场信号预测上升（置信 0.9），建议优先投入】",
       "practice": "完成一个包含 自动化运维 的实战小项目并沉淀到简历",
       "evaluate": "在项目复盘中自评 自动化运维 的独立完成度",
       "certify": "整理项目证据形成 自动化运维 能力证明材料",
@@ -177,16 +177,16 @@
       "trend": {
         "name": "自动化运维",
         "direction": "up",
-        "confidence": 0.5,
-        "recent": 2.0,
-        "prior": 1.0,
+        "confidence": 0.9,
+        "recent": 6.3,
+        "prior": 3.6,
         "emerging": false,
         "suggestion": {
           "change_type": "add",
           "lead_days": -1767,
           "reliability": "jd_preceded"
         },
-        "note": "市场信号预测上升（置信 0.5），建议优先投入"
+        "note": "市场信号预测上升（置信 0.9），建议优先投入"
       }
     }
   ],

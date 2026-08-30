@@ -125,6 +125,12 @@ observed_at   信号观察时间
 到期后：预测复盘和错误分析
 ```
 
+**实际自动化（forecast_refresh 定时链，默认每天）**：上表是设计频率；落地为一条定时链，
+启动 60s 后首轮、此后每 `HIRO2_FORECAST_REFRESH_INTERVAL_HOURS`（默认 24h）重跑：
+`rssget 抓RSS -> extract feeds 增量抽取（--days 限成本）-> livcast 实时预测 -> predsnap 快照`。
+事件采集尽力而为、预测必执行；诊断实时读快照，刷新后趋势立即新鲜。实时预测（非回测）
+是学练段前瞻提示的供数端。
+
 首期订阅源控制在 20-40 个高质量来源，不直接导入旧项目的全部源清单。
 
 ## CLI

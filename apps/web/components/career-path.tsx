@@ -54,9 +54,7 @@ export function CareerPath({ fixture }: { fixture: DiagnosisFixture }) {
                 </Tag>
                 {gap.trend?.note ? (
                   <Tag
-                    color={
-                      gap.trend.direction === "up" ? "green" : "orange"
-                    }
+                    color={gap.trend.direction === "up" ? "green" : "orange"}
                     className="career-path-trend"
                   >
                     前瞻 · {gap.trend.note}

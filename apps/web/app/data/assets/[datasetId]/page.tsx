@@ -43,7 +43,11 @@ export default async function DatasetDetailPage({
         sources: [],
         count_scope: "简历档案",
         stage_counts: [
-          { stage: "archive", label: "已入档", count: MOCK_RESUME_ARCHIVE.length },
+          {
+            stage: "archive",
+            label: "已入档",
+            count: MOCK_RESUME_ARCHIVE.length,
+          },
           { stage: "parsed", label: "已解析", count: parsed },
         ],
       },

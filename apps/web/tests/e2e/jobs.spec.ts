@@ -19,7 +19,7 @@ test("accepts all changes and publishes target version", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: "岗位版本已发布" }),
   ).toBeVisible({ timeout: 15_000 }); // dev server 首次编译发布视图较慢
-  await expect(page.getByText(/^已接受/)).toBeVisible();
+  await expect(page.getByText(/^已确认/)).toBeVisible();
   await expect(page.getByText(/^已拒绝/)).toBeVisible();
 
   // 发布成功页提供下游承接动作（见 design-recruiting.md「发布后的承接」）

@@ -31,6 +31,13 @@ const SKILL_STATUSES: Array<SkillMatch["status"]> = [
   "missing",
 ];
 
+// 候选人技能用候选人语义，不复用审核词表
+const SKILL_STATUS_LABELS: Record<SkillMatch["status"], string> = {
+  ready: "已具备",
+  partial: "部分具备",
+  missing: "缺失",
+};
+
 function makeCorrectionId(prefix: string): string {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
 }
@@ -288,7 +295,10 @@ export function DiagnosisWorkbench({
                 >
                   <div>
                     <strong>{skill.name}</strong>
-                    <StatusMark status={skillStatusToReview(skill.status)} />
+                    <StatusMark
+                      label={SKILL_STATUS_LABELS[skill.status]}
+                      status={skillStatusToReview(skill.status)}
+                    />
                   </div>
                   {!careerMode && editing === skill.name ? (
                     <>

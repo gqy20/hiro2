@@ -529,6 +529,19 @@ h3 {
   max-width: 100%;
 }
 
+.context-static {
+  display: block;
+  max-width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
 .context-window {
   display: grid;
   gap: 6px;

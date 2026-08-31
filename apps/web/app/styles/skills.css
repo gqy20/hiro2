@@ -489,4 +489,18 @@
   padding: 4px 8px;
   font-size: 14px;
   color: var(--ink);
+  text-decoration: none;
+}
+a.skill-node-detail-job:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.skill-node-detail-more {
+  margin-top: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--blue);
+  font-size: 13px;
+  cursor: pointer;
 }

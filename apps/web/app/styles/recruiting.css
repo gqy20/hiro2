@@ -380,6 +380,55 @@
   aspect-ratio: 920 / 250;
   overflow: visible;
 }
+.dashboard-trend-stage {
+  position: relative;
+}
+.dashboard-chart-hoverline {
+  stroke: var(--muted);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+.dashboard-trend-tooltip {
+  position: absolute;
+  top: 8px;
+  z-index: 2;
+  display: grid;
+  gap: 4px;
+  min-width: 150px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel);
+  box-shadow: 0 4px 14px rgba(20, 18, 12, 0.08);
+  pointer-events: none;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.dashboard-trend-tooltip strong {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+.dashboard-trend-tooltip span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dashboard-trend-tooltip i {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+.dashboard-trend-tooltip b {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-weight: 650;
+}
+.dashboard-trend-tooltip small {
+  color: var(--muted);
+  font-size: 12px;
+}
 .dashboard-trend-chart path {
   fill: none;
   stroke-width: 2.5;

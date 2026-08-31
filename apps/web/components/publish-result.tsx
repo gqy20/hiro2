@@ -84,7 +84,7 @@ export function PublishResultView({
           <h2 id="review-summary-title">本次审核记录</h2>
           <dl>
             <div>
-              <dt>已接受</dt>
+              <dt>已确认</dt>
               <dd>{reviewCounts.accepted}</dd>
             </div>
             <div>
@@ -92,7 +92,7 @@ export function PublishResultView({
               <dd>{reviewCounts.rejected}</dd>
             </div>
             <div>
-              <dt>待确认</dt>
+              <dt>待审核</dt>
               <dd>{reviewCounts.pending}</dd>
             </div>
           </dl>

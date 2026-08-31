@@ -5,14 +5,22 @@ import { Button, Tooltip } from "antd";
 
 import type { ReviewStatus } from "@/lib/job-update";
 
+// 业务状态词表对齐 design-recruiting.md「证据与状态」：
+// 待审核 / 证据不足 / 审核中 / 已确认 / 可发布 / 已发布 / 已过期。
 export const reviewLabels: Record<ReviewStatus, string> = {
-  accepted: "已接受",
-  needs_evidence: "待确认",
+  accepted: "已确认",
+  needs_evidence: "证据不足",
   rejected: "已拒绝",
-  reviewing: "待审",
+  reviewing: "待审核",
 };
 
-export function StatusMark({ status }: { status: ReviewStatus }) {
+export function StatusMark({
+  status,
+  label,
+}: {
+  status: ReviewStatus;
+  label?: string;
+}) {
   const icon =
     status === "accepted" ? (
       <CheckCircle aria-hidden weight="fill" />
@@ -24,7 +32,7 @@ export function StatusMark({ status }: { status: ReviewStatus }) {
   return (
     <span className={`status-mark status-mark-${status}`}>
       {icon}
-      <span>{reviewLabels[status]}</span>
+      <span>{label ?? reviewLabels[status]}</span>
     </span>
   );
 }

@@ -5,7 +5,7 @@ test("accepts candidate and edits five definition fields", async ({ page }) => {
 
   const acceptButton = page.getByRole("button", { name: "接受候选" });
   await acceptButton.click();
-  await expect(page.locator(".status-mark").first()).toContainText(/已接受/);
+  await expect(page.locator(".status-mark").first()).toContainText(/已确认/);
 
   // 决定后审核栏切换为承接状态，可本地恢复待审
   await expect(page.locator(".candidate-review-bar")).toContainText(

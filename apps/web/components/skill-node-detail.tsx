@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
 import { ArrowSquareOut } from "@phosphor-icons/react";
 import { Button, Tag } from "antd";
 
@@ -25,6 +27,7 @@ const statusTone: Record<SkillNode["status"], string> = {
 };
 
 const MAX_ALIASES = 12;
+const MAX_JOB_REFS = 6;
 
 export function SkillNodeDetail({
   node,
@@ -57,6 +60,10 @@ export function SkillNodeDetail({
   const aliasOverflow = node.aliases.length - aliases.length;
   const jobVersions = node.jobVersions ?? [];
   const signal = node.signal ?? null;
+  const [showAllVersions, setShowAllVersions] = useState(false);
+  const visibleJobVersions = showAllVersions
+    ? jobVersions
+    : jobVersions.slice(0, MAX_JOB_REFS);
 
   return (
     <div className="skill-node-detail" aria-label={`${node.label} 节点详情`}>
@@ -140,28 +147,37 @@ export function SkillNodeDetail({
       <section className="skill-node-detail-section" aria-label="证据">
         <h4>证据</h4>
         <p className="skill-node-detail-meta">
-          {`${node.evidenceIds.length} 条证据 · 点击按钮查看原文与质量`}
+          {node.evidenceIds.length > 0
+            ? `${node.evidenceIds.length} 条证据 · 点击按钮查看原文与质量`
+            : "该节点暂无关联证据"}
         </p>
-        <Button
-          block
-          icon={<ArrowSquareOut aria-hidden size={15} />}
-          onClick={onOpenEvidence}
-        >
-          查看证据
-        </Button>
+        {node.evidenceIds.length > 0 ? (
+          <Button
+            block
+            icon={<ArrowSquareOut aria-hidden size={15} />}
+            onClick={onOpenEvidence}
+          >
+            查看证据
+          </Button>
+        ) : null}
       </section>
 
       <section className="skill-node-detail-section" aria-label="关联岗位版本">
         <h4>关联岗位版本</h4>
         {jobVersions.length > 0 ? (
           <div className="skill-node-detail-siblings">
-            {jobVersions.map((ref) => (
-              <span className="skill-node-detail-job" key={ref.versionId}>
-                {`${ref.title}（${ref.versionId}）`}
+            {visibleJobVersions.map((ref) => (
+              <Link
+                className="skill-node-detail-job"
+                href={`/skills?job=${encodeURIComponent(ref.versionId)}`}
+                key={ref.versionId}
+                title={`切换到 ${ref.title}（${ref.versionId}）`}
+              >
+                {ref.title}
                 <Tag color={ref.role === "required" ? "gold" : "default"}>
                   {`${roleLabels[ref.role]}${ref.weight !== null ? ` · ${ref.weight}` : ""}`}
                 </Tag>
-              </span>
+              </Link>
             ))}
           </div>
         ) : (
@@ -169,6 +185,15 @@ export function SkillNodeDetail({
             未进入任何已发布岗位版本。
           </p>
         )}
+        {jobVersions.length > MAX_JOB_REFS ? (
+          <button
+            className="skill-node-detail-more"
+            onClick={() => setShowAllVersions((value) => !value)}
+            type="button"
+          >
+            {showAllVersions ? "收起" : `展开全部 ${jobVersions.length} 个版本`}
+          </button>
+        ) : null}
         <p className="skill-node-detail-meta">
           {signal
             ? `市场信号：${signal.jdMentions} 条 JD 提及（占全部提及 ${Math.round(signal.mentionShare * 100)}%）`

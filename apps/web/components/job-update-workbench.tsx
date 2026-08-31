@@ -4,12 +4,11 @@ import Link from "next/link";
 import { useMemo, useState, useSyncExternalStore } from "react";
 import {
   CheckCircle,
-  FileText,
   MagnifyingGlass,
   PaperPlaneTilt,
   Warning,
 } from "@phosphor-icons/react";
-import { Alert, Button, Modal, Select, Skeleton, Tag, Tooltip } from "antd";
+import { Alert, Button, Modal, Skeleton, Tag, Tooltip } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
@@ -275,17 +274,15 @@ export function JobUpdateWorkbench({
             <div className="context-form">
               <label>
                 岗位
-                <Select
-                  defaultValue={fixture.context.jobTitle}
-                  options={[{ value: fixture.context.jobTitle }]}
-                />
+                <span className="context-static">
+                  {fixture.context.jobTitle}
+                </span>
               </label>
               <label>
                 基准版本
-                <Select
-                  defaultValue={fixture.context.baselineVersion}
-                  options={[{ value: fixture.context.baselineVersion }]}
-                />
+                <span className="context-static">
+                  {fixture.context.baselineVersion}
+                </span>
               </label>
               <label>
                 观察窗口
@@ -339,14 +336,6 @@ export function JobUpdateWorkbench({
                 <div className="inline-heading">
                   <h2 id="version-title">版本对比</h2>
                 </div>
-                <Tooltip title="查看版本说明">
-                  <Button
-                    aria-label="查看版本说明"
-                    icon={<FileText size={17} />}
-                    size="small"
-                    type="text"
-                  />
-                </Tooltip>
               </div>
               <dl>
                 <div>
@@ -479,17 +468,17 @@ export function JobUpdateWorkbench({
               <span className="distribution-accepted">
                 <i aria-hidden />
                 <b>{reviewCounts.accepted}</b>
-                <small>已接受</small>
+                <small>已确认</small>
               </span>
               <span className="distribution-reviewing">
                 <i aria-hidden />
                 <b>{reviewCounts.reviewing}</b>
-                <small>待审</small>
+                <small>待审核</small>
               </span>
               <span className="distribution-evidence">
                 <i aria-hidden />
                 <b>{reviewCounts.needsEvidence}</b>
-                <small>待确认</small>
+                <small>证据不足</small>
               </span>
             </div>
             <section className="review-queue" aria-labelledby="queue-title">

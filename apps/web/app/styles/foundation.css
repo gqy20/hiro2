@@ -383,6 +383,26 @@ input:focus-visible {
   background: var(--green);
 }
 
+/* 使用引导触发按钮：紧贴工作区切换器，轻量图标按钮 */
+.help-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  margin-right: 8px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.help-trigger:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
 .workbench {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr) 320px;

@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixture";
 
 test("resume dataset exposes test records and structured detail", async ({
   page,

@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixture";
 
 test("evaluation datasets switch metrics and expose concrete cases", async ({
   page,

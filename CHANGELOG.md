@@ -15,6 +15,8 @@
   - emergscan 新增 sample_jds 产物字段 + _jd_url 构造器
   - ashby.py 采集时留存 jobUrl（后续采集直接可用）
 
+- 引导层（三工作区）：每个工作区一套 AntD 原生 Tour（原生优先，不引第三方引导库），锚点固定顶栏导航项（工作区功能地图，任何页面都存在不失效）。首访该工作区自动弹一次（localStorage 记忆已读），顶栏工作区切换器旁新增「?」按钮可随时重开。e2e 共享 fixture 预置已读标记跳过引导遮罩（此前遮罩拦截其他用例点击致 7 例失败），onboarding.spec.ts 独立覆盖首访弹出/关闭记忆/问号重开/工作区切换。
+
 ### Fixed
 - **emerging-jobs API 提速 8 倍**（5.9s -> 0.7s）：evidence 池改为一次
   加载传引用，消除每候选重复全量查询（PostgreSQL Repository

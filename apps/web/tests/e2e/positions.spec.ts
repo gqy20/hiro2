@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixture";
 
 test("positions renders detected changes without NaN or undefined", async ({
   page,

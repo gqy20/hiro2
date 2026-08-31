@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixture";
 
 test("adds / edits / removes project with audit trail", async ({ page }) => {
   await page.goto("/diagnosis");

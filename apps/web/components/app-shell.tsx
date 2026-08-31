@@ -17,9 +17,12 @@ import {
   GitDiff,
   Graph,
   MagnifyingGlass,
+  Question,
   ShieldCheck,
 } from "@phosphor-icons/react";
 import { Tooltip } from "antd";
+
+import { OnboardingTour } from "@/components/onboarding-tour";
 
 gsap.registerPlugin(useGSAP);
 
@@ -104,6 +107,27 @@ export function AppShell({
     return pathname === href;
   }
   const contentRef = useRef<HTMLElement>(null);
+  const [tourOpen, setTourOpen] = useState(false);
+
+  // 首访每个工作区时自动弹一次引导；localStorage 记忆已读，之后用问号重开。
+  // 延迟 600ms 等首屏渲染与锚点就绪。
+  // 注意：e2e 由共享 fixture（tests/e2e/fixture.ts）预置已读标记跳过，
+  // 产品代码不为测试写守卫。
+  useEffect(() => {
+    const key = `hiro2:tour-seen:${workspace}`;
+    if (localStorage.getItem(key)) return;
+    const timer = window.setTimeout(() => setTourOpen(true), 600);
+    return () => window.clearTimeout(timer);
+  }, [workspace]);
+
+  function closeTour() {
+    setTourOpen(false);
+    try {
+      localStorage.setItem(`hiro2:tour-seen:${workspace}`, "1");
+    } catch {
+      // 隐私模式等存储不可用时静默降级，引导仍只随本次会话出现一次
+    }
+  }
 
   function switchWorkspace(next: Workspace) {
     if (next === workspace) return;
@@ -160,6 +184,7 @@ export function AppShell({
                 className={
                   isActive(href) ? "nav-link nav-link-active" : "nav-link"
                 }
+                data-tour={href}
                 href={href}
               >
                 <Icon
@@ -199,6 +224,16 @@ export function AppShell({
               数据
             </button>
           </div>
+          <Tooltip title="使用引导">
+            <button
+              aria-label="使用引导"
+              className="help-trigger"
+              onClick={() => setTourOpen(true)}
+              type="button"
+            >
+              <Question aria-hidden size={16} />
+            </button>
+          </Tooltip>
           <span className="live-dot" aria-hidden />
           {dataAsOf ? <span>数据截至 {dataAsOf}</span> : null}
         </div>
@@ -206,6 +241,11 @@ export function AppShell({
       <main id="main-content" ref={contentRef}>
         {children}
       </main>
+      <OnboardingTour
+        onClose={closeTour}
+        open={tourOpen}
+        workspace={workspace}
+      />
     </div>
   );
 }

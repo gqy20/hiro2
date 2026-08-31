@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixture";
 
 test("career jobs page renders published job cards and group filter", async ({
   page,

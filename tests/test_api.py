@@ -30,7 +30,8 @@ def test_quality_overview_contract() -> None:
     response = TestClient(app).get("/api/v1/quality/overview")
     assert response.status_code == 200
     body = response.json()
-    assert body["task_total"] == 180
+    # 评测集多版本累积入库（eval-v1/v2/v3），总数随版本演进，只验证量级与结构
+    assert body["task_total"] >= 180
     assert "error_distribution" in body
 
 

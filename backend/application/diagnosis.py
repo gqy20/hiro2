@@ -11,7 +11,8 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from ..matching import xlzsz
-from .repos import P
+from .evidence_view import evidence_to_vm
+from .repos import P, build_repository
 
 
 class _VM(BaseModel):
@@ -80,6 +81,37 @@ class DiagnosisVM(_VM):
 
 def _load(p: Path) -> dict:
     return json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}
+
+
+_REPO = None
+_EVIDENCE_INDEX: dict[str, dict] | None = None
+
+
+def _evidence_index() -> dict[str, dict]:
+    """evidence_id -> 原始证据记录（进程内只建一次）。"""
+    global _REPO, _EVIDENCE_INDEX
+    if _EVIDENCE_INDEX is None:
+        _REPO = build_repository()
+        _EVIDENCE_INDEX = {ev["evidence_id"]: ev for ev in _REPO.evidence()}
+    return _EVIDENCE_INDEX
+
+
+def _resolve_report_evidence(evidence_ids: list[str]) -> list[dict]:
+    """报告引用的 evidence_id -> 前端证据条目（camelCase，去重、最多 5 条）。"""
+    if not evidence_ids:
+        return []
+    index = _evidence_index()
+    assert _REPO is not None
+    events = _REPO.events_primary()
+    jd = _REPO.jd_parsed()
+    out: list[dict] = []
+    for evidence_id in dict.fromkeys(evidence_ids):
+        if not evidence_id or len(out) >= 5:
+            continue
+        ev = index.get(evidence_id)
+        if ev:
+            out.append(evidence_to_vm(ev, events, jd).model_dump(by_alias=True))
+    return out
 
 
 def _live_trend(skill_id: str) -> dict | None:
@@ -255,6 +287,7 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
             "requiredTotal": len(job.get("required_skill_ids", [])),
             "gaps": [g.model_dump() for g in gaps],
             "career": career_state,
+            "evidence": _resolve_report_evidence(report.get("evidence_ids") or []),
         },
         target_jobs=list_target_jobs(candidate_id),
     )

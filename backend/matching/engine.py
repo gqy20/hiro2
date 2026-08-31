@@ -113,7 +113,9 @@ def match(candidate: CandidateProfile, job_version_id: str) -> MatchReport:
             name=skill.get("name", sid),
             verdict=verdict,
             is_required=is_required,
-            job_evidence_ids=[job.get("baseline_evidence_id", "")] if is_required else [],
+            job_evidence_ids=[(job.get("evidence") or {}).get("baseline_evidence_id", "")]
+            if is_required
+            else [],
             candidate_evidence=cand_ev,
         )
 
@@ -145,7 +147,9 @@ def match(candidate: CandidateProfile, job_version_id: str) -> MatchReport:
         ],
         gaps=gaps,
         key_shortboards=shortboards,
-        evidence_ids=[g.job_evidence_ids[0] for g in gaps if g.job_evidence_ids][:3],
+        evidence_ids=list(dict.fromkeys(g.job_evidence_ids[0] for g in gaps if g.job_evidence_ids))[
+            :3
+        ],
     )
 
 

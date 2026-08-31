@@ -437,6 +437,7 @@ GET  /health/ready
 `PATCH /candidates/{candidate_id}/profile` 的技能项包含 `name`、`status`、`level` 与 `years`；保存时追加画像版本和修正记录，并重新计算当前目标岗位。技能证明通过 `POST /candidates/{candidate_id}/proofs` 关联标准能力域；未完成标准映射的技能不能写入结构化证明。
 `scripts/outbox.py enqueue <version_id>` 写入 `JobVersionPublished`，`scripts/outbox.py consume` 领取并幂等投影到 Neo4j。
 `GET /jobs/detected-changes` 返回快照差异检测草稿（`DetectedChanges`）：顶层 `base`、`obs`、`changes_total`、`jobs[]`；每个岗位含 `position_id`、`job`（展示名，取该岗位聚类众数 JD 标题并截断，解析失败回退 `position_id`）、`base_jds`/`obs_jds`、`review_status` 与 `changes[]`；每条变化含 `skill_id`、`name`、`change_type: add | grow | shrink | remove`、`base_share`/`obs_share`（岗位内提及份额 0–1）、`base_mentions`/`obs_mentions`。字段名使用 snake_case，与后端 `DetectedChangesVM` 一致，前端不得另造驼峰别名；草稿仅供复核展示，发布仍走 `POST /jobs/{id}/versions/{version}/publish`。
+`GET /diagnosis/{candidate_id}` 的 `report.evidence` 返回匹配报告引用的证据条目（camelCase：`id/source/sourceType/publishedAt/collectedAt/quality/excerpt/fullText/sourceUrl/stance`），由 `evidence_ids` 经证据库解析，去重后最多 5 条；匹配引擎的岗位依据使用发布版本 `evidence.baseline_evidence_id`（职业标准基线），报告 `evidence_ids` 去重后落库。
 ```
 
 ### JD 导入请求

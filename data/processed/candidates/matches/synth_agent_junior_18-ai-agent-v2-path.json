@@ -76,17 +76,17 @@
       ],
       "trend": {
         "name": "LLM应用",
-        "direction": "up",
-        "confidence": 0.9,
-        "recent": 111.5,
-        "prior": 83.5,
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 107.9,
+        "prior": 88.1,
         "emerging": false,
         "suggestion": {
           "change_type": "add",
           "lead_days": -1492,
           "reliability": "jd_preceded"
         },
-        "note": "市场信号预测上升（置信 0.9），建议优先投入"
+        "note": ""
       }
     },
     {
@@ -132,8 +132,8 @@
         "name": "模型微调",
         "direction": "flat",
         "confidence": 0.4,
-        "recent": 53.6,
-        "prior": 16.0,
+        "recent": 52.6,
+        "prior": 17.0,
         "emerging": false,
         "suggestion": {
           "change_type": "add",
@@ -189,8 +189,8 @@
         "name": "多模态AI",
         "direction": "up",
         "confidence": 0.9,
-        "recent": 126.3,
-        "prior": 69.7,
+        "recent": 115.2,
+        "prior": 82.5,
         "emerging": false,
         "suggestion": {
           "change_type": "add",
@@ -238,17 +238,17 @@
       ],
       "trend": {
         "name": "ML/DL算法",
-        "direction": "up",
-        "confidence": 0.9,
-        "recent": 83.9,
-        "prior": 59.6,
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 81.5,
+        "prior": 62.8,
         "emerging": false,
         "suggestion": {
           "change_type": "promote",
           "lead_days": 365,
           "reliability": "lower_bound"
         },
-        "note": "市场信号预测上升（置信 0.9），建议优先投入"
+        "note": ""
       }
     }
   ],

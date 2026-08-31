@@ -23,7 +23,8 @@ def published(monkeypatch, tmp_path):
             {"skill_id": "cap_07", "name": "Python"},
         ],
         "preferred_skill_ids": [{"skill_id": "cap_02", "name": "Prompt工程"}],
-        "baseline_evidence_id": "xlsx:pos_02",
+        # 与真实发布版本一致：基线证据嵌套在 evidence 下
+        "evidence": {"baseline_evidence_id": "xlsx:pos_02"},
     }
     pub_dir = tmp_path / "published"
     pub_dir.mkdir()
@@ -57,6 +58,15 @@ def test_match_requires_published(published, monkeypatch):
     p = _profile([])
     with pytest.raises(FileNotFoundError):
         engine.match(p, "nonexistent-v9")
+
+
+def test_match_report_carries_job_baseline_evidence(published):
+    """必备能力的岗位依据携带基线证据，报告 evidence_ids 去重非空。"""
+    p = _profile([EffectiveSkill(mention="Agent", skill_id="cap_04", proficiency="高级", years=3)])
+    report = engine.match(p, "test-v1")
+    required_gaps = [g for g in report.gaps if g.is_required]
+    assert required_gaps and all(g.job_evidence_ids == ["xlsx:pos_02"] for g in required_gaps)
+    assert report.evidence_ids == ["xlsx:pos_02"]
 
 
 def test_learning_path_priority_order(published):

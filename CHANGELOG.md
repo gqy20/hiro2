@@ -96,6 +96,12 @@
   - 能力全景节点详情：0 条证据时不再提供打开空抽屉的「查看证据」按钮；「关联岗位版本」截断为 6 项并可展开全部，每项改为可点击链接直接切换对应岗位图谱。
   - 工作台能力需求趋势支持 hover：竖线定位 + 提示框展示各能力域当月提及率与样本量。
 
+- 候选诊断「岗位依据与证据」真正接通数据（三层断链，非数据缺失）：
+  - **匹配引擎键路径 bug**：`engine.match()` 从顶层读 `baseline_evidence_id`，实际嵌套在发布版本 `evidence.` 下，导致全部 22 份匹配报告 `evidence_ids` 为空串占位；修复后重新生成全部匹配产物并同步 DB（现为岗位基线证据如 `xlsx:pos_02`，报告级 `evidence_ids` 去重）。
+  - **VM 未组装**：`build_diagnosis` 从不输出 `report.evidence`；现经证据库解析 `evidence_ids`（camelCase 条目，去重、最多 5 条）供前端消费，诊断页右栏从诚实占位变为真实证据（职业标准原文摘录）。
+  - **解析器去重**：证据 → EvidenceVM 解析抽为共享模块 `evidence_view.py`，service（新岗位/岗位更新）与 diagnosis 共用。
+  - 契约与测试：`contracts.md` 登记诊断证据契约；`test_matching.py` 夹具改为真实嵌套结构并补证据落位回归，`test_diag.py` 补 `report.evidence` 解析用例（后端 117 通过）。
+
 ### Fixed
 - 招聘区「我的岗位」快照差异块修复前后端契约失配：后端 `DetectedChangesVM` 为 snake_case，前端原用驼峰本地类型导致真实模式渲染 `undefined 项待复核`、`NaN%→NaN%`、空「→ 条 JD」；现前端统一消费 `lib/api/types.ts` 的 snake_case 类型，`change_type` 使用 add|grow|shrink|remove。`job` 字段从裸 `position_id`（pos_01）解析为岗位聚类众数 JD 标题（确定性、截断 24 字、失败回退），`contracts.md` 登记 `DetectedChanges` 字段级契约。
 - 岗位更新页审核进度不再丢失：接受/拒绝/编辑说明持久化到浏览器会话存储（`useSyncExternalStore`，服务端快照为空无水合抖动），刷新保留，发布成功后自动清除并明示「审核进度保存在当前浏览器会话」。

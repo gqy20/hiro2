@@ -18,8 +18,8 @@
         "name": "自动化运维",
         "direction": "up",
         "confidence": 0.9,
-        "recent": 6.3,
-        "prior": 3.6,
+        "recent": 6.5,
+        "prior": 4.6,
         "emerging": false,
         "suggestion": {
           "change_type": "add",

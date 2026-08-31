@@ -23,7 +23,7 @@
       "verdict": "已具备",
       "is_required": true,
       "job_evidence_ids": [
-        ""
+        "xlsx:pos_02"
       ],
       "candidate_evidence": "简历技能：LangChain"
     },
@@ -33,7 +33,7 @@
       "verdict": "缺失",
       "is_required": true,
       "job_evidence_ids": [
-        ""
+        "xlsx:pos_02"
       ],
       "candidate_evidence": "简历中无该能力域任何证据"
     },
@@ -43,7 +43,7 @@
       "verdict": "已具备",
       "is_required": true,
       "job_evidence_ids": [
-        ""
+        "xlsx:pos_02"
       ],
       "candidate_evidence": "简历技能：Python（3.0 年，高级）"
     },
@@ -53,7 +53,7 @@
       "verdict": "已具备",
       "is_required": true,
       "job_evidence_ids": [
-        ""
+        "xlsx:pos_02"
       ],
       "candidate_evidence": "简历技能：Milvus"
     },
@@ -63,7 +63,7 @@
       "verdict": "已具备",
       "is_required": true,
       "job_evidence_ids": [
-        ""
+        "xlsx:pos_02"
       ],
       "candidate_evidence": "简历技能：MySQL"
     },
@@ -112,9 +112,7 @@
     "LLM应用"
   ],
   "evidence_ids": [
-    "",
-    "",
-    ""
+    "xlsx:pos_02"
   ],
   "status": "FINAL"
 }

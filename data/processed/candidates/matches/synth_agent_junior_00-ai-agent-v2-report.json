@@ -23,7 +23,7 @@
       "verdict": "已具备",
       "is_required": true,
       "job_evidence_ids": [
-        ""
+        "xlsx:pos_02"
       ],
       "candidate_evidence": "简历技能：LangChain（2.0 年，高级）"
     },
@@ -33,7 +33,7 @@
       "verdict": "已具备",
       "is_required": true,
       "job_evidence_ids": [
-        ""
+        "xlsx:pos_02"
       ],
       "candidate_evidence": "简历技能：OpenAI API"
     },
@@ -43,7 +43,7 @@
       "verdict": "已具备",
       "is_required": true,
       "job_evidence_ids": [
-        ""
+        "xlsx:pos_02"
       ],
       "candidate_evidence": "简历技能：Python（2.0 年，高级）"
     },
@@ -53,7 +53,7 @@
       "verdict": "部分具备",
       "is_required": true,
       "job_evidence_ids": [
-        ""
+        "xlsx:pos_02"
       ],
       "candidate_evidence": "简历技能：向量数据库——初级水平，未达岗位要求深度"
     },
@@ -63,7 +63,7 @@
       "verdict": "部分具备",
       "is_required": true,
       "job_evidence_ids": [
-        ""
+        "xlsx:pos_02"
       ],
       "candidate_evidence": "简历技能：PostgreSQL——初级水平，未达岗位要求深度"
     },
@@ -113,9 +113,7 @@
     "SQL/数据库"
   ],
   "evidence_ids": [
-    "",
-    "",
-    ""
+    "xlsx:pos_02"
   ],
   "status": "FINAL"
 }

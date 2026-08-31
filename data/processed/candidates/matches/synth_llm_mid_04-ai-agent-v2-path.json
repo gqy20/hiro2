@@ -52,17 +52,17 @@
       ],
       "trend": {
         "name": "AI Agent",
-        "direction": "up",
-        "confidence": 0.9,
-        "recent": 207.8,
-        "prior": 155.2,
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 202.1,
+        "prior": 160.4,
         "emerging": false,
         "suggestion": {
           "change_type": "add",
           "lead_days": -1430,
           "reliability": "jd_preceded"
         },
-        "note": "市场信号预测上升（置信 0.9），建议优先投入"
+        "note": ""
       }
     },
     {
@@ -89,17 +89,17 @@
       "contests": [],
       "trend": {
         "name": "RAG/知识库",
-        "direction": "up",
-        "confidence": 0.9,
-        "recent": 14.0,
-        "prior": 5.6,
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 16.0,
+        "prior": 4.0,
         "emerging": false,
         "suggestion": {
           "change_type": "add",
           "lead_days": -578,
           "reliability": "jd_preceded"
         },
-        "note": "市场信号预测上升（置信 0.9），建议优先投入"
+        "note": ""
       }
     },
     {
@@ -148,8 +148,8 @@
         "name": "多模态AI",
         "direction": "up",
         "confidence": 0.9,
-        "recent": 126.3,
-        "prior": 69.7,
+        "recent": 115.2,
+        "prior": 82.5,
         "emerging": false,
         "suggestion": {
           "change_type": "add",
@@ -174,8 +174,8 @@
         "name": "自动化运维",
         "direction": "up",
         "confidence": 0.9,
-        "recent": 6.3,
-        "prior": 3.6,
+        "recent": 6.5,
+        "prior": 4.6,
         "emerging": false,
         "suggestion": {
           "change_type": "add",

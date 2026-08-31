@@ -52,17 +52,17 @@
       ],
       "trend": {
         "name": "LLM应用",
-        "direction": "up",
-        "confidence": 0.9,
-        "recent": 111.5,
-        "prior": 83.5,
+        "direction": "flat",
+        "confidence": 0.4,
+        "recent": 107.9,
+        "prior": 88.1,
         "emerging": false,
         "suggestion": {
           "change_type": "add",
           "lead_days": -1492,
           "reliability": "jd_preceded"
         },
-        "note": "市场信号预测上升（置信 0.9），建议优先投入"
+        "note": ""
       }
     },
     {
@@ -149,8 +149,8 @@
         "name": "模型微调",
         "direction": "flat",
         "confidence": 0.4,
-        "recent": 53.6,
-        "prior": 16.0,
+        "recent": 52.6,
+        "prior": 17.0,
         "emerging": false,
         "suggestion": {
           "change_type": "add",
@@ -175,8 +175,8 @@
         "name": "自动化运维",
         "direction": "up",
         "confidence": 0.9,
-        "recent": 6.3,
-        "prior": 3.6,
+        "recent": 6.5,
+        "prior": 4.6,
         "emerging": false,
         "suggestion": {
           "change_type": "add",

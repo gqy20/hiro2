@@ -54,10 +54,8 @@ def test_dashboard_overview_contract() -> None:
     assert len(body["queue"]) == 3
 
 
-def test_job_update_change_review_round_trip(tmp_path, monkeypatch) -> None:
+def test_job_update_change_review_round_trip(isolated_review_log) -> None:
     """岗位更新逐条审核：提交留痕后能按草稿读取终态（隔离日志，不污染事实库）。"""
-    monkeypatch.setattr(api_main.svc.repo, "_review_path", tmp_path / "log.jsonl")
-    monkeypatch.delenv("DATABASE_URL", raising=False)
     client = TestClient(app)
     draft = "contract-draft"
     post = client.post(
@@ -198,7 +196,7 @@ def test_dataset_detail_and_source_stats(monkeypatch) -> None:
     assert client.get("/api/v1/datasets/unknown").status_code == 404
 
 
-def test_publish_job_idempotent_and_unknown_404() -> None:
+def test_publish_job_idempotent_and_unknown_404(isolated_review_log) -> None:
     client = TestClient(app)
     # 已发布过的默认草稿：幂等返回既有 PUBLISHED 版本而非 409
     ok = client.post(

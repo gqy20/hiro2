@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import {
   CheckCircle,
   MagnifyingGlass,
   PaperPlaneTilt,
   Warning,
 } from "@phosphor-icons/react";
-import { Alert, Button, Modal, Skeleton, Tag, Tooltip } from "antd";
+import { Alert, Button, message, Modal, Skeleton, Tag, Tooltip } from "antd";
 
 import { AppShell } from "@/components/app-shell";
 import { EvidenceDrawer } from "@/components/evidence-drawer";
@@ -20,7 +20,13 @@ import {
   StatusMark,
 } from "@/components/review-ui";
 import { FixtureState } from "@/components/workflow-ui";
-import { publishJobVersion, type PublishResult } from "@/lib/api/queries";
+import {
+  fetchChangeReviews,
+  publishJobVersion,
+  submitChangeReview,
+  type ChangeReviewDecision,
+  type PublishResult,
+} from "@/lib/api/queries";
 import {
   type ChangeItem,
   type ChangeKind,
@@ -51,9 +57,9 @@ type JobUpdateWorkbenchProps = {
 type SavedReviewEntry = { status: ReviewStatus; detail: string };
 type SavedReview = Record<string, SavedReviewEntry>;
 
-// ponytail: 审核进度只存浏览器会话，不落后端；发布成功即清除。
-// sessionStorage 是同文档外部存储，用 useSyncExternalStore 订阅，
-// 避免在 effect 里 setState，也避免 SSR 水合不一致（服务端快照为空）。
+// ponytail: 审核进度双层承载——浏览器会话为即时状态（useSyncExternalStore
+// 订阅，避免 effect 内 setState 与水合不一致），后端 append-only 留痕负责
+// 跨会话/跨设备持久化；页面挂载时以后端终态水合，会话内更新优先。
 function reviewStorageKey(jobTitle: string, targetVersion: string): string {
   return `hiro2:job-review:${jobTitle}:${targetVersion}`;
 }
@@ -90,11 +96,7 @@ function savedSnapshot(key: string): SavedReview {
   return parsed;
 }
 
-function writeSavedReview(key: string, items: ChangeItem[]): void {
-  const saved: SavedReview = {};
-  for (const item of items) {
-    saved[item.id] = { status: item.status, detail: item.detail };
-  }
+function writeSavedEntries(key: string, saved: SavedReview): void {
   try {
     window.sessionStorage.setItem(key, JSON.stringify(saved));
   } catch {
@@ -102,6 +104,14 @@ function writeSavedReview(key: string, items: ChangeItem[]): void {
   }
   savedCache = null;
   notifyReviewListeners();
+}
+
+function writeSavedReview(key: string, items: ChangeItem[]): void {
+  const saved: SavedReview = {};
+  for (const item of items) {
+    saved[item.id] = { status: item.status, detail: item.detail };
+  }
+  writeSavedEntries(key, saved);
 }
 
 function clearSavedReview(key: string): void {
@@ -135,6 +145,42 @@ export function JobUpdateWorkbench({
       }),
     [fixture.changes, savedReview],
   );
+  // 挂载时从后端审核留痕水合（跨设备恢复）；会话内已有条目视为更新，优先保留。
+  // 注意：不能用一次性 ref 守卫——StrictMode 双挂载会跳过第二次执行；
+  // 合并逻辑幂等（后端打底、会话优先），重复执行无副作用。
+  useEffect(() => {
+    let cancelled = false;
+    fetchChangeReviews("default", fixture.context.targetVersion).then(
+      (reviews) => {
+        if (cancelled) return;
+        const local = savedSnapshot(storageKey);
+        const merged: SavedReview = {};
+        for (const [changeId, record] of Object.entries(reviews)) {
+          const base = fixture.changes.find((item) => item.id === changeId);
+          if (!base) continue;
+          const status =
+            record.decision === "accepted" ||
+            record.decision === "rejected" ||
+            record.decision === "needs_evidence"
+              ? record.decision
+              : base.status;
+          merged[changeId] = {
+            detail: record.note || base.detail,
+            status,
+          };
+        }
+        for (const [id, entry] of Object.entries(local)) merged[id] = entry;
+        if (Object.keys(merged).length > 0) {
+          writeSavedEntries(storageKey, merged);
+        }
+      },
+    );
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [selected, setSelected] = useState<ChangeItem | null>(null);
   const [running, setRunning] = useState(false);
   const [publishModalOpen, setPublishModalOpen] = useState(false);
@@ -164,11 +210,32 @@ export function JobUpdateWorkbench({
     removed: items.filter((item) => item.kind === "removed").length,
   };
 
+  function syncReview(
+    changeId: string,
+    decision: ChangeReviewDecision,
+    note: string,
+  ): void {
+    submitChangeReview(
+      "default",
+      fixture.context.targetVersion,
+      changeId,
+      decision,
+      note,
+    ).catch(() => {
+      message.error("审核动作未能写入后端，本次仅保留在浏览器会话");
+    });
+  }
+
   function updateStatus(id: string, status: ReviewStatus) {
-    writeSavedReview(
-      storageKey,
-      items.map((item) => (item.id === id ? { ...item, status } : item)),
+    const next = items.map((item) =>
+      item.id === id ? { ...item, status } : item,
     );
+    writeSavedReview(storageKey, next);
+    const target = next.find((item) => item.id === id);
+    // reviewing 仅是初始态，无需留痕
+    if (status !== "reviewing") {
+      syncReview(id, status, target?.detail ?? "");
+    }
   }
 
   function startEditing(item: ChangeItem) {
@@ -177,13 +244,19 @@ export function JobUpdateWorkbench({
   }
 
   function saveDetail(id: string) {
-    writeSavedReview(
-      storageKey,
-      items.map((item) =>
-        item.id === id ? { ...item, detail: draftDetail } : item,
-      ),
+    const next = items.map((item) =>
+      item.id === id ? { ...item, detail: draftDetail } : item,
     );
+    writeSavedReview(storageKey, next);
     setEditingId(null);
+    const target = next.find((item) => item.id === id);
+    const decision: ChangeReviewDecision =
+      target?.status === "accepted" ||
+      target?.status === "rejected" ||
+      target?.status === "needs_evidence"
+        ? target.status
+        : "modified";
+    syncReview(id, decision, draftDetail);
   }
 
   function runAnalysis() {
@@ -505,7 +578,7 @@ export function JobUpdateWorkbench({
               <span>{`已接受的变化将进入 ${fixture.context.targetVersion} 草稿，发布后不可覆盖历史版本。`}</span>
             </div>
             <p className="review-note-hint">
-              审核进度保存在当前浏览器会话，刷新不丢失；发布成功后自动清除。
+              审核进度实时留痕后端，跨设备可恢复；发布后本轮记录归档。
             </p>
           </aside>
         </div>

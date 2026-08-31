@@ -394,6 +394,8 @@ POST /api/v1/emerging-jobs/{id}/review
 GET  /api/v1/jobs/published
 GET  /api/v1/jobs/detected-changes
 GET  /api/v1/jobs/{id}/diff?base=v1&target=v2
+POST /api/v1/jobs/{job_id}/updates/review          # 岗位更新逐条审核留痕（append-only）
+GET  /api/v1/jobs/{job_id}/updates/reviews?draft=  # 读取草稿逐条审核终态
 GET  /api/v1/jobs/{id}/training-output
 GET  /api/v1/xlzsz/certs?skill_id=cap_04        # 学练赛证"证"段：能力域->权威证书（CERTS.yml）
 GET  /api/v1/xlzsz/contests?skill_id=cap_04     # 学练赛证"赛"段：能力域->推荐竞赛（CONTESTS.yml）
@@ -437,6 +439,7 @@ GET  /health/ready
 `PATCH /candidates/{candidate_id}/profile` 的技能项包含 `name`、`status`、`level` 与 `years`；保存时追加画像版本和修正记录，并重新计算当前目标岗位。技能证明通过 `POST /candidates/{candidate_id}/proofs` 关联标准能力域；未完成标准映射的技能不能写入结构化证明。
 `scripts/outbox.py enqueue <version_id>` 写入 `JobVersionPublished`，`scripts/outbox.py consume` 领取并幂等投影到 Neo4j。
 `GET /jobs/detected-changes` 返回快照差异检测草稿（`DetectedChanges`）：顶层 `base`、`obs`、`changes_total`、`jobs[]`；每个岗位含 `position_id`、`job`（展示名，取该岗位聚类众数 JD 标题并截断，解析失败回退 `position_id`）、`base_jds`/`obs_jds`、`review_status` 与 `changes[]`；每条变化含 `skill_id`、`name`、`change_type: add | grow | shrink | remove`、`base_share`/`obs_share`（岗位内提及份额 0–1）、`base_mentions`/`obs_mentions`。字段名使用 snake_case，与后端 `DetectedChangesVM` 一致，前端不得另造驼峰别名；草稿仅供复核展示，发布仍走 `POST /jobs/{id}/versions/{version}/publish`。
+岗位更新逐条审核以 `jobchg:{job_id}:{draft}:{change_id}` 为目标写入统一审核日志（append-only）；`updates/reviews` 按 draft 前缀读取每条变化的最新终态，`note` 可携带编辑后的说明。岗位更新页的证据来自 changeset 的 `evidence_ids`；为空时回退为观察窗内归一技能命中该能力域的招聘 JD（确定性，最多 3 条），保证每条变化都有证据。
 `GET /diagnosis/{candidate_id}` 的 `report.evidence` 返回匹配报告引用的证据条目（camelCase：`id/source/sourceType/publishedAt/collectedAt/quality/excerpt/fullText/sourceUrl/stance`），由 `evidence_ids` 经证据库解析，去重后最多 5 条；匹配引擎的岗位依据使用发布版本 `evidence.baseline_evidence_id`（职业标准基线），报告 `evidence_ids` 去重后落库。 `report.gaps[].jobEvidence` 返回该缺口的岗位侧 JD 归因证据（同形状条目，每能力域最多 2 条）：归因为确定性联查——岗位版本 `evidence.evidence_ids` 中，归一技能命中该能力域的招聘 JD。
 ```
 

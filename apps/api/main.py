@@ -109,6 +109,13 @@ class ReviewRequest(BaseModel):
     note: str = ""
 
 
+class ChangeReviewRequest(BaseModel):
+    draft: str = Field(min_length=1, max_length=120)
+    change_id: str = Field(min_length=1, max_length=80)
+    decision: str = Field(pattern="^(accepted|rejected|needs_evidence|modified)$")
+    note: str = Field(default="", max_length=2000)
+
+
 class PublishRequest(BaseModel):
     reviewer: str = ""
     note: str = ""
@@ -573,6 +580,18 @@ def xlzsz_certs(skill_id: str = Query(description="能力域 id，如 cap_04")) 
 def xlzsz_contests(skill_id: str = Query(description="能力域 id，如 cap_04")) -> dict:
     """学练赛证"赛"段：能力域 -> 推荐竞赛（CONTESTS.yml 映射，零 LLM）。"""
     return build_xlzsz(skill_id, segment="contests").model_dump()
+
+
+@app.post("/api/v1/jobs/{job_id}/updates/review")
+def submit_change_review(job_id: str, req: ChangeReviewRequest) -> dict:
+    """岗位更新逐条审核留痕（append-only）：decision + note（可携带编辑后说明）。"""
+    return svc.submit_change_review(job_id, req.draft, req.change_id, req.decision, req.note)
+
+
+@app.get("/api/v1/jobs/{job_id}/updates/reviews")
+def list_change_reviews(job_id: str, draft: str = "") -> dict:
+    """读取某草稿逐条审核终态：change_id -> 最新 decision/note/ts。"""
+    return {"reviews": svc.change_reviews(job_id, draft)}
 
 
 @app.post("/api/v1/jobs/{job_version_id}/versions/{version}/publish")

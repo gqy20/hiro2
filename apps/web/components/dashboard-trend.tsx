@@ -6,6 +6,25 @@ const COLORS = ["var(--blue)", "var(--green)", "#a27600"];
 
 const CHART_WIDTH = 920;
 const CHART_HEIGHT = 250;
+const SMOOTH_RADIUS = 2;
+
+// 样本加权移动平均：早期小样本月份（个位数 JD）毛刺大，按样本量
+// 加权平滑（sqrt 抑制后期数千样本的绝对主导）；平滑仅用于展示曲线，
+// 提示框仍展示原始值与样本量。
+export function smoothSeries(values: number[], weights: number[]): number[] {
+  return values.map((_, index) => {
+    let numerator = 0;
+    let denominator = 0;
+    const from = Math.max(0, index - SMOOTH_RADIUS);
+    const to = Math.min(values.length - 1, index + SMOOTH_RADIUS);
+    for (let j = from; j <= to; j++) {
+      const weight = Math.sqrt(Math.max(weights[j] ?? 0, 1));
+      numerator += (values[j] ?? 0) * weight;
+      denominator += weight;
+    }
+    return denominator > 0 ? numerator / denominator : (values[index] ?? 0);
+  });
+}
 
 export function DashboardTrend({
   trends,
@@ -27,7 +46,11 @@ export function DashboardTrend({
   const width = CHART_WIDTH;
   const height = CHART_HEIGHT;
   const months = trends[0]?.months ?? [];
-  const all = trends.flatMap((trend) => trend.values);
+  // 展示用平滑曲线（样本加权）；原始值保留给提示框与终点标注。
+  const smoothed = trends.map((trend) =>
+    smoothSeries(trend.values, trend.sample_counts),
+  );
+  const all = smoothed.flatMap((values) => values);
   const min = Math.min(...all, 0);
   const max = Math.max(...all, 1);
   const xAt = (index: number, count: number) =>
@@ -107,17 +130,18 @@ export function DashboardTrend({
           ) : null}
           {trends.map((trend, index) => {
             const color = COLORS[index % COLORS.length];
-            const last = trend.values.length - 1;
-            const x = xAt(last, trend.values.length);
-            const y = yAt(trend.values[last]);
+            const series = smoothed[index] ?? [];
+            const last = series.length - 1;
+            const x = xAt(last, series.length);
+            const y = yAt(series[last] ?? 0);
             return (
               <g key={trend.skill_id}>
-                <path d={path(trend.values)} style={{ stroke: color }} />
+                <path d={path(series)} style={{ stroke: color }} />
                 <circle cx={x} cy={y} r="3.5" style={{ fill: color }} />
-                {hoverIndex !== null && trend.values[hoverIndex] != null ? (
+                {hoverIndex !== null && series[hoverIndex] != null ? (
                   <circle
-                    cx={xAt(hoverIndex, trend.values.length)}
-                    cy={yAt(trend.values[hoverIndex])}
+                    cx={xAt(hoverIndex, series.length)}
+                    cy={yAt(series[hoverIndex])}
                     r="4"
                     style={{ fill: color }}
                   />
@@ -158,6 +182,7 @@ export function DashboardTrend({
                 <small>{`样本 ${trend.sample_counts[hoverIndex] ?? 0}`}</small>
               </span>
             ))}
+            <em>{`曲线为 ±${SMOOTH_RADIUS} 月样本加权平滑`}</em>
           </div>
         ) : null}
       </div>

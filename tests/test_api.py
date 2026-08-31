@@ -54,6 +54,41 @@ def test_dashboard_overview_contract() -> None:
     assert len(body["queue"]) == 3
 
 
+def test_job_update_change_review_round_trip(tmp_path, monkeypatch) -> None:
+    """岗位更新逐条审核：提交留痕后能按草稿读取终态（隔离日志，不污染事实库）。"""
+    monkeypatch.setattr(api_main.svc.repo, "_review_path", tmp_path / "log.jsonl")
+    monkeypatch.delenv("DATABASE_URL", raising=False)
+    client = TestClient(app)
+    draft = "contract-draft"
+    post = client.post(
+        "/api/v1/jobs/default/updates/review",
+        json={
+            "draft": draft,
+            "change_id": "chg-cap_03",
+            "decision": "accepted",
+            "note": "说明已编辑",
+        },
+    )
+    assert post.status_code == 200 and post.json()["accepted"]
+    # 后一条覆盖前一条（append-only 取终态）
+    client.post(
+        "/api/v1/jobs/default/updates/review",
+        json={"draft": draft, "change_id": "chg-cap_03", "decision": "rejected", "note": ""},
+    )
+    body = client.get(f"/api/v1/jobs/default/updates/reviews?draft={draft}").json()
+    assert body["reviews"]["chg-cap_03"]["decision"] == "rejected"
+    # 其他草稿互不串读
+    assert client.get("/api/v1/jobs/default/updates/reviews?draft=other").json()["reviews"] == {}
+
+
+def test_job_update_changes_all_carry_evidence() -> None:
+    """每条变化都有证据：空 evidence_ids 回退到观察窗内 JD 归因。"""
+    body = TestClient(app).get("/api/v1/jobs/default/update?state=ready").json()
+    assert body["changes"]
+    for change in body["changes"]:
+        assert change["evidence"], f"{change['title']} 缺少证据且回退归因失败"
+
+
 def test_detected_changes_contract() -> None:
     """DetectedChanges 使用 snake_case VM 字段与合法 change_type。"""
     response = TestClient(app).get("/api/v1/jobs/detected-changes")

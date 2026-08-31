@@ -1,8 +1,7 @@
 // 客户端可调用的查询函数。RSC 页面不通过本文件读取数据（避免把
 // node:fs 路径拉进客户端 bundle）；RSC 直接调用 loadXxxFixture 或 apiFetch。
 //
-// 当前只有 publishJobVersion 是客户端操作（mutation），新增客户端 mutation
-// 时按相同模式增量添加。
+// 客户端 mutation（publishJobVersion、逐条审核等）按相同模式增量添加。
 
 import { apiFetch, isMockMode } from "@/lib/api/client";
 
@@ -102,5 +101,53 @@ export async function reviewEmergingJob(
   return apiFetch<{ accepted: boolean }>(
     `/emerging-jobs/${encodeURIComponent(candidateId)}/review`,
     { method: "POST", body: { decision, note } },
+  );
+}
+
+export type ChangeReviewDecision =
+  "accepted" | "rejected" | "needs_evidence" | "modified";
+
+export type ChangeReviewRecord = {
+  decision: ChangeReviewDecision;
+  note: string;
+  ts: string;
+};
+
+// 岗位更新逐条审核：读取某草稿的审核终态（real 走后端；mock 无持久状态）。
+export async function fetchChangeReviews(
+  jobId: string,
+  draft: string,
+): Promise<Record<string, ChangeReviewRecord>> {
+  if (isMockMode()) return {};
+  try {
+    const data = await apiFetch<{
+      reviews: Record<string, ChangeReviewRecord>;
+    }>(
+      `/jobs/${encodeURIComponent(jobId)}/updates/reviews?draft=${encodeURIComponent(draft)}`,
+    );
+    return data.reviews;
+  } catch {
+    return {}; // 读取失败不阻断页面，退化为会话内状态
+  }
+}
+
+// 岗位更新逐条审核：提交决策留痕（append-only），note 可携带编辑后的说明。
+export async function submitChangeReview(
+  jobId: string,
+  draft: string,
+  changeId: string,
+  decision: ChangeReviewDecision,
+  note = "",
+): Promise<{ accepted: boolean }> {
+  if (isMockMode()) {
+    await new Promise((resolve) => setTimeout(resolve, 120));
+    return { accepted: true };
+  }
+  return apiFetch<{ accepted: boolean }>(
+    `/jobs/${encodeURIComponent(jobId)}/updates/review`,
+    {
+      method: "POST",
+      body: { draft, change_id: changeId, decision, note },
+    },
   );
 }

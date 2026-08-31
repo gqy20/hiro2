@@ -429,6 +429,14 @@
   color: var(--muted);
   font-size: 12px;
 }
+.dashboard-trend-tooltip em {
+  margin-top: 2px;
+  padding-top: 4px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+  font-style: normal;
+}
 .dashboard-trend-chart path {
   fill: none;
   stroke-width: 2.5;

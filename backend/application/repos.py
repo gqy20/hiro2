@@ -36,6 +36,8 @@ class DataRepository(Protocol):
     def jd_parsed(self) -> dict[str, dict]: ...
     def capabilities(self) -> list[dict]: ...
     def role_map(self) -> list[dict]: ...
+    def review_actions(self) -> list[dict]: ...
+
     def append_review(self, action: dict) -> None: ...
 
 
@@ -104,6 +106,16 @@ class FileRepository:
     def role_map(self) -> list[dict]:
         self._ensure()
         return self._roles
+
+    def review_actions(self) -> list[dict]:
+        """审核事实日志（append-only）；文件为离线/在线统一事实源。"""
+        if not self._review_path.is_file():
+            return []
+        out = []
+        for line in self._review_path.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                out.append(json.loads(line))
+        return out
 
     def append_review(self, action: dict) -> None:
         self._review_path.parent.mkdir(parents=True, exist_ok=True)
@@ -190,12 +202,17 @@ class PostgresRepository(FileRepository):
         }
 
     def jd_parsed(self) -> dict[str, dict]:
-        rows = self._rows("SELECT jd_id, responsibilities, requirements, resolved FROM jd_records")
+        rows = self._rows(
+            "SELECT jd_id, responsibilities, requirements, resolved, publish_date FROM jd_records"
+        )
         return {
             row["jd_id"]: {
                 "responsibilities": row["responsibilities"],
                 "requirements": row["requirements"],
                 "resolved": row["resolved"],
+                "publish_date": row["publish_date"].isoformat()
+                if hasattr(row["publish_date"], "isoformat")
+                else (row["publish_date"] or ""),
             }
             for row in rows
         }

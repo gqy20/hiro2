@@ -104,6 +104,10 @@
 
 - 候选诊断缺口级岗位证据归因：每个缺口携带「岗位依据 · N 条招聘 JD」，点击打开证据抽屉查看具体哪些招聘 JD 要求该能力（确定性归因：岗位版本证据集中归一技能命中该能力域的 JD，每能力域最多 2 条）；后端 `report.gaps[].jobEvidence`（camelCase）+ 前端缺口卡按钮，mock 样本与 e2e 同步补齐。
 
+- 岗位更新审核持久化升级为后端留痕：新增 `POST /jobs/{job_id}/updates/review` 与 `GET /jobs/{job_id}/updates/reviews`（append-only 审核日志，目标键 `jobchg:{job}:{draft}:{change}`），工作台逐条审核写透后端、挂载时按草稿水合恢复，跨设备不丢；浏览器会话仍作即时状态层（StrictMode 双挂载水合守卫修复）。
+- 岗位更新每条变化保证有证据：changeset 空 `evidence_ids` 时回退为观察窗内归一技能命中该能力域的招聘 JD（确定性，最多 3 条）；`PostgresRepository.jd_parsed()` 补 `publish_date` 字段（窗口过滤依赖）。
+- 工作台能力需求趋势改为样本加权移动平均平滑（±2 月、sqrt 权重），消除早期个位数样本毛刺；曲线与提示框明示平滑口径，提示框保留原始值与样本量；补 `smoothSeries` 单元测试。
+
 ### Fixed
 - 招聘区「我的岗位」快照差异块修复前后端契约失配：后端 `DetectedChangesVM` 为 snake_case，前端原用驼峰本地类型导致真实模式渲染 `undefined 项待复核`、`NaN%→NaN%`、空「→ 条 JD」；现前端统一消费 `lib/api/types.ts` 的 snake_case 类型，`change_type` 使用 add|grow|shrink|remove。`job` 字段从裸 `position_id`（pos_01）解析为岗位聚类众数 JD 标题（确定性、截断 24 字、失败回退），`contracts.md` 登记 `DetectedChanges` 字段级契约。
 - 岗位更新页审核进度不再丢失：接受/拒绝/编辑说明持久化到浏览器会话存储（`useSyncExternalStore`，服务端快照为空无水合抖动），刷新保留，发布成功后自动清除并明示「审核进度保存在当前浏览器会话」。

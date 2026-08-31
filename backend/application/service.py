@@ -307,12 +307,36 @@ class ApplicationService:
         )
 
     def _jd_evidence(self, change: dict, ev_index: dict[str, dict]) -> list[dict]:
+        eids = change.get("evidence_ids") or []
+        if not eids:
+            # 空证据回退：观察窗内归一技能命中该能力域的招聘 JD（确定性，最多 3 条）
+            eids = self._window_jd_evidence(change.get("skill_id", ""), ev_index)
         out = []
-        for eid in change.get("evidence_ids") or []:
+        for eid in eids:
             ev = ev_index.get(eid)
             if ev:
                 out.append(ev)
         return out[:3]
+
+    def _window_jd_evidence(self, skill_id: str, ev_index: dict[str, dict]) -> list[str]:
+        """观察窗内提及某能力域的招聘 JD evidence_id（需存在证据记录）。"""
+        if not skill_id:
+            return []
+        obs = self.repo.job_changeset().get("obs_window", "")
+        start, _, end = obs.partition(":")
+        hits: list[str] = []
+        for jd_id, rec in self._jd_parsed().items():
+            pub = rec.get("publish_date") or ""
+            if start and end and not (start <= pub <= end):
+                continue
+            if not any(x.get("skill_id") == skill_id for x in rec.get("resolved") or []):
+                continue
+            eid = f"jd:{jd_id}"
+            if eid in ev_index:
+                hits.append(eid)
+            if len(hits) >= 3:
+                break
+        return hits
 
     # ---------- 新岗位候选（主案例 1） ----------
 
@@ -365,6 +389,36 @@ class ApplicationService:
         return [self._evidence_vm(e) for e in picks]
 
     # ---------- 审核（append-only，ADR 0006） ----------
+
+    # ---------- 岗位更新逐条审核（append-only，跨会话持久化） ----------
+
+    @staticmethod
+    def _change_review_target(job_id: str, draft: str, change_id: str) -> str:
+        return f"jobchg:{job_id}:{draft}:{change_id}"
+
+    def submit_change_review(
+        self, job_id: str, draft: str, change_id: str, decision: str, note: str = ""
+    ) -> dict:
+        return self.submit_review(
+            self._change_review_target(job_id, draft, change_id), decision, note
+        )
+
+    def change_reviews(self, job_id: str, draft: str) -> dict[str, dict]:
+        """change_id -> 最新一条审核动作（同一事实日志，只取终态）。"""
+        prefix = f"jobchg:{job_id}:{draft}:"
+        latest: dict[str, dict] = {}
+        for rec in self.repo.review_actions():
+            tid = rec.get("target_id", "")
+            if tid.startswith(prefix):
+                latest[tid.removeprefix(prefix)] = rec
+        return {
+            cid: {
+                "decision": rec.get("decision", ""),
+                "note": rec.get("note", ""),
+                "ts": rec.get("ts", ""),
+            }
+            for cid, rec in latest.items()
+        }
 
     def submit_review(self, target_id: str, decision: str, note: str = "", **extra: object) -> dict:
         action = {

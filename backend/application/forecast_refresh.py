@@ -6,6 +6,7 @@
 完整链（对齐：事件采集与预测同一任务、正确顺序，避免预测基于陈旧事件）：
     rssget fetch             抓 RSS 实时源 -> raw/feeds/（尽力而为）
     extract feeds --days N   RSS 条目增量抽取进 events.jsonl（LLM，幂等，尽力而为）
+    emergscan run            涌现岗位扫描（新岗位候选持续产出，零 LLM）
     livcast run              实时预测（读 events.jsonl，确定性）
     predsnap run --source live  合并预测快照（学练段消费）
   前两步尽力而为（失败不阻塞）；预测 + 快照必定执行（用现有事件）。
@@ -36,6 +37,8 @@ _INGEST_CMDS = [
     [sys.executable, "scripts/rssget.py", "fetch"],
     # extract feeds 的 --days 在运行时按 env 填充（增量窗口限 LLM 成本）
     [sys.executable, "scripts/extract.py", "feeds"],
+    # 涌现岗位扫描（通用新岗位发现，持续产出候选，零 LLM；注意 python 直跑 uv 脚本别名偶发不解析）
+    [sys.executable, "scripts/emergscan.py", "run"],
 ]
 _FORECAST_CMDS = [
     [sys.executable, "scripts/livcast.py", "run"],
@@ -44,8 +47,9 @@ _FORECAST_CMDS = [
 _STEP_TIMEOUTS = {
     0: 15 * 60,  # rssget 抓取
     1: 30 * 60,  # extract feeds（LLM 抽取，预留长些）
-    2: 15 * 60,  # livcast 实时预测
-    3: 5 * 60,  # predsnap 快照合并
+    2: 5 * 60,  # emergscan 涌现扫描（确定性，快）
+    3: 15 * 60,  # livcast 实时预测
+    4: 5 * 60,  # predsnap 快照合并
 }
 
 
@@ -77,17 +81,24 @@ async def run_forecast_refresh_once() -> dict:
     事件采集失败不阻塞预测：预测 + 快照用现有事件照常执行。
     """
     started = time.time()
-    # 事件采集（尽力而为）：抓 RSS -> 增量抽取进 events.jsonl
+    # 事件采集 + 涌现扫描（尽力而为）：抓 RSS -> 增量抽取 -> 扫涌现岗位候选
     ok_rss = await _run_step(0, _INGEST_CMDS[0])
     extract_days = os.getenv("HIRO2_FORECAST_REFRESH_EXTRACT_DAYS", "2") or "2"
     ok_extract = await _run_step(1, [*_INGEST_CMDS[1], "--days", extract_days])
+    ok_emerge = await _run_step(2, _INGEST_CMDS[2])
     if not (ok_rss and ok_extract):
         _log("事件采集部分失败，预测改用现有事件照常执行")
     # 实时预测 + 快照（必执行）
-    ok_live = await _run_step(2, _FORECAST_CMDS[0])
-    ok_snap = await _run_step(3, _FORECAST_CMDS[1]) if ok_live else False
+    ok_live = await _run_step(3, _FORECAST_CMDS[0])
+    ok_snap = await _run_step(4, _FORECAST_CMDS[1]) if ok_live else False
     _log(f"本轮{'完成' if ok_snap else '失败'} 耗时 {time.time() - started:.0f}s")
-    return {"rssget": ok_rss, "extract": ok_extract, "livcast": ok_live, "predsnap": ok_snap}
+    return {
+        "rssget": ok_rss,
+        "extract": ok_extract,
+        "emergescan": ok_emerge,
+        "livcast": ok_live,
+        "predsnap": ok_snap,
+    }
 
 
 async def forecast_refresh_loop() -> None:

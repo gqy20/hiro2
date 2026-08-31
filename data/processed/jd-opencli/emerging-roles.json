@@ -1,0 +1,145 @@
+{
+  "as_of": "2026-08-27",
+  "criteria": {
+    "min_recent_90d": 10,
+    "growth_ratio": 1.5,
+    "min_title_variants": 3,
+    "min_platforms": 2
+  },
+  "candidates": [
+    {
+      "keyword": "forward deployed",
+      "total": 137,
+      "recent_90d": 129,
+      "prior_90d": 2,
+      "growth_ratio": 64.5,
+      "monthly": {
+        "2024-01": 1,
+        "2025-10": 5,
+        "2026-05": 2,
+        "2026-07": 2,
+        "2026-08": 127
+      },
+      "title_variants": 66,
+      "platforms": 8,
+      "sample_titles": [
+        "AI Engineer - FDE (Forward Deployed Engineer)",
+        "Director of Product Management, Forward Deployed & Strategy",
+        "Director, Forward Deployed Engineering",
+        "Engineering Manager, Forward Deployed (Privy)",
+        "Forward Deployed AI Accelerator, Marketing"
+      ],
+      "aliases": [
+        "FDE",
+        "sr forward",
+        "sr forward deployed"
+      ]
+    },
+    {
+      "keyword": "applied ai",
+      "total": 47,
+      "recent_90d": 42,
+      "prior_90d": 0,
+      "growth_ratio": null,
+      "monthly": {
+        "2025-10": 5,
+        "2026-08": 42
+      },
+      "title_variants": 37,
+      "platforms": 4,
+      "sample_titles": [
+        "Applied AI Architect",
+        "Applied AI Architect, Commercial",
+        "Applied AI Architect, Digital Natives Business ",
+        "Applied AI Architect, Enterprise Tech",
+        "Applied AI Architect, Industries"
+      ]
+    },
+    {
+      "keyword": "ai infrastructure",
+      "total": 20,
+      "recent_90d": 15,
+      "prior_90d": 0,
+      "growth_ratio": null,
+      "monthly": {
+        "2025-04": 1,
+        "2025-06": 2,
+        "2025-10": 1,
+        "2026-02": 1,
+        "2026-06": 1,
+        "2026-07": 5,
+        "2026-08": 9
+      },
+      "title_variants": 16,
+      "platforms": 5,
+      "sample_titles": [
+        "AI Infrastructure Engineer",
+        "AI Infrastructure Engineer, Model Serving Platform",
+        "AI Infrastructure Engineer, Sandbox Platform",
+        "AI Infrastructure Engineer, Serving Platform",
+        "AI Infrastructure Operations, Demand Planning"
+      ]
+    },
+    {
+      "keyword": "data platform",
+      "total": 19,
+      "recent_90d": 18,
+      "prior_90d": 1,
+      "growth_ratio": 18.0,
+      "monthly": {
+        "2026-03": 1,
+        "2026-07": 1,
+        "2026-08": 17
+      },
+      "title_variants": 16,
+      "platforms": 7,
+      "sample_titles": [
+        "Backend Software Engineer — Data Platform & AI Data Products",
+        "Engineering Manager, Research Data Platform",
+        "Manager, Software Engineering - Data Platform",
+        "Product Management, Human Data Platform",
+        "Research Engineer, Economic Research Data Platform"
+      ]
+    },
+    {
+      "keyword": "compute infrastructure",
+      "total": 12,
+      "recent_90d": 12,
+      "prior_90d": 0,
+      "growth_ratio": null,
+      "monthly": {
+        "2026-07": 2,
+        "2026-08": 10
+      },
+      "title_variants": 6,
+      "platforms": 4,
+      "sample_titles": [
+        "Director, Compute Infrastructure Procurement Operations",
+        "Junior/Senior/Staff Software Engineer, Inference / Compute Infrastructure Engineering",
+        "Legal Program Manager, Compute & Infrastructure",
+        "Staff Software Engineer, Inference / Compute Infrastructure Engineering",
+        "Staff Technical Program Manager, Compute Infrastructure"
+      ]
+    },
+    {
+      "keyword": "基础技术",
+      "total": 11,
+      "recent_90d": 10,
+      "prior_90d": 0,
+      "growth_ratio": null,
+      "monthly": {
+        "2025-02": 1,
+        "2026-08": 10
+      },
+      "title_variants": 11,
+      "platforms": 2,
+      "sample_titles": [
+        "AI中间件开发工程师/专家-基础技术",
+        "JDK研发工程师-基础技术",
+        "业务架构研发工程师-基础技术",
+        "中间件研发-基础技术",
+        "可观测性技术研发-基础技术"
+      ]
+    }
+  ]
+}

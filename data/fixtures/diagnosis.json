@@ -90,7 +90,21 @@
           "confidence": 0.9,
           "emerging": false,
           "note": "市场信号预测上升（置信 0.9），建议优先投入"
-        }
+        },
+        "jobEvidence": [
+          {
+            "id": "jd:fixture:eval_01",
+            "source": "51job",
+            "sourceType": "招聘 JD",
+            "publishedAt": "2026-07-21",
+            "collectedAt": "2026-08-26",
+            "quality": 0.82,
+            "excerpt": "负责智能体效果评测体系搭建，制定评测指标与回归基线，持续跟踪线上质量。",
+            "fullText": "负责智能体效果评测体系搭建，制定评测指标与回归基线，持续跟踪线上质量；熟悉 RAGAS 等评测框架者优先。",
+            "sourceUrl": null,
+            "stance": "支持"
+          }
+        ]
       },
       {
         "skill": "智能体编排",
@@ -119,7 +133,21 @@
           "confidence": 0.9,
           "emerging": false,
           "note": "市场信号预测上升（置信 0.9），建议优先投入"
-        }
+        },
+        "jobEvidence": [
+          {
+            "id": "jd:fixture:agent_01",
+            "source": "BOSS直聘",
+            "sourceType": "招聘 JD",
+            "publishedAt": "2026-07-18",
+            "collectedAt": "2026-08-26",
+            "quality": 0.8,
+            "excerpt": "负责多智能体编排框架设计，集成工具调用与任务规划，落地复杂业务流程自动化。",
+            "fullText": "负责多智能体编排框架设计，集成工具调用与任务规划，落地复杂业务流程自动化；有 LangGraph、AutoGen 经验者优先。",
+            "sourceUrl": null,
+            "stance": "支持"
+          }
+        ]
       },
       {
         "skill": "检索增强生成",
@@ -142,7 +170,8 @@
           "confidence": 0.4,
           "emerging": false,
           "note": ""
-        }
+        },
+        "jobEvidence": []
       }
     ],
     "evidence": [

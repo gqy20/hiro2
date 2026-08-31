@@ -35,6 +35,26 @@ def test_skill_evidence_uses_business_source_instead_of_resolution_method() -> N
     assert _skill_evidence({"source": "correction"}) == "人工修正"
 
 
+def test_build_diagnosis_attributes_job_evidence_per_gap(monkeypatch) -> None:
+    """缺口携带岗位侧 JD 归因证据（确定性：JD 归一技能命中岗位证据集）。"""
+    from backend.application import diagnosis
+    from backend.application.diagnosis import build_diagnosis
+
+    monkeypatch.delenv("DATABASE_URL", raising=False)
+    monkeypatch.setattr(diagnosis, "_EVIDENCE_INDEX", None, raising=False)
+    monkeypatch.setattr(diagnosis, "_JD_SKILLS", None, raising=False)
+    monkeypatch.setattr(diagnosis, "_REPO", None, raising=False)
+
+    vm = build_diagnosis("synth_agent_senior_02", "ai-agent-v2")
+    gaps = vm.report["gaps"]
+    assert gaps, "应存在缺口"
+    with_evidence = [g for g in gaps if g["jobEvidence"]]
+    assert with_evidence, "至少一个缺口应归因到招聘 JD 证据"
+    for entry in with_evidence[0]["jobEvidence"]:
+        assert entry["sourceType"] == "招聘 JD"
+        assert entry["excerpt"]
+
+
 def test_build_diagnosis_exposes_resolved_report_evidence(monkeypatch) -> None:
     """报告 evidence_ids 解析为前端证据条目（走离线文件路径，避免依赖数据库）。"""
     from backend.application import diagnosis

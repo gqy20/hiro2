@@ -126,6 +126,23 @@ export function DiagnosisWorkbench({
     status: "accepted",
     evidence: reportEvidenceList,
   };
+  // 缺口 -> 证据抽屉项：岗位侧 JD 归因证据（置信取证据质量均值）
+  function gapEvidenceItem(gap: (typeof priorityGaps)[number]): ChangeItem {
+    const evidence = gap.jobEvidence ?? [];
+    const avg = evidence.length
+      ? evidence.reduce((sum, e) => sum + e.quality, 0) / evidence.length
+      : 0;
+    return {
+      confidence: Math.round(avg * 100) / 100,
+      detail: `${fixture.job.title}（${fixture.job.version}）的招聘 JD 中对「${gap.skill}」的提及证据。`,
+      evidence,
+      id: `gap-${gap.skill}`,
+      kind: "modified",
+      status: "accepted",
+      title: gap.skill,
+    };
+  }
+
   const counts = {
     ready: skills.filter((skill) => skill.status === "ready").length,
     partial: skills.filter((skill) => skill.status === "partial").length,
@@ -551,6 +568,17 @@ export function DiagnosisWorkbench({
                         "岗位要求中尚未找到你的有效项目或技能证明。"}
                     </p>
                     <span>{gap.action}</span>
+                    {gap.jobEvidence?.length ? (
+                      <button
+                        className="gap-job-evidence"
+                        onClick={() =>
+                          setSelectedEvidence(gapEvidenceItem(gap))
+                        }
+                        type="button"
+                      >
+                        {`岗位依据 · ${gap.jobEvidence.length} 条招聘 JD`}
+                      </button>
+                    ) : null}
                   </article>
                 ))}
               </div>

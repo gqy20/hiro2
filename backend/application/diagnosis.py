@@ -68,6 +68,7 @@ class GapVM(_VM):
     certificates: list[dict] = Field(default_factory=list)
     contests: list[dict] = Field(default_factory=list)
     trend: dict | None = None
+    job_evidence: list[dict] = Field(default_factory=list)
 
 
 class DiagnosisVM(_VM):
@@ -85,15 +86,58 @@ def _load(p: Path) -> dict:
 
 _REPO = None
 _EVIDENCE_INDEX: dict[str, dict] | None = None
+_JD_SKILLS: dict[str, set[str]] | None = None
 
 
 def _evidence_index() -> dict[str, dict]:
     """evidence_id -> 原始证据记录（进程内只建一次）。"""
-    global _REPO, _EVIDENCE_INDEX
+    global _EVIDENCE_INDEX
     if _EVIDENCE_INDEX is None:
-        _REPO = build_repository()
-        _EVIDENCE_INDEX = {ev["evidence_id"]: ev for ev in _REPO.evidence()}
+        _EVIDENCE_INDEX = {ev["evidence_id"]: ev for ev in _repo().evidence()}
     return _EVIDENCE_INDEX
+
+
+def _repo():
+    global _REPO
+    if _REPO is None:
+        _REPO = build_repository()
+    return _REPO
+
+
+def _jd_skill_index() -> dict[str, set[str]]:
+    """jd_id -> 归一技能集合（进程内只建一次）。"""
+    global _JD_SKILLS
+    if _JD_SKILLS is None:
+        _JD_SKILLS = {
+            jd_id: {x["skill_id"] for x in (rec.get("resolved") or []) if x.get("skill_id")}
+            for jd_id, rec in _repo().jd_parsed().items()
+        }
+    return _JD_SKILLS
+
+
+def _attribute_job_evidence(job_evidence_ids: list[str], skill_ids: set[str]) -> dict:
+    """能力域 -> 岗位 JD 证据条目（确定性归因：JD 归一技能命中）。
+
+    每个能力域最多取 2 条，保持岗位证据清单原序；只归因请求的能力域。
+    """
+    if not job_evidence_ids or not skill_ids:
+        return {}
+    jd_skills = _jd_skill_index()
+    index = _evidence_index()
+    events = _repo().events_primary()
+    jd = _repo().jd_parsed()
+    out: dict[str, list[dict]] = {}
+    for evidence_id in job_evidence_ids:
+        ev = index.get(evidence_id)
+        if not ev:
+            continue
+        jd_id = (ev.get("source_span") or {}).get("jd_id", "")
+        for sid in jd_skills.get(jd_id, set()) & skill_ids:
+            if len(out.get(sid, [])) < 2:
+                out.setdefault(sid, []).append(
+                    evidence_to_vm(ev, events, jd).model_dump(by_alias=True)
+                )
+    return out
 
 
 def _resolve_report_evidence(evidence_ids: list[str]) -> list[dict]:
@@ -101,9 +145,8 @@ def _resolve_report_evidence(evidence_ids: list[str]) -> list[dict]:
     if not evidence_ids:
         return []
     index = _evidence_index()
-    assert _REPO is not None
-    events = _REPO.events_primary()
-    jd = _REPO.jd_parsed()
+    events = _repo().events_primary()
+    jd = _repo().jd_parsed()
     out: list[dict] = []
     for evidence_id in dict.fromkeys(evidence_ids):
         if not evidence_id or len(out) >= 5:
@@ -237,6 +280,10 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
             {},
         )
 
+    job_evidence_ids = (job.get("evidence") or {}).get("evidence_ids", [])
+    attributed = _attribute_job_evidence(
+        job_evidence_ids, {g["skill_id"] for g in report.get("gaps", [])}
+    )
     gaps = [
         GapVM(
             skill=g["name"],
@@ -250,6 +297,8 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
             contests=_step(g["skill_id"]).get("contests", []),
             # 趋势实时读预测快照（而非固化的 path.json），定时刷新后立即生效。
             trend=_live_trend(g["skill_id"]),
+            # 岗位侧 JD 证据：该能力域被哪些招聘 JD 提及（确定性归因）。
+            job_evidence=attributed.get(g["skill_id"], []),
         )
         for g in report.get("gaps", [])
         if g.get("verdict") != "已具备"
@@ -285,7 +334,7 @@ def build_diagnosis(candidate_id: str, job_version_id: str = "ai-agent-v2") -> D
                 if g.get("is_required") and g.get("verdict") == "已具备"
             ),
             "requiredTotal": len(job.get("required_skill_ids", [])),
-            "gaps": [g.model_dump() for g in gaps],
+            "gaps": [g.model_dump(by_alias=True) for g in gaps],
             "career": career_state,
             "evidence": _resolve_report_evidence(report.get("evidence_ids") or []),
         },

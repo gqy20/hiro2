@@ -448,6 +448,19 @@
   color: var(--muted);
   font-size: 14px;
 }
+.gap-job-evidence {
+  margin-top: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.gap-job-evidence:hover {
+  text-decoration: underline;
+}
 .gap-high {
   background: rgba(220, 60, 52, 0.08);
 }

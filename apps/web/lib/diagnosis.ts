@@ -78,6 +78,7 @@ export type DiagnosisFixture = {
         emerging: boolean;
         note: string;
       } | null;
+      jobEvidence?: import("@/lib/job-update").Evidence[];
     }>;
     career?: {
       completedSkills: string[];

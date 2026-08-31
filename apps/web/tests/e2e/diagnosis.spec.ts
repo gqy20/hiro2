@@ -44,6 +44,20 @@ test("recalculates score after click", async ({ page }) => {
   expect(scoreAfter).toMatch(/%/);
 });
 
+test("gap items expose job-side JD evidence", async ({ page }) => {
+  await page.goto("/diagnosis");
+
+  const evidenceButton = page
+    .getByRole("button", { name: /岗位依据 · \d+ 条招聘 JD/ })
+    .first();
+  await expect(evidenceButton).toBeVisible();
+  await evidenceButton.click();
+  await expect(page.locator(".ant-drawer-open")).toBeVisible();
+  await expect(page.locator(".ant-drawer-open .evidence-item")).not.toHaveCount(
+    0,
+  );
+});
+
 test("renders empty and error variants", async ({ page }) => {
   await page.goto("/diagnosis?state=empty");
   await expect(page.getByText("上传简历或录入技能后开始诊断。")).toBeVisible();

@@ -5,6 +5,18 @@
 ## [Unreleased]
 
 ### Added
+- **前沿 AI 实验室覆盖面扩展**（10 家新源 + 1626 条新 JD）：
+  此前 JD 池只有 Anthropic 一家 AI 实验室——AI Safety/Alignment/Context Engineering/
+  Agent Infra/Post-Training 等前沿方向零覆盖。本轮新增：
+  - `scripts/ashby.py`：Ashby 公开板采集器（一次 API 全量、无翻页无登录），
+    接入 OpenAI（742）/ Cohere（146）/ Perplexity（93）/ ElevenLabs（248）/
+    LangChain（107）/ LlamaIndex（14）/ Runway（4）
+  - Greenhouse 板追加：xAI（249）/ Moonshot月之暗面（19）/ StabilityAI（4）
+  - JD 池从 8758 扩到 10384 条（+19%），前沿实验室从 1 家到 10 家
+  - **FDE 涌现证据大幅增强**：190 条（原 137）/ 12 平台（原 8）/ 117 标题变体
+  - 新检出涌现方向：post training（20 倍增长）/ ai infrastructure /
+    compute infrastructure / cloud infrastructure / data platform（21 倍）
+  - emergscan 噪声过滤增强：KNOWN_DOMAIN 子串匹配 + 职能泛词 30+
 - 涌现岗位候选接入前端/API（方案 A 第一步）：`emerging_jobs()` 从硬编码单候选升级为
   AI Agent（主案例第一位）+ 涌现扫描候选（FDE 第二位 + 5 个真实涌现方向），
   前端 `/new-jobs` 页直接渲染 7 个候选卡，审核流（接受/拒绝）复用现有端点。

@@ -1,5 +1,12 @@
 import type { Evidence, ReviewStatus } from "@/lib/job-update";
 
+export type JdLink = {
+  title: string;
+  platform: string;
+  url: string;
+  date: string;
+};
+
 export type EmergingJobCandidate = {
   id: string;
   title: string;
@@ -14,6 +21,8 @@ export type EmergingJobCandidate = {
   preferredSkills: string[];
   scenarios: string[];
   evidence: Evidence[];
+  monthly?: Record<string, number>;
+  sampleJds?: JdLink[];
 };
 
 export type NewJobsFixture = {

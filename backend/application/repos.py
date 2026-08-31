@@ -161,6 +161,7 @@ class PostgresRepository(FileRepository):
     def __init__(self, dsn: str) -> None:
         super().__init__()
         self._dsn = dsn
+        self._evidence_cache: list[dict] | None = None
 
     def _rows(self, query: str, params: tuple = ()) -> list[dict]:
         import psycopg

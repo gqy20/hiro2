@@ -37,6 +37,38 @@
         "Engineering Manager, Forward Deployed (Privy)",
         "Forward Deployed AI Accelerator, Marketing"
       ],
+      "sample_jds": [
+        {
+          "title": "Forward Deployed Engineer, Agentic Platform (West Coast)",
+          "platform": "ashby-cohere",
+          "url": "https://jobs.ashbyhq.com/cohere",
+          "date": "2026-08-28"
+        },
+        {
+          "title": "Forward Deployed Engineer, Infrastructure Specialist (Public Sector)",
+          "platform": "ashby-cohere",
+          "url": "https://jobs.ashbyhq.com/cohere",
+          "date": "2026-08-28"
+        },
+        {
+          "title": "Forward Deployed Engineer, Sovereign AI",
+          "platform": "ashby-cohere",
+          "url": "https://jobs.ashbyhq.com/cohere",
+          "date": "2026-08-28"
+        },
+        {
+          "title": "Forward Deployed Engineer, Agentic Platform",
+          "platform": "ashby-cohere",
+          "url": "https://jobs.ashbyhq.com/cohere",
+          "date": "2026-08-28"
+        },
+        {
+          "title": "Forward Deployed Engineer, Infrastructure Specialist (North America)",
+          "platform": "ashby-cohere",
+          "url": "https://jobs.ashbyhq.com/cohere",
+          "date": "2026-08-28"
+        }
+      ],
       "top_skills": [
         {
           "name": "Python",
@@ -182,6 +214,38 @@
         "Applied AI Architect, Digital Natives",
         "Applied AI Architect, Digital Natives (Strategics) "
       ],
+      "sample_jds": [
+        {
+          "title": "Applied AI Architect",
+          "platform": "ashby-openai",
+          "url": "https://jobs.ashbyhq.com/openai",
+          "date": "2026-08-31"
+        },
+        {
+          "title": "Applied AI Architect, Edu",
+          "platform": "ashby-openai",
+          "url": "https://jobs.ashbyhq.com/openai",
+          "date": "2026-08-28"
+        },
+        {
+          "title": "Applied AI Architect",
+          "platform": "anthropic",
+          "url": "",
+          "date": "2026-08-27"
+        },
+        {
+          "title": "Applied AI Architect, Strategic Enterprise Tech",
+          "platform": "anthropic",
+          "url": "",
+          "date": "2026-08-27"
+        },
+        {
+          "title": "Applied AI Architect",
+          "platform": "anthropic",
+          "url": "",
+          "date": "2026-08-26"
+        }
+      ],
       "top_skills": [
         {
           "name": "LLM应用",
@@ -303,6 +367,38 @@
         "Agent Post-Training, Artifacts Research",
         "Agent Post-Training, Computer Use Research",
         "Agent Post-Training, Connectors Research"
+      ],
+      "sample_jds": [
+        {
+          "title": "Member of Technical Staff - Post-Training and RL",
+          "platform": "gh-xai",
+          "url": "https://boards.greenhouse.io/xai/jobs/5114737007",
+          "date": "2026-08-27"
+        },
+        {
+          "title": "Machine Learning Research Scientist, Post-Training",
+          "platform": "gh-scaleai",
+          "url": "https://boards.greenhouse.io/scaleai/jobs/4528009005",
+          "date": "2026-08-26"
+        },
+        {
+          "title": "Research Engineer, Production Model Post-Training",
+          "platform": "anthropic",
+          "url": "",
+          "date": "2026-08-21"
+        },
+        {
+          "title": "Research Engineer, Production Model Post-Training",
+          "platform": "anthropic",
+          "url": "",
+          "date": "2026-08-21"
+        },
+        {
+          "title": "Forward Deployed Engineer (Inference & Post-Training) - Mandarin Speaking",
+          "platform": "gh-togetherai",
+          "url": "https://boards.greenhouse.io/togetherai/jobs/5199993007",
+          "date": "2026-08-13"
+        }
       ],
       "top_skills": [
         {
@@ -427,6 +523,38 @@
         "AI Infrastructure Engineer, Serving Platform",
         "AI Infrastructure Operations, Demand Planning"
       ],
+      "sample_jds": [
+        {
+          "title": "IT Engineer, Internal AI Infrastructure",
+          "platform": "gh-figma",
+          "url": "https://boards.greenhouse.io/figma/jobs/6164379004",
+          "date": "2026-08-27"
+        },
+        {
+          "title": "AI Infrastructure Engineer, Sandbox Platform",
+          "platform": "gh-scaleai",
+          "url": "https://boards.greenhouse.io/scaleai/jobs/4717105005",
+          "date": "2026-08-25"
+        },
+        {
+          "title": "AI Infrastructure Operations, Demand Planning",
+          "platform": "anthropic",
+          "url": "",
+          "date": "2026-08-21"
+        },
+        {
+          "title": "AI Infrastructure Engineer, Sandbox Platform",
+          "platform": "gh-scaleai",
+          "url": "https://boards.greenhouse.io/scaleai/jobs/4716453005",
+          "date": "2026-08-17"
+        },
+        {
+          "title": "AI Infrastructure Engineer, Model Serving Platform",
+          "platform": "gh-scaleai",
+          "url": "https://boards.greenhouse.io/scaleai/jobs/4520320005",
+          "date": "2026-08-13"
+        }
+      ],
       "top_skills": [
         {
           "name": "云计算",
@@ -543,6 +671,38 @@
         "Engineering Manager, Research Data Platform",
         "Manager, Software Engineering - Data Platform",
         "Member of Technical Staff (Software Engineer, Data Platform)"
+      ],
+      "sample_jds": [
+        {
+          "title": "Staff+ Software Engineer, RL Data Platform",
+          "platform": "anthropic",
+          "url": "",
+          "date": "2026-08-27"
+        },
+        {
+          "title": "Staff+ Research Engineer, RL Data Platform",
+          "platform": "anthropic",
+          "url": "",
+          "date": "2026-08-27"
+        },
+        {
+          "title": "Software Engineer - Data Platform",
+          "platform": "gh-xai",
+          "url": "https://boards.greenhouse.io/xai/jobs/4803862007",
+          "date": "2026-08-27"
+        },
+        {
+          "title": "Sr. Staff Software Engineer, Big Data Platform",
+          "platform": "gh-pinterest",
+          "url": "https://boards.greenhouse.io/pinterest/jobs/7494956",
+          "date": "2026-08-25"
+        },
+        {
+          "title": "Senior Software Engineer (Data Platform)",
+          "platform": "gh-databricks",
+          "url": "https://boards.greenhouse.io/databricks/jobs/7647369002",
+          "date": "2026-08-22"
+        }
       ],
       "top_skills": [
         {
@@ -661,6 +821,38 @@
         "Director, Compute & Infrastructure FP&A",
         "Director, Compute Infrastructure Procurement Operations",
         "Global Public Policy Manager, Compute, Infrastructure & Sovereign AI"
+      ],
+      "sample_jds": [
+        {
+          "title": "Junior/Senior/Staff Software Engineer, Inference / Compute Infrastructure Engineering",
+          "platform": "gh-togetherai",
+          "url": "https://boards.greenhouse.io/togetherai/jobs/5213322007",
+          "date": "2026-08-26"
+        },
+        {
+          "title": "Strategic Deals Leader, Compute & Infrastructure",
+          "platform": "anthropic",
+          "url": "",
+          "date": "2026-08-21"
+        },
+        {
+          "title": "Director, Compute Infrastructure Procurement Operations",
+          "platform": "anthropic",
+          "url": "",
+          "date": "2026-08-21"
+        },
+        {
+          "title": "Legal Program Manager, Compute & Infrastructure",
+          "platform": "anthropic",
+          "url": "",
+          "date": "2026-08-21"
+        },
+        {
+          "title": "Staff Technical Program Manager, Compute Infrastructure",
+          "platform": "gh-pinterest",
+          "url": "https://boards.greenhouse.io/pinterest/jobs/7494634",
+          "date": "2026-08-20"
+        }
       ],
       "top_skills": [
         {
@@ -788,6 +980,38 @@
         "Member Of Technical Staff - Cloud Infrastructure",
         "Member of Technical Staff (Software Engineer, Cloud Infrastructure)"
       ],
+      "sample_jds": [
+        {
+          "title": "Member Of Technical Staff - Cloud Infrastructure",
+          "platform": "gh-xai",
+          "url": "https://boards.greenhouse.io/xai/jobs/5133071007",
+          "date": "2026-08-27"
+        },
+        {
+          "title": "Specialist Solutions Architect - Cloud Infrastructure & Platform (AWS)",
+          "platform": "gh-databricks",
+          "url": "https://boards.greenhouse.io/databricks/jobs/8739506002",
+          "date": "2026-08-26"
+        },
+        {
+          "title": "Specialist Solutions Architect - Cloud Infrastructure & Platform (Azure)",
+          "platform": "gh-databricks",
+          "url": "https://boards.greenhouse.io/databricks/jobs/8739507002",
+          "date": "2026-08-26"
+        },
+        {
+          "title": "Senior Specialist Solutions Engineer - Platform Security and Cloud Infrastructure",
+          "platform": "gh-databricks",
+          "url": "https://boards.greenhouse.io/databricks/jobs/8687202002",
+          "date": "2026-08-18"
+        },
+        {
+          "title": "Senior Software Engineer - Together Cloud Infrastructure",
+          "platform": "gh-togetherai",
+          "url": "https://boards.greenhouse.io/togetherai/jobs/4749787007",
+          "date": "2026-08-06"
+        }
+      ],
       "top_skills": [
         {
           "name": "云计算",
@@ -903,6 +1127,38 @@
         "中间件研发-基础技术",
         "可观测性技术研发-基础技术"
       ],
+      "sample_jds": [
+        {
+          "title": "JDK研发工程师-基础技术",
+          "platform": "xiaohongshu",
+          "url": "",
+          "date": "2026-08-27"
+        },
+        {
+          "title": "高性能网络通信工程师/专家-基础技术",
+          "platform": "xiaohongshu",
+          "url": "",
+          "date": "2026-08-27"
+        },
+        {
+          "title": "网络解决方案工程师/架构师-基础技术",
+          "platform": "xiaohongshu",
+          "url": "",
+          "date": "2026-08-27"
+        },
+        {
+          "title": "AI中间件开发工程师/专家-基础技术",
+          "platform": "xiaohongshu",
+          "url": "",
+          "date": "2026-08-27"
+        },
+        {
+          "title": "大模型Agentic Ops研发工程师-基础技术",
+          "platform": "xiaohongshu",
+          "url": "",
+          "date": "2026-08-27"
+        }
+      ],
       "top_skills": [
         {
           "name": "Python",
@@ -1016,6 +1272,38 @@
         "Senior ML & AI Technical Solutions Engineer ",
         "Sr Technical Solutions (Backline)",
         "Sr Technical Solutions Engineering"
+      ],
+      "sample_jds": [
+        {
+          "title": "Technical Solutions Specialist- FTC",
+          "platform": "gh-xai",
+          "url": "https://boards.greenhouse.io/xai/jobs/5182478007",
+          "date": "2026-08-27"
+        },
+        {
+          "title": "Sr. Technical Solutions Engineer - Platform (Support)",
+          "platform": "gh-databricks",
+          "url": "https://boards.greenhouse.io/databricks/jobs/8337391002",
+          "date": "2026-08-20"
+        },
+        {
+          "title": "Senior ML & AI Technical Solutions Engineer ",
+          "platform": "gh-databricks",
+          "url": "https://boards.greenhouse.io/databricks/jobs/7845325002",
+          "date": "2026-08-18"
+        },
+        {
+          "title": "Sr. Manager, Technical Solutions",
+          "platform": "gh-databricks",
+          "url": "https://boards.greenhouse.io/databricks/jobs/8341135002",
+          "date": "2026-08-18"
+        },
+        {
+          "title": "Sr Technical Solutions (Backline)",
+          "platform": "gh-databricks",
+          "url": "https://boards.greenhouse.io/databricks/jobs/8444598002",
+          "date": "2026-08-18"
+        }
       ],
       "top_skills": [
         {

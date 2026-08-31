@@ -268,6 +268,17 @@ def _aggregate_content(rows: list[dict], caps_names: dict[str, str]) -> dict:
     }
 
 
+def _jd_url(platform: str, jd_id: str) -> str:
+    """从 platform + jd_id 构造 JD 原文链接（gh 可精确到单条，ashby 退到招聘板）。"""
+    if platform.startswith("gh-"):
+        board = platform[3:]
+        num = jd_id.split(":", 1)[-1]
+        return f"https://boards.greenhouse.io/{board}/jobs/{num}"
+    if platform.startswith("ashby-"):
+        return f"https://jobs.ashbyhq.com/{platform[6:]}"
+    return ""
+
+
 def cmd_run() -> dict:
     run = RunContext("emergscan", {"cmd": "run"})
     jds = []
@@ -332,6 +343,15 @@ def cmd_run() -> dict:
                 "title_variants": variants,
                 "platforms": platforms,
                 "sample_titles": sorted({r["title"] for r in rows})[:5],
+                "sample_jds": [
+                    {
+                        "title": r["title"],
+                        "platform": r["platform"],
+                        "url": r.get("job_url") or _jd_url(r["platform"], r["jd_id"]),
+                        "date": (r.get("publish_date") or "")[:10],
+                    }
+                    for r in sorted(rows, key=lambda x: x.get("publish_date", ""), reverse=True)[:5]
+                ],
                 **content,
                 "_jd_ids": {r["jd_id"] for r in rows},
             }

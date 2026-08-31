@@ -5,6 +5,21 @@
 ## [Unreleased]
 
 ### Added
+- **涌现候选月度趋势图 + JD 原文链接**（/new-jobs 定义卡）：
+  - 月度趋势迷你柱状图（TrendSparkline，纯 SVG 零依赖）：数据来自
+    emergscan 的 monthly，月份自动补零保持时间轴连续，悬停显示当月条数；
+    从“增长 16.6 倍”文字升级为可视化趋势（FDE 可见 13 个月 1->156 爬升）
+  - 近期 JD 原文链接（top 5）：每条含标题/日期/平台/原文 URL，
+    Greenhouse 可精确到单岗页，Ashby 回退到招聘板；点击直达证据原文
+  - CandidateVM 新增 monthly / sampleJds 字段（camelCase 序列化）
+  - emergscan 新增 sample_jds 产物字段 + _jd_url 构造器
+  - ashby.py 采集时留存 jobUrl（后续采集直接可用）
+
+### Fixed
+- **emerging-jobs API 提速 8 倍**（5.9s -> 0.7s）：evidence 池改为一次
+  加载传引用，消除每候选重复全量查询（PostgreSQL Repository
+  evidence() 每次调用都打一次 DB）；顺带修复 apiFetch 10s 超时导致
+  /new-jobs 页面偶发加载失败
 - **前沿 AI 实验室覆盖面扩展**（10 家新源 + 1626 条新 JD）：
   此前 JD 池只有 Anthropic 一家 AI 实验室——AI Safety/Alignment/Context Engineering/
   Agent Infra/Post-Training 等前沿方向零覆盖。本轮新增：

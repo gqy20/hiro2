@@ -36,3 +36,22 @@ test("renders empty and error variants", async ({ page }) => {
   await page.goto("/new-jobs?state=error");
   await expect(page.getByText("候选岗位来源暂时不可用。")).toBeVisible();
 });
+
+test("emergscan candidate shows monthly trend and jd links", async ({ page }) => {
+  await page.goto("/new-jobs");
+
+  // 切到涌现扫描候选（FDE），验证月度趋势图与 JD 原文链接
+  const fde = page.locator(".candidate-item", { hasText: "FDE" }).first();
+  if (await fde.count()) {
+    await fde.click();
+    await expect(page.locator(".trend-sparkline")).toBeVisible();
+    const bars = page.locator(".trend-bar");
+    expect(await bars.count()).toBeGreaterThan(1);
+    const jdLinks = page.locator(".jd-links li");
+    expect(await jdLinks.count()).toBeGreaterThan(0);
+    await expect(jdLinks.first().locator("a")).toHaveAttribute(
+      "href",
+      /ashbyhq\.com|greenhouse\.io/,
+    );
+  }
+});

@@ -70,6 +70,15 @@ class JobUpdateVM(_VM):
     progress_steps: list[ProgressStepVM]
 
 
+class JdLinkVM(_VM):
+    """证据 JD 原文链接（emergscan 聚合的近期样例）。"""
+
+    title: str
+    platform: str
+    url: str
+    date: str
+
+
 class CandidateVM(_VM):
     id: str
     title: str
@@ -84,6 +93,8 @@ class CandidateVM(_VM):
     preferred_skills: list[str]
     scenarios: list[str]
     evidence: list[EvidenceVM]
+    monthly: dict[str, int] = {}  # 月度 JD 量，趋势图数据源
+    sample_jds: list[JdLinkVM] = []  # 近期 JD 原文链接
 
 
 class NewJobsVM(_VM):
@@ -342,6 +353,7 @@ class ApplicationService:
 
     def emerging_jobs(self) -> NewJobsVM:
         em = self.repo.emerging().get("evidence", {})
+        evidence_pool = self.repo.evidence()  # 一次加载，供全部候选复用
         card = em.get("definition_card", {})
         diff = em.get("diffusion", {})
         emerge = em.get("emergence", {})
@@ -371,19 +383,20 @@ class ApplicationService:
                 required_skills=req,
                 preferred_skills=pref,
                 scenarios=scen,
-                evidence=self._agent_evidence(),
+                evidence=self._agent_evidence(evidence_pool),
             )
         ]
-        candidates.extend(self._emergscan_candidates())
+        candidates.extend(self._emergscan_candidates(evidence_pool))
         return NewJobsVM(
             fixture_version="v3",
             run_id="emergscan-auto",
             candidates=candidates,
         )
 
-    def _emergscan_candidates(self) -> list[CandidateVM]:
+    def _emergscan_candidates(self, evidence_pool: list[dict] | None = None) -> list[CandidateVM]:
         """涌现扫描器（emergscan.py）候选 -> CandidateVM（确定性组装，零 LLM）。"""
         scan = self.repo.emerging_roles()
+        pool = evidence_pool if evidence_pool is not None else self.repo.evidence()
         out: list[CandidateVM] = []
         for c in scan.get("candidates", []):
             kw = c.get("keyword", "")
@@ -406,6 +419,15 @@ class ApplicationService:
             resp = [x["phrase"] for x in c.get("core_responsibilities", []) if x.get("phrase")]
             scen = [x["phrase"] for x in c.get("scenarios", []) if x.get("phrase")]
             req_plus = [x["phrase"] for x in c.get("core_requirements", []) if x.get("phrase")][:4]
+            jds = [
+                JdLinkVM(
+                    title=j["title"][:70],
+                    platform=j.get("platform", ""),
+                    url=j.get("url", ""),
+                    date=j.get("date", ""),
+                )
+                for j in c.get("sample_jds", [])[:5]
+            ]
             out.append(
                 CandidateVM(
                     id=f"emerg-{kw.replace(' ', '-').lower()[:40]}",
@@ -420,7 +442,9 @@ class ApplicationService:
                     required_skills=skills,
                     preferred_skills=req_plus,
                     scenarios=scen,
-                    evidence=self._emergscan_evidence(kw),
+                    evidence=self._emergscan_evidence(kw, pool),
+                    monthly=c.get("monthly", {}),
+                    sample_jds=jds,
                 )
             )
         return out
@@ -451,11 +475,11 @@ class ApplicationService:
             score += 0.05
         return round(min(score, 0.95), 2)
 
-    def _emergscan_evidence(self, kw: str) -> list[EvidenceVM]:
+    def _emergscan_evidence(self, kw: str, pool: list[dict] | None = None) -> list[EvidenceVM]:
         """按关键词从现有证据池筛 JD 证据（回链涌现候选的原文依据）。"""
         picks: list[dict] = []
         kw_lower = kw.lower()
-        for ev in self.repo.evidence():
+        for ev in pool if pool is not None else self.repo.evidence():
             if len(picks) >= 3:
                 break
             payload = ev.get("payload", {})
@@ -464,9 +488,9 @@ class ApplicationService:
                 picks.append(ev)
         return [self._evidence_vm(e) for e in picks]
 
-    def _agent_evidence(self) -> list[EvidenceVM]:
+    def _agent_evidence(self, pool: list[dict] | None = None) -> list[EvidenceVM]:
         picks: list[dict] = []
-        for ev in self.repo.evidence():
+        for ev in pool if pool is not None else self.repo.evidence():
             if len(picks) >= 3:
                 break
             if ev["evidence_id"].startswith(("jd:", "xlsx:")):

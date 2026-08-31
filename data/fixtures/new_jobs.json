@@ -63,22 +63,72 @@
     {
       "id": "emerging-forward-deployed",
       "title": "AI Engineer - FDE (Forward Deployed Engineer)",
-      "summary": "137 条 JD · 近90天 129 · 增长 64.5 倍 · 8 条来源",
+      "summary": "190 条 JD · 近90天 166 · 增长 16.6 倍",
       "confidence": 0.8,
       "companies": 66,
       "sourceCount": 8,
       "status": "reviewing",
       "whyNew": "涌现扫描检出：近 90 天 129 条（前 90 天仅 2，增长 64.5 倍），66 种标题变体、8 个平台同时涌现",
-      "responsibilities": [],
+      "responsibilities": [
+        "交付生产级数据与AI解决方案",
+        "构建并投产客户数据与AI解决方案",
+        "主导架构与设计决策"
+      ],
       "requiredSkills": [
         "Python",
         "自动化运维",
         "AI Agent",
-        "大数据处理"
+        "云计算"
       ],
-      "preferredSkills": [],
-      "scenarios": [],
-      "evidence": []
+      "preferredSkills": [
+        "6年以上数据工程或软件工程经验",
+        "熟悉CI/CD生产部署",
+        "熟练使用Python、Scala或JavaScript/TypeScript"
+      ],
+      "scenarios": [
+        "Communications",
+        "Media",
+        "Entertainment"
+      ],
+      "evidence": [
+        {
+          "evidenceId": "jd:fixture-fde-1",
+          "sourceId": "ashby-cohere",
+          "claimType": "job_posting",
+          "quote": "Forward Deployed Engineer, Agentic Platform (West Coast)",
+          "sourceUrl": "https://jobs.ashbyhq.com/cohere",
+          "stance": "支持"
+        }
+      ],
+      "monthly": {
+        "2026-02": 2,
+        "2026-03": 5,
+        "2026-04": 9,
+        "2026-05": 17,
+        "2026-06": 38,
+        "2026-07": 82,
+        "2026-08": 156
+      },
+      "sampleJds": [
+        {
+          "title": "Forward Deployed Engineer, Agentic Platform (West Coast)",
+          "platform": "ashby-cohere",
+          "url": "https://jobs.ashbyhq.com/cohere",
+          "date": "2026-08-28"
+        },
+        {
+          "title": "Forward Deployed Engineer, Sovereign AI",
+          "platform": "ashby-cohere",
+          "url": "https://jobs.ashbyhq.com/cohere",
+          "date": "2026-08-28"
+        },
+        {
+          "title": "Forward Deployed Engineer",
+          "platform": "gh-openai",
+          "url": "https://boards.greenhouse.io/openai/jobs/1234567",
+          "date": "2026-08-27"
+        }
+      ]
     },
     {
       "id": "emerging-ai-evaluation",

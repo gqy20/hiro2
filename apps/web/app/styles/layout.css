@@ -851,3 +851,88 @@
     animation-iteration-count: 1 !important;
   }
 }
+
+/* 涌现候选：月度趋势迷你图 */
+.trend-sparkline {
+  margin: 16px 0 0;
+  padding: 14px 16px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.trend-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 96px;
+}
+.trend-bar-col {
+  flex: 1;
+  min-width: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  gap: 4px;
+}
+.trend-bar {
+  width: 100%;
+  max-width: 28px;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(180deg, var(--accent, #4f6ef7), var(--accent-soft, #aab6ff));
+  transition: height 0.3s ease;
+}
+.trend-bar-col:hover .trend-bar {
+  background: var(--accent-strong, #3b55d9);
+}
+.trend-bar-value {
+  font-size: 11px;
+  color: var(--ink-soft, #667);
+  line-height: 1;
+  min-height: 14px;
+}
+.trend-sparkline figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  color: var(--ink-soft, #667);
+  font-size: 12px;
+}
+.trend-sparkline figcaption span:nth-child(2) {
+  color: var(--ink);
+}
+
+/* 涌现候选：近期 JD 原文链接 */
+.jd-links {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.jd-links li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.jd-links a {
+  color: var(--accent, #4f6ef7);
+  text-decoration: none;
+  font-weight: 500;
+}
+.jd-links a:hover {
+  text-decoration: underline;
+}
+.jd-meta {
+  flex-shrink: 0;
+  color: var(--ink-soft, #667);
+  font-size: 12px;
+}

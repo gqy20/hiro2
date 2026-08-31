@@ -61,6 +61,7 @@ def _normalize(job: dict, board: str) -> dict | None:
         "work_year": "",
         "salary": "",
         "keyword": "ALL",
+        "job_url": job.get("jobUrl") or "",
         "fetched_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
     }
 

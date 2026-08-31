@@ -21,6 +21,7 @@ import type {
   JobUpdateContext,
   ReviewStatus,
 } from "@/lib/job-update";
+import { TrendSparkline } from "@/components/trend-sparkline";
 
 type NewJobsWorkbenchProps = {
   fixture: NewJobsFixture;
@@ -227,6 +228,10 @@ export function NewJobsWorkbench({
                   </Button>
                 </div>
                 <p className="why-new">{selected.whyNew}</p>
+                <TrendSparkline
+                  monthly={selected.monthly}
+                  summary={selected.summary}
+                />
               </section>
             )}
 
@@ -248,6 +253,31 @@ export function NewJobsWorkbench({
                 />
                 <DefinitionBlock title="典型场景" items={selected.scenarios} />
               </div>
+            ) : null}
+
+            {!editing && selected.sampleJds?.length ? (
+              <section
+                className="definition-section"
+                aria-labelledby="sample-jds-title"
+              >
+                <h3 id="sample-jds-title">近期 JD 原文</h3>
+                <ul className="jd-links">
+                  {selected.sampleJds.map((jd) => (
+                    <li key={`${jd.platform}-${jd.title}`}>
+                      <a
+                        href={jd.url}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        {jd.title}
+                      </a>
+                      <span className="jd-meta">
+                        {`${jd.date} · ${jd.platform}`}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
             ) : null}
 
             <footer className="candidate-review-bar">

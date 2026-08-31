@@ -507,26 +507,65 @@
   font-size: 14px;
   line-height: 1.5;
 }
-.recruiting-diagnosis-points {
+.diagnosis-candidate-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.diagnosis-basis {
   display: grid;
   gap: 14px;
-  margin: 20px 0;
+  margin-top: 20px;
+}
+.diagnosis-basis-job {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel);
+}
+.diagnosis-basis-job strong {
+  font-size: 14px;
+}
+.diagnosis-basis-job span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.diagnosis-basis-evidence {
+  display: grid;
+  gap: 10px;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
-.recruiting-diagnosis-points li {
+.diagnosis-basis-evidence li {
   display: grid;
-  gap: 5px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--line-subtle);
+  gap: 4px;
 }
-.recruiting-diagnosis-points strong {
-  font-size: 14px;
-}
-.recruiting-diagnosis-points span {
-  color: var(--muted);
-  font-size: 14px;
+.diagnosis-basis-evidence button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 13px;
   line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+}
+.diagnosis-basis-evidence button:hover {
+  color: var(--blue);
+}
+.diagnosis-basis-evidence span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.diagnosis-basis-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
 }
 
 @media (max-width: 1100px) {

@@ -1,5 +1,6 @@
 import { DiagnosisWorkbench } from "@/components/diagnosis-workbench";
 import { apiFetch, isMockMode } from "@/lib/api/client";
+import type { CandidateSummary } from "@/lib/api/types";
 import { loadDiagnosisFixture } from "@/lib/diagnosis-fixture";
 import type { DiagnosisView } from "@/lib/api/types";
 
@@ -26,6 +27,19 @@ async function fetchDiagnosis(
   );
 }
 
+// ponytail: 招聘模式提供候选人切换；候选列表失败不阻断诊断页。
+async function fetchCandidates(
+  mode: DiagnosisMode,
+): Promise<Array<{ id: string; name: string }>> {
+  if (mode !== "recruiting" || isMockMode()) return [];
+  try {
+    const list = await apiFetch<CandidateSummary[]>("/candidates");
+    return list.map((item) => ({ id: item.id, name: item.name }));
+  } catch {
+    return [];
+  }
+}
+
 export async function DiagnosisPageView({
   mode,
   searchParams,
@@ -35,9 +49,14 @@ export async function DiagnosisPageView({
 }) {
   const { state, candidate, job } = await searchParams;
   const variant = state === "empty" || state === "error" ? state : "ready";
+  const [fixture, candidates] = await Promise.all([
+    fetchDiagnosis(variant, candidate, job),
+    fetchCandidates(mode),
+  ]);
   return (
     <DiagnosisWorkbench
-      fixture={await fetchDiagnosis(variant, candidate, job)}
+      candidates={candidates}
+      fixture={fixture}
       mode={mode}
       state={variant}
     />

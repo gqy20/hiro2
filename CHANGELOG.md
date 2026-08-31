@@ -80,6 +80,16 @@
 - `GET /api/v1/jobs/published` 已发布岗位版本列表端点（`backend/application/joblist.py`）：每岗位取最新发布版本，经 job_id 内嵌 pos_XX 结构化关联岗位目录补充岗位族与首条职责，12 岗位。
 - 招聘区快照差异检测契约测试：`tests/test_api.py` 新增 `test_detected_changes_contract`（snake_case VM 字段、`change_type` 合法枚举、份额 0-1）；前端新增 `tests/e2e/positions.spec.ts` 断言「我的岗位」检测块不再出现 NaN/undefined；新增 `data/fixtures/detected_changes.json` mock 样本。
 
+- 招聘区候选诊断新增候选人切换器：接 `GET /api/v1/candidates` 候选列表，`?candidate=` 参数驱动切换（求职模式不受影响）。
+
+### Changed
+- 招聘区去重与设计对齐（落实 design-recruiting.md 验收标准「同一业务数字只保留一个主要视觉表达」）：
+  - 工作台：删除与焦点卡重复的「需要关注」条目；右侧「运行状态」卡改为「最近活动」（消费后端既有 `activities` 字段），移除与顶栏重复的「数据截至」行（现全页仅一处）；「岗位列表 →」由装饰文字改为真实链接（`/positions`）。
+  - 候选诊断：右栏按设计改为「岗位依据与证据」（岗位版本卡 + 必备能力满足度 + 岗位侧证据），删除缺口列表的第二份拷贝；「查看依据/打开证据」两个重复入口收敛为右栏单一「查看匹配依据」；`report.evidence` 缺失时归一为空数组（真实 API 无该字段导致整页报错的防御）。
+  - 证据抽屉：删除「查看原文/查看全文」打开同一 Modal 的重复按钮；删除底部 `Sources` 重复来源列表；置信度仅保留标题栏 Tag 一处（删 Progress 条）；采集时间从带微秒 ISO 串格式化为日期。
+  - 岗位发现：右侧决策区去除与左列重复的企业/来源计数；审核栏证据计数口径统一；接受/拒绝后切换承接态（「已接受为岗位定义草稿，可继续编辑」/「已拒绝，可恢复待审」）并给出消息提示。
+- 岗位版本发布成功页按设计补齐下游承接动作：查看能力图谱 / 诊断候选人 / 查看培养任务（锚点定位培养输出区块），「返回岗位更新」降为普通动作。
+
 ### Fixed
 - 招聘区「我的岗位」快照差异块修复前后端契约失配：后端 `DetectedChangesVM` 为 snake_case，前端原用驼峰本地类型导致真实模式渲染 `undefined 项待复核`、`NaN%→NaN%`、空「→ 条 JD」；现前端统一消费 `lib/api/types.ts` 的 snake_case 类型，`change_type` 使用 add|grow|shrink|remove。`job` 字段从裸 `position_id`（pos_01）解析为岗位聚类众数 JD 标题（确定性、截断 24 字、失败回退），`contracts.md` 登记 `DetectedChanges` 字段级契约。
 - 岗位更新页审核进度不再丢失：接受/拒绝/编辑说明持久化到浏览器会话存储（`useSyncExternalStore`，服务端快照为空无水合抖动），刷新保留，发布成功后自动清除并明示「审核进度保存在当前浏览器会话」。

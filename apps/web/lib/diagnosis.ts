@@ -54,7 +54,7 @@ export type DiagnosisFixture = {
     overallScore: number;
     requiredMet?: number;
     requiredTotal?: number;
-    evidence: import("@/lib/job-update").Evidence[];
+    evidence?: import("@/lib/job-update").Evidence[];
     gaps: Array<{
       skill: string;
       reason: string;

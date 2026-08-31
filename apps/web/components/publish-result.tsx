@@ -1,4 +1,10 @@
-import { ArrowLeft } from "@phosphor-icons/react";
+import Link from "next/link";
+import {
+  ArrowLeft,
+  ClipboardText,
+  GraduationCap,
+  Graph,
+} from "@phosphor-icons/react";
 import { Button, Result, Tag } from "antd";
 
 import { AppShell } from "@/components/app-shell";
@@ -42,9 +48,32 @@ export function PublishResultView({
           title={`${targetVersion} 已发布`}
           subTitle="已发布岗位版本不可修改；如需修订请创建新版本。"
           extra={
-            <Button icon={<ArrowLeft />} onClick={onBack} type="primary">
-              返回岗位更新
-            </Button>
+            <div className="publish-next-actions">
+              <span className="publish-next-actions-label">现在可以</span>
+              <Link href="/skills">
+                <Button icon={<Graph aria-hidden size={15} />}>
+                  查看能力图谱
+                </Button>
+              </Link>
+              <Link href="/diagnosis">
+                <Button icon={<ClipboardText aria-hidden size={15} />}>
+                  诊断候选人
+                </Button>
+              </Link>
+              {versionId ? (
+                <a href="#training-output">
+                  <Button icon={<GraduationCap aria-hidden size={15} />}>
+                    查看培养任务
+                  </Button>
+                </a>
+              ) : null}
+              <Button
+                icon={<ArrowLeft aria-hidden size={15} />}
+                onClick={onBack}
+              >
+                返回岗位更新
+              </Button>
+            </div>
           }
         />
 
@@ -69,7 +98,11 @@ export function PublishResultView({
           </dl>
         </section>
 
-        {versionId ? <TrainingOutputSection versionId={versionId} /> : null}
+        {versionId ? (
+          <div id="training-output">
+            <TrainingOutputSection versionId={versionId} />
+          </div>
+        ) : null}
       </section>
     </AppShell>
   );

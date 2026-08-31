@@ -47,10 +47,12 @@ export function DiagnosisWorkbench({
   fixture,
   mode = "recruiting",
   state = "ready",
+  candidates = [],
 }: {
   fixture: DiagnosisFixture;
   mode?: "recruiting" | "career";
   state?: "ready" | "empty" | "error";
+  candidates?: Array<{ id: string; name: string }>;
 }) {
   const router = useRouter();
   const careerMode = mode === "career";
@@ -106,6 +108,8 @@ export function DiagnosisWorkbench({
     targetVersion: fixture.job.version,
     timeWindow: fixture.job.window,
   };
+  // ponytail: 真实 API 的 report 可能不携带 evidence，统一归一为空数组。
+  const reportEvidenceList = fixture.report.evidence ?? [];
   const reportEvidence: ChangeItem = {
     id: fixture.report.matchId,
     kind: "modified",
@@ -113,7 +117,7 @@ export function DiagnosisWorkbench({
     detail: "岗位版本与候选人证据共同决定本次匹配结果。",
     confidence: fixture.report.overallScore,
     status: "accepted",
-    evidence: fixture.report.evidence,
+    evidence: reportEvidenceList,
   };
   const counts = {
     ready: skills.filter((skill) => skill.status === "ready").length,
@@ -237,7 +241,26 @@ export function DiagnosisWorkbench({
                 {careerMode ? (
                   <h2 className="diagnosis-profile-title">我的画像</h2>
                 ) : (
-                  <h1>{fixture.candidate.name}</h1>
+                  <div className="diagnosis-candidate-row">
+                    <h1>{fixture.candidate.name}</h1>
+                    {candidates.length > 1 ? (
+                      <Select
+                        aria-label="切换候选人"
+                        onChange={(id) =>
+                          router.push(
+                            `/diagnosis?candidate=${encodeURIComponent(id)}`,
+                          )
+                        }
+                        options={candidates.map((candidate) => ({
+                          label: candidate.name,
+                          value: candidate.id,
+                        }))}
+                        size="small"
+                        style={{ minWidth: 150 }}
+                        value={fixture.candidate.id}
+                      />
+                    ) : null}
+                  </div>
                 )}
                 <span>
                   {careerMode
@@ -500,15 +523,6 @@ export function DiagnosisWorkbench({
             <p className="recalculate-hint">画像更新后，重新判断你的投递基础</p>
             <section className="gap-section">
               <SectionHeader
-                action={
-                  <Button
-                    onClick={() => setSelectedEvidence(reportEvidence)}
-                    size="small"
-                    type="link"
-                  >
-                    查看依据
-                  </Button>
-                }
                 meta={`${priorityGaps.length} 项优先处理`}
                 title="先补什么"
               />
@@ -534,13 +548,6 @@ export function DiagnosisWorkbench({
             <section className="match-evidence">
               <div className="match-evidence-heading">
                 <h3>为什么这样判断</h3>
-                <Button
-                  onClick={() => setSelectedEvidence(reportEvidence)}
-                  size="small"
-                  type="link"
-                >
-                  打开证据
-                </Button>
               </div>
               <p>
                 结果同时依据已发布岗位标准和你的技能、项目证据，不以单一分数决定是否适合投递。
@@ -549,12 +556,16 @@ export function DiagnosisWorkbench({
           </main>
           <aside
             className="learning-panel"
-            aria-label={careerMode ? "后续行动" : "诊断要点"}
+            aria-label={careerMode ? "后续行动" : "岗位依据与证据"}
           >
             <div className="section-heading">
               <div className="inline-heading">
-                <h2>{careerMode ? "后续行动" : "诊断要点"}</h2>
-                <span>{`${priorityGaps.length} 项待关注`}</span>
+                <h2>{careerMode ? "后续行动" : "岗位依据与证据"}</h2>
+                <span>
+                  {careerMode
+                    ? `${priorityGaps.length} 项待关注`
+                    : `${reportEvidenceList.length} 条岗位侧证据`}
+                </span>
               </div>
             </div>
             {careerMode ? (
@@ -568,14 +579,40 @@ export function DiagnosisWorkbench({
                 </Link>
               </div>
             ) : (
-              <ul className="recruiting-diagnosis-points">
-                {priorityGaps.map((gap) => (
-                  <li key={gap.skill}>
-                    <strong>{gap.skill}</strong>
-                    <span>{gap.reason || "候选人画像中暂无明确证明"}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="diagnosis-basis">
+                <div className="diagnosis-basis-job">
+                  <strong>{fixture.job.title}</strong>
+                  <span>{`${fixture.job.version} · 已发布岗位标准`}</span>
+                  {fixture.report.requiredTotal != null ? (
+                    <span>{`必备能力满足 ${fixture.report.requiredMet ?? 0} / ${fixture.report.requiredTotal}`}</span>
+                  ) : null}
+                </div>
+                {reportEvidenceList.length > 0 ? (
+                  <ul className="diagnosis-basis-evidence">
+                    {reportEvidenceList.slice(0, 5).map((evidence) => (
+                      <li key={evidence.id}>
+                        <button
+                          onClick={() => setSelectedEvidence(reportEvidence)}
+                          type="button"
+                        >
+                          {evidence.excerpt}
+                        </button>
+                        <span>{`${evidence.sourceType} · ${evidence.source}`}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="diagnosis-basis-empty">
+                    当前判断主要依据候选人已验证技能与项目证据；岗位侧原文证据接入后在此展示。
+                  </p>
+                )}
+                <Button
+                  block
+                  onClick={() => setSelectedEvidence(reportEvidence)}
+                >
+                  查看匹配依据
+                </Button>
+              </div>
             )}
           </aside>
           <EvidenceDrawer

@@ -7,6 +7,13 @@ test("accepts candidate and edits five definition fields", async ({ page }) => {
   await acceptButton.click();
   await expect(page.locator(".status-mark").first()).toContainText(/已接受/);
 
+  // 决定后审核栏切换为承接状态，可本地恢复待审
+  await expect(page.locator(".candidate-review-bar")).toContainText(
+    "已接受为岗位定义草稿",
+  );
+  await page.getByRole("button", { name: "恢复待审" }).click();
+  await expect(page.getByRole("button", { name: "接受候选" })).toBeVisible();
+
   await page.getByRole("button", { name: "编辑定义" }).click();
   await expect(page.locator(".definition-editor")).toBeVisible();
 

@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Sources } from "@ant-design/x";
 import {
   ArrowSquareOut,
   CheckCircle,
   WarningCircle,
 } from "@phosphor-icons/react";
-import { Button, Descriptions, Drawer, Grid, Modal, Progress, Tag } from "antd";
+import { Button, Descriptions, Drawer, Grid, Modal, Tag } from "antd";
 
+import { formatDate } from "@/lib/time";
 import type { ChangeItem, Evidence, JobUpdateContext } from "@/lib/job-update";
 
 type EvidenceDrawerProps = {
@@ -54,11 +54,6 @@ export function EvidenceDrawer({
         <div className="drawer-content">
           <section className="drawer-summary" aria-label="变化说明">
             <p>{item.detail}</p>
-            <Progress
-              percent={Math.round(item.confidence * 100)}
-              showInfo={false}
-              strokeColor="#2457e6"
-            />
           </section>
 
           <Descriptions bordered column={1} size="small" title="审核上下文">
@@ -99,11 +94,17 @@ export function EvidenceDrawer({
                     </div>
                     <div>
                       <dt>发布</dt>
-                      <dd>{evidence.publishedAt}</dd>
+                      <dd>
+                        {formatDate(evidence.publishedAt) ||
+                          evidence.publishedAt}
+                      </dd>
                     </div>
                     <div>
                       <dt>采集</dt>
-                      <dd>{evidence.collectedAt}</dd>
+                      <dd>
+                        {formatDate(evidence.collectedAt) ||
+                          evidence.collectedAt}
+                      </dd>
                     </div>
                     <div>
                       <dt>质量</dt>
@@ -112,13 +113,15 @@ export function EvidenceDrawer({
                   </dl>
                   <div className="evidence-id">{evidence.id}</div>
                   <div className="evidence-actions">
-                    <Button
-                      onClick={() => setSelectedEvidence(evidence)}
-                      size="small"
-                      type="link"
-                    >
-                      查看原文
-                    </Button>
+                    {evidence.fullText ? (
+                      <Button
+                        onClick={() => setSelectedEvidence(evidence)}
+                        size="small"
+                        type="link"
+                      >
+                        查看原文
+                      </Button>
+                    ) : null}
                     {evidence.sourceUrl ? (
                       <Button
                         href={evidence.sourceUrl}
@@ -129,37 +132,12 @@ export function EvidenceDrawer({
                       >
                         打开来源
                       </Button>
-                    ) : evidence.fullText ? (
-                      <Button
-                        onClick={() => setSelectedEvidence(evidence)}
-                        size="small"
-                        type="link"
-                      >
-                        查看全文
-                      </Button>
                     ) : null}
                   </div>
                 </article>
               );
             })}
           </section>
-
-          <Sources
-            defaultExpanded={false}
-            items={item.evidence.map((evidence) => ({
-              description: `${evidence.publishedAt} · 质量 ${evidence.quality.toFixed(2)}`,
-              key: evidence.id,
-              title: evidence.source,
-              url: evidence.sourceUrl ?? undefined,
-            }))}
-            onClick={(source) => {
-              const evidence = item.evidence.find(
-                (entry) => entry.id === source.key,
-              );
-              if (evidence) setSelectedEvidence(evidence);
-            }}
-            title={`${item.evidence.length} 条来源`}
-          />
         </div>
       ) : null}
       <Modal

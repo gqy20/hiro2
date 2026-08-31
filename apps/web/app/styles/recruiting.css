@@ -155,6 +155,35 @@
   margin: 0;
   font-family: var(--font-mono);
 }
+.dashboard-activity-list {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+}
+.dashboard-activity-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.dashboard-activity-list li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.dashboard-activity-list strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+.dashboard-activity-list span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.dashboard-attention-empty {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
 .dashboard-queue .dashboard-section-heading {
   align-items: center;
 }

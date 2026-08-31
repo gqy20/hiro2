@@ -34,12 +34,20 @@ export default async function DashboardPage() {
     pending_changes: Number(focus.pending),
     published_versions: 1,
   };
-  const attention = dashboard?.attention ?? [
-    {
-      title: focus.title,
-      detail: `${focus.pending} 项能力变化待审核`,
-      href: "/jobs",
-    },
+  // 需要关注与焦点卡去重：同一目的地只保留焦点卡一个主行动入口。
+  const attention = (
+    dashboard?.attention ?? [
+      {
+        title: focus.title,
+        detail: `${focus.pending} 项能力变化待审核`,
+        href: "/jobs",
+      },
+    ]
+  ).filter((item) => item.href !== focus.href);
+  const activities = dashboard?.activities ?? [
+    { label: "岗位变化分析完成", detail: `${focus.pending} 项能力变化待审核` },
+    { label: "新岗位候选生成", detail: "1 个候选岗位" },
+    { label: "回测运行完成", detail: "6 个时间窗口" },
   ];
   return (
     <AppShell>
@@ -97,25 +105,18 @@ export default async function DashboardPage() {
               查看岗位 →
             </span>
           </Link>
-          <aside className="dashboard-status" aria-label="运行状态">
+          <aside className="dashboard-status" aria-label="最近活动">
             <div className="dashboard-section-heading">
-              <h2>运行状态</h2>
-              <span className="dashboard-status-live">正常</span>
+              <h2>最近活动</h2>
             </div>
-            <dl>
-              <div>
-                <dt>数据截至</dt>
-                <dd>{dashboard?.status.data_as_of ?? "08-22"}</dd>
-              </div>
-              <div>
-                <dt>今日回测</dt>
-                <dd>{dashboard?.status.backtests ?? "3"} 个运行</dd>
-              </div>
-              <div>
-                <dt>待审核</dt>
-                <dd>{dashboard?.status.pending_reviews ?? focus.pending} 项</dd>
-              </div>
-            </dl>
+            <ul className="dashboard-activity-list">
+              {activities.map((activity) => (
+                <li key={activity.label}>
+                  <strong>{activity.label}</strong>
+                  <span>{activity.detail}</span>
+                </li>
+              ))}
+            </ul>
           </aside>
         </div>
         <div className="dashboard-insights-grid">
@@ -142,17 +143,23 @@ export default async function DashboardPage() {
                 <h2 id="attention-title">需要关注</h2>
               </div>
             </div>
-            <ul>
-              {attention.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href}>
-                    <strong>{item.title}</strong>
-                    <span>{item.detail}</span>
-                    <b>查看 →</b>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            {attention.length > 0 ? (
+              <ul>
+                {attention.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href}>
+                      <strong>{item.title}</strong>
+                      <span>{item.detail}</span>
+                      <b>查看 →</b>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="dashboard-attention-empty">
+                当前没有其他待关注事项。
+              </p>
+            )}
           </section>
         </div>
         <section className="dashboard-jobs" aria-labelledby="jobs-title">
@@ -160,7 +167,9 @@ export default async function DashboardPage() {
             <div>
               <h2 id="jobs-title">我的岗位</h2>
             </div>
-            <span className="dashboard-section-link">岗位列表 →</span>
+            <Link className="dashboard-section-link" href="/positions">
+              岗位列表 →
+            </Link>
           </div>
           {jobs.map((job) => (
             <Link

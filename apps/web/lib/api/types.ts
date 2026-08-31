@@ -71,3 +71,12 @@ export type DetectedChangesView = {
   jobs: DetectedJob[];
   changes_total: number;
 };
+
+// GET /api/v1/candidates 的候选人摘要（招聘模式候选人切换器）。
+export type CandidateSummary = {
+  id: string;
+  name: string;
+  education?: string;
+  experienceYears?: number | null;
+  skills?: number;
+};

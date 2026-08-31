@@ -292,6 +292,19 @@
   margin-left: auto;
 }
 
+.publish-next-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.publish-next-actions-label {
+  color: var(--muted);
+  font-size: 14px;
+  margin-right: 4px;
+}
+
 .training-block {
   margin-top: 12px;
 }

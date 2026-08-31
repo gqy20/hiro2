@@ -87,6 +87,11 @@ export function NewJobsWorkbench({
         message.error("审核动作未能写入后端，请稍后重试");
         return;
       }
+      message.success(
+        status === "accepted"
+          ? "已接受候选，定义存为草稿，可继续编辑"
+          : "已拒绝该候选",
+      );
     }
     setCandidates((current) =>
       current.map((candidate) =>
@@ -199,8 +204,6 @@ export function NewJobsWorkbench({
             <div className="candidate-decision" aria-label="候选判断">
               <StatusMark status={selected.status} />
               <span>{`${Math.round(selected.confidence * 100)}% 置信`}</span>
-              <span>{`${selected.companies} 家企业`}</span>
-              <span>{`${selected.sourceCount} 条来源`}</span>
             </div>
 
             {editing && draft ? (
@@ -248,23 +251,38 @@ export function NewJobsWorkbench({
             ) : null}
 
             <footer className="candidate-review-bar">
-              <span>{`已检查 ${selected.evidence.length} 条证据；接受后进入岗位定义草稿，仍需人工编辑和发布。`}</span>
+              <span>
+                {selected.status === "accepted"
+                  ? "已接受为岗位定义草稿，可继续编辑定义。"
+                  : selected.status === "rejected"
+                    ? "已拒绝该候选；如判断有误可恢复待审。"
+                    : `${selected.evidence.length} 条证据可查；接受后成为岗位定义草稿，仍可人工编辑。`}
+              </span>
               <div>
-                <Button
-                  danger
-                  icon={<XCircle />}
-                  onClick={() => updateStatus("rejected")}
-                  type="text"
-                >
-                  拒绝
-                </Button>
-                <Button
-                  icon={<CheckCircle />}
-                  onClick={() => updateStatus("accepted")}
-                  type="primary"
-                >
-                  接受候选
-                </Button>
+                {selected.status === "reviewing" ||
+                selected.status === "needs_evidence" ? (
+                  <>
+                    <Button
+                      danger
+                      icon={<XCircle />}
+                      onClick={() => updateStatus("rejected")}
+                      type="text"
+                    >
+                      拒绝
+                    </Button>
+                    <Button
+                      icon={<CheckCircle />}
+                      onClick={() => updateStatus("accepted")}
+                      type="primary"
+                    >
+                      接受候选
+                    </Button>
+                  </>
+                ) : (
+                  <Button onClick={() => updateStatus("reviewing")} type="text">
+                    恢复待审
+                  </Button>
+                )}
               </div>
             </footer>
           </main>

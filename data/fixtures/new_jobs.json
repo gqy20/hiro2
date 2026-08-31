@@ -12,14 +12,73 @@
       "sourceCount": 18,
       "status": "reviewing",
       "whyNew": "职责组合同时覆盖任务编排、工具接入、评测和人工接管，区别于传统 AI 应用开发。",
-      "responsibilities": ["设计多步骤智能体工作流", "接入外部工具和业务 API", "建立评测与人工接管机制"],
-      "requiredSkills": ["智能体编排", "工具调用", "效果评测", "Python"],
-      "preferredSkills": ["LangGraph", "MCP", "可观测性"],
-      "scenarios": ["企业知识助手", "自动化运营流程", "研发 Copilot"],
+      "responsibilities": [
+        "设计多步骤智能体工作流",
+        "接入外部工具和业务 API",
+        "建立评测与人工接管机制"
+      ],
+      "requiredSkills": [
+        "智能体编排",
+        "工具调用",
+        "效果评测",
+        "Python"
+      ],
+      "preferredSkills": [
+        "LangGraph",
+        "MCP",
+        "可观测性"
+      ],
+      "scenarios": [
+        "企业知识助手",
+        "自动化运营流程",
+        "研发 Copilot"
+      ],
       "evidence": [
-        { "id": "new-ev-01", "source": "招聘 JD 汇总", "sourceType": "招聘 JD", "publishedAt": "2026-08-12", "collectedAt": "2026-08-23", "quality": 0.94, "excerpt": "负责智能体工作流设计、工具调用和效果评测。", "fullText": "岗位职责：负责智能体工作流设计、工具调用和效果评测，建立异常恢复与人工接管机制。", "sourceUrl": null, "stance": "支持" },
-        { "id": "new-ev-02", "source": "AI 工程日报", "sourceType": "技术日报", "publishedAt": "2026-08-18", "collectedAt": "2026-08-23", "quality": 0.82, "excerpt": "多步骤智能体正在成为企业 AI 应用的独立工程方向。", "fullText": "行业观察：多步骤智能体从实验性功能进入企业生产系统，工具治理、状态追踪和效果评测成为新的工程职责。", "sourceUrl": null, "stance": "支持" }
+        {
+          "id": "new-ev-01",
+          "source": "招聘 JD 汇总",
+          "sourceType": "招聘 JD",
+          "publishedAt": "2026-08-12",
+          "collectedAt": "2026-08-23",
+          "quality": 0.94,
+          "excerpt": "负责智能体工作流设计、工具调用和效果评测。",
+          "fullText": "岗位职责：负责智能体工作流设计、工具调用和效果评测，建立异常恢复与人工接管机制。",
+          "sourceUrl": null,
+          "stance": "支持"
+        },
+        {
+          "id": "new-ev-02",
+          "source": "AI 工程日报",
+          "sourceType": "技术日报",
+          "publishedAt": "2026-08-18",
+          "collectedAt": "2026-08-23",
+          "quality": 0.82,
+          "excerpt": "多步骤智能体正在成为企业 AI 应用的独立工程方向。",
+          "fullText": "行业观察：多步骤智能体从实验性功能进入企业生产系统，工具治理、状态追踪和效果评测成为新的工程职责。",
+          "sourceUrl": null,
+          "stance": "支持"
+        }
       ]
+    },
+    {
+      "id": "emerging-forward-deployed",
+      "title": "AI Engineer - FDE (Forward Deployed Engineer)",
+      "summary": "137 条 JD · 近90天 129 · 增长 64.5 倍 · 8 条来源",
+      "confidence": 0.8,
+      "companies": 66,
+      "sourceCount": 8,
+      "status": "reviewing",
+      "whyNew": "涌现扫描检出：近 90 天 129 条（前 90 天仅 2，增长 64.5 倍），66 种标题变体、8 个平台同时涌现",
+      "responsibilities": [],
+      "requiredSkills": [
+        "Python",
+        "自动化运维",
+        "AI Agent",
+        "大数据处理"
+      ],
+      "preferredSkills": [],
+      "scenarios": [],
+      "evidence": []
     },
     {
       "id": "emerging-ai-evaluation",
@@ -30,12 +89,39 @@
       "sourceCount": 11,
       "status": "reviewing",
       "whyNew": "岗位核心从模型开发转向评测集、指标体系、错误归因和持续回归。",
-      "responsibilities": ["设计离线评测集", "分析模型和检索错误", "维护质量回归与报告"],
-      "requiredSkills": ["效果评测", "数据分析", "Python"],
-      "preferredSkills": ["RAG", "LLM-as-a-Judge", "实验设计"],
-      "scenarios": ["模型发布验收", "知识库质量监控", "智能体回归测试"],
+      "responsibilities": [
+        "设计离线评测集",
+        "分析模型和检索错误",
+        "维护质量回归与报告"
+      ],
+      "requiredSkills": [
+        "效果评测",
+        "数据分析",
+        "Python"
+      ],
+      "preferredSkills": [
+        "RAG",
+        "LLM-as-a-Judge",
+        "实验设计"
+      ],
+      "scenarios": [
+        "模型发布验收",
+        "知识库质量监控",
+        "智能体回归测试"
+      ],
       "evidence": [
-        { "id": "new-ev-03", "source": "招聘 JD 汇总", "sourceType": "招聘 JD", "publishedAt": "2026-08-05", "collectedAt": "2026-08-23", "quality": 0.89, "excerpt": "建立模型效果评估体系并跟踪失败案例。", "fullText": "岗位职责：建立模型效果评估体系，维护测试集与指标，跟踪失败案例并推动模型、检索和提示词链路改进。", "sourceUrl": null, "stance": "支持" }
+        {
+          "id": "new-ev-03",
+          "source": "招聘 JD 汇总",
+          "sourceType": "招聘 JD",
+          "publishedAt": "2026-08-05",
+          "collectedAt": "2026-08-23",
+          "quality": 0.89,
+          "excerpt": "建立模型效果评估体系并跟踪失败案例。",
+          "fullText": "岗位职责：建立模型效果评估体系，维护测试集与指标，跟踪失败案例并推动模型、检索和提示词链路改进。",
+          "sourceUrl": null,
+          "stance": "支持"
+        }
       ]
     },
     {
@@ -47,13 +133,51 @@
       "sourceCount": 8,
       "status": "needs_evidence",
       "whyNew": "岗位同时要求知识建模、检索质量和引用溯源，尚需更多 JD 验证其独立性。",
-      "responsibilities": ["整理领域知识和实体关系", "构建检索与重排链路", "追踪回答引用和质量"],
-      "requiredSkills": ["知识库构建", "检索增强生成", "数据治理"],
-      "preferredSkills": ["向量数据库", "知识图谱", "重排模型"],
-      "scenarios": ["企业知识库", "客服问答", "合规检索"],
+      "responsibilities": [
+        "整理领域知识和实体关系",
+        "构建检索与重排链路",
+        "追踪回答引用和质量"
+      ],
+      "requiredSkills": [
+        "知识库构建",
+        "检索增强生成",
+        "数据治理"
+      ],
+      "preferredSkills": [
+        "向量数据库",
+        "知识图谱",
+        "重排模型"
+      ],
+      "scenarios": [
+        "企业知识库",
+        "客服问答",
+        "合规检索"
+      ],
       "evidence": [
-        { "id": "new-ev-04", "source": "职业标准草案", "sourceType": "职业标准", "publishedAt": "2026-07-02", "collectedAt": "2026-08-23", "quality": 0.71, "excerpt": "知识组织、检索和引用溯源逐渐成为独立能力组合。", "fullText": "能力说明：知识组织、检索、重排和引用溯源共同影响企业 AI 应用可信度，相关能力可作为岗位候选继续观察。", "sourceUrl": null, "stance": "支持" },
-        { "id": "new-ev-05", "source": "招聘 JD 汇总", "sourceType": "招聘 JD", "publishedAt": "2026-08-09", "collectedAt": "2026-08-23", "quality": 0.68, "excerpt": "部分岗位仍将知识工程并入 AI 应用开发职责。", "fullText": "岗位职责：负责知识库与检索增强模块，但岗位名称仍为 AI 应用工程师，尚不能确认其已形成稳定的独立岗位。", "sourceUrl": null, "stance": "反证" }
+        {
+          "id": "new-ev-04",
+          "source": "职业标准草案",
+          "sourceType": "职业标准",
+          "publishedAt": "2026-07-02",
+          "collectedAt": "2026-08-23",
+          "quality": 0.71,
+          "excerpt": "知识组织、检索和引用溯源逐渐成为独立能力组合。",
+          "fullText": "能力说明：知识组织、检索、重排和引用溯源共同影响企业 AI 应用可信度，相关能力可作为岗位候选继续观察。",
+          "sourceUrl": null,
+          "stance": "支持"
+        },
+        {
+          "id": "new-ev-05",
+          "source": "招聘 JD 汇总",
+          "sourceType": "招聘 JD",
+          "publishedAt": "2026-08-09",
+          "collectedAt": "2026-08-23",
+          "quality": 0.68,
+          "excerpt": "部分岗位仍将知识工程并入 AI 应用开发职责。",
+          "fullText": "岗位职责：负责知识库与检索增强模块，但岗位名称仍为 AI 应用工程师，尚不能确认其已形成稳定的独立岗位。",
+          "sourceUrl": null,
+          "stance": "反证"
+        }
       ]
     }
   ]

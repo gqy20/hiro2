@@ -31,6 +31,7 @@ class DataRepository(Protocol):
     def job_changeset(self) -> dict: ...
     def jobversion_draft(self) -> dict: ...
     def emerging(self) -> dict: ...
+    def emerging_roles(self) -> dict: ...
     def evidence(self) -> list[dict]: ...
     def events_primary(self) -> dict[str, dict]: ...
     def jd_parsed(self) -> dict[str, dict]: ...
@@ -49,6 +50,7 @@ class FileRepository:
         self._cs: dict = {}
         self._draft: dict = {}
         self._emerging: dict = {}
+        self._emerging_roles: dict = {}
         self._evidence: list[dict] = []
         self._events: dict[str, dict] = {}
         self._jd: dict[str, dict] = {}
@@ -62,6 +64,7 @@ class FileRepository:
         self._cs = _load_json(P / "jd-opencli" / "jobchangeset-window-diff.json")
         self._draft = _load_json(P / "jd-opencli" / "jobversion-agent-draft.json")
         self._emerging = _load_json(P / "jd-opencli" / "emerging-agent.json")
+        self._emerging_roles = _load_json(P / "jd-opencli" / "emerging-roles.json")
         self._evidence = _load_jsonl(P / "evidence" / "evidence.jsonl")
         self._events = {
             e["event_id"]: e
@@ -86,6 +89,10 @@ class FileRepository:
     def emerging(self) -> dict:
         self._ensure()
         return self._emerging
+
+    def emerging_roles(self) -> dict:
+        self._ensure()
+        return self._emerging_roles
 
     def evidence(self) -> list[dict]:
         self._ensure()

@@ -22,6 +22,40 @@
       },
       "title_variants": 66,
       "platforms": 8,
+      "top_skills": [
+        {
+          "name": "Python",
+          "count": 96
+        },
+        {
+          "name": "自动化运维",
+          "count": 63
+        },
+        {
+          "name": "AI Agent",
+          "count": 40
+        },
+        {
+          "name": "大数据处理",
+          "count": 27
+        },
+        {
+          "name": "模型微调",
+          "count": 25
+        },
+        {
+          "name": "ML/DL算法",
+          "count": 20
+        },
+        {
+          "name": "LLM应用",
+          "count": 15
+        },
+        {
+          "name": "RAG/知识库",
+          "count": 10
+        }
+      ],
       "sample_titles": [
         "AI Engineer - FDE (Forward Deployed Engineer)",
         "Director of Product Management, Forward Deployed & Strategy",
@@ -47,6 +81,40 @@
       },
       "title_variants": 37,
       "platforms": 4,
+      "top_skills": [
+        {
+          "name": "LLM应用",
+          "count": 35
+        },
+        {
+          "name": "AI Agent",
+          "count": 17
+        },
+        {
+          "name": "Python",
+          "count": 12
+        },
+        {
+          "name": "API开发",
+          "count": 5
+        },
+        {
+          "name": "ML/DL算法",
+          "count": 4
+        },
+        {
+          "name": "RAG/知识库",
+          "count": 2
+        },
+        {
+          "name": "安全/风控意识",
+          "count": 1
+        },
+        {
+          "name": "系统架构",
+          "count": 1
+        }
+      ],
       "sample_titles": [
         "Applied AI Architect",
         "Applied AI Architect, Commercial",
@@ -72,6 +140,36 @@
       },
       "title_variants": 16,
       "platforms": 5,
+      "top_skills": [
+        {
+          "name": "云计算",
+          "count": 21
+        },
+        {
+          "name": "Python",
+          "count": 15
+        },
+        {
+          "name": "LLM应用",
+          "count": 8
+        },
+        {
+          "name": "AI Agent",
+          "count": 5
+        },
+        {
+          "name": "API开发",
+          "count": 4
+        },
+        {
+          "name": "嵌入式/硬件",
+          "count": 3
+        },
+        {
+          "name": "系统架构",
+          "count": 1
+        }
+      ],
       "sample_titles": [
         "AI Infrastructure Engineer",
         "AI Infrastructure Engineer, Model Serving Platform",
@@ -93,6 +191,40 @@
       },
       "title_variants": 16,
       "platforms": 7,
+      "top_skills": [
+        {
+          "name": "大数据处理",
+          "count": 14
+        },
+        {
+          "name": "Python",
+          "count": 9
+        },
+        {
+          "name": "云计算",
+          "count": 5
+        },
+        {
+          "name": "AI Agent",
+          "count": 3
+        },
+        {
+          "name": "自动化运维",
+          "count": 3
+        },
+        {
+          "name": "LLM应用",
+          "count": 3
+        },
+        {
+          "name": "API开发",
+          "count": 2
+        },
+        {
+          "name": "RAG/知识库",
+          "count": 2
+        }
+      ],
       "sample_titles": [
         "Backend Software Engineer — Data Platform & AI Data Products",
         "Engineering Manager, Research Data Platform",
@@ -113,6 +245,36 @@
       },
       "title_variants": 6,
       "platforms": 4,
+      "top_skills": [
+        {
+          "name": "Python",
+          "count": 16
+        },
+        {
+          "name": "云计算",
+          "count": 16
+        },
+        {
+          "name": "嵌入式/硬件",
+          "count": 8
+        },
+        {
+          "name": "自动化运维",
+          "count": 8
+        },
+        {
+          "name": "API开发",
+          "count": 6
+        },
+        {
+          "name": "LLM应用",
+          "count": 1
+        },
+        {
+          "name": "ML/DL算法",
+          "count": 1
+        }
+      ],
       "sample_titles": [
         "Director, Compute Infrastructure Procurement Operations",
         "Junior/Senior/Staff Software Engineer, Inference / Compute Infrastructure Engineering",
@@ -133,6 +295,40 @@
       },
       "title_variants": 11,
       "platforms": 2,
+      "top_skills": [
+        {
+          "name": "Python",
+          "count": 7
+        },
+        {
+          "name": "LLM应用",
+          "count": 7
+        },
+        {
+          "name": "系统架构",
+          "count": 5
+        },
+        {
+          "name": "云计算",
+          "count": 4
+        },
+        {
+          "name": "自动化运维",
+          "count": 4
+        },
+        {
+          "name": "AI Agent",
+          "count": 2
+        },
+        {
+          "name": "大数据处理",
+          "count": 1
+        },
+        {
+          "name": "RAG/知识库",
+          "count": 1
+        }
+      ],
       "sample_titles": [
         "AI中间件开发工程师/专家-基础技术",
         "JDK研发工程师-基础技术",

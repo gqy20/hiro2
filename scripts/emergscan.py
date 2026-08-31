@@ -38,6 +38,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PARSED = ROOT / "data" / "processed" / "jd-opencli" / "jd-parsed.jsonl"
 POSITIONS = ROOT / "data" / "processed" / "capability-matrix" / "positions.jsonl"
 OUT = ROOT / "data" / "processed" / "jd-opencli" / "emerging-roles.json"
+CAPS = ROOT / "data" / "processed" / "capability-matrix" / "capabilities.json"
 
 # 涌现判据参数（可按需调整；判据本身来自"增长 + 多样 + 非已知"三要素）
 MIN_TOTAL = 8  # 关键词最少覆盖 JD 数（低于此是噪声）
@@ -212,6 +213,10 @@ def cmd_run() -> dict:
     known = [
         p.get("name", "").lower() for p in (json.loads(x) for x in POSITIONS.open(encoding="utf-8"))
     ]
+    caps_names = {
+        c["capability_id"]: c["name"]
+        for c in json.loads(CAPS.read_text(encoding="utf-8"))["capabilities"]
+    }
     data_end = max(_parse_day(j["publish_date"]) for j in jds)  # 数据末日作基准日
     recent_start = data_end - timedelta(days=90)
     prior_start = data_end - timedelta(days=180)
@@ -238,6 +243,12 @@ def cmd_run() -> dict:
         ratio = (recent / prior) if prior > 0 else None  # None = 从无到有
         variants = len({r["title"] for r in rows})
         platforms = len({r.get("platform", "?") for r in rows})
+        # 技能画像：聚合候选簇内 JD 的 resolved 技能（供前端定义卡 requiredSkills）
+        skill_c: Counter = Counter()
+        for r in rows:
+            for x in r.get("resolved") or []:
+                skill_c[x["skill_id"]] += 1
+        top_skills = [{"name": caps_names.get(k, k), "count": v} for k, v in skill_c.most_common(8)]
         # 涌现判据：近期有效量 + 强增长（或从无到有）+ 多样性
         if recent < MIN_RECENT:
             continue
@@ -255,6 +266,7 @@ def cmd_run() -> dict:
                 "monthly": dict(sorted(monthly.items())),
                 "title_variants": variants,
                 "platforms": platforms,
+                "top_skills": top_skills,
                 "sample_titles": sorted({r["title"] for r in rows})[:5],
                 "_jd_ids": {r["jd_id"] for r in rows},
             }

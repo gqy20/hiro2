@@ -5,6 +5,12 @@
 ## [Unreleased]
 
 ### Added
+- 涌现岗位候选接入前端/API（方案 A 第一步）：`emerging_jobs()` 从硬编码单候选升级为
+  AI Agent（主案例第一位）+ 涌现扫描候选（FDE 第二位 + 5 个真实涌现方向），
+  前端 `/new-jobs` 页直接渲染 7 个候选卡，审核流（接受/拒绝）复用现有端点。
+  emergscan 补技能画像聚合（候选簇内 JD 的 resolved 技能频次），FDE 的必备技能
+  为 Python/自动化运维/AI Agent/大数据处理/模型微调等 8 项。置信度从增长比+平台数
+  +近期量确定性推导。mock fixture 同步补 FDE 候选。
 - 通用涌现岗位探测器 + 接入持续链路（FDE 验证通过）：修复 newjob.py 硬编码单案例的结构性盲区（只能发现 AI Agent、一次性产物、不持续）。新增 `emergscan.py`：扫全部 AI 域 JD 标题关键词（英文 n-gram+缩写+中文段），按涌现判据（近 90 天>=10 且增长比>=1.5、标题变体>=3、跨平台>=2）自动捞出涌现岗位候选，已知岗位/技术领域/地名噪声过滤，Jaccard>0.3 合并同义变体；接入 forecast_refresh 定时链持续产出。**FDE 验证：2024-01 仅 1 条 -> 2026-08 爆发 134 条，被自动检出为第 1 候选（137 条/64.5 倍增长/66 标题变体/8 平台）**，同批捞出 applied ai / ai infrastructure / data platform / post training 等真实涌现方向。
 - 事件采集与预测刷新对齐（完整链同一任务、正确顺序）：预测刷新从"只重算预测"升级为完整链 `rssget 抓RSS -> extract feeds 增量抽取 -> livcast 实时预测 -> predsnap 快照`。修复失配：此前预测每日重算但读的事件只有手动抓取才更新，预测基于陈旧事件。现事件采集尽力而为、预测必执行（抓取失败不阻塞）；extract 用 --days 增量窗口限 LLM 成本且幂等（实测抽 2 篇新文章、跳过 1738 已抽，77s 全链完成）。新增 HIRO2_FORECAST_REFRESH_EXTRACT_DAYS（默认 2）。端到端验证：新事件把预测 as_of 推进到当日。
 - 实时预测定时刷新（项目启动后自动周期刷新，默认每天）：

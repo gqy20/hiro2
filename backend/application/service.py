@@ -354,30 +354,111 @@ class ApplicationService:
             f"{em.get('signal_precedence', {}).get('signal_total_weight', 0):.0f}（全域第一），"
             f"领先 JD 落地 184 天（下界）"
         )
+        candidates = [
+            CandidateVM(
+                id="emerging-agent",
+                title="AI Agent 工程师",
+                summary=(
+                    f"{emerge.get('jd_total', 0)} 条 JD、"
+                    f"{emerge.get('title_variants', 0)} 种标题变体、月度 1->7 增长"
+                ),
+                confidence=0.92,
+                companies=diff.get("distinct_companies", 0),
+                source_count=2,
+                status="reviewing",
+                why_new=why,
+                responsibilities=resp,
+                required_skills=req,
+                preferred_skills=pref,
+                scenarios=scen,
+                evidence=self._agent_evidence(),
+            )
+        ]
+        candidates.extend(self._emergscan_candidates())
         return NewJobsVM(
-            fixture_version="v2",
-            run_id="newjob-agent-20260825",
-            candidates=[
+            fixture_version="v3",
+            run_id="emergscan-auto",
+            candidates=candidates,
+        )
+
+    def _emergscan_candidates(self) -> list[CandidateVM]:
+        """涌现扫描器（emergscan.py）候选 -> CandidateVM（确定性组装，零 LLM）。"""
+        scan = self.repo.emerging_roles()
+        out: list[CandidateVM] = []
+        for c in scan.get("candidates", []):
+            kw = c.get("keyword", "")
+            total = c.get("total", 0)
+            recent = c.get("recent_90d", 0)
+            prior = c.get("prior_90d", 0)
+            growth = c.get("growth_ratio")
+            platforms = c.get("platforms", 0)
+            variants = c.get("title_variants", 0)
+            skills = [s["name"] for s in c.get("top_skills", []) if s.get("name")]
+            samples = c.get("sample_titles", [])
+            title = self._emergscan_title(kw, samples)
+            growth_desc = f"增长 {growth} 倍" if growth else "从无到有"
+            why = (
+                f"涌现扫描检出：近 90 天 {recent} 条（前 90 天仅 {prior}，{growth_desc}），"
+                f"{variants} 种标题变体、{platforms} 个平台同时涌现"
+            )
+            conf = self._emergscan_confidence(growth, platforms, recent)
+            out.append(
                 CandidateVM(
-                    id="emerging-agent",
-                    title="AI Agent 工程师",
-                    summary=(
-                        f"{emerge.get('jd_total', 0)} 条 JD、"
-                        f"{emerge.get('title_variants', 0)} 种标题变体、月度 1->7 增长"
-                    ),
-                    confidence=0.92,
-                    companies=diff.get("distinct_companies", 0),
-                    source_count=2,
+                    id=f"emerg-{kw.replace(' ', '-').lower()[:40]}",
+                    title=title,
+                    summary=f"{total} 条 JD · 近90天 {recent} · {growth_desc}",
+                    confidence=conf,
+                    companies=variants,
+                    source_count=platforms,
                     status="reviewing",
                     why_new=why,
-                    responsibilities=resp,
-                    required_skills=req,
-                    preferred_skills=pref,
-                    scenarios=scen,
-                    evidence=self._agent_evidence(),
+                    responsibilities=[],
+                    required_skills=skills,
+                    preferred_skills=[],
+                    scenarios=[],
+                    evidence=self._emergscan_evidence(kw),
                 )
-            ],
-        )
+            )
+        return out
+
+    @staticmethod
+    def _emergscan_title(kw: str, samples: list[str]) -> str:
+        """候选展示标题：优先从样例标题取最具代表性的，回退用关键词。"""
+        for t in samples:
+            if kw.lower() in t.lower() and len(t) <= 60:
+                return t.strip()
+        return kw.title()  # 关键词首字母大写作展示标题兑底
+
+    @staticmethod
+    def _emergscan_confidence(growth: float | None, platforms: int, recent: int) -> float:
+        """涌现候选置信度：增长强度 + 多平台 + 近期量的简单确定性推导。"""
+        score = 0.3
+        if growth is None or growth >= 10:
+            score += 0.3
+        elif growth >= 2:
+            score += 0.2
+        if platforms >= 5:
+            score += 0.2
+        elif platforms >= 3:
+            score += 0.1
+        if recent >= 50:
+            score += 0.1
+        elif recent >= 20:
+            score += 0.05
+        return round(min(score, 0.95), 2)
+
+    def _emergscan_evidence(self, kw: str) -> list[EvidenceVM]:
+        """按关键词从现有证据池筛 JD 证据（回链涌现候选的原文依据）。"""
+        picks: list[dict] = []
+        kw_lower = kw.lower()
+        for ev in self.repo.evidence():
+            if len(picks) >= 3:
+                break
+            payload = ev.get("payload", {})
+            title = str(payload.get("title", "")).lower()
+            if kw_lower in title and ev["evidence_id"].startswith("jd:"):
+                picks.append(ev)
+        return [self._evidence_vm(e) for e in picks]
 
     def _agent_evidence(self) -> list[EvidenceVM]:
         picks: list[dict] = []

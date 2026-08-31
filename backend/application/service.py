@@ -402,6 +402,10 @@ class ApplicationService:
                 f"{variants} 种标题变体、{platforms} 个平台同时涌现"
             )
             conf = self._emergscan_confidence(growth, platforms, recent)
+            # 内容画像（emergscan 聚合的职责/要求/场景短语）
+            resp = [x["phrase"] for x in c.get("core_responsibilities", []) if x.get("phrase")]
+            scen = [x["phrase"] for x in c.get("scenarios", []) if x.get("phrase")]
+            req_plus = [x["phrase"] for x in c.get("core_requirements", []) if x.get("phrase")][:4]
             out.append(
                 CandidateVM(
                     id=f"emerg-{kw.replace(' ', '-').lower()[:40]}",
@@ -412,10 +416,10 @@ class ApplicationService:
                     source_count=platforms,
                     status="reviewing",
                     why_new=why,
-                    responsibilities=[],
+                    responsibilities=resp,
                     required_skills=skills,
-                    preferred_skills=[],
-                    scenarios=[],
+                    preferred_skills=req_plus,
+                    scenarios=scen,
                     evidence=self._emergscan_evidence(kw),
                 )
             )

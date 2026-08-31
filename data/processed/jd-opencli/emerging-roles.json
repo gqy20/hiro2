@@ -22,6 +22,13 @@
       },
       "title_variants": 66,
       "platforms": 8,
+      "sample_titles": [
+        "AI Engineer - FDE (Forward Deployed Engineer)",
+        "Director of Product Management, Forward Deployed & Strategy",
+        "Director, Forward Deployed Engineering",
+        "Engineering Manager, Forward Deployed (Privy)",
+        "Forward Deployed AI Accelerator, Marketing"
+      ],
       "top_skills": [
         {
           "name": "Python",
@@ -56,71 +63,92 @@
           "count": 10
         }
       ],
-      "sample_titles": [
-        "AI Engineer - FDE (Forward Deployed Engineer)",
-        "Director of Product Management, Forward Deployed & Strategy",
-        "Director, Forward Deployed Engineering",
-        "Engineering Manager, Forward Deployed (Privy)",
-        "Forward Deployed AI Accelerator, Marketing"
+      "core_responsibilities": [
+        {
+          "phrase": "交付生产级数据与AI解决方案",
+          "count": 24
+        },
+        {
+          "phrase": "构建并投产客户数据与AI解决方案",
+          "count": 20
+        },
+        {
+          "phrase": "主导架构与设计决策",
+          "count": 16
+        },
+        {
+          "phrase": "沉淀可复用资产与最佳实践",
+          "count": 12
+        },
+        {
+          "phrase": "嵌入客户团队理解业务挑战",
+          "count": 11
+        },
+        {
+          "phrase": "交付生产级系统与参考架构",
+          "count": 11
+        }
+      ],
+      "core_requirements": [
+        {
+          "phrase": "6年以上数据工程或软件工程经验",
+          "count": 46
+        },
+        {
+          "phrase": "熟悉CI/CD生产部署",
+          "count": 24
+        },
+        {
+          "phrase": "熟练使用Python、Scala或JavaScript/TypeScript",
+          "count": 14
+        },
+        {
+          "phrase": "具备技术项目交付管理经验",
+          "count": 9
+        },
+        {
+          "phrase": "有技术项目交付管理经验",
+          "count": 8
+        },
+        {
+          "phrase": "熟悉Python、Scala或JavaScript/TypeScript",
+          "count": 7
+        },
+        {
+          "phrase": "了解MLOps、ML/AI模型与AI API",
+          "count": 6
+        },
+        {
+          "phrase": "深入掌握Apache Spark及运行时原理",
+          "count": 6
+        }
+      ],
+      "scenarios": [
+        {
+          "phrase": "Communications",
+          "count": 14
+        },
+        {
+          "phrase": "Media",
+          "count": 14
+        },
+        {
+          "phrase": "Entertainment",
+          "count": 14
+        },
+        {
+          "phrase": "Games",
+          "count": 14
+        },
+        {
+          "phrase": "Healthcare",
+          "count": 7
+        }
       ],
       "aliases": [
         "FDE",
         "sr forward",
         "sr forward deployed"
-      ]
-    },
-    {
-      "keyword": "applied ai",
-      "total": 47,
-      "recent_90d": 42,
-      "prior_90d": 0,
-      "growth_ratio": null,
-      "monthly": {
-        "2025-10": 5,
-        "2026-08": 42
-      },
-      "title_variants": 37,
-      "platforms": 4,
-      "top_skills": [
-        {
-          "name": "LLM应用",
-          "count": 35
-        },
-        {
-          "name": "AI Agent",
-          "count": 17
-        },
-        {
-          "name": "Python",
-          "count": 12
-        },
-        {
-          "name": "API开发",
-          "count": 5
-        },
-        {
-          "name": "ML/DL算法",
-          "count": 4
-        },
-        {
-          "name": "RAG/知识库",
-          "count": 2
-        },
-        {
-          "name": "安全/风控意识",
-          "count": 1
-        },
-        {
-          "name": "系统架构",
-          "count": 1
-        }
-      ],
-      "sample_titles": [
-        "Applied AI Architect",
-        "Applied AI Architect, Commercial",
-        "Applied AI Architect, Digital Natives Business ",
-        "Applied AI Architect, Enterprise Tech",
-        "Applied AI Architect, Industries"
       ]
     },
     {
@@ -140,6 +168,13 @@
       },
       "title_variants": 16,
       "platforms": 5,
+      "sample_titles": [
+        "AI Infrastructure Engineer",
+        "AI Infrastructure Engineer, Model Serving Platform",
+        "AI Infrastructure Engineer, Sandbox Platform",
+        "AI Infrastructure Engineer, Serving Platform",
+        "AI Infrastructure Operations, Demand Planning"
+      ],
       "top_skills": [
         {
           "name": "云计算",
@@ -170,13 +205,67 @@
           "count": 1
         }
       ],
-      "sample_titles": [
-        "AI Infrastructure Engineer",
-        "AI Infrastructure Engineer, Model Serving Platform",
-        "AI Infrastructure Engineer, Sandbox Platform",
-        "AI Infrastructure Engineer, Serving Platform",
-        "AI Infrastructure Operations, Demand Planning"
-      ]
+      "core_responsibilities": [
+        {
+          "phrase": "构建大规模LLM服务系统",
+          "count": 2
+        },
+        {
+          "phrase": "开发监控与可观测性方案",
+          "count": 2
+        },
+        {
+          "phrase": "构建GPU集群自动化管理系统",
+          "count": 2
+        },
+        {
+          "phrase": "开发AI基础设施智能体",
+          "count": 2
+        },
+        {
+          "phrase": "构建Fleet Intelligence监控平台",
+          "count": 2
+        },
+        {
+          "phrase": "构建监控系统保障服务质量",
+          "count": 2
+        }
+      ],
+      "core_requirements": [
+        {
+          "phrase": "精通Python、Go或Rust",
+          "count": 3
+        },
+        {
+          "phrase": "熟悉云基础设施（AWS、GCP）与IaC（Terraform）",
+          "count": 2
+        },
+        {
+          "phrase": "熟悉现代LLM服务框架（vLLM、SGLang、TensorRT-LLM等）",
+          "count": 2
+        },
+        {
+          "phrase": "4年以上高性能系统软件经验",
+          "count": 2
+        },
+        {
+          "phrase": "3年以上分布式系统或基础设施平台经验",
+          "count": 2
+        },
+        {
+          "phrase": "熟悉Linux、Kubernetes、Terraform、Ansible",
+          "count": 2
+        },
+        {
+          "phrase": "自动化优先思维",
+          "count": 2
+        },
+        {
+          "phrase": "有监控和可观测性实践经验",
+          "count": 2
+        }
+      ],
+      "scenarios": []
     },
     {
       "keyword": "data platform",
@@ -191,6 +280,13 @@
       },
       "title_variants": 16,
       "platforms": 7,
+      "sample_titles": [
+        "Backend Software Engineer — Data Platform & AI Data Products",
+        "Engineering Manager, Research Data Platform",
+        "Manager, Software Engineering - Data Platform",
+        "Product Management, Human Data Platform",
+        "Research Engineer, Economic Research Data Platform"
+      ],
       "top_skills": [
         {
           "name": "大数据处理",
@@ -225,13 +321,181 @@
           "count": 2
         }
       ],
+      "core_responsibilities": [
+        {
+          "phrase": "构建可靠数据管道并解决数据问题",
+          "count": 2
+        },
+        {
+          "phrase": "构建数据管道生成隐私保护数据集",
+          "count": 1
+        },
+        {
+          "phrase": "开发分类器与模型内部探针",
+          "count": 1
+        },
+        {
+          "phrase": "构建ML流水线分析Claude使用",
+          "count": 1
+        },
+        {
+          "phrase": "构建外部数据源自助集成工作流",
+          "count": 1
+        },
+        {
+          "phrase": "开发服务研究人员与公众的API和库",
+          "count": 1
+        }
+      ],
+      "core_requirements": [
+        {
+          "phrase": "具备生产环境数据密集型应用构建经验",
+          "count": 1
+        },
+        {
+          "phrase": "熟悉AWS或GCP云基础设施",
+          "count": 1
+        },
+        {
+          "phrase": "编写整洁、文档完善的Python代码",
+          "count": 1
+        },
+        {
+          "phrase": "具备分析工作流直觉与研究人员共情能力",
+          "count": 1
+        },
+        {
+          "phrase": "能在信息不完整时做出技术决策",
+          "count": 1
+        },
+        {
+          "phrase": "丰富的软件工程经验，数据密集型应用或内部工具",
+          "count": 1
+        },
+        {
+          "phrase": "善于与用户直接沟通并迭代需求",
+          "count": 1
+        },
+        {
+          "phrase": "快速学习ML或研究领域",
+          "count": 1
+        }
+      ],
+      "scenarios": []
+    },
+    {
+      "keyword": "post training",
+      "total": 16,
+      "recent_90d": 11,
+      "prior_90d": 1,
+      "growth_ratio": 11.0,
+      "monthly": {
+        "2025-08": 1,
+        "2025-10": 3,
+        "2026-05": 1,
+        "2026-07": 3,
+        "2026-08": 8
+      },
+      "title_variants": 11,
+      "platforms": 5,
       "sample_titles": [
-        "Backend Software Engineer — Data Platform & AI Data Products",
-        "Engineering Manager, Research Data Platform",
-        "Manager, Software Engineering - Data Platform",
-        "Product Management, Human Data Platform",
-        "Research Engineer, Economic Research Data Platform"
-      ]
+        "Forward Deployed Engineer (Inference & Post-Training)",
+        "Forward Deployed Engineer (Inference & Post-Training) - Mandarin Speaking",
+        "Machine Learning Research Scientist / Research Engineer, Post-Training",
+        "Machine Learning Research Scientist, Post-Training",
+        "Machine Learning Systems Research Engineer, Agent Post-training - Enterprise GenAI"
+      ],
+      "top_skills": [
+        {
+          "name": "模型微调",
+          "count": 40
+        },
+        {
+          "name": "LLM应用",
+          "count": 15
+        },
+        {
+          "name": "Python",
+          "count": 12
+        },
+        {
+          "name": "云计算",
+          "count": 6
+        },
+        {
+          "name": "ML/DL算法",
+          "count": 5
+        },
+        {
+          "name": "多模态AI",
+          "count": 3
+        },
+        {
+          "name": "AI Agent",
+          "count": 1
+        }
+      ],
+      "core_responsibilities": [
+        {
+          "phrase": "设计并实验偏好优化新方法",
+          "count": 2
+        },
+        {
+          "phrase": "在顶级AI会议发表研究成果",
+          "count": 2
+        },
+        {
+          "phrase": "研究前沿算法并集成至训练栈",
+          "count": 2
+        },
+        {
+          "phrase": "驱动RL训练并优化系统设计",
+          "count": 2
+        },
+        {
+          "phrase": "作为战略客户技术对接人",
+          "count": 2
+        },
+        {
+          "phrase": "实现并优化前沿模型后训练技术",
+          "count": 1
+        }
+      ],
+      "core_requirements": [
+        {
+          "phrase": "优秀书面与口头沟通能力",
+          "count": 2
+        },
+        {
+          "phrase": "5年以上生产环境LLM训练经验",
+          "count": 2
+        },
+        {
+          "phrase": "熟悉PPO/GRPO等相关算法",
+          "count": 2
+        },
+        {
+          "phrase": "多节点LLM训练与推理经验",
+          "count": 2
+        },
+        {
+          "phrase": "熟悉SGLang、vLLM、TensorRT-LLM等推理引擎",
+          "count": 2
+        },
+        {
+          "phrase": "具备熟练的Python编程能力",
+          "count": 1
+        },
+        {
+          "phrase": "精通深度学习框架",
+          "count": 1
+        },
+        {
+          "phrase": "熟悉分布式计算",
+          "count": 1
+        }
+      ],
+      "scenarios": []
     },
     {
       "keyword": "compute infrastructure",
@@ -245,6 +509,13 @@
       },
       "title_variants": 6,
       "platforms": 4,
+      "sample_titles": [
+        "Director, Compute Infrastructure Procurement Operations",
+        "Junior/Senior/Staff Software Engineer, Inference / Compute Infrastructure Engineering",
+        "Legal Program Manager, Compute & Infrastructure",
+        "Staff Software Engineer, Inference / Compute Infrastructure Engineering",
+        "Staff Technical Program Manager, Compute Infrastructure"
+      ],
       "top_skills": [
         {
           "name": "Python",
@@ -275,13 +546,67 @@
           "count": 1
         }
       ],
-      "sample_titles": [
-        "Director, Compute Infrastructure Procurement Operations",
-        "Junior/Senior/Staff Software Engineer, Inference / Compute Infrastructure Engineering",
-        "Legal Program Manager, Compute & Infrastructure",
-        "Staff Software Engineer, Inference / Compute Infrastructure Engineering",
-        "Staff Technical Program Manager, Compute Infrastructure"
-      ]
+      "core_responsibilities": [
+        {
+          "phrase": "与推理/ML平台团队协作",
+          "count": 5
+        },
+        {
+          "phrase": "构建硬件生命周期状态机",
+          "count": 2
+        },
+        {
+          "phrase": "设计声明式API和控制面",
+          "count": 2
+        },
+        {
+          "phrase": "构建物理主机全生命周期状态机",
+          "count": 2
+        },
+        {
+          "phrase": "制定并执行计算与基础设施获取战略",
+          "count": 1
+        },
+        {
+          "phrase": "主导复杂基础设施交易全生命周期",
+          "count": 1
+        }
+      ],
+      "core_requirements": [
+        {
+          "phrase": "精通Go/Python/Rust等语言",
+          "count": 4
+        },
+        {
+          "phrase": "了解Kubernetes控制器模式",
+          "count": 3
+        },
+        {
+          "phrase": "熟悉Kubernetes控制器模式",
+          "count": 3
+        },
+        {
+          "phrase": "具备内部平台或API开发经验",
+          "count": 2
+        },
+        {
+          "phrase": "了解GPU驱动/CUDA栈",
+          "count": 2
+        },
+        {
+          "phrase": "精通Go、Python、Rust等语言",
+          "count": 2
+        },
+        {
+          "phrase": "深度理解AI基础设施与生态系统",
+          "count": 1
+        },
+        {
+          "phrase": "有战略判断与财务敏锐度",
+          "count": 1
+        }
+      ],
+      "scenarios": []
     },
     {
       "keyword": "基础技术",
@@ -295,6 +620,13 @@
       },
       "title_variants": 11,
       "platforms": 2,
+      "sample_titles": [
+        "AI中间件开发工程师/专家-基础技术",
+        "JDK研发工程师-基础技术",
+        "业务架构研发工程师-基础技术",
+        "中间件研发-基础技术",
+        "可观测性技术研发-基础技术"
+      ],
       "top_skills": [
         {
           "name": "Python",
@@ -329,13 +661,67 @@
           "count": 1
         }
       ],
-      "sample_titles": [
-        "AI中间件开发工程师/专家-基础技术",
-        "JDK研发工程师-基础技术",
-        "业务架构研发工程师-基础技术",
-        "中间件研发-基础技术",
-        "可观测性技术研发-基础技术"
-      ]
+      "core_responsibilities": [
+        {
+          "phrase": "参与小红书JDK产品研发迭代",
+          "count": 1
+        },
+        {
+          "phrase": "服务Java服务和大数据场景",
+          "count": 1
+        },
+        {
+          "phrase": "研发GC、编译器、内存管理等核心模块",
+          "count": 1
+        },
+        {
+          "phrase": "满足特定业务场景需求",
+          "count": 1
+        },
+        {
+          "phrase": "推动业务升级到RedJDK21",
+          "count": 1
+        },
+        {
+          "phrase": "移植OpenJDK25特性获取收益",
+          "count": 1
+        }
+      ],
+      "core_requirements": [
+        {
+          "phrase": "技术视野开阔，学习主动性强",
+          "count": 3
+        },
+        {
+          "phrase": "本科及以上学历，计算机相关专业",
+          "count": 2
+        },
+        {
+          "phrase": "熟练掌握C/C++/Java语言",
+          "count": 1
+        },
+        {
+          "phrase": "具备相应开发、诊断能力",
+          "count": 1
+        },
+        {
+          "phrase": "扎实的计算机理论基础",
+          "count": 1
+        },
+        {
+          "phrase": "熟悉操作系统、数据结构、编译原理",
+          "count": 1
+        },
+        {
+          "phrase": "对底层系统开发有热情",
+          "count": 1
+        },
+        {
+          "phrase": "良好的沟通协调能力",
+          "count": 1
+        }
+      ],
+      "scenarios": []
     }
   ]
 }

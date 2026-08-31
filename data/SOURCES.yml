@@ -1,169 +1,185 @@
-# 原始数据来源登记（D0）。字段与 docs/contracts.md 的 Evidence/FeedSource 对齐。
-# ingestion_mode: backfill 表示历史回填，available_at 以发布时间为准，不能伪装实时采集。
-
 sources:
-  - id: capability-matrix
-    type: expert_matrix          # 职业标准/Excel：能力本体与专家基线
-    path: data/raw/capability-matrix
-    license: 团队内部整理，仅限比赛与研究使用
-    time_range: [2026-08-19, 2026-08-19]
-    ingestion_mode: backfill
-    notes: 数字经济岗位能力矩阵，46 岗位 x 30 能力 x 7 分组，0-5 评分
-
-  - id: policy
-    type: government_policy      # 政策文件：岗位演化的政策层锚点
-    path: data/raw/policy
-    license: 政府公开文件（gov.cn 统一检索 API），公开信息
-    time_range: [2010, 2026]
-    ingestion_mode: live
-    notes: sousuo.www.gov.cn 政策文件库统一 API（国务院+部委两库，9 个关键词
-      109 条，含标题/发文机关/发布时间/全文链接）；职业目录取 osta.org.cn
-      职业分类大典系统结构化 API（2022 版 versionId=2，全 450 小类 1676 个职业含官方
-      编码/工种数，dadianget.py 可复用）；2015 版取石首市政府网转载的结构化 Excel
-      （1036 个职业，有国家职业标准的 3-6 大类子集）+ 官方完整 PDF 164MB 备档；
-      2015→2022 版本 diff 落盘（数字技术域新增 23 个职业，总 diff 数因两侧覆盖
-      不对等不可按字面读，官方口径净增 158）
-
-  - id: onet-history
-    type: occupational_database   # O*NET 官方历史版本：美国侧职业/技能演化对照
-    path: data/raw/onet
-    license: O*NET 官方公开数据（CC BY 4.0），仅限研究使用
-    time_range: [2005, 2025]
-    ingestion_mode: backfill
-    notes: onetcenter.org 官方 db_releases.html 历史版本直取（老版 /dl_files/db_X.zip
-      新版 /dl_files/database/db_X_text.zip 双 URL 模式）；代表版本 5 个
-      （2005/2010/2015/2020/2025），核心表 Occupation Data + Technology/Software
-      Skills（表名随版本演化）；来源为 B 站 CNPaperData11 资源帖的官方原始出处
-
-  - id: resume-ner
-    type: academic_dataset      # 公开学术 NER 数据集：实体抽取层对照检验
-    path: data/raw/resume-ner
-    license: Yang et al. 2018 (LatticeLSTM) 论文公开数据，仅限研究使用
-    time_range: [2018, 2018]
-    ingestion_mode: backfill
-    notes: 新浪财经上市公司高管简历 BMES 标注（8 类实体：NAME/TITLE/ORG/EDU/PRO/
-      CONT/RACE/LOC，157,850 行），GitHub 原始仓库直取；转换为 240 份文档级
-      JSONL（data/processed/resume-ner/）供实体抽取对照检验；注意为高管简介
-      段落而非完整求职简历，无技能层 gold
-
-  - id: arxiv
-    type: academic_preprint     # arXiv 预印本：技术先导信号的最上游
-    path: data/raw/arxiv
-    license: arXiv 公开 metadata（CC BY），仅限研究使用
-    time_range: [2015, 2026]
-    ingestion_mode: backfill
-    notes: export.arxiv.org API 按 13 个技能关键词 x 12 年拉取 14830 篇
-      （标题/摘要/分类/提交日期），词典归一聚合月 x 能力域；
-      与 relsignal 的包/日报/JD 三层并排构成四层时间轴
-
-  - id: jd-opencli
-    type: job_board              # 招聘 JD：企业岗位需求验证
-    path: data/raw/jd/opencli
-    license: 招聘平台公开页面，仅限研究使用，不分发原文
-    time_range: [2025-09, 2026-07]
-    ingestion_mode: backfill
-    notes: 关键词“AI 工程师”；搜索层 1190 条（51job 650 / boss 540），详情层 70 条，正文可用约 38 条
-
-  - id: jd-archive
-    type: web_archive          # Wayback Machine 历史快照：回溯 2022~2025 真实岗位池
-    path: data/raw/jd/archive
-    license: Internet Archive 公开快照，仅限研究使用，不分发原文
-    time_range: [2022-01, 2025-05]
-    ingestion_mode: backfill
-    notes: CDX 枚举字节/腾讯招聘 API 的全部 200 快照（搜索响应逐份拉取），
-      记录带 snapshot_ts 观测时间锚点；jdxtract 按 jd_id 首见去重（最早观测优先）
-
-  - id: jd-corp
-    type: employer_site          # 企业官方招聘站：结构化 JD 与真实发布时间
-    path: data/raw/jd/corp
-    license: 企业招聘官网公开页面，仅限研究使用，不分发原文
-    time_range: [2026-01, 2026-08]
-    ingestion_mode: live
-    notes: 三站 13 关键词 x3 页共 682 条——字节 jobs.bytedance.com 376 条（Playwright
-      拦截同源 XHR，职责/要求正文+毫秒发布时间）、阿里 talent-holding 98 条
-      （POST /position/search，含学历与年限区间）、腾讯 careers.tencent.com 208 条
-      （GET /tencentcareer/api/post/Query 纯 HTTP）；均无登录/WAF 对抗，限速页间 2~4s
-
-  - id: standards
-    type: occupation_standard    # 官方职业标准：能力本体参考
-    path: data/raw/standards
-    license: 各来源官方许可，仅限研究使用
-    time_range: [2022, 2026]
-    ingestion_mode: backfill
-    notes: 中国职业分类 2022 征求意见稿 PDF、O*NET 30.3 文本、ESCO v1.2.1 职业页
-
-  - id: wechat-mp
-    type: industry_media         # 中文产业资讯：技术先导信号
-    path: data/raw/wechat-mp
-    license: 微信公众号公开内容，仅限研究使用，不二次分发全文
-    time_range: [2025-03, 2026-08]
-    ingestion_mode: backfill
-    notes: AI 早报归档 697 篇 Markdown + jueya-index.csv 索引（权威元数据以索引为准）
-
-  - id: jd-boss
-    type: job_board              # boss直聘：标注素材（无发布日期）
-    path: data/raw/jd/boss
-    license: 平台公开页面，仅限研究使用，不分发原文
-    time_range: [2026-08, 2026-08]
-    ingestion_mode: backfill
-    notes: OpenCLI 标签页 + mitm 网络层捕获；92 搜索 + 85 可用详情，明文薪资与技能标签
-
-  - id: jd-51job-har
-    type: job_board              # 51job 新采集（jdauto 通路）
-    path: data/raw/jd/opencli
-    license: 平台公开页面，仅限研究使用，不分发原文
-    time_range: [2025-09, 2026-08]
-    ingestion_mode: backfill
-    notes: 远程浏览器 CDP 通路；386 搜索（六城）+ 237 详情，与 jd-opencli 同目录按文件区分（jd_har_*）
-
-  - id: feeds
-    type: rss_direct              # 24 个直连 RSS/Atom 源（清单见 data/FEEDS.yml）
-    path: data/raw/feeds
-    license: 各源公开 RSS/Atom，仅限研究使用，不二次分发全文
-    time_range: [2015-12, 2026-08]
-    ingestion_mode: live
-    notes: 首期 24 源（优先级>=4 全量 + p2 精选），源自 rss2cubox feeds.txt [direct] 段；
-      feedtest 2026-08-26 全部通过；guid 幂等追加，rssget 每 3 小时增量抓取
-
-  - id: cert-catalog
-    type: occupation_standard    # 学练赛证"证"段：官方证书/标准目录三源
-    path: data/raw/certs
-    license: 政府公开目录（osta.org.cn / ncb.edu.cn）与华为官网公开信息，仅限研究使用
-    time_range: [2006, 2026]
-    ingestion_mode: backfill
-    notes: certget.py 三源——人社部国家职业标准库 702 条（含标准 PDF 直链，已下载
-      10 份数字技术域核心标准原文）；教育部 1+X 证书 106 张 + 等级标准 74 项（数字技术域关键词子集——API 分页参数实测失效，无法拉全量，局限见 docs/research/xlzsz-known-limits.md）
-      （vslc.ncb.edu.cn 公开 POST API，服务端固定每页 10 条）；华为职业认证 108 条
-      （apigw-04.huawei.com 树形 JSON，AI 方向 9 条）。归一产物 data/processed/certs/
-      cert-catalog.jsonl（916 条，cert_id/name/issuer/level/effective_from）；
-      certparse.py 解析标准 PDF 工作要求表（10 份 → 431 工作内容 / 1679 能力 /
-      1643 知识条目，含等级分离与同键合并，列优先+编号深度切分，零 LLM 确定性解析）
-
-  - id: race-catalog
-    type: competition_platform   # 学练赛证"赛"段：AI 竞赛三平台全量赛事
-    path: data/raw/races
-    license: 各平台公开赛事列表，仅限研究使用，不二次分发赛题原文
-    time_range: [2018, 2026]
-    ingestion_mode: backfill
-    notes: raceget.py 三源——讯飞 AI 开发者大赛 629 条（challenge.xfyun.cn 公开
-      JSON，算法赛+应用赛含往届全届次，行业分类与大模型/CV/NLP 赛道对齐能力域）；
-      阿里天池 270 条（/v3/proxy/competition/api/race/page，tags 技能标签+亮点
-      字段标证书奖励）；DataFountain 300 条（tags 即技能标签体系）。归一产物
-      data/processed/races/race-catalog.jsonl（1269 条，race_id/name/organizer/
-      bonus/team_count/register_end/tags）
-
-  - id: pypi-pkgstats
-    type: package_registry       # PyPI/npm 包发布/下载：技术萌芽与采用信号
-    path: data/raw/pypi
-    license: PyPI JSON API、pypistats.org、BigQuery 公共数据集与 npm downloads API 公开数据，仅限研究使用
-    time_range: [2006-02, 2026-08]
-    ingestion_mode: backfill
-    notes: 映射表 data/PKGS.yml v9（PyPI 209 包/18 域 + npm 24 包/5 域，npm 份额独立
-      分母）。萌芽锚点 = pypi.org JSON API 全版本 upload_time；量级信号主通路 =
-      ClickHouse 官方 Playground 的 pypi.pypi_downloads_per_month（`ch` 子命令，
-      sql-clickhouse.clickhouse.com demo 免费，2016-01 起 127 个月全历史一条 SQL
-      拉取；口径与 BigQuery Linehaul 交叉验证逐位一致 torch 2018-01=9502，BigQuery
-      `hist` 降级为备份通路——2026-08-28 额度被测试查询耗尽且切账号实测不可绕过）
-      + npm downloads/range API（2015 起全历史已拉）+ pepy.tech 近 90 天滚动通路
-      （`pepy` 子命令，key 在 .env 的 PEPY_API_KEY）。已死通路：pypistats 全端点仅
-      180 天、GitHub stargazers 端点 2026-06-30 起仅限仓库管理员
+- id: capability-matrix
+  type: expert_matrix
+  path: data/raw/capability-matrix
+  license: 团队内部整理，仅限比赛与研究使用
+  time_range:
+  - 2026-08-19
+  - 2026-08-19
+  ingestion_mode: backfill
+  notes: 数字经济岗位能力矩阵，46 岗位 x 30 能力 x 7 分组，0-5 评分
+- id: policy
+  type: government_policy
+  path: data/raw/policy
+  license: 政府公开文件（gov.cn 统一检索 API），公开信息
+  time_range:
+  - 2010
+  - 2026
+  ingestion_mode: live
+  notes: sousuo.www.gov.cn 政策文件库统一 API（国务院+部委两库，9 个关键词 109 条，含标题/发文机关/发布时间/全文链接）；职业目录取
+    osta.org.cn 职业分类大典系统结构化 API（2022 版 versionId=2，全 450 小类 1676 个职业含官方 编码/工种数，dadianget.py
+    可复用）；2015 版取石首市政府网转载的结构化 Excel （1036 个职业，有国家职业标准的 3-6 大类子集）+ 官方完整 PDF 164MB 备档；
+    2015→2022 版本 diff 落盘（数字技术域新增 23 个职业，总 diff 数因两侧覆盖 不对等不可按字面读，官方口径净增 158）
+- id: onet-history
+  type: occupational_database
+  path: data/raw/onet
+  license: O*NET 官方公开数据（CC BY 4.0），仅限研究使用
+  time_range:
+  - 2005
+  - 2025
+  ingestion_mode: backfill
+  notes: onetcenter.org 官方 db_releases.html 历史版本直取（老版 /dl_files/db_X.zip 新版 /dl_files/database/db_X_text.zip
+    双 URL 模式）；代表版本 5 个 （2005/2010/2015/2020/2025），核心表 Occupation Data + Technology/Software
+    Skills（表名随版本演化）；来源为 B 站 CNPaperData11 资源帖的官方原始出处
+- id: resume-ner
+  type: academic_dataset
+  path: data/raw/resume-ner
+  license: Yang et al. 2018 (LatticeLSTM) 论文公开数据，仅限研究使用
+  time_range:
+  - 2018
+  - 2018
+  ingestion_mode: backfill
+  notes: 新浪财经上市公司高管简历 BMES 标注（8 类实体：NAME/TITLE/ORG/EDU/PRO/ CONT/RACE/LOC，157,850
+    行），GitHub 原始仓库直取；转换为 240 份文档级 JSONL（data/processed/resume-ner/）供实体抽取对照检验；注意为高管简介
+    段落而非完整求职简历，无技能层 gold
+- id: arxiv
+  type: academic_preprint
+  path: data/raw/arxiv
+  license: arXiv 公开 metadata（CC BY），仅限研究使用
+  time_range:
+  - 2015
+  - 2026
+  ingestion_mode: backfill
+  notes: export.arxiv.org API 按 13 个技能关键词 x 12 年拉取 14830 篇 （标题/摘要/分类/提交日期），词典归一聚合月
+    x 能力域； 与 relsignal 的包/日报/JD 三层并排构成四层时间轴
+- id: jd-opencli
+  type: job_board
+  path: data/raw/jd/opencli
+  license: 招聘平台公开页面，仅限研究使用，不分发原文
+  time_range:
+  - 2025-09
+  - 2026-07
+  ingestion_mode: backfill
+  notes: 关键词“AI 工程师”；搜索层 1190 条（51job 650 / boss 540），详情层 70 条，正文可用约 38 条
+- id: jd-archive
+  type: web_archive
+  path: data/raw/jd/archive
+  license: Internet Archive 公开快照，仅限研究使用，不分发原文
+  time_range:
+  - 2022-01
+  - 2025-05
+  ingestion_mode: backfill
+  notes: CDX 枚举字节/腾讯招聘 API 的全部 200 快照（搜索响应逐份拉取）， 记录带 snapshot_ts 观测时间锚点；jdxtract 按
+    jd_id 首见去重（最早观测优先）
+- id: jd-ai-labs
+  type: employer_site
+  path: data/raw/jd/corp
+  license: 各公司公开招聘页面，仅限研究使用，不分发原文
+  time_range:
+  - 2026-03
+  - 2026-08
+  ingestion_mode: live
+  notes: scripts/ashby.py（Ashby 公开 posting API，一次全量）+ jdcorp.py greenhouse 模式。 2026-08-30
+    首采 10 家前沿 AI 公司 1626 条——OpenAI 742（Safety/Agent/FDE/Context 全覆盖）、 xAI 249、ElevenLabs
+    248（Voice AI）、Cohere 146、LangChain 107（Agent 生态）、 Perplexity 93、月之暗面 19、LlamaIndex
+    14、Runway 4、StabilityAI 4。 接入意义：补齐 AI 实验室覆盖盲区（此前仅 Anthropic 一家）， AI Safety/Alignment/Context
+    Engineering/Agent Infra 等方向从零覆盖变有据可查。 emergscan 重跑后 FDE 证据增强（137->190 条、8->12
+    平台）， 新增涌现方向 post training/ai infrastructure/compute infrastructure/cloud infrastructure。
+- id: jd-corp
+  type: employer_site
+  path: data/raw/jd/corp
+  license: 企业招聘官网公开页面，仅限研究使用，不分发原文
+  time_range:
+  - 2026-01
+  - 2026-08
+  ingestion_mode: live
+  notes: 三站 13 关键词 x3 页共 682 条——字节 jobs.bytedance.com 376 条（Playwright 拦截同源 XHR，职责/要求正文+毫秒发布时间）、阿里
+    talent-holding 98 条 （POST /position/search，含学历与年限区间）、腾讯 careers.tencent.com 208
+    条 （GET /tencentcareer/api/post/Query 纯 HTTP）；均无登录/WAF 对抗，限速页间 2~4s
+- id: standards
+  type: occupation_standard
+  path: data/raw/standards
+  license: 各来源官方许可，仅限研究使用
+  time_range:
+  - 2022
+  - 2026
+  ingestion_mode: backfill
+  notes: 中国职业分类 2022 征求意见稿 PDF、O*NET 30.3 文本、ESCO v1.2.1 职业页
+- id: wechat-mp
+  type: industry_media
+  path: data/raw/wechat-mp
+  license: 微信公众号公开内容，仅限研究使用，不二次分发全文
+  time_range:
+  - 2025-03
+  - 2026-08
+  ingestion_mode: backfill
+  notes: AI 早报归档 697 篇 Markdown + jueya-index.csv 索引（权威元数据以索引为准）
+- id: jd-boss
+  type: job_board
+  path: data/raw/jd/boss
+  license: 平台公开页面，仅限研究使用，不分发原文
+  time_range:
+  - 2026-08
+  - 2026-08
+  ingestion_mode: backfill
+  notes: OpenCLI 标签页 + mitm 网络层捕获；92 搜索 + 85 可用详情，明文薪资与技能标签
+- id: jd-51job-har
+  type: job_board
+  path: data/raw/jd/opencli
+  license: 平台公开页面，仅限研究使用，不分发原文
+  time_range:
+  - 2025-09
+  - 2026-08
+  ingestion_mode: backfill
+  notes: 远程浏览器 CDP 通路；386 搜索（六城）+ 237 详情，与 jd-opencli 同目录按文件区分（jd_har_*）
+- id: feeds
+  type: rss_direct
+  path: data/raw/feeds
+  license: 各源公开 RSS/Atom，仅限研究使用，不二次分发全文
+  time_range:
+  - 2015-12
+  - 2026-08
+  ingestion_mode: live
+  notes: 首期 24 源（优先级>=4 全量 + p2 精选），源自 rss2cubox feeds.txt [direct] 段； feedtest 2026-08-26
+    全部通过；guid 幂等追加，rssget 每 3 小时增量抓取
+- id: cert-catalog
+  type: occupation_standard
+  path: data/raw/certs
+  license: 政府公开目录（osta.org.cn / ncb.edu.cn）与华为官网公开信息，仅限研究使用
+  time_range:
+  - 2006
+  - 2026
+  ingestion_mode: backfill
+  notes: certget.py 三源——人社部国家职业标准库 702 条（含标准 PDF 直链，已下载 10 份数字技术域核心标准原文）；教育部 1+X 证书
+    106 张 + 等级标准 74 项（数字技术域关键词子集——API 分页参数实测失效，无法拉全量，局限见 docs/research/xlzsz-known-limits.md）
+    （vslc.ncb.edu.cn 公开 POST API，服务端固定每页 10 条）；华为职业认证 108 条 （apigw-04.huawei.com 树形
+    JSON，AI 方向 9 条）。归一产物 data/processed/certs/ cert-catalog.jsonl（916 条，cert_id/name/issuer/level/effective_from）；
+    certparse.py 解析标准 PDF 工作要求表（10 份 → 431 工作内容 / 1679 能力 / 1643 知识条目，含等级分离与同键合并，列优先+编号深度切分，零
+    LLM 确定性解析）
+- id: race-catalog
+  type: competition_platform
+  path: data/raw/races
+  license: 各平台公开赛事列表，仅限研究使用，不二次分发赛题原文
+  time_range:
+  - 2018
+  - 2026
+  ingestion_mode: backfill
+  notes: raceget.py 三源——讯飞 AI 开发者大赛 629 条（challenge.xfyun.cn 公开 JSON，算法赛+应用赛含往届全届次，行业分类与大模型/CV/NLP
+    赛道对齐能力域）； 阿里天池 270 条（/v3/proxy/competition/api/race/page，tags 技能标签+亮点 字段标证书奖励）；DataFountain
+    300 条（tags 即技能标签体系）。归一产物 data/processed/races/race-catalog.jsonl（1269 条，race_id/name/organizer/
+    bonus/team_count/register_end/tags）
+- id: pypi-pkgstats
+  type: package_registry
+  path: data/raw/pypi
+  license: PyPI JSON API、pypistats.org、BigQuery 公共数据集与 npm downloads API 公开数据，仅限研究使用
+  time_range:
+  - 2006-02
+  - 2026-08
+  ingestion_mode: backfill
+  notes: 映射表 data/PKGS.yml v9（PyPI 209 包/18 域 + npm 24 包/5 域，npm 份额独立 分母）。萌芽锚点 = pypi.org
+    JSON API 全版本 upload_time；量级信号主通路 = ClickHouse 官方 Playground 的 pypi.pypi_downloads_per_month（`ch`
+    子命令， sql-clickhouse.clickhouse.com demo 免费，2016-01 起 127 个月全历史一条 SQL 拉取；口径与 BigQuery
+    Linehaul 交叉验证逐位一致 torch 2018-01=9502，BigQuery `hist` 降级为备份通路——2026-08-28 额度被测试查询耗尽且切账号实测不可绕过）
+    + npm downloads/range API（2015 起全历史已拉）+ pepy.tech 近 90 天滚动通路 （`pepy` 子命令，key 在
+    .env 的 PEPY_API_KEY）。已死通路：pypistats 全端点仅 180 天、GitHub stargazers 端点 2026-06-30
+    起仅限仓库管理员

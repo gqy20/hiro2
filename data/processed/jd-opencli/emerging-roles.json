@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-08-27",
+  "as_of": "2026-08-31",
   "criteria": {
     "min_recent_90d": 10,
     "growth_ratio": 1.5,
@@ -9,19 +9,27 @@
   "candidates": [
     {
       "keyword": "forward deployed",
-      "total": 137,
-      "recent_90d": 129,
-      "prior_90d": 2,
-      "growth_ratio": 64.5,
+      "total": 190,
+      "recent_90d": 166,
+      "prior_90d": 10,
+      "growth_ratio": 16.6,
       "monthly": {
         "2024-01": 1,
+        "2025-08": 1,
+        "2025-09": 2,
         "2025-10": 5,
-        "2026-05": 2,
-        "2026-07": 2,
-        "2026-08": 127
+        "2025-11": 1,
+        "2025-12": 2,
+        "2026-01": 2,
+        "2026-03": 3,
+        "2026-04": 1,
+        "2026-05": 6,
+        "2026-06": 4,
+        "2026-07": 6,
+        "2026-08": 156
       },
-      "title_variants": 66,
-      "platforms": 8,
+      "title_variants": 117,
+      "platforms": 12,
       "sample_titles": [
         "AI Engineer - FDE (Forward Deployed Engineer)",
         "Director of Product Management, Forward Deployed & Strategy",
@@ -32,15 +40,23 @@
       "top_skills": [
         {
           "name": "Python",
-          "count": 96
+          "count": 139
         },
         {
           "name": "自动化运维",
-          "count": 63
+          "count": 96
         },
         {
           "name": "AI Agent",
-          "count": 40
+          "count": 63
+        },
+        {
+          "name": "云计算",
+          "count": 41
+        },
+        {
+          "name": "LLM应用",
+          "count": 39
         },
         {
           "name": "大数据处理",
@@ -53,14 +69,6 @@
         {
           "name": "ML/DL算法",
           "count": 20
-        },
-        {
-          "name": "LLM应用",
-          "count": 15
-        },
-        {
-          "name": "RAG/知识库",
-          "count": 10
         }
       ],
       "core_responsibilities": [
@@ -142,7 +150,7 @@
         },
         {
           "phrase": "Healthcare",
-          "count": 7
+          "count": 10
         }
       ],
       "aliases": [
@@ -152,22 +160,266 @@
       ]
     },
     {
-      "keyword": "ai infrastructure",
-      "total": 20,
-      "recent_90d": 15,
+      "keyword": "ai architect",
+      "total": 33,
+      "recent_90d": 26,
       "prior_90d": 0,
       "growth_ratio": null,
+      "monthly": {
+        "2025-08": 1,
+        "2025-11": 1,
+        "2026-01": 2,
+        "2026-02": 3,
+        "2026-06": 3,
+        "2026-08": 23
+      },
+      "title_variants": 18,
+      "platforms": 2,
+      "sample_titles": [
+        "Applied AI Architect",
+        "Applied AI Architect - EDU",
+        "Applied AI Architect, Commercial",
+        "Applied AI Architect, Digital Natives",
+        "Applied AI Architect, Digital Natives (Strategics) "
+      ],
+      "top_skills": [
+        {
+          "name": "LLM应用",
+          "count": 37
+        },
+        {
+          "name": "AI Agent",
+          "count": 12
+        },
+        {
+          "name": "安全/风控意识",
+          "count": 5
+        },
+        {
+          "name": "云计算",
+          "count": 4
+        },
+        {
+          "name": "Python",
+          "count": 3
+        },
+        {
+          "name": "系统架构",
+          "count": 3
+        },
+        {
+          "name": "API开发",
+          "count": 1
+        }
+      ],
+      "core_responsibilities": [
+        {
+          "phrase": "支持客户使用Claude API和Claude for Work",
+          "count": 7
+        },
+        {
+          "phrase": "指导技术架构决策并集成Claude",
+          "count": 5
+        },
+        {
+          "phrase": "与客户经理合作理解需求并转化为技术方案",
+          "count": 4
+        },
+        {
+          "phrase": "理解客户需求并转化为技术方案",
+          "count": 3
+        },
+        {
+          "phrase": "制作并交付面向不同受众的技术内容",
+          "count": 3
+        },
+        {
+          "phrase": "帮助客户开发评估框架衡量Claude性能",
+          "count": 3
+        }
+      ],
+      "core_requirements": [
+        {
+          "phrase": "熟练使用Python",
+          "count": 2
+        },
+        {
+          "phrase": "熟悉LLM框架或机器学习背景",
+          "count": 2
+        },
+        {
+          "phrase": "有行业或数字原生企业经验",
+          "count": 2
+        },
+        {
+          "phrase": "丰富的客户面对技术经验",
+          "count": 2
+        },
+        {
+          "phrase": "5年以上解决方案架构师等客户面向经验",
+          "count": 1
+        },
+        {
+          "phrase": "具有企业客户及复杂采购周期经验",
+          "count": 1
+        },
+        {
+          "phrase": "与高管及工程团队沟通技术概念的能力",
+          "count": 1
+        },
+        {
+          "phrase": "技术沟通能力且能转化客户需求",
+          "count": 1
+        }
+      ],
+      "scenarios": [
+        {
+          "phrase": "Digital",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "keyword": "post training",
+      "total": 27,
+      "recent_90d": 20,
+      "prior_90d": 1,
+      "growth_ratio": 20.0,
+      "monthly": {
+        "2025-06": 1,
+        "2025-08": 1,
+        "2025-10": 3,
+        "2025-12": 1,
+        "2026-05": 1,
+        "2026-06": 8,
+        "2026-07": 3,
+        "2026-08": 9
+      },
+      "title_variants": 22,
+      "platforms": 8,
+      "sample_titles": [
+        "Agent Post-Training Research",
+        "Agent Post-Training, API & Power Users",
+        "Agent Post-Training, Artifacts Research",
+        "Agent Post-Training, Computer Use Research",
+        "Agent Post-Training, Connectors Research"
+      ],
+      "top_skills": [
+        {
+          "name": "模型微调",
+          "count": 56
+        },
+        {
+          "name": "LLM应用",
+          "count": 28
+        },
+        {
+          "name": "ML/DL算法",
+          "count": 17
+        },
+        {
+          "name": "Python",
+          "count": 14
+        },
+        {
+          "name": "AI Agent",
+          "count": 13
+        },
+        {
+          "name": "云计算",
+          "count": 8
+        },
+        {
+          "name": "多模态AI",
+          "count": 3
+        }
+      ],
+      "core_responsibilities": [
+        {
+          "phrase": "设计并实验偏好优化新方法",
+          "count": 2
+        },
+        {
+          "phrase": "在顶级AI会议发表研究成果",
+          "count": 2
+        },
+        {
+          "phrase": "研究前沿算法并集成至训练栈",
+          "count": 2
+        },
+        {
+          "phrase": "驱动RL训练并优化系统设计",
+          "count": 2
+        },
+        {
+          "phrase": "作为战略客户技术对接人",
+          "count": 2
+        },
+        {
+          "phrase": "构建评估和环境以暴露模型失败",
+          "count": 2
+        }
+      ],
+      "core_requirements": [
+        {
+          "phrase": "优秀书面与口头沟通能力",
+          "count": 2
+        },
+        {
+          "phrase": "5年以上生产环境LLM训练经验",
+          "count": 2
+        },
+        {
+          "phrase": "熟悉PPO/GRPO等相关算法",
+          "count": 2
+        },
+        {
+          "phrase": "多节点LLM训练与推理经验",
+          "count": 2
+        },
+        {
+          "phrase": "熟悉SGLang、vLLM、TensorRT-LLM等推理引擎",
+          "count": 2
+        },
+        {
+          "phrase": "有编码智能体或工具使用智能体经验",
+          "count": 2
+        },
+        {
+          "phrase": "具备熟练的Python编程能力",
+          "count": 1
+        },
+        {
+          "phrase": "精通深度学习框架",
+          "count": 1
+        }
+      ],
+      "scenarios": [],
+      "aliases": [
+        "agent post",
+        "agent post training"
+      ]
+    },
+    {
+      "keyword": "ai infrastructure",
+      "total": 25,
+      "recent_90d": 17,
+      "prior_90d": 2,
+      "growth_ratio": 8.5,
       "monthly": {
         "2025-04": 1,
         "2025-06": 2,
         "2025-10": 1,
+        "2025-12": 1,
         "2026-02": 1,
-        "2026-06": 1,
+        "2026-04": 1,
+        "2026-05": 1,
+        "2026-06": 2,
         "2026-07": 5,
-        "2026-08": 9
+        "2026-08": 10
       },
-      "title_variants": 16,
-      "platforms": 5,
+      "title_variants": 20,
+      "platforms": 7,
       "sample_titles": [
         "AI Infrastructure Engineer",
         "AI Infrastructure Engineer, Model Serving Platform",
@@ -178,15 +430,19 @@
       "top_skills": [
         {
           "name": "云计算",
-          "count": 21
+          "count": 30
         },
         {
           "name": "Python",
-          "count": 15
+          "count": 20
         },
         {
           "name": "LLM应用",
-          "count": 8
+          "count": 9
+        },
+        {
+          "name": "自动化运维",
+          "count": 6
         },
         {
           "name": "AI Agent",
@@ -198,11 +454,11 @@
         },
         {
           "name": "嵌入式/硬件",
-          "count": 3
+          "count": 4
         },
         {
           "name": "系统架构",
-          "count": 1
+          "count": 2
         }
       ],
       "core_responsibilities": [
@@ -269,36 +525,37 @@
     },
     {
       "keyword": "data platform",
-      "total": 19,
-      "recent_90d": 18,
+      "total": 22,
+      "recent_90d": 21,
       "prior_90d": 1,
-      "growth_ratio": 18.0,
+      "growth_ratio": 21.0,
       "monthly": {
         "2026-03": 1,
+        "2026-06": 1,
         "2026-07": 1,
-        "2026-08": 17
+        "2026-08": 19
       },
-      "title_variants": 16,
-      "platforms": 7,
+      "title_variants": 19,
+      "platforms": 10,
       "sample_titles": [
         "Backend Software Engineer — Data Platform & AI Data Products",
+        "Data Engineer, Monetization Data Platform",
         "Engineering Manager, Research Data Platform",
         "Manager, Software Engineering - Data Platform",
-        "Product Management, Human Data Platform",
-        "Research Engineer, Economic Research Data Platform"
+        "Member of Technical Staff (Software Engineer, Data Platform)"
       ],
       "top_skills": [
         {
           "name": "大数据处理",
-          "count": 14
+          "count": 27
         },
         {
           "name": "Python",
-          "count": 9
+          "count": 13
         },
         {
           "name": "云计算",
-          "count": 5
+          "count": 7
         },
         {
           "name": "AI Agent",
@@ -384,150 +641,39 @@
       "scenarios": []
     },
     {
-      "keyword": "post training",
-      "total": 16,
-      "recent_90d": 11,
-      "prior_90d": 1,
-      "growth_ratio": 11.0,
-      "monthly": {
-        "2025-08": 1,
-        "2025-10": 3,
-        "2026-05": 1,
-        "2026-07": 3,
-        "2026-08": 8
-      },
-      "title_variants": 11,
-      "platforms": 5,
-      "sample_titles": [
-        "Forward Deployed Engineer (Inference & Post-Training)",
-        "Forward Deployed Engineer (Inference & Post-Training) - Mandarin Speaking",
-        "Machine Learning Research Scientist / Research Engineer, Post-Training",
-        "Machine Learning Research Scientist, Post-Training",
-        "Machine Learning Systems Research Engineer, Agent Post-training - Enterprise GenAI"
-      ],
-      "top_skills": [
-        {
-          "name": "模型微调",
-          "count": 40
-        },
-        {
-          "name": "LLM应用",
-          "count": 15
-        },
-        {
-          "name": "Python",
-          "count": 12
-        },
-        {
-          "name": "云计算",
-          "count": 6
-        },
-        {
-          "name": "ML/DL算法",
-          "count": 5
-        },
-        {
-          "name": "多模态AI",
-          "count": 3
-        },
-        {
-          "name": "AI Agent",
-          "count": 1
-        }
-      ],
-      "core_responsibilities": [
-        {
-          "phrase": "设计并实验偏好优化新方法",
-          "count": 2
-        },
-        {
-          "phrase": "在顶级AI会议发表研究成果",
-          "count": 2
-        },
-        {
-          "phrase": "研究前沿算法并集成至训练栈",
-          "count": 2
-        },
-        {
-          "phrase": "驱动RL训练并优化系统设计",
-          "count": 2
-        },
-        {
-          "phrase": "作为战略客户技术对接人",
-          "count": 2
-        },
-        {
-          "phrase": "实现并优化前沿模型后训练技术",
-          "count": 1
-        }
-      ],
-      "core_requirements": [
-        {
-          "phrase": "优秀书面与口头沟通能力",
-          "count": 2
-        },
-        {
-          "phrase": "5年以上生产环境LLM训练经验",
-          "count": 2
-        },
-        {
-          "phrase": "熟悉PPO/GRPO等相关算法",
-          "count": 2
-        },
-        {
-          "phrase": "多节点LLM训练与推理经验",
-          "count": 2
-        },
-        {
-          "phrase": "熟悉SGLang、vLLM、TensorRT-LLM等推理引擎",
-          "count": 2
-        },
-        {
-          "phrase": "具备熟练的Python编程能力",
-          "count": 1
-        },
-        {
-          "phrase": "精通深度学习框架",
-          "count": 1
-        },
-        {
-          "phrase": "熟悉分布式计算",
-          "count": 1
-        }
-      ],
-      "scenarios": []
-    },
-    {
       "keyword": "compute infrastructure",
-      "total": 12,
-      "recent_90d": 12,
-      "prior_90d": 0,
-      "growth_ratio": null,
+      "total": 19,
+      "recent_90d": 15,
+      "prior_90d": 4,
+      "growth_ratio": 3.75,
       "monthly": {
-        "2026-07": 2,
-        "2026-08": 10
+        "2026-03": 1,
+        "2026-04": 1,
+        "2026-05": 2,
+        "2026-07": 3,
+        "2026-08": 12
       },
-      "title_variants": 6,
-      "platforms": 4,
+      "title_variants": 13,
+      "platforms": 6,
       "sample_titles": [
+        "Data Center Compute Infrastructure",
+        "Director of Product Finance, Compute & Infrastructure Demand",
+        "Director, Compute & Infrastructure FP&A",
         "Director, Compute Infrastructure Procurement Operations",
-        "Junior/Senior/Staff Software Engineer, Inference / Compute Infrastructure Engineering",
-        "Legal Program Manager, Compute & Infrastructure",
-        "Staff Software Engineer, Inference / Compute Infrastructure Engineering",
-        "Staff Technical Program Manager, Compute Infrastructure"
+        "Global Public Policy Manager, Compute, Infrastructure & Sovereign AI"
       ],
       "top_skills": [
         {
-          "name": "Python",
-          "count": 16
+          "name": "云计算",
+          "count": 21
         },
         {
-          "name": "云计算",
+          "name": "Python",
           "count": 16
         },
         {
           "name": "嵌入式/硬件",
-          "count": 8
+          "count": 12
         },
         {
           "name": "自动化运维",
@@ -543,6 +689,10 @@
         },
         {
           "name": "ML/DL算法",
+          "count": 1
+        },
+        {
+          "name": "SQL/数据库",
           "count": 1
         }
       ],
@@ -606,16 +756,142 @@
           "count": 1
         }
       ],
-      "scenarios": []
+      "scenarios": [
+        {
+          "phrase": "Finance",
+          "count": 1
+        }
+      ]
     },
     {
-      "keyword": "基础技术",
-      "total": 11,
+      "keyword": "cloud infrastructure",
+      "total": 15,
       "recent_90d": 10,
       "prior_90d": 0,
       "growth_ratio": null,
       "monthly": {
-        "2025-02": 1,
+        "2024-12": 1,
+        "2025-04": 1,
+        "2025-06": 1,
+        "2025-08": 1,
+        "2025-10": 1,
+        "2026-06": 3,
+        "2026-07": 2,
+        "2026-08": 5
+      },
+      "title_variants": 12,
+      "platforms": 7,
+      "sample_titles": [
+        "Backend Software Engineer (Graph Neural Network System), Cloud Infrastructure Intern - 2025 Start",
+        "Lead Cloud Infrastructure Engineer",
+        "Lead/Manager Together Cloud Infrastructure ",
+        "Member Of Technical Staff - Cloud Infrastructure",
+        "Member of Technical Staff (Software Engineer, Cloud Infrastructure)"
+      ],
+      "top_skills": [
+        {
+          "name": "云计算",
+          "count": 21
+        },
+        {
+          "name": "Python",
+          "count": 10
+        },
+        {
+          "name": "系统架构",
+          "count": 5
+        },
+        {
+          "name": "API开发",
+          "count": 3
+        },
+        {
+          "name": "SQL/数据库",
+          "count": 3
+        },
+        {
+          "name": "自动化运维",
+          "count": 3
+        },
+        {
+          "name": "大数据处理",
+          "count": 3
+        },
+        {
+          "name": "嵌入式/硬件",
+          "count": 2
+        }
+      ],
+      "core_responsibilities": [
+        {
+          "phrase": "反馈客户需求影响产品方向",
+          "count": 2
+        },
+        {
+          "phrase": "为客户设计Databricks大数据解决方案",
+          "count": 1
+        },
+        {
+          "phrase": "提供技术领导力引导战略客户实施",
+          "count": 1
+        },
+        {
+          "phrase": "支持售前技术销售高级需求",
+          "count": 1
+        },
+        {
+          "phrase": "架构云端原生治理工作负载",
+          "count": 1
+        },
+        {
+          "phrase": "提供云基础设施与安全专业意见",
+          "count": 1
+        }
+      ],
+      "core_requirements": [
+        {
+          "phrase": "5年以上高性能生产级代码编写经验",
+          "count": 2
+        },
+        {
+          "phrase": "优秀的沟通与设计文档编写能力",
+          "count": 2
+        },
+        {
+          "phrase": "1-2年基础设施团队领导经验",
+          "count": 2
+        },
+        {
+          "phrase": "适应模糊性与快速变化",
+          "count": 2
+        },
+        {
+          "phrase": "有售前或售后客户经验",
+          "count": 1
+        },
+        {
+          "phrase": "4年以上云基础设施/安全设计经验（AWS/Azure/GCP）",
+          "count": 1
+        },
+        {
+          "phrase": "熟悉VPC/VNet设计、路由、分段、私有连接",
+          "count": 1
+        },
+        {
+          "phrase": "掌握身份与访问管理（RBAC、最小权限、IdP集成）",
+          "count": 1
+        }
+      ],
+      "scenarios": []
+    },
+    {
+      "keyword": "基础技术",
+      "total": 12,
+      "recent_90d": 10,
+      "prior_90d": 0,
+      "growth_ratio": null,
+      "monthly": {
+        "2025-02": 2,
         "2026-08": 10
       },
       "title_variants": 11,
@@ -630,6 +906,10 @@
       "top_skills": [
         {
           "name": "Python",
+          "count": 10
+        },
+        {
+          "name": "云计算",
           "count": 7
         },
         {
@@ -639,10 +919,6 @@
         {
           "name": "系统架构",
           "count": 5
-        },
-        {
-          "name": "云计算",
-          "count": 4
         },
         {
           "name": "自动化运维",
@@ -697,6 +973,10 @@
           "count": 2
         },
         {
+          "phrase": "2026届本科及以上在读",
+          "count": 2
+        },
+        {
           "phrase": "熟练掌握C/C++/Java语言",
           "count": 1
         },
@@ -715,13 +995,128 @@
         {
           "phrase": "对底层系统开发有热情",
           "count": 1
-        },
-        {
-          "phrase": "良好的沟通协调能力",
-          "count": 1
         }
       ],
       "scenarios": []
+    },
+    {
+      "keyword": "technical solutions",
+      "total": 10,
+      "recent_90d": 10,
+      "prior_90d": 0,
+      "growth_ratio": null,
+      "monthly": {
+        "2026-08": 10
+      },
+      "title_variants": 10,
+      "platforms": 3,
+      "sample_titles": [
+        "Pre-sales Senior Technical Solutions Engineer (AI/ML - Digital Native Business) x2",
+        "Pre-sales Senior Technical Solutions Engineer (Data and AI) ",
+        "Senior ML & AI Technical Solutions Engineer ",
+        "Sr Technical Solutions (Backline)",
+        "Sr Technical Solutions Engineering"
+      ],
+      "top_skills": [
+        {
+          "name": "Python",
+          "count": 6
+        },
+        {
+          "name": "AI Agent",
+          "count": 5
+        },
+        {
+          "name": "RAG/知识库",
+          "count": 4
+        },
+        {
+          "name": "LLM应用",
+          "count": 3
+        },
+        {
+          "name": "SQL/数据库",
+          "count": 3
+        },
+        {
+          "name": "API开发",
+          "count": 2
+        },
+        {
+          "name": "大数据处理",
+          "count": 2
+        },
+        {
+          "name": "ML/DL算法",
+          "count": 1
+        }
+      ],
+      "core_responsibilities": [
+        {
+          "phrase": "排查并解决Databricks平台复杂客户问题",
+          "count": 2
+        },
+        {
+          "phrase": "帮助客户调试和维持GenAI与ML工作负载稳定",
+          "count": 1
+        },
+        {
+          "phrase": "提供分布式系统的端到端技术解决方案",
+          "count": 1
+        },
+        {
+          "phrase": "分析并优化生产工作负载的性能与成本",
+          "count": 1
+        },
+        {
+          "phrase": "支持ML和LLM部署的监控与调优",
+          "count": 1
+        },
+        {
+          "phrase": "指导客户使用Databricks AI解决生成式AI用例",
+          "count": 1
+        }
+      ],
+      "core_requirements": [
+        {
+          "phrase": "8年以上数据、机器学习和AI系统设计经验",
+          "count": 1
+        },
+        {
+          "phrase": "熟练使用Python、Scala、Java于生产环境",
+          "count": 1
+        },
+        {
+          "phrase": "精通机器学习和/或生成式AI",
+          "count": 1
+        },
+        {
+          "phrase": "熟悉AWS、Azure或GCP云平台",
+          "count": 1
+        },
+        {
+          "phrase": "精通数据工程及端到端ML训练流水线编排",
+          "count": 1
+        },
+        {
+          "phrase": "Apache Spark处理大规模数据集经验",
+          "count": 1
+        },
+        {
+          "phrase": "SME级特征工程、模型训练、监控与漂移检测知识",
+          "count": 1
+        },
+        {
+          "phrase": "有Databricks使用经验",
+          "count": 1
+        }
+      ],
+      "scenarios": [
+        {
+          "phrase": "Digital",
+          "count": 1
+        }
+      ]
     }
   ]
 }

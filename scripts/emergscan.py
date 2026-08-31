@@ -123,11 +123,24 @@ KNOWN_DOMAIN = {
     "pre sales",
     "sales engineer",
     "customer success",
+    "member of",
+    "uk",
+    "it",
+    "strategic account",
+    "api",
+    "deployment strategist",
+    "of technical",
+    "media entertainment",
+    "stack software",
+    "professional services",
+    "strategy operations",
+    "strategic finance",
+    "data systems", "architect digital", "center operations", "distributed data",
 }
 
 # 地名/噪声词（含子串匹配）
 GEO_NOISE = {
-    "united kingdom",
+    "united kingdom", "nyc", "new york city",
     "london",
     "singapore",
     "tokyo",
@@ -289,6 +302,9 @@ def cmd_run() -> dict:
         if kw.lower() in KNOWN_DOMAIN or kw.lower() in GEO_NOISE:
             continue
         if any(g in kw.lower() for g in GEO_NOISE):
+            continue
+        # 已知领域词的子串匹配（如 member of technical 含 member of）
+        if any(d in kw.lower() for d in KNOWN_DOMAIN if len(d) >= 4):
             continue
         if any(kw.lower() in k for k in known):
             continue

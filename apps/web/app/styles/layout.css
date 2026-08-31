@@ -880,7 +880,11 @@
   width: 100%;
   max-width: 28px;
   border-radius: 3px 3px 0 0;
-  background: linear-gradient(180deg, var(--accent, #4f6ef7), var(--accent-soft, #aab6ff));
+  background: linear-gradient(
+    180deg,
+    var(--accent, #4f6ef7),
+    var(--accent-soft, #aab6ff)
+  );
   transition: height 0.3s ease;
 }
 .trend-bar-col:hover .trend-bar {

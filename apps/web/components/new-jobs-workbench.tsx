@@ -264,11 +264,7 @@ export function NewJobsWorkbench({
                 <ul className="jd-links">
                   {selected.sampleJds.map((jd) => (
                     <li key={`${jd.platform}-${jd.title}`}>
-                      <a
-                        href={jd.url}
-                        rel="noreferrer"
-                        target="_blank"
-                      >
+                      <a href={jd.url} rel="noreferrer" target="_blank">
                         {jd.title}
                       </a>
                       <span className="jd-meta">

@@ -15,7 +15,8 @@ export function TrendSparkline({
   summary?: string;
 }) {
   const { bars, peak } = useMemo(() => {
-    if (!monthly || Object.keys(monthly).length === 0) return { bars: [], peak: 0 };
+    if (!monthly || Object.keys(monthly).length === 0)
+      return { bars: [], peak: 0 };
     const keys = Object.keys(monthly).sort();
     const start = new Date(`${keys[0]}-01`);
     const end = new Date(`${keys[keys.length - 1]}-01`);
@@ -35,12 +36,20 @@ export function TrendSparkline({
     <figure className="trend-sparkline" aria-label="月度 JD 数量趋势">
       <div className="trend-bars">
         {bars.map((b) => (
-          <div className="trend-bar-col" key={b.label} title={`${b.label}：${b.count} 条`}>
+          <div
+            className="trend-bar-col"
+            key={b.label}
+            title={`${b.label}：${b.count} 条`}
+          >
             <div
               className="trend-bar"
-              style={{ height: `${Math.max((b.count / peak) * 100, b.count > 0 ? 4 : 1)}%` }}
+              style={{
+                height: `${Math.max((b.count / peak) * 100, b.count > 0 ? 4 : 1)}%`,
+              }}
             />
-            <span className="trend-bar-value">{b.count > 0 ? b.count : ""}</span>
+            <span className="trend-bar-value">
+              {b.count > 0 ? b.count : ""}
+            </span>
           </div>
         ))}
       </div>

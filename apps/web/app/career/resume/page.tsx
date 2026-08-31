@@ -77,10 +77,6 @@ export default async function CareerResumePage({
 
   return (
     <AppShell>
-      <div className="page-heading">
-        <h1 className="sr-only">简历工作台</h1>
-        <p>画像已自动带入草稿；补充经历后检查岗位覆盖，并生成投递 PDF。</p>
-      </div>
       <ResumeStudio
         initialAdvice={initialAdvice}
         initialDraft={initialDraft}

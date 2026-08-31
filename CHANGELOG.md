@@ -111,6 +111,11 @@
 
 - 审核事实日志测试隔离推广：`tests/conftest.py` 新增 `isolated_review_log` fixture（临时日志 + 预置 accepted 种子 + 切断 DATABASE_URL），发布流幂等测试与逐条审核测试统一接入。此前每轮后端测试都会向 `review-actions.jsonl` 追加 2 条测试噪声（实测 252→254），现在全量 120 项测试跑完事实日志零变更。
 
+- 求职工作区三页截断与对齐修复（实测定位：main 固定高 + overflow:hidden，而三个页面未接入招聘区滚动契约，超出内容物理截断且不可滚动）：
+  - **简历工作台**：`/career/resume` 此前超出部分截断 ~1834px（生成 PDF 按钮、教育/工作经历不可见）；改为占满高度的纵向容器，左右双栏各自独立滚动（参照求职区 `.profile-skill-scroll` 模式），窄屏单栏堆叠由外层容器滚动。
+  - **学习路径**：`/career/path` 截断 589px（第三个缺口与底部 CTA 不可见）；页面改为占满高度内部滚动。卡片 header 序号/标题/标签基线不齐（实测 top 差 2-3px）改为 baseline 对齐；超长前瞻 Tag（实测宽 293px）从标题栏拆出独占一行。
+  - **目标岗位**：`/career/jobs` 截断 359px（底部岗位卡不可见）；页面改为占满高度内部滚动。卡片减重（实测单卡内容 136px vs 220px 卡高）：padding 24→18/16、圆角 10→8、底色从半透明乳白铺满改为细边框 + panel，当前目标卡用蓝色边框代替满底色强调。
+  - 求职区 `career/diagnosis` 与 `profile` 既有固定高度容器未受影响（已验证无回归）。
 ### Fixed
 - 招聘区「我的岗位」快照差异块修复前后端契约失配：后端 `DetectedChangesVM` 为 snake_case，前端原用驼峰本地类型导致真实模式渲染 `undefined 项待复核`、`NaN%→NaN%`、空「→ 条 JD」；现前端统一消费 `lib/api/types.ts` 的 snake_case 类型，`change_type` 使用 add|grow|shrink|remove。`job` 字段从裸 `position_id`（pos_01）解析为岗位聚类众数 JD 标题（确定性、截断 24 字、失败回退），`contracts.md` 登记 `DetectedChanges` 字段级契约。
 - 岗位更新页审核进度不再丢失：接受/拒绝/编辑说明持久化到浏览器会话存储（`useSyncExternalStore`，服务端快照为空无水合抖动），刷新保留，发布成功后自动清除并明示「审核进度保存在当前浏览器会话」。

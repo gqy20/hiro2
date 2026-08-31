@@ -135,12 +135,17 @@ KNOWN_DOMAIN = {
     "professional services",
     "strategy operations",
     "strategic finance",
-    "data systems", "architect digital", "center operations", "distributed data",
+    "data systems",
+    "architect digital",
+    "center operations",
+    "distributed data",
 }
 
 # 地名/噪声词（含子串匹配）
 GEO_NOISE = {
-    "united kingdom", "nyc", "new york city",
+    "united kingdom",
+    "nyc",
+    "new york city",
     "london",
     "singapore",
     "tokyo",

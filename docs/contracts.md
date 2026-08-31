@@ -429,6 +429,24 @@ GET  /api/v1/evaluation/runs/{id}/compare
 GET  /health/live
 GET  /health/ready
 
+涌现岗位候选 `GET /emerging-jobs` 的响应字段：
+
+```text
+NewJobsVM   { fixtureVersion, mode, runId, candidates[] }
+CandidateVM { id, title, summary, confidence, companies, sourceCount,
+              status, whyNew, responsibilities[], requiredSkills[],
+              preferredSkills[], scenarios[], evidence[],
+              monthly{}, sampleJds[] }
+JdLinkVM    { title, platform, url, date }   # 近期 JD 原文链接（emergscan 聚合）
+```
+
+`monthly` 为月度 JD 量（如 `"2026-08": 156`），前端补零连续渲染趋势图；
+`sampleJds` 为近 90 天 Top5 原文链接——Greenhouse 源精确到单岗页，
+Ashby 源回退到招聘板页；人工主案例（emerging-agent）两字段可为空。
+候选第一位为人工论证的 AI Agent 工程师（主案例），其余为 emergscan
+自动检出（判据：近 90 天 ≥10 条且增长比 ≥1.5 或从无到有、标题变体 ≥3、
+跨平台 ≥2；含 Jaccard 重叠合并与已知领域词子串去噪）。
+
 质量看板在配置 `DATABASE_URL` 时从 PostgreSQL `review_tasks` 与 `review_actions` 聚合；数据库不可用时回退离线评测产物。
 数据资产在配置 `DATABASE_URL` 时从 PostgreSQL `dataset_versions` 读取每个数据域的最新导入快照；离线开发时回退扫描本地处理产物。
 完整信号接口不设置记录数硬上限，按 `signal_id` 去重并按 `observed_at` 倒序返回；前端负责时间范围筛选。聚合 `/temporal/dataset` 仍只携带近 90 天、最多 2000 条唯一信号，避免非信号页面重复加载完整历史。

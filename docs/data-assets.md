@@ -7,13 +7,13 @@
 ## 总览
 
 ```text
-16 个登记来源通道（data/SOURCES.yml）
+17 个登记来源通道（data/SOURCES.yml）
 ├── 4 条业务主链数据：能力矩阵（专家基线）、招聘 JD（市场验证）、日报（先导信号）、简历（候选人输入）
 ├── 4 条对照与扩展数据：政策/大典（官方锚点）、O*NET/ESCO（国际对照）、arXiv/PyPI（技术上游）、RSS（实时源）
 └── 3 条学练赛证数据：证书目录（证）、竞赛目录（赛）、职业标准工作要求（学）
 
-核心产物规模（data/processed/，2026-08-30 审计）：
-  8,656 条 JD 解析记录 | 10,379 个日报事件 | 14,174 条证据实体
+核心产物规模（data/processed/，2026-08-31 审计）：
+  10,384 条 JD 解析记录（28 平台，AI 域 7,325 条） | 10,379 个日报事件 | 14,174 条证据实体
   17 个已发布岗位版本 | 7,474 条历史信号 | 839 条回测记录
   916 张证书目录 | 1,269 场竞赛目录 | 431 项标准工作要求（含 1,679 能力 + 1,643 知识条目）
   23 个候选人画像 | 22 份匹配报告 | 164 份简历档案
@@ -47,12 +47,16 @@ LLM 产物必须带 prompt_version/model_version、合成数据永不进评测�
 | Excel 能力矩阵 | 专家基线 | 46 岗位 × 30 能力 × 7 分组 | 团队整理（`ingest.py excel`） | 2026-08 |
 | 招聘 JD（平台） | 51job / boss | 搜索 1,150 条 | 浏览器 CDP + mitm 网络层（`jdauto/jdboss`） | 2025-09~2026-08 |
 | 招聘 JD（企业官网） | 字节/阿里/腾讯 | 682 条 | 官方 API 直连（`jdcorp`，无 WAF） | 2026-01~08 |
+| 招聘 JD（前沿 AI 实验室） | OpenAI/xAI/Moonshot 等 10 家 | 1,626 条 | Ashby/Greenhouse 公开板 API（`ashby.py` + `jdcorp greenhouse`，2026-08-31 新增） | 2026-03~08 |
 | 招聘 JD（历史快照） | Wayback 字节/腾讯 | 全部 200 快照 | CDX 枚举（`jdarchive`） | 2022~2025 |
 | 日报 | AI 早报公众号 | 697 篇 → 10,379 事件 | Markdown 归档（`ingest.py wechat`，backfill） | 2017-11~2026-08 |
 | 简历（学术集） | resume-ner | 240 份文档 | GitHub 直取（对照检验用） | 2018 |
 
-JD 解析最终语料：**8,656 条入库记录**（`jdxtract` 三源合并，337 成功/5 隔离的 AI 域
-详细口径 + 存档/企业源解析），AI 域干净 JD 243 条。
+JD 解析最终语料：**10,384 条入库记录**（`jdxtract` 三源合并 + 2026-08-31 新增 10 家前沿
+AI 公司 1,626 条：OpenAI 742 / xAI 249 / ElevenLabs 248 / Cohere 146 / LangChain 107 /
+Perplexity 93 / Moonshot 19 / LlamaIndex 14 / Runway 4 / StabilityAI 4，28 平台，
+AI 域 7,325 条）。前沿实验室源补齐了 AI Safety / Agent Infra / Context Engineering /
+Post-Training 等方向的覆盖盲区（此前仅 Anthropic 一家）。
 
 ### 二、对照与扩展数据
 
@@ -93,6 +97,22 @@ JD 解析最终语料：**8,656 条入库记录**（`jdxtract` 三源合并，33
   → 人工审核（review-actions 留痕）
   → jobpub 发布（不可变 PUBLISHED，17 个版本）
 ```
+
+### 1b. JD → 涌现岗位候选（自动发现）
+
+```text
+emergscan 扫描全量 AI 域 JD 标题 n-gram 聚簇
+  → 判据：近 90 天 ≥10 条 AND 增长比 ≥1.5（或从无到有）
+           AND 标题变体 ≥3 AND 跨平台 ≥2
+  → 去噪：地名/职能泛词/已知领域词子串过滤 + Jaccard 重叠合并
+  → 产物 emerging-roles.json：候选 + 月度分布（monthly）
+           + 近期 JD 原文链接（sampleJds，Greenhouse 精确到单岗）
+           + 内容画像（职责/要求/技能/场景聚合）
+  → 前端 /new-jobs 审核工作台（趋势图 + JD 链接 + 接受/拒绝）
+```
+
+验证样本：FDE（Forward Deployed Engineer）190 条 / 12 平台 / 117 变体 /
+增长 16.6 倍，2026-08 检出后随前沿实验室源扩展证据增强。
 
 ### 2. 日报 → 信号 → 预测（时间主链）
 
@@ -160,6 +180,10 @@ std_requirements（431）`——已导入本地 PG。
 
 ## 已知局限（诚实标注）
 
+- **Ashby 源 JD 原文链接只能到招聘板级**：首采时 jd_id 截断 UUID 前 12 位且未留存
+  jobUrl，无法回构单岗页链接；涌现候选的 sampleJds 对 Ashby 源回退到
+  `jobs.ashbyhq.com/{company}`（Greenhouse 源可精确到单岗页）。
+  采集器已改为留存完整 jobUrl，重采后即恢复单岗链接。
 - **2025 基准窗 JD 稀缺**：51job 在招职位随时间下架，基准窗仅 ~24 条（平台物理上限，
   不可回补），主案例 2 两窗口调整为 2026-03~04 / 2026-06~07。
 - **boss JD 无发布日期**：仅作标注素材，不进时间分析。
@@ -170,5 +194,7 @@ std_requirements（431）`——已导入本地 PG。
   局限与排查过程见 `research/xlzsz-known-limits.md`。
 - **certparse 覆盖 10 份标准**：osta 标准库共 702 份，当前只解析了数字技术域核心
   10 份；扩量仅需下载 + 重跑（脚本幂等）。
+- **Ashby 源无单岗 URL**：Ashby posting API 的 jobUrl 未在早期采集中留存，
+  已修正采集器（`ashby.py` 新增 jobUrl 字段）；存量数据 sampleJds 回退到招聘板页。
 - **评测指标待真人抽检**：540 条 AI 预标注采纳需 ~50 条真人复核后方可宣称正式指标
   （roadmap D9）。

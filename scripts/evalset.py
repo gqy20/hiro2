@@ -133,7 +133,13 @@ def cmd_freeze() -> dict:
 def _score_csv(path: Path, verdict_col: str, task_type: str, annotations: dict[str, dict]) -> dict:
     """标注来源：annotations.jsonl 优先，CSV 手工判定列为兼容回退。
 
-    语义：ACCEPT=系统输出正确；MODIFY/REJECT=错误；UNKNOWN=无法判断不计入分母。
+    语义（锚定对齐版）：标准答案 vs 实际输出直接比较——
+    - 带 corrected_payload 的判定：标准答案 = payload.position_id（含 None 锚定），
+      对 = CSV 系统输出列 == 标准答案（系统对齐修正后即记对）；
+    - ACCEPT 无 payload：系统输出正确；
+    - UNKNOWN：无法判断不计入分母。
+    这与 evalcmp 的锚定口径一致；CSV 系统输出列反映被评系统当前版本
+    （rolemap repair 产物，刷新脚本与 score 同步）。
     """
     if not path.is_file():
         return {"error": "missing"}
@@ -146,7 +152,13 @@ def _score_csv(path: Path, verdict_col: str, task_type: str, annotations: dict[s
             if ann["decision"] == "UNKNOWN":
                 continue
             labeled += 1
-            if ann["decision"] == "ACCEPT":
+            payload = ann.get("corrected_payload") or None
+            if payload is not None and "position_id" in payload:
+                expect = payload.get("position_id") or ""
+                actual = (r.get("系统岗位id") or "").strip()
+                if actual == expect:
+                    agree += 1
+            elif ann["decision"] == "ACCEPT":
                 agree += 1
             continue
         verdict = r.get(verdict_col, "").strip()

@@ -12,8 +12,8 @@
 ├── 4 条对照与扩展数据：政策/大典（官方锚点）、O*NET/ESCO（国际对照）、arXiv/PyPI（技术上游）、RSS（实时源）
 └── 3 条学练赛证数据：证书目录（证）、竞赛目录（赛）、职业标准工作要求（学）
 
-核心产物规模（data/processed/，2026-08-31 审计）：
-  10,384 条 JD 解析记录（28 平台，AI 域 7,325 条） | 10,379 个日报事件 | 14,174 条证据实体
+核心产物规模（2026-09-01 复核）：
+  10,384 条 JD 解析记录（28 平台，AI 域 7,325 条） | 10,645 个日报事件 | 14,174 条证据实体
   17 个已发布岗位版本 | 7,474 条历史信号 | 839 条回测记录
   916 张证书目录 | 1,269 场竞赛目录 | 431 项标准工作要求（含 1,679 能力 + 1,643 知识条目）
   23 个候选人画像 | 22 份匹配报告 | 164 份简历档案
@@ -32,7 +32,7 @@ data/processed/    清洗与标准化产物，可重建
    ▼
 PostgreSQL         事实主库（migration 0001-0009，dbimport/xlzszdb 幂等导入）
    │
-   └─ data/runs/<run_id>/  每次运行的 config/events/metrics（714 次运行留痕）
+   └─ data/runs/<run_id>/  每次运行的 config/events/metrics（1,291 次运行留痕，2026-09-01）
 ```
 
 质量规则：原始记录不覆盖、清洗结果可从 raw 重建、失败进隔离队列、
@@ -49,7 +49,7 @@ LLM 产物必须带 prompt_version/model_version、合成数据永不进评测�
 | 招聘 JD（企业官网） | 字节/阿里/腾讯 | 682 条 | 官方 API 直连（`jdcorp`，无 WAF） | 2026-01~08 |
 | 招聘 JD（前沿 AI 实验室） | OpenAI/xAI/Moonshot 等 10 家 | 1,626 条 | Ashby/Greenhouse 公开板 API（`ashby.py` + `jdcorp greenhouse`，2026-08-31 新增） | 2026-03~08 |
 | 招聘 JD（历史快照） | Wayback 字节/腾讯 | 全部 200 快照 | CDX 枚举（`jdarchive`） | 2022~2025 |
-| 日报 | AI 早报公众号 | 697 篇 → 10,379 事件 | Markdown 归档（`ingest.py wechat`，backfill） | 2017-11~2026-08 |
+| 日报 | AI 早报公众号 | 697 篇 → 10,645 事件 | Markdown 归档（`ingest.py wechat`，backfill） | 2017-11~2026-08 |
 | 简历（学术集） | resume-ner | 240 份文档 | GitHub 直取（对照检验用） | 2018 |
 
 JD 解析最终语料：**10,384 条入库记录**（`jdxtract` 三源合并 + 2026-08-31 新增 10 家前沿
@@ -117,7 +117,7 @@ emergscan 扫描全量 AI 域 JD 标题 n-gram 聚簇
 ### 2. 日报 → 信号 → 预测（时间主链）
 
 ```text
-697 篇 Markdown → extract（prompt v3：8 类事件 + 事实分级）→ 10,379 事件
+697 篇 Markdown → extract（prompt v3：8 类事件 + 事实分级）→ 10,645 事件
   → evdedup 去重（24.2% 速览/转载重复，并查集聚类）
   → resolve 技能归一（中高频覆盖率 87.2%，时间闸门可回溯）
   → evidence 证据实体化（14,174 条，含回链与质量分）

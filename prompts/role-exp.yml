@@ -1,0 +1,33 @@
+id: role_exp
+version: 1
+task: 实验用岗位映射——对照 role-map v1，验证职责上下文与岗位描述接地的增益
+enabled: true
+
+system: |
+  你是岗位目录映射器。基于 JD 的职位名、职责与技能要素，判断它最接近
+  46 个标准岗位中的哪一个（目录见输入）。
+
+  规则：
+  1. 职责语义优先于职位名字面相似——"Software Engineer, Gen AI" 若职责是
+     TypeScript 前后端与基础设施，应按职责选应用工程岗而非算法岗。
+  2. 实习/助理/初级/Manager 头缀不影响岗位映射（那是等级问题）；
+     但职责以售前/客户成功/纯管理为主时不属技术目录，is_match=false。
+  3. 核心工作是大模型/AI 技术研发或应用才映射；仅"使用 AI 工具"的非
+     技术岗、与目录全部语义不符时 is_match=false，position_id 留空。
+  4. confidence 取 0~1；低于 0.6 建议 is_match=false。
+  5. reason 给出不超过 25 字的职责依据（引用职责关键词）。
+  6. 只输出一个 JSON 对象：
+     {"jd_id": "...", "is_match": true, "position_id": "pos_XX", "confidence": 0.9, "reason": "..."}
+
+input_schema:
+  jd_id: JD 标识
+  title: 职位名
+  responsibilities: 职责列表（前 5 条）
+  skills: 技能要素（前 10 个）
+  positions: 46 个标准岗位（id + 分组 + 名称；实验变体附加每岗职责一句话）
+
+output_schema: RoleMatch
+
+limits:
+  timeout_seconds: 240
+  max_tokens: 400

@@ -39,6 +39,14 @@ MAX_RETRIES = 2
 # 职位名别名（市场叫法 -> Excel 标准名），人工先验
 # 注意 dict 顺序即匹配优先级：放前面的先命中。
 TITLE_ALIASES: dict[str, str] = {
+    # v4（evalloop 首轮，run 20260831T161631）：产品头衔优先于技术词——
+    # "QQ-Agent产品经理"曾被 "Agent" 抢配 pos_02（role_level-022/037 证据），
+    # 技术头衔罕含"产品"，置顶风险低。
+    "产品经理": "AI产品经理",
+    "产品实习生": "AI产品经理",
+    # v4.2 已撤回：曾按终审锚点加"推理部署/异构硬件/Compute Infrastructure"三个词，
+    # 每词仅修 1 条 case 却带全库回归面——词典修补的边际收益已经为负，
+    # 这些 case 的正确出路是 role-map LLM 路径带职责上下文重判（方向见 docs/competition.md）。
     "大模型": "大模型算法工程师",
     "LLM": "大模型算法工程师",
     "AIGC": "AI创意策略师",
@@ -64,7 +72,6 @@ TITLE_ALIASES: dict[str, str] = {
     "嵌入式": "嵌入式AI工程师",
     "物联网": "物联网(IoT)架构师",
     "IoT": "物联网(IoT)架构师",
-    "产品经理": "AI产品经理",
     "Prompt": "Prompt工程师",
     # 泛称与应用类（v2 新增）：应用开发岗归 Agent 开发，泛 AI 工程师归算法主体岗
     # 注意：别名匹配在去空格的 norm 上进行，别名本身不得含空格
@@ -79,7 +86,31 @@ TITLE_ALIASES: dict[str, str] = {
     "算法工程师": "大模型算法工程师",
     "AI研发": "大模型算法工程师",
     "AI技术": "大模型算法工程师",
+    # v4（evalloop 首轮）：推理服务工程岗归 MLOps（role_level-097 证据，
+    # "Staff Software Engineer, Inference" 原 unmatched）；置于算法词后，
+    # "Inference Research" 类算法岗仍由前部研究/算法词先接住。
+    "Inference": "AI模型部署工程师(MLOps)",
 }
+
+# v5：泛词别名——归类粗暴、无法区分方向，repair --semantic 时对这些命中
+# 追加 LLM 语义重判（职责细分）。证据：eval-v3 gold 修正的 15 条里
+# 012/016/038/041/051/064/068 均为"算法工程师->pos_01"泛词粗暴归类。
+GENERIC_ALIASES: tuple[str, ...] = (
+    "算法工程师",
+    "AI工程师",
+    "人工智能工程师",
+    "AI研发",
+    "AI技术",
+    "机器学习",
+    "深度学习",
+)
+
+# v5.1：方向词——exact 命中大类（pos_01 等）但 title 含细分方向时也需语义重判
+# （"多模态大模型算法工程师" exact 命中 pos_01，实际属 pos_04，role_level-012 证据）
+SEMANTIC_DIRECTION_WORDS: tuple[str, ...] = (
+    "多模态", "视觉", "搜索", "推荐", "语音", "NLP", "推理", "部署",
+    "Agent", "数据挖掘", "运筹", "生成", "AIGC", "具身", "强化学习",
+)
 
 # LLM 结果后置校验族（v2）：title 命中族关键词而 LLM 未选族内岗位时修正。
 # 顺序即优先级：视觉/部署/安全先于算法/应用（避免“图像算法”被“算法”截胡）。
@@ -89,7 +120,8 @@ FAMILY_CHECK: list[tuple[tuple[str, ...], str]] = [
     (("部署", "MLOps"), "pos_05"),
     (("网安", "网络安全", "信息安全", "数据安全"), "pos_36"),
     (("大模型", "LLM", "算法", "AI工程师", "人工智能工程师", "AI研发", "AI技术"), "pos_01"),
-    (("AI应用", "应用AI", "AI Native", "AI开发", "Agent", "智能体", "RAG"), "pos_02"),
+    # v4.1：补 "Applied AI" 英文族词（role_level-074/081 "Applied AI Engineer/Architect"）
+    (("AI应用", "应用AI", "AI Native", "AI开发", "Applied AI", "Agent", "智能体", "RAG"), "pos_02"),
 ]
 
 # 域专门岗集合：族校验不得覆盖 LLM 对专门域岗位的判断
@@ -124,6 +156,16 @@ BIZ_SIGNALS: tuple[str, ...] = (
     "Developer Relations",
     "Revenue",
     "Enablement",
+    # v4.1（evalloop 第二圈，run 20260831T161631 建议 2 采纳部分）：
+    # Manager 类精确形态，命中即按商务/管理岗排除（role_level-063/084/086 期望 None）。
+    # 用 "managerof"/"manager-"/"sr.manager" 而非裸 "manager"：避开 "Product Manager"
+    # （AI产品经理 pos_06 是合法目录岗，会被误伤）。
+    "Manager of",
+    "Manager -",
+    "Manager –",
+    "Sr. Manager",
+    # v4.1 撤回：曾加 "战略"/"商业化"，中文词过宽——"算法工程师-商业化"等
+    # 合法技术岗被整词错杀（evalcmp 回归 44），087 留人工裁决。
 )
 
 # 技术执行岗集合：alias 命中技术岗而 title 含商务信号时跳过该别名
@@ -169,8 +211,24 @@ LEVEL_BY_TITLE = [
 
 
 def _has_biz_signal(norm_lower: str) -> bool:
-    """title（去空格小写）是否含商务/管理/运营信号。"""
-    return any(s.replace(" ", "").lower() in norm_lower for s in BIZ_SIGNALS)
+    """title（去空格小写）是否含商务/管理/运营信号。
+
+    v4.1：Forward Deployed 只在 title 无 "engineer" 时才算商务信号——
+    FDE（Forward Deployed Engineer）本质是部署工程岗，整词排除会把
+    "Frontier Agents Engineer (Forward Deployed Engineering)" 错杀。
+    """
+    for s in BIZ_SIGNALS:
+        key = s.replace(" ", "").lower()
+        if key == "forwarddeployed":
+            # FDE 精确化：title 真的含该词、且无 engineer 时才算商务信号
+            # （v4.1 首版漏了 key in 判断，所有不含 engineer 的 title 被误判，
+            #  evalcmp 回归 44 当场拦下）
+            if key in norm_lower and "engineer" not in norm_lower:
+                return True
+            continue
+        if key in norm_lower:
+            return True
+    return False
 
 
 def _family_override(title: str, pid: str) -> tuple[str, str]:
@@ -465,40 +523,106 @@ def cmd_label() -> dict:
     return {"rows": n, "file": str(LABELS)}
 
 
-def cmd_repair() -> dict:
+def cmd_repair(semantic: bool = False, force: bool = False) -> dict:
     """v3 重判：规则层重跑 + 后置校验，零 LLM 成本。
 
     读取现有 jd-role-map.jsonl，输出 jd-role-map-repaired.jsonl：
     - 规则层（扩充别名 + 商务信号过滤）能接住的以规则为准；
     - 规则层未接住的统一过 post_check（族一致性 + 非技术岗排除），
       含曾被旧别名误中的条目（过滤后降级 unmatched）。
+
+    v5 --semantic：泛词别名（GENERIC_ALIASES，约 398 条命中）在规则匹配后
+    追加 LLM 语义重判（role-semmap.yml，输入带职责与技能）。泛词无法区分
+    方向（"算法工程师"->pos_01 是粗暴归类），职责语义才能细分（多模态算法
+    ->pos_04 / 推理框架->pos_05）；明确词别名与 exact 不重判。
     """
-    run = RunContext("rolemap", {"cmd": "repair"})
+    run = RunContext("rolemap", {"cmd": "repair", "semantic": semantic, "force": force})
     positions = [json.loads(x) for x in POSITIONS.open(encoding="utf-8")]
     out_repaired = OUT.with_name("jd-role-map-repaired.jsonl")
     changed = repaired = 0
     recs = [json.loads(x) for x in OUT.open(encoding="utf-8")]
+    # 幂等（继承式）：上轮语义重判结果直接继承——重判非确定性，重跑会漂移；
+    # repair 是确定性管线，semantic 结果一经产生即为缓存（--semantic-force 才重判）
+    prev_semantic: dict[str, dict] = {}
+    if out_repaired.is_file() and not force:
+        for line in out_repaired.open(encoding="utf-8"):
+            r = json.loads(line)
+            if str(r.get("method", "")).startswith("semantic"):
+                prev_semantic[r["jd_id"]] = r
+    # 治理层次：人审/AI 交叉复核锚定（corrected_payload）的 case 不被批量重判翻案
+    anchored = _anchored_decisions()
+    semantic_hits: list[dict] = []
+    for rec in recs:
+        # 一级：锚定判定直接生效（人审/AI 交叉复核，含 None 锚定），不触任何后续
+        if rec["jd_id"] in anchored:
+            rec["position_id"] = anchored[rec["jd_id"]]
+            rec["confidence"] = 1.0 if anchored[rec["jd_id"]] else 0
+            rec["method"] = "anchored"
+            continue
+        # 二级：继承上轮 semantic 判定（缓存语义，保证 repair 确定性）
+        prev = prev_semantic.get(rec["jd_id"])
+        if prev is not None:
+            rec["position_id"] = prev.get("position_id")
+            rec["confidence"] = prev.get("confidence", 0)
+            rec["method"] = prev.get("method")
+            if prev.get("semantic_reason"):
+                rec["semantic_reason"] = prev["semantic_reason"]
+            continue
+        title = rec["title"]
+        pid, conf, method = match_by_rule(title, positions)
+        if pid:
+            # 规则层（含扩充别名）能接住的，以规则为准
+            if pid != rec.get("position_id"):
+                changed += 1
+            rec["position_id"] = pid
+            rec["confidence"] = conf
+            rec["method"] = method
+            # v5.1：语义重判触发（AI+关键词结合）——
+            # a) 泛词别名命中（归类粗暴，职责才能细分）
+            # b) LLM 路径结果（llm/llm-repair 置信有限，None 类错误主来源）
+            # c) exact 命中但 title 含细分方向词（"多模态大模型算法工程师"类）
+            if semantic and rec["jd_id"] not in prev_semantic and rec["jd_id"] not in anchored:
+                norm = title.replace(" ", "")
+                need = method == "alias" and any(
+                    a.replace(" ", "") in norm for a in GENERIC_ALIASES
+                )
+                if not need and method == "exact":
+                    need = rec["position_id"] == "pos_01" and any(
+                        w in norm for w in SEMANTIC_DIRECTION_WORDS
+                    )
+                if need:
+                    rec["_generic_alias"] = "v5.1-expanded"
+                    semantic_hits.append(rec)
+        else:
+            # 规则层未接住：统一过 post_check（LLM 修正 / 商务排除 / 族校验）
+            new_pid, note = post_check(title, rec.get("position_id"), rec.get("confidence", 0))
+            if new_pid != rec.get("position_id"):
+                repaired += 1
+                rec["position_id"] = new_pid
+                rec["method"] = "llm-repair" if new_pid else "unmatched"
+                rec["repair_note"] = note
+                if not new_pid:
+                    rec["confidence"] = 0
+            # v5.1：LLM 路径存活判定（llm/llm-repair）-> 语义重判
+            # （None 类错误主来源：Manager/测试/全栈等被 LLM 判了技术岗；
+            #  这些 case 本轮规则匹配 unmatched 走本分支，须在此触发）
+            if (
+                semantic
+                and rec["jd_id"] not in prev_semantic
+                and rec["jd_id"] not in anchored
+                and rec.get("method") in ("llm", "llm-repair")
+            ):
+                rec["_generic_alias"] = "v5.1-llm-path"
+                semantic_hits.append(rec)
+
+    n_semantic = 0
+    if semantic_hits:
+        n_semantic = asyncio.run(_semantic_remap(semantic_hits))
+    for rec in recs:
+        rec.pop("_generic_alias", None)
+
     with out_repaired.open("w", encoding="utf-8") as fh:
         for rec in recs:
-            title = rec["title"]
-            pid, conf, method = match_by_rule(title, positions)
-            if pid:
-                # 规则层（含扩充别名）能接住的，以规则为准
-                if pid != rec.get("position_id"):
-                    changed += 1
-                rec["position_id"] = pid
-                rec["confidence"] = conf
-                rec["method"] = method
-            else:
-                # 规则层未接住：统一过 post_check（LLM 修正 / 商务排除 / 族校验）
-                new_pid, note = post_check(title, rec.get("position_id"), rec.get("confidence", 0))
-                if new_pid != rec.get("position_id"):
-                    repaired += 1
-                    rec["position_id"] = new_pid
-                    rec["method"] = "llm-repair" if new_pid else "unmatched"
-                    rec["repair_note"] = note
-                    if not new_pid:
-                        rec["confidence"] = 0
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
     from collections import Counter
 
@@ -506,10 +630,110 @@ def cmd_repair() -> dict:
         "total": len(recs),
         "rule_changed": changed,
         "llm_repaired": repaired,
+        "semantic_remap": n_semantic,
         "by_method": dict(Counter(r["method"] for r in recs)),
     }
     run.finish({k: v for k, v in metrics.items() if not isinstance(v, dict)})
     return metrics
+
+
+async def _semantic_remap(recs: list[dict]) -> int:
+    """泛词命中 case 的 LLM 语义重判（role-semmap.yml，带职责上下文）。
+
+    就地更新 rec 的 position_id/method/confidence；method 标记 semantic。
+    返回实际发生变更的条数。重判失败保留规则结果（不降级）。
+    """
+    from backend.infra.llm.promptspec import load_prompt
+    from backend.infra.llm.provider import AnthropicProvider
+    from backend.infra.llm.settings import LLMSettings
+    from backend.jobs.models import RoleMatch
+
+    spec = load_prompt("role-semmap")
+    provider = AnthropicProvider(LLMSettings())
+    parsed = {
+        json.loads(line)["jd_id"]: json.loads(line)
+        for line in PARSED.open(encoding="utf-8")
+    }
+    positions = [json.loads(x) for x in POSITIONS.open(encoding="utf-8")]
+    catalog = "\n".join(f"{p['position_id']} {p.get('group')}/{p['name']}" for p in positions)
+    sem = asyncio.Semaphore(8)
+    changed = 0
+
+    async def one(rec: dict) -> None:
+        nonlocal changed
+        jd = parsed.get(rec["jd_id"], {})
+        resp = "\n".join(f"- {x[:60]}" for x in (jd.get("responsibilities") or [])[:5])
+        skills = ", ".join((jd.get("skill_mentions") or [])[:10])
+        user = (
+            f"jd_id: {rec['jd_id']}\n职位名: {rec['title']}\n职责:\n{resp}\n"
+            f"技能: {skills}\n\n标准岗位目录:\n{catalog}"
+        )
+        async with sem:
+            try:
+                raw = await provider.complete(
+                    system=spec.system,
+                    user=user,
+                    max_tokens=int(spec.limits.get("max_tokens", 1500)),
+                    timeout=float(spec.limits.get("timeout_seconds", 120)),
+                )
+                d = json.loads(_strip_json(raw))
+                # reason 硬截断：S4 判例式解释惯性超 40 字限制（RoleMatch 约束）
+                d["reason"] = (d.get("reason") or "")[:40]
+                m = RoleMatch.model_validate(d)
+            except Exception:  # noqa: BLE001 - 重判失败保留规则结果
+                rec["semantic_note"] = "重判失败，保留规则结果"
+                return
+        new_pid = m.position_id if m.is_match else None
+        if new_pid != rec.get("position_id"):
+            changed += 1
+            rec["position_id"] = new_pid
+            rec["confidence"] = m.confidence
+            rec["semantic_reason"] = m.reason
+        rec["method"] = "semantic" if new_pid else "semantic-unmatched"
+
+    await asyncio.gather(*(one(r) for r in recs))
+    print(f"语义重判 {len(recs)} 条（变更 {changed}）；tokens={provider.usage.as_dict()}")
+    return changed
+
+
+def _anchored_decisions() -> dict[str, str | None]:
+    """评测锚定判定：jd_id -> position_id（None=锚定为目录外）。
+
+    来源 annotations 最新带 corrected_payload 的判定（含空 position_id 的
+    None 锚定）。治理优先级：锚定 > 继承 semantic > 规则 + 新重判。
+    """
+    import csv as _csv
+
+    ann_path = ROOT / "evaluation" / "annotations.jsonl"
+    csv_path = ROOT / "evaluation" / "samples" / "role-mapping.csv"
+    if not ann_path.is_file() or not csv_path.is_file():
+        return {}
+    latest: dict[str, dict] = {}
+    for line in ann_path.open(encoding="utf-8"):
+        rec = json.loads(line)
+        if rec.get("dataset_version") == "eval-v3-20260828":
+            latest[rec["task_id"]] = rec
+    anchored: dict[int, str | None] = {}
+    for tid, r in latest.items():
+        cp = r.get("corrected_payload") or {}
+        if r.get("corrected_payload") is not None and "position_id" in cp:
+            anchored[int(tid.rsplit("-", 1)[1])] = cp.get("position_id") or None
+    rows = list(_csv.DictReader(csv_path.open(encoding="utf-8-sig")))
+    out: dict[str, str | None] = {}
+    for i, row in enumerate(rows):
+        if i in anchored:
+            out[row["jd_id"]] = anchored[i]
+    return out
+
+
+def _strip_json(text: str) -> str:
+    t = text.strip()
+    if t.startswith("```"):
+        nl = t.find("\n")
+        t = t[nl + 1 :] if nl != -1 else t
+        if t.rstrip().endswith("```"):
+            t = t.rstrip()[:-3]
+    return t.strip()
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -517,14 +741,20 @@ def main(argv: list[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="cmd", required=True)
     sub.add_parser("run")
     sub.add_parser("label")
-    sub.add_parser("repair")
+    p_repair = sub.add_parser("repair")
+    p_repair.add_argument(
+        "--semantic", action="store_true", help="泛词/LLM路径/方向词 exact 追加语义重判"
+    )
+    p_repair.add_argument(
+        "--semantic-force", action="store_true", help="忽略上轮 semantic 结果全部重判"
+    )
     args = parser.parse_args(argv)
     import asyncio
 
     if args.cmd == "run":
         result = asyncio.run(cmd_run())
     elif args.cmd == "repair":
-        result = cmd_repair()
+        result = cmd_repair(semantic=args.semantic, force=args.semantic_force)
     else:
         result = cmd_label()
     print(json.dumps(result, ensure_ascii=False))

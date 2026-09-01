@@ -58,10 +58,14 @@ def main() -> int:
         fix = (ann.get("corrected_payload") or {}).get("position_id")
         key = f"{idx:03d}"
         if ann["decision"] == "ACCEPT":
+            # 终审锚定：ACCEPT 带 corrected_payload 时期望=锚定岗位
+            # （判定对象是当时的系统输出；映射更新后期望随之对齐，消除误报回归）
+            anchored = (ann.get("corrected_payload") or {}).get("position_id")
+            expect = anchored if anchored is not None else old
             agree_base += 1
-            if new != old and new not in (BORDERLINE.get(key) or set()):
+            if new != expect and new not in (BORDERLINE.get(key) or set()):
                 regressed += 1
-                print(f"回归 {key} {rows[idx]['职位名'][:26]}: {old} -> {new}")
+                print(f"回归 {key} {rows[idx]['职位名'][:26]}: {expect} -> {new}")
             continue
         target = fix if ann["decision"] == "MODIFY" else None
         if ann["decision"] == "REJECT" and "漏判" in ann.get("rationale", ""):

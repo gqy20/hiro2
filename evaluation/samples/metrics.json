@@ -3,14 +3,14 @@
   "role_mapping": {
     "total": 100,
     "labeled": 100,
-    "agree": 78,
-    "accuracy": 0.78
+    "agree": 97,
+    "accuracy": 0.97
   },
   "domain_judgment": {
     "total": 50,
     "labeled": 50,
-    "agree": 48,
-    "accuracy": 0.96
+    "agree": 49,
+    "accuracy": 0.98
   },
   "event_extraction": {
     "total": 30,

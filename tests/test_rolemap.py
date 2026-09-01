@@ -52,3 +52,33 @@ def test_infer_level_rules() -> None:
     assert infer_level("算法工程师", "1-3年") == ("L2", "经验要求:1-3年")
     assert infer_level("算法工程师", "经验不限") == ("L1", "经验要求:经验不限")
     assert infer_level("算法工程师", "") == ("UNKNOWN", "无信号")
+
+
+def test_has_biz_signal_fde_and_manager_forms() -> None:
+    """v4.1 商务信号边界：FDE 含 engineer 放行、Manager 精确形态、中文词不误伤。
+
+    回归背景：FDE 特判首版漏了 key in 判断，所有不含 engineer 的 title
+    被误判商务信号（evalcmp 回归 44 拦下）——此测试防止复发。
+    """
+    from rolemap import _has_biz_signal
+
+    # 普通技术/产品岗不得误伤
+    assert _has_biz_signal("产品经理") is False
+    assert _has_biz_signal("大模型算法工程师-商业化") is False  # v4.1 撤回的中文宽词
+    # FDE：含 engineer 是部署工程岗，放行；无 engineer 才算商务信号
+    assert _has_biz_signal("frontieragentsengineer(forwarddeployedengineering)") is False
+    assert _has_biz_signal("forwarddeployedspecialist") is True
+    # Manager 精确形态命中；Product Manager 不误伤
+    assert _has_biz_signal("managerofappliedaiarchitecture") is True
+    assert _has_biz_signal("manager-techsolutions(bigdata/ai)") is True
+    assert _has_biz_signal("sr.manager–data&ai") is True
+    assert _has_biz_signal("aiproductmanager") is False
+
+
+def test_product_manager_alias_priority() -> None:
+    """v4：产品头衔优先于技术词（QQ-Agent产品经理 -> pos_06 而非 pos_02）。"""
+    real = _all_positions()
+    pid, _, method = match_by_rule("QQ-Agent产品经理", real)
+    assert pid == "pos_06" and method == "alias"
+    pid2, _, _ = match_by_rule("豆包AI大模型产品实习生-Data AML", real)
+    assert pid2 == "pos_06"

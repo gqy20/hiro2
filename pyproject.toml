@@ -61,3 +61,8 @@ warn_unused_configs = true
 [[tool.mypy.overrides]]
 module = "feedparser"
 ignore_missing_imports = true
+
+# scripts 目录不在 mypy 路径内；backend 中按文件名运行时导入（scripts/sys.path 注入惯例）
+[[tool.mypy.overrides]]
+module = ["rolemap", "emergscan"]
+ignore_missing_imports = true

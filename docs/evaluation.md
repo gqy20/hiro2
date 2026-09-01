@@ -93,6 +93,27 @@ evalset.py freeze（分层抽样，manifest 哈希锁定）
 - 标注记录 append-only，带 `reviewer_id` 与 `dataset_version`；批量 AI 采纳必须透明标记（如 `ai-prelabel-batch`），与人工判定可区分。
 - 跨版本对比必须锚定固定样本的 `jd_id`（`evalcmp.py`），因为 freeze 按方法分层抽样，系统输出变化会导致样本漂移，直接比两版分数口径不成立。
 
+### 抽检智能体（evalaudit）
+
+人工抽检前先跑 `scripts/evalaudit.py`：抽检智能体对 AI 预标注做独立二次判定（查证工具只读：岗位目录/岗位详情/JD 详情/事件详情），每 case 独立 agent run 留痕（`agent-steps.jsonl` + token 预算硬闸门），产出分歧清单（`audit-summary.json`）——agent 判定与预标注不一致的 case 即人工优先复核对象。抽检策略：非 ACCEPT 全复核 + ACCEPT 抽 10%，固定 seed 可复现。agent 判定不写入 annotations、不参与 score；正式指标仍以人工确认为准。
+
+### 评测-修正飞轮（evalloop）
+
+`scripts/evalloop.py` 把"发现错误 -> 修正规则 -> 重评"连成轮次：非 ACCEPT case 聚类（叠加抽检分歧视角）-> 分析智能体归纳错误模式、产出规则补丁建议（`patch-suggestions.json`，target 指向 rolemap.py 具体常量）-> 人工审核应用 -> rolemap 规则层重跑（零 LLM 成本）-> `evalcmp.py` 固定样本对比。建议不自动应用；负改进由对比如实呈现并可回滚。这层循环是发榜方"效果测评与闭环优化"方向的直接落地。
+
+### gold 锚定与口径（2026-09-01）
+
+岗位映射的判定链：AI 预标注（批量建议）→ 抽检智能体独立复核（分歧清单）→ ai-cross-review 逐条职责证据裁决 → **锚定**（`corrected_payload` 落定标准答案，含显式 None=目录外）。锚定后：
+
+- **score 口径**：标准答案（corrected_payload）vs CSV 系统输出列（实际输出，随 repair 刷新）直接比较；ACCEPT 无锚定的沿用字母语义。
+- **evalcmp 口径**：锚定 jd_id + repaired 当前输出，修复/回归计数。已知边界：CSV 刷新后 ACCEPT 无锚定 case 的期望随输出走（检测力弱化），主数字以锚定对齐 + score 双口径呈现。
+- **repair 治理链**：锚定 > 继承 semantic（缓存式幂等，重跑不漂移）> 规则 + 语义重判；`--semantic-force` 才重判。
+- 方案选型（shootout，10 条难例 → 99 条全量两步验证）：任务分解两段式 + 判例 few-shot（S4）胜出，已回填 role-semmap v3。
+
+### 词表新词闭环（aliasprobe）
+
+词表不再是静态人工先验：`scripts/aliasprobe.py` 从数据流发现词典外语言并生成词表提议。信源一：unmatched JD 标题关键词聚类（复用 emergscan n-gram，>=5 次成簇）；信源二：日报 skill_mentions 月度突增检测（近 3 月/历史月均 >=3 倍，先导预警——时间传导轴证明日报先导 JD 5~7 年）。提议 agent 逐簇查证样本 JD 职责与岗位职责，产出三类判定：add_alias（词典缺口）/ new_position_signal（46 岗对不上，转新岗位流）/ reject（噪声词）。提议经人工审核后进 TITLE_ALIASES，repair 重跑 + evalcmp 验证。首次运行（2026-08-31）：410 候选 -> 前 15 查证 -> 12 新岗信号 + 2 弃 + 1 词典缺口，FDE 簇与涌现扫描结论互相印证。
+
 ## 未来预测
 
 未来预测使用同一个 `ForecastEngine`，把 `as_of_date` 设置为当前时间，并为每项结果保存 `forecast_valid_until`。预测结果只进入当前趋势和岗位变化建议，不直接覆盖岗位图谱。

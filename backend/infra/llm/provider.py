@@ -1,14 +1,19 @@
 """LLM Provider 适配层：Anthropic Messages 协议 + 离线 Mock。
 
 领域代码只依赖 LLMPorter 协议，不直接导入 anthropic SDK。
+agent loop（infra.llm.agent）依赖 AnthropicChatMixin.chat / MockChatProvider，
+ChatTurn 在 agent.py 定义，此处函数内延迟导入以避免循环依赖。
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Protocol
+from typing import TYPE_CHECKING, Any, Protocol
 
 from .settings import LLMSettings
+
+if TYPE_CHECKING:
+    from .agent import ChatTurn
 
 
 @dataclass
@@ -31,6 +36,10 @@ class UsageTotals:
         self.output_tokens += output_tokens
         self.calls += 1
 
+    @property
+    def total(self) -> int:
+        return self.input_tokens + self.output_tokens
+
 
 class LLMProvider(Protocol):
     """最小协议：一次 system+user 文本调用，返回纯文本；usage 记录累计消耗。"""
@@ -44,7 +53,52 @@ class LLMProvider(Protocol):
     ) -> str: ...
 
 
-class AnthropicProvider:
+class AnthropicChatMixin:
+    """chat() 实现：Anthropic Messages 工具调用协议，归一化为 ChatTurn。
+
+    与 complete() 分离：单轮抽取（7 个既有 prompt）不感知工具；
+    agent loop（infra.llm.agent）只依赖 AgentPorter 协议。
+    """
+
+    _client: Any
+    _model: str
+
+    async def chat(
+        self,
+        *,
+        system: str,
+        messages: list[dict],
+        tools: list[dict],
+        max_tokens: int,
+        timeout: float = 60.0,
+    ) -> ChatTurn:  # pragma: no cover - 协议适配，测试走 MockChatProvider
+        from .agent import ChatTurn
+
+        # ponytail: 网关流式实现不完整（get_final_message 聚合缺事件崩溃），保持非流式；
+        # 长输出 422 风险由调用侧压短输出缓解（见 eval-analyze.yml 的紧凑约束）。
+        resp = await self._client.messages.create(
+            model=self._model,
+            max_tokens=max_tokens,
+            system=system,
+            messages=messages,
+            tools=tools or None,
+            timeout=timeout,
+        )
+        turn = ChatTurn(stop_reason=resp.stop_reason or "")
+        for block in resp.content:
+            if getattr(block, "type", "") == "text":
+                turn.text += block.text
+            elif getattr(block, "type", "") == "tool_use":
+                turn.tool_calls.append(
+                    {"id": block.id, "name": block.name, "args": block.input or {}}
+                )
+        if resp.usage is not None:
+            turn.input_tokens = resp.usage.input_tokens or 0
+            turn.output_tokens = resp.usage.output_tokens or 0
+        return turn
+
+
+class AnthropicProvider(AnthropicChatMixin):
     """Anthropic Messages 协议适配器，网关地址与密钥来自 .env 的 HIRO2_LLM_*。"""
 
     def __init__(self, settings: LLMSettings) -> None:
@@ -104,3 +158,33 @@ def build_provider(settings: LLMSettings, mock_responses: list[str] | None = Non
     if settings.hiro2_llm_provider == "mock":
         return MockProvider(mock_responses or ['{"events": []}'])
     return AnthropicProvider(settings)
+
+
+class MockChatProvider:
+    """离线假实现：按调用轮次返回预设 ChatTurn，用于测试与 CI。
+
+    usage 只累计 turn 自带的 token 数，便于测试预算闸门。
+    """
+
+    def __init__(self, turns: list[ChatTurn]) -> None:
+        self._turns = list(turns)
+        self._calls = 0
+        self.name = "mock-chat"
+        self.model_version = "mock-chat-1"
+        self.usage = UsageTotals()
+
+    async def chat(
+        self,
+        *,
+        system: str,
+        messages: list[dict],
+        tools: list[dict],
+        max_tokens: int,
+        timeout: float = 60.0,
+    ) -> ChatTurn:
+        from .agent import ChatTurn
+
+        turn = self._turns[min(self._calls, len(self._turns) - 1)] if self._turns else ChatTurn()
+        self._calls += 1
+        self.usage.add(turn.input_tokens, turn.output_tokens)
+        return turn

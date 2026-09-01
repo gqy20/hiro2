@@ -60,7 +60,7 @@
 | --- | --- | --- | --- | --- | --- |
 | B-T4.1 | Evaluation Case schema | B-T1.1 | **完成** | 输入、标准答案、预测、判定 | `evalset.py freeze` 三层冻结样本 |
 | B-T4.2 | 指标计算 CLI | B-T4.1 | **完成** | 指标可重跑 | `evalset.py score` 确定性计算 |
-| B-T4.3 | 100+ JD 测试集导入 | B-T4.1 | **完成** | 真实、来源、标注、synthetic 标记 | 337 条（266 AI 域），全部真实采集 |
+| B-T4.3 | 100+ JD 测试集导入 | B-T4.1 | **完成** | 真实、来源、标注、synthetic 标记 | 冻结评测集 180 条（role 100 + domain 50 + event 30）+ JD 解析库 10,384 条（266 AI 域），全部真实采集 |
 | B-T4.4 | 单元、契约、集成测试 | 全部 | **完成** | 覆盖率>=60% | 38 个测试全绿，覆盖率 65.12%（当前 73 个 68.44%），Makefile 强制下限 60% |
 | B-T4.5 | Pipeline Run / Outbox | B-T2 | **完成（2026-08-29）** | 长任务可追踪，事件幂等 | 消费逻辑归位 `backend/application/outbox.consume_batch`（失败带退避回 PENDING、达上限转 FAILED，FOR UPDATE SKIP LOCKED 并发安全）；常驻 worker `outbox_worker.py`（API lifespan 挂载，HIRO2_OUTBOX_WORKER 开关默认关、compose 默认开、30s 轮询）；CLI 壳化；域单测 3 例 |
 | B-T4.6 | Docker Compose 和健康检查 | 全部 | **完成** | 干净环境可启动 | `docker-compose.yml` 含 PostgreSQL/Neo4j/API/Web 健康依赖和 migration 初始化；`/health/live` + `/health/ready` |

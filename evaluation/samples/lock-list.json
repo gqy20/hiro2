@@ -1,0 +1,370 @@
+[
+ {
+  "task_id": "task-role_level-001",
+  "title": "视觉大模型算法工程师-国际电商",
+  "当前系统": "pos_01",
+  "gold期望": "pos_27",
+  "判定": "MODIFY",
+  "职责": "负责电商场景大规模视觉多模态预训练; 优化CV及多模态大模型底座"
+ },
+ {
+  "task_id": "task-role_level-003",
+  "title": "3D/动作-多模态大模型算法工程师-抖音V-AI-筋斗云人才计划",
+  "当前系统": "pos_01",
+  "gold期望": "pos_04",
+  "判定": "MODIFY",
+  "职责": "研发大语言/多模态/AIGC算法和数字人; 研发3D生成、动作生成、智能对话算法"
+ },
+ {
+  "task_id": "task-role_level-012",
+  "title": "数据技术及产品部-多模态大模型算法工程师-杭州/北京",
+  "当前系统": "pos_01",
+  "gold期望": "pos_04",
+  "判定": "MODIFY",
+  "职责": "研发多模态数据理解与处理算子; 开发多模态专家模型全流程"
+ },
+ {
+  "task_id": "task-role_level-016",
+  "title": "算法工程师-搜索",
+  "当前系统": "pos_01",
+  "gold期望": "pos_04",
+  "判定": "MODIFY",
+  "职责": "参与ByteDance搜索引擎研发，应用机器学习深度学习算法优化搜索体验; 参与抖音/头条/电商/生活服务核心产品搜索研发，服务数亿用户"
+ },
+ {
+  "task_id": "task-role_level-017",
+  "title": "机器学习推理框架研发实习生-Data AML",
+  "当前系统": "pos_01",
+  "gold期望": "pos_05",
+  "判定": "MODIFY",
+  "职责": "研发AML机器学习在线服务框架; 高效部署优化CV/语音/NLP模型"
+ },
+ {
+  "task_id": "task-role_level-023",
+  "title": "NLP算法工程师-抖音AI分身",
+  "当前系统": "pos_01",
+  "gold期望": "pos_04",
+  "判定": "ACCEPT",
+  "职责": "建设抖音创作者AI数字分身; 应用超拟人大模型还原创作者人设"
+ },
+ {
+  "task_id": "task-role_level-024",
+  "title": "大模型Agent算法专家",
+  "当前系统": "pos_01",
+  "gold期望": "pos_02",
+  "判定": "MODIFY",
+  "职责": "设计研发通用Agent框架; 大模型垂直领域微调与对齐"
+ },
+ {
+  "task_id": "task-role_level-027",
+  "title": "多模态算法工程师",
+  "当前系统": "pos_04",
+  "gold期望": "pos_01",
+  "判定": "ACCEPT",
+  "职责": "负责多模态大模型预训练与SFT训练; 探索合成数据在多模态训练中的应用"
+ },
+ {
+  "task_id": "task-role_level-028",
+  "title": "AI技术研发工程师(J13320)",
+  "当前系统": "pos_02",
+  "gold期望": "pos_01",
+  "判定": "ACCEPT",
+  "职责": "核心AI算法设计开发优化; RAG知识库系统架构与落地"
+ },
+ {
+  "task_id": "task-role_level-029",
+  "title": "视觉大模型推理部署工程师-智能创作（北京/上海/杭州/深圳）",
+  "当前系统": "pos_27",
+  "gold期望": "None",
+  "判定": "REJECT",
+  "职责": "负责视觉大模型LLM/VLM/AIGC推理服务架构设计和实现; 负责推理优化、服务部署、应用落地"
+ },
+ {
+  "task_id": "task-role_level-031",
+  "title": "数据挖掘算法工程师（游戏AI）",
+  "当前系统": "pos_35",
+  "gold期望": "pos_01",
+  "判定": "ACCEPT",
+  "职责": "负责大数据在游戏AI领域的算法与产品化; 覆盖用户增长、因果推断、匹配系统等方向"
+ },
+ {
+  "task_id": "task-role_level-033",
+  "title": "高性能计算研发工程师-豆包大模型（Top Seed）",
+  "当前系统": "pos_01",
+  "gold期望": "pos_13",
+  "判定": "MODIFY",
+  "职责": "语音大模型训练推理性能优化; 开发优化语音大模型训推框架"
+ },
+ {
+  "task_id": "task-role_level-038",
+  "title": "算法工程师-地理位置专项",
+  "当前系统": "pos_01",
+  "gold期望": "pos_04",
+  "判定": "MODIFY",
+  "职责": "POI搜索与地址理解算法建设; 多源数据特征挖掘与优化"
+ },
+ {
+  "task_id": "task-role_level-040",
+  "title": "运筹优化算法实习生-电商业务",
+  "当前系统": "pos_01",
+  "gold期望": "pos_44",
+  "判定": "MODIFY",
+  "职责": "负责电商供应链物流数据挖掘及算法模型迭代; 构建深度学习统计模型预测ETA并分析因果影响"
+ },
+ {
+  "task_id": "task-role_level-041",
+  "title": "多模态算法实习生-电商业务（平台治理方向）",
+  "当前系统": "pos_01",
+  "gold期望": "pos_04",
+  "判定": "MODIFY",
+  "职责": "多模态大模型预训练与对齐; 图文、图视频、音频、OCR等多模态底座研发"
+ },
+ {
+  "task_id": "task-role_level-042",
+  "title": "机器人运动控制算法实习生-ByteDance Research",
+  "当前系统": "pos_23",
+  "gold期望": "pos_01",
+  "判定": "ACCEPT",
+  "职责": "人形臂运动学/动力学建模分析与仿真; 人形手臂控制系统方案设计与硬件适配调试"
+ },
+ {
+  "task_id": "task-role_level-043",
+  "title": "腾讯云-AI前线部署工程师-(北京/上海)",
+  "当前系统": "pos_02",
+  "gold期望": "pos_05",
+  "判定": "ACCEPT",
+  "职责": "将需求转化为AI解决方案并主导落地交付; 基于Skills与Connector定制办公与代码场景方案"
+ },
+ {
+  "task_id": "task-role_level-045",
+  "title": "算法工程专家（模型推理平台-国际支付）-Global Payment",
+  "当前系统": "pos_01",
+  "gold期望": "pos_05",
+  "判定": "MODIFY",
+  "职责": "负责模型推理平台架构设计与性能优化; 实现推理调度机制与弹性扩缩容"
+ },
+ {
+  "task_id": "task-role_level-046",
+  "title": "算法实习生-抖音",
+  "当前系统": "pos_01",
+  "gold期望": "pos_04",
+  "判定": "MODIFY",
+  "职责": "营销内容生成算法设计与优化; 营销策略算法设计与优化"
+ },
+ {
+  "task_id": "task-role_level-051",
+  "title": "算法实习生-AI个性化和搜索推荐",
+  "当前系统": "pos_01",
+  "gold期望": "pos_04",
+  "判定": "MODIFY",
+  "职责": "负责个性化搜索推荐算法工作; 提升自然语言理解能力，如意图识别、NL2SQL"
+ },
+ {
+  "task_id": "task-role_level-053",
+  "title": "AI测试开发工程师-豆包手机助手",
+  "当前系统": "pos_05",
+  "gold期望": "None",
+  "判定": "REJECT",
+  "职责": "负责AI产品服务端和客户端质量保障; 完成端/云模型部署运行交付"
+ },
+ {
+  "task_id": "task-role_level-055",
+  "title": "AI异构硬件性能评估专家-Seed",
+  "当前系统": "pos_05",
+  "gold期望": "None",
+  "判定": "REJECT",
+  "职责": "建立硬件仿真与性能评估体系; 构建LLM负载Benchmark与画像"
+ },
+ {
+  "task_id": "task-role_level-058",
+  "title": "整机项目经理 - AI创新业务",
+  "当前系统": "pos_06",
+  "gold期望": "None",
+  "判定": "REJECT",
+  "职责": "主导AI智能硬件项目全流程; 协调资源评估需求并排期"
+ },
+ {
+  "task_id": "task-role_level-059",
+  "title": "Business Systems Architect, AI",
+  "当前系统": "pos_21",
+  "gold期望": "None",
+  "判定": "REJECT",
+  "职责": "制定内部AI功能战略路线图; 领导企业应用AI功能集成设计"
+ },
+ {
+  "task_id": "task-role_level-063",
+  "title": "Manager of Applied AI Architecture, Ente",
+  "当前系统": "pos_02",
+  "gold期望": "None",
+  "判定": "REJECT",
+  "职责": "管理并指导Applied AI架构师团队; 制定团队目标与绩效评估，促进成长"
+ },
+ {
+  "task_id": "task-role_level-064",
+  "title": "多模态世界模型算法实习生-Seed",
+  "当前系统": "pos_01",
+  "gold期望": "pos_04",
+  "判定": "MODIFY",
+  "职责": "探索多模态理解、生成、强化学习等前沿技术; 研究大规模多模态理解与生成基础模型"
+ },
+ {
+  "task_id": "task-role_level-066",
+  "title": "Senior Software Engineer / Researcher, A",
+  "当前系统": "pos_11",
+  "gold期望": "pos_13",
+  "判定": "MODIFY",
+  "职责": "架构并实现AI原生数据库，整合结构化、非结构化与向量数据; 设计面向嵌入摄取与多模态检索的存储引擎"
+ },
+ {
+  "task_id": "task-role_level-068",
+  "title": "算法实习生-飞书",
+  "当前系统": "pos_01",
+  "gold期望": "pos_04",
+  "判定": "MODIFY",
+  "职责": "参与飞书企业智能产品研发; 打造AI驱动的产品功能"
+ },
+ {
+  "task_id": "task-role_level-071",
+  "title": "数据挖掘算法实习生-电商业务",
+  "当前系统": "pos_01",
+  "gold期望": "pos_35",
+  "判定": "MODIFY",
+  "职责": "参与电商供应链及物流智能体系建设，负责数据挖掘及算法迭代; 结合电商底层数据，用数据挖掘、深度学习等方法分析预测履约链路"
+ },
+ {
+  "task_id": "task-role_level-072",
+  "title": "Software Engineer, Gen AI",
+  "当前系统": "pos_01",
+  "gold期望": "None",
+  "判定": "REJECT",
+  "职责": "端到端设计与实现前后端及基础设施功能; 使用TypeScript、MongoDB、Elasticsearch构建功能"
+ },
+ {
+  "task_id": "task-role_level-075",
+  "title": "AI Researcher, Core ML",
+  "当前系统": "pos_01",
+  "gold期望": "pos_04",
+  "判定": "MODIFY",
+  "职责": "开发新架构、系统优化及算法; 构建最优开源模型"
+ },
+ {
+  "task_id": "task-role_level-076",
+  "title": "AI产品服务端开发工程师 - 移动OS",
+  "当前系统": "pos_05",
+  "gold期望": "pos_02",
+  "判定": "MODIFY",
+  "职责": "负责服务端模块设计开发测试与迭代; 保障服务高可用高并发高性能运行"
+ },
+ {
+  "task_id": "task-role_level-077",
+  "title": "高级应用解决方案经理-信息安全",
+  "当前系统": "pos_36",
+  "gold期望": "pos_18",
+  "判定": "MODIFY",
+  "职责": "夯实人力资源安全合规防控体系; 覆盖信息安全、数据安全、隐私合规、AI安全合规"
+ },
+ {
+  "task_id": "task-role_level-079",
+  "title": "Staff Machine Learning Engineer, Visual ",
+  "当前系统": "pos_27",
+  "gold期望": "pos_04",
+  "判定": "MODIFY",
+  "职责": "构建视觉编码器、VLM和扩散模型; 实验十亿级图像数据集"
+ },
+ {
+  "task_id": "task-role_level-080",
+  "title": "算法实习生-TikTok内容发现",
+  "当前系统": "pos_01",
+  "gold期望": "pos_29",
+  "判定": "MODIFY",
+  "职责": "优化POI质量准入与规范化算法; 挖掘POI名称地址坐标等数据质量"
+ },
+ {
+  "task_id": "task-role_level-084",
+  "title": "Manager of Applied AI Architecture, Comm",
+  "当前系统": "pos_02",
+  "gold期望": "None",
+  "判定": "REJECT",
+  "职责": "管理并培养商业应用AI架构师团队; 负责团队招聘与入职培训"
+ },
+ {
+  "task_id": "task-role_level-085",
+  "title": "Senior Specialist Solutions Engineer (AI",
+  "当前系统": "pos_05",
+  "gold期望": "None",
+  "判定": "UNKNOWN",
+  "职责": "设计生产级 ML 工作负载架构; 提供售前技术支持和 MVP 构建"
+ },
+ {
+  "task_id": "task-role_level-087",
+  "title": "企业微信-战略&商业化设计-AI/SaaS方向（广州）",
+  "当前系统": "pos_06",
+  "gold期望": "None",
+  "判定": "REJECT",
+  "职责": "制定企业微信商业化策略; 设计SaaS和AI商业模式"
+ },
+ {
+  "task_id": "task-role_level-090",
+  "title": "Software Engineer (Forward Deployed), In",
+  "当前系统": "unmatched",
+  "gold期望": "None",
+  "判定": "ACCEPT",
+  "职责": "与公共部门客户合作定义AI解决方案; 为模糊客户问题设计并实施综合方案"
+ },
+ {
+  "task_id": "task-role_level-091",
+  "title": "EMEA Assurance Lead",
+  "当前系统": "unmatched",
+  "gold期望": "None",
+  "判定": "ACCEPT",
+  "职责": "主导EMEA区域政府与商业保障项目; 管理GCC/UK合规认证（NIA、ECC、ISR等）"
+ },
+ {
+  "task_id": "task-role_level-092",
+  "title": "前端开发实习生-广告业务",
+  "当前系统": "unmatched",
+  "gold期望": "None",
+  "判定": "ACCEPT",
+  "职责": "负责前端技术选型和开发工作; 优化前端功能设计，解决浏览器和终端兼容性问题"
+ },
+ {
+  "task_id": "task-role_level-093",
+  "title": "41066-腾讯云-国际渠道运营经理",
+  "当前系统": "unmatched",
+  "gold期望": "None",
+  "判定": "ACCEPT",
+  "职责": "基于海外云业务数据提供分析与洞察; 监控预警渠道业务风险与机会"
+ },
+ {
+  "task_id": "task-role_level-094",
+  "title": "Medical Fellow - Human Frontier Collecti",
+  "当前系统": "unmatched",
+  "gold期望": "None",
+  "判定": "ACCEPT",
+  "职责": "设计复杂临床场景; 评估模型决策的安全性与准确性"
+ },
+ {
+  "task_id": "task-role_level-096",
+  "title": "Engineering Manager, Revenue",
+  "当前系统": "unmatched",
+  "gold期望": "None",
+  "判定": "ACCEPT",
+  "职责": "领导全栈团队交付营收产品; 与产品协作制定长期战略"
+ },
+ {
+  "task_id": "task-role_level-097",
+  "title": "Staff Software Engineer, Inference / Com",
+  "当前系统": "pos_05",
+  "gold期望": "None",
+  "判定": "REJECT",
+  "职责": "构建硬件全生命周期状态机; 设计自助API与控制面"
+ },
+ {
+  "task_id": "task-role_level-099",
+  "title": "高性能计算工程师（视频）",
+  "当前系统": "unmatched",
+  "gold期望": "None",
+  "判定": "ACCEPT",
+  "职责": "影像视频算法SDK方案设计与实现; 设计异构并行框架(NPU/DSP/GPU/CPU)"
+ }
+]

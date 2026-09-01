@@ -17,6 +17,7 @@ class LLMSettings(BaseSettings):
     hiro2_llm_base_url: str | None = None
     hiro2_llm_model: str | None = None
     hiro2_llm_api_key: str | None = None
+    hiro2_llm_model_embedding: str = "qwen3-embedding:8b"
 
     @property
     def can_call_anthropic(self) -> bool:

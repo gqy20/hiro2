@@ -83,7 +83,11 @@ export function DiagnosisWorkbench({
     return (
       <AppShell>
         <FixtureState
-          errorText="候选人或岗位版本数据暂时不可用。"
+          errorText={
+            careerMode
+              ? "画像或目标岗位数据暂时不可用。"
+              : "候选人或岗位版本数据暂时不可用。"
+          }
           state="error"
         />
       </AppShell>
@@ -121,7 +125,9 @@ export function DiagnosisWorkbench({
     id: fixture.report.matchId,
     kind: "modified",
     title: "匹配依据",
-    detail: "岗位版本与候选人证据共同决定本次匹配结果。",
+    detail: careerMode
+      ? "岗位能力标准与我的技能、项目证据共同决定本次诊断结果。"
+      : "岗位版本与候选人证据共同决定本次匹配结果。",
     confidence: fixture.report.overallScore,
     status: "accepted",
     evidence: reportEvidenceList,
@@ -134,7 +140,9 @@ export function DiagnosisWorkbench({
       : 0;
     return {
       confidence: Math.round(avg * 100) / 100,
-      detail: `${fixture.job.title}（${fixture.job.version}）的招聘 JD 中对「${gap.skill}」的提及证据。`,
+      detail: careerMode
+        ? `${fixture.job.title}（${fixture.job.version}）的岗位要求中对「${gap.skill}」的要求依据。`
+        : `${fixture.job.title}（${fixture.job.version}）的招聘 JD 中对「${gap.skill}」的提及证据。`,
       evidence,
       id: `gap-${gap.skill}`,
       kind: "modified",
@@ -259,7 +267,10 @@ export function DiagnosisWorkbench({
       <div className="workflow-page">
         {careerMode ? <h1 className="sr-only">人岗诊断</h1> : null}
         <div className="diagnosis-workbench">
-          <aside className="diagnosis-profile" aria-label="候选人画像">
+          <aside
+            aria-label={careerMode ? "我的技能画像" : "候选人画像"}
+            className="diagnosis-profile"
+          >
             <div className="diagnosis-heading">
               <div>
                 {careerMode ? (
@@ -269,7 +280,7 @@ export function DiagnosisWorkbench({
                     <h1>{fixture.candidate.name}</h1>
                     {candidates.length > 1 ? (
                       <Select
-                        aria-label="切换候选人"
+                        aria-label={careerMode ? "切换画像" : "切换候选人"}
                         onChange={(id) =>
                           router.push(
                             `/diagnosis?candidate=${encodeURIComponent(id)}`,
@@ -576,7 +587,9 @@ export function DiagnosisWorkbench({
                         }
                         type="button"
                       >
-                        {`岗位依据 · ${gap.jobEvidence.length} 条招聘 JD`}
+                        {careerMode
+                          ? `岗位要求依据 · ${gap.jobEvidence.length} 条在招岗位`
+                          : `岗位依据 · ${gap.jobEvidence.length} 条招聘 JD`}
                       </button>
                     ) : null}
                   </article>
@@ -641,7 +654,9 @@ export function DiagnosisWorkbench({
                   </ul>
                 ) : (
                   <p className="diagnosis-basis-empty">
-                    当前判断主要依据候选人已验证技能与项目证据；岗位侧原文证据接入后在此展示。
+                    {careerMode
+                      ? "当前判断主要依据我已验证的技能与项目证据；岗位侧原文证据整理后将在此展示。"
+                      : "当前判断主要依据候选人已验证技能与项目证据；岗位侧原文证据接入后在此展示。"}
                   </p>
                 )}
                 <Button

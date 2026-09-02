@@ -19,18 +19,20 @@ const STAGES = [
 ] as const;
 
 // viewBox 几何：左列来源节点、中部四步圆环节点、右列两个消费端
-const VB_W = 1200;
-const VB_H = 340;
-const SRC_X = 30;
-const SRC_W = 200;
-const SRC_Y0 = 18;
-const SRC_GAP = 60;
-const STAGE_Y = 162;
-const STAGE_R = 26;
-const STAGE_X = [400, 520, 640, 760];
-const DST_X = 970;
-const DST_W = 200;
-const DST_Y = [82, 197]; // 消费端节点中心 y = +28
+// 宽高比 ≈ 2.53 贴近总览面板形状，配合 CSS max-height:100% 让图填满面板受限方向；
+// VB_W 收窄到 1000 使渲染比例 >1（节点与文字实际放大，而非仅靠留白拉开间距）
+const VB_W = 1000;
+const VB_H = 396;
+const SRC_X = 24;
+const SRC_W = 184;
+const SRC_Y0 = 20;
+const SRC_GAP = 77;
+const STAGE_Y = 198;
+const STAGE_R = 30;
+const STAGE_X = [290, 430, 570, 710];
+const DST_X = 792;
+const DST_W = 184;
+const DST_Y = [126, 214]; // 消费端节点中心 y = +28
 
 function formatNumber(n: number): string {
   return n.toLocaleString("zh-CN");
@@ -84,14 +86,14 @@ export function DataFlowMap({ sources, stageRuns }: Props) {
   const sourceNodes = sources.slice(0, 5);
   const convergePaths = sourceNodes.map((_, i) => {
     const y = SRC_Y0 + 24 + SRC_GAP * i;
-    return `M ${SRC_X + SRC_W} ${y} C 320 ${y} 320 ${STAGE_Y} ${STAGE_X[0] - STAGE_R} ${STAGE_Y}`;
+    return `M ${SRC_X + SRC_W} ${y} C 242 ${y} 242 ${STAGE_Y} ${STAGE_X[0] - STAGE_R} ${STAGE_Y}`;
   });
   const segmentPaths = STAGE_X.slice(0, -1).map(
-    (x) => `M ${x + STAGE_R} ${STAGE_Y} L ${x + 120 - STAGE_R} ${STAGE_Y}`,
+    (x) => `M ${x + STAGE_R} ${STAGE_Y} L ${x + 140 - STAGE_R} ${STAGE_Y}`,
   );
   const branchPaths = DST_Y.map(
     (y) =>
-      `M ${STAGE_X.at(-1)! + STAGE_R} ${STAGE_Y} C 880 ${STAGE_Y} 880 ${y + 28} ${DST_X} ${y + 28}`,
+      `M ${STAGE_X.at(-1)! + STAGE_R} ${STAGE_Y} C 766 ${STAGE_Y} 766 ${y + 28} ${DST_X} ${y + 28}`,
   );
   const [selected, setSelected] = useState<string | null>(null);
 

@@ -58,27 +58,29 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 14px;
-  flex: none;
-  height: auto;
+  flex: 1;
   min-height: 0;
   align-items: stretch;
 }
 .data-flow-wrap {
   margin: 0;
-  padding: 24px 28px 16px;
+  padding: 20px 28px;
   border: 1px solid var(--line-soft);
   border-radius: 12px;
   background: var(--panel);
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   min-height: 0;
-  height: auto;
+  height: 100%;
 }
 .data-flow-map {
+  /* 宽度优先拉满，高度受面板限制时等比收缩（viewBox 宽高比贴近面板）——
+     图始终填满面板的受限方向，居中由 wrap 的 flex 对齐承担 */
   width: 100%;
   height: auto;
-  max-height: calc(100vh - 170px);
+  max-height: 100%;
   display: block;
 }
 
